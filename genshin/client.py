@@ -1,14 +1,14 @@
 import asyncio
-from genshin.models.character import Character
-from genshin.models import UserStats
 import hashlib
 import random
 import string
 import time
-from typing import Any, ClassVar, Dict, List, Mapping, Union
+from typing import Any, ClassVar, Dict, List, Literal, Mapping, Union, overload
 
 import aiohttp
 from yarl import URL
+
+from .models import *
 
 
 def generate_ds_token(salt: str) -> str:
@@ -37,6 +37,8 @@ def recognize_server(uid: int) -> str:
 
 
 class GenshinClient:
+    """A simple http client for genshin endpoints"""
+    
     OS_DS_SALT: ClassVar[str] = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     CN_DS_SALT: ClassVar[str] = "14bmu1mz0yuljprsfgpvjh3ju2ni468r"
     OS_BBS_URL: ClassVar[str] = "https://bbs-api-os.hoyolab.com/"
@@ -110,62 +112,51 @@ class GenshinClient:
         url = self.create_url(endpoint, chinese).update_query(params)
 
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
-            print(r.request_info.url)
-            print(dict(r.request_info.headers))
             data = await r.json()
 
         if data["retcode"] == 0:
             return data["data"]
         else:
             raise Exception(f"{data['retcode']} - {data['message']}")
+    
+    
+    @overload
+    async def get_user(self, uid: int, lang: str = None, *, equipment: Literal[True]) -> FullUserStats: ...
 
-    async def get_user_stats(self, uid: int) -> UserStats:
-        """Get a user's stats"""
+    @overload
+    async def get_user(self, uid: int, lang: str = None, *, equipment: bool = ...) -> UserStats: ...
+
+    async def get_user(self, uid: int, lang: str = None, *, equipment: bool = False) -> UserStats:
+        """Get a user's stats and characters"""
         server = recognize_server(uid)
-        data = await self.request("game_record/genshin/api/index", params=dict(server=server, role_id=uid))
-        return UserStats(**data)
+        data = await self.request("game_record/genshin/api/index", params=dict(server=server, role_id=uid), lang=lang)
+        
+        if not equipment:
+            return UserStats(**data)
 
-    async def get_characters(self, uid: int, character_ids: List[int] = None, lang: str = None) -> List[Character]:
-        """Get a list of user's characters along with all their equipment"""
-        if character_ids is None:
-            stats = await self.get_user_stats(uid)
-            character_ids = [char.id for char in stats.characters]
-
-        server = recognize_server(uid)
-        data = await self.request(
+        character_ids = [char['id'] for char in data['avatars']]
+        character_data = await self.request(
             "game_record/genshin/api/character",
             method="POST",
             lang=lang,
             json=dict(character_ids=character_ids, role_id=uid, server=server),
         )
-        return [Character(**i) for i in data["avatars"]]
-
-
-async def test():
-    import os
-    from devtools import debug
-
-    client = GenshinClient({"ltuid": os.environ["GS_LTUID"], "ltoken": os.environ["GS_LTOKEN"]})
-    async with client:
-        data = await client.get_user_stats(710785423)
-        debug(data)
-
-
-if __name__ == "__main__":
-    from functools import wraps
-    from asyncio.proactor_events import _ProactorBasePipeTransport
-
-    def silence_event_loop_closed(func):
-        @wraps(func)
-        def wrapper(self, *args, **kwargs):
-            try:
-                return func(self, *args, **kwargs)
-            except RuntimeError as e:
-                if str(e) != "Event loop is closed":
-                    raise
-
-        return wrapper
+        data.update(character_data)
+        
+        return FullUserStats(**data)
     
-    _ProactorBasePipeTransport.__del__ = silence_event_loop_closed(_ProactorBasePipeTransport.__del__)
-    
-    asyncio.run(test())
+    async def get_user_with_equipment(self, uid: int, lang: str = None) -> FullUserStats:
+        """Helper alternative function for get_user in case of dynamic arguments"""
+        return await self.get_user(uid, lang=lang, equipment=True)
+            
+    async def get_spiral_abyss(self, uid: int, previous: bool = False) -> SpiralAbyss:
+        """Get spiral abyss runs"""
+        server = recognize_server(uid)
+        schedule_type = 2 if previous else 1
+        data = await self.request(
+            "game_record/genshin/api/spiralAbyss",
+            params=dict(server=server, role_id=uid, schedule_type=schedule_type)
+        )
+        return SpiralAbyss(**data)
+
+

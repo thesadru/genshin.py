@@ -1,25 +1,11 @@
-from typing import Any, Dict, List
-from pydantic import BaseModel, Field, validator, root_validator, HttpUrl
+from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any, Dict, List, Literal
 
-class BaseCharacter(BaseModel):
-    id: int
-    image: HttpUrl
-    name: str
-    element: str
-    friendship: int = Field(alias="fetter")
-    level: int
-    rarity: int
-    constellation: int = Field(0, alias="activated_constellation_num")
+from pydantic import BaseModel, Field, HttpUrl, validator
 
-    collab: bool = False
-
-    @root_validator
-    def is_collab(cls, values: Dict[str, Any]):
-        if values["rarity"] > 100:
-            values["rarity"] -= 100
-            values["collab"] = True
-        return values
+from .base import Character
+from .character import EquippedCharacter
 
 
 class Stats(BaseModel):
@@ -49,7 +35,7 @@ class Offering(BaseModel):
 class Exploration(BaseModel):
     level: int
     _explored = Field(alias="exploration_percentage")
-    icon: HttpUrl
+    icon: str
     name: str
     type: str
     offerings: List[Offering]
@@ -58,7 +44,7 @@ class Exploration(BaseModel):
 
 class TeapotRealm(BaseModel):
     name: str
-    icon: HttpUrl
+    icon: str
 
 
 class Teapot(BaseModel):
@@ -68,18 +54,27 @@ class Teapot(BaseModel):
     comfort: int = Field(alias="comfort_num")
     items: int = Field(alias="item_num")
     comfort_name: str = Field(alias="comfort_level_name")
-    comfort_icon: HttpUrl = Field(alias="comfort_level_icon")
+    comfort_icon: str = Field(alias="comfort_level_icon")
 
 
 class UserStats(BaseModel):
+    equipped: Literal[True] = True
+    
     stats: Stats
-    characters: List[BaseCharacter] = Field(alias="avatars")
+    characters: List[Character] = Field(alias="avatars")
     explorations: List[Exploration] = Field(alias="world_explorations")
-    # teapots: List[Teapot] = Field(alias="homes")  # TODO: Use a single model with lists of names
     teapot: Teapot = Field(alias="homes")
 
     @validator("teapot", pre=True)
-    def format_teapot(cls, v: List[Dict[str, Any]]):
+    def __format_teapot(cls, v):
+        if isinstance(v, dict):
+            return v
         value = v[0]
         value["realms"] = v
         return value
+
+class FullUserStats(UserStats):
+    """User stats with characters with equipment"""
+    equipped: Literal[False] = False
+
+    characters: List[EquippedCharacter] = Field(alias="avatars")

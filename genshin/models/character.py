@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel, Field, HttpUrl
 
-from .stats import BaseCharacter
+from .base import Character
 
 
 class WeaponType(str, Enum):
@@ -19,7 +19,7 @@ class WeaponType(str, Enum):
 
 class Weapon(BaseModel):
     id: int
-    icon: HttpUrl
+    icon: str
     name: str
     rarity: int
     description: str = Field(alias="desc")
@@ -42,7 +42,7 @@ class ArtifactSet(BaseModel):
 
 class Artifact(BaseModel):
     id: int
-    icon: HttpUrl
+    icon: str
     name: str
     pos_name: str
     pos: int
@@ -51,7 +51,7 @@ class Artifact(BaseModel):
 
 class Constellation(BaseModel):
     id: int
-    icon: HttpUrl
+    icon: str
     pos: int
     name: str
     effect: str
@@ -60,13 +60,12 @@ class Constellation(BaseModel):
 
 class Outfit(BaseModel):
     id: int
-    icon: HttpUrl
+    icon: str
     name: str
 
 
-class Character(BaseCharacter):
-    """A character but with equipment"""
-
+class EquippedCharacter(Character):
+    """A character with stats and equipment"""
     weapon: Weapon
     artifacts: List[Artifact] = Field(alias="reliquaries")
     constellations: List[Constellation]
