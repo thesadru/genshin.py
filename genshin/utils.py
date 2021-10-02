@@ -1,9 +1,13 @@
 
 import hashlib
+import heapq
 import random
 import string
 import time
-from .constants import CHARACTER_NAMES
+from typing import (Any, AsyncIterable, AsyncIterator, Callable, Iterable,
+                    TypeVar)
+
+T = TypeVar("T")
 
 def generate_ds_token(salt: str) -> str:
     """Creates a new ds token for authentication."""
@@ -29,3 +33,39 @@ def recognize_server(uid: int) -> str:
     else:
         raise Exception(f"UID {uid} isn't associated with any server")
 
+def get_short_lang_code(lang: str) -> str:
+    """Returns an alternative short lang code"""
+    return lang if 'zh' in lang else lang.split('-')[0]
+
+async def heapq_merge(iterables: Iterable[AsyncIterable[T]], key: Callable[[T], Any] = None) -> AsyncIterator[T]:
+    """Async version of heapq.merge"""
+    key = key or (lambda x: x)
+    heap = []
+
+    for order, iterable in enumerate(iterables):
+        it = iterable.__aiter__()
+        try:
+            value = await it.__anext__()
+            heap.append([key(value), order, value, it.__anext__])
+        except StopAsyncIteration:
+            pass
+    
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        try:
+            while True:
+                key_value, order, value, next = s = heap[0]
+                yield value
+                value = await next()
+                s[0] = key(value)
+                s[2] = value
+                heapq.heapreplace(heap, s)
+        except StopAsyncIteration:
+            heapq.heappop(heap)
+    
+    if heap:
+        key_value, order, value, next = heap[0]
+        yield value
+        async for item in next.__self__:
+            yield item

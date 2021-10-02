@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, List, Literal
+from typing import List, Literal
 
-from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic import BaseModel, Field, validator
 
 from .base import Character
 from .character import EquippedCharacter
@@ -57,8 +57,8 @@ class Teapot(BaseModel):
     comfort_icon: str = Field(alias="comfort_level_icon")
 
 
-class UserStats(BaseModel):
-    equipped: Literal[True] = True
+class PartialUserStats(BaseModel):
+    partial: Literal[True] = True
     
     stats: Stats
     characters: List[Character] = Field(alias="avatars")
@@ -73,8 +73,8 @@ class UserStats(BaseModel):
         value["realms"] = v
         return value
 
-class FullUserStats(UserStats):
+class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
-    equipped: Literal[False] = False
+    partial: Literal[False] = False
 
     characters: List[EquippedCharacter] = Field(alias="avatars")
