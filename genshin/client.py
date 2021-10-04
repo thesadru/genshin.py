@@ -1,12 +1,12 @@
-
-from typing import Any, ClassVar, Dict, Literal, Union, overload, Optional
+from http.cookies import SimpleCookie
+from typing import Any, ClassVar, Dict, Literal, Optional, Union, overload
 
 import aiohttp
 from yarl import URL
 
 from . import utils
 from .models import *
-from .paginator import WishHistory
+from .paginator import MergedWishHistory, WishHistory
 
 
 class GenshinClient:
@@ -15,26 +15,52 @@ class GenshinClient:
     OS_DS_SALT: ClassVar[str] = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     CN_DS_SALT: ClassVar[str] = "14bmu1mz0yuljprsfgpvjh3ju2ni468r"
 
-    OS_BBS_URL = "https://bbs-api-os.hoyolab.com/game_record/genshin/api"
-    CN_TAKUMI_URL = "https://api-takumi.mihoyo.com/game_record/genshin/api"
+    # bbs-api is an alternative
+    OS_BBS_URL = "https://bbs-api-os.hoyolab.com/game_record/genshin/api/"
+    CN_TAKUMI_URL = "https://api-takumi.mihoyo.com/game_record/genshin/api/"
     GACHA_INFO_URL = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/"
 
-    USER_AGENT: ClassVar[
-        str
-    ] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 
-    def __init__(self, cookies: Dict[str, str], lang: str = "en-us", authkey: str = None) -> None:
-        self.cookies = cookies
+    _session: Optional[aiohttp.ClientSession] = None
+
+    def __init__(self, cookies: Dict[str, str] = None, lang: str = "en-us", authkey: str = None) -> None:
+        self.cookies = cookies or {}
         self.authkey = authkey
         self.lang = lang
 
     @property
     def session(self) -> aiohttp.ClientSession:
         """The current client session, created when needed"""
-        if not hasattr(self, "_session"):
-            self._session = aiohttp.ClientSession(cookies=self.cookies)
+        if self._session is None:
+            self._session = aiohttp.ClientSession()
 
         return self._session
+
+    @property
+    def cookies(self) -> Dict[str, str]:
+        """The cookie jar belonging to the current session"""
+        return {cookie.key: cookie.value for cookie in self.session.cookie_jar}
+
+    @cookies.setter
+    def cookies(self, cookies: Dict[str, Any]) -> None:
+        cks = {str(key): value for key, value in cookies.items()}
+        self.session.cookie_jar.clear()
+        self.session.cookie_jar.update_cookies(cks)
+    
+    def set_cookies(self, cookies: Union[Dict[str, Any], str]) -> Dict[str, str]:
+        """Helper cookie setter that accepts cookie headers"""
+        cookies = SimpleCookie(cookies)
+        self.cookies = cookies
+        return {morsel.key: morsel.value for morsel in cookies.values()}
+    
+    def set_browser_cookies(self, browser: str = None) -> Dict[str, str]:
+        """Extract cookies from your browser and set them as client cookies
+        
+        Refer to get_browser_cookies for more info.
+        """
+        self.cookies = utils.get_browser_cookies(browser)
+        return self.cookies
 
     @property
     def hoyolab_uid(self) -> Optional[int]:
@@ -45,7 +71,7 @@ class GenshinClient:
 
         return None
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the client's session"""
         if not self.session.closed:
             await self.session.close()
@@ -71,27 +97,28 @@ class GenshinClient:
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
 
-        async with self.session.request(method, url, **kwargs) as r:
-            print(r.url)
+        async with self.session.request(method, url, headers=headers, **kwargs) as r:
             data = await r.json()
 
         if data["retcode"] == 0:
             return data["data"]
-        else:
-            raise Exception(f"{data['retcode']} - {data['message']}")
+
+        raise Exception(f"{data['retcode']} - {data['message']}")
 
     async def request_game_record(
-        self, endpoint: str, method: str = "GET", chinese: bool = False, lang: str = None, **kwargs
+        self, endpoint: str, method: str = "GET", chinese: bool = False, lang: str = None, **kwargs: Any
     ) -> Dict[str, Any]:
         """Make a request towards the game record endpoint
 
         User stats related data
         """
+        if self.cookies is None:
+            raise Exception("No cookies provided")
+
         base_url = URL(self.CN_TAKUMI_URL if chinese else self.OS_BBS_URL)
         url = base_url.join(URL(endpoint))
 
         headers = {
-            "user-agent": self.USER_AGENT,
             "x-rpc-app_version": "2.7.0" if chinese else "1.5.0",
             "x-rpc-client_type": "5" if chinese else "4",
             "x-rpc-language": lang or self.lang,
@@ -107,6 +134,7 @@ class GenshinClient:
         lang: str = None,
         authkey: str = None,
         params: Dict[str, Any] = None,
+        **kwargs: Any,
     ) -> Dict[str, Any]:
         """Make a request towards the game info endpoint
 
@@ -124,9 +152,22 @@ class GenshinClient:
         if authkey is None and self.authkey is None:
             raise Exception("No authkey provided")
 
-        return await self.request(url, method, params=params)
+        return await self.request(url, method, params=params, **kwargs)
 
     # GAME RECORD:
+    
+    async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
+        """Get a user's record card. If a uid is not provided gets the logged in user's"""
+        data = await self.request_game_record(
+            "../../card/wapi/getGameRecordCard",
+            lang=lang,
+            params=dict(uid=hoyolab_uid or self.hoyolab_uid, gids=2),
+        )
+        cards = data['list']
+        if not cards:
+            raise Exception("User's data is not public")
+        
+        return RecordCard(**cards[0])
 
     @overload
     async def get_user(self, uid: int, *, lang: str = None, equipment: Literal[True] = ...) -> PartialUserStats:
@@ -170,16 +211,51 @@ class GenshinClient:
 
     # WISH HISTORY:
 
+    @overload
+    def wish_history(
+        self,
+        banner_type: None = ...,
+        *,
+        limit: int = None,
+        lang: str = None,
+        authkey: str = None,
+        end_id: int = 0,
+    ) -> MergedWishHistory:
+        ...
+
+    @overload
+    def wish_history(
+        self,
+        banner_type: Union[int, BannerType],
+        *,
+        limit: int = None,
+        lang: str = None,
+        authkey: str = None,
+        end_id: int = 0,
+    ) -> WishHistory:
+        ...
+
     def wish_history(
         self,
         banner_type: Union[int, BannerType] = None,
         *,
         limit: int = None,
+        lang: str = None,
         authkey: str = None,
         end_id: int = 0,
-        lang: str = None,
-    ):
-        if banner_type is not None:
+    ) -> Union[WishHistory, MergedWishHistory]:
+        """Get the wish history of a user"""
+        if banner_type is None:
+            return MergedWishHistory(self, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
+        else:
             return WishHistory(self, banner_type, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
-        
-        raise NotImplementedError("Wish History merge not implemented yet.")
+    
+    @utils.permanent_cache('lang')
+    async def get_banner_types(self, *, lang: str = None, authkey: str = None) -> Dict[int, str]:
+        """Get a list of banner types"""
+        data = await self.request_gacha_info(
+            "getConfigList",
+            lang=lang,
+            authkey=authkey,
+        )
+        return {int(i['key']): i['name'] for i in data['gacha_type_list']}

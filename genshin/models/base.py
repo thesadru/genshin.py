@@ -2,17 +2,12 @@ from __future__ import annotations
 
 import re
 from abc import ABC
-from typing import TYPE_CHECKING, Any, Dict, Optional, Union
+from typing import Any, Dict, Union
 
 from pydantic import BaseModel, Field, root_validator, validator
-from pydantic.main import BaseConfig
 
 from ..constants import CHARACTER_NAMES
 
-if TYPE_CHECKING:
-    from ..client import GenshinClient
-
-BaseConfig.underscore_attrs_are_private
 
 class CharacterIcon(str):
     character_name: str
@@ -97,7 +92,7 @@ class BaseCharacter(BaseModel, ABC):
     def __cast_icon(cls, icon: str):
         return CharacterIcon(icon)
 
-class Character(BaseCharacter):
+class PartialCharacter(BaseCharacter):
     """A character without any equipment"""
 
     level: int

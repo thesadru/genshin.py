@@ -4,8 +4,8 @@ from typing import List, Literal
 
 from pydantic import BaseModel, Field, validator
 
-from .base import Character
-from .character import EquippedCharacter
+from .base import PartialCharacter
+from .character import Character
 
 
 class Stats(BaseModel):
@@ -33,13 +33,18 @@ class Offering(BaseModel):
 
 
 class Exploration(BaseModel):
-    level: int
-    _explored = Field(alias="exploration_percentage")
+    id: int
     icon: str
     name: str
     type: str
+    level: int
+    explored: int = Field(alias="exploration_percentage")
     offerings: List[Offering]
-    id: int
+    
+    @property
+    def percentage(self):
+        """The percentage explored"""
+        return self.explored / 100
 
 
 class TeapotRealm(BaseModel):
@@ -61,7 +66,7 @@ class PartialUserStats(BaseModel):
     partial: Literal[True] = True
     
     stats: Stats
-    characters: List[Character] = Field(alias="avatars")
+    characters: List[PartialCharacter] = Field(alias="avatars")
     explorations: List[Exploration] = Field(alias="world_explorations")
     teapot: Teapot = Field(alias="homes")
 
@@ -77,4 +82,4 @@ class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
     partial: Literal[False] = False
 
-    characters: List[EquippedCharacter] = Field(alias="avatars")
+    characters: List[Character] = Field(alias="avatars")

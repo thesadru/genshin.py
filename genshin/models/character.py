@@ -1,20 +1,8 @@
-from enum import Enum
 from typing import List
 
 from pydantic import BaseModel, Field
 
-from .base import Character
-
-
-class WeaponType(str, Enum):
-    sword = "Sword"
-    polearm = "Polearm"
-    claymore = "Claymore"
-    catalyst = "Catalyst"
-    bow = "Bow"
-
-    def __str__(self) -> str:
-        return self.name
+from .base import PartialCharacter
 
 
 class Weapon(BaseModel):
@@ -24,7 +12,7 @@ class Weapon(BaseModel):
     rarity: int
     description: str = Field(alias="desc")
     level: int
-    type: WeaponType = Field(alias="type_name")
+    type: str = Field(alias="type_name")
     ascensions: int = Field(alias="promote_level")
     refinement: int = Field(alias="affix_level")
 
@@ -64,7 +52,7 @@ class Outfit(BaseModel):
     name: str
 
 
-class EquippedCharacter(Character):
+class Character(PartialCharacter):
     """A character with stats and equipment"""
     weapon: Weapon
     artifacts: List[Artifact] = Field(alias="reliquaries")
