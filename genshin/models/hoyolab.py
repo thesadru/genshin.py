@@ -46,3 +46,11 @@ class RecordCard(BaseModel):
     @property
     def spiral_abyss(self):
         return self.data[3].value
+
+class SearchUser(BaseModel):
+    hoyolab_uid: int = Field(alias="uid")
+    nickname: str
+    introduction: str = Field(alias="introduce")
+    avatar: int
+    gender: int
+    avatar_url: str

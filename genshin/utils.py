@@ -11,10 +11,11 @@ from typing import *
 
 if TYPE_CHECKING:
     from typing_extensions import ParamSpec
-    P = ParamSpec('P')
+
+    P = ParamSpec("P")
 else:
-    P = TypeVar('P')
-    
+    P = TypeVar("P")
+
 T = TypeVar("T")
 
 
@@ -69,6 +70,7 @@ def get_browser_cookies(browser: str = None) -> Dict[str, str]:
         if c.name in allowed_cookies and c.value is not None
     }
 
+
 def permanent_cache(*params: str) -> Callable[[T], T]:
     """Like lru_cache except permanent and only caches based on some parameters"""
     cache: Dict[Any, Any] = {}
@@ -92,7 +94,8 @@ def permanent_cache(*params: str) -> Callable[[T], T]:
         inner.cache = cache
         return update_wrapper(inner, func)
 
-    return wrapper # type: ignore
+    return wrapper  # type: ignore
+
 
 async def _try_gather(coros: Iterable[Awaitable[T]]) -> List[T]:
     _failed = object()
@@ -107,7 +110,9 @@ async def _try_gather(coros: Iterable[Awaitable[T]]) -> List[T]:
     return [x for x in values if x is not _failed]
 
 
-async def amerge(iterables: Iterable[AsyncIterable[T]], key: Callable[[T], Any] = None) -> AsyncIterator[T]:
+async def amerge(
+    iterables: Iterable[AsyncIterable[T]], key: Callable[[T], Any] = None
+) -> AsyncIterator[T]:
     """Async version of heapq.merge"""
     key = key or (lambda x: x)
 
@@ -115,7 +120,10 @@ async def amerge(iterables: Iterable[AsyncIterable[T]], key: Callable[[T], Any] 
     iterators = [i.__aiter__() for i in iterables]
     values = await _try_gather(it.__anext__() for it in iterators)
 
-    heap = [[key(value), order, value, it.__anext__] for order, (it, value) in enumerate(zip(iterators, values))]
+    heap = [
+        [key(value), order, value, it.__anext__]
+        for order, (it, value) in enumerate(zip(iterators, values))
+    ]
 
     # the rest is simply heapq.merge:
     heapq.heapify(heap)

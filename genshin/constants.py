@@ -1,5 +1,7 @@
 from typing import Dict, NamedTuple
 
+__all__ = ["CHARACTER_NAMES", "LANGS"]
+
 
 class DBChar(NamedTuple):
     id: int
@@ -7,6 +9,7 @@ class DBChar(NamedTuple):
     name: str  # english name
     element: str
     rarity: int
+
 
 _character_names = {
     10000001: None,
@@ -70,4 +73,20 @@ _character_names = {
 }
 CHARACTER_NAMES: Dict[int, DBChar] = {
     id: DBChar(id, *data) for id, data in _character_names.items() if data is not None
+}
+
+LANGS = {
+    "zh-cn": "简体中文",
+    "zh-tw": "繁體中文",
+    "de-de": "Deutsch",
+    "en-us": "English",
+    "es-es": "Español",
+    "fr-fr": "Français",
+    "id-id": "Indonesia",
+    "ja-jp": "日本語",
+    "ko-kr": "한국어",
+    "pt-pt": "Português",
+    "ru-ru": "Pусский",
+    "th-th": "ภาษาไทย",
+    "vi-vn": "Tiếng Việt",
 }

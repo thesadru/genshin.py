@@ -45,7 +45,6 @@ class BannerDetailsItem(BaseModel):
     element: str = Field(alias="item_attr")
     icon: str = Field(alias="item_img")
 
-    
     @validator("element", pre=True)
     def __parse_element(cls, v):
         return {
@@ -56,8 +55,9 @@ class BannerDetailsItem(BaseModel):
             "冰": "Cryo",
             "岩": "Geo",
             "？": "Dendro",
-            "": ""
+            "": "",
         }[v]
+
 
 class BannerDetails(BaseModel):
     banner_type: int = Field(alias="gacha_type")
@@ -106,10 +106,10 @@ class BannerDetails(BaseModel):
     @property
     def banner_type_name(self) -> str:
         banners = {
-            100: "Novice Wishes", 
-            200: "Permanent Wish", 
-            301: "Character Event Wish", 
-            302: "Weapon Event Wish"
+            100: "Novice Wishes",
+            200: "Permanent Wish",
+            301: "Character Event Wish",
+            302: "Weapon Event Wish",
         }
         return banners[self.banner_type]
 

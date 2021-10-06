@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Literal
+from typing import Any, Dict, List, Literal
 
 from pydantic import BaseModel, Field, validator
 
@@ -26,6 +26,12 @@ class Stats(BaseModel):
     unlocked_domains: int =   Field(alias="domain_number")
     # fmt: on
 
+    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
+        """Helper function which turns fields into properly named ones"""
+        assert lang == "en-us", "Other languages not yet implemented"
+
+        return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
+
 
 class Offering(BaseModel):
     name: str
@@ -40,7 +46,7 @@ class Exploration(BaseModel):
     level: int
     explored: int = Field(alias="exploration_percentage")
     offerings: List[Offering]
-    
+
     @property
     def percentage(self):
         """The percentage explored"""
@@ -64,7 +70,7 @@ class Teapot(BaseModel):
 
 class PartialUserStats(BaseModel):
     partial: Literal[True] = True
-    
+
     stats: Stats
     characters: List[PartialCharacter] = Field(alias="avatars")
     explorations: List[Exploration] = Field(alias="world_explorations")
@@ -78,8 +84,10 @@ class PartialUserStats(BaseModel):
         value["realms"] = v
         return value
 
+
 class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
+
     partial: Literal[False] = False
 
     characters: List[Character] = Field(alias="avatars")
