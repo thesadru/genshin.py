@@ -18,6 +18,15 @@ else:
 
 T = TypeVar("T")
 
+__all__ = [
+    "generate_ds_token",
+    "recognize_server",
+    "get_short_lang_code",
+    "get_browser_cookies",
+    "permanent_cache",
+    "amerge",
+]
+
 
 def generate_ds_token(salt: str) -> str:
     """Creates a new ds token for authentication."""
@@ -148,7 +157,7 @@ async def amerge(
 
 
 # for the convenience of the user we hide these windows errors:
-def silence_event_loop_closed(func):
+def _silence_event_loop_closed(func):
     def wrapper(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
@@ -159,4 +168,4 @@ def silence_event_loop_closed(func):
     return wrapper
 
 
-_ProactorBasePipeTransport.__del__ = silence_event_loop_closed(_ProactorBasePipeTransport.__del__)
+_ProactorBasePipeTransport.__del__ = _silence_event_loop_closed(_ProactorBasePipeTransport.__del__)

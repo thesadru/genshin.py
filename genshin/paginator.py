@@ -4,7 +4,7 @@ import asyncio
 import heapq
 from typing import *
 
-from .models import ItemTransaction, Transaction, Wish
+from .models import ClaimedDailyReward, ItemTransaction, Transaction, Wish
 from .utils import amerge
 
 if TYPE_CHECKING:
@@ -36,8 +36,66 @@ async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator
             return
 
 
+class DailyRewardPaginator:
+    """A paginator specifically for claimed daily rewards"""
+
+    client: GenshinClient
+    limit: Optional[int]
+    current_page: Optional[int]
+
+    page_size: int = 10
+
+    def __init__(self, client: GenshinClient, limit: int = None) -> None:
+        self.client = client
+        self.limit = limit
+
+        self.current_page = 1
+
+    @property
+    def exhausted(self) -> bool:
+        return self.current_page is None
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(limit={self.limit})"
+
+    async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
+        data = await self.client.request_daily_reward("award", params=dict(current_page=page))
+        return [ClaimedDailyReward(**i) for i in data["list"]]
+
+    async def next_page(self) -> List[ClaimedDailyReward]:
+        if self.current_page is None:
+            raise Exception("No more pages")
+
+        data = await self._get_page(self.current_page)
+
+        if len(data) < self.page_size:
+            self.current_page = None
+            return data
+
+        self.current_page += 1
+        return data
+
+    async def _iter(self) -> AsyncIterator[ClaimedDailyReward]:
+        """Iterate over pages until the end"""
+        while not self.exhausted:
+            page = await self.next_page()
+            for i in page:
+                yield i
+
+    def __aiter__(self) -> AsyncIterator[ClaimedDailyReward]:
+        """Iterate over all pages unril the limit is reached"""
+        return aislice(self._iter(), self.limit)
+
+    async def flatten(self) -> List[ClaimedDailyReward]:
+        """Flatten the entire iterator into a list"""
+        # sending more than 1 request at once causes a ratelimit
+        # that means no posible greedy flatten implementation
+        
+        return [item async for item in self]
+
+
 class IDPagintor(Generic[IDModelT]):
-    """A paginator of genshin prev_id pages
+    """A paginator of genshin end_id pages
 
     Takes in a function with which to get the next few arguments
     """
@@ -130,37 +188,6 @@ class WishHistory(AuthkeyPaginator[Wish]):
         return [Wish(**i, banner_name=banner_name) for i in data["list"]]
 
 
-class MergedWishHistory(AuthkeyPaginator[Wish]):
-    client: GenshinClient
-    lang: Optional[str]
-    banner_type: Literal[None] = None
-
-    def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.client = client
-        self.lang = lang
-
-        self._paginators = [
-            WishHistory(client, b, lang=self.lang, **kwargs) for b in (100, 200, 301, 302)
-        ]
-        self.__key: Callable[[Wish], int] = lambda wish: -wish.time.timestamp()
-
-    def _iter(self) -> AsyncIterator[Wish]:
-        return amerge(self._paginators, key=self.__key)
-
-    async def flatten(self, *, lazy: bool = False) -> List[Wish]:
-        # before we gather all histories we should get the banner name
-        asyncio.create_task(self.client.get_banner_types(lang=self.lang, authkey=self.authkey))
-
-        if self.limit is not None and lazy:
-            it = aislice(amerge(self._paginators, key=self.__key), self.limit)
-            return [x async for x in it]
-
-        coros = (p.flatten() for p in self._paginators)
-        lists = await asyncio.gather(*coros)
-        return list(heapq.merge(*lists, key=self.__key))[: self.limit]
-
-
 class Transactions(AuthkeyPaginator[TransactionT]):
     client: GenshinClient
     kind: str
@@ -193,7 +220,48 @@ class Transactions(AuthkeyPaginator[TransactionT]):
         return transactions
 
 
-class MergedTransactions(AuthkeyPaginator[Union[Transaction, ItemTransaction]]):
+class MergedPaginator(AuthkeyPaginator[IDModelT]):
+    _paginators: List[IDPagintor[IDModelT]]
+    _key: Callable[[IDModelT], Any]
+
+    def __init__(self, authkey: str = None, limit: int = None, end_id: int = 0) -> None:
+        super().__init__(authkey=authkey, limit=limit, end_id=end_id)
+
+    def _iter(self) -> AsyncIterator[IDModelT]:
+        return amerge(self._paginators, key=self._key)
+
+    async def flatten(self, *, lazy: bool = False) -> List[IDModelT]:
+        if self.limit is not None and lazy:
+            it = aislice(amerge(self._paginators, key=self._key), self.limit)
+            return [x async for x in it]
+
+        coros = (p.flatten() for p in self._paginators)
+        lists = await asyncio.gather(*coros)
+        return list(heapq.merge(*lists, key=self._key))[: self.limit]
+
+
+class MergedWishHistory(MergedPaginator[Wish]):
+    client: GenshinClient
+    lang: Optional[str]
+    banner_type: Literal[None] = None
+
+    def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.client = client
+        self.lang = lang
+
+        self._paginators = [
+            WishHistory(client, b, lang=self.lang, **kwargs) for b in (100, 200, 301, 302)
+        ]
+        self._key: Callable[[Wish], int] = lambda wish: -wish.time.timestamp()
+
+    async def flatten(self, *, lazy: bool = False) -> List[Wish]:
+        # before we gather all histories we should get the banner name
+        asyncio.create_task(self.client.get_banner_types(lang=self.lang, authkey=self.authkey))
+        return await super().flatten(lazy=lazy)
+
+
+class MergedTransactions(MergedPaginator[Union[Transaction, ItemTransaction]]):
     client: GenshinClient
     lang: Optional[str]
     kind: Literal[None] = None
@@ -207,19 +275,4 @@ class MergedTransactions(AuthkeyPaginator[Union[Transaction, ItemTransaction]]):
             Transactions(client, kind, lang=self.lang, **kwargs)
             for kind in ("primogem", "crystal", "resin", "artifact", "weapon")
         ]
-        self.__key: Callable[[Transaction], int] = lambda trans: -trans.time.timestamp()
-
-    def _iter(self) -> AsyncIterator[Union[Transaction, ItemTransaction]]:
-        return amerge(self._paginators, key=self.__key)
-
-    async def flatten(self, *, lazy: bool = False) -> List[Union[Transaction, ItemTransaction]]:
-        # before we gather all histories we should get the banner name
-        asyncio.create_task(self.client.get_banner_types(lang=self.lang, authkey=self.authkey))
-
-        if self.limit is not None and lazy:
-            it = aislice(amerge(self._paginators, key=self.__key), self.limit)
-            return [x async for x in it]
-
-        coros = (p.flatten() for p in self._paginators)
-        lists = await asyncio.gather(*coros)
-        return list(heapq.merge(*lists, key=self.__key))[: self.limit]
+        self._key: Callable[[Transaction], int] = lambda trans: -trans.time.timestamp()
