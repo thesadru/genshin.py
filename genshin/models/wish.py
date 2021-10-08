@@ -117,3 +117,17 @@ class BannerDetails(BaseModel):
     def items(self):
         items = self.r5_items + self.r4_items + self.r3_items
         return sorted(items, key=lambda x: x.order)
+
+
+class GachaItem(BaseModel):
+    name: str
+    type: str = Field(alias="item_type")
+    rarity: int = Field(alias="rank_type")
+    id: int = Field(alias="item_id")
+
+    @validator("id")
+    def __format_id(cls, v):
+        return 10000000 + v - 1000 if len(str(v)) == 4 else v
+
+    def is_character(self):
+        return len(str(self.id)) == 8

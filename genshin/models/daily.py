@@ -8,10 +8,12 @@ class DailyRewardInfo(NamedTuple):
     signed_in: bool
     claimed_rewards: int
 
+
 class DailyReward(BaseModel):
     name: str
     amount: int = Field(alias="cnt")
     icon: str
+
 
 class ClaimedDailyReward(BaseModel):
     id: int

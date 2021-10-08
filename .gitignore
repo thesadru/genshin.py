@@ -1,5 +1,7 @@
 __pycache__
-test.py
-tests/
-extra/
 .vscode
+extra/
+
+.coverage
+htmlcov/
+test.py

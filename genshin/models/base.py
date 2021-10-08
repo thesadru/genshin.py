@@ -67,21 +67,28 @@ class BaseCharacter(BaseModel, ABC):
         if id:
             char = CHARACTER_NAMES[id]
         elif icon:
-            char = next(char for char in CHARACTER_NAMES.values() if char.icon_name == icon.character_name)
+            for char in CHARACTER_NAMES.values():
+                if char.icon_name == icon.character_name:
+                    break
+            else:
+                # missing data for this character
+                return values
         elif name:
-            char = next((char for char in CHARACTER_NAMES.values() if char.name == name), None)
-            # cannot complete values for foreign languages
-            if char is None:
+            for char in CHARACTER_NAMES.values():
+                if char.name == name:
+                    break
+            else:
+                # cannot complete values for foreign languages
                 return values
         else:
             raise TypeError("Character data incomplete")
-        
+
         values["id"] = values.get("id") or char.id
         values["icon"] = values.get("icon") or CharacterIcon(char.icon_name)
         values["name"] = values.get("name") or char.name
         values["element"] = values.get("element") or char.element
         values["rarity"] = values.get("rarity") or char.rarity
-        
+
         if values["rarity"] > 100:
             values["rarity"] -= 100
             values["collab"] = True
@@ -91,6 +98,7 @@ class BaseCharacter(BaseModel, ABC):
     @validator("icon", pre=True)
     def __cast_icon(cls, icon: str):
         return CharacterIcon(icon)
+
 
 class PartialCharacter(BaseCharacter):
     """A character without any equipment"""

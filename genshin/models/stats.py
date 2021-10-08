@@ -69,8 +69,6 @@ class Teapot(BaseModel):
 
 
 class PartialUserStats(BaseModel):
-    partial: Literal[True] = True
-
     stats: Stats
     characters: List[PartialCharacter] = Field(alias="avatars")
     explorations: List[Exploration] = Field(alias="world_explorations")
@@ -87,7 +85,5 @@ class PartialUserStats(BaseModel):
 
 class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
-
-    partial: Literal[False] = False
 
     characters: List[Character] = Field(alias="avatars")

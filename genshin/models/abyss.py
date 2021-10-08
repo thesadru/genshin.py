@@ -1,21 +1,23 @@
-from typing import Any, Dict, List, Literal
-import re
-from pydantic import BaseModel, Field, root_validator, validator
 from datetime import datetime
+from typing import Any, Dict, List, Literal
 
-from .base import BaseCharacter
+from pydantic import BaseModel, Field, root_validator
+
+from .base import BaseCharacter, CharacterIcon
 
 
 class AbyssRankCharacter(BaseCharacter):
     """A character with a value of a rank"""
+
     id: int = Field(alias="avatar_id")
-    icon: str = Field(alias="avatar_icon")
-    
+    icon: CharacterIcon = Field(alias="avatar_icon")
+
     value: int
 
 
 class AbyssCharacter(BaseCharacter):
     """A character with just a level"""
+
     level: int
 
 
@@ -26,6 +28,12 @@ class CharacterRanks(BaseModel):
     most_damage_taken: List[AbyssRankCharacter] = Field(alias="take_damage_rank")
     most_bursts_used: List[AbyssRankCharacter] = Field(alias="normal_skill_rank")
     most_skills_used: List[AbyssRankCharacter] = Field(alias="energy_skill_rank")
+
+    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
+        """Helper function which turns fields into properly named ones"""
+        assert lang == "en-us", "Other languages not yet implemented"
+
+        return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
 
 
 class Battle(BaseModel):

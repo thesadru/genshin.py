@@ -54,6 +54,7 @@ class Outfit(BaseModel):
 
 class Character(PartialCharacter):
     """A character with stats and equipment"""
+
     weapon: Weapon
     artifacts: List[Artifact] = Field(alias="reliquaries")
     constellations: List[Constellation]

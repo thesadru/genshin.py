@@ -5,7 +5,7 @@ import heapq
 from typing import *
 
 from .models import ClaimedDailyReward, ItemTransaction, Transaction, Wish
-from .utils import amerge
+from .utils import aislice, amerge
 
 if TYPE_CHECKING:
     from .client import GenshinClient
@@ -15,25 +15,8 @@ class IDModel(Protocol):
     id: int
 
 
-T = TypeVar("T")
 IDModelT = TypeVar("IDModelT", bound=IDModel, covariant=True)
 TransactionT = TypeVar("TransactionT", bound=Transaction, covariant=True)
-
-
-async def aenumerate(iterable: AsyncIterable[T], start: int = 0) -> AsyncIterator[Tuple[int, T]]:
-    i = start
-    async for x in iterable:
-        yield i, x
-        i += 1
-
-
-async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator[T]:
-    """Slices an async iterable"""
-    async for i, x in aenumerate(iterable, start=1):
-        yield x
-
-        if stop and i >= stop:
-            return
 
 
 class DailyRewardPaginator:
@@ -90,23 +73,21 @@ class DailyRewardPaginator:
         """Flatten the entire iterator into a list"""
         # sending more than 1 request at once causes a ratelimit
         # that means no posible greedy flatten implementation
-        
         return [item async for item in self]
 
 
 class IDPagintor(Generic[IDModelT]):
-    """A paginator of genshin end_id pages
+    """A paginator of genshin end_id pages"""
 
-    Takes in a function with which to get the next few arguments
-    """
-
+    client: GenshinClient
     limit: Optional[int]
     end_id: Optional[int]
 
     page_size: int = 20
 
-    def __init__(self, limit: int = None, end_id: int = 0) -> None:
+    def __init__(self, client: GenshinClient, *, limit: int = None, end_id: int = 0) -> None:
         """Create a new paginator from alimit and the starting end id"""
+        self.client = client
         self.limit = limit
         self.end_id = end_id
 
@@ -117,15 +98,28 @@ class IDPagintor(Generic[IDModelT]):
     def __repr__(self) -> str:
         return f"{type(self).__name__}(limit={self.limit})"
 
-    async def function(self, end_id: int) -> List[IDModelT]:
+    async def _get_page(self, end_id: int) -> List[IDModelT]:
         raise NotImplementedError
+
+    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
+        return (end_id,)
 
     async def next_page(self) -> List[IDModelT]:
         """Get the next page of the paginator"""
         if self.end_id is None:
             raise Exception("No more pages")
 
-        data = await self.function(self.end_id)
+        data = await self._get_page(self.end_id)
+
+        # update the cache:
+        if self.client.paginator_cache is not None:
+            cache = self.client.paginator_cache
+
+            if self.end_id != 0:
+                cache[self._cache_key(self.end_id)] = data[0]
+
+            for p, n in zip(data, data[1:]):
+                cache[self._cache_key(p.id)] = n
 
         # mark paginator as exhausted
         if len(data) < self.page_size:
@@ -137,7 +131,17 @@ class IDPagintor(Generic[IDModelT]):
 
     async def _iter(self) -> AsyncIterator[IDModelT]:
         """Iterate over pages until the end"""
-        while not self.exhausted:
+        while self.end_id is not None:
+
+            # collect from the cache:
+            if self.client.paginator_cache:
+                cache = self.client.paginator_cache
+                key = self._cache_key(self.end_id)
+                while key in cache:
+                    yield cache[key]
+                    self.end_id = cache[key].id
+                    key = self._cache_key(self.end_id)
+
             page = await self.next_page()
             for i in page:
                 yield i
@@ -154,8 +158,14 @@ class IDPagintor(Generic[IDModelT]):
 class AuthkeyPaginator(IDPagintor[IDModelT]):
     authkey: Optional[str]
 
-    def __init__(self, authkey: str = None, limit: int = None, end_id: int = 0) -> None:
-        super().__init__(limit=limit, end_id=end_id)
+    def __init__(
+        self,
+        client: GenshinClient,
+        authkey: str = None,
+        limit: int = None,
+        end_id: int = 0,
+    ) -> None:
+        super().__init__(client, limit=limit, end_id=end_id)
         self.authkey = authkey
 
 
@@ -167,17 +177,19 @@ class WishHistory(AuthkeyPaginator[Wish]):
     def __init__(
         self, client: GenshinClient, banner_type: int, lang: str = None, **kwargs: Any
     ) -> None:
-        super().__init__(**kwargs)
-        self.client = client
+        super().__init__(client, **kwargs)
         self.banner_type = banner_type
         self.lang = lang
+
+    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
+        return ("wish", end_id, self.lang or self.client.lang)
 
     async def _get_banner_name(self) -> str:
         """Get the banner name of banner_type"""
         banner_types = await self.client.get_banner_types(lang=self.lang, authkey=self.authkey)
         return banner_types[self.banner_type]
 
-    async def function(self, end_id: int) -> List[Wish]:
+    async def _get_page(self, end_id: int) -> List[Wish]:
         data = await self.client.request_gacha_info(
             "getGachaLog",
             lang=self.lang,
@@ -194,19 +206,24 @@ class Transactions(AuthkeyPaginator[TransactionT]):
     lang: Optional[str]
 
     def __init__(self, client: GenshinClient, kind: str, lang: str = None, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.client = client
+        super().__init__(client, **kwargs)
         self.kind = kind
         self.lang = lang
 
-    async def function(self, end_id: int):
+    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
+        return ("transaction", end_id, self.lang or self.client.lang)
+
+    async def _get_page(self, end_id: int):
         endpoint = "get" + self.kind.capitalize() + "Log"
 
         coro = self.client._get_transaction_reasons(self.lang or self.client.lang)
         reasons_task = asyncio.create_task(coro)
 
         data = await self.client.request_transaction(
-            endpoint, lang=self.lang, authkey=self.authkey, params=dict(end_id=end_id, size=20)
+            endpoint,
+            lang=self.lang,
+            authkey=self.authkey,
+            params=dict(end_id=end_id, size=20),
         )
 
         reasons = await reasons_task
@@ -224,8 +241,8 @@ class MergedPaginator(AuthkeyPaginator[IDModelT]):
     _paginators: List[IDPagintor[IDModelT]]
     _key: Callable[[IDModelT], Any]
 
-    def __init__(self, authkey: str = None, limit: int = None, end_id: int = 0) -> None:
-        super().__init__(authkey=authkey, limit=limit, end_id=end_id)
+    def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
+        super().__init__(client, **kwargs)
 
     def _iter(self) -> AsyncIterator[IDModelT]:
         return amerge(self._paginators, key=self._key)
@@ -246,14 +263,13 @@ class MergedWishHistory(MergedPaginator[Wish]):
     banner_type: Literal[None] = None
 
     def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.client = client
+        super().__init__(client, **kwargs)
         self.lang = lang
 
         self._paginators = [
             WishHistory(client, b, lang=self.lang, **kwargs) for b in (100, 200, 301, 302)
         ]
-        self._key: Callable[[Wish], int] = lambda wish: -wish.time.timestamp()
+        self._key: Callable[[Wish], float] = lambda wish: -wish.time.timestamp()
 
     async def flatten(self, *, lazy: bool = False) -> List[Wish]:
         # before we gather all histories we should get the banner name
@@ -267,12 +283,11 @@ class MergedTransactions(MergedPaginator[Union[Transaction, ItemTransaction]]):
     kind: Literal[None] = None
 
     def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.client = client
+        super().__init__(client, **kwargs)
         self.lang = lang
 
         self._paginators = [
             Transactions(client, kind, lang=self.lang, **kwargs)
             for kind in ("primogem", "crystal", "resin", "artifact", "weapon")
         ]
-        self._key: Callable[[Transaction], int] = lambda trans: -trans.time.timestamp()
+        self._key: Callable[[Transaction], float] = lambda trans: -trans.time.timestamp()
