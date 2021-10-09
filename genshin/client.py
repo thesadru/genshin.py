@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 import os
 from http.cookies import SimpleCookie
@@ -7,6 +8,7 @@ from typing import *
 import aiohttp
 from yarl import URL
 
+from . import errors
 from .constants import LANGS
 from .models import *
 from .paginator import (
@@ -25,6 +27,8 @@ from .utils import (
     permanent_cache,
     recognize_server,
 )
+
+__all__ = ["GenshinClient", "MultiCookieClient"]
 
 
 class GenshinClient:
@@ -55,16 +59,24 @@ class GenshinClient:
     def __init__(
         self,
         cookies: Mapping[str, str] = None,
-        lang: str = "en-us",
         authkey: str = None,
         *,
+        lang: str = "en-us",
         debug: bool = False,
     ) -> None:
-        self.cookies = cookies or {}
+        """Create a new GenshinClient instance by setting the language and authentication
+
+        If debug is turned on the dlogger for GenshinClient will be turned to debug mode.
+        """
+        if cookies:
+            self.cookies = cookies
+
         self.authkey = authkey
 
-        assert lang in LANGS, "Invalid language, must be one of: " + ", ".join(LANGS)
-        self.lang = lang
+        if lang in LANGS:
+            self.lang = lang
+        else:
+            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
         if debug:
             logging.basicConfig()
@@ -139,6 +151,81 @@ class GenshinClient:
 
     # RAW HTTP REQUESTS:
 
+    def _raise_for_retcode(self, data: Dict[str, Any]) -> NoReturn:
+        """Raise an equivalent error to a response
+
+        game record:
+            10001 = invalid cookie
+            101xx = generic errors
+
+        authkey:
+            -100 = invalid authkey
+            -101 = authkey timed out
+
+        code redemption:
+            20xx = invalid code or state
+            -107x = invalid cookies
+
+        daily reward:
+            -500x = already claimed the daily reward
+
+        unknown:
+            -1 = account not found
+            -100 = invalid cookies
+            -108 = invalid language
+            1009 = account not found
+
+        """
+        r, m = data["retcode"], data["message"]
+
+        if m == "authkey error":
+            if r == -100:
+                raise errors.InvalidAuthkey(data)
+            elif r == -101:
+                raise errors.AuthkeyTimeout(data)
+            else:
+                raise errors.AuthkeyException(data)
+
+        if r == -100:
+            raise errors.InvalidCookies(data, "Cookies are not valid")
+        elif r == -108:
+            raise errors.GenshinException(data, "Invalid language")
+
+        elif r == 10001:
+            raise errors.InvalidCookies(data, "Cookies are not valid")
+
+        elif r == 10101:
+            raise errors.TooManyRequests(data)
+        elif r == 10102:
+            raise errors.DataNotPublic(data)
+        elif r == 10103:
+            msg = "Cookies are valid but do not have a hoyolab account bound to them"
+            raise errors.InvalidCookies(data, msg)
+
+        elif r in [-1, 1009]:
+            raise errors.AccountNotFound(data)
+
+        elif r == -1071:
+            raise errors.InvalidCookies(data)
+        elif r == -1073:
+            msg = "Cannot claim code. Account has no game account bound to it."
+            raise errors.GenshinException(data, msg)
+        elif r == -2001:
+            raise errors.GenshinException(data, "Redemption code has expired.")
+        elif r == -2003:
+            raise errors.GenshinException(data, "Invalid redemption code")
+        elif r == -2017:
+            raise errors.GenshinException(data, "Redemption code has been claimed already.")
+        elif r == -2021:
+            msg = "Cannot claim codes for account with adventure rank lower than 10."
+            raise errors.GenshinException(data, msg)
+
+        elif r == -5003:
+            raise errors.GenshinException(data, "Already claimed the daily reward today.")
+
+        else:
+            raise errors.GenshinException(data)
+
     async def request(
         self,
         url: Union[str, URL],
@@ -157,7 +244,7 @@ class GenshinClient:
         if data["retcode"] == 0:
             return data["data"]
 
-        raise Exception(f"{data['retcode']} - {data['message']}")
+        self._raise_for_retcode(data)
 
     async def request_webstatic(
         self,
@@ -207,8 +294,8 @@ class GenshinClient:
         if cache and self.cache and cache in self.cache:
             return self.cache[cache]
 
-        if self.cookies is None:
-            raise Exception("No cookies provided")
+        if not self.cookies:
+            raise RuntimeError("No cookies provided")
 
         base_url = URL(self.CN_RECORD_URL if chinese else self.OS_RECORD_URL)
         url = base_url.join(URL(endpoint))
@@ -245,8 +332,8 @@ class GenshinClient:
         Daily reward claiming and history
         """
         params = params or {}
-        if self.cookies is None:
-            raise Exception("No cookies provided")
+        if not self.cookies:
+            raise RuntimeError("No cookies provided")
 
         base_url = URL(self.CN_REWARD_URL if chinese else self.OS_REWARD_URL)
         url = base_url.join(URL(endpoint))
@@ -412,7 +499,7 @@ class GenshinClient:
             cache=("user", uid),
         )
 
-    async def get_user(self, uid: int, *, lang: str = None) -> PartialUserStats:
+    async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
         """Get a user's stats and characters"""
         server = recognize_server(uid)
         data = await self._get_raw_index(uid, server, lang)
@@ -622,3 +709,77 @@ class GenshinClient:
         await asyncio.gather(
             self.get_banner_types(lang=lang), self._get_transaction_reasons(lang=lang)
         )
+
+
+class MultiCookieClient(GenshinClient):
+    """A Genshin Client which allows setting multiple cookies"""
+
+    sessions: List[aiohttp.ClientSession]
+
+    def __init__(
+        self,
+        cookie_list: Iterable[Mapping[str, str]] = None,
+        lang: str = "en-us",
+        *,
+        debug: bool = False,
+    ) -> None:
+        self.sessions = []
+
+        if cookie_list:
+            self.set_cookies(cookie_list)
+
+        super().__init__(lang=lang, debug=debug)
+
+    @property
+    def session(self) -> aiohttp.ClientSession:
+        """The current chosen session"""
+        if not self.sessions:
+            return aiohttp.ClientSession()
+
+        return self.sessions[0]
+
+    @property
+    def cookies(self) -> List[Mapping[str, str]]:
+        """A list of all cookies"""
+        return [{m.key: m.value for m in s.cookie_jar} for s in self.sessions]
+
+    def set_cookies(
+        self, cookie_list: Union[Iterable[Mapping[str, Any]], str], clear: bool = True
+    ) -> None:
+        if clear:
+            self.sessions.clear()
+
+        if isinstance(cookie_list, str):
+            with open(cookie_list) as file:
+                cookie_list = json.load(file)
+                
+            if not isinstance(cookie_list, list):
+                raise RuntimeError("Json file must contain a list of cookies")
+
+        for cookies in cookie_list:
+            session = aiohttp.ClientSession(cookies=SimpleCookie(cookies))
+            self.sessions.append(session)
+
+    async def close(self) -> None:
+        await asyncio.wait([session.close() for session in self.sessions if not session.closed])
+
+    async def request(
+        self, url: Union[str, URL], method: str = "GET", **kwargs: Any
+    ) -> Dict[str, Any]:
+
+        for _ in range(len(self.sessions)):
+            try:
+                return await super().request(url, method=method, **kwargs)
+            except errors.TooManyRequests:
+                # move the ratelimited session to the end to let the ratelimit wear off
+                session = self.sessions.pop(0)
+                self.sessions.append(session)
+
+        # if we're here it means we used up all our sessions so we must handle that
+        dummy = {"msg": "", "retcode": 10101}
+        msg = "All cookies have hit their request limit of 30 accounts per day."
+        raise errors.TooManyRequests(dummy, msg)
+
+    async def request_daily_reward(self, *args: Any, **kwargs: Any) -> NoReturn:
+        """Helper overwrite to prevent nasty bugs"""
+        raise RuntimeError(f"{type(self).__name__} does not support daily reward endpoints")

@@ -3,7 +3,7 @@ import pytest
 from genshin import GenshinClient
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio_cooperative
 async def test_record_card(client: GenshinClient, hoyolab_uid: int):
     data = await client.get_record_card(hoyolab_uid)
 
@@ -11,7 +11,7 @@ async def test_record_card(client: GenshinClient, hoyolab_uid: int):
     assert pretty["Days Active"] == data.days_active
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio_cooperative
 async def test_user(client: GenshinClient, uid: int):
     data = await client.get_user(uid)
 
@@ -19,7 +19,7 @@ async def test_user(client: GenshinClient, uid: int):
     assert "Anemoculi" in pretty
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio_cooperative
 async def test_abyss(client: GenshinClient, uid: int):
     data = await client.get_spiral_abyss(uid, previous=True)
 
@@ -27,7 +27,7 @@ async def test_abyss(client: GenshinClient, uid: int):
     assert "Most Kills" in pretty
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio_cooperative
 async def test_exception(client: GenshinClient):
     with pytest.raises(Exception):
         await client.get_record_card(10000000)

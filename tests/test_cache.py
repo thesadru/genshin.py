@@ -2,14 +2,16 @@ import pytest
 from genshin import GenshinClient
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio_cooperative
 async def test_cache(client: GenshinClient, uid: int):
     # we only get the cookies from the old client
     cookies = client.cookies
 
     client = GenshinClient()
     client.set_cookies(cookies)
+
     client.cache = {}
+    client.static_cache = {}
 
     for _ in range(5):
         await client.get_user(uid)
