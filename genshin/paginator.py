@@ -189,7 +189,7 @@ class WishHistory(AuthkeyPaginator[Wish]):
 
     async def _get_banner_name(self) -> str:
         """Get the banner name of banner_type"""
-        banner_types = await self.client.get_banner_types(lang=self._lang, authkey=self._authkey)
+        banner_types = await self.client.get_banner_names(lang=self._lang, authkey=self._authkey)
         return banner_types[self.banner_type]
 
     async def _get_page(self, end_id: int) -> List[Wish]:
@@ -270,7 +270,7 @@ class MergedWishHistory(MergedPaginator[Wish]):
 
     async def flatten(self, *, lazy: bool = False) -> List[Wish]:
         # before we gather all histories we should get the banner name
-        asyncio.create_task(self.client.get_banner_types(lang=self._lang, authkey=self._authkey))
+        asyncio.create_task(self.client.get_banner_names(lang=self._lang, authkey=self._authkey))
         return await super().flatten(lazy=lazy)
 
 
