@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Literal
+from typing import Any, Dict, List
 
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
 
-from .base import PartialCharacter
+from .base import GenshinModel, PartialCharacter
 from .character import Character
 
 
-class Stats(BaseModel):
+class Stats(GenshinModel):
     # This is such fucking bullshit, just why?
     # fmt: off
     achievements: int =       Field(alias="achievement_number")
@@ -33,12 +33,12 @@ class Stats(BaseModel):
         return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
 
 
-class Offering(BaseModel):
+class Offering(GenshinModel):
     name: str
     level: int
 
 
-class Exploration(BaseModel):
+class Exploration(GenshinModel):
     id: int
     icon: str
     name: str
@@ -48,17 +48,17 @@ class Exploration(BaseModel):
     offerings: List[Offering]
 
     @property
-    def percentage(self):
+    def percentage(self) -> float:
         """The percentage explored"""
         return self.explored / 100
 
 
-class TeapotRealm(BaseModel):
+class TeapotRealm(GenshinModel):
     name: str
     icon: str
 
 
-class Teapot(BaseModel):
+class Teapot(GenshinModel):
     realms: List[TeapotRealm]
     level: int
     visitors: int = Field(alias="visit_num")
@@ -68,7 +68,7 @@ class Teapot(BaseModel):
     comfort_icon: str = Field(alias="comfort_level_icon")
 
 
-class PartialUserStats(BaseModel):
+class PartialUserStats(GenshinModel):
     stats: Stats
     characters: List[PartialCharacter] = Field(alias="avatars")
     explorations: List[Exploration] = Field(alias="world_explorations")

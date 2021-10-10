@@ -1,11 +1,11 @@
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from .base import PartialCharacter
+from .base import GenshinModel, PartialCharacter
 
 
-class Weapon(BaseModel):
+class Weapon(GenshinModel):
     id: int
     icon: str
     name: str
@@ -17,18 +17,18 @@ class Weapon(BaseModel):
     refinement: int = Field(alias="affix_level")
 
 
-class ArtifactSetEffect(BaseModel):
+class ArtifactSetEffect(GenshinModel):
     pieces: int = Field(alias="activation_number")
     effect: str
 
 
-class ArtifactSet(BaseModel):
+class ArtifactSet(GenshinModel):
     id: int
     name: str
     effects: List[ArtifactSetEffect]
 
 
-class Artifact(BaseModel):
+class Artifact(GenshinModel):
     id: int
     icon: str
     name: str
@@ -37,7 +37,7 @@ class Artifact(BaseModel):
     rarity: int
 
 
-class Constellation(BaseModel):
+class Constellation(GenshinModel):
     id: int
     icon: str
     pos: int
@@ -46,7 +46,7 @@ class Constellation(BaseModel):
     activated: bool = Field(alias="is_actived")
 
 
-class Outfit(BaseModel):
+class Outfit(GenshinModel):
     id: int
     icon: str
     name: str

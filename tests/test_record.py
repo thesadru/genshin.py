@@ -1,5 +1,6 @@
 import pytest
 
+import genshin
 from genshin import GenshinClient
 
 
@@ -17,7 +18,13 @@ async def test_user(client: GenshinClient, uid: int):
 
     pretty = data.stats.as_dict()
     assert "Anemoculi" in pretty
+    assert data.characters[0].weapon
 
+
+@pytest.mark.asyncio_cooperative
+async def test_partial_user(client: GenshinClient, uid: int):
+    data = await client.get_partial_user(uid)
+    assert not hasattr(data.characters[0], "weapon")
 
 @pytest.mark.asyncio_cooperative
 async def test_abyss(client: GenshinClient, uid: int):
@@ -28,6 +35,10 @@ async def test_abyss(client: GenshinClient, uid: int):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_exception(client: GenshinClient):
-    with pytest.raises(Exception):
+async def test_exceptions(client: GenshinClient):
+    with pytest.raises(genshin.DataNotPublic):
         await client.get_record_card(10000000)
+    
+    with pytest.raises(genshin.AccountNotFound):
+        await client.get_record_card(700000010)
+    

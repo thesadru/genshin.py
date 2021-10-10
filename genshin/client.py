@@ -66,7 +66,7 @@ class GenshinClient:
     ) -> None:
         """Create a new GenshinClient instance by setting the language and authentication
 
-        If debug is turned on the dlogger for GenshinClient will be turned to debug mode.
+        If debug is turned on the logger for GenshinClient will be turned to debug mode.
         """
         if cookies:
             self.cookies = cookies
@@ -369,7 +369,7 @@ class GenshinClient:
         params["lang"] = get_short_lang_code(lang or self.lang)
 
         if authkey is None and self.authkey is None:
-            raise Exception("No authkey provided")
+            raise RuntimeError("No authkey provided")
 
         debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
         self.logger.debug(f"GACHA {method} {debug_url}")
@@ -401,7 +401,7 @@ class GenshinClient:
         params["lang"] = get_short_lang_code(lang or self.lang)
 
         if authkey is None and self.authkey is None:
-            raise Exception("No authkey provided")
+            raise RuntimeError("No authkey provided")
 
         debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
         self.logger.debug(f"TRANS {method} {debug_url}")
@@ -487,7 +487,7 @@ class GenshinClient:
         )
         cards = data["list"]
         if not cards:
-            raise Exception("User's data is not public")
+            raise errors.DataNotPublic({})
 
         return RecordCard(**cards[0])
 
@@ -752,13 +752,17 @@ class MultiCookieClient(GenshinClient):
         if isinstance(cookie_list, str):
             with open(cookie_list) as file:
                 cookie_list = json.load(file)
-                
+
             if not isinstance(cookie_list, list):
                 raise RuntimeError("Json file must contain a list of cookies")
 
         for cookies in cookie_list:
             session = aiohttp.ClientSession(cookies=SimpleCookie(cookies))
             self.sessions.append(session)
+    
+    def set_browser_cookies(self, *args: Any, **kwargs: Any) -> NoReturn:
+        """Helper overwrite to prevent nasty bugs"""
+        raise RuntimeError(f"{type(self).__name__} does not support browser cookies")
 
     async def close(self) -> None:
         await asyncio.wait([session.close() for session in self.sessions if not session.closed])
@@ -776,9 +780,8 @@ class MultiCookieClient(GenshinClient):
                 self.sessions.append(session)
 
         # if we're here it means we used up all our sessions so we must handle that
-        dummy = {"msg": "", "retcode": 10101}
         msg = "All cookies have hit their request limit of 30 accounts per day."
-        raise errors.TooManyRequests(dummy, msg)
+        raise errors.TooManyRequests({}, msg)
 
     async def request_daily_reward(self, *args: Any, **kwargs: Any) -> NoReturn:
         """Helper overwrite to prevent nasty bugs"""

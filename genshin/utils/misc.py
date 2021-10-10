@@ -36,7 +36,7 @@ def recognize_server(uid: int) -> str:
     if server:
         return server
     else:
-        raise Exception(f"UID {uid} isn't associated with any server")
+        raise ValueError(f"UID {uid} isn't associated with any server")
 
 
 def get_short_lang_code(lang: str) -> str:

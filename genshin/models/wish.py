@@ -1,19 +1,21 @@
 import re
 from datetime import datetime
-from enum import Enum
+from enum import IntEnum
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
+
+from .base import GenshinModel
 
 
-class BannerType(int, Enum):
+class BannerType(IntEnum):
     novice = 100
     permanent = 200
     character = 301
     weapon = 302
 
 
-class Wish(BaseModel):
+class Wish(GenshinModel):
     uid: int
 
     id: int
@@ -30,7 +32,7 @@ class Wish(BaseModel):
         return int(v)
 
 
-class BannerDetailProb(BaseModel):
+class BannerDetailProb(GenshinModel):
     name: str = Field(alias="item_name")
     type: str = Field(alias="item_type")
     rarity: int = Field(alias="rank")
@@ -39,7 +41,7 @@ class BannerDetailProb(BaseModel):
     order: int = Field(alias="order_value")
 
 
-class BannerDetailsItem(BaseModel):
+class BannerDetailsItem(GenshinModel):
     name: str = Field(alias="item_name")
     type: str = Field(alias="item_type")
     element: str = Field(alias="item_attr")
@@ -59,7 +61,7 @@ class BannerDetailsItem(BaseModel):
         }[v]
 
 
-class BannerDetails(BaseModel):
+class BannerDetails(GenshinModel):
     banner_type: int = Field(alias="gacha_type")
     title: str
     content: str
@@ -114,12 +116,12 @@ class BannerDetails(BaseModel):
         return banners[self.banner_type]
 
     @property
-    def items(self):
+    def items(self) -> List[BannerDetailProb]:
         items = self.r5_items + self.r4_items + self.r3_items
         return sorted(items, key=lambda x: x.order)
 
 
-class GachaItem(BaseModel):
+class GachaItem(GenshinModel):
     name: str
     type: str = Field(alias="item_type")
     rarity: int = Field(alias="rank_type")
@@ -129,5 +131,5 @@ class GachaItem(BaseModel):
     def __format_id(cls, v):
         return 10000000 + v - 1000 if len(str(v)) == 4 else v
 
-    def is_character(self):
+    def is_character(self) -> bool:
         return len(str(self.id)) == 8

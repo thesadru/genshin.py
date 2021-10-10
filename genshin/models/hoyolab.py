@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from .base import GenshinModel
 
 
-class GenshinAccount(BaseModel):
+class GenshinAccount(GenshinModel):
     uid: int = Field(alias="game_uid")
     level: int
     nickname: str
@@ -14,12 +16,12 @@ class GenshinAccount(BaseModel):
     official: bool = Field(alias="is_official")
 
 
-class RecordCardData(BaseModel):
+class RecordCardData(GenshinModel):
     name: str
     value: str
 
 
-class RecordCard(BaseModel):
+class RecordCard(GenshinModel):
     uid: int = Field(alias="game_role_id")
     level: int
     nickname: str
@@ -34,19 +36,19 @@ class RecordCard(BaseModel):
     public: bool = Field(alias="is_public")
 
     @property
-    def days_active(self):
+    def days_active(self) -> int:
         return int(self.data[0].value)
 
     @property
-    def characters(self):
+    def characters(self) -> int:
         return int(self.data[1].value)
 
     @property
-    def achievements(self):
+    def achievements(self) -> int:
         return int(self.data[2].value)
 
     @property
-    def spiral_abyss(self):
+    def spiral_abyss(self) -> str:
         return self.data[3].value
 
     def as_dict(self, lang: str = "en-us"):
@@ -56,7 +58,7 @@ class RecordCard(BaseModel):
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 
 
-class SearchUser(BaseModel):
+class SearchUser(GenshinModel):
     hoyolab_uid: int = Field(alias="uid")
     nickname: str
     introduction: str = Field(alias="introduce")

@@ -156,44 +156,47 @@ class IDPagintor(Generic[IDModelT]):
 
 
 class AuthkeyPaginator(IDPagintor[IDModelT]):
-    authkey: Optional[str]
+    _authkey: Optional[str]
+    _lang: Optional[str]
 
     def __init__(
         self,
         client: GenshinClient,
+        lang: str = None,
         authkey: str = None,
         limit: int = None,
         end_id: int = 0,
     ) -> None:
         super().__init__(client, limit=limit, end_id=end_id)
-        self.authkey = authkey
+        self._lang = lang
+        self._authkey = authkey
+
+    @property
+    def lang(self) -> str:
+        return self._lang or self.client.lang
 
 
 class WishHistory(AuthkeyPaginator[Wish]):
     client: GenshinClient
     banner_type: int
-    lang: Optional[str]
 
-    def __init__(
-        self, client: GenshinClient, banner_type: int, lang: str = None, **kwargs: Any
-    ) -> None:
+    def __init__(self, client: GenshinClient, banner_type: int, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
         self.banner_type = banner_type
-        self.lang = lang
 
     def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
-        return ("wish", end_id, self.lang or self.client.lang)
+        return ("wish", end_id, self.lang)
 
     async def _get_banner_name(self) -> str:
         """Get the banner name of banner_type"""
-        banner_types = await self.client.get_banner_types(lang=self.lang, authkey=self.authkey)
+        banner_types = await self.client.get_banner_types(lang=self._lang, authkey=self._authkey)
         return banner_types[self.banner_type]
 
     async def _get_page(self, end_id: int) -> List[Wish]:
         data = await self.client.request_gacha_info(
             "getGachaLog",
-            lang=self.lang,
-            authkey=self.authkey,
+            lang=self._lang,
+            authkey=self._authkey,
             params=dict(gacha_type=self.banner_type, size=self.page_size, end_id=end_id),
         )
         banner_name = await self._get_banner_name()
@@ -203,26 +206,24 @@ class WishHistory(AuthkeyPaginator[Wish]):
 class Transactions(AuthkeyPaginator[TransactionT]):
     client: GenshinClient
     kind: str
-    lang: Optional[str]
 
-    def __init__(self, client: GenshinClient, kind: str, lang: str = None, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, kind: str, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
         self.kind = kind
-        self.lang = lang
 
     def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
-        return ("transaction", end_id, self.lang or self.client.lang)
+        return ("transaction", end_id, self.lang)
 
     async def _get_page(self, end_id: int):
         endpoint = "get" + self.kind.capitalize() + "Log"
 
-        coro = self.client._get_transaction_reasons(self.lang or self.client.lang)
+        coro = self.client._get_transaction_reasons(self.lang)
         reasons_task = asyncio.create_task(coro)
 
         data = await self.client.request_transaction(
             endpoint,
-            lang=self.lang,
-            authkey=self.authkey,
+            lang=self._lang,
+            authkey=self._authkey,
             params=dict(end_id=end_id, size=20),
         )
 
@@ -259,35 +260,29 @@ class MergedPaginator(AuthkeyPaginator[IDModelT]):
 
 class MergedWishHistory(MergedPaginator[Wish]):
     client: GenshinClient
-    lang: Optional[str]
     banner_type: Literal[None] = None
 
-    def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
-        self.lang = lang
 
-        self._paginators = [
-            WishHistory(client, b, lang=self.lang, **kwargs) for b in (100, 200, 301, 302)
-        ]
+        self._paginators = [WishHistory(client, b, **kwargs) for b in (100, 200, 301, 302)]
         self._key: Callable[[Wish], float] = lambda wish: -wish.time.timestamp()
 
     async def flatten(self, *, lazy: bool = False) -> List[Wish]:
         # before we gather all histories we should get the banner name
-        asyncio.create_task(self.client.get_banner_types(lang=self.lang, authkey=self.authkey))
+        asyncio.create_task(self.client.get_banner_types(lang=self._lang, authkey=self._authkey))
         return await super().flatten(lazy=lazy)
 
 
 class MergedTransactions(MergedPaginator[Union[Transaction, ItemTransaction]]):
     client: GenshinClient
-    lang: Optional[str]
     kind: Literal[None] = None
 
-    def __init__(self, client: GenshinClient, lang: str = None, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
-        self.lang = lang
 
         self._paginators = [
-            Transactions(client, kind, lang=self.lang, **kwargs)
+            Transactions(client, kind, **kwargs)
             for kind in ("primogem", "crystal", "resin", "artifact", "weapon")
         ]
         self._key: Callable[[Transaction], float] = lambda trans: -trans.time.timestamp()

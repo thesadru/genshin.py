@@ -4,12 +4,21 @@ import re
 from abc import ABC
 from typing import Any, Dict, Union
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, root_validator
 
 from ..constants import CHARACTER_NAMES
+from ..utils import FastApiFields
+
+
+class GenshinModel(BaseModel):
+    """A genshin model"""
+
+    __fastapi__ = FastApiFields()
 
 
 class CharacterIcon(str):
+    """A character containing with"""
+
     character_name: str
 
     def __init__(self, icon: Union[str, int]) -> None:
@@ -27,22 +36,22 @@ class CharacterIcon(str):
         return base + f"{specifier}_{self.character_name}{f'@{scale}x' if scale else ''}.png"
 
     @property
-    def icon(self):
+    def icon(self) -> str:
         return self.create_icon("character_icon/UI_AvatarIcon")
 
     @property
-    def image(self):
+    def image(self) -> str:
         return self.create_icon("character_image/UI_AvatarIcon", scale=2)
 
     @property
-    def side(self):
+    def side(self) -> str:
         return self.create_icon("character_side_icon/UI_AvatarIcon_Side")
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self.character_name!r})"
 
 
-class BaseCharacter(BaseModel, ABC):
+class BaseCharacter(GenshinModel, ABC):
     """A Base character model which autocompletes every static field"""
 
     id: int = Field(None)
@@ -67,6 +76,7 @@ class BaseCharacter(BaseModel, ABC):
         if id:
             char = CHARACTER_NAMES[id]
         elif icon:
+            icon = CharacterIcon(icon)
             for char in CHARACTER_NAMES.values():
                 if char.icon_name == icon.character_name:
                     break
@@ -94,10 +104,6 @@ class BaseCharacter(BaseModel, ABC):
             values["collab"] = True
 
         return values
-
-    @validator("icon", pre=True)
-    def __cast_icon(cls, icon: str):
-        return CharacterIcon(icon)
 
 
 class PartialCharacter(BaseCharacter):

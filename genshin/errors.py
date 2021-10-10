@@ -23,8 +23,8 @@ class GenshinException(Exception):
     original: str
 
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        self.retcode = response["retcode"]
-        self.original = response["message"]
+        self.retcode = response.get("retcode", 0)
+        self.original = response.get("message", "")
 
         if msg is None:
             msg = f"[{self.retcode}] {self.original}"

@@ -1,7 +1,9 @@
 from datetime import datetime
 from typing import NamedTuple
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from .base import GenshinModel
 
 
 class DailyRewardInfo(NamedTuple):
@@ -9,13 +11,13 @@ class DailyRewardInfo(NamedTuple):
     claimed_rewards: int
 
 
-class DailyReward(BaseModel):
+class DailyReward(GenshinModel):
     name: str
     amount: int = Field(alias="cnt")
     icon: str
 
 
-class ClaimedDailyReward(BaseModel):
+class ClaimedDailyReward(GenshinModel):
     id: int
     name: str
     amount: int = Field(alias="cnt")

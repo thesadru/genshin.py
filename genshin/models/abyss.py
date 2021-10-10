@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Any, Dict, List, Literal
 
-from pydantic import BaseModel, Field, root_validator
+from pydantic import Field, root_validator
 
-from .base import BaseCharacter, CharacterIcon
+from .base import BaseCharacter, CharacterIcon, GenshinModel
 
 
 class AbyssRankCharacter(BaseCharacter):
@@ -21,7 +21,7 @@ class AbyssCharacter(BaseCharacter):
     level: int
 
 
-class CharacterRanks(BaseModel):
+class CharacterRanks(GenshinModel):
     most_played: List[AbyssRankCharacter] = Field(alias="reveal_rank")
     most_kills: List[AbyssRankCharacter] = Field(alias="defeat_rank")
     strongest_strike: List[AbyssRankCharacter] = Field(alias="damage_rank")
@@ -36,20 +36,20 @@ class CharacterRanks(BaseModel):
         return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
 
 
-class Battle(BaseModel):
+class Battle(GenshinModel):
     half: int = Field(alias="index")
     timestamp: datetime
     characters: List[AbyssCharacter] = Field(alias="avatars")
 
 
-class Chamber(BaseModel):
+class Chamber(GenshinModel):
     chamber: int = Field(alias="index")
     stars: int = Field(alias="star")
     max_stars: Literal[3] = Field(alias="max_star")
     battles: List[Battle]
 
 
-class Floor(BaseModel):
+class Floor(GenshinModel):
     floor: int = Field(alias="index")
     # icon: str - unused
     # settle_time: int - appsample might be using this?
@@ -59,7 +59,7 @@ class Floor(BaseModel):
     chambers: List[Chamber] = Field(alias="levels")
 
 
-class SpiralAbyss(BaseModel):
+class SpiralAbyss(GenshinModel):
     unlocked: bool = Field(alias="is_unlock")
     season: int = Field(alias="schedule_id")
     start_time: datetime
