@@ -12,13 +12,13 @@ class Transaction(GenshinModel):
     id: int
     uid: int
     time: datetime
-    amount: int = Field(alias="add_num")
-    reason_id: int = Field(alias="reason")
-    reason: str = Field("", alias="reason_str")
+    amount: int = Field(galias="add_num")
+    reason_id: int = Field(galias="reason")
+    reason: str = Field("", galias="reason_str")
 
 
 class ItemTransaction(Transaction):
     kind: Literal["artifact", "weapon"]
 
     name: str
-    rarity: int = Field(alias="rank")
+    rarity: int = Field(galias="rank")

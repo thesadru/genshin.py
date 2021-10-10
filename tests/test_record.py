@@ -26,6 +26,7 @@ async def test_partial_user(client: GenshinClient, uid: int):
     data = await client.get_partial_user(uid)
     assert not hasattr(data.characters[0], "weapon")
 
+
 @pytest.mark.asyncio_cooperative
 async def test_abyss(client: GenshinClient, uid: int):
     data = await client.get_spiral_abyss(uid, previous=True)
@@ -38,7 +39,6 @@ async def test_abyss(client: GenshinClient, uid: int):
 async def test_exceptions(client: GenshinClient):
     with pytest.raises(genshin.DataNotPublic):
         await client.get_record_card(10000000)
-    
+
     with pytest.raises(genshin.AccountNotFound):
-        await client.get_record_card(700000010)
-    
+        await client.get_user(70000001)

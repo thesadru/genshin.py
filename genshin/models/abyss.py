@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Literal
+from typing import Any, Dict, List, Literal, NamedTuple
 
 from pydantic import Field, root_validator
 
@@ -9,8 +9,8 @@ from .base import BaseCharacter, CharacterIcon, GenshinModel
 class AbyssRankCharacter(BaseCharacter):
     """A character with a value of a rank"""
 
-    id: int = Field(alias="avatar_id")
-    icon: CharacterIcon = Field(alias="avatar_icon")
+    id: int = Field(galias="avatar_id")
+    icon: CharacterIcon = Field(galias="avatar_icon")
 
     value: int
 
@@ -22,12 +22,14 @@ class AbyssCharacter(BaseCharacter):
 
 
 class CharacterRanks(GenshinModel):
-    most_played: List[AbyssRankCharacter] = Field(alias="reveal_rank")
-    most_kills: List[AbyssRankCharacter] = Field(alias="defeat_rank")
-    strongest_strike: List[AbyssRankCharacter] = Field(alias="damage_rank")
-    most_damage_taken: List[AbyssRankCharacter] = Field(alias="take_damage_rank")
-    most_bursts_used: List[AbyssRankCharacter] = Field(alias="normal_skill_rank")
-    most_skills_used: List[AbyssRankCharacter] = Field(alias="energy_skill_rank")
+    """A collection of rankings achieved during spiral abyss runs"""
+
+    most_played: List[AbyssRankCharacter] = Field([], galias="reveal_rank")
+    most_kills: List[AbyssRankCharacter] = Field([], galias="defeat_rank")
+    strongest_strike: List[AbyssRankCharacter] = Field([], galias="damage_rank")
+    most_damage_taken: List[AbyssRankCharacter] = Field([], galias="take_damage_rank")
+    most_bursts_used: List[AbyssRankCharacter] = Field([], galias="normal_skill_rank")
+    most_skills_used: List[AbyssRankCharacter] = Field([], galias="energy_skill_rank")
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
@@ -37,38 +39,46 @@ class CharacterRanks(GenshinModel):
 
 
 class Battle(GenshinModel):
-    half: int = Field(alias="index")
+    """A battle in the spiral abyss"""
+
+    half: int = Field(galias="index")
     timestamp: datetime
-    characters: List[AbyssCharacter] = Field(alias="avatars")
+    characters: List[AbyssCharacter] = Field(galias="avatars")
 
 
 class Chamber(GenshinModel):
-    chamber: int = Field(alias="index")
-    stars: int = Field(alias="star")
-    max_stars: Literal[3] = Field(alias="max_star")
+    """A chamber of the spiral abyss"""
+
+    chamber: int = Field(galias="index")
+    stars: int = Field(galias="star")
+    max_stars: Literal[3] = Field(galias="max_star")
     battles: List[Battle]
 
 
 class Floor(GenshinModel):
-    floor: int = Field(alias="index")
+    """A floor of the spiral abyss"""
+
+    floor: int = Field(galias="index")
     # icon: str - unused
     # settle_time: int - appsample might be using this?
-    unlocked: Literal[True] = Field(alias="is_unlock")
-    stars: int = Field(alias="star")
-    max_stars: Literal[9] = Field(alias="max_star")  # maybe one day
-    chambers: List[Chamber] = Field(alias="levels")
+    unlocked: Literal[True] = Field(galias="is_unlock")
+    stars: int = Field(galias="star")
+    max_stars: Literal[9] = Field(galias="max_star")  # maybe one day
+    chambers: List[Chamber] = Field(galias="levels")
 
 
 class SpiralAbyss(GenshinModel):
-    unlocked: bool = Field(alias="is_unlock")
-    season: int = Field(alias="schedule_id")
+    """Information about Spiral Abyss runs during a specific season"""
+
+    unlocked: bool = Field(galias="is_unlock")
+    season: int = Field(galias="schedule_id")
     start_time: datetime
     end_time: datetime
 
-    total_battles: int = Field(alias="total_battle_times")
-    total_wins: str = Field(alias="total_win_times")
+    total_battles: int = Field(galias="total_battle_times")
+    total_wins: str = Field(galias="total_win_times")
     max_floor: str
-    total_stars: int = Field(alias="total_star")
+    total_stars: int = Field(galias="total_star")
 
     ranks: CharacterRanks
 
@@ -76,5 +86,13 @@ class SpiralAbyss(GenshinModel):
 
     @root_validator(pre=True)
     def __nest_ranks(cls, values: Dict[str, Any]):
-        values["ranks"] = values
+        """By default ranks are for some reason on the same level as the rest of the abyss"""
+        values.setdefault("ranks", {}).update(values)
         return values
+
+
+class SpiralAbyssPair(NamedTuple):
+    """A pair of both current and previous spiral abyss"""
+
+    current: SpiralAbyss
+    previous: SpiralAbyss

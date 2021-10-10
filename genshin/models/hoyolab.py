@@ -4,36 +4,33 @@ from .base import GenshinModel
 
 
 class GenshinAccount(GenshinModel):
-    uid: int = Field(alias="game_uid")
+    """A genshin account"""
+
+    uid: int = Field(galias="game_uid")
     level: int
     nickname: str
-    server: str = Field(alias="region")
-    server_name: str = Field(alias="region_name")
-
-    # unknown meaning
-    biz: str = Field(alias="game_biz")
-    chosen: bool = Field(alias="is_chosen")
-    official: bool = Field(alias="is_official")
+    server: str = Field(galias="region")
+    server_name: str = Field(galias="region_name")
 
 
 class RecordCardData(GenshinModel):
+    """A data entry of a record card"""
+
     name: str
     value: str
 
 
-class RecordCard(GenshinModel):
-    uid: int = Field(alias="game_role_id")
-    level: int
-    nickname: str
-    server: str = Field(alias="region")
-    server_name: str = Field(alias="region_name")
+class RecordCard(GenshinAccount):
+    """A genshin record card containing very basic user info"""
+
+    uid: int = Field(galias="game_role_id")
 
     data: list[RecordCardData]
 
     # unknown meaning
     background_image: str
-    has_uid: bool = Field(alias="has_role")
-    public: bool = Field(alias="is_public")
+    has_uid: bool = Field(galias="has_role")
+    public: bool = Field(galias="is_public")
 
     @property
     def days_active(self) -> int:
@@ -59,9 +56,9 @@ class RecordCard(GenshinModel):
 
 
 class SearchUser(GenshinModel):
-    hoyolab_uid: int = Field(alias="uid")
+    hoyolab_uid: int = Field(galias="uid")
     nickname: str
-    introduction: str = Field(alias="introduce")
-    avatar_id: int = Field(alias="avatar")
+    introduction: str = Field(galias="introduce")
+    avatar_id: int = Field(galias="avatar")
     gender: int
-    icon: str = Field(alias="avatar_url")
+    icon: str = Field(galias="avatar_url")

@@ -26,13 +26,6 @@ async def test_daily_reward(lclient: GenshinClient):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_daily_reward_info(lclient: GenshinClient):
-    s, c = await lclient.get_reward_info()
-    assert isinstance(s, bool)
-    assert isinstance(c, int)
-
-
-@pytest.mark.asyncio_cooperative
 async def test_monthly_rewards(lclient: GenshinClient):
     rewards = await lclient.get_monthly_rewards()
     now = datetime.now()

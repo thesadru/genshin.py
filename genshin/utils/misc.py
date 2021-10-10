@@ -50,10 +50,7 @@ def get_browser_cookies(browser: str = None) -> Dict[str, str]:
     If a specific browser is set, gets data from that browser only.
     Avalible browsers: chrome, chromium, opera, edge, firefox
     """
-    try:
-        import browser_cookie3
-    except ImportError as e:
-        raise ImportError("Missing optional dependency browser_cookie3") from e
+    import browser_cookie3
 
     load = getattr(browser_cookie3, browser.lower()) if browser else browser_cookie3.load
 

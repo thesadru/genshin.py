@@ -82,6 +82,8 @@ class GenshinClient:
             logging.basicConfig()
             logging.getLogger("genshin").setLevel(logging.DEBUG)
 
+    # PROPERTIES:
+
     @property
     def session(self) -> aiohttp.ClientSession:
         """The current client session, created when needed"""
@@ -100,6 +102,15 @@ class GenshinClient:
         cks = {str(key): value for key, value in cookies.items()}
         self.session.cookie_jar.clear()
         self.session.cookie_jar.update_cookies(cks)
+
+    @property
+    def hoyolab_uid(self) -> Optional[int]:
+        """The logged-in user's hoyolab uid"""
+        for cookie in self.session.cookie_jar:
+            if cookie.key in ("ltuid", "account_id"):
+                return int(cookie.value)
+
+        return None
 
     def set_cookies(self, cookies: Union[Mapping[str, Any], str]) -> Mapping[str, str]:
         """Helper cookie setter that accepts cookie headers"""
@@ -127,14 +138,35 @@ class GenshinClient:
 
         self.authkey = authkey
 
-    @property
-    def hoyolab_uid(self) -> Optional[int]:
-        """The logged-in user's hoyolab uid"""
-        for cookie in self.session.cookie_jar:
-            if cookie.key in ("ltuid", "account_id"):
-                return int(cookie.value)
+    def set_cache(
+        self,
+        maxsize: int,
+        strategy: Literal["FIFO", "LFU", "LRU", "MRU", "RR"] = "LRU",
+        *,
+        ttl: int = None,
+        getsizeof: Callable[[Any], float] = None,
+    ) -> MutableMapping[Any, Any]:
+        """Create and set a new cache (not static or paginator)
 
-        return None
+        If ttl is set then a TTL cache is created
+        """
+        import cachetools
+
+        if ttl:
+            if strategy != "LRU":
+                raise ValueError("TTL caches must use LRU")
+
+            self.cache = cachetools.TTLCache(maxsize, ttl, getsizeof=getsizeof)
+            return self.cache
+
+        cls_name = strategy + "Cache"
+        if not hasattr(cachetools, cls_name):
+            raise ValueError(f"Invalid strategy: {strategy}")
+
+        self.cache = getattr(cachetools, cls_name)(maxsize, getsizeof=getsizeof)
+        return self.cache
+
+    # ASYNCIO HANDLERS:
 
     async def close(self) -> None:
         """Close the client's session"""
@@ -150,81 +182,6 @@ class GenshinClient:
         await self.close()
 
     # RAW HTTP REQUESTS:
-
-    def _raise_for_retcode(self, data: Dict[str, Any]) -> NoReturn:
-        """Raise an equivalent error to a response
-
-        game record:
-            10001 = invalid cookie
-            101xx = generic errors
-
-        authkey:
-            -100 = invalid authkey
-            -101 = authkey timed out
-
-        code redemption:
-            20xx = invalid code or state
-            -107x = invalid cookies
-
-        daily reward:
-            -500x = already claimed the daily reward
-
-        unknown:
-            -1 = account not found
-            -100 = invalid cookies
-            -108 = invalid language
-            1009 = account not found
-
-        """
-        r, m = data["retcode"], data["message"]
-
-        if m == "authkey error":
-            if r == -100:
-                raise errors.InvalidAuthkey(data)
-            elif r == -101:
-                raise errors.AuthkeyTimeout(data)
-            else:
-                raise errors.AuthkeyException(data)
-
-        if r == -100:
-            raise errors.InvalidCookies(data, "Cookies are not valid")
-        elif r == -108:
-            raise errors.GenshinException(data, "Invalid language")
-
-        elif r == 10001:
-            raise errors.InvalidCookies(data, "Cookies are not valid")
-
-        elif r == 10101:
-            raise errors.TooManyRequests(data)
-        elif r == 10102:
-            raise errors.DataNotPublic(data)
-        elif r == 10103:
-            msg = "Cookies are valid but do not have a hoyolab account bound to them"
-            raise errors.InvalidCookies(data, msg)
-
-        elif r in [-1, 1009]:
-            raise errors.AccountNotFound(data)
-
-        elif r == -1071:
-            raise errors.InvalidCookies(data)
-        elif r == -1073:
-            msg = "Cannot claim code. Account has no game account bound to it."
-            raise errors.GenshinException(data, msg)
-        elif r == -2001:
-            raise errors.GenshinException(data, "Redemption code has expired.")
-        elif r == -2003:
-            raise errors.GenshinException(data, "Invalid redemption code")
-        elif r == -2017:
-            raise errors.GenshinException(data, "Redemption code has been claimed already.")
-        elif r == -2021:
-            msg = "Cannot claim codes for account with adventure rank lower than 10."
-            raise errors.GenshinException(data, msg)
-
-        elif r == -5003:
-            raise errors.GenshinException(data, "Already claimed the daily reward today.")
-
-        else:
-            raise errors.GenshinException(data)
 
     async def request(
         self,
@@ -244,7 +201,7 @@ class GenshinClient:
         if data["retcode"] == 0:
             return data["data"]
 
-        self._raise_for_retcode(data)
+        errors.raise_for_retcode(data)
 
     async def request_webstatic(
         self,
@@ -296,6 +253,8 @@ class GenshinClient:
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
+        if lang not in LANGS:
+            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
         base_url = URL(self.CN_RECORD_URL if chinese else self.OS_RECORD_URL)
         url = base_url.join(URL(endpoint))
@@ -533,6 +492,27 @@ class GenshinClient:
         )
         return SpiralAbyss(**data)
 
+    async def get_activities(self, uid: int, *, lang: str = None) -> Activities:
+        """Get activities"""
+        server = recognize_server(uid)
+        data = await self.request_game_record(
+            "game_record/genshin/api/activities",
+            lang=lang,
+            params=dict(server=server, role_id=uid),
+            cache=("activities", uid),
+        )
+        return Activities(**data["activities"][0])
+
+    async def get_full_user(self, uid: int, *, lang: str = None) -> FullUserStats:
+        """Get a user with all their possible data"""
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_user(uid, lang=lang),
+            self.get_spiral_abyss(uid, previous=False),
+            self.get_spiral_abyss(uid, previous=True),
+            self.get_activities(uid, lang=lang),
+        )
+        return FullUserStats(**user.dict(), abyss=(abyss1, abyss2), activities=activities)
+
     # DAILY REWARDS:
 
     async def get_reward_info(self, *, lang: str = None) -> DailyRewardInfo:
@@ -759,7 +739,7 @@ class MultiCookieClient(GenshinClient):
         for cookies in cookie_list:
             session = aiohttp.ClientSession(cookies=SimpleCookie(cookies))
             self.sessions.append(session)
-    
+
     def set_browser_cookies(self, *args: Any, **kwargs: Any) -> NoReturn:
         """Helper overwrite to prevent nasty bugs"""
         raise RuntimeError(f"{type(self).__name__} does not support browser cookies")

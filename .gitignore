@@ -1,7 +1,7 @@
 __pycache__
 .vscode
-extra/
 
 .coverage
 htmlcov/
 test.py
+cookies.json

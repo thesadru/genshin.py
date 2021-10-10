@@ -7,17 +7,25 @@ from typing import Any, Dict, Union
 from pydantic import BaseModel, Field, root_validator
 
 from ..constants import CHARACTER_NAMES
-from ..utils import FastApiFields
 
 
 class GenshinModel(BaseModel):
     """A genshin model"""
 
-    __fastapi__ = FastApiFields()
+    @root_validator(pre=True)
+    def __parse_galias(cls, values: Dict[str, Any]):
+        """Due to alias being reserved for actual aliases we use a custom alias"""
+        aliases = {}
+        for name, field in cls.__fields__.items():
+            alias = field.field_info.extra.get("galias")
+            if alias is not None:
+                aliases[alias] = name
+
+        return {aliases.get(name, name): value for name, value in values.items()}
 
 
 class CharacterIcon(str):
-    """A character containing with"""
+    """A character's icon"""
 
     character_name: str
 
@@ -52,13 +60,13 @@ class CharacterIcon(str):
 
 
 class BaseCharacter(GenshinModel, ABC):
-    """A Base character model which autocompletes every static field"""
+    """A Base character model"""
 
-    id: int = Field(None)
-    name: str = Field(None)
-    element: str = Field(None)
-    rarity: int = Field(None)
-    icon: CharacterIcon = Field(None)
+    id: int
+    name: str
+    element: str
+    rarity: int
+    icon: CharacterIcon
     collab: bool = False
 
     @property
@@ -69,12 +77,14 @@ class BaseCharacter(GenshinModel, ABC):
     def side_icon(self) -> str:
         return self.icon.side
 
-    @root_validator
+    @root_validator(pre=True)
     def __autocomplete(cls, values: Dict[str, Any]):
-        # first fetch the char
+        """Complete missing data"""
         id, icon, name = values.get("id"), values.get("icon"), values.get("name")
         if id:
-            char = CHARACTER_NAMES[id]
+            char = CHARACTER_NAMES.get(id)
+            if char is None:
+                raise ValueError(f"Invalid character id {id}")
         elif icon:
             icon = CharacterIcon(icon)
             for char in CHARACTER_NAMES.values():
@@ -110,5 +120,5 @@ class PartialCharacter(BaseCharacter):
     """A character without any equipment"""
 
     level: int
-    friendship: int = Field(alias="fetter")
-    constellation: int = Field(0, alias="activated_constellation_num")
+    friendship: int = Field(galias="fetter")
+    constellation: int = Field(0, galias="activated_constellation_num")

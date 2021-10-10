@@ -19,12 +19,12 @@ class Wish(GenshinModel):
     uid: int
 
     id: int
-    type: str = Field(alias="item_type")
+    type: str = Field(galias="item_type")
     name: str
-    rarity: int = Field(alias="rank_type")
+    rarity: int = Field(galias="rank_type")
     time: datetime
 
-    banner_type: BannerType = Field(alias="gacha_type")
+    banner_type: BannerType = Field(galias="gacha_type")
     banner_name: str
 
     @validator("banner_type", pre=True)
@@ -33,19 +33,19 @@ class Wish(GenshinModel):
 
 
 class BannerDetailProb(GenshinModel):
-    name: str = Field(alias="item_name")
-    type: str = Field(alias="item_type")
-    rarity: int = Field(alias="rank")
+    name: str = Field(galias="item_name")
+    type: str = Field(galias="item_type")
+    rarity: int = Field(galias="rank")
 
-    up: bool = Field(alias="is_up")
-    order: int = Field(alias="order_value")
+    up: bool = Field(galias="is_up")
+    order: int = Field(galias="order_value")
 
 
 class BannerDetailsItem(GenshinModel):
-    name: str = Field(alias="item_name")
-    type: str = Field(alias="item_type")
-    element: str = Field(alias="item_attr")
-    icon: str = Field(alias="item_img")
+    name: str = Field(galias="item_name")
+    type: str = Field(galias="item_type")
+    element: str = Field(galias="item_attr")
+    icon: str = Field(galias="item_img")
 
     @validator("element", pre=True)
     def __parse_element(cls, v):
@@ -62,26 +62,26 @@ class BannerDetailsItem(GenshinModel):
 
 
 class BannerDetails(GenshinModel):
-    banner_type: int = Field(alias="gacha_type")
+    banner_type: int = Field(galias="gacha_type")
     title: str
     content: str
     date_range: str
 
-    r5_up_prob: Optional[float] = Field(alias="r5_up_prob")
-    r4_up_prob: Optional[float] = Field(alias="r4_up_prob")
-    r5_prob: Optional[float] = Field(alias="r5_prob")
-    r4_prob: Optional[float] = Field(alias="r4_prob")
-    r3_prob: Optional[float] = Field(alias="r3_prob")
-    r5_guarantee_prob: Optional[float] = Field(alias="r5_baodi_prob")
-    r4_guarantee_prob: Optional[float] = Field(alias="r4_baodi_prob")
-    r3_guarantee_prob: Optional[float] = Field(alias="r3_baodi_prob")
+    r5_up_prob: Optional[float] = Field(galias="r5_up_prob")
+    r4_up_prob: Optional[float] = Field(galias="r4_up_prob")
+    r5_prob: Optional[float] = Field(galias="r5_prob")
+    r4_prob: Optional[float] = Field(galias="r4_prob")
+    r3_prob: Optional[float] = Field(galias="r3_prob")
+    r5_guarantee_prob: Optional[float] = Field(galias="r5_baodi_prob")
+    r4_guarantee_prob: Optional[float] = Field(galias="r4_baodi_prob")
+    r3_guarantee_prob: Optional[float] = Field(galias="r3_baodi_prob")
 
     r5_up_items: List[BannerDetailsItem]
     r4_up_items: List[BannerDetailsItem]
 
-    r5_items: List[BannerDetailProb] = Field(alias="r5_prob_list")
-    r4_items: List[BannerDetailProb] = Field(alias="r4_prob_list")
-    r3_items: List[BannerDetailProb] = Field(alias="r3_prob_list")
+    r5_items: List[BannerDetailProb] = Field(galias="r5_prob_list")
+    r4_items: List[BannerDetailProb] = Field(galias="r4_prob_list")
+    r3_items: List[BannerDetailProb] = Field(galias="r3_prob_list")
 
     @validator("r5_up_items", "r4_up_items", pre=True)
     def __replace_none(cls, v):
@@ -123,9 +123,9 @@ class BannerDetails(GenshinModel):
 
 class GachaItem(GenshinModel):
     name: str
-    type: str = Field(alias="item_type")
-    rarity: int = Field(alias="rank_type")
-    id: int = Field(alias="item_id")
+    type: str = Field(galias="item_type")
+    rarity: int = Field(galias="rank_type")
+    id: int = Field(galias="item_id")
 
     @validator("id")
     def __format_id(cls, v):

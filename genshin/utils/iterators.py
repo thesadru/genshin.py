@@ -25,16 +25,8 @@ async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator
 
 
 async def _try_gather(coros: Iterable[Awaitable[T]]) -> List[T]:
-    _failed = object()
-
-    async def maybe(coro) -> Any:
-        try:
-            return await coro
-        except:
-            return _failed
-
-    values = await asyncio.gather(*(maybe(coro) for coro in coros))
-    return [x for x in values if x is not _failed]
+    values = await asyncio.gather(*coros, return_exceptions=True)
+    return [x for x in values if not isinstance(x, BaseException)]
 
 
 async def amerge(

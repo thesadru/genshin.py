@@ -4,6 +4,8 @@ from typing import Any, Dict, List
 
 from pydantic import Field, validator
 
+from .abyss import SpiralAbyssPair
+from .activities import Activities
 from .base import GenshinModel, PartialCharacter
 from .character import Character
 
@@ -11,19 +13,19 @@ from .character import Character
 class Stats(GenshinModel):
     # This is such fucking bullshit, just why?
     # fmt: off
-    achievements: int =       Field(alias="achievement_number")
-    active_days: int =        Field(alias="active_day_number")
-    characters: int =         Field(alias="avatar_number")
-    spiral_abyss: str =       Field(alias="spiral_abyss")
-    anemoculi: int =          Field(alias="anemoculus_number")
-    geoculi: int =            Field(alias="geoculus_number")
-    electroculi: int =        Field(alias="electroculus_number")
-    common_chests: int =      Field(alias="common_chest_number")
-    exquisite_chests: int =   Field(alias="exquisite_chest_number")
-    precious_chests: int =    Field(alias="precious_chest_number")
-    luxurious_chests: int =   Field(alias="luxurious_chest_number")
-    unlocked_waypoints: int = Field(alias="way_point_number")
-    unlocked_domains: int =   Field(alias="domain_number")
+    achievements: int =       Field(galias="achievement_number")
+    active_days: int =        Field(galias="active_day_number")
+    characters: int =         Field(galias="avatar_number")
+    spiral_abyss: str =       Field(galias="spiral_abyss")
+    anemoculi: int =          Field(galias="anemoculus_number")
+    geoculi: int =            Field(galias="geoculus_number")
+    electroculi: int =        Field(galias="electroculus_number")
+    common_chests: int =      Field(galias="common_chest_number")
+    exquisite_chests: int =   Field(galias="exquisite_chest_number")
+    precious_chests: int =    Field(galias="precious_chest_number")
+    luxurious_chests: int =   Field(galias="luxurious_chest_number")
+    unlocked_waypoints: int = Field(galias="way_point_number")
+    unlocked_domains: int =   Field(galias="domain_number")
     # fmt: on
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
@@ -44,7 +46,7 @@ class Exploration(GenshinModel):
     name: str
     type: str
     level: int
-    explored: int = Field(alias="exploration_percentage")
+    explored: int = Field(galias="exploration_percentage")
     offerings: List[Offering]
 
     @property
@@ -61,18 +63,18 @@ class TeapotRealm(GenshinModel):
 class Teapot(GenshinModel):
     realms: List[TeapotRealm]
     level: int
-    visitors: int = Field(alias="visit_num")
-    comfort: int = Field(alias="comfort_num")
-    items: int = Field(alias="item_num")
-    comfort_name: str = Field(alias="comfort_level_name")
-    comfort_icon: str = Field(alias="comfort_level_icon")
+    visitors: int = Field(galias="visit_num")
+    comfort: int = Field(galias="comfort_num")
+    items: int = Field(galias="item_num")
+    comfort_name: str = Field(galias="comfort_level_name")
+    comfort_icon: str = Field(galias="comfort_level_icon")
 
 
 class PartialUserStats(GenshinModel):
     stats: Stats
-    characters: List[PartialCharacter] = Field(alias="avatars")
-    explorations: List[Exploration] = Field(alias="world_explorations")
-    teapot: Teapot = Field(alias="homes")
+    characters: List[PartialCharacter] = Field(galias="avatars")
+    explorations: List[Exploration] = Field(galias="world_explorations")
+    teapot: Teapot = Field(galias="homes")
 
     @validator("teapot", pre=True)
     def __format_teapot(cls, v):
@@ -86,4 +88,11 @@ class PartialUserStats(GenshinModel):
 class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
 
-    characters: List[Character] = Field(alias="avatars")
+    characters: List[Character] = Field(galias="avatars")
+
+
+class FullUserStats(UserStats):
+    """User stats with all data a user can have"""
+
+    abyss: SpiralAbyssPair
+    activities: Activities

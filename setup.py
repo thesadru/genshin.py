@@ -1,0 +1,38 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="genshin",
+    version="0.0.1",
+    author="thesadru",
+    author_email="thesadru@gmail.com",
+    description="An API wrapper for Genshin Impact.",
+    keywords="api wrapper mihoyo genshin genshin-impact".split(),
+    url="https://github.com/thesadru/genshin.py",
+    project_urls={
+        "Issue tracker": "https://github.com/thesadru/genshin.py/issues",
+    },
+    packages=find_packages(exclude=["tests"]),
+    python_requires=">=3.8",
+    install_requires=["aiohttp", "pydantic", "yarl", "typing-extensions"],
+    extras_require={
+        "all": ["cachetools", "browser-cookie3", "fastapi"],
+        "cookies": ["browser-cookie3"],
+        "cache": ["cachetools"],
+        "web": ["fastapi", "cachetools"],
+    },
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    license="MIT",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Utilities",
+        "Typing :: Typed",
+    ],
+)
