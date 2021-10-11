@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import json
 import logging
 import os
@@ -19,11 +20,12 @@ from .paginator import (
     WishHistory,
 )
 from .utils import (
+    create_short_lang_code,
     extract_authkey,
     generate_ds_token,
     get_authkey,
+    get_banner_ids,
     get_browser_cookies,
-    get_short_lang_code,
     permanent_cache,
     recognize_server,
 )
@@ -57,7 +59,7 @@ class GenshinClient:
     logger: logging.Logger = logging.getLogger(__name__)
 
     cache: Optional[MutableMapping[Any, Any]] = None
-    static_cache: Optional[MutableMapping[Any, Any]] = {}  # classvar
+    static_cache: ClassVar[MutableMapping[Any, Any]] = {}
     paginator_cache: Optional[MutableMapping[Any, Any]] = None
 
     def __init__(
@@ -76,11 +78,7 @@ class GenshinClient:
             self.cookies = cookies
 
         self.authkey = authkey
-
-        if lang in LANGS:
-            self.lang = lang
-        else:
-            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
+        self.lang = lang
 
         if debug:
             logging.basicConfig()
@@ -115,6 +113,36 @@ class GenshinClient:
                 return int(cookie.value)
 
         return None
+
+    @property
+    def lang(self) -> str:
+        """The default language, defaults to en-us"""
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -> None:
+        if lang not in LANGS:
+            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
+
+        self._lang = lang
+
+    @property
+    def authkey(self) -> Optional[str]:
+        """The default authkey"""
+        return self._authkey
+
+    @authkey.setter
+    def authkey(self, authkey: Optional[str]) -> None:
+        if authkey is not None:
+            try:
+                base64.b64decode(authkey)
+            except Exception as e:
+                raise ValueError("authkey contains invalid characters") from e
+
+            if len(authkey) != 1024:
+                raise ValueError("authkey must have precisely 1024 characters")
+
+        self._authkey = authkey
 
     def set_cookies(self, cookies: Union[Mapping[str, Any], str]) -> Mapping[str, str]:
         """Helper cookie setter that accepts cookie headers"""
@@ -212,11 +240,11 @@ class GenshinClient:
         url: Union[str, URL],
         *,
         headers: Dict[str, Any] = None,
-        cache: bool = False,
+        cache: bool = True,
         **kwargs: Any,
     ) -> Any:
         """Request a static json file"""
-        if cache and self.static_cache and str(url) in self.static_cache:
+        if cache and str(url) in self.static_cache:
             return self.static_cache[str(url)]
 
         headers = headers or {}
@@ -229,7 +257,7 @@ class GenshinClient:
         async with self.session.get(url, headers=headers, **kwargs) as r:
             data = await r.json()
 
-        if cache and self.static_cache is not None:
+        if cache:
             self.static_cache[str(url)] = data
 
         return data
@@ -257,7 +285,7 @@ class GenshinClient:
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
-        if lang not in LANGS:
+        if lang not in LANGS and lang is not None:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
         base_url = URL(self.CN_RECORD_URL if chinese else self.OS_RECORD_URL)
@@ -329,7 +357,7 @@ class GenshinClient:
 
         params["authkey_ver"] = 1
         params["authkey"] = authkey or self.authkey
-        params["lang"] = get_short_lang_code(lang or self.lang)
+        params["lang"] = create_short_lang_code(lang or self.lang)
 
         if authkey is None and self.authkey is None:
             raise RuntimeError("No authkey provided")
@@ -361,7 +389,7 @@ class GenshinClient:
         params["authkey_ver"] = 1
         params["sign_type"] = 2
         params["authkey"] = authkey or self.authkey
-        params["lang"] = get_short_lang_code(lang or self.lang)
+        params["lang"] = create_short_lang_code(lang or self.lang)
 
         if authkey is None and self.authkey is None:
             raise RuntimeError("No authkey provided")
@@ -446,7 +474,7 @@ class GenshinClient:
         # do note that this endpoint is very quirky, can't really make this pretty
         if uid is not None:
             server = recognize_server(uid)
-            lang = get_short_lang_code(lang or self.lang)
+            lang = create_short_lang_code(lang or self.lang)
             await self.request(
                 "https://hk4e-api-os.mihoyo.com/common/apicdkey/api/webExchangeCdkey",
                 params=dict(
@@ -485,18 +513,15 @@ class GenshinClient:
 
         return RecordCard(**cards[0])
 
-    async def _get_raw_index(self, uid: int, server: str, lang: str = None) -> Any:
-        return await self.request_game_record(
+    async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
+        """Get a user's stats and characters"""
+        server = recognize_server(uid)
+        data = await self.request_game_record(
             "game_record/genshin/api/index",
             params=dict(server=server, role_id=uid),
             lang=lang,
             cache=("user", uid),
         )
-
-    async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
-        """Get a user's stats and characters"""
-        server = recognize_server(uid)
-        data = await self._get_raw_index(uid, server, lang)
 
         character_ids = [char["id"] for char in data["avatars"]]
         character_data = await self.request_game_record(
@@ -513,7 +538,12 @@ class GenshinClient:
     async def get_partial_user(self, uid: int, *, lang: str = None) -> PartialUserStats:
         """Helper alternative function to get a user without any equipment"""
         server = recognize_server(uid)
-        data = await self._get_raw_index(uid, server, lang)
+        data = await self.request_game_record(
+            "game_record/genshin/api/index",
+            params=dict(server=server, role_id=uid),
+            lang=lang,
+            cache=("user", uid),
+        )
         return PartialUserStats(**data)
 
     async def get_spiral_abyss(self, uid: int, *, previous: bool = False) -> SpiralAbyss:
@@ -643,20 +673,27 @@ class GenshinClient:
     async def get_banner_details(self, banner_id: str, *, lang: str = None) -> BannerDetails:
         """Get details of a specific banner using its id"""
         data = await self.request_webstatic(
-            f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json", cache=True
+            f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json"
         )
         return BannerDetails(**data)
+
+    async def get_all_banner_details(
+        self, banner_ids: List[str] = None, *, lang: str = None
+    ) -> List[BannerDetails]:
+        """Get all banner details at once"""
+        banner_ids = banner_ids or get_banner_ids()
+        data = await asyncio.gather(*(self.get_banner_details(i, lang=lang) for i in banner_ids))
+        return list(data)
 
     async def get_gacha_items(self, *, lang: str = None) -> List[GachaItem]:
         """Get the list of characters and weapons that can be gotten from the gacha."""
         data = await self.request_webstatic(
-            f"/hk4e/gacha_info/os_asia/items/{lang or self.lang}.json", cache=True
+            f"/hk4e/gacha_info/os_asia/items/{lang or self.lang}.json"
         )
         return [GachaItem(**i) for i in data]
 
     # TRANSACTIONS:
 
-    @permanent_cache("lang")
     async def _get_transaction_reasons(self, lang: str) -> Dict[str, str]:
         """Get a mapping of transaction reasons"""
         base = "https://mi18n-os.mihoyo.com/webstatic/admin/mi18n/hk4e_global/"
@@ -718,11 +755,60 @@ class GenshinClient:
         else:
             return Transactions(self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
 
+    # INTERACTIVE MAP:
+
+    @permanent_cache("lang", "map_id")
+    async def _get_map_pin_icons(self, map_id: int = 2, *, lang: str = None) -> Dict[int, str]:
+        data = await self.request_map("spot_kind/get_icon_list", lang=lang, map_id=map_id)
+        return {i["id"]: i["url"] for i in data["icons"]}
+
+    async def get_map_info(self, map_id: int = 2, *, lang: str = None) -> MapInfo:
+        """Get info about an interactive map"""
+        data = await self.request_map(
+            "map/info",
+            lang=lang,
+            map_id=map_id,
+            static=True,
+        )
+        return MapInfo(**data["info"])
+
+    async def get_map_labels(self, map_id: int = 2, *, lang: str = None) -> List[MapNode]:
+        """Get the map tree of all categories & lables of map points"""
+        data = await self.request_map("map/label/tree", lang=lang, map_id=map_id, static=True)
+        return [MapNode(**i) for i in data["tree"]]
+
+    async def get_map_points(
+        self, map_id: int = 2, *, lang: str = None
+    ) -> Tuple[List[MapNode], List[MapPoint]]:
+        """Get a tuple of all map lables and map points"""
+        data = await self.request_map("map/point/list", lang=lang, map_id=map_id, static=True)
+
+        labels = [MapNode(**i) for i in data["label_list"]]
+        points = [MapPoint(**i) for i in data["point_list"]]
+
+        return labels, points
+
+    async def get_map_locations(self, map_id: int = 2, *, lang: str = None) -> List[MapLocation]:
+        """Get a list of all locations on a map"""
+        data = await self.request_map("map/map_anchor/list", lang=lang, map_id=map_id, static=True)
+
+        return [MapLocation(**i) for i in data["list"]]
+
+    # MISC:
+
     async def init(self, lang: str = None):
         """Request all static endpoints to not require them later"""
         lang = lang or self.lang
+
+        try:
+            banner_ids = get_banner_ids()
+        except FileNotFoundError:
+            banner_ids = []
+
         await asyncio.gather(
-            self.get_banner_names(lang=lang), self._get_transaction_reasons(lang=lang)
+            self.get_banner_names(lang=lang),
+            self._get_transaction_reasons(lang=lang),
+            self.get_all_banner_details(banner_ids, lang=lang),
         )
 
 
@@ -758,8 +844,12 @@ class MultiCookieClient(GenshinClient):
         """A list of all cookies"""
         return [{m.key: m.value for m in s.cookie_jar} for s in self.sessions]
 
+    @cookies.setter
+    def cookies(self, cookies: List[Mapping[str, Any]]) -> None:
+        self.set_cookies(cookies)
+
     def set_cookies(
-        self, cookie_list: Union[Iterable[Mapping[str, Any]], str], clear: bool = True
+        self, cookie_list: Union[Iterable[Union[Mapping[str, Any], str]], str], clear: bool = True
     ) -> None:
         if clear:
             self.sessions.clear()

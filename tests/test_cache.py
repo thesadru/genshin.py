@@ -11,7 +11,8 @@ async def test_cache(client: GenshinClient, uid: int):
     client.set_cookies(cookies)
 
     client.cache = {}
-    client.static_cache = {}
+    # hack to clear the cache while making concurrency possible
+    client.static_cache = {}  # type: ignore
 
     for _ in range(5):
         await client.get_user(uid)

@@ -7,7 +7,7 @@ from urllib.parse import unquote
 
 __all__ = ["get_logfile", "extract_authkey", "get_authkey", "get_banner_ids"]
 
-AUTHKEY_FILE = os.path.join(gettempdir(), "genshinstats_authkey.txt")
+AUTHKEY_FILE = os.path.join(gettempdir(), "genshin_authkey.txt")
 
 
 def get_logfile() -> Optional[str]:

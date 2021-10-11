@@ -26,17 +26,12 @@ class GenshinException(Exception):
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
         self.retcode = response.get("retcode", 0)
         self.original = response.get("message", "")
+        self.msg = msg or self.original
 
-        if msg is None:
-            msg = f"[{self.retcode}] {self.original}"
-        elif self.retcode:
-            msg = f"[{self.retcode}] {msg}"
+        if self.retcode:
+            msg = f"[{self.retcode}] {self.msg}"
 
         super().__init__(msg)
-
-    @property
-    def msg(self) -> str:
-        return self.args[0]
 
 
 class AccountNotFound(GenshinException):
