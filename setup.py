@@ -19,6 +19,7 @@ setup(
         "cookies": ["browser-cookie3"],
         "cache": ["cachetools"],
         "web": ["fastapi", "cachetools"],
+        "tests": ["pytest", "pytest-asyncio-cooperative"]
     },
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
