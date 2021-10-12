@@ -32,6 +32,7 @@ async def test_genshin_accounts(lclient: GenshinClient, uid: int):
 
 @pytest.mark.asyncio_cooperative
 async def test_redeem_code(lclient: GenshinClient):
+    pytest.skip("Test too inconsistent")
 
     with pytest.raises(Exception):
         await lclient.redeem_code("genshingift")

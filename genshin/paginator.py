@@ -24,13 +24,19 @@ class DailyRewardPaginator:
 
     client: GenshinClient
     limit: Optional[int]
+    lang: Optional[str]
+    chinese: bool
     current_page: Optional[int]
 
     page_size: int = 10
 
-    def __init__(self, client: GenshinClient, limit: int = None) -> None:
+    def __init__(
+        self, client: GenshinClient, limit: int = None, lang: str = None, chinese: bool = False
+    ) -> None:
         self.client = client
         self.limit = limit
+        self.lang = lang
+        self.chinese = chinese
 
         self.current_page = 1
 
@@ -42,7 +48,9 @@ class DailyRewardPaginator:
         return f"{type(self).__name__}(limit={self.limit})"
 
     async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
-        data = await self.client.request_daily_reward("award", params=dict(current_page=page))
+        data = await self.client.request_daily_reward(
+            "award", params=dict(current_page=page), lang=self.lang, chinese=self.chinese
+        )
         return [ClaimedDailyReward(**i) for i in data["list"]]
 
     async def next_page(self) -> List[ClaimedDailyReward]:

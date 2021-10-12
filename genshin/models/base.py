@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from abc import ABC
-from typing import Any, Dict, Union
+from typing import Any, Dict, Literal, Union
 
 from pydantic import BaseModel, Field, root_validator
 
@@ -67,7 +67,9 @@ class BaseCharacter(GenshinModel, ABC):
     element: str
     rarity: int
     icon: CharacterIcon
+
     collab: bool = False
+    traveler_name: Literal["Aether", "Lumine", ""] = ""
 
     @property
     def image(self) -> str:
@@ -112,6 +114,11 @@ class BaseCharacter(GenshinModel, ABC):
         if values["rarity"] > 100:
             values["rarity"] -= 100
             values["collab"] = True
+
+        if values["id"] == 10000005:
+            values["traveler_name"] = "Aether"
+        elif values["id"] == 10000007:
+            values["traveler_name"] = "Lumine"
 
         return values
 

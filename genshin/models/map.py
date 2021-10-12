@@ -10,6 +10,8 @@ from .base import GenshinModel
 
 
 class MapInfoDetails(GenshinModel):
+    """Rendering details about a specific map"""
+
     slices: List[List[str]]
     origin: Tuple[int, int]
     total_size: Tuple[int, int]
@@ -21,6 +23,8 @@ class MapInfoDetails(GenshinModel):
 
 
 class MapInfo(GenshinModel):
+    """Information about a specific map"""
+
     id: int
     name: str
     icon: str
@@ -33,6 +37,8 @@ class MapInfo(GenshinModel):
 
 
 class MapNode(GenshinModel):
+    """A label or category node"""
+
     id: int
     name: str
     icon: str
@@ -53,6 +59,8 @@ class MapNode(GenshinModel):
 
 
 class MapPoint(GenshinModel):
+    """A point on the map"""
+
     id: int
     label_id: int
     x: float = Field(galias="x_pos")
@@ -68,6 +76,8 @@ class MapPoint(GenshinModel):
 
 
 class MapLocation(GenshinModel):
+    """A general location on the map"""
+
     id: int
     name: str
     parent_id: int

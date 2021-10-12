@@ -45,6 +45,10 @@ async def partial_user(uid: int, lang: Lang = None):
     return await client.get_partial_user(uid, lang=lang)
 
 
+@app.get("/user/{uid}/full", response_model=genshin.models.FullUserStats)
+async def full_user(uid: int, lang: Lang = None):
+    return await client.get_full_user(uid, lang=lang)
+
 
 @app.exception_handler(genshin.GenshinException)
 async def handle_genshin_exception(request: Request, exc: genshin.GenshinException):

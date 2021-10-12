@@ -26,6 +26,7 @@ from .utils import (
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
+    is_chinese,
     permanent_cache,
     recognize_server,
 )
@@ -37,7 +38,7 @@ class GenshinClient:
     """A simple http client for genshin endpoints"""
 
     OS_DS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
-    CN_DS_SALT = "14bmu1mz0yuljprsfgpvjh3ju2ni468r"
+    CN_DS_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
     OS_ACT_ID = "e202102251931481"
     CN_ACT_ID = "e202009291139501"
 
@@ -58,9 +59,9 @@ class GenshinClient:
     _session: Optional[aiohttp.ClientSession] = None
     logger: logging.Logger = logging.getLogger(__name__)
 
-    cache: Optional[MutableMapping[Any, Any]] = None
-    static_cache: ClassVar[MutableMapping[Any, Any]] = {}
-    paginator_cache: Optional[MutableMapping[Any, Any]] = None
+    cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
+    static_cache: ClassVar[MutableMapping[str, Any]] = {}
+    paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
 
     def __init__(
         self,
@@ -144,8 +145,14 @@ class GenshinClient:
 
         self._authkey = authkey
 
-    def set_cookies(self, cookies: Union[Mapping[str, Any], str]) -> Mapping[str, str]:
+    def set_cookies(
+        self, cookies: Union[Mapping[str, Any], str] = None, **kwargs: Any
+    ) -> Mapping[str, str]:
         """Helper cookie setter that accepts cookie headers"""
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError("Cannot use both positional and keyword arguments at once")
+
+        cookies = cookies or kwargs
         cookies = {morsel.key: morsel.value for morsel in SimpleCookie(cookies).values()}
         self.cookies = cookies
         return self.cookies
@@ -291,12 +298,17 @@ class GenshinClient:
         base_url = URL(self.CN_RECORD_URL if chinese else self.OS_RECORD_URL)
         url = base_url.join(URL(endpoint))
 
-        headers = {
-            "x-rpc-app_version": "2.7.0" if chinese else "1.5.0",
-            "x-rpc-client_type": "5" if chinese else "4",
-            "x-rpc-language": lang or self.lang,
-            "ds": generate_ds_token(self.CN_DS_SALT if chinese else self.OS_DS_SALT),
-        }
+        if chinese:
+            raise RuntimeError(
+                "Chinese game record api has changed way too drastically and is no longer supported"
+            )
+        else:
+            headers = {
+                "x-rpc-app_version": "1.5.0",
+                "x-rpc-client_type": "4",
+                "x-rpc-language": lang or self.lang,
+                "ds": generate_ds_token(self.OS_DS_SALT),
+            }
 
         debug_url = url.with_query(kwargs.get("params", {}))
         self.logger.debug(f"RECORD {method} {debug_url}")
@@ -498,11 +510,14 @@ class GenshinClient:
 
     # GAME RECORD:
 
-    async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
+    async def get_record_card(
+        self, hoyolab_uid: int = None, *, lang: str = None, chinese: bool = False
+    ) -> RecordCard:
         """Get a user's record card. If a uid is not provided gets the logged in user's"""
         data = await self.request_game_record(
             "game_record/card/wapi/getGameRecordCard",
             lang=lang,
+            chinese=chinese,
             params=dict(uid=hoyolab_uid or self.hoyolab_uid, gids=2),
             cache=("record", hoyolab_uid),
             cache_check=lambda data: len(data["list"]) > 0,
@@ -518,8 +533,9 @@ class GenshinClient:
         server = recognize_server(uid)
         data = await self.request_game_record(
             "game_record/genshin/api/index",
-            params=dict(server=server, role_id=uid),
             lang=lang,
+            chinese=is_chinese(uid),
+            params=dict(server=server, role_id=uid),
             cache=("user", uid),
         )
 
@@ -528,6 +544,7 @@ class GenshinClient:
             "game_record/genshin/api/character",
             method="POST",
             lang=lang,
+            chinese=is_chinese(uid),
             json=dict(character_ids=character_ids, role_id=uid, server=server),
             cache=("characters", uid),
         )
@@ -540,8 +557,9 @@ class GenshinClient:
         server = recognize_server(uid)
         data = await self.request_game_record(
             "game_record/genshin/api/index",
-            params=dict(server=server, role_id=uid),
             lang=lang,
+            chinese=is_chinese(uid),
+            params=dict(server=server, role_id=uid),
             cache=("user", uid),
         )
         return PartialUserStats(**data)
@@ -552,6 +570,7 @@ class GenshinClient:
         schedule_type = 2 if previous else 1
         data = await self.request_game_record(
             "game_record/genshin/api/spiralAbyss",
+            chinese=is_chinese(uid),
             params=dict(server=server, role_id=uid, schedule_type=schedule_type),
             cache=("abyss", uid, schedule_type),
         )
@@ -563,6 +582,7 @@ class GenshinClient:
         data = await self.request_game_record(
             "game_record/genshin/api/activities",
             lang=lang,
+            chinese=is_chinese(uid),
             params=dict(server=server, role_id=uid),
             cache=("activities", uid),
         )
@@ -576,40 +596,47 @@ class GenshinClient:
             self.get_spiral_abyss(uid, previous=True),
             self.get_activities(uid, lang=lang),
         )
-        return FullUserStats(**user.dict(), abyss=(abyss1, abyss2), activities=activities)
+        abyss = {"current": abyss1, "previous": abyss2}
+        return FullUserStats(**user.dict(), abyss=abyss, activities=activities)
 
     # DAILY REWARDS:
 
-    async def get_reward_info(self, *, lang: str = None) -> DailyRewardInfo:
+    async def get_reward_info(self, *, lang: str = None, chinese: bool = False) -> DailyRewardInfo:
         """Get the daily reward info for the current user"""
-        data = await self.request_daily_reward("info", lang=lang)
+        data = await self.request_daily_reward("info", lang=lang, chinese=chinese)
         return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
 
-    async def get_monthly_rewards(self, *, lang: str = None) -> List[DailyReward]:
+    async def get_monthly_rewards(
+        self, *, lang: str = None, chinese: bool = False
+    ) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month"""
-        data = await self.request_daily_reward("home", lang=lang)
+        data = await self.request_daily_reward("home", lang=lang, chinese=chinese)
         return [DailyReward(**i) for i in data["awards"]]
 
-    def claimed_rewards(self, *, limit: int = None) -> DailyRewardPaginator:
+    def claimed_rewards(
+        self, *, limit: int = None, lang: str = None, chinese: bool = False
+    ) -> DailyRewardPaginator:
         """Get all claimed rewards for the current user"""
-        return DailyRewardPaginator(self, limit=limit)
+        return DailyRewardPaginator(self, limit=limit, lang=lang, chinese=chinese)
 
-    async def claim_daily_reward(self, *, lang: str = None) -> Optional[DailyReward]:
+    async def claim_daily_reward(
+        self, *, lang: str = None, chinese: bool = False
+    ) -> Optional[DailyReward]:
         """Signs into hoyolab and claims the daily reward.
 
         Returns the claimed reward or None if the reward cannot be claimed yet.
         """
         # preflight to see if it's possible to claim
         # in the future maybe just catch errors instead?
-        signed_in, claimed_rewards = await self.get_reward_info()
+        signed_in, claimed_rewards = await self.get_reward_info(lang=lang, chinese=chinese)
         if signed_in:
             return None
 
-        await self.request_daily_reward("sign", method="POST")
+        await self.request_daily_reward("sign", method="POST", lang=lang, chinese=chinese)
         # note to avoid off-by-one errors:
         # we'd need to do +1 because info returns how many rewards we have claimed before
         # but we'd also need to do -1 because months start from 1
-        rewards = await self.get_monthly_rewards(lang=lang)
+        rewards = await self.get_monthly_rewards(lang=lang, chinese=chinese)
         return rewards[claimed_rewards]
 
     # WISH HISTORY:
@@ -870,7 +897,10 @@ class MultiCookieClient(GenshinClient):
         raise RuntimeError(f"{type(self).__name__} does not support browser cookies")
 
     async def close(self) -> None:
-        await asyncio.wait([session.close() for session in self.sessions if not session.closed])
+        tasks = [
+            asyncio.create_task(session.close()) for session in self.sessions if not session.closed
+        ]
+        await asyncio.wait(tasks)
 
     async def request(
         self, url: Union[str, URL], method: str = "GET", **kwargs: Any

@@ -1,8 +1,8 @@
-from collections import namedtuple
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Literal, NamedTuple
+from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator
+from pydantic.main import BaseModel
 
 from .base import BaseCharacter, CharacterIcon, GenshinModel
 
@@ -92,8 +92,11 @@ class SpiralAbyss(GenshinModel):
         return values
 
 
-class SpiralAbyssPair(NamedTuple):
-    """A pair of both current and previous spiral abyss"""
+class SpiralAbyssPair(BaseModel):
+    """A pair of both current and previous spiral abyss
+
+    This may not be a namedtuple due to how pydantic handles them
+    """
 
     current: SpiralAbyss
     previous: SpiralAbyss

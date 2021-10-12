@@ -56,6 +56,8 @@ class RecordCard(GenshinAccount):
 
 
 class SearchUser(GenshinModel):
+    """A user from a search result"""
+
     hoyolab_uid: int = Field(galias="uid")
     nickname: str
     introduction: str = Field(galias="introduce")

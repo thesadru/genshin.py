@@ -127,6 +127,8 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
 
     elif r == 10001:
         raise InvalidCookies(data, "Cookies are not valid")
+    elif r == -10001:
+        raise GenshinException(data, "Malformed request")
 
     elif r == 10101:
         raise TooManyRequests(data)

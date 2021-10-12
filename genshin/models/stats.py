@@ -11,6 +11,8 @@ from .character import Character
 
 
 class Stats(GenshinModel):
+    """Overall user stats"""
+
     # This is such fucking bullshit, just why?
     # fmt: off
     achievements: int =       Field(galias="achievement_number")
@@ -36,11 +38,15 @@ class Stats(GenshinModel):
 
 
 class Offering(GenshinModel):
+    """An offering"""
+
     name: str
     level: int
 
 
 class Exploration(GenshinModel):
+    """Exploration data"""
+
     id: int
     icon: str
     name: str
@@ -56,11 +62,15 @@ class Exploration(GenshinModel):
 
 
 class TeapotRealm(GenshinModel):
+    """A specific teapot realm"""
+
     name: str
     icon: str
 
 
 class Teapot(GenshinModel):
+    """User's Serenitea Teapot"""
+
     realms: List[TeapotRealm]
     level: int
     visitors: int = Field(galias="visit_num")
@@ -71,6 +81,8 @@ class Teapot(GenshinModel):
 
 
 class PartialUserStats(GenshinModel):
+    """User stats with characters without equipment"""
+
     stats: Stats
     characters: List[PartialCharacter] = Field(galias="avatars")
     explorations: List[Exploration] = Field(galias="world_explorations")
