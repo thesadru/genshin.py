@@ -9,10 +9,13 @@ __all__ = [
     "CookieException",
     "InvalidCookies",
     "TooManyRequests",
+    # redemption:
+    "AlreadyClaimed",
     # authkeys:
     "AuthkeyException",
     "InvalidAuthkey",
     "AuthkeyTimeout",
+    # misc:
     "raise_for_retcode",
 ]
 
@@ -22,6 +25,7 @@ class GenshinException(Exception):
 
     retcode: int
     original: str
+    msg: str
 
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
         self.retcode = response.get("retcode", 0)
@@ -62,6 +66,13 @@ class TooManyRequests(CookieException):
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
         msg = msg or "Cannnot get data for more than 30 accounts per cookie per day."
         super().__init__(response, msg)
+
+
+class AlreadyClaimed(GenshinException):
+    """Already claimed the daily reward today"""
+
+    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
+        super().__init__(response, msg or "Already claimed the daily reward today.")
 
 
 class AuthkeyException(GenshinException):
@@ -129,6 +140,8 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
         raise InvalidCookies(data, "Cookies are not valid")
     elif r == -10001:
         raise GenshinException(data, "Malformed request")
+    elif r == -10002:
+        raise GenshinException(data, "No genshin account associated with cookies")
 
     elif r == 10101:
         raise TooManyRequests(data)
@@ -159,7 +172,7 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
         raise GenshinException(data, msg)
 
     elif r == -5003:
-        raise GenshinException(data, "Already claimed the daily reward today.")
+        raise AlreadyClaimed(data, "Already claimed the daily reward today.")
 
     else:
         raise GenshinException(data)

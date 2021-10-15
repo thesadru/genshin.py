@@ -1,11 +1,11 @@
 import asyncio
 import os
+import warnings
 from typing import Dict, Optional
 
-import pytest
-
-from genshin import GenshinClient
 import genshin
+import pytest
+from genshin import ChineseClient, GenshinClient
 
 
 @pytest.fixture(scope="session")
@@ -16,16 +16,8 @@ def event_loop():
 
 
 @pytest.fixture(scope="session")
-async def client() -> GenshinClient:
-    """Client with environment cookies"""
-    client = GenshinClient()
-
-    cookies = {"ltuid": os.environ["GS_LTUID"], "ltoken": os.environ["GS_LTOKEN"]}
-    client.set_cookies(cookies)
-
-    yield client
-
-    await client.close()
+def cookies() -> Dict[str, str]:
+    return {"ltuid": os.environ["GS_LTUID"], "ltoken": os.environ["GS_LTOKEN"]}
 
 
 @pytest.fixture(scope="session")
@@ -34,6 +26,26 @@ def browser_cookies() -> Dict[str, str]:
         return genshin.get_browser_cookies()
     except Exception:
         return {}
+
+
+@pytest.fixture(scope="session")
+def chinese_cookies() -> Dict[str, str]:
+    try:
+        return {"ltuid": os.environ["CN_LTUID"], "ltoken": os.environ["CN_LTOKEN"]}
+    except KeyError:
+        warnings.warn("No chinese cookies were set for tests")
+        return {}
+
+
+@pytest.fixture(scope="session")
+async def client(cookies: Dict[str, str]) -> GenshinClient:
+    """Client with environment cookies"""
+    client = GenshinClient()
+    client.set_cookies(cookies)
+
+    yield client
+
+    await client.close()
 
 
 @pytest.fixture(scope="function")
@@ -46,6 +58,21 @@ async def lclient(browser_cookies: Dict[str, str]) -> Optional[GenshinClient]:
     client = GenshinClient()
     client.set_cookies(browser_cookies)
     client.set_authkey()
+
+    yield client
+
+    await client.close()
+
+
+@pytest.fixture(scope="function")
+async def cnclient(chinese_cookies: Dict[str, str]) -> Optional[GenshinClient]:
+    """A client with chinese cookies"""
+    if not chinese_cookies:
+        pytest.skip("Skipped chinese test")
+        return
+
+    client = ChineseClient()
+    client.set_cookies(chinese_cookies)
 
     yield client
 

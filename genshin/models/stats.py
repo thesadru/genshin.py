@@ -92,9 +92,7 @@ class PartialUserStats(GenshinModel):
     def __format_teapot(cls, v):
         if isinstance(v, dict):
             return v
-        value = v[0]
-        value["realms"] = v
-        return value
+        return {**v[0], "realms": v}
 
 
 class UserStats(PartialUserStats):

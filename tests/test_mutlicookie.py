@@ -1,11 +1,11 @@
+from typing import Dict
+
 import pytest
-from genshin import MultiCookieClient, GenshinClient
+from genshin import MultiCookieClient
 
 
 @pytest.mark.asyncio_cooperative
-async def test_multicookie(client: GenshinClient, uid: int):
-    cookies = client.cookies
-
+async def test_multicookie(cookies: Dict[str, str], uid: int):
     client = MultiCookieClient()
     client.set_cookies([cookies])
 

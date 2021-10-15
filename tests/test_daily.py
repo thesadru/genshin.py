@@ -2,7 +2,7 @@ import calendar
 from datetime import datetime
 
 import pytest
-from genshin import GenshinClient, GenshinException
+from genshin import GenshinClient, GenshinException, AlreadyClaimed
 
 
 @pytest.mark.asyncio_cooperative
@@ -14,12 +14,12 @@ async def test_daily_reward(lclient: GenshinClient):
             return pytest.skip("Daily rewards are ratelimited")
         raise
 
-    reward = await lclient.claim_daily_reward()
-
-    if signed_in:
-        assert reward is None
+    try:
+        reward = await lclient.claim_daily_reward()
+    except AlreadyClaimed:
+        assert signed_in
     else:
-        assert reward is not None
+        assert not signed_in
 
         rewards = await lclient.get_monthly_rewards()
         assert rewards[claimed_rewards].name == reward.name

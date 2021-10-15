@@ -1,5 +1,5 @@
 import asyncio
-import time
+from typing import Dict
 
 import cachetools
 import pytest
@@ -7,10 +7,7 @@ from genshin import GenshinClient
 
 
 @pytest.mark.asyncio_cooperative
-async def test_cache(client: GenshinClient, uid: int):
-    # we only get the cookies from the old client
-    cookies = client.cookies
-
+async def test_cache(cookies: Dict[str, str], uid: int):
     client = GenshinClient()
     client.set_cookies(cookies)
 
@@ -25,9 +22,7 @@ async def test_cache(client: GenshinClient, uid: int):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_static_cache(client: GenshinClient):
-    cookies = client.cookies
-
+async def test_static_cache(cookies: Dict[str, str]):
     client = GenshinClient()
     client.set_cookies(cookies)
 
@@ -42,9 +37,7 @@ async def test_static_cache(client: GenshinClient):
 
 
 @pytest.mark.asyncio_cooperative
-async def test_cachetools_cache(client: GenshinClient, uid: int):
-    cookies = client.cookies
-
+async def test_cachetools_cache(cookies: Dict[str, str], uid: int):
     client = GenshinClient()
     client.set_cookies(cookies)
     client.set_cache(1024, ttl=1)

@@ -25,18 +25,14 @@ class DailyRewardPaginator:
     client: GenshinClient
     limit: Optional[int]
     lang: Optional[str]
-    chinese: bool
     current_page: Optional[int]
 
     page_size: int = 10
 
-    def __init__(
-        self, client: GenshinClient, limit: int = None, lang: str = None, chinese: bool = False
-    ) -> None:
+    def __init__(self, client: GenshinClient, limit: int = None, lang: str = None) -> None:
         self.client = client
         self.limit = limit
         self.lang = lang
-        self.chinese = chinese
 
         self.current_page = 1
 
@@ -48,9 +44,8 @@ class DailyRewardPaginator:
         return f"{type(self).__name__}(limit={self.limit})"
 
     async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
-        data = await self.client.request_daily_reward(
-            "award", params=dict(current_page=page), lang=self.lang, chinese=self.chinese
-        )
+        params = dict(current_page=page)
+        data = await self.client.request_daily_reward("award", params=params, lang=self.lang)
         return [ClaimedDailyReward(**i) for i in data["list"]]
 
     async def next_page(self) -> List[ClaimedDailyReward]:
@@ -112,6 +107,31 @@ class IDPagintor(Generic[IDModelT]):
     def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
         return (end_id,)
 
+    def _update_cache(self, data: List[IDModelT]) -> bool:
+        if self.client.paginator_cache is None:
+            return False
+
+        cache = self.client.paginator_cache
+
+        if self.end_id:
+            cache[self._cache_key(self.end_id)] = data[0]
+
+        for p, n in zip(data, data[1:]):
+            cache[self._cache_key(p.id)] = n
+
+        return True
+
+    def _collect_cache(self) -> Iterator[IDModelT]:
+        cache = self.client.paginator_cache
+        if not cache or not self.end_id:
+            return
+
+        key = self._cache_key(self.end_id)
+        while key in cache:
+            yield cache[key]
+            self.end_id = cache[key].id
+            key = self._cache_key(self.end_id)
+
     async def next_page(self) -> List[IDModelT]:
         """Get the next page of the paginator"""
         if self.end_id is None:
@@ -119,15 +139,7 @@ class IDPagintor(Generic[IDModelT]):
 
         data = await self._get_page(self.end_id)
 
-        # update the cache:
-        if self.client.paginator_cache is not None:
-            cache = self.client.paginator_cache
-
-            if self.end_id != 0:
-                cache[self._cache_key(self.end_id)] = data[0]
-
-            for p, n in zip(data, data[1:]):
-                cache[self._cache_key(p.id)] = n
+        self._update_cache(data)
 
         # mark paginator as exhausted
         if len(data) < self.page_size:
@@ -139,16 +151,10 @@ class IDPagintor(Generic[IDModelT]):
 
     async def _iter(self) -> AsyncIterator[IDModelT]:
         """Iterate over pages until the end"""
+        # tfw no yield from in asyn iterators
         while self.end_id is not None:
-
-            # collect from the cache:
-            if self.client.paginator_cache:
-                cache = self.client.paginator_cache
-                key = self._cache_key(self.end_id)
-                while key in cache:
-                    yield cache[key]
-                    self.end_id = cache[key].id
-                    key = self._cache_key(self.end_id)
+            for i in self._collect_cache():
+                yield i
 
             page = await self.next_page()
             for i in page:
@@ -182,6 +188,14 @@ class AuthkeyPaginator(IDPagintor[IDModelT]):
     @property
     def lang(self) -> str:
         return self._lang or self.client.lang
+
+    @property
+    def authkey(self) -> str:
+        authkey = self._authkey or self.client.authkey
+        if authkey is None:
+            raise RuntimeError("No authkey set for client")
+
+        return authkey
 
 
 class WishHistory(AuthkeyPaginator[Wish]):
@@ -225,17 +239,15 @@ class Transactions(AuthkeyPaginator[TransactionT]):
     async def _get_page(self, end_id: int):
         endpoint = "get" + self.kind.capitalize() + "Log"
 
-        coro = self.client._get_transaction_reasons(self.lang)
-        reasons_task = asyncio.create_task(coro)
-
-        data = await self.client.request_transaction(
-            endpoint,
-            lang=self._lang,
-            authkey=self._authkey,
-            params=dict(end_id=end_id, size=20),
+        data, reasons = await asyncio.gather(
+            self.client.request_transaction(
+                endpoint,
+                lang=self._lang,
+                authkey=self._authkey,
+                params=dict(end_id=end_id, size=20),
+            ),
+            self.client._get_transaction_reasons(self.lang),
         )
-
-        reasons = await reasons_task
 
         transactions = []
         for trans in data["list"]:
