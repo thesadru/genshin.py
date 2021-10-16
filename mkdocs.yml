@@ -1,0 +1,37 @@
+site_name: Genshin.py
+site_description: FastAPI framework, high performance, easy to learn, fast to code, ready for production
+site_url: https://fastapi.tiangolo.com/
+theme:
+    name: material
+    palette:
+        - scheme: default
+          primary: blue grey
+          accent: amber
+          toggle:
+              icon: material/toggle-switch-off-outline
+              name: Switch to light mode
+        - scheme: slate
+          primary: blue grey
+          accent: amber
+          toggle:
+              icon: material/toggle-switch
+              name: Switch to dark mode
+    features:
+        - navigation.instant
+        - navigation.expand
+    language: en
+repo_name: thesadru/genshin.py
+repo_url: https://github.com/thesadru/genshin.py
+plugins:
+    - search
+markdown_extensions:
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
+    - pymdownx.superfences
+    - pymdownx.snippets
+nav:
+    - Overview:
+        - index.md
+    - Usage:
+        - authentication.md
+        - battle_chronicle.md

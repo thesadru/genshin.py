@@ -69,15 +69,6 @@ class BaseCharacter(GenshinModel, ABC):
     icon: CharacterIcon
 
     collab: bool = False
-    traveler_name: Literal["Aether", "Lumine", ""] = ""
-
-    @property
-    def image(self) -> str:
-        return self.icon.image
-
-    @property
-    def side_icon(self) -> str:
-        return self.icon.side
 
     @root_validator(pre=True)
     def __autocomplete(cls, values: Dict[str, Any]):
@@ -115,13 +106,24 @@ class BaseCharacter(GenshinModel, ABC):
             values["rarity"] -= 100
             values["collab"] = True
 
-        if values["id"] == 10000005:
-            values["traveler_name"] = "Aether"
-        elif values["id"] == 10000007:
-            values["traveler_name"] = "Lumine"
-
         return values
 
+    @property
+    def image(self) -> str:
+        return self.icon.image
+
+    @property
+    def side_icon(self) -> str:
+        return self.icon.side
+    
+    @property
+    def traveler_name(self) -> str:        
+        if self.id == 10000005:
+            return "Aether"
+        elif self.id == 10000007:
+            return "Lumine"
+        else:
+            return ''
 
 class PartialCharacter(BaseCharacter):
     """A character without any equipment"""

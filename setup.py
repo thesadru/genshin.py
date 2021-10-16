@@ -15,7 +15,7 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic", "yarl", "typing-extensions"],
     extras_require={
-        "all": ["cachetools", "browser-cookie3", "click"],
+        "all": ["cachetools", "browser-cookie3", "typer"],
         "cookies": ["browser-cookie3"],
         "cache": ["cachetools"],
         "cli": ["typer"],

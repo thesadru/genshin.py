@@ -42,7 +42,7 @@ class AccountNotFound(GenshinException):
     """Tried to get data with an invalid uid."""
 
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        super().__init__(response, msg or "Could not find user; uid may not be valid.")
+        super().__init__(response, msg or "Could not find user; uid may be invalid.")
 
 
 class DataNotPublic(GenshinException):
