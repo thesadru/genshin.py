@@ -128,4 +128,4 @@ class PartialCharacter(BaseCharacter):
 
     level: int
     friendship: int = Field(galias="fetter")
-    constellation: int = Field(0, galias="activated_constellation_num")
+    constellation: int = Field(galias="actived_constellation_num")

@@ -23,11 +23,11 @@ from .paginator import (
 from .utils import (
     create_short_lang_code,
     extract_authkey,
+    generate_cn_ds_token,
     generate_ds_token,
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
-    is_chinese,
     permanent_cache,
     recognize_server,
 )
@@ -42,7 +42,8 @@ class GenshinClient:
     ACT_ID = "e202102251931481"
 
     WEBSTATIC_URL = "https://webstatic-sea.mihoyo.com/"
-    RECORD_URL = "https://api-os-takumi.mihoyo.com/"
+    TAKUMI_URL = "https://api-os-takumi.mihoyo.com/"
+    RECORD_URL = "https://api-os-takumi.mihoyo.com/game_record/"
     REWARD_URL = "https://hk4e-api-os.mihoyo.com/event/sol/"
     GACHA_INFO_URL = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/"
     YSULOG_URL = "https://hk4e-api-os.mihoyo.com/ysulog/api/"
@@ -202,6 +203,42 @@ class GenshinClient:
         self.cache = getattr(cachetools, cls_name)(maxsize, getsizeof=getsizeof)
         return self.cache
 
+    def _check_cache(
+        self, key: Tuple[Any, ...], check: Callable[[Any], bool] = None, *, lang: str = None
+    ) -> Optional[Any]:
+        """Check the cache for any entries"""
+        if self.cache is None:
+            return None
+
+        key = key + (lang or self.lang,)
+
+        if key not in self.cache:
+            return None
+
+        data = self.cache[key]
+        if check is None or check(data):
+            return data
+
+        del self.cache[key]
+        return None
+
+    def _update_cache(
+        self,
+        data: Any,
+        key: Tuple[Any, ...],
+        check: Callable[[Any], bool] = None,
+        *,
+        lang: str = None,
+    ) -> None:
+        """Update the cache with a new entry"""
+        if self.cache is None:
+            return
+
+        key = key + (lang or self.lang,)
+
+        if check is None or check(data):
+            self.cache[key] = data
+
     # ASYNCIO HANDLERS:
 
     async def close(self) -> None:
@@ -266,9 +303,9 @@ class GenshinClient:
 
         return data
 
-    async def request_game_record(
+    async def request_hoyolab(
         self,
-        endpoint: str,
+        endpoint: Union[str, URL],
         *,
         method: str = "GET",
         lang: str = None,
@@ -276,22 +313,21 @@ class GenshinClient:
         cache_check: Callable[[Any], bool] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        """Make a request towards the game record endpoint
+        """Make a request towards misc hoyolabs api
 
-        User stats related data
+        Community related data
         """
         if cache:
-            cache = cache + (lang or self.lang,)
-
-        if cache and self.cache and cache in self.cache:
-            return self.cache[cache]
+            data = self._check_cache(cache, cache_check, lang=lang)
+            if data:
+                return data
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
         if lang not in LANGS and lang is not None:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
-        url = URL(self.RECORD_URL).join(URL(endpoint))
+        url = URL(self.TAKUMI_URL).join(URL(endpoint))
 
         headers = {
             "x-rpc-app_version": "1.5.0",
@@ -305,10 +341,30 @@ class GenshinClient:
 
         data = await self.request(url, method, headers=headers, **kwargs)
 
-        if cache and self.cache is not None and (cache_check is None or cache_check(data)):
-            self.cache[cache] = data
+        if cache:
+            self._update_cache(data, cache, cache_check, lang=lang)
 
         return data
+
+    async def request_game_record(
+        self,
+        endpoint: str,
+        *,
+        method: str = "GET",
+        cache: Tuple[Any, ...] = None,
+        cache_check: Callable[[Any], bool] = None,
+        **kwargs: Any,
+    ):
+        """Make a request towards the game record endpoint
+
+        User stats related data
+        """
+        # this is simply just an alias for shorter request endpoints
+        url = URL(self.RECORD_URL).join(URL(endpoint))
+
+        return await self.request_hoyolab(
+            url, method=method, cache=cache, cache_check=cache_check, **kwargs
+        )
 
     async def request_daily_reward(
         self,
@@ -431,7 +487,7 @@ class GenshinClient:
     async def genshin_accounts(self, *, lang: str = None) -> List[GenshinAccount]:
         """Get the genshin accounts of the currently logged-in user"""
         # fmt: off
-        data = await self.request_game_record(
+        data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie", 
             lang=lang, 
             cache=("accounts", self.hoyolab_uid)
@@ -440,7 +496,7 @@ class GenshinClient:
         return [GenshinAccount(**i) for i in data["list"]]
 
     async def search_users(self, keyword: str, *, lang: str = None) -> List[SearchUser]:
-        data = await self.request_game_record(
+        data = await self.request_hoyolab(
             "community/apihub/wapi/search",
             lang=lang,
             params=dict(keyword=keyword, size=20, gids=2),
@@ -451,17 +507,16 @@ class GenshinClient:
     async def set_visibility(self, public: bool) -> None:
         """Sets your data to public or private."""
         await self.request_game_record(
-            "game_record/genshin/wapi/publishGameRecord",
+            "genshin/wapi/publishGameRecord",
             method="POST",
             json=dict(is_public=public, game_id=2),
         )
 
     async def get_recommended_users(self, *, limit: int = 200) -> List[SearchUser]:
         """Get a list of recommended active users"""
-        data = await self.request_game_record(
+        data = await self.request_hoyolab(
             "community/user/wapi/recommendActive",
             params=dict(page_size=limit),
-            cache=("recommended", limit),
         )
         return [SearchUser(**i["user"]) for i in data["list"]]
 
@@ -497,7 +552,7 @@ class GenshinClient:
     async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
         """Get a user's record card. If a uid is not provided gets the logged in user's"""
         data = await self.request_game_record(
-            "game_record/card/wapi/getGameRecordCard",
+            "card/wapi/getGameRecordCard",
             lang=lang,
             params=dict(uid=hoyolab_uid or self.hoyolab_uid, gids=2),
             cache=("record", hoyolab_uid),
@@ -513,15 +568,15 @@ class GenshinClient:
         """Get a user's stats and characters"""
         server = recognize_server(uid)
         data = await self.request_game_record(
-            "game_record/genshin/api/index",
+            "genshin/api/index",
             lang=lang,
-            params=dict(server=server, role_id=uid),
+            params=dict(role_id=uid, server=server),
             cache=("user", uid),
         )
 
         character_ids = [char["id"] for char in data["avatars"]]
         character_data = await self.request_game_record(
-            "game_record/genshin/api/character",
+            "genshin/api/character",
             method="POST",
             lang=lang,
             json=dict(character_ids=character_ids, role_id=uid, server=server),
@@ -535,7 +590,7 @@ class GenshinClient:
         """Helper alternative function to get a user without any equipment"""
         server = recognize_server(uid)
         data = await self.request_game_record(
-            "game_record/genshin/api/index",
+            "genshin/api/index",
             lang=lang,
             params=dict(server=server, role_id=uid),
             cache=("user", uid),
@@ -548,7 +603,7 @@ class GenshinClient:
         """Helper function to fetch characters from just their ids"""
         server = recognize_server(uid)
         data = await self.request_game_record(
-            "game_record/genshin/api/character",
+            "genshin/api/character",
             method="POST",
             lang=lang,
             json=dict(character_ids=character_ids, role_id=uid, server=server),
@@ -561,8 +616,8 @@ class GenshinClient:
         server = recognize_server(uid)
         schedule_type = 2 if previous else 1
         data = await self.request_game_record(
-            "game_record/genshin/api/spiralAbyss",
-            params=dict(server=server, role_id=uid, schedule_type=schedule_type),
+            "genshin/api/spiralAbyss",
+            params=dict(role_id=uid, server=server, schedule_type=schedule_type),
             cache=("abyss", uid, schedule_type),
         )
         return SpiralAbyss(**data)
@@ -571,7 +626,7 @@ class GenshinClient:
         """Get activities"""
         server = recognize_server(uid)
         data = await self.request_game_record(
-            "game_record/genshin/api/activities",
+            "genshin/api/activities",
             lang=lang,
             params=dict(server=server, role_id=uid),
             cache=("activities", uid),
@@ -774,6 +829,7 @@ class GenshinClient:
         authkey: str = None,
         end_id: int = 0,
     ) -> Union[Transactions, MergedTransactions]:
+        # TODO: Utilize the new diary
         if kind is None:
             return MergedTransactions(self, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
         else:
@@ -842,7 +898,8 @@ class ChineseClient(GenshinClient):
     DS_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
     ACT_ID = "e202009291139501"
 
-    RECORD_URL = "https://api-takumi.mihoyo.com/"
+    TAKUMI_URL = "https://api-takumi.mihoyo.com/"
+    RECORD_URL = "https://api-takumi.mihoyo.com/game_record/app/"
     REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
     MAP_URL = "https://api-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
     STATIC_MAP_URL = "https://api-static.mihoyo.com/common/map_user/ys_obc/v1/map"
@@ -852,48 +909,52 @@ class ChineseClient(GenshinClient):
         cookies: Mapping[str, str] = None,
         authkey: str = None,
         *,
-        lang: str = "zh-cn",
+        lang: str = "zh-tw",
         debug: bool = False,
     ) -> None:
         super().__init__(cookies=cookies, authkey=authkey, lang=lang, debug=debug)
 
-    async def request_game_record(
+    async def request_hoyolab(
         self,
         endpoint: str,
         *,
         method: str = "GET",
         lang: str = None,
+        json: Any = None,
+        params: Dict[str, Any] = None,
         cache: Tuple[Any, ...] = None,
         cache_check: Callable[[Any], bool] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        if cache:
-            cache = cache + (lang or self.lang,)
+        params = params or {}
 
-        if cache and self.cache and cache in self.cache:
-            return self.cache[cache]
+        if cache:
+            data = self._check_cache(cache, cache_check, lang=lang)
+            if data:
+                return data
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
         if lang not in LANGS and lang is not None:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
-        url = URL(self.RECORD_URL).join(URL(endpoint))
+        url = URL(self.TAKUMI_URL).join(URL(endpoint))
 
+        # all of this repetition is literally just to change these few lines
         headers = {
-            "x-rpc-app_version": "2.7.0",
+            "x-rpc-app_version": "2.11.1",
             "x-rpc-client_type": "5",
             "x-rpc-language": lang or self.lang,
-            "ds": generate_ds_token(self.DS_SALT),
+            "ds": generate_cn_ds_token(self.DS_SALT, json, params),
         }
 
         debug_url = url.with_query(kwargs.get("params", {}))
         self.logger.debug(f"RECORD {method} {debug_url}")
 
-        data = await self.request(url, method, headers=headers, **kwargs)
+        data = await self.request(url, method, headers=headers, json=json, params=params, **kwargs)
 
-        if cache and self.cache is not None and (cache_check is None or cache_check(data)):
-            self.cache[cache] = data
+        if cache:
+            self._update_cache(data, cache, cache_check, lang=lang)
 
         return data
 

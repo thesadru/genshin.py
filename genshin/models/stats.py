@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
 
@@ -58,7 +58,7 @@ class Exploration(GenshinModel):
     @property
     def percentage(self) -> float:
         """The percentage explored"""
-        return self.explored / 100
+        return self.explored / 10
 
 
 class TeapotRealm(GenshinModel):
@@ -86,10 +86,12 @@ class PartialUserStats(GenshinModel):
     stats: Stats
     characters: List[PartialCharacter] = Field(galias="avatars")
     explorations: List[Exploration] = Field(galias="world_explorations")
-    teapot: Teapot = Field(galias="homes")
+    teapot: Optional[Teapot] = Field(galias="homes")
 
     @validator("teapot", pre=True)
     def __format_teapot(cls, v):
+        if not v:
+            return None
         if isinstance(v, dict):
             return v
         return {**v[0], "realms": v}

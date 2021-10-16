@@ -56,7 +56,7 @@ class BannerDetailsItem(GenshinModel):
             "雷": "Electro",
             "冰": "Cryo",
             "岩": "Geo",
-            "？": "Dendro",
+            "草": "Dendro",
             "": "",
         }[v]
 

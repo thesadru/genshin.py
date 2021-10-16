@@ -15,7 +15,7 @@ class Weapon(GenshinModel):
     description: str = Field(galias="desc")
     level: int
     type: str = Field(galias="type_name")
-    ascensions: int = Field(galias="promote_level")
+    ascension: int = Field(galias="promote_level")
     refinement: int = Field(galias="affix_level")
 
 
@@ -31,7 +31,7 @@ class ArtifactSet(GenshinModel):
 
     id: int
     name: str
-    effects: List[ArtifactSetEffect]
+    effects: List[ArtifactSetEffect] = Field(galias="affixes")
 
 
 class Artifact(GenshinModel):
@@ -43,6 +43,7 @@ class Artifact(GenshinModel):
     pos_name: str
     pos: int
     rarity: int
+    set: ArtifactSet
 
 
 class Constellation(GenshinModel):

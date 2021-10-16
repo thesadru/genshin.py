@@ -15,12 +15,14 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic", "yarl", "typing-extensions"],
     extras_require={
-        "all": ["cachetools", "browser-cookie3", "fastapi"],
+        "all": ["cachetools", "browser-cookie3", "click"],
         "cookies": ["browser-cookie3"],
         "cache": ["cachetools"],
-        "web": ["fastapi", "cachetools"],
+        "cli": ["typer"],
         "tests": ["pytest", "pytest-asyncio-cooperative", "cachetools"],
     },
+    include_package_data=True,
+    package_data={"genshin": ["py.typed"]},
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="MIT",
@@ -36,4 +38,8 @@ setup(
         "Topic :: Utilities",
         "Typing :: Typed",
     ],
+    entry_points="""
+        [console_scripts]
+        genshin=genshin.__main__:app[cli]
+    """,
 )
