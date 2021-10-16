@@ -1,6 +1,6 @@
 site_name: Genshin.py
-site_description: FastAPI framework, high performance, easy to learn, fast to code, ready for production
-site_url: https://fastapi.tiangolo.com/
+site_description: Modern API wrapper for Genshin Impact built on asyncio and pydantic.
+site_url: https://thesadru.github.io/genshin.py
 theme:
     name: material
     palette:
