@@ -9,6 +9,7 @@ setup(
     keywords="api wrapper mihoyo genshin genshin-impact".split(),
     url="https://github.com/thesadru/genshin.py",
     project_urls={
+        "Documentation": "https://thesadru.github.io/genshin.py",
         "Issue tracker": "https://github.com/thesadru/genshin.py/issues",
     },
     packages=find_packages(exclude=["tests"]),
