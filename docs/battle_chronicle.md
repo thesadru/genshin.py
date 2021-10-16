@@ -33,7 +33,7 @@ user = await client.get_full_user(710785423)
 print(user.abyss.previous.total_stars)
 ```
 
-In case you only want to show character data, you may batch-request only characters using a uid and character ids. To get the authkeys, you may want to utilize `genshin.CHARACTER_NAMES`.
+If you only want to show character data, you may batch-request only characters using a uid and character ids. You may want to utilize `genshin.CHARACTER_NAMES` to get the authkeys,.
 ```py
 character_ids = [10000006, 10000014, 10000015, 10000021]
 characters = await client.get_characters(710785423, character_ids)
