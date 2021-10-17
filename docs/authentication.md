@@ -1,13 +1,12 @@
 # Authentication
 
-Mihoyo does not use any kind of authentication. Instead, it uses cookies and authkeys.
-This means it's highly recommended to only use your own cookies for local testing and to create alt accounts for actual API requests.
-
 ## Cookies
 
-Cookies are the default form of authentication over the majority of Mihoyo APIs. These are used in web events and in HoYoLAB utilities such as the Battle Chronicle.
+Cookies are the default form of authentication over the majority of Mihoyo APIs. These are used in web events and hoyolab utilities such as the Battle Chronicle.
+The cookies used in these APIs are the same as the ones you use to log in to your hoyolab account and make payments.
+This means it's highly recommended to use your own cookies only for local testing and to create alt accounts for actual API requests.
 
-For authentication, you will need to send two cookies: `ltuid` and `ltoken`. `ltuid` is your HoYoLAB UID and `ltoken` is a unique token used for the actual authentication.
+For authentication, you will need to send two cookies: `ltuid` and `ltoken`. `ltuid` is your hoyolab UID and `ltoken` is a unique token used for the actual authentication.
 
 ### Setting cookies
 There are several ways to set cookies but `set_cookies` is preferred.
@@ -31,7 +30,7 @@ client.set_cookies("ltuid=...; ltoken=...") # cookie header
 5. Copy `ltuid` and `ltoken`.
 
 ### Setting cookies automatically
-For testing you may want to use your own personal cookies.
+For testing, you may want to use your own personal cookies.
 As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.get_browser_cookies()`. 
 ```py
 # get cookies from a browser and set them
@@ -84,12 +83,12 @@ async for wish in client.wish_history(authkey="..."):
 To get your authkey manually from other platforms, you can use any of these approaches:
 
 - PC
-    - Open Paimon menu
+    - Open the Paimon menu
     - Click Feedback
     - Wait for it to load, and a feedback page should open
     - Copy the link
 - Android
-    - Open Paimon menu
+    - Open the Paimon menu
     - Click Feedback
     - Wait for it to load, and a feedback page should open
     - Turn off your Wi-Fi
@@ -97,12 +96,12 @@ To get your authkey manually from other platforms, you can use any of these appr
     - The page should display an error containing a link
     - Copy the entire link
 - IOS
-    - Open Paimon menu
+    - Open the Paimon menu
     - Click Feedback
     - Wait for it to load, and a feedback page should open
     - Press In-game issue
     - Press Co-Op Mode
-    - There is a link on the bottom of the reply. Click the link.
+    - There is a link at the bottom of the reply. Click the link.
     - A browser should open up
     - Copy the link
 - PS

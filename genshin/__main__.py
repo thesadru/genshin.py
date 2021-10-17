@@ -10,8 +10,10 @@ app = typer.Typer(name="genshin")
 
 
 def asynchronous(func: Callable[..., Awaitable[Any]]) -> Callable[..., Any]:
-    new = lambda *args, **kwargs: asyncio.run(func(*args, **kwargs))
-    return update_wrapper(new, func)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(func(*args, **kwargs))
+
+    return update_wrapper(wrapper, func)
 
 
 @app.command()

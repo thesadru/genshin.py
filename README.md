@@ -47,3 +47,21 @@ async def main():
 
 asyncio.run(main())
 ```
+
+## Contributing
+Any kind of contribution is welcome.
+
+Before making a pull request remember to test your changes using pytest.
+Remember to set your `LTUID` and `LTOKEN` environment variables.
+```
+pip install genshin[test]
+python -m pytest
+```
+
+Please also edit the documentation accordingly. You may see how the final documentation would look like by starting an `mkdocs` server.
+```
+pip install genshin[doc]
+mkdocs serve
+```
+
+**I am currently looking for any chinese mainland players who could share their `account_id` and `cookie_token` cookies to allow for testing of chinese endpoints.**

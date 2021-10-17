@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import Field
 
 from .base import GenshinModel
@@ -25,7 +26,7 @@ class RecordCard(GenshinAccount):
 
     uid: int = Field(galias="game_role_id")
 
-    data: list[RecordCardData]
+    data: List[RecordCardData]
 
     # unknown meaning
     background_image: str

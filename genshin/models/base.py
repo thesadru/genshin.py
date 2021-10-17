@@ -115,15 +115,16 @@ class BaseCharacter(GenshinModel, ABC):
     @property
     def side_icon(self) -> str:
         return self.icon.side
-    
+
     @property
-    def traveler_name(self) -> str:        
+    def traveler_name(self) -> str:
         if self.id == 10000005:
             return "Aether"
         elif self.id == 10000007:
             return "Lumine"
         else:
-            return ''
+            return ""
+
 
 class PartialCharacter(BaseCharacter):
     """A character without any equipment"""

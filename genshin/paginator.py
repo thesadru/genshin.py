@@ -89,7 +89,7 @@ class IDPagintor(Generic[IDModelT]):
     page_size: int = 20
 
     def __init__(self, client: GenshinClient, *, limit: int = None, end_id: int = 0) -> None:
-        """Create a new paginator from alimit and the starting end id"""
+        """Create a new paginator from a limit and the starting end id"""
         self.client = client
         self.limit = limit
         self.end_id = end_id

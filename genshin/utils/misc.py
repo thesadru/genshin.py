@@ -38,4 +38,4 @@ def _silence_event_loop_closed(func):
     return wrapper
 
 
-_ProactorBasePipeTransport.__del__ = _silence_event_loop_closed(_ProactorBasePipeTransport.__del__)  # type: ignore
+_ProactorBasePipeTransport.__del__ = _silence_event_loop_closed(_ProactorBasePipeTransport.__del__)  # type: ignore # noqa

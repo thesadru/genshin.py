@@ -54,6 +54,7 @@ async def test_activities(client: GenshinClient, uid: int):
 @pytest.mark.asyncio_cooperative
 async def test_full_user(client: GenshinClient, uid: int):
     data = await client.get_full_user(uid)
+    assert data.abyss.previous is not None
 
 
 @pytest.mark.asyncio_cooperative

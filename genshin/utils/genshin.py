@@ -8,8 +8,8 @@ import time
 from typing import Any, Mapping, Optional, Union
 
 __all__ = [
-    "generate_ds_token",
-    "generate_cn_ds_token",
+    "generate_dynamic_secret",
+    "generate_cn_dynamic_secret",
     "create_short_lang_code",
     "recognize_server",
     "recognize_id",
@@ -18,7 +18,7 @@ __all__ = [
 ]
 
 
-def generate_ds_token(salt: str) -> str:
+def generate_dynamic_secret(salt: str) -> str:
     """Creates a new ds token for authentication."""
     t = int(time.time())
     r = "".join(random.choices(string.ascii_letters, k=6))
@@ -26,10 +26,10 @@ def generate_ds_token(salt: str) -> str:
     return f"{t},{r},{h}"
 
 
-def generate_cn_ds_token(salt: str, body: Any, query: Mapping[str, Any]) -> str:
+def generate_cn_dynamic_secret(salt: str, body: Any, query: Mapping[str, Any]) -> str:
     """Creates a new chinese ds token for authentication."""
     t = int(time.time())
-    r = "".join(random.choices(string.ascii_letters, k=6))
+    r = random.randint(100001, 200000)
     b = json.dumps(body) if body else ""
     q = "&".join(f"{k}={v}" for k, v in sorted(query.items())) if query else ""
 

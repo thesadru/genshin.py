@@ -26,14 +26,14 @@ user = await client.get_partial_user(710785423)
 print(user.stats.days_played)
 ```
 
-If you want to request as much information as possible, you should use `get_full_user` which adds spiral abyss runs and activities to the user.
+On the other hand, if you want to request as much information as possible, you should use `get_full_user` which adds spiral abyss runs and activities to the user.
 
 ```py
 user = await client.get_full_user(710785423)
 print(user.abyss.previous.total_stars)
 ```
 
-If you only want to show character data, you may batch-request only characters using a uid and character ids. You may want to utilize `genshin.CHARACTER_NAMES` to get the authkeys,.
+If you only want to get character data, you may batch-request characters using a uid and a list of character ids. You may want to utilize `genshin.CHARACTER_NAMES` to get the ids.
 ```py
 character_ids = [10000006, 10000014, 10000015, 10000021]
 characters = await client.get_characters(710785423, character_ids)

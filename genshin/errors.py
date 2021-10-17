@@ -1,4 +1,4 @@
-from typing import Any, Dict, NoReturn
+from typing import Any, Dict, NoReturn, Optional, Tuple, Type, Union
 
 __all__ = [
     "GenshinException",
@@ -16,6 +16,7 @@ __all__ = [
     "InvalidAuthkey",
     "AuthkeyTimeout",
     # misc:
+    "ERRORS",
     "raise_for_retcode",
 ]
 
@@ -25,31 +26,33 @@ class GenshinException(Exception):
 
     retcode: int
     original: str
-    msg: str
+    msg: str = ""
 
     def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
         self.retcode = response.get("retcode", 0)
         self.original = response.get("message", "")
-        self.msg = msg or self.original
+        self.msg = msg or self.msg or self.original
 
         if self.retcode:
             msg = f"[{self.retcode}] {self.msg}"
 
         super().__init__(msg)
 
+    def __repr__(self) -> str:
+        response = {"retcode": self.retcode, "message": self.original}
+        return f"{type(self).__name__}({response}, {self.msg!r})"
+
 
 class AccountNotFound(GenshinException):
     """Tried to get data with an invalid uid."""
 
-    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        super().__init__(response, msg or "Could not find user; uid may be invalid.")
+    msg = "Could not find user; uid may be invalid."
 
 
 class DataNotPublic(GenshinException):
     """User hasn't set their data to public."""
 
-    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        super().__init__(response, msg or "User's data is not public")
+    msg = "User's data is not public"
 
 
 class CookieException(GenshinException):
@@ -59,41 +62,66 @@ class CookieException(GenshinException):
 class InvalidCookies(CookieException):
     """Cookies weren't valid"""
 
+    msg = "Cookies are not valid"
+
 
 class TooManyRequests(CookieException):
     """Made too many requests and got ratelimited"""
 
-    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        msg = msg or "Cannnot get data for more than 30 accounts per cookie per day."
-        super().__init__(response, msg)
+    msg = "Cannnot get data for more than 30 accounts per cookie per day."
 
 
 class AlreadyClaimed(GenshinException):
     """Already claimed the daily reward today"""
 
-    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        super().__init__(response, msg or "Already claimed the daily reward today.")
+    msg = "Already claimed the daily reward today."
 
 
 class AuthkeyException(GenshinException):
     """Base error for authkeys"""
 
-    def __init__(self, response: Dict[str, Any], msg: str = None) -> None:
-        super().__init__(response, msg)
-
 
 class InvalidAuthkey(AuthkeyException):
     """Authkey is not valid"""
 
-    def __init__(self, response: Dict[str, Any]) -> None:
-        super().__init__(response, "Authkey is not valid")
+    msg = "Authkey is not valid."
 
 
 class AuthkeyTimeout(AuthkeyException):
-    """Authkey is not valid"""
+    """Authkey has timed out"""
 
-    def __init__(self, response: Dict[str, Any]) -> None:
-        super().__init__(response, "Authkey is not valid")
+    msg = "Authkey has timed out."
+
+
+_errors: Dict[int, Union[Tuple[Type[GenshinException], Optional[str]], Type[GenshinException]]] = {
+    # misc hoyolab
+    -100: InvalidCookies,
+    -108: (GenshinException, "Invalid language."),
+    # game record
+    10001: InvalidCookies,
+    -10001: (GenshinException, "Malformed request."),
+    -10002: (GenshinException, "No genshin account associated with cookies."),
+    # database game record
+    10101: TooManyRequests,
+    10102: DataNotPublic,
+    10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
+    # mixin
+    -1: (GenshinException, "Internal database error."),
+    1009: AccountNotFound,
+    # redemption
+    -1071: InvalidCookies,
+    -1073: (GenshinException, "Cannot claim code. Account has no game account bound to it."),
+    -2001: (GenshinException, "Redemption code has expired."),
+    -2003: (GenshinException, "Invalid redemption code."),
+    -2017: (GenshinException, "Redeption code has been claimed already."),
+    -2021: (GenshinException, "Cannot claim codes for account with adventure rank lower than 10."),
+    # rewards
+    -5003: (AlreadyClaimed, "Already claimed the daily reward today."),
+}
+
+ERRORS: Dict[int, Tuple[Type[GenshinException], Optional[str]]] = {
+    retcode: ((exc, None) if isinstance(exc, type) else exc) for retcode, exc in _errors.items()
+}
 
 
 def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
@@ -131,48 +159,13 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
         else:
             raise AuthkeyException(data)
 
-    if r == -100:
-        raise InvalidCookies(data, "Cookies are not valid")
-    elif r == -108:
-        raise GenshinException(data, "Invalid language")
+    elif m.startswith("character id"):
+        char = m.split(":")[1].split()[0]
+        raise GenshinException(data, f"User does not have a character with id {char}")
 
-    elif r == 10001:
-        raise InvalidCookies(data, "Cookies are not valid")
-    elif r == -10001:
-        raise GenshinException(data, "Malformed request")
-    elif r == -10002:
-        raise GenshinException(data, "No genshin account associated with cookies")
-
-    elif r == 10101:
-        raise TooManyRequests(data)
-    elif r == 10102:
-        raise DataNotPublic(data)
-    elif r == 10103:
-        msg = "Cookies are valid but do not have a hoyolab account bound to them"
-        raise InvalidCookies(data, msg)
-
-    elif r == -1:
-        raise GenshinException(data, "Malformed request, maybe uid is invalid?")
-    elif r == 1009:
-        raise AccountNotFound(data)
-
-    elif r == -1071:
-        raise InvalidCookies(data)
-    elif r == -1073:
-        msg = "Cannot claim code. Account has no game account bound to it."
-        raise GenshinException(data, msg)
-    elif r == -2001:
-        raise GenshinException(data, "Redemption code has expired.")
-    elif r == -2003:
-        raise GenshinException(data, "Invalid redemption code")
-    elif r == -2017:
-        raise GenshinException(data, "Redemption code has been claimed already.")
-    elif r == -2021:
-        msg = "Cannot claim codes for account with adventure rank lower than 10."
-        raise GenshinException(data, msg)
-
-    elif r == -5003:
-        raise AlreadyClaimed(data, "Already claimed the daily reward today.")
+    elif r in ERRORS:
+        exctype, msg = ERRORS[r]
+        raise exctype(data, msg)
 
     else:
         raise GenshinException(data)

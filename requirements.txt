@@ -1,0 +1,11 @@
+aiohttp
+pydantic
+typing-extensions
+yarl
+
+cachetools
+browser-cookie3
+typer
+
+pytest
+pytest-asyncio-cooperative

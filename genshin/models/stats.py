@@ -9,7 +9,7 @@ from .activities import Activities
 from .base import GenshinModel, PartialCharacter
 from .character import Character
 
-
+# flake8: noqa: E222
 class Stats(GenshinModel):
     """Overall user stats"""
 

@@ -5,7 +5,7 @@ The primary focus of genshin.py is convenience. The entire project is fully type
 
 Key features:
 
-* All data is in the form of <abbr title="Practically glorified dataclasses with builtin validation">Pydantic Models</abbr> which means full autocompletion and linter support.
+* All data is in the form of <abbr title="Improved dataclasses with built-in validation">Pydantic Models</abbr> which means full autocompletion and linter support.
 * Requests are significantly faster thanks to proper usage of asyncio.
 * Chinese and Engrish names returned by the API are renamed to simpler English fields.
 * Supports the majority of the popular endpoints.
@@ -34,7 +34,7 @@ async def main():
     data = await client.get_user(710785423)
     print(f"User has a total of {len(data.characters)} characters")
 
-    # remember to close the client so you don't leave a hanging aiohttp session
+    # remember to close the client, so you don't leave a hanging aiohttp session
     await client.close()
 
 asyncio.run(main())

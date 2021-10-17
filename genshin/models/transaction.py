@@ -7,6 +7,8 @@ from .base import GenshinModel
 
 
 class Transaction(GenshinModel):
+    """A genshin transaction of currency"""
+
     kind: Literal["primogem", "crystal", "resin"]
 
     id: int
@@ -18,6 +20,8 @@ class Transaction(GenshinModel):
 
 
 class ItemTransaction(Transaction):
+    """A genshin transaction of artifacts or weapons"""
+
     kind: Literal["artifact", "weapon"]
 
     name: str

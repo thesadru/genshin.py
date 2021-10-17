@@ -17,7 +17,7 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def cookies() -> Dict[str, str]:
-    return {"ltuid": os.environ["GS_LTUID"], "ltoken": os.environ["GS_LTOKEN"]}
+    return {"ltuid": os.environ["LTUID"], "ltoken": os.environ["LTOKEN"]}
 
 
 @pytest.fixture(scope="session")

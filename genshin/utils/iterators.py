@@ -5,7 +5,7 @@ from typing import *
 
 T = TypeVar("T")
 
-__all__ = ["amerge", "aenumerate", "aislice"]
+__all__ = ["aenumerate", "aislice", "azip", "amerge"]
 
 
 async def aenumerate(iterable: AsyncIterable[T], start: int = 0) -> AsyncIterator[Tuple[int, T]]:
@@ -22,6 +22,17 @@ async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator
 
         if stop and i >= stop:
             return
+
+
+async def azip(*iterables: AsyncIterable[T]) -> AsyncIterator[Tuple[T, ...]]:
+    iterators = [i.__aiter__() for i in iterables]
+    while True:
+        coros = (i.__anext__() for i in iterators)
+        try:
+            x = await asyncio.gather(*coros)
+        except StopAsyncIteration:
+            break
+        yield x
 
 
 async def _try_gather(coros: Iterable[Awaitable[T]]) -> List[T]:

@@ -23,8 +23,8 @@ from .paginator import (
 from .utils import (
     create_short_lang_code,
     extract_authkey,
-    generate_cn_ds_token,
-    generate_ds_token,
+    generate_cn_dynamic_secret,
+    generate_dynamic_secret,
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
@@ -50,7 +50,7 @@ class GenshinClient:
     MAP_URL = "https://api-os-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
     STATIC_MAP_URL = "https://api-os-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map"
 
-    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
     _session: Optional[aiohttp.ClientSession] = None
     logger: logging.Logger = logging.getLogger(__name__)
@@ -247,8 +247,6 @@ class GenshinClient:
             await self.session.close()
 
     async def __aenter__(self):
-        # create the session
-        session = self.session
         return self
 
     async def __aexit__(self, *exc_info):
@@ -333,7 +331,7 @@ class GenshinClient:
             "x-rpc-app_version": "1.5.0",
             "x-rpc-client_type": "4",
             "x-rpc-language": lang or self.lang,
-            "ds": generate_ds_token(self.DS_SALT),
+            "ds": generate_dynamic_secret(self.DS_SALT),
         }
 
         debug_url = url.with_query(kwargs.get("params", {}))
@@ -488,8 +486,8 @@ class GenshinClient:
         """Get the genshin accounts of the currently logged-in user"""
         # fmt: off
         data = await self.request_hoyolab(
-            "binding/api/getUserGameRolesByCookie", 
-            lang=lang, 
+            "binding/api/getUserGameRolesByCookie",
+            lang=lang,
             cache=("accounts", self.hoyolab_uid)
         )
         # fmt: on
@@ -945,7 +943,7 @@ class ChineseClient(GenshinClient):
             "x-rpc-app_version": "2.11.1",
             "x-rpc-client_type": "5",
             "x-rpc-language": lang or self.lang,
-            "ds": generate_cn_ds_token(self.DS_SALT, json, params),
+            "ds": generate_cn_dynamic_secret(self.DS_SALT, json, params),
         }
 
         debug_url = url.with_query(kwargs.get("params", {}))
@@ -959,12 +957,12 @@ class ChineseClient(GenshinClient):
         return data
 
     async def claim_daily_reward(
-        self, uid: int = None, *, lang: str = None
+        self, uid: int = None, *, lang: str = None, reward: bool = True
     ) -> Optional[DailyReward]:
-        signed_in, claimed_rewards = await self.get_reward_info(lang=lang)
-        if signed_in:
-            return None
+        """Signs into hoyolab and claims the daily reward.
 
+        If reward is True then the claimed reward will be returned
+        """
         params = {}
         if uid is None:
             accounts = await self.genshin_accounts(lang=lang)
@@ -974,10 +972,12 @@ class ChineseClient(GenshinClient):
             params["game_uid"] = uid
             params["region"] = recognize_server(uid)
 
-        await self.request_daily_reward("sign", method="POST", params=params, lang=lang)
-
-        rewards = await self.get_monthly_rewards(lang=lang)
-        return rewards[claimed_rewards]
+        if reward:
+            info, rewards = await asyncio.gather(
+                self.get_reward_info(lang=lang),
+                self.get_monthly_rewards(lang=lang),
+            )
+            return rewards[info.claimed_rewards - 1]
 
 
 class MultiCookieClient(GenshinClient):

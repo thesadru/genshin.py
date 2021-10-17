@@ -1,0 +1,35 @@
+name: Linting and Unit Testing.
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest mypy black
+          pip install -r requirements.txt
+      - name: Test with pytest
+        env:
+          LTUID: ${{ secrets.LTUID }}
+          LTOKEN: ${{ secrets.LTOKEN }}
+        run: |
+          python -m pytest
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --statistics --max-line-length=100 --select=E9,F63,F7,F82 --show-source
+          flake8 . --count --statistics --max-line-length=100 --ignore F40,F811 --exit-zero
+      - name: Lint with black
+        run: |
+          black . --check --verbose -l 100
