@@ -168,6 +168,12 @@ class IDPagintor(Generic[IDModelT]):
         """Flatten the entire iterator into a list"""
         return [item async for item in self]
 
+    async def first(self) -> IDModelT:
+        """Get the very first item"""
+        x = await self._iter().__anext__()
+        self.end_id = None  # invalidate the iterator
+        return x
+
 
 class AuthkeyPaginator(IDPagintor[IDModelT]):
     _authkey: Optional[str]

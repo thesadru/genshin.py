@@ -35,9 +35,18 @@ async def azip(*iterables: AsyncIterable[T]) -> AsyncIterator[Tuple[T, ...]]:
         yield x
 
 
-async def _try_gather(coros: Iterable[Awaitable[T]]) -> List[T]:
-    values = await asyncio.gather(*coros, return_exceptions=True)
-    return [x for x in values if not isinstance(x, BaseException)]
+async def _try_gather_first(iterators: Iterable[AsyncIterator[T]]) -> List[T]:
+    """Gather all the first values of iterators at once"""
+    coros = (it.__anext__() for it in iterators)
+    gathered = await asyncio.gather(*coros, return_exceptions=True)
+    values = []
+    for x in gathered:
+        if isinstance(x, BaseException):
+            if not isinstance(x, StopAsyncIteration):
+                raise x
+        else:
+            values.append(x)
+    return values
 
 
 async def amerge(
@@ -46,9 +55,8 @@ async def amerge(
     """Async version of heapq.merge"""
     key = key or (lambda x: x)
 
-    # for optimization we get all the first values at once
     iterators = [i.__aiter__() for i in iterables]
-    values = await _try_gather(it.__anext__() for it in iterators)
+    values = await _try_gather_first(iterators)
 
     heap: List[List[Any]] = [
         [key(value), order, value, it.__anext__]

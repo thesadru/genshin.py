@@ -34,7 +34,6 @@ async def main():
     data = await client.get_user(710785423)
     print(f"User has a total of {len(data.characters)} characters")
 
-    # remember to close the client, so you don't leave a hanging aiohttp session
     await client.close()
 
 asyncio.run(main())

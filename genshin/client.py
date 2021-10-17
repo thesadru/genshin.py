@@ -56,8 +56,9 @@ class GenshinClient:
     logger: logging.Logger = logging.getLogger(__name__)
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
-    static_cache: ClassVar[MutableMapping[str, Any]] = {}
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
+    static_cache: ClassVar[MutableMapping[str, Any]] = {}
+    _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # NEVER CHANGE!
 
     def __init__(
         self,
@@ -649,18 +650,19 @@ class GenshinClient:
         data = await self.request_daily_reward("info", lang=lang)
         return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
 
+    @permanent_cache(
+        lambda self, lang=None: ("rewards", datetime.utcnow().month, lang or self.lang)
+    )
     async def get_monthly_rewards(self, *, lang: str = None) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month"""
-        # use the static cache for this resource, but use the time
-        dummy = self.REWARD_URL + f"home?month={datetime.now().month}"
-        if dummy in self.static_cache:
-            data = self.static_cache[dummy]
-        else:
-            data = await self.request_daily_reward("home", lang=lang)
+        data = await self.request_daily_reward("home", lang=lang)
         return [DailyReward(**i) for i in data["awards"]]
 
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
-        """Get all claimed rewards for the current user"""
+        """Get all claimed rewards for the current user
+
+        NOTE: Mihoyo does not support languages on this endpoint yet
+        """
         return DailyRewardPaginator(self, limit=limit, lang=lang)
 
     @overload
@@ -737,7 +739,7 @@ class GenshinClient:
                 end_id=end_id,
             )
 
-    @permanent_cache("lang")
+    @permanent_cache(lambda self, lang=None, authkey=None: ("banners", lang or self.lang))
     async def get_banner_names(self, *, lang: str = None, authkey: str = None) -> Dict[int, str]:
         """Get a list of banner names"""
         data = await self.request_gacha_info(
@@ -835,7 +837,6 @@ class GenshinClient:
 
     # INTERACTIVE MAP:
 
-    @permanent_cache("lang", "map_id")
     async def _get_map_pin_icons(self, map_id: int = 2, *, lang: str = None) -> Dict[int, str]:
         data = await self.request_map("spot_kind/get_icon_list", lang=lang, map_id=map_id)
         return {i["id"]: i["url"] for i in data["icons"]}
@@ -888,6 +889,13 @@ class GenshinClient:
             self._get_transaction_reasons(lang=lang),
             self.get_all_banner_details(banner_ids, lang=lang),
         )
+
+    async def fetch_banner_ids(self) -> List[str]:
+        """Fetch banner ids from a user-mantained repo"""
+        url = "https://raw.githubusercontent.com/thesadru/genshin.py/gh-pages/banner_ids.txt"
+        async with self.session.get(url) as r:
+            data = await r.text()
+        return data.splitlines()
 
 
 class ChineseClient(GenshinClient):
@@ -955,6 +963,26 @@ class ChineseClient(GenshinClient):
             self._update_cache(data, cache, cache_check, lang=lang)
 
         return data
+
+    async def get_daily_note(self, uid: int, *, lang: str = None) -> Any:
+        server = recognize_server(uid)
+        data = await self.request_game_record(
+            "genshin/api/dailyNote",
+            lang=lang,
+            params=dict(server=server, role_id=uid),
+            cache=("user", uid),
+        )
+        return data
+
+    @overload
+    async def claim_daily_reward(
+        self, *, lang: str = None, reward: Literal[True] = ...
+    ) -> DailyReward:
+        ...
+
+    @overload
+    async def claim_daily_reward(self, *, lang: str = None, reward: Literal[False]) -> None:
+        ...
 
     async def claim_daily_reward(
         self, uid: int = None, *, lang: str = None, reward: bool = True

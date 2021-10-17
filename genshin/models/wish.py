@@ -9,6 +9,8 @@ from .base import GenshinModel
 
 
 class BannerType(IntEnum):
+    """A genshin wish history banner type"""
+
     novice = 100
     permanent = 200
     character = 301
@@ -16,6 +18,8 @@ class BannerType(IntEnum):
 
 
 class Wish(GenshinModel):
+    """A wish made on any banner"""
+
     uid: int
 
     id: int
@@ -32,7 +36,9 @@ class Wish(GenshinModel):
         return int(v)
 
 
-class BannerDetailProb(GenshinModel):
+class BannerDetailItem(GenshinModel):
+    """An item that may be gotten from a banner"""
+
     name: str = Field(galias="item_name")
     type: str = Field(galias="item_type")
     rarity: int = Field(galias="rank")
@@ -41,7 +47,9 @@ class BannerDetailProb(GenshinModel):
     order: int = Field(galias="order_value")
 
 
-class BannerDetailsItem(GenshinModel):
+class BannerDetailsUpItem(GenshinModel):
+    """An item that has a rate-up on a banner"""
+
     name: str = Field(galias="item_name")
     type: str = Field(galias="item_type")
     element: str = Field(galias="item_attr")
@@ -62,26 +70,28 @@ class BannerDetailsItem(GenshinModel):
 
 
 class BannerDetails(GenshinModel):
+    """Details of a banner"""
+
     banner_type: int = Field(galias="gacha_type")
     title: str
     content: str
     date_range: str
 
-    r5_up_prob: Optional[float] = Field(galias="r5_up_prob")
-    r4_up_prob: Optional[float] = Field(galias="r4_up_prob")
-    r5_prob: Optional[float] = Field(galias="r5_prob")
-    r4_prob: Optional[float] = Field(galias="r4_prob")
-    r3_prob: Optional[float] = Field(galias="r3_prob")
+    r5_up_prob: Optional[float]
+    r4_up_prob: Optional[float]
+    r5_prob: Optional[float]
+    r4_prob: Optional[float]
+    r3_prob: Optional[float]
     r5_guarantee_prob: Optional[float] = Field(galias="r5_baodi_prob")
     r4_guarantee_prob: Optional[float] = Field(galias="r4_baodi_prob")
     r3_guarantee_prob: Optional[float] = Field(galias="r3_baodi_prob")
 
-    r5_up_items: List[BannerDetailsItem]
-    r4_up_items: List[BannerDetailsItem]
+    r5_up_items: List[BannerDetailsUpItem]
+    r4_up_items: List[BannerDetailsUpItem]
 
-    r5_items: List[BannerDetailProb] = Field(galias="r5_prob_list")
-    r4_items: List[BannerDetailProb] = Field(galias="r4_prob_list")
-    r3_items: List[BannerDetailProb] = Field(galias="r3_prob_list")
+    r5_items: List[BannerDetailItem] = Field(galias="r5_prob_list")
+    r4_items: List[BannerDetailItem] = Field(galias="r4_prob_list")
+    r3_items: List[BannerDetailItem] = Field(galias="r3_prob_list")
 
     @validator("r5_up_items", "r4_up_items", pre=True)
     def __replace_none(cls, v):
@@ -102,7 +112,7 @@ class BannerDetails(GenshinModel):
         return None if v == "0%" else float(v[:-1].replace(",", "."))
 
     @property
-    def banner(self) -> str:
+    def name(self) -> str:
         return re.sub(r"<.*?>", "", self.title).strip()
 
     @property
@@ -116,12 +126,14 @@ class BannerDetails(GenshinModel):
         return banners[self.banner_type]
 
     @property
-    def items(self) -> List[BannerDetailProb]:
+    def items(self) -> List[BannerDetailItem]:
         items = self.r5_items + self.r4_items + self.r3_items
         return sorted(items, key=lambda x: x.order)
 
 
 class GachaItem(GenshinModel):
+    """An item that can be gotten from the gacha"""
+
     name: str
     type: str = Field(galias="item_type")
     rarity: int = Field(galias="rank_type")

@@ -1,34 +1,31 @@
 """Cache utils"""
-import inspect
+from __future__ import annotations
+
 from functools import update_wrapper
-from typing import Any, Awaitable, Callable, Dict, TypeVar
+from typing import TYPE_CHECKING, Any, Awaitable, Callable, TypeVar
+
+if TYPE_CHECKING:
+    from genshin.client import GenshinClient
 
 CallableT = TypeVar("CallableT", bound=Callable[..., Awaitable[Any]])
 
 __all__ = ["permanent_cache"]
 
 
-def permanent_cache(*params: str) -> Callable[[CallableT], CallableT]:
-    """Like lru_cache except permanent and only caches based on some parameters"""
-    cache: Dict[Any, Any] = {}
+def permanent_cache(key_func: Callable[..., Any]) -> Callable[[CallableT], CallableT]:
+    """Like lru_cache except permanent and using a key"""
 
     def wrapper(func):
-        sig = inspect.signature(func)
+        async def inner(self: GenshinClient, *args: Any, **kwargs: Any):
+            key = key_func(self, *args, **kwargs)
 
-        async def inner(*args, **kwargs):
-            bound = sig.bind(*args, **kwargs)
-            bound.apply_defaults()
-            # since the amount of arguments is constant we can just save the values
-            key = tuple(v for k, v in bound.arguments.items() if k in params)
+            if key in self._permanent_cache:
+                return self._permanent_cache[key]
 
-            if key in cache:
-                return cache[key]
-            r = await func(*args, **kwargs)
-            if r is not None:
-                cache[key] = r
-            return r
+            x = await func(self, *args, **kwargs)
+            self._permanent_cache[key] = x
+            return x
 
-        inner.cache = cache
         return update_wrapper(inner, func)
 
     return wrapper

@@ -29,9 +29,12 @@ markdown_extensions:
     - pymdownx.inlinehilite
     - pymdownx.superfences
     - pymdownx.snippets
+    - tables
 nav:
-    - Overview:
-        - index.md
+    - index.md
     - Usage:
         - authentication.md
         - battle_chronicle.md
+        - wish_history.md
+        - daily_rewards.md
+    - api.md

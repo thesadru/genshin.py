@@ -1,5 +1,5 @@
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 from genshin import GenshinClient, GenshinException, AlreadyClaimed
@@ -28,11 +28,11 @@ async def test_daily_reward(lclient: GenshinClient):
 @pytest.mark.asyncio_cooperative
 async def test_monthly_rewards(lclient: GenshinClient):
     rewards = await lclient.get_monthly_rewards()
-    now = datetime.now()
+    now = datetime.utcnow()
     assert len(rewards) == calendar.monthrange(now.year, now.month)[1]
 
 
 @pytest.mark.asyncio_cooperative
 async def test_claimed_rewards(lclient: GenshinClient):
     claimed = await lclient.claimed_rewards(limit=10).flatten()
-    assert claimed[0].time <= datetime.now()
+    assert claimed[0].time <= datetime.utcnow()
