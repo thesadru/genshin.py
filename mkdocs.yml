@@ -37,4 +37,9 @@ nav:
         - battle_chronicle.md
         - wish_history.md
         - daily_rewards.md
+    - Advanced Usage:
+        - caching.md
+    - Internationalization: 
+      - langs.md
+      - chinese.md
     - api.md

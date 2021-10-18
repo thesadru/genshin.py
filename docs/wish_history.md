@@ -15,7 +15,7 @@ async for wish in client.wish_history(limit=100):
 history = await client.wish_history(limit=100).flatten()
 print(history[-1].time)
 
-# get the first wish in the iterator (most recent one)
+# get the first wish in the paginator (most recent one)
 wish = await client.wish_history().first()
 print(wish.uid)
 ```
@@ -58,7 +58,7 @@ items = await client.get_gacha_items()
 
 ## Optimizations
 
-You may start from any point in the iterator as long as you know the id of the previous item.
+You may start from any point in the paginator as long as you know the id of the previous item.
 ```py
 async for wish in client.wish_history(limit=20):
     print(wish)
@@ -68,7 +68,7 @@ async for wish in client.wish_history(limit=20, end_id=wish.id):
 ```
 
 
-When getting data from a single banner you may use the `next_page` method to get the next 20 items in the iterator.
+When getting data from a single banner you may use the `next_page` method to get the next 20 items in the paginator.
 ```py
 # a more accurate progress bar
 history = client.wish_history(200)
