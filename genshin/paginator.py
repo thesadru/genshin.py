@@ -82,6 +82,8 @@ class DailyRewardPaginator:
 class IDPagintor(Generic[IDModelT]):
     """A paginator of genshin end_id pages"""
 
+    __repr_args__: Sequence[str] = ["limit"]
+
     client: GenshinClient
     limit: Optional[int]
     end_id: Optional[int]
@@ -99,7 +101,8 @@ class IDPagintor(Generic[IDModelT]):
         return self.end_id is None
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(limit={self.limit})"
+        args = ", ".join(f"{i}={getattr(self, i)!r}" for i in self.__repr_args__)
+        return f"{type(self).__name__}({args})"
 
     async def _get_page(self, end_id: int) -> List[IDModelT]:
         raise NotImplementedError
@@ -176,6 +179,8 @@ class IDPagintor(Generic[IDModelT]):
 
 
 class AuthkeyPaginator(IDPagintor[IDModelT]):
+    __repr_args__ = ["limit", "lang"]
+
     _authkey: Optional[str]
     _lang: Optional[str]
 
@@ -205,11 +210,15 @@ class AuthkeyPaginator(IDPagintor[IDModelT]):
 
 
 class WishHistory(AuthkeyPaginator[Wish]):
+    __repr_args__ = ["banner_type", "limit", "lang"]
+
     client: GenshinClient
     banner_type: int
 
     def __init__(self, client: GenshinClient, banner_type: int, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
+        if banner_type not in [100, 200, 301, 302]:
+            raise ValueError(f"Invalid banner type: {banner_type!r}")
         self.banner_type = banner_type
 
     def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
@@ -232,11 +241,15 @@ class WishHistory(AuthkeyPaginator[Wish]):
 
 
 class Transactions(AuthkeyPaginator[TransactionT]):
+    __repr_args__ = ["kind", "limit", "lang"]
+
     client: GenshinClient
     kind: str
 
     def __init__(self, client: GenshinClient, kind: str, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
+        if kind not in ["primogem", "crystal", "resin", "artifact", "weapon"]:
+            raise ValueError(f"Invalid transaction kind: {kind}")
         self.kind = kind
 
     def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
@@ -285,13 +298,18 @@ class MergedPaginator(AuthkeyPaginator[IDModelT]):
 
 
 class MergedWishHistory(MergedPaginator[Wish]):
+    __repr_args__ = ["banner_types", "limit", "lang"]
+
     client: GenshinClient
-    banner_type: Literal[None] = None
+    banner_types: List[int]
 
-    def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
+    def __init__(
+        self, client: GenshinClient, banner_types: List[int] = None, **kwargs: Any
+    ) -> None:
         super().__init__(client, **kwargs)
+        self.banner_types = banner_types or [100, 200, 301, 302]
 
-        self._paginators = [WishHistory(client, b, **kwargs) for b in (100, 200, 301, 302)]
+        self._paginators = [WishHistory(client, b, **kwargs) for b in self.banner_types]
         self._key: Callable[[Wish], float] = lambda wish: -wish.time.timestamp()
 
     async def flatten(self, *, lazy: bool = False) -> List[Wish]:
@@ -301,14 +319,14 @@ class MergedWishHistory(MergedPaginator[Wish]):
 
 
 class MergedTransactions(MergedPaginator[Union[Transaction, ItemTransaction]]):
+    __repr_args__ = ["kinds", "limit", "lang"]
+
     client: GenshinClient
-    kind: Literal[None] = None
+    kinds: List[str]
 
-    def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, kinds: List[str] = None, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
+        self.kinds = kinds or ["primogem", "crystal", "resin", "artifact", "weapon"]
 
-        self._paginators = [
-            Transactions(client, kind, **kwargs)
-            for kind in ("primogem", "crystal", "resin", "artifact", "weapon")
-        ]
+        self._paginators = [Transactions(client, kind, **kwargs) for kind in self.kinds]
         self._key: Callable[[Transaction], float] = lambda trans: -trans.time.timestamp()

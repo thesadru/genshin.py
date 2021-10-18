@@ -17,3 +17,9 @@ async def test_merged_transactions(lclient: GenshinClient):
             assert not hasattr(trans, "name")
         else:
             assert hasattr(trans, "name")
+
+
+@pytest.mark.asyncio_cooperative
+async def test_filtered_merged_transactions(lclient: GenshinClient):
+    async for trans in lclient.transaction_log(["artifact", "weapon"], limit=20):
+        assert trans.kind in ["artifact", "weapon"]

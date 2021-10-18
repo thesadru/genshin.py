@@ -696,7 +696,7 @@ class GenshinClient:
     @overload
     def wish_history(
         self,
-        banner_type: None = ...,
+        banner_type: Optional[List[int]] = ...,
         *,
         limit: int = None,
         lang: str = None,
@@ -708,7 +708,7 @@ class GenshinClient:
     @overload
     def wish_history(
         self,
-        banner_type: Union[int, BannerType],
+        banner_type: int,
         *,
         limit: int = None,
         lang: str = None,
@@ -719,7 +719,7 @@ class GenshinClient:
 
     def wish_history(
         self,
-        banner_type: Union[int, BannerType] = None,
+        banner_type: Union[int, List[int]] = None,
         *,
         limit: int = None,
         lang: str = None,
@@ -727,9 +727,7 @@ class GenshinClient:
         end_id: int = 0,
     ) -> Union[WishHistory, MergedWishHistory]:
         """Get the wish history of a user"""
-        if banner_type is None:
-            return MergedWishHistory(self, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
-        else:
+        if isinstance(banner_type, int):
             return WishHistory(
                 self,
                 banner_type,
@@ -737,6 +735,10 @@ class GenshinClient:
                 authkey=authkey,
                 limit=limit,
                 end_id=end_id,
+            )
+        else:
+            return MergedWishHistory(
+                self, banner_type, lang=lang, authkey=authkey, limit=limit, end_id=end_id
             )
 
     @permanent_cache(lambda self, lang=None, authkey=None: ("banners", lang or self.lang))
@@ -787,7 +789,7 @@ class GenshinClient:
     @overload
     def transaction_log(
         self,
-        kind: None = ...,
+        kind: Optional[List[str]] = ...,
         *,
         limit: int = None,
         lang: str = None,
@@ -822,7 +824,7 @@ class GenshinClient:
 
     def transaction_log(
         self,
-        kind: Literal["primogem", "crystal", "resin", "artifact", "weapon"] = None,
+        kind: Union[str, List[str]] = None,
         *,
         limit: int = None,
         lang: str = None,
@@ -830,10 +832,12 @@ class GenshinClient:
         end_id: int = 0,
     ) -> Union[Transactions, MergedTransactions]:
         # TODO: Utilize the new diary
-        if kind is None:
-            return MergedTransactions(self, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
-        else:
+        if isinstance(kind, str):
             return Transactions(self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
+        else:
+            return MergedTransactions(
+                self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id
+            )
 
     # INTERACTIVE MAP:
 

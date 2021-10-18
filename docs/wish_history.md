@@ -8,6 +8,10 @@ To request any of the wish history endpoints you must set an authkey. Refer to [
 
 ```py
 # simply iterate over the wish history
+async for wish in client.wish_history():
+    print(f"{wish.time} - {wish.name} ({wish.rarity}* {wish.type})")
+
+# set a limit for the iteration
 async for wish in client.wish_history(limit=100):
     print(f"{wish.time} - {wish.name} ({wish.rarity}* {wish.type})")
 
@@ -32,7 +36,12 @@ By default `client.wish_history()` gets data from all banners, you can filter th
 | Weapon Event Wish    | 302 |
 
 ```py
+# get wishes only from the permanent banner
 async for wish in client.wish_history(200, limit=20):
+    print(f"{wish.time} - {wish.name} ({wish.rarity}* {wish.type})")
+
+# get wishes from both the character and the weapon banner
+async for wish in client.wish_history([301, 302], limit=20):
     print(f"{wish.time} - {wish.name} ({wish.rarity}* {wish.type})")
 ```
 

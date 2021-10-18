@@ -95,6 +95,24 @@ async def characters(
 
 @app.command()
 @asynchronous
+async def wishes(
+    limit: int = typer.Option(None, help="The maximum amount of wishes to show"),
+    lang: str = typer.Option("en-us", help="The language to use"),
+):
+    """Get a nicely formatted wish history"""
+    async with genshin.GenshinClient() as client:
+        client.set_authkey()
+
+        banner_names = await client.get_banner_names(lang=lang)
+        longest = max(len(v) for v in banner_names.values())
+
+        async for wish in client.wish_history(limit=limit, lang=lang):
+            banner = typer.style(wish.banner_name.ljust(longest), bold=True)
+            typer.echo(f"{banner} | {wish.time} - {wish.name} ({'★' * wish.rarity} {wish.type})")
+
+
+@app.command()
+@asynchronous
 async def pity():
     """Calculates the amount of pulls until pity"""
     async with genshin.GenshinClient() as client:

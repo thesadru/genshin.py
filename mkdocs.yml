@@ -25,20 +25,25 @@ repo_url: https://github.com/thesadru/genshin.py
 plugins:
     - search
 markdown_extensions:
+    - tables
     - pymdownx.highlight
     - pymdownx.inlinehilite
     - pymdownx.superfences
     - pymdownx.snippets
-    - tables
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
 nav:
     - index.md
     - Usage:
         - authentication.md
         - battle_chronicle.md
-        - wish_history.md
         - daily_rewards.md
+        - wish_history.md
+        - transactions.md
     - Advanced Usage:
         - caching.md
+        - debugging.md
     - Internationalization: 
       - langs.md
       - chinese.md

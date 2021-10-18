@@ -17,6 +17,12 @@ async def test_merged_wish_history(lclient: GenshinClient):
 
 
 @pytest.mark.asyncio_cooperative
+async def test_filtered_merged_wish_history(lclient: GenshinClient):
+    async for wish in lclient.wish_history([301, 302], limit=20):
+        assert wish.banner_type in [301, 302]
+
+
+@pytest.mark.asyncio_cooperative
 async def test_banner_types(lclient: GenshinClient):
     banner_types = await lclient.get_banner_names()
     assert sorted(banner_types.keys()) == [100, 200, 301, 302]

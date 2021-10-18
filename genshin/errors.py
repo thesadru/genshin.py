@@ -151,7 +151,7 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
     """
     r, m = data["retcode"], data["message"]
 
-    if m == "authkey error":
+    if m.startswith("authkey"):
         if r == -100:
             raise InvalidAuthkey(data)
         elif r == -101:
