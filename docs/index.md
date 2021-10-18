@@ -17,7 +17,7 @@ Key features:
 - Pydantic
 
 ```console
-pip install genshin
+pip install genshin.py
 ```
 
 ## Example
