@@ -26,4 +26,19 @@ client.set_cache(maxsize=256, ttl=3600)
 
 ## Paginator caches
 
-A paginator cache
+A paginator cache is used for wish history and transactions. The mapping used for this paginator must support frequent access since every single individual item will be stored separately for optimization.
+```py
+import cachetools
+
+client = genshin.GenshinClient()
+client.paginator_cache = LRUCache(2048) # A simple LRU cache is ideal
+```
+
+## Static caches
+
+Every request towards a static endpoint is cached. You may overwrite it with any other mapping but unless you're only trying to make the caching persistent there's generally no reason to.
+```py
+client = genshin.GenshinClient()
+items = await client.get_gacha_items()
+print(len(client.static_cache))
+```

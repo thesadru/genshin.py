@@ -43,6 +43,7 @@ nav:
         - transactions.md
     - Advanced Usage:
         - caching.md
+        - multicookie.md
         - debugging.md
     - Internationalization: 
       - langs.md
