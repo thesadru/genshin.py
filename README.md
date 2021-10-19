@@ -25,7 +25,7 @@ Key features:
 - Pydantic
 
 ```console
-pip install genshin.py
+pip install genshin
 ```
 
 ## Example
@@ -53,13 +53,13 @@ Any kind of contribution is welcome.
 Before making a pull request remember to test your changes using pytest.
 Remember to set your `LTUID` and `LTOKEN` environment variables.
 ```
-pip install genshin.py[test]
+pip install genshin[test]
 python -m pytest
 ```
 
 Please also edit the documentation accordingly. You may see how the final documentation would look like by starting an `mkdocs` server.
 ```
-pip install genshin.py[doc]
+pip install genshin[doc]
 mkdocs serve
 ```
 
