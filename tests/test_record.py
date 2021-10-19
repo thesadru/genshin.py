@@ -48,6 +48,7 @@ async def test_abyss(client: GenshinClient, uid: int):
 async def test_activities(client: GenshinClient, uid: int):
     data = await client.get_activities(uid)
 
+    assert data.hyakunin is not None
     assert data.hyakunin.challenges[0].medal == "gold"
 
 

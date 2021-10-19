@@ -1,4 +1,5 @@
 from typing import List
+
 from pydantic import Field
 
 from .base import GenshinModel
@@ -48,6 +49,11 @@ class RecordCard(GenshinAccount):
     @property
     def spiral_abyss(self) -> str:
         return self.data[3].value
+
+    @property
+    def html_url(self) -> str:
+        """The html url"""
+        return f"https://webstatic-sea.hoyolab.com/app/community-game-records-sea/index.html?uid={self.uid}#/ys"
 
     def as_dict(self, lang: str = "en-us"):
         """Helper function which turns fields into properly named ones"""

@@ -47,17 +47,14 @@ async for wish in client.wish_history([301, 302], limit=20):
 
 ## Banner Details
 
-To get banner details you require the banner's id. Like authkeys, these can be gotten from the logfile. Simply open the banner page in genshin impact and then run `genshin.get_banner_ids()`
-
-If you do not want to get the banner ids every time you may fetch them from a user-maintained storage using `client.fetch_banner_ids`
+In the same way you can get data for your wish history you may also get data for the static banner details.
 
 ### Quick example
 
 ```py
 # get all the current banners
-banner_ids = await client.fetch_banner_ids()
-for banner_id in banner_ids:
-    banner = await client.get_banner_details(banner_id)
+banners = await client.get_banner_details()
+for banner in banners:
     print(banner.name)
 ```
 ```py
@@ -84,4 +81,10 @@ history = client.wish_history(200)
 while not history.exhausted:
     page = await history.next_page()
     print('.', end='')
+```
+
+`get_banner_details` requires ids to get the banner details. These ids change with every new banner so for user experience they are hosted on a remote repository maintained by me. In case you want to get proper data before I update the ids you may simply just get them yourself by openning every single details page in genshin and then running `genshin.get_banner_ids()`
+```py
+banner_ids = genshin.get_banner_ids()
+banners = await client.get_banner_details(banner_ids)
 ```

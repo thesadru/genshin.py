@@ -16,7 +16,7 @@ class Stats(GenshinModel):
     # This is such fucking bullshit, just why?
     # fmt: off
     achievements: int =       Field(galias="achievement_number")
-    days_played: int =        Field(galias="active_day_number")
+    days_active: int =        Field(galias="active_day_number")
     characters: int =         Field(galias="avatar_number")
     spiral_abyss: str =       Field(galias="spiral_abyss")
     anemoculi: int =          Field(galias="anemoculus_number")

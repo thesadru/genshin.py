@@ -284,13 +284,13 @@ class GenshinClient:
         **kwargs: Any,
     ) -> Any:
         """Request a static json file"""
+        url = URL(self.WEBSTATIC_URL).join(URL(url))
+
         if cache and str(url) in self.static_cache:
             return self.static_cache[str(url)]
 
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
-
-        url = URL(self.WEBSTATIC_URL).join(URL(url))
 
         self.logger.debug(f"STATIC {url}")
 
@@ -579,9 +579,9 @@ class GenshinClient:
             method="POST",
             lang=lang,
             json=dict(character_ids=character_ids, role_id=uid, server=server),
-            cache=("characters", uid),
+            cache=("characters", uid, tuple(sorted(character_ids))),
         )
-        data.update(character_data)
+        data = {**data, **character_data}
 
         return UserStats(**data)
 
@@ -600,15 +600,18 @@ class GenshinClient:
         self, uid: int, character_ids: List[int], *, lang: str = None
     ) -> List[Character]:
         """Helper function to fetch characters from just their ids"""
+        # TODO: Caching with incomplete characters takes up way too much memory
         server = recognize_server(uid)
         data = await self.request_game_record(
             "genshin/api/character",
             method="POST",
             lang=lang,
             json=dict(character_ids=character_ids, role_id=uid, server=server),
-            cache=("characters", uid),
+            cache=("characters", uid, tuple(sorted(character_ids))),
         )
-        return [Character(**i) for i in data["avatars"]]
+        characters = [Character(**i) for i in data["avatars"]]
+        # not a guaranteed order but it's nice to make it ensured in some way
+        return sorted(characters, key=lambda c: character_ids.index(c.id))
 
     async def get_spiral_abyss(self, uid: int, *, previous: bool = False) -> SpiralAbyss:
         """Get spiral abyss runs"""
@@ -751,19 +754,26 @@ class GenshinClient:
         )
         return {int(i["key"]): i["name"] for i in data["gacha_type_list"]}
 
-    async def get_banner_details(self, banner_id: str, *, lang: str = None) -> BannerDetails:
+    async def _get_banner_details(self, banner_id: str, *, lang: str = None) -> BannerDetails:
         """Get details of a specific banner using its id"""
         data = await self.request_webstatic(
             f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json"
         )
         return BannerDetails(**data)
 
-    async def get_all_banner_details(
+    async def get_banner_details(
         self, banner_ids: List[str] = None, *, lang: str = None
     ) -> List[BannerDetails]:
         """Get all banner details at once in a batch"""
-        banner_ids = banner_ids or get_banner_ids()
-        data = await asyncio.gather(*(self.get_banner_details(i, lang=lang) for i in banner_ids))
+        try:
+            banner_ids = banner_ids or get_banner_ids()
+        except FileNotFoundError:
+            banner_ids = []
+
+        if len(banner_ids) < 3:
+            banner_ids = await self.fetch_banner_ids()
+
+        data = await asyncio.gather(*(self._get_banner_details(i, lang=lang) for i in banner_ids))
         return list(data)
 
     async def get_gacha_items(self, *, lang: str = None) -> List[GachaItem]:
@@ -883,20 +893,16 @@ class GenshinClient:
         """Request all static endpoints to not require them later"""
         lang = lang or self.lang
 
-        try:
-            banner_ids = get_banner_ids()
-        except FileNotFoundError:
-            banner_ids = []
-
         await asyncio.gather(
             self.get_banner_names(lang=lang),
+            self.get_banner_details(lang=lang),
+            self.get_monthly_rewards(),
             self._get_transaction_reasons(lang=lang),
-            self.get_all_banner_details(banner_ids, lang=lang),
         )
 
     async def fetch_banner_ids(self) -> List[str]:
         """Fetch banner ids from a user-mantained repo"""
-        url = "https://raw.githubusercontent.com/thesadru/genshin.py/gh-pages/banner_ids.txt"
+        url = "https://raw.githubusercontent.com/thesadru/thesadru.github.io/master/genshin_banners.txt"
         async with self.session.get(url) as r:
             data = await r.text()
         return data.splitlines()

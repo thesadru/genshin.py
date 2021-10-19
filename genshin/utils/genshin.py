@@ -26,7 +26,7 @@ def generate_dynamic_secret(salt: str) -> str:
     return f"{t},{r},{h}"
 
 
-def generate_cn_dynamic_secret(salt: str, body: Any, query: Mapping[str, Any]) -> str:
+def generate_cn_dynamic_secret(salt: str, body: Any = None, query: Mapping[str, Any] = None) -> str:
     """Creates a new chinese ds token for authentication."""
     t = int(time.time())
     r = random.randint(100001, 200000)

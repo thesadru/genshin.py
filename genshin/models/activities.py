@@ -1,7 +1,7 @@
 import re
-from typing import List
+from typing import List, Optional
 
-from pydantic import Field
+from pydantic import Field, validator
 
 from .base import BaseCharacter, GenshinModel
 
@@ -60,4 +60,10 @@ class HyakuninIkki(Activity):
 class Activities(GenshinModel):
     """A collection of genshin activities"""
 
-    hyakunin: HyakuninIkki = Field(galias="sumo")
+    hyakunin: Optional[HyakuninIkki] = Field(galias="sumo")
+
+    @validator("hyakunin", pre=True)
+    def __check_activity_exists(cls, v):
+        if not v["exists_data"]:
+            return None
+        return v

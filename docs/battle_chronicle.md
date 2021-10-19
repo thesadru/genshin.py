@@ -23,7 +23,7 @@ Under the hood, `get_user` has to make two requests: one for the user and anothe
 
 ```py
 user = await client.get_partial_user(710785423)
-print(user.stats.days_played)
+print(user.stats.days_active)
 ```
 
 On the other hand, if you want to request as much information as possible, you should use `get_full_user` which adds spiral abyss runs and activities to the user.
