@@ -559,7 +559,7 @@ class GenshinClient:
         )
         cards = data["list"]
         if not cards:
-            raise errors.DataNotPublic({})
+            raise errors.DataNotPublic({"retcode": 10102})
 
         return RecordCard(**cards[0])
 
@@ -1095,7 +1095,7 @@ class MultiCookieClient(GenshinClient):
 
         # if we're here it means we used up all our sessions so we must handle that
         msg = "All cookies have hit their request limit of 30 accounts per day."
-        raise errors.TooManyRequests({}, msg)
+        raise errors.TooManyRequests({"retcode": 10101}, msg)
 
     async def request_daily_reward(self, *args: Any, **kwargs: Any) -> NoReturn:
         """Helper overwrite to prevent nasty bugs"""

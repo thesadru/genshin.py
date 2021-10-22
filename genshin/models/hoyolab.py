@@ -1,4 +1,5 @@
-from typing import List
+from enum import IntEnum
+from typing import Any, Dict, List
 
 from pydantic import Field
 
@@ -22,12 +23,29 @@ class RecordCardData(GenshinModel):
     value: str
 
 
+class RecordCardSetting(GenshinModel):
+    """A privacy setting of a record card"""
+
+    id: int = Field(galias="switch_id")
+    description: str = Field(galias="switch_name")
+    public: bool = Field(galias="is_public")
+
+    @property
+    def name(self) -> str:
+        return {
+            1: "Battle Chronicle",
+            2: "Character Details",
+            3: "Real-Time Notes",
+        }.get(self.id, "")
+
+
 class RecordCard(GenshinAccount):
     """A genshin record card containing very basic user info"""
 
     uid: int = Field(galias="game_role_id")
 
     data: List[RecordCardData]
+    privacy_settings: List[RecordCardSetting] = Field(galias="data_switches")
 
     # unknown meaning
     background_image: str
@@ -55,11 +73,18 @@ class RecordCard(GenshinAccount):
         """The html url"""
         return f"https://webstatic-sea.hoyolab.com/app/community-game-records-sea/index.html?uid={self.uid}#/ys"
 
-    def as_dict(self, lang: str = "en-us"):
+    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
         assert lang == "en-us", "Other languages not yet implemented"
 
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
+
+
+class Gender(IntEnum):
+    unknown = 0
+    male = 1
+    female = 2
+    other = 3
 
 
 class SearchUser(GenshinModel):
@@ -69,5 +94,5 @@ class SearchUser(GenshinModel):
     nickname: str
     introduction: str = Field(galias="introduce")
     avatar_id: int = Field(galias="avatar")
-    gender: int
+    gender: Gender
     icon: str = Field(galias="avatar_url")

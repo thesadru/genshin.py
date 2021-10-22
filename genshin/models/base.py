@@ -52,6 +52,9 @@ class GenshinModel(BaseModel):
 
         return super().dict(**kwargs)
 
+    class Config:
+        allow_mutation = False
+
 
 class CharacterIcon:
     """A character's icon"""

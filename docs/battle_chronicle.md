@@ -17,6 +17,18 @@ data = await client.get_spiral_abyss(710785423, previous=True)
 data = await client.get_activities(710785423)
 ```
 
+## Real-Time Notes
+
+Thanks to a relatively new feature added to battle chronicles you may now view your own resin count, explorations, comissions and similar data just using the API.
+
+Currently you may only get your own data using your own cookies but a uid is still required.
+
+```py
+notes = await client.get_notes(710785423)
+print(f"Resin: {notes.current_resin}/{notes.max_resin}")
+print(f"Comissions: {notes.completed_comissions}/{notes.max_comissions}")
+```
+
 ## Optimizations
 
 Under the hood, `get_user` has to make two requests: one for the user and another for character equipment. If you do not care about character equipment, you should use `get_partial_user`.
