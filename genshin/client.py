@@ -624,6 +624,16 @@ class GenshinClient:
         )
         return SpiralAbyss(**data)
 
+    async def get_notes(self, uid: int, *, lang: str = None) -> Notes:
+        """Get the real-time notes."""
+        server = recognize_server(uid)
+        data = await self.request_game_record(
+            "genshin/api/dailyNote",
+            lang=lang,
+            params=dict(server=server, role_id=uid),
+        )
+        return Notes(**data)
+
     async def get_activities(self, uid: int, *, lang: str = None) -> Activities:
         """Get activities"""
         server = recognize_server(uid)
@@ -633,7 +643,7 @@ class GenshinClient:
             params=dict(server=server, role_id=uid),
             cache=("activities", uid),
         )
-        return Activities(**data["activities"][0])
+        return Activities(**data)
 
     async def get_full_user(self, uid: int, *, lang: str = None) -> FullUserStats:
         """Get a user with all their possible data"""
@@ -902,7 +912,7 @@ class GenshinClient:
 
     async def fetch_banner_ids(self) -> List[str]:
         """Fetch banner ids from a user-mantained repo"""
-        url = "https://raw.githubusercontent.com/thesadru/thesadru.github.io/master/genshin_banners.txt"
+        url = "https://raw.githubusercontent.com/thesadru/genshindata/master/banner_ids.txt"
         async with self.session.get(url) as r:
             data = await r.text()
         return data.splitlines()
@@ -972,16 +982,6 @@ class ChineseClient(GenshinClient):
         if cache:
             self._update_cache(data, cache, cache_check, lang=lang)
 
-        return data
-
-    async def get_daily_note(self, uid: int, *, lang: str = None) -> Any:
-        server = recognize_server(uid)
-        data = await self.request_game_record(
-            "genshin/api/dailyNote",
-            lang=lang,
-            params=dict(server=server, role_id=uid),
-            cache=("user", uid),
-        )
         return data
 
     @overload

@@ -1,7 +1,8 @@
 import asyncio
+import json
 import os
 import warnings
-from typing import Dict, Optional
+from typing import Dict
 
 import genshin
 import pytest
@@ -38,18 +39,42 @@ def chinese_cookies() -> Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-async def client(cookies: Dict[str, str]) -> GenshinClient:
+async def client(cookies: Dict[str, str]):
     """Client with environment cookies"""
     client = GenshinClient()
     client.set_cookies(cookies)
+    client.cache = {}
 
     yield client
 
     await client.close()
 
+    # dump the entire cache into a json file
+    cache = {}
+    parsed = {}
+    for k, v in client.cache.items():
+        key = "|".join(map(str, k))
+        cache[key] = v
+        if k[0] == "user":
+            parsed[key] = json.loads(genshin.models.PartialUserStats(**v).json())
+        elif k[0] == "characters":
+            parsed[key] = [json.loads(genshin.models.Character(**c).json()) for c in v["avatars"]]
+        elif k[0] == "abyss":
+            parsed[key] = json.loads(genshin.models.SpiralAbyss(**v).json())
+        elif k[0] == "record":
+            parsed[key] = json.loads(genshin.models.RecordCard(**v["list"][0]).json())
+        elif k[0] == "activities":
+            parsed[key] = json.loads(genshin.models.Activities(**v).json())
+
+    os.makedirs(".pytest_cache", exist_ok=True)
+    with open(".pytest_cache/genshin_cache.json", "w") as file:
+        json.dump(cache, file, indent=4)
+    with open(".pytest_cache/parsed_genshin_cache.json", "w") as file:
+        json.dump(parsed, file, indent=4)
+
 
 @pytest.fixture(scope="function")
-async def lclient(browser_cookies: Dict[str, str]) -> Optional[GenshinClient]:
+async def lclient(browser_cookies: Dict[str, str]):
     """The local client"""
     if not browser_cookies:
         pytest.skip("Skipped local test")
@@ -65,7 +90,7 @@ async def lclient(browser_cookies: Dict[str, str]) -> Optional[GenshinClient]:
 
 
 @pytest.fixture(scope="function")
-async def cnclient(chinese_cookies: Dict[str, str]) -> Optional[GenshinClient]:
+async def cnclient(chinese_cookies: Dict[str, str]):
     """A client with chinese cookies"""
     if not chinese_cookies:
         pytest.skip("Skipped chinese test")

@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 
 import genshin
 import pytest
@@ -45,11 +46,21 @@ async def test_abyss(client: GenshinClient, uid: int):
 
 
 @pytest.mark.asyncio_cooperative
+async def test_notes(lclient: GenshinClient, uid: int):
+    data = await lclient.get_notes(uid)
+
+    assert data.resin_recovered_at > datetime.now().astimezone()
+    assert data.max_comissions == 4
+    assert not (data.completed_commissions != 4 and data.claimed_comission_reward)
+    assert len(data.expeditions) == 5
+
+
+@pytest.mark.asyncio_cooperative
 async def test_activities(client: GenshinClient, uid: int):
     data = await client.get_activities(uid)
 
-    assert data.hyakunin is not None
-    assert data.hyakunin.challenges[0].medal == "gold"
+    assert data.hyakunin_ikki is not None
+    assert data.hyakunin_ikki.challenges[0].medal == "gold"
 
 
 @pytest.mark.asyncio_cooperative

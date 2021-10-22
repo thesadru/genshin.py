@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
@@ -8,6 +9,7 @@ from .abyss import SpiralAbyssPair
 from .activities import Activities
 from .base import GenshinModel, PartialCharacter
 from .character import Character
+
 
 # flake8: noqa: E222
 class Stats(GenshinModel):
@@ -26,6 +28,7 @@ class Stats(GenshinModel):
     exquisite_chests: int =   Field(galias="exquisite_chest_number")
     precious_chests: int =    Field(galias="precious_chest_number")
     luxurious_chests: int =   Field(galias="luxurious_chest_number")
+    remarkable_chests: int =  Field(galias="magic_chest_number")
     unlocked_waypoints: int = Field(galias="way_point_number")
     unlocked_domains: int =   Field(galias="domain_number")
     # fmt: on
@@ -66,6 +69,11 @@ class TeapotRealm(GenshinModel):
 
     name: str
     icon: str
+
+    @property
+    def id(self) -> int:
+        match = re.search(r"\d", self.icon)
+        return int(match.group()) if match else 0
 
 
 class Teapot(GenshinModel):

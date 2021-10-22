@@ -105,6 +105,7 @@ _errors: Dict[int, Union[Tuple[Type[GenshinException], Optional[str]], Type[Gens
     10101: TooManyRequests,
     10102: DataNotPublic,
     10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
+    10104: (GenshinException, "Tried to use a beta feature in an invalid context"),
     # mixin
     -1: (GenshinException, "Internal database error."),
     1009: AccountNotFound,

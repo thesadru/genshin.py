@@ -1,13 +1,12 @@
 import re
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
-from pydantic import Field, validator
+from pydantic import Field, root_validator
 
 from .base import BaseCharacter, GenshinModel
 
-
-class Activity(GenshinModel):
-    """A genshin activity"""
+# ---------------------------------------------------------
+# Hyakunin Ikki:
 
 
 class HyakuninIkkiCharacter(BaseCharacter):
@@ -23,7 +22,7 @@ class HyakuninIkkiSkill(GenshinModel):
     id: int
     name: str
     icon: str
-    desc: str
+    description: str = Field(galias="desc")
 
 
 class HyakuninIkkiBattle(GenshinModel):
@@ -51,19 +50,72 @@ class HyakuninIkkiChallenge(GenshinModel):
         return match.group(1) if match else ""
 
 
-class HyakuninIkki(Activity):
+class HyakuninIkki(GenshinModel):
     """A Hyakunin Ikki event"""
 
     challenges: List[HyakuninIkkiChallenge] = Field(galias="records")
 
 
+# ---------------------------------------------------------
+# Labyrinth Warriors:
+
+
+class LabyrinthWarriorsCharacter(BaseCharacter):
+    """A Labyrinth Warriors character"""
+
+    level: int
+
+
+class LabyrinthWarriorsRune(GenshinModel):
+    """A Labyrinth Warriors rune"""
+
+    id: int
+    icon: str
+    name: str
+    description: str = Field(galias="desc")
+    element: str
+
+
+class LabyrinthWarriorsChallenge(GenshinModel):
+    """A Labyrinth Warriors challenge"""
+
+    id: int = Field(galias="challenge_id")
+    name: str = Field(galias="challenge_name")
+    passed: bool = Field(galias="is_passed")
+    level: int = Field(galias="settled_level")
+
+    main_characters: List[LabyrinthWarriorsCharacter] = Field(galias="main_avatars")
+    support_characters: List[LabyrinthWarriorsCharacter] = Field(galias="support_avatars")
+    runes: List[LabyrinthWarriorsRune]
+
+
+class LabyrinthWarriors(GenshinModel):
+    """A Labyrinth Warriors event"""
+
+    challenges: List[LabyrinthWarriorsChallenge] = Field(galias="records")
+
+
+# ---------------------------------------------------------
+# Activities:
+
+
 class Activities(GenshinModel):
     """A collection of genshin activities"""
 
-    hyakunin: Optional[HyakuninIkki] = Field(galias="sumo")
+    hyakunin_ikki: Optional[HyakuninIkki] = Field(gslug="sumo")
+    labyrinth_warriors: Optional[LabyrinthWarriors] = Field(gslug="rogue")
 
-    @validator("hyakunin", pre=True)
-    def __check_activity_exists(cls, v):
-        if not v["exists_data"]:
-            return None
-        return v
+    @root_validator(pre=True)
+    def __flatten_activities(cls, values: Dict[str, Any]):
+        slugs = {
+            field.field_info.extra["gslug"]: name
+            for name, field in cls.__fields__.items()
+            if field.field_info.extra.get("gslug")
+        }
+
+        for activity in values["activities"]:
+            for name, value in activity.items():
+                name = slugs.get(name, name)
+                values[name] = value if value["exists_data"] else None
+
+        return values

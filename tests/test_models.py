@@ -7,7 +7,7 @@ def test_character_icon():
     base = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
     assert i.icon == base + "character_icon/UI_AvatarIcon_Ayaka.png"
     assert i.image == base + "character_image/UI_AvatarIcon_Ayaka@2x.png"
-    assert i.side == base + "character_side_icon/UI_AvatarIcon_Side_Ayaka.png"
+    assert i.side_icon == base + "character_side_icon/UI_AvatarIcon_Side_Ayaka.png"
 
 
 def test_base_character():

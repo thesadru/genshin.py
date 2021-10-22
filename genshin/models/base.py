@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import re
+import warnings
 from abc import ABC
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Union
 
 from pydantic import BaseModel, Field, root_validator
 
-from ..constants import CHARACTER_NAMES
+from ..constants import CHARACTER_NAMES, DBChar
 
 
 class GenshinModel(BaseModel):
@@ -23,8 +25,35 @@ class GenshinModel(BaseModel):
 
         return {aliases.get(name, name): value for name, value in values.items()}
 
+    @root_validator()
+    def __parse_timezones(cls, values: Dict[str, Any]):
+        for name, field in cls.__fields__.items():
+            if isinstance(values.get(name), datetime):
+                offset = field.field_info.extra.get("timezone", 0)
+                tzinfo = timezone(timedelta(hours=offset))
+                values[name] = values[name].replace(tzinfo=tzinfo)
 
-class CharacterIcon(str):
+        return values
+
+    def dict(self, **kwargs) -> Dict[str, Any]:
+        """Generate a dictionary representation of the model,
+        optionally specifying which fields to include or exclude.
+
+        Takes the liberty of also giving properties as fields.
+        """
+        for name in dir(type(self)):
+            clsvalue = getattr(type(self), name)
+            if isinstance(clsvalue, property):
+                value = getattr(self, name)
+                # skip context-specific properties
+                if value == "":
+                    continue
+                self.__dict__[name] = value
+
+        return super().dict(**kwargs)
+
+
+class CharacterIcon:
     """A character's icon"""
 
     character_name: str
@@ -52,7 +81,7 @@ class CharacterIcon(str):
         return self.create_icon("character_image/UI_AvatarIcon", scale=2)
 
     @property
-    def side(self) -> str:
+    def side_icon(self) -> str:
         return self.create_icon("character_side_icon/UI_AvatarIcon_Side")
 
     def __repr__(self) -> str:
@@ -66,7 +95,7 @@ class BaseCharacter(GenshinModel, ABC):
     name: str
     element: str
     rarity: int
-    icon: CharacterIcon
+    icon: str
 
     collab: bool = False
 
@@ -74,30 +103,33 @@ class BaseCharacter(GenshinModel, ABC):
     def __autocomplete(cls, values: Dict[str, Any]):
         """Complete missing data"""
         id, icon, name = values.get("id"), values.get("icon"), values.get("name")
-        if id:
-            char = CHARACTER_NAMES.get(id)
-            if char is None:
-                raise ValueError(f"Invalid character id {id}")
+
+        if id and id in CHARACTER_NAMES:
+            char = CHARACTER_NAMES[id]
+
         elif icon:
             icon = CharacterIcon(icon)
             for char in CHARACTER_NAMES.values():
                 if char.icon_name == icon.character_name:
                     break
             else:
-                # missing data for this character
-                return values
+                warnings.warn("Completing data for an unknown character")
+                name = icon.character_name
+                char = DBChar(0, name, name, "Anemo", 5)
+
         elif name:
             for char in CHARACTER_NAMES.values():
                 if char.name == name:
                     break
             else:
-                # cannot complete values for foreign languages
-                return values
+                warnings.warn("Completing data for a partial character")
+                char = DBChar(0, name, name, "Anemo", 5)
+
         else:
-            raise TypeError("Character data incomplete")
+            raise ValueError("Character data incomplete")
 
         values["id"] = values.get("id") or char.id
-        values["icon"] = values.get("icon") or CharacterIcon(char.icon_name)
+        values["icon"] = CharacterIcon(values.get("icon") or char.icon_name).icon
         values["name"] = values.get("name") or char.name
         values["element"] = values.get("element") or char.element
         values["rarity"] = values.get("rarity") or char.rarity
@@ -110,11 +142,11 @@ class BaseCharacter(GenshinModel, ABC):
 
     @property
     def image(self) -> str:
-        return self.icon.image
+        return CharacterIcon(self.icon).image
 
     @property
     def side_icon(self) -> str:
-        return self.icon.side
+        return CharacterIcon(self.icon).side_icon
 
     @property
     def traveler_name(self) -> str:

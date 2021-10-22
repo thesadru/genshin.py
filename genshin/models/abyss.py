@@ -4,14 +4,14 @@ from typing import Any, Dict, List, Literal
 from pydantic import Field, root_validator
 from pydantic.main import BaseModel
 
-from .base import BaseCharacter, CharacterIcon, GenshinModel
+from .base import BaseCharacter, GenshinModel
 
 
 class AbyssRankCharacter(BaseCharacter):
     """A character with a value of a rank"""
 
     id: int = Field(galias="avatar_id")
-    icon: CharacterIcon = Field(galias="avatar_icon")
+    icon: str = Field(galias="avatar_icon")
 
     value: int
 

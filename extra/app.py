@@ -26,13 +26,18 @@ async def index():
 
 
 @app.get("/user/{uid}", response_model=genshin.models.UserStats)
-async def user(uid: int, lang: str = None):
+async def user(uid: int, lang: Lang = None):
     return await client.get_user(uid, lang=lang)
 
 
 @app.get("/user/{uid}/abyss", response_model=genshin.models.SpiralAbyss)
 async def abyss(uid: int, previous: bool = False):
     return await client.get_spiral_abyss(uid, previous=previous)
+
+
+@app.get("/user/{uid}/notes", response_model=genshin.models.Notes)
+async def notes(uid: int, lang: Lang = None):
+    return await client.get_notes(uid, lang=lang)
 
 
 @app.get("/user/{uid}/activities", response_model=genshin.models.Activities)

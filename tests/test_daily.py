@@ -35,4 +35,4 @@ async def test_monthly_rewards(lclient: GenshinClient):
 @pytest.mark.asyncio_cooperative
 async def test_claimed_rewards(lclient: GenshinClient):
     claimed = await lclient.claimed_rewards(limit=10).flatten()
-    assert claimed[0].time <= datetime.utcnow()
+    assert claimed[0].time <= datetime.now().astimezone()

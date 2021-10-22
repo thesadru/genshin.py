@@ -95,6 +95,44 @@ async def characters(
 
 @app.command()
 @asynchronous
+async def notes(
+    uid: int = typer.Argument(..., help="A genshin uid"),
+    lang: str = typer.Option("en-us", help="The language to use"),
+):
+    cuid = typer.style(str(uid), fg="blue")
+    typer.echo(f"Real-Time notes of {cuid}")
+
+    async with genshin.GenshinClient() as client:
+        client.set_browser_cookies()
+        data = await client.get_notes(uid, lang=lang)
+
+    typer.echo(f"{typer.style('Resin:', bold=True)} {data.current_resin}/{data.max_resin}")
+    typer.echo(
+        f"{typer.style('Comissions:', bold=True)} "
+        f"{data.completed_commissions}/{data.max_comissions}",
+        nl=False,
+    )
+    if data.completed_commissions == data.max_comissions and not data.claimed_comission_reward:
+        typer.echo(f" | [{typer.style('X', fg='red')}] Haven't claimed rewards")
+    else:
+        typer.echo()
+    typer.echo(
+        f"{typer.style('Used resin cost-halving opportunities:', bold=True)} "
+        f"{data.max_resin_discounts - data.remaining_resin_discounts}/{data.max_resin_discounts}"
+    )
+
+    typer.echo(
+        f"\n{typer.style('Expeditions:', bold=True)} "
+        f"{len(data.expeditions)}/{data.max_expeditions}"
+    )
+    for expedition in data.expeditions:
+        seconds = expedition.remaining.seconds
+        remaining = f"{seconds // 3600:2}:{seconds % 3600 // 60:02}"
+        typer.echo(f" - {expedition.status} | {remaining} remaining - {expedition.character.name}")
+
+
+@app.command()
+@asynchronous
 async def wishes(
     limit: int = typer.Option(None, help="The maximum amount of wishes to show"),
     lang: str = typer.Option("en-us", help="The language to use"),
