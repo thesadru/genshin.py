@@ -24,6 +24,8 @@ jobs:
         env:
           LTUID: ${{ secrets.LTUID }}
           LTOKEN: ${{ secrets.LTOKEN }}
+          CN_LTUID: ${{ secrets.CN_LTUID }}
+          CN_LTOKEN: ${{ secrets.CN_LTOKEN }}
         run: |
           python -m pytest
       - name: Lint with flake8

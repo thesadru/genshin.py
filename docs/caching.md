@@ -9,6 +9,11 @@ Genshin.py uses several caches:
 
 It is recommended to use `cachetools` to set your caches. Genshin.py has a builtin utility method to create caches for you.
 
+## Installation
+```console
+pip install genshin[cache]
+```
+
 ## Quick example
 
 ```py

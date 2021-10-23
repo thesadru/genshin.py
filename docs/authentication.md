@@ -31,7 +31,14 @@ client.set_cookies("ltuid=...; ltoken=...") # cookie header
 
 ### Setting cookies automatically
 For testing, you may want to use your own personal cookies.
-As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.get_browser_cookies()`. 
+As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.get_browser_cookies()`.
+
+### Installation
+```console
+pip install genshin[cookies]
+```
+
+### Example
 ```py
 # get cookies from a browser and set them
 client = genshin.GenshinClient()

@@ -35,6 +35,7 @@ markdown_extensions:
         emoji_generator: !!python/name:materialx.emoji.to_svg
 nav:
     - index.md
+    - credits.md
     - Usage:
         - authentication.md
         - battle_chronicle.md
@@ -49,4 +50,5 @@ nav:
     - Internationalization: 
       - langs.md
       - chinese.md
+    - cli.md
     - api.md

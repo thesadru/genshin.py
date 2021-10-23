@@ -59,7 +59,7 @@ async def stats(
 
     if data.teapot is not None:
         typer.echo()
-        typer.secho("Teapot", fg="yellow")
+        typer.secho("Teapot:", fg="yellow")
         level = typer.style(str(data.teapot.level), bold=True)
         comfort = typer.style(str(data.teapot.comfort), bold=True)
         typer.echo(f"level {level} | comfort {comfort} ({data.teapot.comfort_name})")
@@ -115,6 +115,7 @@ async def notes(
     uid: int = typer.Argument(..., help="A genshin uid"),
     lang: str = typer.Option("en-us", help="The language to use"),
 ):
+    """Real-Time notes to see live genshin data"""
     cuid = typer.style(str(uid), fg="blue")
     typer.echo(f"Real-Time notes of {cuid}")
 
