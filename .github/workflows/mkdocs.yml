@@ -14,9 +14,9 @@ jobs:
         with:
           python-version: 3.9
       - name: Install dependencies
-        run: \
-          pip install mkdocs-material 
-          pip install git+https://github.com/devdrian/pdoc@reST_style_docstrings_support
+        run: |
+          pip install mkdocs-material git+https://github.com/devdrian/pdoc@reST_style_docstrings_support
+          pip install -r requirements.txt
       - name: Generate API Documentation
         run: pdoc genshin --html -o "docs/pdoc" --force
       - name: Deploy docs
