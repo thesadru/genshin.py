@@ -118,6 +118,8 @@ _errors: Dict[int, Union[Tuple[Type[GenshinException], Optional[str]], Type[Gens
     -2021: (GenshinException, "Cannot claim codes for account with adventure rank lower than 10."),
     # rewards
     -5003: (AlreadyClaimed, "Already claimed the daily reward today."),
+    # chinese
+    1008: AccountNotFound,
 }
 
 ERRORS: Dict[int, Tuple[Type[GenshinException], Optional[str]]] = {

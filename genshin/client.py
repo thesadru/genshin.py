@@ -1025,7 +1025,7 @@ class ChineseClient(GenshinClient):
             "ds": generate_cn_dynamic_secret(self.DS_SALT, json, params),
         }
 
-        debug_url = url.with_query(kwargs.get("params", {}))
+        debug_url = url.with_query(params)
         self.logger.debug(f"RECORD {method} {debug_url}")
 
         data = await self.request(url, method, headers=headers, json=json, params=params, **kwargs)

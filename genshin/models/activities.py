@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from pydantic import Field, root_validator
@@ -96,6 +97,18 @@ class LabyrinthWarriors(GenshinModel):
 
 
 # ---------------------------------------------------------
+# Chinese activities:
+
+
+class ChineseActivity(GenshinModel):
+    start_time: datetime
+    end_time: datetime
+    total_score: int
+    total_times: int
+    records: List[Any]
+
+
+# ---------------------------------------------------------
 # Activities:
 
 
@@ -104,6 +117,12 @@ class Activities(GenshinModel):
 
     hyakunin_ikki: Optional[HyakuninIkki] = Field(gslug="sumo")
     labyrinth_warriors: Optional[LabyrinthWarriors] = Field(gslug="rogue")
+
+    effigy: Optional[ChineseActivity]
+    mechanicus: Optional[ChineseActivity]
+    challenger_slab: Optional[ChineseActivity]
+    martial_legend: Optional[ChineseActivity]
+    chess: Optional[ChineseActivity]
 
     @root_validator(pre=True)
     def __flatten_activities(cls, values: Dict[str, Any]):
@@ -115,6 +134,9 @@ class Activities(GenshinModel):
 
         for activity in values["activities"]:
             for name, value in activity.items():
+                if "exists_data" not in value:
+                    continue
+
                 name = slugs.get(name, name)
                 values[name] = value if value["exists_data"] else None
 

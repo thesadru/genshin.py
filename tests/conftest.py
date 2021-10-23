@@ -112,3 +112,13 @@ def uid():
 @pytest.fixture(scope="session")
 def hoyolab_uid():
     return 8366222
+
+
+@pytest.fixture(scope="session")
+def cnuid():
+    return 101322963
+
+
+@pytest.fixture(scope="session")
+def miyoushe_uid():
+    return 75276539
