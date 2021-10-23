@@ -14,6 +14,11 @@ from ..constants import CHARACTER_NAMES, DBChar
 class GenshinModel(BaseModel):
     """A genshin model"""
 
+    def __init__(self, **data: Any) -> None:
+        """"""
+        # clear the docstring for pdoc
+        super().__init__(**data)
+
     @root_validator(pre=True)
     def __parse_galias(cls, values: Dict[str, Any]):
         """Due to alias being reserved for actual aliases we use a custom alias"""

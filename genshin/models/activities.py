@@ -27,7 +27,7 @@ class HyakuninIkkiSkill(GenshinModel):
 
 
 class HyakuninIkkiBattle(GenshinModel):
-    """A Hyakunin Ikki challenge"""
+    """A Hyakunin Ikki battle"""
 
     characters: List[HyakuninIkkiCharacter] = Field(galias="avatars")
     skills: List[HyakuninIkkiSkill] = Field(galias="skills")
@@ -101,6 +101,8 @@ class LabyrinthWarriors(GenshinModel):
 
 
 class ChineseActivity(GenshinModel):
+    """An arbitrary activty for chinese events"""
+
     start_time: datetime
     end_time: datetime
     total_score: int

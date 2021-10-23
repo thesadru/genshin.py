@@ -1,3 +1,4 @@
+"""Errors raised by genshin.py"""
 from typing import Any, Dict, NoReturn, Optional, Tuple, Type, Union
 
 __all__ = [

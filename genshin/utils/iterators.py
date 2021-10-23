@@ -9,6 +9,11 @@ __all__ = ["aenumerate", "aislice", "azip", "amerge"]
 
 
 async def aenumerate(iterable: AsyncIterable[T], start: int = 0) -> AsyncIterator[Tuple[int, T]]:
+    """enumerate for async iterators
+
+    :param iterable: An async iterable
+    :param start: The starting value
+    """
     i = start
     async for x in iterable:
         yield i, x
@@ -16,7 +21,11 @@ async def aenumerate(iterable: AsyncIterable[T], start: int = 0) -> AsyncIterato
 
 
 async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator[T]:
-    """Slices an async iterable"""
+    """islice for async iterators
+
+    :param iterable: An async iterable
+    :param stop: The stopping index, if any
+    """
     async for i, x in aenumerate(iterable, start=1):
         yield x
 
@@ -25,6 +34,10 @@ async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator
 
 
 async def azip(*iterables: AsyncIterable[T]) -> AsyncIterator[Tuple[T, ...]]:
+    """zip for async iterators
+
+    :param iterables: Async iterables
+    """
     iterators = [i.__aiter__() for i in iterables]
     while True:
         coros = (i.__anext__() for i in iterators)
@@ -36,7 +49,10 @@ async def azip(*iterables: AsyncIterable[T]) -> AsyncIterator[Tuple[T, ...]]:
 
 
 async def _try_gather_first(iterators: Iterable[AsyncIterator[T]]) -> List[T]:
-    """Gather all the first values of iterators at once"""
+    """Gather all the first values of iterators at once
+
+    :param iterators: Async iterators
+    """
     coros = (it.__anext__() for it in iterators)
     gathered = await asyncio.gather(*coros, return_exceptions=True)
     values = []
@@ -52,7 +68,11 @@ async def _try_gather_first(iterators: Iterable[AsyncIterator[T]]) -> List[T]:
 async def amerge(
     iterables: Iterable[AsyncIterable[T]], key: Callable[[T], Any] = None
 ) -> AsyncIterator[T]:
-    """Async version of heapq.merge"""
+    """heapq.merge for async iterators
+
+    :param iterables: Async iterables
+    :param key: Function to determine the sort order
+    """
     key = key or (lambda x: x)
 
     iterators = [i.__aiter__() for i in iterables]

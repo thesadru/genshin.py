@@ -1,3 +1,4 @@
+"""A cli for genshin.py"""
 import asyncio
 from functools import update_wrapper
 from typing import Any, Awaitable, Callable

@@ -1,20 +1,13 @@
 import re
 from datetime import datetime
 from enum import IntEnum
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from pydantic import Field, validator
 
 from .base import GenshinModel
 
-
-class BannerType(IntEnum):
-    """A genshin wish history banner type"""
-
-    novice = 100
-    permanent = 200
-    character = 301
-    weapon = 302
+BannerType = Literal[100, 200, 301, 302]
 
 
 class Wish(GenshinModel):

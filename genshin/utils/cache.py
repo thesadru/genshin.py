@@ -1,4 +1,4 @@
-"""Cache utils"""
+"""Caching utilities"""
 from __future__ import annotations
 
 from functools import update_wrapper

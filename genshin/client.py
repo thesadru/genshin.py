@@ -1,3 +1,4 @@
+"""A client interacting directly with the api"""
 from __future__ import annotations
 
 import asyncio
@@ -41,7 +42,14 @@ __all__ = ["GenshinClient", "MultiCookieClient", "ChineseClient", "ChineseMultiC
 
 
 class GenshinClient:
-    """A simple http client for genshin endpoints"""
+    """A simple http client for genshin endpoints
+
+    :var logger: A logger used for debugging
+    :var cache: A cache for http requests
+    :var redis_cache: A Redis cache for http requests
+    :var paginator_cache: A high-frequency access cache for paginators
+    :cvar static_cache: A static cache
+    """
 
     DS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
     ACT_ID = "e202102251931481"
@@ -64,7 +72,7 @@ class GenshinClient:
     redis_cache: Optional[Redis] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     static_cache: ClassVar[MutableMapping[str, Any]] = {}
-    _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # NEVER CHANGE!
+    _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # TODO: Remove the need for this
 
     def __init__(
         self,
@@ -74,9 +82,12 @@ class GenshinClient:
         lang: str = "en-us",
         debug: bool = False,
     ) -> None:
-        """Create a new GenshinClient instance by setting the language and authentication
+        """Create a new GenshinClient instance
 
-        If debug is turned on the logger for GenshinClient will be turned to debug mode.
+        :param cookies: The cookies used for authenticaation
+        :param authkey: The authkey used for paginators
+        :param lang: The default language
+        :param debug: Whether debug logs should be shown in stdout
         """
         if cookies:
             self.cookies = cookies
@@ -120,7 +131,7 @@ class GenshinClient:
 
     @property
     def lang(self) -> str:
-        """The default language, defaults to en-us"""
+        """The default language, defaults to "en-us" """
         return self._lang
 
     @lang.setter
@@ -150,6 +161,7 @@ class GenshinClient:
 
     @property
     def debug(self) -> bool:
+        """Whether the debug logs are being shown in stdout"""
         return logging.getLogger("genshin").level == logging.DEBUG
 
     @debug.setter
@@ -161,7 +173,10 @@ class GenshinClient:
     def set_cookies(
         self, cookies: Union[Mapping[str, Any], str] = None, **kwargs: Any
     ) -> Mapping[str, str]:
-        """Helper cookie setter that accepts cookie headers"""
+        """Helper cookie setter that accepts cookie headers
+
+        :returns: The new cookies
+        """
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
@@ -173,7 +188,10 @@ class GenshinClient:
     def set_browser_cookies(self, browser: str = None) -> Mapping[str, str]:
         """Extract cookies from your browser and set them as client cookies
 
-        Refer to get_browser_cookies for more info.
+        Avalible browsers: chrome, chromium, opera, edge, firefox
+
+        :param browser: The browser to extract the cookies from
+        :returns: The extracted cookies
         """
         self.cookies = get_browser_cookies(browser)
         return self.cookies
@@ -181,7 +199,8 @@ class GenshinClient:
     def set_authkey(self, authkey: str = None) -> None:
         """Sets an authkey for wish & transaction logs
 
-        Accepts an authkey, a url containing an authkey or a path to a file with an authkey.
+        :param authkey: An authkey, a url containing an authkey or a path towards a logfile
+        :returns: The new authkey
         """
         if authkey is None or os.path.isfile(authkey):
             authkey = get_authkey(authkey)
@@ -198,9 +217,13 @@ class GenshinClient:
         ttl: int = None,
         getsizeof: Callable[[Any], float] = None,
     ) -> MutableMapping[Any, Any]:
-        """Create and set a new cache (not static or paginator)
+        """Create and set a new cache for http requests
 
-        If ttl is set then a TTL cache is created
+        :param maxsize: The maximum size of the cache
+        :param strategy: The cache strategy to use, defaults to Least-Recently-Used
+        :param ttl: The time to live of items, only works with LRU caches
+        :param getsizeof: Function that gets the size of any objecct, by default everything has size of 1
+        :returns: The newly created cache
         """
         if self.redis_cache is not None:
             raise RuntimeError("Cannot have both a cache and a redis cache")
@@ -224,6 +247,12 @@ class GenshinClient:
         return self.cache
 
     def set_redis_cache(self, url: str, **kwargs: Any) -> Redis:
+        """Create and set a new redis cache for http requests
+
+        :param url: A redis database url
+        :param kwargs: Kwargs proxied to aioredis.from_url
+        :returns: The newly created Redis object
+        """
         if self.cache is not None:
             raise RuntimeError("Cannot have both a cache and a redis cache")
 
@@ -287,7 +316,7 @@ class GenshinClient:
     # ASYNCIO HANDLERS:
 
     async def close(self) -> None:
-        """Close the client's session"""
+        """Close the underlying aiohttp session"""
         if not self.session.closed:
             await self.session.close()
         if self.redis_cache:
@@ -309,7 +338,7 @@ class GenshinClient:
         headers: Dict[str, Any] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        """Make a request and return a parsed dictionary response"""
+        """Make a request and return a parsed json response"""
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
 
@@ -532,7 +561,10 @@ class GenshinClient:
     # HOYOLAB:
 
     async def genshin_accounts(self, *, lang: str = None) -> List[GenshinAccount]:
-        """Get the genshin accounts of the currently logged-in user"""
+        """Get the genshin accounts of the currently logged-in user
+
+        :params lang: The language to use
+        """
         # fmt: off
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
@@ -543,6 +575,11 @@ class GenshinClient:
         return [GenshinAccount(**i) for i in data["list"]]
 
     async def search_users(self, keyword: str, *, lang: str = None) -> List[SearchUser]:
+        """Search hoyolab users
+
+        :param keyword: The keyword to search with
+        :params lang: The language to use
+        """
         data = await self.request_hoyolab(
             "community/apihub/wapi/search",
             lang=lang,
@@ -552,7 +589,10 @@ class GenshinClient:
         return [SearchUser(**i) for i in data["users"]]
 
     async def set_visibility(self, public: bool) -> None:
-        """Sets your data to public or private."""
+        """Sets your data to public or private.
+
+        :param public: Whether the data should now be public
+        """
         await self.request_game_record(
             "genshin/wapi/publishGameRecord",
             method="POST",
@@ -560,7 +600,10 @@ class GenshinClient:
         )
 
     async def get_recommended_users(self, *, limit: int = 200) -> List[SearchUser]:
-        """Get a list of recommended active users"""
+        """Get a list of recommended active users
+
+        :param limit: The maximum amount of users to return
+        """
         data = await self.request_hoyolab(
             "community/user/wapi/recommendActive",
             params=dict(page_size=limit),
@@ -568,7 +611,12 @@ class GenshinClient:
         return [SearchUser(**i["user"]) for i in data["list"]]
 
     async def redeem_code(self, code: str, uid: int = None, *, lang: str = None) -> None:
-        """Redeems a gift code for the current user"""
+        """Redeems a gift code for the current user
+
+        :param code: The code to redeem
+        :param uid: The specific uid to redeem for
+        :param lang: The language to use
+        """
         # do note that this endpoint is very quirky, can't really make this pretty
         if uid is not None:
             server = recognize_server(uid)
@@ -615,14 +663,14 @@ class GenshinClient:
         Caching with characters is optimized
         """
         # try to get all the characters from the cache
-        characters = []
-        for charid in character_ids:
-            char = await self._check_cache(("character", uid, charid), lang=lang)
-            if char is None:
-                break
-            characters.append(char)
-        else:
-            return characters
+        coros = (
+            asyncio.create_task(self._check_cache(("character", uid, charid), lang=lang))
+            for charid in character_ids
+        )
+        characters = await asyncio.gather(*coros)
+        if all(characters):
+            # mypy bug - all does not function as a type guard
+            return characters  # type: ignore
 
         server = recognize_server(uid)
         data = await self.request_game_record(
@@ -634,13 +682,20 @@ class GenshinClient:
 
         # update the cache one by one
         characters = data["avatars"]
-        for char in characters:
-            await self._update_cache(char, ("character", uid, char["id"]))
+        coros = [
+            asyncio.create_task(self._update_cache(char, ("character", uid, char["id"])))
+            for char in characters
+        ]
+        await asyncio.wait(coros)
 
         return characters
 
     async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
-        """Get a user's record card. If a uid is not provided gets the logged in user's"""
+        """Get a user's record card
+
+        :param hoyolab_uid: A hoyolab uid
+        :param lang: The language to use
+        """
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
             lang=lang,
@@ -655,7 +710,11 @@ class GenshinClient:
         return RecordCard(**cards[0])
 
     async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
-        """Get a user's stats and characters"""
+        """Get a user's stats and characters
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         data = await self.__fetch_user(uid, lang=lang)
         character_ids = [char["id"] for char in data["avatars"]]
         data["avatars"] = await self.__fetch_characters(uid, character_ids, lang=lang)
@@ -663,21 +722,35 @@ class GenshinClient:
         return UserStats(**data)
 
     async def get_partial_user(self, uid: int, *, lang: str = None) -> PartialUserStats:
-        """Helper alternative function to get a user without any equipment"""
+        """Helper function to get a user without any equipment
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         data = await self.__fetch_user(uid, lang=lang)
         return PartialUserStats(**data)
 
     async def get_characters(
         self, uid: int, character_ids: List[int], *, lang: str = None
     ) -> List[Character]:
-        """Helper function to fetch characters from just their ids"""
+        """Helper function to fetch characters from just their ids
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         data = await self.__fetch_characters(uid, character_ids, lang=lang)
         characters = [Character(**i) for i in data]
-        # not a guaranteed order but it's nice to make it ensured in some way
         return sorted(characters, key=lambda c: character_ids.index(c.id))
 
-    async def get_spiral_abyss(self, uid: int, *, previous: bool = False) -> SpiralAbyss:
-        """Get spiral abyss runs"""
+    async def get_spiral_abyss(
+        self, uid: int, *, previous: bool = False, lang: str = None
+    ) -> SpiralAbyss:
+        """Get spiral abyss runs
+
+        :param hoyolab_uid: A Genshin uid
+        :param previous: Whether to get the record of the previous spiral abyss
+        :param lang: The language to use
+        """
         server = recognize_server(uid)
         schedule_type = 2 if previous else 1
         data = await self.request_game_record(
@@ -688,7 +761,11 @@ class GenshinClient:
         return SpiralAbyss(**data)
 
     async def get_notes(self, uid: int, *, lang: str = None) -> Notes:
-        """Get the real-time notes."""
+        """Get the real-time notes.
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         server = recognize_server(uid)
         data = await self.request_game_record(
             "genshin/api/dailyNote",
@@ -698,7 +775,11 @@ class GenshinClient:
         return Notes(**data)
 
     async def get_activities(self, uid: int, *, lang: str = None) -> Activities:
-        """Get activities"""
+        """Get activities
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         server = recognize_server(uid)
         data = await self.request_game_record(
             "genshin/api/activities",
@@ -709,7 +790,11 @@ class GenshinClient:
         return Activities(**data)
 
     async def get_full_user(self, uid: int, *, lang: str = None) -> FullUserStats:
-        """Get a user with all their possible data"""
+        """Get a user with all their possible data
+
+        :param hoyolab_uid: A Genshin uid
+        :param lang: The language to use
+        """
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_user(uid, lang=lang),
             self.get_spiral_abyss(uid, previous=False),
@@ -722,7 +807,10 @@ class GenshinClient:
     # DAILY REWARDS:
 
     async def get_reward_info(self, *, lang: str = None) -> DailyRewardInfo:
-        """Get the daily reward info for the current user"""
+        """Get the daily reward info for the current user
+
+        :param lang: The language to use
+        """
         data = await self.request_daily_reward("info", lang=lang)
         return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
 
@@ -730,14 +818,21 @@ class GenshinClient:
         lambda self, lang=None: ("rewards", datetime.utcnow().month, lang or self.lang)
     )
     async def get_monthly_rewards(self, *, lang: str = None) -> List[DailyReward]:
-        """Get a list of all availible rewards for the current month"""
+        """Get a list of all availible rewards for the current month
+
+        :param lang: The language to use
+        """
         data = await self.request_daily_reward("home", lang=lang)
         return [DailyReward(**i) for i in data["awards"]]
 
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
         """Get all claimed rewards for the current user
 
-        NOTE: Mihoyo does not support languages on this endpoint yet
+        NOTE: Languages are currently broken,
+        the language is based off the language used to claim the reward
+
+        :param limit: The maximum amount of rewards to get
+        :param lang: The language to use - currently broken
         """
         return DailyRewardPaginator(self, limit=limit, lang=lang)
 
@@ -756,7 +851,8 @@ class GenshinClient:
     ) -> Optional[DailyReward]:
         """Signs into hoyolab and claims the daily reward.
 
-        If reward is True then the claimed reward will be returned
+        :param lang: The language to use
+        :param reward: Whether to also fetch the claimed reward
         """
         await self.request_daily_reward("sign", method="POST", lang=lang)
 
@@ -772,7 +868,7 @@ class GenshinClient:
     @overload
     def wish_history(
         self,
-        banner_type: Optional[List[int]] = ...,
+        banner_type: Optional[List[BannerType]] = ...,
         *,
         limit: int = None,
         lang: str = None,
@@ -784,7 +880,7 @@ class GenshinClient:
     @overload
     def wish_history(
         self,
-        banner_type: int,
+        banner_type: BannerType,
         *,
         limit: int = None,
         lang: str = None,
@@ -795,14 +891,21 @@ class GenshinClient:
 
     def wish_history(
         self,
-        banner_type: Union[int, List[int]] = None,
+        banner_type: Union[BannerType, List[BannerType]] = None,
         *,
         limit: int = None,
         lang: str = None,
         authkey: str = None,
         end_id: int = 0,
     ) -> Union[WishHistory, MergedWishHistory]:
-        """Get the wish history of a user"""
+        """Get the wish history of a user
+
+        :param banner_type: The banner(s) from which to get the wishes
+        :param limit: The maximum amount of wishes to get
+        :param lang: The language to use
+        :param authkey: The authkey to use when requesting data
+        :param end_id: The ending id to start getting data from
+        """
         if isinstance(banner_type, int):
             return WishHistory(
                 self,
@@ -813,22 +916,39 @@ class GenshinClient:
                 end_id=end_id,
             )
         else:
+            # fmt: off
             return MergedWishHistory(
-                self, banner_type, lang=lang, authkey=authkey, limit=limit, end_id=end_id
+                self, 
+                banner_type, 
+                lang=lang, 
+                authkey=authkey, 
+                limit=limit, 
+                end_id=end_id
             )
+            # fmt: on
 
-    @permanent_cache(lambda self, lang=None, authkey=None: ("banners", lang or self.lang))
-    async def get_banner_names(self, *, lang: str = None, authkey: str = None) -> Dict[int, str]:
-        """Get a list of banner names"""
+    @permanent_cache(lambda self, lang=None, **kwargs: ("banners", lang or self.lang))
+    async def get_banner_names(
+        self, *, lang: str = None, authkey: str = None
+    ) -> Dict[BannerType, str]:
+        """Get a list of banner names
+
+        :param lang: The language to use
+        :param authkey: The authkey to use when requesting data
+        """
         data = await self.request_gacha_info(
             "getConfigList",
             lang=lang,
             authkey=authkey,
         )
-        return {int(i["key"]): i["name"] for i in data["gacha_type_list"]}
+        return {int(i["key"]): i["name"] for i in data["gacha_type_list"]}  # type: ignore
 
     async def _get_banner_details(self, banner_id: str, *, lang: str = None) -> BannerDetails:
-        """Get details of a specific banner using its id"""
+        """Get details of a specific banner using its id
+
+        :param banner_id: A banner id
+        :param lang: The language to use
+        """
         data = await self.request_webstatic(
             f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json"
         )
@@ -837,7 +957,11 @@ class GenshinClient:
     async def get_banner_details(
         self, banner_ids: List[str] = None, *, lang: str = None
     ) -> List[BannerDetails]:
-        """Get all banner details at once in a batch"""
+        """Get all banner details at once in a batch
+
+        :param banner_ids: A list of banner ids, implicitly fetched when not provided
+        :param lang: The language to use
+        """
         try:
             banner_ids = banner_ids or get_banner_ids()
         except FileNotFoundError:
@@ -849,17 +973,26 @@ class GenshinClient:
         data = await asyncio.gather(*(self._get_banner_details(i, lang=lang) for i in banner_ids))
         return list(data)
 
-    async def get_gacha_items(self, *, lang: str = None) -> List[GachaItem]:
-        """Get the list of characters and weapons that can be gotten from the gacha."""
+    async def get_gacha_items(
+        self, *, server: str = "os_asia", lang: str = None
+    ) -> List[GachaItem]:
+        """Get the list of characters and weapons that can be gotten from the gacha.
+
+        :param server: The server to request the items from
+        :param lang: The language to use
+        """
         data = await self.request_webstatic(
-            f"/hk4e/gacha_info/os_asia/items/{lang or self.lang}.json"
+            f"/hk4e/gacha_info/{server}/items/{lang or self.lang}.json"
         )
         return [GachaItem(**i) for i in data]
 
     # TRANSACTIONS:
 
     async def _get_transaction_reasons(self, lang: str) -> Dict[str, str]:
-        """Get a mapping of transaction reasons"""
+        """Get a mapping of transaction reasons
+
+        :param lang: The language to use
+        """
         base = "https://mi18n-os.mihoyo.com/webstatic/admin/mi18n/hk4e_global/"
         data = await self.request_webstatic(base + f"m02251421001311/m02251421001311-{lang}.json")
 
@@ -872,7 +1005,7 @@ class GenshinClient:
     @overload
     def transaction_log(
         self,
-        kind: Optional[List[str]] = ...,
+        kind: Optional[List[TransactionKind]] = ...,
         *,
         limit: int = None,
         lang: str = None,
@@ -907,13 +1040,21 @@ class GenshinClient:
 
     def transaction_log(
         self,
-        kind: Union[str, List[str]] = None,
+        kind: Union[TransactionKind, List[TransactionKind]] = None,
         *,
         limit: int = None,
         lang: str = None,
         authkey: str = None,
         end_id: int = 0,
     ) -> Union[Transactions, MergedTransactions]:
+        """Get the transaction log of a user
+
+        :param kind: The kind(s) of transactions to get
+        :param limit: The maximum amount of wishes to get
+        :param lang: The language to use
+        :param authkey: The authkey to use when requesting data
+        :param end_id: The ending id to start getting data from
+        """
         # TODO: Utilize the new diary
         if isinstance(kind, str):
             return Transactions(self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
@@ -925,6 +1066,7 @@ class GenshinClient:
     # INTERACTIVE MAP:
 
     async def _get_map_pin_icons(self, map_id: int = 2, *, lang: str = None) -> Dict[int, str]:
+        """Get the icons of pins"""
         data = await self.request_map("spot_kind/get_icon_list", lang=lang, map_id=map_id)
         return {i["id"]: i["url"] for i in data["icons"]}
 
@@ -939,14 +1081,22 @@ class GenshinClient:
         return MapInfo(**data["info"])
 
     async def get_map_labels(self, map_id: int = 2, *, lang: str = None) -> List[MapNode]:
-        """Get the map tree of all categories & lables of map points"""
+        """Get the map tree of all categories & lables of map points
+
+        :param map_id: The id of the map
+        :param lang: The language to use
+        """
         data = await self.request_map("map/label/tree", lang=lang, map_id=map_id, static=True)
         return [MapNode(**i) for i in data["tree"]]
 
     async def get_map_points(
         self, map_id: int = 2, *, lang: str = None
     ) -> Tuple[List[MapNode], List[MapPoint]]:
-        """Get a tuple of all map lables and map points"""
+        """Get a tuple of all map lables and map points
+
+        :param map_id: The id of the map
+        :param lang: The language to use
+        """
         data = await self.request_map("map/point/list", lang=lang, map_id=map_id, static=True)
 
         labels = [MapNode(**i) for i in data["label_list"]]
@@ -955,7 +1105,11 @@ class GenshinClient:
         return labels, points
 
     async def get_map_locations(self, map_id: int = 2, *, lang: str = None) -> List[MapLocation]:
-        """Get a list of all locations on a map"""
+        """Get a list of all locations on a map
+
+        :param map_id: The id of the map
+        :param lang: The language to use
+        """
         data = await self.request_map("map/map_anchor/list", lang=lang, map_id=map_id, static=True)
 
         return [MapLocation(**i) for i in data["list"]]
@@ -963,7 +1117,10 @@ class GenshinClient:
     # MISC:
 
     async def init(self, lang: str = None):
-        """Request all static endpoints to not require them later"""
+        """Request all static & permanent endpoints to not require them later
+
+        :param lang: The language to use
+        """
         lang = lang or self.lang
 
         await asyncio.gather(
@@ -1062,11 +1219,16 @@ class ChineseClient(GenshinClient):
     ) -> Optional[DailyReward]:
         """Signs into hoyolab and claims the daily reward.
 
-        If reward is True then the claimed reward will be returned
+        :param uid: Genshin uid of the currently logged-in user
+        :param lang: The language to use
+        :param reward: Whether to also fetch the claimed reward
         """
         params: Dict[str, Any] = {}
         if uid is None:
             accounts = await self.genshin_accounts(lang=lang)
+            if len(accounts) == 0:
+                errors.raise_for_retcode({"retcode": -1071})
+
             params["game_uid"] = accounts[0].uid
             params["region"] = accounts[0].server
         else:
@@ -1102,7 +1264,7 @@ class MultiCookieClient(GenshinClient):
 
     @property
     def session(self) -> aiohttp.ClientSession:
-        """The current chosen session"""
+        """The currently chosen session"""
         if not self.sessions:
             return aiohttp.ClientSession()
 
@@ -1119,7 +1281,12 @@ class MultiCookieClient(GenshinClient):
 
     def set_cookies(
         self, cookie_list: Union[Iterable[Union[Mapping[str, Any], str]], str], clear: bool = True
-    ) -> None:
+    ) -> List[Mapping[str, str]]:
+        """Set a list of cookies
+
+        :param cookie_list: A list of cookies or a json file containing cookies
+        :param clear: Whether to clear all of the previous cookies
+        """
         if clear:
             self.sessions.clear()
 
@@ -1134,11 +1301,13 @@ class MultiCookieClient(GenshinClient):
             session = aiohttp.ClientSession(cookies=SimpleCookie(cookies))
             self.sessions.append(session)
 
+        return self.cookies
+
     def set_browser_cookies(self, *args: Any, **kwargs: Any) -> NoReturn:
-        """Helper overwrite to prevent nasty bugs"""
         raise RuntimeError(f"{type(self).__name__} does not support browser cookies")
 
     async def close(self) -> None:
+        """Close the underlying aiohttp sessions"""
         tasks = [
             asyncio.create_task(session.close()) for session in self.sessions if not session.closed
         ]

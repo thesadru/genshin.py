@@ -5,3 +5,4 @@ __pycache__
 htmlcov/
 test.py
 cookies.json
+docs/pdoc

@@ -10,9 +10,14 @@ __all__ = [
 def get_browser_cookies(browser: str = None) -> Dict[str, str]:
     """Gets cookies from your browser for later storing.
 
-    If a specific browser is set, gets data from that browser only.
     Avalible browsers: chrome, chromium, opera, edge, firefox
+
+    :param browser: The browser to extract the cookies from
+    :returns: The extracted cookies
     """
+    if browser and browser not in ("chrome", "chromium", "opera", "edge", "firefox"):
+        raise ValueError(f"Unsupported browser: {browser}")
+
     import browser_cookie3
 
     load = getattr(browser_cookie3, browser.lower()) if browser else browser_cookie3.load

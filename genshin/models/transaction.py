@@ -5,6 +5,8 @@ from pydantic import Field
 
 from .base import GenshinModel
 
+TransactionKind = Literal["primogem", "crystal", "resin", "artifact", "weapon"]
+
 
 class Transaction(GenshinModel):
     """A genshin transaction of currency"""

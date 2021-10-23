@@ -1,3 +1,4 @@
+"""Constants for data completions and assertions"""
 from typing import Dict, NamedTuple
 
 __all__ = ["CHARACTER_NAMES", "LANGS"]

@@ -21,7 +21,10 @@ setup(
         "cache": ["cachetools", "aioredis"],
         "cli": ["typer", "browser-cookie3"],
         "test": ["pytest", "pytest-asyncio-cooperative", "cachetools"],
-        "doc": ["mkdocs-material"],
+        "doc": [
+            "mkdocs-material",
+            "git+https://github.com/devdrian/pdoc@reST_style_docstrings_support",
+        ],
     },
     include_package_data=True,
     package_data={"genshin": ["py.typed"]},

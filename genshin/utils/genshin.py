@@ -5,7 +5,7 @@ import random
 import re
 import string
 import time
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Mapping, Union
 
 __all__ = [
     "generate_dynamic_secret",
@@ -19,7 +19,10 @@ __all__ = [
 
 
 def generate_dynamic_secret(salt: str) -> str:
-    """Creates a new ds token for authentication."""
+    """Creates a new overseas dynamic secret
+
+    :param salt: A ds salt
+    """
     t = int(time.time())
     r = "".join(random.choices(string.ascii_letters, k=6))
     h = hashlib.md5(f"salt={salt}&t={t}&r={r}".encode()).hexdigest()
@@ -27,7 +30,12 @@ def generate_dynamic_secret(salt: str) -> str:
 
 
 def generate_cn_dynamic_secret(salt: str, body: Any = None, query: Mapping[str, Any] = None) -> str:
-    """Creates a new chinese ds token for authentication."""
+    """Creates a new chinese dynamic secret
+
+    :param salt: A ds salt
+    :param body: A json body of the request
+    :param query: A query of the request
+    """
     t = int(time.time())
     r = random.randint(100001, 200000)
     b = json.dumps(body) if body else ""
@@ -38,12 +46,18 @@ def generate_cn_dynamic_secret(salt: str, body: Any = None, query: Mapping[str, 
 
 
 def create_short_lang_code(lang: str) -> str:
-    """Returns an alternative short lang code"""
+    """Returns an alternative short lang code
+
+    :param lang: A language code
+    """
     return lang if "zh" in lang else lang.split("-")[0]
 
 
 def recognize_server(uid: int) -> str:
-    """Recognizes which server a UID is from."""
+    """Recognizes which server a UID is from.
+
+    :param uid: A genshin uid
+    """
     server = {
         "1": "cn_gf01",
         "2": "cn_gf01",
@@ -60,32 +74,45 @@ def recognize_server(uid: int) -> str:
         raise ValueError(f"UID {uid} isn't associated with any server")
 
 
-def recognize_id(id: int) -> Optional[str]:
-    """Attempts to recognize what item type an id is"""
-    # TODO: Return the model (might be a problem with characters)
+def recognize_id(id: int):
+    """Attempts to recognize what item type an id is
+
+    :param id: Any id
+    :returns: A model for the appropriate id
+    """
+    from .. import models
+
     if 10000000 < id < 20000000:
-        return "Character"
+        return models.base.BaseCharacter
     elif 1000000 < id < 10000000:
-        return "ArtifactSet"
+        return models.character.ArtifactSet
     elif 100000 < id < 1000000:
-        return "Outfit"
+        return models.character.Outfit
     elif 50000 < id < 100000:
-        return "Artifact"
+        return models.character.Artifact
     elif 10000 < id < 50000:
-        return "Weapon"
+        return models.character.Weapon
     elif 100 < id < 1000:
-        return "Constellation"
-    elif 10 ** 17 < id < 10 ** 19:
-        return "Transaction"
+        return models.character.Constellation
+    elif 10e17 < id < 10e19:
+        return models.wish.Wish
     else:
         return None
 
 
 def is_genshin_uid(uid: int) -> bool:
-    """Recognizes whether the uid is a valid genshin uid."""
+    """Recognizes whether the uid is a valid genshin uid
+
+    Doesn't work for chinese uids.
+
+    :param uid: A genshin or hoyolab uid
+    """
     return bool(re.fullmatch(r"[6789]\d{8}", str(uid)))
 
 
 def is_chinese(x: Union[int, str]) -> bool:
-    """Recognizes whether the server/uid is chinese."""
-    return str(x).startswith(("cn", "1", "5"))
+    """Recognizes whether the server/uid is chinese
+
+    :param x: A server or a genshin uid
+    """
+    return str(x).startswith(("cn", "1", "2", "5"))

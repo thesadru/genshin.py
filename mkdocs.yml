@@ -51,4 +51,6 @@ nav:
       - langs.md
       - chinese.md
     - cli.md
-    - api.md
+    - genshin_api.md
+    - doc.md
+
