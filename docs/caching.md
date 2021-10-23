@@ -1,8 +1,9 @@
 # Caching
 
-Genshin.py uses a total of 3 caches:
+Genshin.py uses several caches:
 
 - `client.cache` - A standard cache for http requests
+- `client.redis_cache` - A redis cache for http requests
 - `client.paginator_cache` - A cache for individual paginator
 - `client.static_cache` - A cache for static resources
 
@@ -41,4 +42,15 @@ Every request towards a static endpoint is cached. You may overwrite it with any
 client = genshin.GenshinClient()
 items = await client.get_gacha_items()
 print(len(client.static_cache))
+```
+
+## Redis caches
+
+Not always is an in-memory cache sufficient. Genshin.py therefore has native support for redis caches. 
+Redis caches are powered by [aioredis](https://aioredis.readthedocs.io/en/latest/)
+
+```py
+client = genshin.GenshinClient()
+# same arguments you would pass into "aioredis.from_url"
+client.set_redis_cache("redis://localhost", username="user", password="pass")
 ```

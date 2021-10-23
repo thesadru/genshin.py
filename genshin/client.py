@@ -83,10 +83,10 @@ class GenshinClient:
 
         self.authkey = authkey
         self.lang = lang
+        self.debug = debug
 
-        if debug:
-            logging.basicConfig()
-            logging.getLogger("genshin").setLevel(logging.DEBUG)
+    def __repr__(self) -> str:
+        return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
 
     # PROPERTIES:
 
@@ -147,6 +147,16 @@ class GenshinClient:
                 raise ValueError("authkey must have precisely 1024 characters")
 
         self._authkey = authkey
+
+    @property
+    def debug(self) -> bool:
+        return logging.getLogger("genshin").level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -> None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger("genshin").setLevel(level)
 
     def set_cookies(
         self, cookies: Union[Mapping[str, Any], str] = None, **kwargs: Any
@@ -304,6 +314,7 @@ class GenshinClient:
         headers["user-agent"] = self.USER_AGENT
 
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
+            r.raise_for_status()
             data = await r.json()
 
         if data["retcode"] == 0:
@@ -331,6 +342,7 @@ class GenshinClient:
         self.logger.debug(f"STATIC {url}")
 
         async with self.session.get(url, headers=headers, **kwargs) as r:
+            r.raise_for_status()
             data = await r.json()
 
         if cache:

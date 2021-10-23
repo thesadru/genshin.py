@@ -6,6 +6,16 @@ from genshin import ChineseClient
 
 
 @pytest.mark.asyncio_cooperative
+async def test_record_card(cnclient: ChineseClient, miyoushe_uid: int):
+    pytest.skip("Miyoushe uid points to a private record")
+
+    data = await cnclient.get_record_card(miyoushe_uid)
+
+    pretty = data.as_dict()
+    assert pretty["Days Active"] == data.days_active
+
+
+@pytest.mark.asyncio_cooperative
 async def test_user(cnclient: ChineseClient, cnuid: int):
     data = await cnclient.get_user(cnuid)
 
