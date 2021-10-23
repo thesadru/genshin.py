@@ -4,6 +4,7 @@ typing-extensions
 yarl
 
 cachetools
+aioredis
 browser-cookie3
 typer
 

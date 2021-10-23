@@ -107,8 +107,8 @@ class IDPagintor(Generic[IDModelT]):
     async def _get_page(self, end_id: int) -> List[IDModelT]:
         raise NotImplementedError
 
-    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
-        return (end_id,)
+    def _cache_key(self, end_id: int) -> Tuple[int, str]:
+        return (end_id, "")
 
     def _update_cache(self, data: List[IDModelT]) -> bool:
         if self.client.paginator_cache is None:
@@ -126,7 +126,7 @@ class IDPagintor(Generic[IDModelT]):
 
     def _collect_cache(self) -> Iterator[IDModelT]:
         cache = self.client.paginator_cache
-        if not cache or not self.end_id:
+        if cache is None or self.end_id is None:
             return
 
         key = self._cache_key(self.end_id)
@@ -221,8 +221,8 @@ class WishHistory(AuthkeyPaginator[Wish]):
             raise ValueError(f"Invalid banner type: {banner_type!r}")
         self.banner_type = banner_type
 
-    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
-        return ("wish", end_id, self.lang)
+    def _cache_key(self, end_id: int) -> Tuple[int, str]:
+        return (end_id, self.lang)
 
     async def _get_banner_name(self) -> str:
         """Get the banner name of banner_type"""
@@ -252,8 +252,8 @@ class Transactions(AuthkeyPaginator[TransactionT]):
             raise ValueError(f"Invalid transaction kind: {kind}")
         self.kind = kind
 
-    def _cache_key(self, end_id: int) -> Tuple[Any, ...]:
-        return ("transaction", end_id, self.lang)
+    def _cache_key(self, end_id: int) -> Tuple[int, str]:
+        return (end_id, self.lang)
 
     async def _get_page(self, end_id: int):
         endpoint = "get" + self.kind.capitalize() + "Log"

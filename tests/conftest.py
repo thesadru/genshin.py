@@ -57,8 +57,8 @@ async def client(cookies: Dict[str, str]):
         cache[key] = v
         if k[0] == "user":
             parsed[key] = json.loads(genshin.models.PartialUserStats(**v).json())
-        elif k[0] == "characters":
-            parsed[key] = [json.loads(genshin.models.Character(**c).json()) for c in v["avatars"]]
+        elif k[0] == "character":
+            parsed[key] = json.loads(genshin.models.Character(**v).json())
         elif k[0] == "abyss":
             parsed[key] = json.loads(genshin.models.SpiralAbyss(**v).json())
         elif k[0] == "record":

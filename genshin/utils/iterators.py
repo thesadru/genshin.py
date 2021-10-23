@@ -32,7 +32,7 @@ async def azip(*iterables: AsyncIterable[T]) -> AsyncIterator[Tuple[T, ...]]:
             x = await asyncio.gather(*coros)
         except StopAsyncIteration:
             break
-        yield x
+        yield tuple(x)
 
 
 async def _try_gather_first(iterators: Iterable[AsyncIterator[T]]) -> List[T]:

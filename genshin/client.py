@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import base64
 import json
@@ -32,6 +34,9 @@ from .utils import (
     recognize_server,
 )
 
+if TYPE_CHECKING:
+    from aioredis import Redis
+
 __all__ = ["GenshinClient", "MultiCookieClient", "ChineseClient", "ChineseMultiCookieClient"]
 
 
@@ -56,6 +61,7 @@ class GenshinClient:
     logger: logging.Logger = logging.getLogger(__name__)
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
+    redis_cache: Optional[Redis] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     static_cache: ClassVar[MutableMapping[str, Any]] = {}
     _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # NEVER CHANGE!
@@ -186,6 +192,9 @@ class GenshinClient:
 
         If ttl is set then a TTL cache is created
         """
+        if self.redis_cache is not None:
+            raise RuntimeError("Cannot have both a cache and a redis cache")
+
         import cachetools
 
         if ttl:
@@ -204,26 +213,48 @@ class GenshinClient:
         self.cache = getattr(cachetools, cls_name)(maxsize, getsizeof=getsizeof)
         return self.cache
 
-    def _check_cache(
+    def set_redis_cache(self, url: str, **kwargs: Any) -> Redis:
+        if self.cache is not None:
+            raise RuntimeError("Cannot have both a cache and a redis cache")
+
+        import aioredis
+
+        self.redis_cache = aioredis.from_url(url, **kwargs)
+        return self.redis_cache
+
+    async def _check_cache(
         self, key: Tuple[Any, ...], check: Callable[[Any], bool] = None, *, lang: str = None
     ) -> Optional[Any]:
         """Check the cache for any entries"""
-        if self.cache is None:
-            return None
-
         key = key + (lang or self.lang,)
 
-        if key not in self.cache:
-            return None
+        if self.cache is not None:
+            if key not in self.cache:
+                return None
 
-        data = self.cache[key]
-        if check is None or check(data):
-            return data
+            data = self.cache[key]
+            if check is None or check(data):
+                return data
 
-        del self.cache[key]
+            del self.cache[key]
+
+        elif self.redis_cache is not None:
+            name = ":".join(map(str, key))
+
+            data = await self.redis_cache.get(name)
+            if data is None:
+                return None
+
+            data = json.loads(data)
+
+            if check is None or check(data):
+                return data
+
+            self.redis_cache.delete(name)
+
         return None
 
-    def _update_cache(
+    async def _update_cache(
         self,
         data: Any,
         key: Tuple[Any, ...],
@@ -232,13 +263,16 @@ class GenshinClient:
         lang: str = None,
     ) -> None:
         """Update the cache with a new entry"""
-        if self.cache is None:
-            return
-
         key = key + (lang or self.lang,)
 
-        if check is None or check(data):
+        if check is not None and not check(data):
+            return
+
+        if self.cache is not None:
             self.cache[key] = data
+        elif self.redis_cache is not None:
+            name = ":".join(map(str, key))
+            await self.redis_cache.set(name, json.dumps(data))
 
     # ASYNCIO HANDLERS:
 
@@ -246,6 +280,8 @@ class GenshinClient:
         """Close the client's session"""
         if not self.session.closed:
             await self.session.close()
+        if self.redis_cache:
+            await self.redis_cache.close()
 
     async def __aenter__(self):
         return self
@@ -317,7 +353,7 @@ class GenshinClient:
         Community related data
         """
         if cache:
-            data = self._check_cache(cache, cache_check, lang=lang)
+            data = await self._check_cache(cache, cache_check, lang=lang)
             if data:
                 return data
 
@@ -341,7 +377,7 @@ class GenshinClient:
         data = await self.request(url, method, headers=headers, **kwargs)
 
         if cache:
-            self._update_cache(data, cache, cache_check, lang=lang)
+            await self._update_cache(data, cache, cache_check, lang=lang)
 
         return data
 
@@ -548,6 +584,49 @@ class GenshinClient:
 
     # GAME RECORD:
 
+    async def __fetch_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
+        """Low-level http method for fetching the game record index"""
+        server = recognize_server(uid)
+        data = await self.request_game_record(
+            "genshin/api/index",
+            lang=lang,
+            params=dict(server=server, role_id=uid),
+            cache=("user", uid),
+        )
+        return data
+
+    async def __fetch_characters(
+        self, uid: int, character_ids: List[int], lang: str = None
+    ) -> List[Dict[str, Any]]:
+        """Low-level http method for fetching the game record characters
+
+        Caching with characters is optimized
+        """
+        # try to get all the characters from the cache
+        characters = []
+        for charid in character_ids:
+            char = await self._check_cache(("character", uid, charid), lang=lang)
+            if char is None:
+                break
+            characters.append(char)
+        else:
+            return characters
+
+        server = recognize_server(uid)
+        data = await self.request_game_record(
+            "genshin/api/character",
+            method="POST",
+            lang=lang,
+            json=dict(character_ids=character_ids, role_id=uid, server=server),
+        )
+
+        # update the cache one by one
+        characters = data["avatars"]
+        for char in characters:
+            await self._update_cache(char, ("character", uid, char["id"]))
+
+        return characters
+
     async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
         """Get a user's record card. If a uid is not provided gets the logged in user's"""
         data = await self.request_game_record(
@@ -565,51 +644,23 @@ class GenshinClient:
 
     async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
         """Get a user's stats and characters"""
-        server = recognize_server(uid)
-        data = await self.request_game_record(
-            "genshin/api/index",
-            lang=lang,
-            params=dict(role_id=uid, server=server),
-            cache=("user", uid),
-        )
-
+        data = await self.__fetch_user(uid, lang=lang)
         character_ids = [char["id"] for char in data["avatars"]]
-        character_data = await self.request_game_record(
-            "genshin/api/character",
-            method="POST",
-            lang=lang,
-            json=dict(character_ids=character_ids, role_id=uid, server=server),
-            cache=("characters", uid, tuple(sorted(character_ids))),
-        )
-        data = {**data, **character_data}
+        data["avatars"] = await self.__fetch_characters(uid, character_ids, lang=lang)
 
         return UserStats(**data)
 
     async def get_partial_user(self, uid: int, *, lang: str = None) -> PartialUserStats:
         """Helper alternative function to get a user without any equipment"""
-        server = recognize_server(uid)
-        data = await self.request_game_record(
-            "genshin/api/index",
-            lang=lang,
-            params=dict(server=server, role_id=uid),
-            cache=("user", uid),
-        )
+        data = await self.__fetch_user(uid, lang=lang)
         return PartialUserStats(**data)
 
     async def get_characters(
         self, uid: int, character_ids: List[int], *, lang: str = None
     ) -> List[Character]:
         """Helper function to fetch characters from just their ids"""
-        # TODO: Caching with incomplete characters takes up way too much memory
-        server = recognize_server(uid)
-        data = await self.request_game_record(
-            "genshin/api/character",
-            method="POST",
-            lang=lang,
-            json=dict(character_ids=character_ids, role_id=uid, server=server),
-            cache=("characters", uid, tuple(sorted(character_ids))),
-        )
-        characters = [Character(**i) for i in data["avatars"]]
+        data = await self.__fetch_characters(uid, character_ids, lang=lang)
+        characters = [Character(**i) for i in data]
         # not a guaranteed order but it's nice to make it ensured in some way
         return sorted(characters, key=lambda c: character_ids.index(c.id))
 
@@ -955,7 +1006,7 @@ class ChineseClient(GenshinClient):
         params = params or {}
 
         if cache:
-            data = self._check_cache(cache, cache_check, lang=lang)
+            data = await self._check_cache(cache, cache_check, lang=lang)
             if data:
                 return data
 
@@ -980,7 +1031,7 @@ class ChineseClient(GenshinClient):
         data = await self.request(url, method, headers=headers, json=json, params=params, **kwargs)
 
         if cache:
-            self._update_cache(data, cache, cache_check, lang=lang)
+            await self._update_cache(data, cache, cache_check, lang=lang)
 
         return data
 
@@ -1001,7 +1052,7 @@ class ChineseClient(GenshinClient):
 
         If reward is True then the claimed reward will be returned
         """
-        params = {}
+        params: Dict[str, Any] = {}
         if uid is None:
             accounts = await self.genshin_accounts(lang=lang)
             params["game_uid"] = accounts[0].uid
@@ -1080,6 +1131,7 @@ class MultiCookieClient(GenshinClient):
             asyncio.create_task(session.close()) for session in self.sessions if not session.closed
         ]
         await asyncio.wait(tasks)
+        await super().close()
 
     async def request(
         self, url: Union[str, URL], method: str = "GET", **kwargs: Any

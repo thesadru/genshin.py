@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator, validator
 
@@ -10,8 +10,12 @@ class Expedition(GenshinModel):
     """A Real-Time note expedition"""
 
     character: BaseCharacter = Field(galias="avatar_side_icon")
-    status: str
+    status: Literal["Ongoing", "Finished"]
     completed_at: datetime
+
+    @property
+    def finished(self) -> bool:
+        return self.status == "Finished"
 
     @property
     def remaining(self) -> timedelta:

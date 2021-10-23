@@ -18,6 +18,22 @@ def asynchronous(func: Callable[..., Awaitable[Any]]) -> Callable[..., Any]:
 
 @app.command()
 @asynchronous
+async def accounts(
+    lang: str = typer.Option("en-us", help="The language to use"),
+):
+    """Get all of your genshin accounts"""
+    async with genshin.GenshinClient() as client:
+        client.set_browser_cookies()
+        data = await client.genshin_accounts(lang=lang)
+
+    for account in data:
+        typer.echo(
+            f"{typer.style(str(account.uid), bold=True)} - {account.nickname} AR {account.level} ({account.server_name})"
+        )
+
+
+@app.command()
+@asynchronous
 async def stats(
     uid: int = typer.Argument(..., help="A genshin uid"),
     lang: str = typer.Option("en-us", help="The language to use"),
