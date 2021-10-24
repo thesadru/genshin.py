@@ -11,14 +11,24 @@ Key features:
 * Supports the majority of the popular endpoints.
 * Cleanly integrates with frameworks like FastAPI out of the box.
 
-## Requirements
+## Installation
+
+From PyPI:
+```console
+pip install genshin
+```
+From github:
+```console
+pip install git+https://github.com/thesadru/genshin.py
+```
+
+### Requirements: 
+
 - Python 3.8+
 - aiohttp
 - Pydantic
 
-```console
-pip install genshin
-```
+
 
 ## Example
 

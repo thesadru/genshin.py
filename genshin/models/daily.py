@@ -12,7 +12,7 @@ class DailyRewardInfo(NamedTuple):
 
     signed_in: bool
     claimed_rewards: int
-    
+
     @property
     def missed_rewards(self):
         cn_timezone = timezone(timedelta(hours=8))

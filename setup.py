@@ -23,7 +23,7 @@ setup(
         "test": ["pytest", "pytest-asyncio-cooperative", "cachetools"],
         "doc": [
             "mkdocs-material",
-            "git+https://github.com/devdrian/pdoc@reST_style_docstrings_support",
+            "pdoc @ git+https://github.com/devdrian/pdoc@reST_style_docstrings_support",
         ],
     },
     include_package_data=True,

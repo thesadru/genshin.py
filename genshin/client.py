@@ -1255,7 +1255,7 @@ class ChineseClient(GenshinClient):
         self.logger.debug(f"{json=} {headers=}")
 
         return await self.request(url, method, json=json, headers=headers, **kwargs)
-    
+
     async def get_reward_info(self, uid: int = None) -> DailyRewardInfo:
         """Get the daily reward info for the current user
 
@@ -1263,13 +1263,13 @@ class ChineseClient(GenshinClient):
         """
         data = await self.request_daily_reward("info", uid)
         return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
-    
+
     async def get_monthly_rewards(self) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month"""
         # uid doesn't matter
         data = await self.request_daily_reward("home", uid=0)
         return [DailyReward(**i) for i in data["awards"]]
-    
+
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
         """Get all claimed rewards for the current user
 
