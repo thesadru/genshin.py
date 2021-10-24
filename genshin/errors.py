@@ -153,7 +153,7 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
         1009 = account not found
 
     """
-    r, m = data["retcode"], data["message"]
+    r, m = data.get("retcode", 0), data.get("message", "")
 
     if m.startswith("authkey"):
         if r == -100:

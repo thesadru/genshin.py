@@ -53,7 +53,7 @@ async def stats(
         typer.echo(f"{k}: {value}")
 
     typer.echo()
-    typer.secho("Explorations", fg="yellow")
+    typer.secho("Explorations:", fg="yellow")
     for area in data.explorations:
         perc = typer.style(str(area.percentage) + "%", bold=True)
         typer.echo(f"{area.name}: explored {perc} | {area.type} level {area.level}")
@@ -144,9 +144,14 @@ async def notes(
         f"{len(data.expeditions)}/{data.max_expeditions}"
     )
     for expedition in data.expeditions:
-        seconds = expedition.remaining.seconds
-        remaining = f"{seconds // 3600:2}:{seconds % 3600 // 60:02}"
-        typer.echo(f" - {expedition.status} | {remaining} remaining - {expedition.character.name}")
+        if expedition.remaining_time > 0:
+            seconds = expedition.remaining_time
+            remaining = f"{seconds // 3600:2}:{seconds % 3600 // 60:02}"
+            typer.echo(
+                f" - {expedition.status} | {remaining} remaining - {expedition.character.name}"
+            )
+        else:
+            typer.echo(f" - {expedition.status} | {expedition.character.name}")
 
 
 @app.command()

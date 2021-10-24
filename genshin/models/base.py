@@ -33,7 +33,7 @@ class GenshinModel(BaseModel):
     @root_validator()
     def __parse_timezones(cls, values: Dict[str, Any]):
         for name, field in cls.__fields__.items():
-            if isinstance(values.get(name), datetime):
+            if isinstance(values.get(name), datetime) and values[name].tzinfo is None:
                 offset = field.field_info.extra.get("timezone", 0)
                 tzinfo = timezone(timedelta(hours=offset))
                 values[name] = values[name].replace(tzinfo=tzinfo)

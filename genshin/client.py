@@ -6,6 +6,7 @@ import base64
 import json
 import logging
 import os
+import uuid
 from datetime import datetime
 from http.cookies import SimpleCookie
 from typing import *
@@ -1142,6 +1143,7 @@ class ChineseClient(GenshinClient):
     """A Genshin Client for chinese endpoints"""
 
     DS_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
+    SIGNIN_SALT = "4a8knnbk5pbjqsrudp3dq484m9axoc5g"
     ACT_ID = "e202009291139501"
 
     TAKUMI_URL = "https://api-takumi.mihoyo.com/"
@@ -1204,41 +1206,105 @@ class ChineseClient(GenshinClient):
 
         return data
 
+    async def request_daily_reward(
+        self,
+        endpoint: str,
+        uid: int = None,
+        *,
+        method: str = "GET",
+        params: Dict[str, Any] = None,
+        headers: Dict[str, Any] = None,
+        json: Dict[str, Any] = None,
+        **kwargs: Any,
+    ) -> Dict[str, Any]:
+        kwargs.pop("lang", None)
+        headers = headers or {}
+        # mihoyo accepts both body and params no matter the context
+        json = json or {}
+        if params:
+            json.update(params)
+
+        if not self.cookies:
+            raise RuntimeError("No cookies provided")
+
+        url = URL(self.REWARD_URL).join(URL(endpoint))
+
+        # add uid to request:
+        if uid is None:
+            accounts = await self.genshin_accounts()
+            accounts = [account for account in accounts if "cn" in account.server]
+            if not accounts:
+                errors.raise_for_retcode({"retcode": -1073})
+
+            account = max(accounts, key=lambda a: a.level)
+            json["uid"] = account.uid
+            json["region"] = account.server
+        else:
+            json["uid"] = uid
+            json["region"] = recognize_server(uid)
+
+        headers["x-rpc-device_id"] = "2.10.1"
+        headers["x-rpc-client_type"] = "5"
+        headers["x-rpc-device_id"] = str(uuid.uuid4())
+        headers["ds"] = generate_dynamic_secret(self.SIGNIN_SALT)
+
+        json["act_id"] = self.ACT_ID
+
+        # self.logger.debug(f"DAILY {method} {url.with_query(json)}")
+        self.logger.debug(f"DAILY {method} {url}")
+        self.logger.debug(f"{json=} {headers=}")
+
+        return await self.request(url, method, json=json, headers=headers, **kwargs)
+    
+    async def get_reward_info(self, uid: int = None) -> DailyRewardInfo:
+        """Get the daily reward info for the current user
+
+        :param uid: Genshin uid of the currently logged-in user
+        """
+        data = await self.request_daily_reward("info", uid)
+        return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
+    
+    async def get_monthly_rewards(self) -> List[DailyReward]:
+        """Get a list of all availible rewards for the current month"""
+        # uid doesn't matter
+        data = await self.request_daily_reward("home", uid=0)
+        return [DailyReward(**i) for i in data["awards"]]
+    
+    def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
+        """Get all claimed rewards for the current user
+
+        NOTE: Languages are currently broken,
+        the language is based off the language used to claim the reward
+
+        :param limit: The maximum amount of rewards to get
+        :param lang: The language to use - currently broken
+        """
+        return DailyRewardPaginator(self, limit=limit, lang=lang)
+
     @overload
     async def claim_daily_reward(
-        self, *, lang: str = None, reward: Literal[True] = ...
+        self, uid: int = None, *, reward: Literal[True] = ...
     ) -> DailyReward:
         ...
 
     @overload
-    async def claim_daily_reward(self, *, lang: str = None, reward: Literal[False]) -> None:
+    async def claim_daily_reward(self, uid: int = None, *, reward: Literal[False]) -> None:
         ...
 
     async def claim_daily_reward(
-        self, uid: int = None, *, lang: str = None, reward: bool = True
+        self, uid: int = None, *, reward: bool = True
     ) -> Optional[DailyReward]:
         """Signs into hoyolab and claims the daily reward.
 
         :param uid: Genshin uid of the currently logged-in user
-        :param lang: The language to use
         :param reward: Whether to also fetch the claimed reward
         """
-        params: Dict[str, Any] = {}
-        if uid is None:
-            accounts = await self.genshin_accounts(lang=lang)
-            if len(accounts) == 0:
-                errors.raise_for_retcode({"retcode": -1071})
-
-            params["game_uid"] = accounts[0].uid
-            params["region"] = accounts[0].server
-        else:
-            params["game_uid"] = uid
-            params["region"] = recognize_server(uid)
+        await self.request_daily_reward("sign", uid, method="POST")
 
         if reward:
             info, rewards = await asyncio.gather(
-                self.get_reward_info(lang=lang),
-                self.get_monthly_rewards(lang=lang),
+                self.get_reward_info(),
+                self.get_monthly_rewards(),
             )
             return rewards[info.claimed_rewards - 1]
 

@@ -15,11 +15,14 @@ class Expedition(GenshinModel):
 
     @property
     def finished(self) -> bool:
-        return self.status == "Finished"
+        """Whether the expedition has finished"""
+        return self.remaining_time == 0
 
     @property
-    def remaining(self) -> timedelta:
-        return self.completed_at - datetime.now().astimezone()
+    def remaining_time(self) -> float:
+        """The remaining time until expedition completion in seconds"""
+        remaining = self.completed_at - datetime.now().astimezone()
+        return max(remaining.total_seconds(), 0)
 
     @root_validator(pre=True)
     def __process_timedelta(cls, values: Dict[str, Any]):
@@ -49,6 +52,12 @@ class Notes(GenshinModel):
 
     expeditions: List[Expedition]
     max_expeditions: int = Field(galias="max_expedition_num")
+
+    @property
+    def until_resin_recovery(self) -> float:
+        """The remaining time until resin recovery in seconds"""
+        remaining = self.resin_recovered_at - datetime.now().astimezone()
+        return min(remaining.total_seconds(), 0)
 
     @root_validator(pre=True)
     def __process_timedelta(cls, values: Dict[str, Any]):
