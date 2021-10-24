@@ -19,7 +19,7 @@ Key features:
 * Supports the majority of the popular endpoints.
 * Cleanly integrates with frameworks like FastAPI out of the box.
 
-> Note: This library is a successor to [genshinstats](https://github.com/thesadru/genshinstats) - an unofficial wrapper for the Genshin Impact api. Genshin.py aims to be a super-powered
+> Note: This library is a successor to [genshinstats](https://github.com/thesadru/genshinstats) - an unofficial wrapper for the Genshin Impact api.
 
 ## Requirements
 - Python 3.8+
