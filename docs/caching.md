@@ -59,3 +59,8 @@ client = genshin.GenshinClient()
 # same arguments you would pass into "aioredis.from_url"
 client.set_redis_cache("redis://localhost", username="user", password="pass")
 ```
+```py
+# set a redis cache but with an EXpiry (in seconds)
+client = genshin.GenshinClient()
+client.set_redis_cache("redis://localhost", ex=3600)
+```

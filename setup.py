@@ -20,7 +20,7 @@ setup(
         "cookies": ["browser-cookie3"],
         "cache": ["cachetools", "aioredis"],
         "cli": ["typer", "browser-cookie3"],
-        "test": ["pytest", "pytest-asyncio-cooperative", "cachetools"],
+        "test": ["pytest", "pytest-asyncio", "cachetools"],
         "doc": [
             "mkdocs-material",
             "pdoc @ git+https://github.com/devdrian/pdoc@reST_style_docstrings_support",

@@ -9,4 +9,4 @@ browser-cookie3
 typer
 
 pytest
-pytest-asyncio-cooperative
+pytest-asyncio

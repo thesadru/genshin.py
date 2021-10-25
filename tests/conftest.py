@@ -18,7 +18,11 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def cookies() -> Dict[str, str]:
-    return {"ltuid": os.environ["LTUID"], "ltoken": os.environ["LTOKEN"]}
+    try:
+        return {"ltuid": os.environ["LTUID"], "ltoken": os.environ["LTOKEN"]}
+    except KeyError:
+        pytest.exit("No cookies set", 1)
+        return {}
 
 
 @pytest.fixture(scope="session")

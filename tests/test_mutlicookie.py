@@ -4,7 +4,7 @@ import pytest
 from genshin import MultiCookieClient
 
 
-@pytest.mark.asyncio_cooperative
+@pytest.mark.asyncio
 async def test_multicookie(cookies: Dict[str, str], uid: int):
     client = MultiCookieClient()
     client.set_cookies([cookies])

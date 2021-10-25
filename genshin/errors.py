@@ -94,37 +94,46 @@ class AuthkeyTimeout(AuthkeyException):
     msg = "Authkey has timed out."
 
 
-_errors: Dict[int, Union[Tuple[Type[GenshinException], Optional[str]], Type[GenshinException]]] = {
+_TGE = Type[GenshinException]
+_errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     # misc hoyolab
     -100: InvalidCookies,
-    -108: (GenshinException, "Invalid language."),
+    -108: "Invalid language.",
     # game record
     10001: InvalidCookies,
-    -10001: (GenshinException, "Malformed request."),
-    -10002: (GenshinException, "No genshin account associated with cookies."),
+    -10001: "Malformed request.",
+    -10002: "No genshin account associated with cookies.",
     # database game record
     10101: TooManyRequests,
     10102: DataNotPublic,
     10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
-    10104: (GenshinException, "Tried to use a beta feature in an invalid context"),
+    10104: "Tried to use a beta feature in an invalid context",
     # mixin
-    -1: (GenshinException, "Internal database error."),
+    -1: "Internal database error.",
     1009: AccountNotFound,
     # redemption
     -1071: InvalidCookies,
-    -1073: (GenshinException, "Cannot claim code. Account has no game account bound to it."),
-    -2001: (GenshinException, "Redemption code has expired."),
-    -2003: (GenshinException, "Invalid redemption code."),
-    -2017: (GenshinException, "Redeption code has been claimed already."),
-    -2021: (GenshinException, "Cannot claim codes for account with adventure rank lower than 10."),
+    -1073: "Cannot claim code. Account has no game account bound to it.",
+    -2001: "Redemption code has expired.",
+    -2003: "Invalid redemption code.",
+    -2017: "Redeption code has been claimed already.",
+    -2021: "Cannot claim codes for account with adventure rank lower than 10.",
     # rewards
-    -5003: (AlreadyClaimed, "Already claimed the daily reward today."),
+    -5003: AlreadyClaimed,
     # chinese
     1008: AccountNotFound,
+    -1104: "This action must be done in the app",
 }
 
 ERRORS: Dict[int, Tuple[Type[GenshinException], Optional[str]]] = {
-    retcode: ((exc, None) if isinstance(exc, type) else exc) for retcode, exc in _errors.items()
+    retcode: (
+        (exc, None)
+        if isinstance(exc, type)
+        else (GenshinException, exc)
+        if isinstance(exc, str)
+        else exc
+    )
+    for retcode, exc in _errors.items()
 }
 
 
@@ -145,13 +154,6 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
 
     daily reward:
         -500x = already claimed the daily reward
-
-    unknown:
-        -1 = malformed request / account not found
-        -100 = invalid cookies
-        -108 = invalid language
-        1009 = account not found
-
     """
     r, m = data.get("retcode", 0), data.get("message", "")
 

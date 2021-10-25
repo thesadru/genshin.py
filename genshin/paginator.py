@@ -96,16 +96,17 @@ class DailyRewardPaginator:
         # that means no posible greedy flatten implementation
         return [item async for item in self]
 
+
 class ChineseDailyRewardsPaginator(DailyRewardPaginator):
     """A paginator specifically for claimed daily rewards on chinese bbs"""
+
     client: ChineseClient
+    uid: Optional[int]
     limit: Optional[int]
-    lang: Optional[str]
     current_page: Optional[int]
 
     page_size: int = 10
-    uid: Optional[int]
-    
+
     def __init__(self, client: ChineseClient, uid: int = None, limit: int = None) -> None:
         """Create a new daily reward pagintor
 
@@ -114,13 +115,14 @@ class ChineseDailyRewardsPaginator(DailyRewardPaginator):
         :param limit: The maximum amount of rewards to get
         """
         self.client = client
-        self.limit = limit
         self.uid = uid
-    
+        self.limit = limit
+
     async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
         params = dict(current_page=page)
         data = await self.client.request_daily_reward("award", self.uid, params=params)
-        return data
+        return [ClaimedDailyReward(**i) for i in data["list"]]
+
 
 class IDPagintor(Generic[MT]):
     """A paginator of genshin end_id pages"""

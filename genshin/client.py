@@ -71,6 +71,7 @@ class GenshinClient:
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     redis_cache: Optional[Redis] = None
+    redis_cache_ex: Optional[int] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     static_cache: ClassVar[MutableMapping[str, Any]] = {}
     _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # TODO: Remove the need for this
@@ -247,10 +248,11 @@ class GenshinClient:
         self.cache = getattr(cachetools, cls_name)(maxsize, getsizeof=getsizeof)
         return self.cache
 
-    def set_redis_cache(self, url: str, **kwargs: Any) -> Redis:
+    def set_redis_cache(self, url: str, *, ex: int = None, **kwargs: Any) -> Redis:
         """Create and set a new redis cache for http requests
 
         :param url: A redis database url
+        :param ex: An automatically applied key expiry
         :param kwargs: Kwargs proxied to aioredis.from_url
         :returns: The newly created Redis object
         """
@@ -260,6 +262,7 @@ class GenshinClient:
         import aioredis
 
         self.redis_cache = aioredis.from_url(url, **kwargs)
+        self.redis_cache_ex = ex
         return self.redis_cache
 
     async def _check_cache(
@@ -312,7 +315,7 @@ class GenshinClient:
             self.cache[key] = data
         elif self.redis_cache is not None:
             name = ":".join(map(str, key))
-            await self.redis_cache.set(name, json.dumps(data))
+            await self.redis_cache.set(name, json.dumps(data), ex=self.redis_cache_ex)
 
     # ASYNCIO HANDLERS:
 
@@ -344,21 +347,6 @@ class GenshinClient:
         headers["user-agent"] = self.USER_AGENT
 
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
-            req = r.request_info
-            nl = '\n'
-            print(f"""
-{req.method} {req.url.path} HTTP/{r.version.major}.{r.version.minor}
-{nl.join(f'{k}: {v}' for k, v in req.headers.items())}
-
-{json.dumps(kwargs.get('json'))}
-------------------------------
-HTTP/1.1 200 OK
-{nl.join(f'{k}: {v}' for k, v in r.headers.items())}
-
-{await r.text()}
-
-==================================================
-""")
             r.raise_for_status()
             data = await r.json()
 
@@ -1229,15 +1217,11 @@ class ChineseClient(GenshinClient):
         method: str = "GET",
         params: Dict[str, Any] = None,
         headers: Dict[str, Any] = None,
-        json: Dict[str, Any] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
         kwargs.pop("lang", None)
         headers = headers or {}
-        # mihoyo accepts both body and params no matter the context
-        json = json or {}
-        if params:
-            json.update(params)
+        params = params or {}
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
@@ -1252,24 +1236,22 @@ class ChineseClient(GenshinClient):
                 errors.raise_for_retcode({"retcode": -1073})
 
             account = max(accounts, key=lambda a: a.level)
-            json["uid"] = str(account.uid)
-            json["region"] = account.server
+            params["uid"] = str(account.uid)
+            params["region"] = account.server
         else:
-            json["uid"] = str(uid)
-            json["region"] = recognize_server(uid)
+            params["uid"] = str(uid)
+            params["region"] = recognize_server(uid)
 
         headers["x-rpc-app_version"] = "2.10.1"
         headers["x-rpc-client_type"] = "5"
         headers["x-rpc-device_id"] = str(uuid.uuid4())
         headers["ds"] = generate_dynamic_secret(self.SIGNIN_SALT)
 
-        json["act_id"] = self.ACT_ID
+        params["act_id"] = self.ACT_ID
 
-        # self.logger.debug(f"DAILY {method} {url.with_query(json)}")
-        self.logger.debug(f"DAILY {method} {url}")
-        self.logger.debug(f"{json=} {headers=}")
+        self.logger.debug(f"DAILY {method} {url.with_query(params)}")
 
-        return await self.request(url, method, json=json, headers=headers, **kwargs)
+        return await self.request(url, method, params=params, headers=headers, **kwargs)
 
     async def get_reward_info(self, uid: int = None) -> DailyRewardInfo:
         """Get the daily reward info for the current user
