@@ -344,6 +344,21 @@ class GenshinClient:
         headers["user-agent"] = self.USER_AGENT
 
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
+            req = r.request_info
+            nl = '\n'
+            print(f"""
+{req.method} {req.url.path} HTTP/{r.version.major}.{r.version.minor}
+{nl.join(f'{k}: {v}' for k, v in req.headers.items())}
+
+{json.dumps(kwargs.get('json'))}
+------------------------------
+HTTP/1.1 200 OK
+{nl.join(f'{k}: {v}' for k, v in r.headers.items())}
+
+{await r.text()}
+
+==================================================
+""")
             r.raise_for_status()
             data = await r.json()
 
@@ -1237,13 +1252,13 @@ class ChineseClient(GenshinClient):
                 errors.raise_for_retcode({"retcode": -1073})
 
             account = max(accounts, key=lambda a: a.level)
-            json["uid"] = account.uid
+            json["uid"] = str(account.uid)
             json["region"] = account.server
         else:
-            json["uid"] = uid
+            json["uid"] = str(uid)
             json["region"] = recognize_server(uid)
 
-        headers["x-rpc-device_id"] = "2.10.1"
+        headers["x-rpc-app_version"] = "2.10.1"
         headers["x-rpc-client_type"] = "5"
         headers["x-rpc-device_id"] = str(uuid.uuid4())
         headers["ds"] = generate_dynamic_secret(self.SIGNIN_SALT)
@@ -1266,8 +1281,9 @@ class ChineseClient(GenshinClient):
 
     async def get_monthly_rewards(self) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month"""
-        # uid doesn't matter
-        data = await self.request_daily_reward("home", uid=0)
+        # uid doesn't matter, this is a static resource
+        # TODO: Cache this the same as the overseas client
+        data = await self.request_daily_reward("home", uid=1)
         return [DailyReward(**i) for i in data["awards"]]
 
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:

@@ -17,7 +17,7 @@ from .models import (
 from .utils import aislice, amerge
 
 if TYPE_CHECKING:
-    from .client import GenshinClient
+    from .client import GenshinClient, ChineseClient
 
 
 class _Model(Protocol):
@@ -96,6 +96,31 @@ class DailyRewardPaginator:
         # that means no posible greedy flatten implementation
         return [item async for item in self]
 
+class ChineseDailyRewardsPaginator(DailyRewardPaginator):
+    """A paginator specifically for claimed daily rewards on chinese bbs"""
+    client: ChineseClient
+    limit: Optional[int]
+    lang: Optional[str]
+    current_page: Optional[int]
+
+    page_size: int = 10
+    uid: Optional[int]
+    
+    def __init__(self, client: ChineseClient, uid: int = None, limit: int = None) -> None:
+        """Create a new daily reward pagintor
+
+        :param client: A client for making http requests
+        :param uid: Genshin uid of the currently logged-in user
+        :param limit: The maximum amount of rewards to get
+        """
+        self.client = client
+        self.limit = limit
+        self.uid = uid
+    
+    async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
+        params = dict(current_page=page)
+        data = await self.client.request_daily_reward("award", self.uid, params=params)
+        return data
 
 class IDPagintor(Generic[MT]):
     """A paginator of genshin end_id pages"""
