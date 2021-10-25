@@ -703,7 +703,7 @@ class GenshinClient:
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
             lang=lang,
-            params=dict(uid=hoyolab_uid or self.hoyolab_uid, gids=2),
+            params=dict(uid=hoyolab_uid or self.hoyolab_uid),
             cache=("record", hoyolab_uid),
             cache_check=lambda data: len(data["list"]) > 0,
         )

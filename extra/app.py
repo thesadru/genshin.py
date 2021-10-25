@@ -1,8 +1,8 @@
 from enum import Enum
-from typing import Type
+from typing import Annotated, List, Literal, Type, Union, cast
 
 import genshin
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse, RedirectResponse
 
@@ -23,6 +23,11 @@ async def on_startup():
 @app.get("/", include_in_schema=False)
 async def index():
     return RedirectResponse("/docs")
+
+
+@app.get("/card/{hoyolab_uid}", response_model=genshin.models.RecordCard)
+async def hoyolab_user(hoyolab_uid: int, lang: Lang = None):
+    return await client.get_record_card(hoyolab_uid, lang=lang)
 
 
 @app.get("/user/{uid}", response_model=genshin.models.UserStats)
@@ -53,6 +58,39 @@ async def partial_user(uid: int, lang: Lang = None):
 @app.get("/user/{uid}/full", response_model=genshin.models.FullUserStats)
 async def full_user(uid: int, lang: Lang = None):
     return await client.get_full_user(uid, lang=lang)
+
+
+@app.get("/wish", response_model=List[genshin.models.Wish])
+async def wish(
+    authkey: str,
+    banner: Literal["100", "200", "301", "302"] = None,
+    size: int = 20,
+    end_id: int = 0,
+    lang: Lang = None,
+):
+    # parse the banner from a string
+    if banner is not None:
+        bt = cast(genshin.models.BannerType, int(banner))
+    else:
+        bt = None
+
+    paginator = client.wish_history(bt, limit=size, lang=lang, authkey=authkey, end_id=end_id)
+    return await paginator.flatten()
+
+
+@app.get(
+    "/transaction",
+    response_model=List[Union[genshin.models.Transaction, genshin.models.ItemTransaction]],
+)
+async def transaction(
+    authkey: str,
+    kind: genshin.models.TransactionKind = None,
+    size: int = 20,
+    end_id: int = 0,
+    lang: Lang = None,
+):
+    paginator = client.transaction_log(kind, limit=size, lang=lang, authkey=authkey, end_id=end_id)
+    return await paginator.flatten()
 
 
 @app.exception_handler(genshin.GenshinException)

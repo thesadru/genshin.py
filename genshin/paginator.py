@@ -14,10 +14,11 @@ from .models import (
     TransactionKind,
     Wish,
 )
+from .models.transaction import BaseTransaction
 from .utils import aislice, amerge
 
 if TYPE_CHECKING:
-    from .client import GenshinClient, ChineseClient
+    from .client import ChineseClient, GenshinClient
 
 
 class _Model(Protocol):
@@ -26,7 +27,7 @@ class _Model(Protocol):
 
 
 MT = TypeVar("MT", bound=_Model, covariant=True)
-TransactionT = TypeVar("TransactionT", bound=Transaction, covariant=True)
+TransactionT = TypeVar("TransactionT", bound=BaseTransaction, covariant=True)
 
 
 class DailyRewardPaginator:
@@ -418,7 +419,7 @@ class MergedWishHistory(MergedPaginator[Wish]):
         return await super().flatten(lazy=lazy)
 
 
-class MergedTransactions(MergedPaginator[Union[Transaction, ItemTransaction]]):
+class MergedTransactions(MergedPaginator[BaseTransaction]):
     __repr_args__ = ["kinds", "limit", "lang"]
 
     client: GenshinClient
