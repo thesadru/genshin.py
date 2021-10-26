@@ -562,6 +562,12 @@ class GenshinClient:
 
         return await self.request(url, method, params=params, **kwargs)
 
+    async def login_with_ticket(self, login_ticket: str = "") -> None:
+        """Complete cookies using a login ticket"""
+        url = "https://webapi-os.account.mihoyo.com/Api/cookie_accountinfo_by_loginticket"
+        async with self.session.get(url, params=dict(login_ticket=login_ticket)) as r:
+            r.raise_for_status()
+
     # HOYOLAB:
 
     async def genshin_accounts(self, *, lang: str = None) -> List[GenshinAccount]:
@@ -585,12 +591,12 @@ class GenshinClient:
         :params lang: The language to use
         """
         data = await self.request_hoyolab(
-            "community/apihub/wapi/search",
+            "community/search/wapi/search/user",
             lang=lang,
-            params=dict(keyword=keyword, size=20, gids=2),
+            params=dict(keyword=keyword, page_size=20),
             cache=("search", keyword),
         )
-        return [SearchUser(**i) for i in data["users"]]
+        return [SearchUser(**i["user"]) for i in data["list"]]
 
     async def set_visibility(self, public: bool) -> None:
         """Sets your data to public or private.
@@ -716,7 +722,7 @@ class GenshinClient:
     async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
         """Get a user's stats and characters
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         data = await self.__fetch_user(uid, lang=lang)
@@ -728,7 +734,7 @@ class GenshinClient:
     async def get_partial_user(self, uid: int, *, lang: str = None) -> PartialUserStats:
         """Helper function to get a user without any equipment
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         data = await self.__fetch_user(uid, lang=lang)
@@ -739,7 +745,7 @@ class GenshinClient:
     ) -> List[Character]:
         """Helper function to fetch characters from just their ids
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         data = await self.__fetch_characters(uid, character_ids, lang=lang)
@@ -751,7 +757,7 @@ class GenshinClient:
     ) -> SpiralAbyss:
         """Get spiral abyss runs
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param previous: Whether to get the record of the previous spiral abyss
         :param lang: The language to use
         """
@@ -767,7 +773,7 @@ class GenshinClient:
     async def get_notes(self, uid: int, *, lang: str = None) -> Notes:
         """Get the real-time notes.
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         server = recognize_server(uid)
@@ -781,7 +787,7 @@ class GenshinClient:
     async def get_activities(self, uid: int, *, lang: str = None) -> Activities:
         """Get activities
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         server = recognize_server(uid)
@@ -796,7 +802,7 @@ class GenshinClient:
     async def get_full_user(self, uid: int, *, lang: str = None) -> FullUserStats:
         """Get a user with all their possible data
 
-        :param hoyolab_uid: A Genshin uid
+        :param uid: A Genshin uid
         :param lang: The language to use
         """
         user, abyss1, abyss2, activities = await asyncio.gather(
@@ -1305,6 +1311,40 @@ class ChineseClient(GenshinClient):
                 self.get_monthly_rewards(),
             )
             return rewards[info.claimed_rewards - 1]
+
+    async def get_diary(self, uid: int, month: int = None) -> Diary:
+        """Get a traveler's diary with earning details for the month
+
+        :param uid: Genshin uid of the currently logged-in user
+        :param month: The month in the year to see the history for
+        """
+        server = recognize_server(uid)
+        month = month or datetime.now().month
+        data = await self.request_hoyolab(
+            "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
+            params=dict(month=month, bind_uid=uid, bind_region=server),
+        )
+        return Diary(**data)
+
+    async def get_diary_page(
+        self, uid: int, type: int, month: int = None, page: int = 0
+    ) -> DiaryPage:
+        """Get a traveler's diary page with earning details for the month
+
+        :param uid: Genshin uid of the currently logged-in user
+        :param type: The type of data to get (1 = primogems, 2 = mora)
+        :param month: The month in the year to see the history for
+        :param page: The page to get
+        """
+        server = recognize_server(uid)
+        month = month or datetime.now().month
+        data = await self.request_hoyolab(
+            "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
+            params=dict(
+                page=page, month=month, limit=10, type=type, bind_uid=uid, bind_region=server
+            ),
+        )
+        return DiaryPage(**data)
 
 
 class MultiCookieClient(GenshinClient):

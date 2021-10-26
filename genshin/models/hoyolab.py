@@ -1,7 +1,8 @@
+import re
 from enum import IntEnum
 from typing import Any, Dict, List
 
-from pydantic import Field
+from pydantic import Field, validator
 
 from .base import GenshinModel
 
@@ -96,3 +97,7 @@ class SearchUser(GenshinModel):
     avatar_id: int = Field(galias="avatar")
     gender: Gender
     icon: str = Field(galias="avatar_url")
+
+    @validator("nickname")
+    def __remove_tag(cls, v):
+        return re.sub(r"<.+?>", "", v)
