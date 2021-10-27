@@ -672,6 +672,9 @@ class GenshinClient:
 
         Caching with characters is optimized
         """
+        if len(character_ids) == 0:
+            return []
+
         # try to get all the characters from the cache
         coros = (
             asyncio.create_task(self._check_cache(("character", uid, charid), lang=lang))
@@ -1415,7 +1418,9 @@ class MultiCookieClient(GenshinClient):
         tasks = [
             asyncio.create_task(session.close()) for session in self.sessions if not session.closed
         ]
-        await asyncio.wait(tasks)
+        if tasks:
+            await asyncio.wait(tasks)
+
         await super().close()
 
     async def request(
