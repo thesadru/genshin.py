@@ -43,6 +43,7 @@ class Artifact(GenshinModel):
     pos_name: str
     pos: int
     rarity: int
+    level: int
     set: ArtifactSet
 
 

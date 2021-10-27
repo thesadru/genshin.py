@@ -672,7 +672,7 @@ class GenshinClient:
 
         Caching with characters is optimized
         """
-        if len(character_ids) == 0:
+        if not character_ids:
             return []
 
         # try to get all the characters from the cache
