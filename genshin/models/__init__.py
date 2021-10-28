@@ -5,7 +5,7 @@ from .activities import Activities
 from .base import BaseCharacter
 from .character import Character
 from .daily import ClaimedDailyReward, DailyReward, DailyRewardInfo
-from .diary import Diary, DiaryPage
+from .diary import BaseDiary, Diary, DiaryAction, DiaryPage
 from .hoyolab import GenshinAccount, RecordCard, SearchUser
 from .intermap import MapInfo, MapLocation, MapNode, MapPoint
 from .notes import Notes

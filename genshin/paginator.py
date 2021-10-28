@@ -8,7 +8,10 @@ from typing import *
 
 from .models import (
     BannerType,
+    BaseDiary,
     ClaimedDailyReward,
+    DiaryAction,
+    DiaryPage,
     ItemTransaction,
     Transaction,
     TransactionKind,
@@ -123,6 +126,107 @@ class ChineseDailyRewardsPaginator(DailyRewardPaginator):
         params = dict(current_page=page)
         data = await self.client.request_daily_reward("award", self.uid, params=params)
         return [ClaimedDailyReward(**i) for i in data["list"]]
+
+
+class DiaryPaginator:
+    """A paginator specifically for diary entries"""
+
+    # TODO: Option to merge all months together
+    client: GenshinClient
+
+    uid: int
+    type: int
+    month: Optional[int]
+    limit: Optional[int]
+    lang: Optional[str]
+
+    _data: Optional[BaseDiary] = None
+    page_size: int = 10
+
+    def __init__(
+        self,
+        client: GenshinClient,
+        uid: int,
+        type: int,
+        month: int = None,
+        limit: int = None,
+        lang: str = None,
+    ) -> None:
+        """Create a new daily reward pagintor
+
+        :param client: A client for making http requests
+        :param uid: Genshin uid of the currently logged-in user
+        :param type: The type of currency to get
+        :param month: The month in the year to see the history for
+        :param limit: The maximum amount of actions to get
+        :param lang: The language to use
+        """
+        self.client = client
+        self.uid = uid
+        self.type = type
+        self.month = month
+        self.limit = limit
+        self.lang = lang
+
+        self.current_page = 1
+
+    @property
+    def exhausted(self) -> bool:
+        """Whether all pages have been fetched"""
+        return self.current_page is None
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(uid={self.uid}, type={self.type}, limit={self.limit})"
+
+    async def _get_page(self, page: int) -> DiaryPage:
+        return await self.client._get_diary_page(
+            self.uid, self.type, page, month=self.month, lang=self.lang
+        )
+
+    async def next_page(self) -> List[DiaryAction]:
+        """Get the next page of the paginator"""
+        if self.current_page is None:
+            raise Exception("No more pages")
+
+        page = await self._get_page(self.current_page)
+        self._data = page
+
+        actions = page.actions
+
+        if len(actions) < self.page_size:
+            self.current_page = None
+            return actions
+
+        self.current_page += 1
+        return actions
+
+    async def _iter(self) -> AsyncIterator[DiaryAction]:
+        """Iterate over pages until the end"""
+        while not self.exhausted:
+            page = await self.next_page()
+            for i in page:
+                yield i
+
+    def __aiter__(self) -> AsyncIterator[DiaryAction]:
+        """Iterate over all pages unril the limit is reached"""
+        return aislice(self._iter(), self.limit)
+
+    async def flatten(self) -> List[DiaryAction]:
+        """Flatten the entire iterator into a list"""
+        # sending more than 1 request at once causes a ratelimit
+        # that means no posible greedy flatten implementation
+        return [item async for item in self]
+
+    @property
+    def data(self) -> BaseDiary:
+        """Get data bound to the diary
+
+        This requires at least one page to have been fetched
+        """
+        if self._data is None:
+            raise RuntimeError("At least one item must be fetched before data can be gotten")
+
+        return self._data
 
 
 class IDPagintor(Generic[MT]):

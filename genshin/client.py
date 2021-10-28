@@ -19,6 +19,7 @@ from .constants import LANGS
 from .models import *
 from .paginator import (
     DailyRewardPaginator,
+    DiaryPaginator,
     MergedTransactions,
     MergedWishHistory,
     Transactions,
@@ -58,6 +59,8 @@ class GenshinClient:
     WEBSTATIC_URL = "https://webstatic-sea.mihoyo.com/"
     TAKUMI_URL = "https://api-os-takumi.mihoyo.com/"
     RECORD_URL = "https://api-os-takumi.mihoyo.com/game_record/"
+    INFO_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_info"
+    DETAIL_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_detail"
     REWARD_URL = "https://hk4e-api-os.mihoyo.com/event/sol/"
     GACHA_INFO_URL = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/"
     YSULOG_URL = "https://hk4e-api-os.mihoyo.com/ysulog/api/"
@@ -446,6 +449,28 @@ class GenshinClient:
             url, method=method, cache=cache, cache_check=cache_check, **kwargs
         )
 
+    async def request_ledger(
+        self,
+        uid: int = None,
+        detail: bool = False,
+        *,
+        month: int = None,
+        lang: str = None,
+        params: Dict[str, Any] = None,
+    ) -> Dict[str, Any]:
+        """Make a request towards the ys ledger endpoint
+
+        Traveler's diary related data
+        """
+        params = params or {}
+
+        url = self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL
+
+        params.update(await self._complete_uid(uid))
+        params["month"] = month or datetime.now().month
+
+        return await self.request_hoyolab(url, params=params, lang=lang)
+
     async def request_daily_reward(
         self,
         endpoint: str,
@@ -817,6 +842,55 @@ class GenshinClient:
         abyss = {"current": abyss1, "previous": abyss2}
         return FullUserStats(**user.dict(), abyss=abyss, activities=activities)
 
+    # LEDGER:
+
+    async def get_diary(self, uid: int, *, month: int = None, lang: str = None) -> Diary:
+        """Get a traveler's diary with earning details for the month
+
+        :param uid: Genshin uid of the currently logged-in user
+        :param month: The month in the year to see the history for
+        :param lang: The language to use
+        """
+        data = await self.request_ledger(uid, month=month, lang=lang)
+        print(data)
+        return Diary(**data)
+
+    async def _get_diary_page(
+        self, uid: int, type: int, page: int = 0, *, month: int = None, lang: str = None
+    ) -> DiaryPage:
+        """A method for the paginator to get a page of the diary
+
+        :param uid: Genshin uid of the currently logged-in user
+        :param type: The type of currency to get
+        :param month: The month in the year to see the history for
+        :param lang: The language to use
+        """
+        data = await self.request_ledger(
+            uid, detail=True, month=month, lang=lang, params=dict(type=type, page=page, limit=10)
+        )
+        return DiaryPage(**data)
+
+    def diary_log(
+        self,
+        uid: int,
+        *,
+        mora: bool = False,
+        month: int = None,
+        limit: int = None,
+        lang: str = None,
+    ) -> DiaryPaginator:
+        """Create a new daily reward pagintor
+
+        :param client: A client for making http requests
+        :param uid: Genshin uid of the currently logged-in user
+        :param mora: Whether the type of currency should be mora instead of primogems
+        :param month: The month in the year to see the history for
+        :param limit: The maximum amount of actions to get
+        :param lang: The language to use
+        """
+        type = 2 if mora else 1
+        return DiaryPaginator(self, uid, type, month, limit, lang)
+
     # DAILY REWARDS:
 
     async def get_reward_info(self, *, lang: str = None) -> DailyRewardInfo:
@@ -1129,6 +1203,35 @@ class GenshinClient:
 
     # MISC:
 
+    async def _complete_uid(
+        self, uid: int = None, uid_key: str = "uid", server_key: str = "region"
+    ) -> Dict[str, Any]:
+        """Create a new dict with a uid and a server
+
+        These are fetched from the currently authenticated user
+        """
+        params = {}
+
+        if uid is not None:
+            params[uid_key] = str(uid)
+            params[server_key] = recognize_server(uid)
+            return params
+
+        accounts = await self.genshin_accounts()
+        # filter test servers
+        accounts = [
+            account for account in accounts if "os" in account.server or "cn" in account.server
+        ]
+        if not accounts:
+            # TODO: Raise properly
+            errors.raise_for_retcode({"retcode": -1073})
+
+        account = max(accounts, key=lambda a: a.level)
+        params[uid_key] = str(account.uid)
+        params[server_key] = account.server
+
+        return params
+
     async def init(self, lang: str = None):
         """Request all static & permanent endpoints to not require them later
 
@@ -1160,6 +1263,8 @@ class ChineseClient(GenshinClient):
 
     TAKUMI_URL = "https://api-takumi.mihoyo.com/"
     RECORD_URL = "https://api-takumi.mihoyo.com/game_record/app/"
+    INFO_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo"
+    DETAIL_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail"
     REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
     MAP_URL = "https://api-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
     STATIC_MAP_URL = "https://api-static.mihoyo.com/common/map_user/ys_obc/v1/map"
@@ -1218,6 +1323,28 @@ class ChineseClient(GenshinClient):
 
         return data
 
+    async def request_ledger(
+        self,
+        uid: int = None,
+        detail: bool = False,
+        *,
+        month: int = None,
+        lang: str = None,
+        params: Dict[str, Any] = None,
+    ) -> Dict[str, Any]:
+        """Make a request towards the ys ledger endpoint
+
+        Traveler's diary related data
+        """
+        params = params or {}
+
+        url = self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL
+
+        params.update(await self._complete_uid(uid, "bind_uid", "bind_region"))
+        params["month"] = month or datetime.now().month
+
+        return await self.request_hoyolab(url, params=params, lang=lang)
+
     async def request_daily_reward(
         self,
         endpoint: str,
@@ -1237,19 +1364,7 @@ class ChineseClient(GenshinClient):
 
         url = URL(self.REWARD_URL).join(URL(endpoint))
 
-        # add uid to request:
-        if uid is None:
-            accounts = await self.genshin_accounts()
-            accounts = [account for account in accounts if "cn" in account.server]
-            if not accounts:
-                errors.raise_for_retcode({"retcode": -1073})
-
-            account = max(accounts, key=lambda a: a.level)
-            params["uid"] = str(account.uid)
-            params["region"] = account.server
-        else:
-            params["uid"] = str(uid)
-            params["region"] = recognize_server(uid)
+        params.update(await self._complete_uid(uid))
 
         headers["x-rpc-app_version"] = "2.10.1"
         headers["x-rpc-client_type"] = "5"
@@ -1314,40 +1429,6 @@ class ChineseClient(GenshinClient):
                 self.get_monthly_rewards(),
             )
             return rewards[info.claimed_rewards - 1]
-
-    async def get_diary(self, uid: int, month: int = None) -> Diary:
-        """Get a traveler's diary with earning details for the month
-
-        :param uid: Genshin uid of the currently logged-in user
-        :param month: The month in the year to see the history for
-        """
-        server = recognize_server(uid)
-        month = month or datetime.now().month
-        data = await self.request_hoyolab(
-            "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
-            params=dict(month=month, bind_uid=uid, bind_region=server),
-        )
-        return Diary(**data)
-
-    async def get_diary_page(
-        self, uid: int, type: int, month: int = None, page: int = 0
-    ) -> DiaryPage:
-        """Get a traveler's diary page with earning details for the month
-
-        :param uid: Genshin uid of the currently logged-in user
-        :param type: The type of data to get (1 = primogems, 2 = mora)
-        :param month: The month in the year to see the history for
-        :param page: The page to get
-        """
-        server = recognize_server(uid)
-        month = month or datetime.now().month
-        data = await self.request_hoyolab(
-            "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
-            params=dict(
-                page=page, month=month, limit=10, type=type, bind_uid=uid, bind_region=server
-            ),
-        )
-        return DiaryPage(**data)
 
 
 class MultiCookieClient(GenshinClient):

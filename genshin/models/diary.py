@@ -7,42 +7,42 @@ from .base import GenshinModel
 
 
 class BaseDiary(GenshinModel):
+    """Base model for diary and diary page"""
+
     uid: int
     region: str
-    hoyolab_uid: int = Field(galias="account_id")
     nickname: str
-    month: int
-    data_month: int
-
-
-class DiaryData(GenshinModel):
-    current_primogems: int
-    current_mora: int
-    last_primogems: int
-    last_mora: int
+    month: int = Field(galias="data_month")
 
 
 class DiaryGroupBy(GenshinModel):
+    """A diary earn category"""
+
     action_id: int
     action: str
     amount: int = Field(galias="num")
     percentage: int = Field(galias="percent")
 
 
-class DiaryMonthData(GenshinModel):
-    current_primogems_level: int  # ???
-    primogems_rate: int
-    mora_rate: int
+class DiaryData(GenshinModel):
+    """Diary data for a month"""
+
+    current_primogems: int
+    current_mora: int
+    primogems_rate: int = 0
+    mora_rate: int = 0
     group_by: List[DiaryGroupBy]
 
 
 class Diary(BaseDiary):
-    day_data: DiaryData
-    month_data: DiaryMonthData
-    lantern: bool = False  # ???
+    """A traveler's diary"""
+
+    data: DiaryData = Field(galias="month_data")
 
 
-class DiaryEntry(GenshinModel):
+class DiaryAction(GenshinModel):
+    """An action which earned currency"""
+
     action_id: int
     action: str
     time: datetime = Field(timezone=8)
@@ -50,6 +50,6 @@ class DiaryEntry(GenshinModel):
 
 
 class DiaryPage(BaseDiary):
-    page: int
+    """A page of a diary"""
 
-    pages: List[DiaryEntry] = Field(galias="list")
+    actions: List[DiaryAction] = Field(galias="list")

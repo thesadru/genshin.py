@@ -113,7 +113,7 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     1009: AccountNotFound,
     # redemption
     -1071: InvalidCookies,
-    -1073: "Cannot claim code. Account has no game account bound to it.",
+    -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: "Redemption code has expired.",
     -2003: "Invalid redemption code.",
     -2017: "Redeption code has been claimed already.",
