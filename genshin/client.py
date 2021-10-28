@@ -70,6 +70,7 @@ class GenshinClient:
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
     _session: Optional[aiohttp.ClientSession] = None
+    _uid: Optional[int] = None
     logger: logging.Logger = logging.getLogger(__name__)
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
@@ -133,6 +134,10 @@ class GenshinClient:
                 return int(cookie.value)
 
         return None
+    
+    @property
+    def uid(self) -> Optional[int]:
+        return self._uid
 
     @property
     def lang(self) -> str:
@@ -1212,23 +1217,27 @@ class GenshinClient:
         """
         params = {}
 
-        if uid is not None:
-            params[uid_key] = str(uid)
-            params[server_key] = recognize_server(uid)
-            return params
+        if uid is None:
+            if self._uid:
+                uid = self._uid
+            else:
+                accounts = await self.genshin_accounts()
+                # filter test servers
+                accounts = [
+                    account for account in accounts if "os" in account.server or "cn" in account.server
+                ]
 
-        accounts = await self.genshin_accounts()
-        # filter test servers
-        accounts = [
-            account for account in accounts if "os" in account.server or "cn" in account.server
-        ]
-        if not accounts:
-            # TODO: Raise properly
-            errors.raise_for_retcode({"retcode": -1073})
+                # TODO: Raise properly
+                if not accounts:
+                    errors.raise_for_retcode({"retcode": -1073})
 
-        account = max(accounts, key=lambda a: a.level)
-        params[uid_key] = str(account.uid)
-        params[server_key] = account.server
+                account = max(accounts, key=lambda a: a.level)
+                uid = account.uid
+
+                self._uid = uid
+
+        params[uid_key] = uid
+        params[server_key] = recognize_server(uid)
 
         return params
 
