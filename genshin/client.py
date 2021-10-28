@@ -167,13 +167,12 @@ class GenshinClient:
     @authkey.setter
     def authkey(self, authkey: Optional[str]) -> None:
         if authkey is not None:
+            authkey = unquote(authkey)
+
             try:
                 base64.b64decode(authkey, validate=True)
             except Exception as e:
                 raise ValueError("authkey is not a valid base64 encoded string") from e
-
-            if len(authkey) != 1024:
-                raise ValueError("authkey must have precisely 1024 characters")
 
         self._authkey = authkey
 
