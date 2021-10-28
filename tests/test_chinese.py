@@ -66,3 +66,17 @@ async def test_exceptions(cnclient: ChineseClient):
 
     with pytest.raises(genshin.AccountNotFound):
         await cnclient.get_user(70000001)
+
+
+@pytest.mark.asyncio
+async def test_diary(lcnclient: ChineseClient):
+    diary = await lcnclient.get_diary()
+
+
+@pytest.mark.asyncio
+async def test_diary_log(lcnclient: ChineseClient):
+    log = lcnclient.diary_log(limit=10)
+    data = await log.flatten()
+
+    assert data[0].amount > 0
+    assert log.data.uid == lcnclient.uid

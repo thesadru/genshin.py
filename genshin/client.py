@@ -10,6 +10,7 @@ import uuid
 from datetime import datetime
 from http.cookies import SimpleCookie
 from typing import *
+from urllib.parse import unquote
 
 import aiohttp
 from yarl import URL
@@ -134,10 +135,17 @@ class GenshinClient:
                 return int(cookie.value)
 
         return None
-    
+
     @property
     def uid(self) -> Optional[int]:
         return self._uid
+
+    @uid.setter
+    def uid(self, uid: Any) -> None:
+        if not str(uid).isdigit() or len(str(uid)) != 9:
+            raise TypeError(f"Invalid uid: {uid}")
+
+        self._uid = int(uid)
 
     @property
     def lang(self) -> str:
@@ -469,12 +477,16 @@ class GenshinClient:
         """
         params = params or {}
 
-        url = self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL
+        url = URL(self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL)
 
         params.update(await self._complete_uid(uid))
         params["month"] = month or datetime.now().month
+        params["lang"] = lang or self.lang
 
-        return await self.request_hoyolab(url, params=params, lang=lang)
+        debug_url = url.with_query(params)
+        self.logger.debug(f"DIARY GET {debug_url}")
+
+        return await self.request(url, params=params)
 
     async def request_daily_reward(
         self,
@@ -849,7 +861,7 @@ class GenshinClient:
 
     # LEDGER:
 
-    async def get_diary(self, uid: int, *, month: int = None, lang: str = None) -> Diary:
+    async def get_diary(self, uid: int = None, *, month: int = None, lang: str = None) -> Diary:
         """Get a traveler's diary with earning details for the month
 
         :param uid: Genshin uid of the currently logged-in user
@@ -857,27 +869,11 @@ class GenshinClient:
         :param lang: The language to use
         """
         data = await self.request_ledger(uid, month=month, lang=lang)
-        print(data)
         return Diary(**data)
-
-    async def _get_diary_page(
-        self, uid: int, type: int, page: int = 0, *, month: int = None, lang: str = None
-    ) -> DiaryPage:
-        """A method for the paginator to get a page of the diary
-
-        :param uid: Genshin uid of the currently logged-in user
-        :param type: The type of currency to get
-        :param month: The month in the year to see the history for
-        :param lang: The language to use
-        """
-        data = await self.request_ledger(
-            uid, detail=True, month=month, lang=lang, params=dict(type=type, page=page, limit=10)
-        )
-        return DiaryPage(**data)
 
     def diary_log(
         self,
-        uid: int,
+        uid: int = None,
         *,
         mora: bool = False,
         month: int = None,
@@ -1224,7 +1220,9 @@ class GenshinClient:
                 accounts = await self.genshin_accounts()
                 # filter test servers
                 accounts = [
-                    account for account in accounts if "os" in account.server or "cn" in account.server
+                    account
+                    for account in accounts
+                    if "os" in account.server or "cn" in account.server
                 ]
 
                 # TODO: Raise properly
@@ -1293,24 +1291,22 @@ class ChineseClient(GenshinClient):
         endpoint: str,
         *,
         method: str = "GET",
-        lang: str = None,
         json: Any = None,
         params: Dict[str, Any] = None,
         cache: Tuple[Any, ...] = None,
         cache_check: Callable[[Any], bool] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
+        kwargs.pop("lang", None)
         params = params or {}
 
         if cache:
-            data = await self._check_cache(cache, cache_check, lang=lang)
+            data = await self._check_cache(cache, cache_check)
             if data:
                 return data
 
         if not self.cookies:
             raise RuntimeError("No cookies provided")
-        if lang not in LANGS and lang is not None:
-            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
 
         url = URL(self.TAKUMI_URL).join(URL(endpoint))
 
@@ -1318,7 +1314,6 @@ class ChineseClient(GenshinClient):
         headers = {
             "x-rpc-app_version": "2.11.1",
             "x-rpc-client_type": "5",
-            "x-rpc-language": lang or self.lang,
             "ds": generate_cn_dynamic_secret(self.DS_SALT, json, params),
         }
 
@@ -1328,7 +1323,7 @@ class ChineseClient(GenshinClient):
         data = await self.request(url, method, headers=headers, json=json, params=params, **kwargs)
 
         if cache:
-            await self._update_cache(data, cache, cache_check, lang=lang)
+            await self._update_cache(data, cache, cache_check)
 
         return data
 
@@ -1338,21 +1333,25 @@ class ChineseClient(GenshinClient):
         detail: bool = False,
         *,
         month: int = None,
-        lang: str = None,
         params: Dict[str, Any] = None,
+        **kwargs: Any,
     ) -> Dict[str, Any]:
         """Make a request towards the ys ledger endpoint
 
         Traveler's diary related data
         """
+        kwargs.pop("lang", None)
         params = params or {}
 
-        url = self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL
+        url = URL(self.DETAIL_LEDGER_URL if detail else self.INFO_LEDGER_URL)
 
         params.update(await self._complete_uid(uid, "bind_uid", "bind_region"))
         params["month"] = month or datetime.now().month
 
-        return await self.request_hoyolab(url, params=params, lang=lang)
+        debug_url = url.with_query(params)
+        self.logger.debug(f"DIARY GET {debug_url}")
+
+        return await self.request(url, params=params)
 
     async def request_daily_reward(
         self,

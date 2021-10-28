@@ -1,8 +1,8 @@
-__pycache__
-.vscode
-
 .coverage
-htmlcov/
-test.py
+.env
+.vscode
+__pycache__
 cookies.json
 docs/pdoc
+htmlcov/
+test.py

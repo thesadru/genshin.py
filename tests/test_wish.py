@@ -1,4 +1,3 @@
-import genshin
 import pytest
 from genshin import GenshinClient
 

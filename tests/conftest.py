@@ -43,6 +43,17 @@ def chinese_cookies() -> Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
+def local_chinese_cookies() -> Dict[str, str]:
+    try:
+        return {
+            "account_id": os.environ["LCN_ACCOUNT_ID"],
+            "cookie_token": os.environ["LCN_COOKIE_TOKEN"],
+        }
+    except KeyError:
+        return {}
+
+
+@pytest.fixture(scope="session")
 async def client(cookies: Dict[str, str]):
     """Client with environment cookies"""
     client = GenshinClient()
@@ -77,7 +88,7 @@ async def client(cookies: Dict[str, str]):
         json.dump(parsed, file, indent=4)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 async def lclient(browser_cookies: Dict[str, str]):
     """The local client"""
     if not browser_cookies:
@@ -93,7 +104,7 @@ async def lclient(browser_cookies: Dict[str, str]):
     await client.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 async def cnclient(chinese_cookies: Dict[str, str]):
     """A client with chinese cookies"""
     if not chinese_cookies:
@@ -102,6 +113,21 @@ async def cnclient(chinese_cookies: Dict[str, str]):
 
     client = ChineseClient()
     client.set_cookies(chinese_cookies)
+
+    yield client
+
+    await client.close()
+
+
+@pytest.fixture(scope="session")
+async def lcnclient(local_chinese_cookies: Dict[str, str]):
+    """A local client with chinese cookies"""
+    if not local_chinese_cookies:
+        pytest.skip("Skipped local chinese test")
+        return
+
+    client = ChineseClient()
+    client.set_cookies(local_chinese_cookies)
 
     yield client
 

@@ -15,11 +15,11 @@ class BaseDiary(GenshinModel):
     month: int = Field(galias="data_month")
 
 
-class DiaryGroupBy(GenshinModel):
-    """A diary earn category"""
+class DiaryActionCategory(GenshinModel):
+    """A diary category for primogems"""
 
-    action_id: int
-    action: str
+    id: int = Field(galias="action_id")
+    name: str = Field(galias="action")
     amount: int = Field(galias="num")
     percentage: int = Field(galias="percent")
 
@@ -29,15 +29,25 @@ class DiaryData(GenshinModel):
 
     current_primogems: int
     current_mora: int
-    primogems_rate: int = 0
-    mora_rate: int = 0
-    group_by: List[DiaryGroupBy]
+    last_primogems: int
+    last_mora: int
+    primogems_rate: int = Field(galias="primogem_rate")
+    mora_rate: int
+    categories: List[DiaryActionCategory] = Field(galias="group_by")
+
+
+class DayDiaryData(GenshinModel):
+    """Diary data for a day"""
+
+    current_primogems: int
+    current_mora: int
 
 
 class Diary(BaseDiary):
     """A traveler's diary"""
 
     data: DiaryData = Field(galias="month_data")
+    day_data: DayDiaryData
 
 
 class DiaryAction(GenshinModel):

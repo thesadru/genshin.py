@@ -134,7 +134,7 @@ class DiaryPaginator:
     # TODO: Option to merge all months together
     client: GenshinClient
 
-    uid: int
+    uid: Optional[int]
     type: int
     month: Optional[int]
     limit: Optional[int]
@@ -146,8 +146,8 @@ class DiaryPaginator:
     def __init__(
         self,
         client: GenshinClient,
-        uid: int,
-        type: int,
+        uid: int = None,
+        type: int = 1,
         month: int = None,
         limit: int = None,
         lang: str = None,
@@ -179,9 +179,14 @@ class DiaryPaginator:
         return f"{type(self).__name__}(uid={self.uid}, type={self.type}, limit={self.limit})"
 
     async def _get_page(self, page: int) -> DiaryPage:
-        return await self.client._get_diary_page(
-            self.uid, self.type, page, month=self.month, lang=self.lang
+        data = await self.client.request_ledger(
+            self.uid,
+            detail=True,
+            month=self.month,
+            lang=self.lang,
+            params=dict(type=self.type, page=page, limit=10),
         )
+        return DiaryPage(**data)
 
     async def next_page(self) -> List[DiaryAction]:
         """Get the next page of the paginator"""
