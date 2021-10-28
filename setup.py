@@ -16,9 +16,9 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic", "yarl", "typing-extensions"],
     extras_require={
-        "all": ["cachetools", "aioredis", "browser-cookie3", "typer"],
+        "all": ["cachetools", "browser-cookie3", "typer"],
         "cookies": ["browser-cookie3"],
-        "cache": ["cachetools", "aioredis"],
+        "cache": ["cachetools"],
         "cli": ["typer", "browser-cookie3"],
         "test": ["pytest", "pytest-asyncio", "cachetools"],
         "doc": ["mkdocs-material", "pdoc"],

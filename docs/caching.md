@@ -3,7 +3,6 @@
 Genshin.py uses several caches:
 
 - `client.cache` - A standard cache for http requests
-- `client.redis_cache` - A redis cache for http requests
 - `client.paginator_cache` - A cache for individual paginator
 - `client.static_cache` - A cache for static resources
 
@@ -49,18 +48,43 @@ items = await client.get_gacha_items()
 print(len(client.static_cache))
 ```
 
-## Redis caches
+## Custom caches
 
-Not always is an in-memory cache sufficient. Genshin.py therefore has native support for redis caches. 
-Redis caches are powered by [aioredis](https://aioredis.readthedocs.io/en/latest/)
+Sometimes a simple mutable mapping won't do, for example with redis caches. In this case you can overwrite the caching methods of `GenshinClient`
+
+Example with aioredis:
 
 ```py
-client = genshin.GenshinClient()
-# same arguments you would pass into "aioredis.from_url"
-client.set_redis_cache("redis://localhost", username="user", password="pass")
-```
-```py
-# set a redis cache but with an EXpiry (in seconds)
-client = genshin.GenshinClient()
-client.set_redis_cache("redis://localhost", ex=3600)
+import aioredis
+import genshin
+
+
+class RedisClient(genshin.GenshinClient):
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.redis = aioredis.from_url("redis://localhost")
+
+    async def _check_cache(self, key, check, lang):
+        """Check the cache for any entries"""
+        key = ":".join(map(str, key + (lang or self.lang,)))
+
+        data = self.redis.get(key)
+        if data is None:
+            return None
+
+        if check is None or check(data):
+            return data
+
+        self.redis.delete(key)
+
+        return None
+
+    async def _update_cache(self, data, key, check=None, lang=None) -> None:
+        """Update the cache with a new entry"""
+        key = ":".join(map(str, key + (lang or self.lang,)))
+
+        if check is not None and not check(data):
+            return
+
+        self.redis.set(key, data, ex=3600)
 ```

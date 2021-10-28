@@ -38,9 +38,6 @@ from .utils import (
     recognize_server,
 )
 
-if TYPE_CHECKING:
-    from aioredis import Redis
-
 __all__ = ["GenshinClient", "MultiCookieClient", "ChineseClient", "ChineseMultiCookieClient"]
 
 
@@ -49,7 +46,6 @@ class GenshinClient:
 
     :var logger: A logger used for debugging
     :var cache: A cache for http requests
-    :var redis_cache: A Redis cache for http requests
     :var paginator_cache: A high-frequency access cache for paginators
     :cvar static_cache: A static cache
     """
@@ -75,8 +71,6 @@ class GenshinClient:
     logger: logging.Logger = logging.getLogger(__name__)
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
-    redis_cache: Optional[Redis] = None
-    redis_cache_ex: Optional[int] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     static_cache: ClassVar[MutableMapping[str, Any]] = {}
     _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # TODO: Remove the need for this
@@ -242,9 +236,6 @@ class GenshinClient:
         :param getsizeof: Function that gets the size of any objecct, by default everything has size of 1
         :returns: The newly created cache
         """
-        if self.redis_cache is not None:
-            raise RuntimeError("Cannot have both a cache and a redis cache")
-
         import cachetools
 
         if ttl:
@@ -263,52 +254,23 @@ class GenshinClient:
         self.cache = getattr(cachetools, cls_name)(maxsize, getsizeof=getsizeof)
         return self.cache
 
-    def set_redis_cache(self, url: str, *, ex: int = None, **kwargs: Any) -> Redis:
-        """Create and set a new redis cache for http requests
-
-        :param url: A redis database url
-        :param ex: An automatically applied key expiry
-        :param kwargs: Kwargs proxied to aioredis.from_url
-        :returns: The newly created Redis object
-        """
-        if self.cache is not None:
-            raise RuntimeError("Cannot have both a cache and a redis cache")
-
-        import aioredis
-
-        self.redis_cache = aioredis.from_url(url, **kwargs)
-        self.redis_cache_ex = ex
-        return self.redis_cache
-
     async def _check_cache(
         self, key: Tuple[Any, ...], check: Callable[[Any], bool] = None, *, lang: str = None
     ) -> Optional[Any]:
         """Check the cache for any entries"""
+        if self.cache is None:
+            return None
+
         key = key + (lang or self.lang,)
 
-        if self.cache is not None:
-            if key not in self.cache:
-                return None
+        if key not in self.cache:
+            return None
 
-            data = self.cache[key]
-            if check is None or check(data):
-                return data
+        data = self.cache[key]
+        if check is None or check(data):
+            return data
 
-            del self.cache[key]
-
-        elif self.redis_cache is not None:
-            name = ":".join(map(str, key))
-
-            data = await self.redis_cache.get(name)
-            if data is None:
-                return None
-
-            data = json.loads(data)
-
-            if check is None or check(data):
-                return data
-
-            self.redis_cache.delete(name)
+        del self.cache[key]
 
         return None
 
@@ -321,16 +283,15 @@ class GenshinClient:
         lang: str = None,
     ) -> None:
         """Update the cache with a new entry"""
+        if self.cache is None:
+            return
+
         key = key + (lang or self.lang,)
 
         if check is not None and not check(data):
             return
 
-        if self.cache is not None:
-            self.cache[key] = data
-        elif self.redis_cache is not None:
-            name = ":".join(map(str, key))
-            await self.redis_cache.set(name, json.dumps(data), ex=self.redis_cache_ex)
+        self.cache[key] = data
 
     # ASYNCIO HANDLERS:
 
@@ -338,8 +299,6 @@ class GenshinClient:
         """Close the underlying aiohttp session"""
         if not self.session.closed:
             await self.session.close()
-        if self.redis_cache:
-            await self.redis_cache.close()
 
     async def __aenter__(self):
         return self
