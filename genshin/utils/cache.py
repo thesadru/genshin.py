@@ -1,31 +1,43 @@
 """Caching utilities"""
-from __future__ import annotations
-
+import json
+import os
 from functools import update_wrapper
-from typing import TYPE_CHECKING, Any, Awaitable, Callable, TypeVar
+from typing import Any, Callable, Coroutine, Tuple, TypeVar
 
-if TYPE_CHECKING:
-    from genshin.client import GenshinClient
+from .misc import get_tempdir
 
-CallableT = TypeVar("CallableT", bound=Callable[..., Awaitable[Any]])
+CallableT = TypeVar("CallableT", bound=Callable[..., Coroutine[Any, Any, Any]])
 
-__all__ = ["permanent_cache"]
+__all__ = ["perm_cache"]
 
 
-def permanent_cache(key_func: Callable[..., Any]) -> Callable[[CallableT], CallableT]:
-    """Like lru_cache except permanent and using a key"""
+def perm_cache(key_tuple: Tuple[Any, ...], func: CallableT) -> CallableT:
+    """A permanent file cache for coroutines, it just kinda works
 
-    def wrapper(func):
-        async def inner(self: GenshinClient, *args: Any, **kwargs: Any):
-            key = key_func(self, *args, **kwargs)
+    I originally wanted to make this wrap an already called coroutine since the syntax is easier.
+    However that will always raise a resource warning which kinda sucks.
+    """
+    key = ":".join(map(str, key_tuple))
 
-            if key in self._permanent_cache:
-                return self._permanent_cache[key]
+    filename = os.path.join(get_tempdir(), "permanent_cache.json")
 
-            x = await func(self, *args, **kwargs)
-            self._permanent_cache[key] = x
-            return x
+    async def wrapper(*args: Any, **kwargs: Any) -> Any:
+        if os.path.isfile(filename):
+            with open(filename) as file:
+                data = json.load(file)
 
-        return update_wrapper(inner, func)
+            if key in data:
+                return data[key]
 
-    return wrapper
+        else:
+            data = {}
+
+        r = await func(*args, **kwargs)
+        data[key] = r
+
+        with open(filename, "w") as file:
+            json.dump(data, file)
+
+        return r
+
+    return update_wrapper(wrapper, func)  # type: ignore

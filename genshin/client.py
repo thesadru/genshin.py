@@ -34,7 +34,7 @@ from .utils import (
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
-    permanent_cache,
+    perm_cache,
     recognize_server,
 )
 
@@ -73,7 +73,6 @@ class GenshinClient:
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     static_cache: ClassVar[MutableMapping[str, Any]] = {}
-    _permanent_cache: ClassVar[MutableMapping[Any, Any]] = {}  # TODO: Remove the need for this
 
     def __init__(
         self,
@@ -860,15 +859,16 @@ class GenshinClient:
         data = await self.request_daily_reward("info", lang=lang)
         return DailyRewardInfo(data["is_sign"], data["total_sign_day"])
 
-    @permanent_cache(
-        lambda self, lang=None: ("rewards", datetime.utcnow().month, lang or self.lang)
-    )
     async def get_monthly_rewards(self, *, lang: str = None) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month
 
         :param lang: The language to use
         """
-        data = await self.request_daily_reward("home", lang=lang)
+        func = perm_cache(
+            ("rewards", datetime.utcnow().month, lang or self.lang),
+            self.request_daily_reward,
+        )
+        data = await func("home", lang=lang)
         return [DailyReward(**i) for i in data["awards"]]
 
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
@@ -973,7 +973,6 @@ class GenshinClient:
             )
             # fmt: on
 
-    @permanent_cache(lambda self, lang=None, **kwargs: ("banners", lang or self.lang))
     async def get_banner_names(
         self, *, lang: str = None, authkey: str = None
     ) -> Dict[BannerType, str]:
@@ -982,7 +981,8 @@ class GenshinClient:
         :param lang: The language to use
         :param authkey: The authkey to use when requesting data
         """
-        data = await self.request_gacha_info(
+        func = perm_cache(("banners", lang or self.lang), self.request_gacha_info)
+        data = await func(
             "getConfigList",
             lang=lang,
             authkey=authkey,
@@ -1354,8 +1354,11 @@ class ChineseClient(GenshinClient):
     async def get_monthly_rewards(self) -> List[DailyReward]:
         """Get a list of all availible rewards for the current month"""
         # uid doesn't matter, this is a static resource
-        # TODO: Cache this the same as the overseas client
-        data = await self.request_daily_reward("home", uid=1)
+        func = perm_cache(
+            ("cn_rewards", datetime.utcnow().month),
+            self.request_daily_reward,
+        )
+        data = await func("home", uid=1)
         return [DailyReward(**i) for i in data["awards"]]
 
     def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:

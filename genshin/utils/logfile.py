@@ -1,13 +1,14 @@
 """Utility functions for extracting data from logfiles"""
 import os
 import re
-from tempfile import gettempdir
 from typing import List, Optional
 from urllib.parse import unquote
 
+from .misc import get_tempdir
+
 __all__ = ["get_logfile", "extract_authkey", "get_authkey", "get_banner_ids"]
 
-AUTHKEY_FILE = os.path.join(gettempdir(), "genshin_authkey.txt")
+AUTHKEY_FILE = os.path.join(get_tempdir(), "genshin_authkey.txt")
 
 
 def get_logfile() -> Optional[str]:

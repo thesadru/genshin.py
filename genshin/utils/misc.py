@@ -1,10 +1,10 @@
 """Miscalenious utilities"""
+import os
+import tempfile
 from asyncio.proactor_events import _ProactorBasePipeTransport
 from typing import Dict
 
-__all__ = [
-    "get_browser_cookies",
-]
+__all__ = ["get_browser_cookies", "get_tempdir"]
 
 
 def get_browser_cookies(browser: str = None) -> Dict[str, str]:
@@ -29,6 +29,12 @@ def get_browser_cookies(browser: str = None) -> Dict[str, str]:
         for c in load(domain_name=domain)
         if c.name in allowed_cookies and c.value is not None
     }
+
+
+def get_tempdir():
+    directory = os.path.join(tempfile.gettempdir(), "genshin.py")
+    os.makedirs(directory, exist_ok=True)
+    return directory
 
 
 # for the convenience of the user we hide these windows errors:
