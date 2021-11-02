@@ -56,7 +56,7 @@ class GenshinClient:
 
     WEBSTATIC_URL = "https://webstatic-sea.mihoyo.com/"
     TAKUMI_URL = "https://api-os-takumi.mihoyo.com/"
-    RECORD_URL = "https://api-os-takumi.mihoyo.com/game_record/"
+    RECORD_URL = "https://bbs-api-os.mihoyo.com/game_record/"
     INFO_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_info"
     DETAIL_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_detail"
     REWARD_URL = "https://hk4e-api-os.mihoyo.com/event/sol/"
@@ -1229,6 +1229,7 @@ class ChineseClient(GenshinClient):
     INFO_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo"
     DETAIL_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail"
     REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
+    GACHA_INFO_URL = "https://hk4e-api.mihoyo.com/event/gacha_info/api/"
     MAP_URL = "https://api-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
     STATIC_MAP_URL = "https://api-static.mihoyo.com/common/map_user/ys_obc/v1/map"
 

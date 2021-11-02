@@ -62,7 +62,7 @@ _character_names = {
     10000047: ("Kazuha", "Kaedehara Kazuha", "Anemo", 5),
     10000048: ("Feiyan", "Yanfei", "Pyro", 4),
     10000049: ("Yoimiya", "Yoimiya", "Pyro", 5),
-    10000050: ("Thoma", "Thoma", "Pyro", 4),
+    10000050: ("Tohma", "Thoma", "Pyro", 4),
     10000051: ("Eula", "Eula", "Cryo", 5),
     10000052: ("Shougun", "Raiden Shogun", "Electro", 5),
     10000053: ("Sayu", "Sayu", "Anemo", 4),

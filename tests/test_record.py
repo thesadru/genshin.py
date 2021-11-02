@@ -62,8 +62,9 @@ async def test_activities(client: GenshinClient, uid: int):
     assert data.hyakunin_ikki is not None
     assert data.hyakunin_ikki.challenges[0].medal == "gold"
 
-    assert data.labyrinth_warriors is not None
-    assert data.labyrinth_warriors.challenges[0].runes[0].element == "Anemo"
+    # mihoyo removed these???
+    # assert data.labyrinth_warriors is not None
+    # assert data.labyrinth_warriors.challenges[0].runes[0].element == "Anemo"
 
 
 @pytest.mark.asyncio
