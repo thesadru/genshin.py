@@ -78,5 +78,6 @@ async def test_diary_log(lcnclient: ChineseClient):
     log = lcnclient.diary_log(limit=10)
     data = await log.flatten()
 
-    assert data[0].amount > 0
     assert log.data.uid == lcnclient.uid
+    if data:
+        assert data[0].amount > 0

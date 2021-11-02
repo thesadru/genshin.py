@@ -10,5 +10,5 @@ from .hoyolab import GenshinAccount, RecordCard, SearchUser
 from .intermap import MapInfo, MapLocation, MapNode, MapPoint
 from .notes import Notes
 from .stats import FullUserStats, PartialUserStats, UserStats
-from .transaction import ItemTransaction, Transaction, TransactionKind
+from .transaction import BaseTransaction, ItemTransaction, Transaction, TransactionKind
 from .wish import BannerDetails, BannerType, GachaItem, Wish

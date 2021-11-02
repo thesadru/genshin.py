@@ -57,6 +57,7 @@ def local_chinese_cookies() -> Dict[str, str]:
 async def client(cookies: Dict[str, str]):
     """Client with environment cookies"""
     client = GenshinClient()
+    client.debug = True
     client.set_cookies(cookies)
     client.cache = {}
 
@@ -96,6 +97,7 @@ async def lclient(browser_cookies: Dict[str, str]):
         return
 
     client = GenshinClient()
+    client.debug = True
     client.set_cookies(browser_cookies)
     client.set_authkey()
 
@@ -112,6 +114,7 @@ async def cnclient(chinese_cookies: Dict[str, str]):
         return
 
     client = ChineseClient()
+    client.debug = True
     client.set_cookies(chinese_cookies)
 
     yield client
@@ -127,6 +130,7 @@ async def lcnclient(local_chinese_cookies: Dict[str, str]):
         return
 
     client = ChineseClient()
+    client.debug = True
     client.set_cookies(local_chinese_cookies)
 
     yield client

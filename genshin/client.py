@@ -19,6 +19,7 @@ from . import errors
 from .constants import LANGS
 from .models import *
 from .paginator import (
+    ChineseDailyRewardPaginator,
     DailyRewardPaginator,
     DiaryPaginator,
     MergedTransactions,
@@ -1163,7 +1164,7 @@ class GenshinClient:
     # MISC:
 
     async def _complete_uid(
-        self, uid: int = None, uid_key: str = "uid", server_key: str = "region"
+        self, uid: Optional[int] = None, uid_key: str = "uid", server_key: str = "region"
     ) -> Dict[str, Any]:
         """Create a new dict with a uid and a server
 
@@ -1171,26 +1172,23 @@ class GenshinClient:
         """
         params = {}
 
+        uid = uid or self._uid
+
         if uid is None:
-            if self._uid:
-                uid = self._uid
-            else:
-                accounts = await self.genshin_accounts()
-                # filter test servers
-                accounts = [
-                    account
-                    for account in accounts
-                    if "os" in account.server or "cn" in account.server
-                ]
+            accounts = await self.genshin_accounts()
+            # filter test servers
+            accounts = [
+                account for account in accounts if "os" in account.server or "cn" in account.server
+            ]
 
-                # TODO: Raise properly
-                if not accounts:
-                    errors.raise_for_retcode({"retcode": -1073})
+            # TODO: Raise properly
+            if not accounts:
+                errors.raise_for_retcode({"retcode": -1073})
 
-                account = max(accounts, key=lambda a: a.level)
-                uid = account.uid
+            account = max(accounts, key=lambda a: a.level)
+            uid = account.uid
 
-                self._uid = uid
+            self._uid = uid
 
         params[uid_key] = uid
         params[server_key] = recognize_server(uid)
@@ -1361,7 +1359,7 @@ class ChineseClient(GenshinClient):
         data = await func("home", uid=1)
         return [DailyReward(**i) for i in data["awards"]]
 
-    def claimed_rewards(self, *, limit: int = None, lang: str = None) -> DailyRewardPaginator:
+    def claimed_rewards(self, uid: int = None, *, limit: int = None) -> ChineseDailyRewardPaginator:
         """Get all claimed rewards for the current user
 
         NOTE: Languages are currently broken,
@@ -1370,7 +1368,7 @@ class ChineseClient(GenshinClient):
         :param limit: The maximum amount of rewards to get
         :param lang: The language to use - currently broken
         """
-        return DailyRewardPaginator(self, limit=limit, lang=lang)
+        return ChineseDailyRewardPaginator(self, uid, limit=limit)
 
     @overload
     async def claim_daily_reward(

@@ -62,7 +62,7 @@ _character_names = {
     10000047: ("Kazuha", "Kaedehara Kazuha", "Anemo", 5),
     10000048: ("Feiyan", "Yanfei", "Pyro", 4),
     10000049: ("Yoimiya", "Yoimiya", "Pyro", 5),
-    10000050: None,
+    10000050: ("Thoma", "Thoma", "Pyro", 4),
     10000051: ("Eula", "Eula", "Cryo", 5),
     10000052: ("Shougun", "Raiden Shogun", "Electro", 5),
     10000053: ("Sayu", "Sayu", "Anemo", 4),
@@ -72,7 +72,6 @@ _character_names = {
     # collab:
     10000062: ("Aloy", "Aloy", "Cryo", 105),
     # guesses before release:
-    20000001: ("Thoma", "Thoma", "Pyro", 4),
     20000002: ("Gorou", "Gorou", "Geo", 4),
     20000003: ("Arataki", "Arataki Itto", "Geo", 5),
     20000004: ("YaeMiko", "Yae Miko", "Electro", 5),

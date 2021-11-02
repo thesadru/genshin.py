@@ -9,6 +9,7 @@ from typing import *
 from .models import (
     BannerType,
     BaseDiary,
+    BaseTransaction,
     ClaimedDailyReward,
     DiaryAction,
     DiaryPage,
@@ -17,7 +18,6 @@ from .models import (
     TransactionKind,
     Wish,
 )
-from .models.transaction import BaseTransaction
 from .utils import aislice, amerge
 
 if TYPE_CHECKING:
@@ -101,7 +101,7 @@ class DailyRewardPaginator:
         return [item async for item in self]
 
 
-class ChineseDailyRewardsPaginator(DailyRewardPaginator):
+class ChineseDailyRewardPaginator(DailyRewardPaginator):
     """A paginator specifically for claimed daily rewards on chinese bbs"""
 
     client: ChineseClient
@@ -482,6 +482,9 @@ class MergedPaginator(AuthkeyPaginator[MT]):
 
     def __init__(self, client: GenshinClient, **kwargs: Any) -> None:
         super().__init__(client, **kwargs)
+
+    def next_page(self) -> NoReturn:
+        raise RuntimeError('Merged paginators cannot be gotten by "pages"')
 
     def _key(self, item: _Model) -> float:
         return item.time.timestamp()

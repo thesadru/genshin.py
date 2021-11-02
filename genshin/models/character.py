@@ -1,6 +1,6 @@
-from typing import List
+from typing import Dict, List
 
-from pydantic import Field
+from pydantic import Field, validator
 
 from .base import GenshinModel, PartialCharacter
 
@@ -24,6 +24,11 @@ class ArtifactSetEffect(GenshinModel):
 
     pieces: int = Field(galias="activation_number")
     effect: str
+    enabled: bool = False
+
+    class Config:
+        # this is for the "enabled" field, hopefully nobody abuses this
+        allow_mutation = True
 
 
 class ArtifactSet(GenshinModel):
@@ -78,3 +83,16 @@ class Character(PartialCharacter):
     artifacts: List[Artifact] = Field(galias="reliquaries")
     constellations: List[Constellation]
     outfits: List[Outfit] = Field(galias="costumes")
+
+    @validator("artifacts")
+    def __add_artifact_effect_enabled(cls, artifacts: List[Artifact]):
+        sets: Dict[int, List[Artifact]] = {}
+        for arti in artifacts:
+            sets.setdefault(arti.set.id, []).append(arti)
+
+        for artifact in artifacts:
+            for effect in artifact.set.effects:
+                if effect.pieces <= len(sets[artifact.set.id]):
+                    effect.enabled = True
+
+        return artifacts
