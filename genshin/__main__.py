@@ -146,10 +146,8 @@ async def notes(
     for expedition in data.expeditions:
         if expedition.remaining_time > 0:
             seconds = expedition.remaining_time
-            remaining = f"{seconds // 3600:2}:{seconds % 3600 // 60:02}"
-            typer.echo(
-                f" - {expedition.status} | {remaining} remaining - {expedition.character.name}"
-            )
+            remaining = f"{seconds // 3600:02.0f}:{seconds % 3600 // 60:02.0f} remaining"
+            typer.echo(f" - {expedition.status} | {remaining} - {expedition.character.name}")
         else:
             typer.echo(f" - {expedition.status} | {expedition.character.name}")
 
@@ -193,11 +191,12 @@ async def pity():
                 accum += 1
                 if wish.rarity == 5:
                     a = typer.style(str(90 - accum), bold=True)
-                    typer.secho(f"{accum} pulls since a 5*, {a} pulls left until pity")
+                    n = typer.style(wish.name, fg="green")
+                    typer.secho(f"Pulled a {n} {accum} pulls ago. {a} pulls left until pity.")
                     break
             else:
                 a = typer.style(str(90 - accum), bold=True)
-                typer.secho(f"Never pulled a 5*, at most {a} pulls left until pity")
+                typer.secho(f"Never pulled a 5*. At most {a} pulls left until pity")
 
 
 if __name__ == "__main__":

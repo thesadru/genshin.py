@@ -36,10 +36,17 @@ from .utils import (
     get_banner_ids,
     get_browser_cookies,
     perm_cache,
+    is_chinese,
     recognize_server,
 )
 
-__all__ = ["GenshinClient", "MultiCookieClient", "ChineseClient", "ChineseMultiCookieClient"]
+__all__ = [
+    "GenshinClient",
+    "MultiCookieClient",
+    "ChineseClient",
+    "ChineseMultiCookieClient",
+    "InternationalClient",
+]
 
 
 class GenshinClient:
@@ -1407,8 +1414,8 @@ class MultiCookieClient(GenshinClient):
     def __init__(
         self,
         cookie_list: Iterable[Mapping[str, str]] = None,
-        lang: str = "en-us",
         *,
+        lang: str = "en-us",
         debug: bool = False,
     ) -> None:
         self.sessions = []
@@ -1473,12 +1480,25 @@ class MultiCookieClient(GenshinClient):
         await super().close()
 
     async def request(
-        self, url: Union[str, URL], method: str = "GET", **kwargs: Any
+        self,
+        url: Union[str, URL],
+        method: str = "GET",
+        headers: Dict[str, Any] = None,
+        **kwargs: Any,
     ) -> Dict[str, Any]:
+        headers = headers or {}
+        headers["user-agent"] = self.USER_AGENT
 
-        for _ in range(len(self.sessions)):
+        for session in self.sessions.copy():
+            async with session.request(method, url, headers=headers, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+            if data["retcode"] == 0:
+                return data["data"]
+
             try:
-                return await super().request(url, method=method, **kwargs)
+                errors.raise_for_retcode(data)
             except errors.TooManyRequests:
                 # move the ratelimited session to the end to let the ratelimit wear off
                 session = self.sessions.pop(0)
@@ -1493,5 +1513,105 @@ class MultiCookieClient(GenshinClient):
         raise RuntimeError(f"{type(self).__name__} does not support daily reward endpoints")
 
 
-class ChineseMultiCookieClient(ChineseClient, MultiCookieClient):
+class ChineseMultiCookieClient(MultiCookieClient, ChineseClient):
     """A Genshin Client for chinese endpoints which allows setting multiple cookies"""
+
+
+class InternationalClient:
+    os_client: MultiCookieClient
+    cn_client: ChineseMultiCookieClient
+
+    def __init__(
+        self,
+        os_client: MultiCookieClient = None,
+        cn_client: ChineseMultiCookieClient = None,
+        *,
+        debug: bool = False,
+    ) -> None:
+        self.os_client = os_client or MultiCookieClient(debug=debug)
+        self.cn_client = cn_client or ChineseMultiCookieClient(debug=debug)
+
+    async def close(self):
+        await asyncio.gather(self.os_client.close(), self.cn_client.close())
+
+    async def set_cookies(
+        self,
+        cookies: List[Mapping[str, Any]] = None,
+        *,
+        os: List[Mapping[str, Any]] = None,
+        cn: List[Mapping[str, Any]] = None,
+    ) -> Tuple[List[Mapping[str, Any]], ...]:
+        """Helper cookie setter that accepts cookie headers
+
+        It is recommended to set os and cn cookies explicitly.
+
+        :param cookies: A list of either os or cn cookies if unknown
+        :param os: A list of cookies known to be os
+        :param cn: A list of cookies known to be cn
+        :returns: A tuple of os cookies and cn cookies
+        """
+        cookies = cookies or []
+        os = os or []
+        cn = cn or []
+
+        async def is_chinese(cookies: Mapping[str, Any]) -> Optional[bool]:
+            os = GenshinClient(cookies)
+            cn = ChineseClient(cookies)
+
+            osd, cnd = await asyncio.gather(
+                os.request_hoyolab(f"community/user/wapi/getUserFullInfo?uid={os.hoyolab_uid}"),
+                cn.request_hoyolab(f"user/wapi/getUserFullInfo?uid={os.hoyolab_uid}"),
+                return_exceptions=True,
+            )
+            await asyncio.gather(os.close(), cn.close())
+
+            if not isinstance(cnd, Exception):
+                return True
+            elif not isinstance(osd, Exception):
+                return False
+            else:
+                return None
+
+        self.os_client.set_cookies(os, clear=False)
+        self.cn_client.set_cookies(cn, clear=False)
+
+        are_chinese = await asyncio.gather(*(is_chinese(i) for i in cookies))
+        for cookie, chinese in zip(cookies, are_chinese):
+            if chinese is None:
+                raise Exception(f"Cookie {cookie!r} can't be found on neither os nor cn servers")
+            elif chinese:
+                self.cn_client.set_cookies([cookie], clear=False)
+            else:
+                self.os_client.set_cookies([cookie], clear=False)
+
+        return self.os_client.cookies, self.cn_client.cookies
+
+    def get_activities(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_activities(uid, *args, **kwargs)
+
+    def get_characters(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_characters(uid, *args, **kwargs)
+
+    def get_full_user(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_full_user(uid, *args, **kwargs)
+
+    def get_partial_user(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_partial_user(uid, *args, **kwargs)
+
+    def get_spiral_abyss(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_spiral_abyss(uid, *args, **kwargs)
+
+    def get_user(self, uid: int, *args: Any, **kwargs: Any):
+        client = self.cn_client if is_chinese(uid) else self.os_client
+        return client.get_user(uid, *args, **kwargs)
+
+    async def get_record_card(self, hoyolab_uid: int, *args: Any, **kwargs: Any):
+        try:
+            return await self.os_client.get_record_card(hoyolab_uid, *args, **kwargs)
+        except:
+            return await self.cn_client.get_record_card(hoyolab_uid, *args, **kwargs)
