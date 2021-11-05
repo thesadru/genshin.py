@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import uuid
+import warnings
 from datetime import datetime
 from http.cookies import SimpleCookie
 from typing import *
@@ -35,8 +36,8 @@ from .utils import (
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
-    perm_cache,
     is_chinese,
+    perm_cache,
     recognize_server,
 )
 
@@ -45,7 +46,6 @@ __all__ = [
     "MultiCookieClient",
     "ChineseClient",
     "ChineseMultiCookieClient",
-    "InternationalClient",
 ]
 
 
@@ -486,7 +486,7 @@ class GenshinClient:
         *,
         method: str = "GET",
         lang: str = None,
-        authkey: str = None,
+        authkey: Optional[str] = None,
         params: Dict[str, Any] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
@@ -495,16 +495,17 @@ class GenshinClient:
         Wish history related data
         """
         params = params or {}
+        authkey = authkey or self.authkey
+
+        if authkey is None:
+            raise RuntimeError("No authkey provided")
 
         base_url = URL(self.GACHA_INFO_URL)
         url = base_url.join(URL(endpoint))
 
         params["authkey_ver"] = 1
-        params["authkey"] = authkey or self.authkey
+        params["authkey"] = unquote(authkey)
         params["lang"] = create_short_lang_code(lang or self.lang)
-
-        if authkey is None and self.authkey is None:
-            raise RuntimeError("No authkey provided")
 
         debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
         self.logger.debug(f"GACHA {method} {debug_url}")
@@ -517,7 +518,7 @@ class GenshinClient:
         *,
         method: str = "GET",
         lang: str = None,
-        authkey: str = None,
+        authkey: Optional[str] = None,
         params: Dict[str, Any] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
@@ -526,17 +527,18 @@ class GenshinClient:
         Transaction related data
         """
         params = params or {}
+        authkey = authkey or self.authkey
+
+        if authkey is None:
+            raise RuntimeError("No authkey provided")
 
         base_url = URL(self.YSULOG_URL)
         url = base_url.join(URL(endpoint))
 
         params["authkey_ver"] = 1
         params["sign_type"] = 2
-        params["authkey"] = authkey or self.authkey
+        params["authkey"] = unquote(authkey)
         params["lang"] = create_short_lang_code(lang or self.lang)
-
-        if authkey is None and self.authkey is None:
-            raise RuntimeError("No authkey provided")
 
         debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
         self.logger.debug(f"TRANS {method} {debug_url}")
@@ -1518,6 +1520,11 @@ class ChineseMultiCookieClient(MultiCookieClient, ChineseClient):
 
 
 class InternationalClient:
+    """A client dummy which accepts both overseas and chinese cookies
+
+    Currently in development and probably shouldn't be used.
+    """
+
     os_client: MultiCookieClient
     cn_client: ChineseMultiCookieClient
 
@@ -1528,6 +1535,8 @@ class InternationalClient:
         *,
         debug: bool = False,
     ) -> None:
+        warnings.warn("Initialized an unstable InteractionClient type")
+
         self.os_client = os_client or MultiCookieClient(debug=debug)
         self.cn_client = cn_client or ChineseMultiCookieClient(debug=debug)
 
@@ -1536,11 +1545,11 @@ class InternationalClient:
 
     async def set_cookies(
         self,
-        cookies: List[Mapping[str, Any]] = None,
+        cookies: Sequence[Mapping[str, Any]] = None,
         *,
-        os: List[Mapping[str, Any]] = None,
-        cn: List[Mapping[str, Any]] = None,
-    ) -> Tuple[List[Mapping[str, Any]], ...]:
+        os: Sequence[Mapping[str, Any]] = None,
+        cn: Sequence[Mapping[str, Any]] = None,
+    ) -> Tuple[List[Mapping[str, Any]], List[Mapping[str, Any]]]:
         """Helper cookie setter that accepts cookie headers
 
         It is recommended to set os and cn cookies explicitly.
@@ -1554,7 +1563,7 @@ class InternationalClient:
         os = os or []
         cn = cn or []
 
-        async def is_chinese(cookies: Mapping[str, Any]) -> Optional[bool]:
+        async def is_chinese(cookies: Mapping[str, Any]) -> bool:
             os = GenshinClient(cookies)
             cn = ChineseClient(cookies)
 
@@ -1569,17 +1578,15 @@ class InternationalClient:
                 return True
             elif not isinstance(osd, Exception):
                 return False
-            else:
-                return None
+
+            raise Exception(f"Cookie {cookie!r} can't be found on neither os nor cn servers")
 
         self.os_client.set_cookies(os, clear=False)
         self.cn_client.set_cookies(cn, clear=False)
 
         are_chinese = await asyncio.gather(*(is_chinese(i) for i in cookies))
         for cookie, chinese in zip(cookies, are_chinese):
-            if chinese is None:
-                raise Exception(f"Cookie {cookie!r} can't be found on neither os nor cn servers")
-            elif chinese:
+            if chinese:
                 self.cn_client.set_cookies([cookie], clear=False)
             else:
                 self.os_client.set_cookies([cookie], clear=False)

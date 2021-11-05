@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import Field, root_validator
+from pydantic import Field
 
 from .base import GenshinModel
 
@@ -9,7 +9,7 @@ TransactionKind = Literal["primogem", "crystal", "resin", "artifact", "weapon"]
 
 
 class BaseTransaction(GenshinModel):
-    """A genshin transaction of currency"""
+    """A genshin transaction"""
 
     kind: TransactionKind
 
@@ -17,18 +17,12 @@ class BaseTransaction(GenshinModel):
     uid: int
     time: datetime
     amount: int = Field(galias="add_num")
-    reason_id: int = Field(galias="reason")
-    reason: str = Field("", galias="reason_str")
-
-    @root_validator()
-    def __check_for_validation(cls, values):
-        # In case we try to validate this exact model reason & reason_id can get mixed up
-        if "reason_id" in values:
-            values["reason"], values["reason_str"] = values["reason_id"], values["reason"]
-        return values
+    reason_id: int
+    reason: str = ""
 
 
 class Transaction(BaseTransaction):
+    """A genshin transaction of currency"""
 
     kind: Literal["primogem", "crystal", "resin"]
 

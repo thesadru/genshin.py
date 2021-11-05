@@ -117,8 +117,8 @@ class ChineseActivity(GenshinModel):
 class Activities(GenshinModel):
     """A collection of genshin activities"""
 
-    hyakunin_ikki: Optional[HyakuninIkki] = Field(gslug="sumo")
-    labyrinth_warriors: Optional[LabyrinthWarriors] = Field(gslug="rogue")
+    hyakunin_ikki: Optional[HyakuninIkki] = Field(None, gslug="sumo")
+    labyrinth_warriors: Optional[LabyrinthWarriors] = Field(None, gslug="rogue")
 
     effigy: Optional[ChineseActivity]
     mechanicus: Optional[ChineseActivity]
@@ -128,6 +128,9 @@ class Activities(GenshinModel):
 
     @root_validator(pre=True)
     def __flatten_activities(cls, values: Dict[str, Any]):
+        if not values.get("activities"):
+            return values
+
         slugs = {
             field.field_info.extra["gslug"]: name
             for name, field in cls.__fields__.items()

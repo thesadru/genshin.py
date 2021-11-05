@@ -84,7 +84,7 @@ async def wish(
 )
 async def transaction(
     authkey: str,
-    kind: genshin.models.TransactionKind = None,
+    kind: genshin.models.TransactionKind = "primogem",
     size: int = 20,
     end_id: int = 0,
     lang: Lang = None,

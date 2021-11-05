@@ -469,14 +469,15 @@ class Transactions(AuthkeyPaginator[TransactionT]):
         transactions = []
         for trans in data["list"]:
             cls = ItemTransaction if "name" in trans else Transaction
-            reason = reasons.get(trans["reason"], "")
-            transactions.append(cls(**trans, reason_str=reason, kind=self.kind))
+            reason_id = trans["reason"]
+            trans = {**trans, "reason_id": reason_id, "reason": reasons.get(reason_id, "")}
+            transactions.append(cls(**trans, kind=self.kind))
 
         return transactions
 
 
 class MergedPaginator(AuthkeyPaginator[MT]):
-    """A paginator w"""
+    """A paginator merging a collection of other paginators"""
 
     _paginators: List[IDPagintor[MT]]
 
@@ -503,6 +504,8 @@ class MergedPaginator(AuthkeyPaginator[MT]):
 
 
 class MergedWishHistory(MergedPaginator[Wish]):
+    """A paginator for wish histories from multiple banners"""
+
     __repr_args__ = ["banner_types", "limit", "lang"]
 
     client: GenshinClient
@@ -532,6 +535,8 @@ class MergedWishHistory(MergedPaginator[Wish]):
 
 
 class MergedTransactions(MergedPaginator[BaseTransaction]):
+    """A paginator for transactions from multiple banners"""
+
     __repr_args__ = ["kinds", "limit", "lang"]
 
     client: GenshinClient
