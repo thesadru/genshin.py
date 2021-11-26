@@ -90,10 +90,9 @@ async for wish in client.wish_history(authkey="..."):
 To get your authkey manually from other platforms, you can use any of these approaches:
 
 - PC
-    - Open the Paimon menu
-    - Click Feedback
-    - Wait for it to load, and a feedback page should open
-    - Copy the link
+    - Open the wish history in the game and wait for it to load
+    - Open the file at `~\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt`
+    - Find the link which starts with `OnGetWebViewPageFinish` and copy it
 - Android
     - Open the Paimon menu
     - Click Feedback
@@ -101,15 +100,6 @@ To get your authkey manually from other platforms, you can use any of these appr
     - Turn off your Wi-Fi
     - Refresh the page
     - The page should display an error containing a link
-    - Copy the entire link
-- IOS
-    - Open the Paimon menu
-    - Click Feedback
-    - Wait for it to load, and a feedback page should open
-    - Press In-game issue
-    - Press Co-Op Mode
-    - There is a link at the bottom of the reply. Click the link.
-    - A browser should open up
     - Copy the link
 - PS
     - Open any event mail which contains a QR Code

@@ -1,7 +1,8 @@
 import asyncio
 
-import genshin
 import pytest
+
+import genshin
 from genshin import ChineseClient
 
 
@@ -43,7 +44,7 @@ async def test_abyss(cnclient: ChineseClient, cnuid: int):
     data = await cnclient.get_spiral_abyss(cnuid, previous=True)
 
     pretty = data.ranks.as_dict()
-    assert "Most Kills" in pretty
+    assert "Most Defeats" in pretty
 
 
 @pytest.mark.asyncio

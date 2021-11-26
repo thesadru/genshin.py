@@ -1,10 +1,16 @@
 """Miscalenious utilities"""
+import asyncio
+import functools
 import os
 import tempfile
 from asyncio.proactor_events import _ProactorBasePipeTransport
-from typing import Dict
+from typing import Any, Callable, Coroutine, Dict, Type, TypeVar
 
-__all__ = ["get_browser_cookies", "get_tempdir"]
+from .. import errors
+
+CallableT = TypeVar("CallableT", bound=Callable[..., Coroutine[Any, Any, Any]])
+
+__all__ = ["get_browser_cookies", "get_tempdir", "handle_ratelimits"]
 
 
 def get_browser_cookies(browser: str = None) -> Dict[str, str]:
@@ -32,9 +38,35 @@ def get_browser_cookies(browser: str = None) -> Dict[str, str]:
 
 
 def get_tempdir():
+    """Gets the temporary directory to be used by genshin.py"""
     directory = os.path.join(tempfile.gettempdir(), "genshin.py")
     os.makedirs(directory, exist_ok=True)
     return directory
+
+
+def handle_ratelimits(
+    tries: int = 5,
+    exception: Type[errors.GenshinException] = errors.VisitsTooFrequently,
+    delay: float = 0.3,
+) -> Callable[[CallableT], CallableT]:
+    """Handles ratelimits for requests"""
+    # TODO: Support exponential backoff
+
+    def wrapper(func):
+        async def inner(self, *args: Any, **kwargs: Any) -> Any:
+            for _ in range(tries):
+                try:
+                    x = await func(self, *args, **kwargs)
+                except exception:
+                    await asyncio.sleep(delay)
+                else:
+                    return x
+            else:
+                raise exception({}, f"Got ratelimited {tries} times in a row")
+
+        return functools.update_wrapper(inner, func)
+
+    return wrapper
 
 
 # for the convenience of the user we hide these windows errors:

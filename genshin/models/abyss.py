@@ -5,6 +5,17 @@ from pydantic import Field, root_validator
 
 from .base import BaseCharacter, GenshinModel
 
+__all__ = [
+    "AbyssRankCharacter",
+    "AbyssCharacter",
+    "CharacterRanks",
+    "Battle",
+    "Chamber",
+    "Floor",
+    "SpiralAbyss",
+    "SpiralAbyssPair",
+]
+
 
 class AbyssRankCharacter(BaseCharacter):
     """A character with a value of a rank"""
@@ -24,18 +35,21 @@ class AbyssCharacter(BaseCharacter):
 class CharacterRanks(GenshinModel):
     """A collection of rankings achieved during spiral abyss runs"""
 
-    most_played: List[AbyssRankCharacter] = Field([], galias="reveal_rank")
-    most_kills: List[AbyssRankCharacter] = Field([], galias="defeat_rank")
-    strongest_strike: List[AbyssRankCharacter] = Field([], galias="damage_rank")
-    most_damage_taken: List[AbyssRankCharacter] = Field([], galias="take_damage_rank")
-    most_bursts_used: List[AbyssRankCharacter] = Field([], galias="normal_skill_rank")
-    most_skills_used: List[AbyssRankCharacter] = Field([], galias="energy_skill_rank")
+    # fmt: off
+    most_played: List[AbyssRankCharacter] = Field([],      galias="reveal_rank",       mi18n="bbs/go_fight_count")
+    most_kills: List[AbyssRankCharacter] = Field([],       galias="defeat_rank",       mi18n="bbs/max_rout_count")
+    strongest_strike: List[AbyssRankCharacter] = Field([], galias="damage_rank",       mi18n="bbs/powerful_attack")
+    most_damage_taken: List[AbyssRankCharacter] = Field([],galias="take_damage_rank",  mi18n="bbs/receive_max_damage")
+    most_bursts_used: List[AbyssRankCharacter] = Field([], galias="energy_skill_rank", mi18n="bbs/element_break_count")
+    most_skills_used: List[AbyssRankCharacter] = Field([], galias="normal_skill_rank", mi18n="bbs/element_skill_use_count")
+    # fmt: on
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
-        assert lang == "en-us", "Other languages not yet implemented"
-
-        return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
+        return {
+            self._get_mi18n(field, lang): getattr(self, field.name)
+            for field in self.__fields__.values()
+        }
 
 
 class Battle(GenshinModel):

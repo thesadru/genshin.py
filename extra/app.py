@@ -1,10 +1,11 @@
 from enum import Enum
-from typing import Annotated, List, Literal, Type, Union, cast
+from typing import List, Literal, Type, Union, cast
 
-import genshin
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse, RedirectResponse
+
+import genshin
 
 __all__ = ["app"]
 

@@ -6,6 +6,20 @@ from pydantic import Field, root_validator
 
 from .base import BaseCharacter, GenshinModel
 
+__all__ = [
+    "HyakuninIkkiCharacter",
+    "HyakuninIkkiSkill",
+    "HyakuninIkkiBattle",
+    "HyakuninIkkiChallenge",
+    "HyakuninIkki",
+    "LabyrinthWarriorsCharacter",
+    "LabyrinthWarriorsRune",
+    "LabyrinthWarriorsChallenge",
+    "LabyrinthWarriors",
+    "ChineseActivity",
+    "Activities",
+]
+
 # ---------------------------------------------------------
 # Hyakunin Ikki:
 

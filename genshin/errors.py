@@ -72,6 +72,12 @@ class TooManyRequests(CookieException):
     msg = "Cannnot get data for more than 30 accounts per cookie per day."
 
 
+class VisitsTooFrequently(GenshinException):
+    """Visited a page too frequently, just handle with exponantial backoff"""
+
+    msg = "visits too frequently"
+
+
 class AlreadyClaimed(GenshinException):
     """Already claimed the daily reward today"""
 
@@ -99,6 +105,7 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     # misc hoyolab
     -100: InvalidCookies,
     -108: "Invalid language.",
+    -110: VisitsTooFrequently,
     # game record
     10001: InvalidCookies,
     -10001: "Malformed request.",

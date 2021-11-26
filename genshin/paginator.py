@@ -512,7 +512,10 @@ class MergedWishHistory(MergedPaginator[Wish]):
     banner_types: List[BannerType]
 
     def __init__(
-        self, client: GenshinClient, banner_types: List[BannerType] = None, **kwargs: Any
+        self,
+        client: GenshinClient,
+        banner_types: List[BannerType] = None,
+        **kwargs: Any,
     ) -> None:
         """Create a new merged wish history paginator
 

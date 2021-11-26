@@ -6,6 +6,8 @@ from pydantic import Field
 
 from .base import GenshinModel
 
+__all__ = ["DailyRewardInfo", "DailyReward", "ClaimedDailyReward"]
+
 
 class DailyRewardInfo(NamedTuple):
     """Information about the current daily reward status"""

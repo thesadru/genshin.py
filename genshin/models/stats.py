@@ -10,6 +10,16 @@ from .activities import Activities
 from .base import GenshinModel, PartialCharacter
 from .character import Character
 
+__all__ = [
+    "Stats",
+    "Offering",
+    "Exploration",
+    "TeapotRealm",
+    "Teapot",
+    "PartialUserStats",
+    "UserStats",
+    "FullUserStats",
+]
 
 # flake8: noqa: E222
 class Stats(GenshinModel):
@@ -17,27 +27,28 @@ class Stats(GenshinModel):
 
     # This is such fucking bullshit, just why?
     # fmt: off
-    achievements: int =       Field(galias="achievement_number")
-    days_active: int =        Field(galias="active_day_number")
-    characters: int =         Field(galias="avatar_number")
-    spiral_abyss: str =       Field(galias="spiral_abyss")
-    anemoculi: int =          Field(galias="anemoculus_number")
-    geoculi: int =            Field(galias="geoculus_number")
-    electroculi: int =        Field(galias="electroculus_number")
-    common_chests: int =      Field(galias="common_chest_number")
-    exquisite_chests: int =   Field(galias="exquisite_chest_number")
-    precious_chests: int =    Field(galias="precious_chest_number")
-    luxurious_chests: int =   Field(galias="luxurious_chest_number")
-    remarkable_chests: int =  Field(galias="magic_chest_number")
-    unlocked_waypoints: int = Field(galias="way_point_number")
-    unlocked_domains: int =   Field(galias="domain_number")
+    achievements: int =       Field(galias="achievement_number",     mi18n="bbs/achievement_complete_count")
+    days_active: int =        Field(galias="active_day_number",      mi18n="bbs/active_day")
+    characters: int =         Field(galias="avatar_number",          mi18n="bbs/other_people_character")
+    spiral_abyss: str =       Field(galias="spiral_abyss",           mi18n="bbs/unlock_portal")
+    anemoculi: int =          Field(galias="anemoculus_number",      mi18n="bbs/wind_god")
+    geoculi: int =            Field(galias="geoculus_number",        mi18n="bbs/rock_god")
+    electroculi: int =        Field(galias="electroculus_number",    mi18n="bbs/electroculus_god")
+    common_chests: int =      Field(galias="common_chest_number",    mi18n="bbs/general_treasure_box_count")
+    exquisite_chests: int =   Field(galias="exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")
+    precious_chests: int =    Field(galias="precious_chest_number",  mi18n="bbs/rarity_treasure_box_count")
+    luxurious_chests: int =   Field(galias="luxurious_chest_number", mi18n="bbs/magnificent_treasure_box_count")
+    remarkable_chests: int =  Field(galias="magic_chest_number",     mi18n="bbs/magic_chest_number")
+    unlocked_waypoints: int = Field(galias="way_point_number",       mi18n="bbs/unlock_portal")
+    unlocked_domains: int =   Field(galias="domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
-        assert lang == "en-us", "Other languages not yet implemented"
-
-        return {key.replace("_", " ").title(): value for key, value in self.dict().items()}
+        return {
+            self._get_mi18n(field, lang): getattr(self, field.name)
+            for field in self.__fields__.values()
+        }
 
 
 class Offering(GenshinModel):

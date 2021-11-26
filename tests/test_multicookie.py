@@ -1,6 +1,7 @@
 from typing import Dict
 
 import pytest
+
 from genshin import MultiCookieClient
 
 

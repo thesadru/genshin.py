@@ -5,6 +5,8 @@ from pydantic import Field, root_validator, validator
 
 from .base import BaseCharacter, GenshinModel
 
+__all__ = ["Expedition", "Notes"]
+
 
 class Expedition(GenshinModel):
     """A Real-Time note expedition"""

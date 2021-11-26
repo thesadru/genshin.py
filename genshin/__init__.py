@@ -7,5 +7,5 @@ Source Code: https://github.com/thesadru/genshin.py
 from . import models
 from .client import *
 from .constants import *
-from .utils import *
 from .errors import *
+from .utils import *

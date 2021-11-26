@@ -1,5 +1,6 @@
-import genshin
 import pytest
+
+import genshin
 
 
 @pytest.mark.parametrize("uid,is_uid", [(710785423, True), (8366222, False)])

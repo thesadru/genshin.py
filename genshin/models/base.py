@@ -4,15 +4,28 @@ import re
 import warnings
 from abc import ABC
 from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, Union
+from typing import Any, ClassVar, Dict, Union
 
 from pydantic import BaseModel, Field, root_validator
+from pydantic.fields import ModelField
 
 from ..constants import CHARACTER_NAMES, DBChar
+
+__all__ = [
+    "GenshinModel",
+    "CharacterIcon",
+    "BaseCharacter",
+    "PartialCharacter",
+]
 
 
 class GenshinModel(BaseModel):
     """A genshin model"""
+
+    _mi18n_urls: ClassVar[Dict[str, str]] = {
+        "bbs": "https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
+    }
+    _mi18n: ClassVar[Dict[str, Dict[str, str]]] = {}
 
     def __init__(self, **data: Any) -> None:
         """"""
@@ -56,6 +69,13 @@ class GenshinModel(BaseModel):
                 self.__dict__[name] = value
 
         return super().dict(**kwargs)
+
+    def _get_mi18n(self, field: ModelField, lang: str) -> str:
+        key = field.field_info.extra.get("mi18n")
+        if key not in self._mi18n:
+            return field.name
+
+        return self._mi18n[key][lang]
 
     class Config:
         allow_mutation = False

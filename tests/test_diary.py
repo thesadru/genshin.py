@@ -1,6 +1,7 @@
 import datetime
 
 import pytest
+
 from genshin import GenshinClient
 
 

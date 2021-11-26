@@ -2,7 +2,8 @@ import calendar
 from datetime import datetime, timedelta
 
 import pytest
-from genshin import GenshinClient, GenshinException, AlreadyClaimed
+
+from genshin import AlreadyClaimed, GenshinClient, GenshinException
 
 
 @pytest.mark.asyncio

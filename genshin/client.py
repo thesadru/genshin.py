@@ -36,9 +36,12 @@ from .utils import (
     get_authkey,
     get_banner_ids,
     get_browser_cookies,
+    get_from_static_cache,
+    handle_ratelimits,
     is_chinese,
     perm_cache,
     recognize_server,
+    save_to_static_cache,
 )
 
 __all__ = [
@@ -55,7 +58,6 @@ class GenshinClient:
     :var logger: A logger used for debugging
     :var cache: A cache for http requests
     :var paginator_cache: A high-frequency access cache for paginators
-    :cvar static_cache: A static cache
     """
 
     DS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
@@ -80,7 +82,8 @@ class GenshinClient:
 
     cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
     paginator_cache: Optional[MutableMapping[Tuple[Any, ...], Any]] = None
-    static_cache: ClassVar[MutableMapping[str, Any]] = {}
+
+    fetched_mi18n: bool = False
 
     def __init__(
         self,
@@ -262,7 +265,11 @@ class GenshinClient:
         return self.cache
 
     async def _check_cache(
-        self, key: Tuple[Any, ...], check: Callable[[Any], bool] = None, *, lang: str = None
+        self,
+        key: Tuple[Any, ...],
+        check: Callable[[Any], bool] = None,
+        *,
+        lang: str = None,
     ) -> Optional[Any]:
         """Check the cache for any entries"""
         if self.cache is None:
@@ -315,6 +322,7 @@ class GenshinClient:
 
     # RAW HTTP REQUESTS:
 
+    @handle_ratelimits()
     async def request(
         self,
         url: Union[str, URL],
@@ -324,6 +332,8 @@ class GenshinClient:
         **kwargs: Any,
     ) -> Dict[str, Any]:
         """Make a request and return a parsed json response"""
+        asyncio.create_task(self._fetch_mi18n())
+
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
 
@@ -347,8 +357,9 @@ class GenshinClient:
         """Request a static json file"""
         url = URL(self.WEBSTATIC_URL).join(URL(url))
 
-        if cache and str(url) in self.static_cache:
-            return self.static_cache[str(url)]
+        data = get_from_static_cache(str(url))
+        if data is not None:
+            return data
 
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
@@ -360,7 +371,7 @@ class GenshinClient:
             data = await r.json()
 
         if cache:
-            self.static_cache[str(url)] = data
+            save_to_static_cache(str(url), data)
 
         return data
 
@@ -1038,7 +1049,7 @@ class GenshinClient:
         :param lang: The language to use
         """
         data = await self.request_webstatic(
-            f"/hk4e/gacha_info/{server}/items/{lang or self.lang}.json"
+            f"/hk4e/gacha_info/{server}/items/{lang or self.lang}.json", cache=False
         )
         return [GachaItem(**i) for i in data]
 
@@ -1173,7 +1184,10 @@ class GenshinClient:
     # MISC:
 
     async def _complete_uid(
-        self, uid: Optional[int] = None, uid_key: str = "uid", server_key: str = "region"
+        self,
+        uid: Optional[int] = None,
+        uid_key: str = "uid",
+        server_key: str = "region",
     ) -> Dict[str, Any]:
         """Create a new dict with a uid and a server
 
@@ -1204,6 +1218,26 @@ class GenshinClient:
 
         return params
 
+    async def _fetch_mi18n(self) -> Dict[str, Dict[str, str]]:
+        if self.fetched_mi18n:
+            return GenshinModel._mi18n
+
+        self.fetched_mi18n = True
+
+        async def single(url: str, key: str, lang: str = None):
+            if lang is None:
+                coros = (single(url, key, l) for l in LANGS)
+                return await asyncio.gather(*coros)
+
+            data = await self.request_webstatic(url.format(lang=lang))
+            for k, v in data.items():
+                GenshinModel._mi18n.setdefault(key + "/" + k, {})[lang] = v
+
+        coros = (single(url, key) for key, url in GenshinModel._mi18n_urls.items())
+        await asyncio.gather(*coros)
+
+        return GenshinModel._mi18n
+
     async def init(self, lang: str = None):
         """Request all static & permanent endpoints to not require them later
 
@@ -1216,6 +1250,7 @@ class GenshinClient:
             self.get_banner_details(lang=lang),
             self.get_monthly_rewards(),
             self._get_transaction_reasons(lang=lang),
+            self._fetch_mi18n(),
         )
 
     async def fetch_banner_ids(self) -> List[str]:
@@ -1445,7 +1480,9 @@ class MultiCookieClient(GenshinClient):
         self.set_cookies(cookies)
 
     def set_cookies(
-        self, cookie_list: Union[Iterable[Union[Mapping[str, Any], str]], str], clear: bool = True
+        self,
+        cookie_list: Union[Iterable[Union[Mapping[str, Any], str]], str],
+        clear: bool = True,
     ) -> List[Mapping[str, str]]:
         """Set a list of cookies
 

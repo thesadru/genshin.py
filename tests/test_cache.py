@@ -3,6 +3,7 @@ from typing import Dict
 
 import cachetools
 import pytest
+
 from genshin import GenshinClient
 
 
@@ -17,21 +18,6 @@ async def test_cache(cookies: Dict[str, str], uid: int):
         await client.get_partial_user(uid)
 
     assert len(client.cache) == 1
-
-    await client.close()
-
-
-@pytest.mark.asyncio
-async def test_static_cache(cookies: Dict[str, str]):
-    client = GenshinClient()
-    client.set_cookies(cookies)
-
-    # hack to clear the cache while making concurrency possible
-    client.static_cache = {}  # type: ignore
-
-    await client.get_gacha_items()
-
-    assert len(client.static_cache) == 1
 
     await client.close()
 

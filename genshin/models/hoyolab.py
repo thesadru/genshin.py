@@ -6,6 +6,15 @@ from pydantic import Field, validator
 
 from .base import GenshinModel
 
+__all__ = [
+    "GenshinAccount",
+    "RecordCardData",
+    "RecordCardSetting",
+    "RecordCard",
+    "Gender",
+    "SearchUser",
+]
+
 
 class GenshinAccount(GenshinModel):
     """A genshin account"""
@@ -74,10 +83,8 @@ class RecordCard(GenshinAccount):
         """The html url"""
         return f"https://webstatic-sea.hoyolab.com/app/community-game-records-sea/index.html?uid={self.uid}#/ys"
 
-    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
+    def as_dict(self) -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
-        assert lang == "en-us", "Other languages not yet implemented"
-
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 
 

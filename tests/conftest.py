@@ -4,8 +4,9 @@ import os
 import warnings
 from typing import Dict
 
-import genshin
 import pytest
+
+import genshin
 from genshin import ChineseClient, GenshinClient
 
 

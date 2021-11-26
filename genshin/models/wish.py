@@ -7,6 +7,15 @@ from pydantic import Field, validator
 
 from .base import GenshinModel
 
+__all__ = [
+    "BannerType",
+    "Wish",
+    "BannerDetailItem",
+    "BannerDetailsUpItem",
+    "BannerDetails",
+    "GachaItem",
+]
+
 BannerType = Literal[100, 200, 301, 302]
 
 
@@ -89,6 +98,10 @@ class BannerDetails(GenshinModel):
     @validator("r5_up_items", "r4_up_items", pre=True)
     def __replace_none(cls, v):
         return v or []
+
+    @validator("banner_type")
+    def __ignore_400(cls, v):
+        return 301 if v == 400 else v
 
     @validator(
         "r5_up_prob",

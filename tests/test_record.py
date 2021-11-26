@@ -1,8 +1,9 @@
 import asyncio
 from datetime import datetime
 
-import genshin
 import pytest
+
+import genshin
 from genshin import GenshinClient
 
 
@@ -41,8 +42,8 @@ async def test_characters(client: GenshinClient, uid: int):
 async def test_abyss(client: GenshinClient, uid: int):
     data = await client.get_spiral_abyss(uid, previous=True)
 
-    pretty = data.ranks.as_dict()
-    assert "Most Kills" in pretty
+    pretty = data.ranks.as_dict("zh-cn")
+    assert "最多击破数" in pretty
 
 
 @pytest.mark.asyncio

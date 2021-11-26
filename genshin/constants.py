@@ -71,10 +71,6 @@ _character_names = {
     10000056: ("Sara", "Kujou Sara", "Electro", 4),
     # collab:
     10000062: ("Aloy", "Aloy", "Cryo", 105),
-    # guesses before release:
-    20000002: ("Gorou", "Gorou", "Geo", 4),
-    20000003: ("Arataki", "Arataki Itto", "Geo", 5),
-    20000004: ("YaeMiko", "Yae Miko", "Electro", 5),
 }
 CHARACTER_NAMES: Dict[int, DBChar] = {
     id: DBChar(id, *data) for id, data in _character_names.items() if data is not None
