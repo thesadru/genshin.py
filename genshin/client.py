@@ -17,7 +17,7 @@ import aiohttp
 from yarl import URL
 
 from . import errors
-from .constants import LANGS
+from .constants import CHARACTER_NAMES, LANGS
 from .models import *
 from .paginator import (
     ChineseDailyRewardPaginator,
@@ -686,7 +686,7 @@ class GenshinClient:
         return data
 
     async def __fetch_characters(
-        self, uid: int, character_ids: List[int], lang: str = None
+        self, uid: int, character_ids: List[int], individual: bool = False, lang: str = None
     ) -> List[Dict[str, Any]]:
         """Low-level http method for fetching the game record characters
 
@@ -694,6 +694,19 @@ class GenshinClient:
         """
         if not character_ids:
             return []
+
+        character_ids = list(set(character_ids))
+
+        if individual:
+            sem = asyncio.Semaphore(5)
+
+            async def _helper(character_id: int):
+                async with sem:
+                    c = await self.__fetch_characters(uid, [character_id], lang=lang)
+                return c[0]
+
+            data = await asyncio.gather(*map(_helper, character_ids), return_exceptions=True)
+            return [i for i in data if not isinstance(i, BaseException)]
 
         # try to get all the characters from the cache
         coros = (
@@ -742,15 +755,33 @@ class GenshinClient:
 
         return RecordCard(**cards[0])
 
-    async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
+    async def get_user(
+        self,
+        uid: int,
+        *,
+        character_ids: List[int] = None,
+        all_characters: bool = False,
+        lang: str = None,
+    ) -> UserStats:
         """Get a user's stats and characters
 
         :param uid: A Genshin uid
+        :param character_ids: The ids of characters you want to fetch
+        :param all_characters: Whether to get every single character a user has. Discouraged.
         :param lang: The language to use
         """
+        # TODO: Optimize all_characters
+        if character_ids is None:
+            character_ids = list(CHARACTER_NAMES) if all_characters else []
+
         data = await self.__fetch_user(uid, lang=lang)
-        character_ids = [char["id"] for char in data["avatars"]]
-        data["avatars"] = await self.__fetch_characters(uid, character_ids, lang=lang)
+        character_ids = [char["id"] for char in data["avatars"]] + character_ids
+        data["avatars"] = await self.__fetch_characters(
+            uid,
+            character_ids,
+            individual=all_characters,
+            lang=lang,
+        )
 
         return UserStats(**data)
 
@@ -764,16 +795,24 @@ class GenshinClient:
         return PartialUserStats(**data)
 
     async def get_characters(
-        self, uid: int, character_ids: List[int], *, lang: str = None
+        self,
+        uid: int,
+        character_ids: List[int],
+        *,
+        individual: bool = False,
+        lang: str = None,
     ) -> List[Character]:
         """Helper function to fetch characters from just their ids
 
         :param uid: A Genshin uid
+        :param character_ids: The ids of characters you want to fetch
+        :param individual: Whether to get all characters individual in order to return only the ones the user has
         :param lang: The language to use
         """
-        data = await self.__fetch_characters(uid, character_ids, lang=lang)
+        data = await self.__fetch_characters(uid, character_ids, individual=individual, lang=lang)
         characters = [Character(**i) for i in data]
-        return sorted(characters, key=lambda c: character_ids.index(c.id))
+        key = lambda c: character_ids.index(c.id) if c.id in character_ids else float("inf")
+        return sorted(characters, key=key)
 
     async def get_spiral_abyss(
         self, uid: int, *, previous: bool = False, lang: str = None
