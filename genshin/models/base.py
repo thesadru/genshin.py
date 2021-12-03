@@ -4,7 +4,7 @@ import re
 import warnings
 from abc import ABC
 from datetime import datetime, timedelta, timezone
-from typing import Any, ClassVar, Dict, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Dict, Union
 
 from pydantic import BaseModel, Field, root_validator
 from pydantic.fields import ModelField
@@ -22,10 +22,15 @@ __all__ = [
 class GenshinModel(BaseModel):
     """A genshin model"""
 
-    _mi18n_urls: ClassVar[Dict[str, str]] = {
-        "bbs": "https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
-    }
-    _mi18n: ClassVar[Dict[str, Dict[str, str]]] = {}
+    # nasty pydantic bug fixed only on the master branch - waiting for pypi release
+    if TYPE_CHECKING:
+        _mi18n_urls: ClassVar[Dict[str, str]]
+        _mi18n: ClassVar[Dict[str, Dict[str, str]]]
+    else:
+        _mi18n_urls = {
+            "bbs": "https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
+        }
+        _mi18n = {}
 
     def __init__(self, **data: Any) -> None:
         """"""
