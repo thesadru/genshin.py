@@ -64,5 +64,3 @@ Please also edit the documentation accordingly. You may see how the final docume
 pip install genshin[doc]
 mkdocs serve
 ```
-
-**I am currently looking for any chinese mainland players who could share their `account_id` and `cookie_token` cookies to allow for testing of chinese endpoints.**

@@ -1,6 +1,7 @@
 """Paginators for abstracting paginated resources"""
 from __future__ import annotations
 
+import abc
 import asyncio
 import heapq
 from datetime import datetime
@@ -33,7 +34,30 @@ MT = TypeVar("MT", bound=_Model, covariant=True)
 TransactionT = TypeVar("TransactionT", bound=BaseTransaction, covariant=True)
 
 
-class DailyRewardPaginator:
+class BasePaginator(abc.ABC):
+    """A base paginator requiring the implementation of some methods"""
+
+    @property
+    @abc.abstractmethod
+    def exhausted(self) -> bool:
+        ...
+
+    @abc.abstractmethod
+    async def next_page(self) -> Any:
+        ...
+
+    @abc.abstractmethod
+    def __aiter__(self) -> AsyncIterator[Any]:
+        ...
+
+    async def flatten(self) -> Sequence[Any]:
+        return [item async for item in self]
+
+    def __await__(self) -> Generator[Any, Any, Sequence[Any]]:
+        return self.flatten().__await__()
+
+
+class DailyRewardPaginator(BasePaginator):
     """A paginator specifically for claimed daily rewards"""
 
     client: GenshinClient
@@ -94,12 +118,6 @@ class DailyRewardPaginator:
         """Iterate over all pages unril the limit is reached"""
         return aislice(self._iter(), self.limit)
 
-    async def flatten(self) -> List[ClaimedDailyReward]:
-        """Flatten the entire iterator into a list"""
-        # sending more than 1 request at once causes a ratelimit
-        # that means no posible greedy flatten implementation
-        return [item async for item in self]
-
 
 class ChineseDailyRewardPaginator(DailyRewardPaginator):
     """A paginator specifically for claimed daily rewards on chinese bbs"""
@@ -128,7 +146,7 @@ class ChineseDailyRewardPaginator(DailyRewardPaginator):
         return [ClaimedDailyReward(**i) for i in data["list"]]
 
 
-class DiaryPaginator:
+class DiaryPaginator(BasePaginator):
     """A paginator specifically for diary entries"""
 
     # TODO: Option to merge all months together
@@ -216,12 +234,6 @@ class DiaryPaginator:
         """Iterate over all pages unril the limit is reached"""
         return aislice(self._iter(), self.limit)
 
-    async def flatten(self) -> List[DiaryAction]:
-        """Flatten the entire iterator into a list"""
-        # sending more than 1 request at once causes a ratelimit
-        # that means no posible greedy flatten implementation
-        return [item async for item in self]
-
     @property
     def data(self) -> BaseDiary:
         """Get data bound to the diary
@@ -234,7 +246,7 @@ class DiaryPaginator:
         return self._data
 
 
-class IDPagintor(Generic[MT]):
+class IDPagintor(BasePaginator, Generic[MT]):
     """A paginator of genshin end_id pages"""
 
     __repr_args__: Sequence[str] = ["limit"]
