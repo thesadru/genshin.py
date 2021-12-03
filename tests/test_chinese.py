@@ -36,7 +36,9 @@ async def test_characters(cnclient: ChineseClient, cnuid: int):
     user, partial = await asyncio.gather(cnclient.get_user(cnuid), cnclient.get_partial_user(cnuid))
 
     characters = await cnclient.get_characters(cnuid, [c.id for c in partial.characters])
-    assert characters == user.characters
+
+    key = lambda c: c.id
+    assert sorted(characters, key=key) == sorted(user.characters, key=key)
 
 
 @pytest.mark.asyncio

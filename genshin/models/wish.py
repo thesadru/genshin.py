@@ -9,6 +9,7 @@ from .base import GenshinModel
 
 __all__ = [
     "BannerType",
+    "BANNER_TYPES",
     "Wish",
     "BannerDetailItem",
     "BannerDetailsUpItem",
@@ -16,7 +17,9 @@ __all__ = [
     "GachaItem",
 ]
 
-BannerType = Literal[100, 200, 301, 302]
+BannerType = Literal[100, 200, 301, 302, 400]
+
+BANNER_TYPES: List[BannerType] = [100, 200, 301, 302, 400]
 
 
 class Wish(GenshinModel):
@@ -99,10 +102,6 @@ class BannerDetails(GenshinModel):
     def __replace_none(cls, v):
         return v or []
 
-    @validator("banner_type")
-    def __ignore_400(cls, v):
-        return 301 if v == 400 else v
-
     @validator(
         "r5_up_prob",
         "r4_up_prob",
@@ -128,6 +127,7 @@ class BannerDetails(GenshinModel):
             200: "Permanent Wish",
             301: "Character Event Wish",
             302: "Weapon Event Wish",
+            400: "Character Event Wish",
         }
         return banners[self.banner_type]
 

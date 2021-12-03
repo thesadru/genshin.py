@@ -32,7 +32,7 @@ async def test_banner_types(lclient: GenshinClient):
 async def test_banner_details(lclient: GenshinClient):
     banners = await lclient.get_banner_details()
     for details in banners:
-        assert details.banner_type in [100, 200, 301, 302]
+        assert details.banner_type in [100, 200, 301, 302, 400]
 
 
 @pytest.mark.asyncio
