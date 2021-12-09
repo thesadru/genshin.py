@@ -76,6 +76,7 @@ class GenshinClient:
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
+    _session: Optional[aiohttp.ClientSession] = None
     _uid: Optional[int] = None
     logger: logging.Logger = logging.getLogger(__name__)
 
@@ -91,7 +92,6 @@ class GenshinClient:
         *,
         lang: str = "en-us",
         debug: bool = False,
-        session: Optional[aiohttp.ClientSession] = None,
     ) -> None:
         """Create a new GenshinClient instance
 
@@ -102,12 +102,11 @@ class GenshinClient:
         :param session: A custom session to be used for requests instead of the default
         """
         if cookies:
-            self.cookies = cookies
+            self.cookies = {str(key): value for key, value in cookies.items()}
 
         self.authkey = authkey
         self.lang = lang
         self.debug = debug
-        self._session = session
 
     def __repr__(self) -> str:
         return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
@@ -121,6 +120,16 @@ class GenshinClient:
             self._session = aiohttp.ClientSession()
 
         return self._session
+
+    @session.setter
+    def session(self, session: aiohttp.ClientSession) -> None:
+        if not isinstance(session, aiohttp.ClientSession):
+            raise TypeError(f"session must be of type aiohttp.ClientSession, got {type(session)}")
+
+        if self._session is not None:
+            self._session.close()
+
+        self._session = session
 
     @property
     def hoyolab_uid(self) -> Optional[int]:
@@ -329,7 +338,11 @@ class GenshinClient:
         headers["user-agent"] = self.USER_AGENT
 
         async with self.session.request(
-            method, url, headers=headers, cookies=self.cookies, **kwargs
+            method,
+            url,
+            headers=headers,
+            cookies=self.cookies,
+            **kwargs,
         ) as r:
             r.raise_for_status()
             data = await r.json()
