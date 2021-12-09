@@ -101,9 +101,7 @@ class GenshinClient:
         :param debug: Whether debug logs should be shown in stdout
         :param session: A custom session to be used for requests instead of the default
         """
-        if cookies:
-            self.cookies = {str(key): value for key, value in cookies.items()}
-
+        self.cookies = cookies or {}
         self.authkey = authkey
         self.lang = lang
         self.debug = debug
@@ -112,6 +110,14 @@ class GenshinClient:
         return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
 
     # PROPERTIES:
+
+    @property
+    def cookies(self) -> Dict[str, str]:
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: Mapping[str, str]) -> None:
+        self._cookies = {str(key): value for key, value in cookies.items()}
 
     @property
     def session(self) -> aiohttp.ClientSession:
@@ -127,7 +133,7 @@ class GenshinClient:
             raise TypeError(f"session must be of type aiohttp.ClientSession, got {type(session)}")
 
         if self._session is not None:
-            self._session.close()
+            asyncio.create_task(self._session.close())
 
         self._session = session
 
@@ -1492,24 +1498,32 @@ class ChineseClient(GenshinClient):
 class MultiCookieClient(GenshinClient):
     """A Genshin Client which allows setting multiple cookies"""
 
+    cookies: List[Mapping[str, str]]
+
     def __init__(
         self,
         cookie_list: Iterable[Mapping[str, str]] = None,
         *,
         lang: str = "en-us",
         debug: bool = False,
-        session: Optional[aiohttp.ClientSession] = None,
     ) -> None:
-        self._session = session
 
         if cookie_list:
             self.cookies = list(cookie_list) if cookie_list else []
 
         super().__init__(lang=lang, debug=debug)
 
+    @property
+    def cookies(self) -> List[Mapping[str, str]]:
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: List[Mapping[str, Any]]) -> None:
+        self.set_cookies(cookies)
+
     def set_cookies(
         self,
-        cookie_list: Union[Iterable[Mapping[str, Any]], str],
+        cookie_list: Union[Iterable[Union[Mapping[str, Any], str]], str],
         clear: bool = True,
     ) -> List[Mapping[str, str]]:
         """Set a list of cookies
@@ -1524,10 +1538,15 @@ class MultiCookieClient(GenshinClient):
             if not isinstance(cookie_list, list):
                 raise RuntimeError("Json file must contain a list of cookies")
 
+        cks = [
+            {morsel.key: morsel.value for morsel in SimpleCookie(cookies).values()}
+            for cookies in cookie_list
+        ]
+
         if clear:
-            self.cookies = list(cookie_list)
+            self._cookies = list(cks)
         else:
-            self.cookies.extend(cookie_list)
+            self._cookies.extend(cks)
 
         return self.cookies
 
@@ -1546,7 +1565,11 @@ class MultiCookieClient(GenshinClient):
 
         for cookies in self.cookies.copy():
             async with self.session.request(
-                method, url, headers=headers, cookies=cookies, **kwargs
+                method,
+                url,
+                headers=headers,
+                cookies=cookies,
+                **kwargs,
             ) as r:
                 r.raise_for_status()
                 data = await r.json()
@@ -1561,7 +1584,7 @@ class MultiCookieClient(GenshinClient):
                 cookie = self.cookies.pop(0)
                 self.cookies.append(cookie)
 
-        # if we're here it means we used up all our sessions so we must handle that
+        # if we're here it means we used up all our cookies so we must handle that
         msg = "All cookies have hit their request limit of 30 accounts per day."
         raise errors.TooManyRequests({"retcode": 10101}, msg)
 
