@@ -99,7 +99,6 @@ class GenshinClient:
         :param authkey: The authkey used for paginators
         :param lang: The default language
         :param debug: Whether debug logs should be shown in stdout
-        :param session: A custom session to be used for requests instead of the default
         """
         self.cookies = cookies or {}
         self.authkey = authkey
