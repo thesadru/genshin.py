@@ -96,7 +96,7 @@ class Character(PartialCharacter):
     outfits: List[Outfit] = Field(galias="costumes")
 
     @validator("artifacts")
-    def __add_artifact_effect_enabled(cls, artifacts: List[Artifact]):
+    def __add_artifact_effect_enabled(cls, artifacts: List[Artifact]) -> List[Artifact]:
         sets: Dict[int, List[Artifact]] = {}
         for arti in artifacts:
             sets.setdefault(arti.set.id, []).append(arti)

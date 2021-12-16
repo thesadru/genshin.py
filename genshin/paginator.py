@@ -13,12 +13,27 @@ from .utils import aislice, amerge
 if TYPE_CHECKING:
     from .client import ChineseClient, GenshinClient
 
+__all__ = [
+    "BasePaginator",
+    "DailyRewardPaginator",
+    "ChineseDailyRewardPaginator",
+    "DiaryPaginator",
+    "IDPagintor",
+    "AuthkeyPaginator",
+    "WishHistory",
+    "Transactions",
+    "MergedPaginator",
+    "MergedWishHistory",
+    "MergedTransactions",
+]
+
 
 class _Model(Protocol):
     id: int
     time: datetime
 
 
+T = TypeVar("T", bound=Any)
 MT = TypeVar("MT", bound=_Model, covariant=True)
 TransactionT = TypeVar("TransactionT", bound=BaseTransaction, covariant=True)
 
@@ -104,7 +119,7 @@ class DailyRewardPaginator(BasePaginator):
                 yield i
 
     def __aiter__(self) -> AsyncIterator[ClaimedDailyReward]:
-        """Iterate over all pages unril the limit is reached"""
+        """Iterate over all pages until the limit is reached"""
         return aislice(self._iter(), self.limit)
 
 
@@ -220,7 +235,7 @@ class DiaryPaginator(BasePaginator):
                 yield i
 
     def __aiter__(self) -> AsyncIterator[DiaryAction]:
-        """Iterate over all pages unril the limit is reached"""
+        """Iterate over all pages until the limit is reached"""
         return aislice(self._iter(), self.limit)
 
     @property
@@ -326,7 +341,7 @@ class IDPagintor(BasePaginator, Generic[MT]):
                 yield i
 
     def __aiter__(self) -> AsyncIterator[MT]:
-        """Iterate over all pages unril the limit is reached"""
+        """Iterate over all pages until the limit is reached"""
         return aislice(self._iter(), self.limit)
 
     async def flatten(self, *, lazy: bool = True) -> List[MT]:
@@ -547,7 +562,10 @@ class MergedTransactions(MergedPaginator[BaseTransaction]):
     kinds: List[TransactionKind]
 
     def __init__(
-        self, client: GenshinClient, kinds: List[TransactionKind] = None, **kwargs: Any
+        self,
+        client: GenshinClient,
+        kinds: List[TransactionKind] = None,
+        **kwargs: Any,
     ) -> None:
         """Create a new transaction paginator
 

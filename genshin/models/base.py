@@ -39,7 +39,7 @@ class GenshinModel(BaseModel, abc.ABC):
         super().__init__(**data)
 
     @root_validator(pre=True)
-    def __parse_galias(cls, values: Dict[str, Any]):
+    def __parse_galias(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         """Due to alias being reserved for actual aliases we use a custom alias"""
         aliases = {}
         for name, field in cls.__fields__.items():
@@ -50,7 +50,7 @@ class GenshinModel(BaseModel, abc.ABC):
         return {aliases.get(name, name): value for name, value in values.items()}
 
     @root_validator()
-    def __parse_timezones(cls, values: Dict[str, Any]):
+    def __parse_timezones(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         for name, field in cls.__fields__.items():
             if isinstance(values.get(name), datetime) and values[name].tzinfo is None:
                 offset = field.field_info.extra.get("timezone", 0)
@@ -59,7 +59,7 @@ class GenshinModel(BaseModel, abc.ABC):
 
         return values
 
-    def dict(self, **kwargs) -> Dict[str, Any]:
+    def dict(self, **kwargs: Any) -> Dict[str, Any]:
         """Generate a dictionary representation of the model,
         optionally specifying which fields to include or exclude.
 
@@ -150,7 +150,7 @@ class BaseCharacter(GenshinModel, Unique):
     collab: bool = False
 
     @root_validator(pre=True)
-    def __autocomplete(cls, values: Dict[str, Any]):
+    def __autocomplete(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         """Complete missing data"""
         partial: bool = False
 

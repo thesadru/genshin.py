@@ -106,5 +106,5 @@ class SearchUser(GenshinModel):
     icon: str = Field(galias="avatar_url")
 
     @validator("nickname")
-    def __remove_tag(cls, v):
+    def __remove_tag(cls, v: str) -> str:
         return re.sub(r"<.+?>", "", v)

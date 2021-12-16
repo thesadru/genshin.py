@@ -27,14 +27,14 @@ class Expedition(GenshinModel):
         return max(remaining.total_seconds(), 0)
 
     @root_validator(pre=True)
-    def __process_timedelta(cls, values: Dict[str, Any]):
+    def __process_timedelta(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         time = timedelta(seconds=int(values["remained_time"]))
         values["completed_at"] = datetime.now().astimezone() + time
 
         return values
 
     @validator("character", pre=True)
-    def __complete_character(cls, v):
+    def __complete_character(cls, v: str) -> BaseCharacter:
         return BaseCharacter(icon=v)
 
 
@@ -62,7 +62,7 @@ class Notes(GenshinModel):
         return min(remaining.total_seconds(), 0)
 
     @root_validator(pre=True)
-    def __process_timedelta(cls, values: Dict[str, Any]):
+    def __process_timedelta(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         time = timedelta(seconds=int(values["resin_recovery_time"]))
         values["resin_recovered_at"] = datetime.now().astimezone() + time
 

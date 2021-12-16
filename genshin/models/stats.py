@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import Field, validator
 
@@ -108,7 +108,7 @@ class PartialUserStats(GenshinModel):
     teapot: Optional[Teapot] = Field(galias="homes")
 
     @validator("teapot", pre=True)
-    def __format_teapot(cls, v):
+    def __format_teapot(cls, v: Any) -> Optional[Dict[str, Any]]:
         if not v:
             return None
         if isinstance(v, dict):

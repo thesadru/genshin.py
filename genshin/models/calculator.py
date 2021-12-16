@@ -6,6 +6,9 @@ from pydantic import Field, validator
 from .base import BaseCharacter, GenshinModel, Unique
 
 __all__ = [
+    "CALCULATOR_ELEMENTS",
+    "CALCULATOR_WEAPON_TYPES",
+    "CALCULATOR_ARTIFACTS",
     "CalculatorCharacter",
     "CalculatorWeapon",
     "CalculatorArtifact",
@@ -51,11 +54,11 @@ class CalculatorCharacter(BaseCharacter):
     max_level: int
 
     @validator("element")
-    def __parse_element(cls, v):
+    def __parse_element(cls, v: Any) -> str:
         return CALCULATOR_ELEMENTS[int(v)]
 
     @validator("weapon_type")
-    def __parse_weapon_type(cls, v):
+    def __parse_weapon_type(cls, v: Any) -> str:
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
@@ -70,7 +73,7 @@ class CalculatorWeapon(GenshinModel, Unique):
     max_level: int
 
     @validator("type")
-    def __parse_weapon_type(cls, v):
+    def __parse_weapon_type(cls, v: Any) -> str:
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 

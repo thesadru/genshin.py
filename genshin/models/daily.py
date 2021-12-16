@@ -16,7 +16,7 @@ class DailyRewardInfo(NamedTuple):
     claimed_rewards: int
 
     @property
-    def missed_rewards(self):
+    def missed_rewards(self) -> int:
         cn_timezone = timezone(timedelta(hours=8))
         now = datetime.now(cn_timezone)
         month_days = calendar.monthrange(now.year, now.month)[1]

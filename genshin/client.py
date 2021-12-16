@@ -19,30 +19,8 @@ from yarl import URL
 from . import errors
 from .constants import CHARACTER_NAMES, LANGS
 from .models import *
-from .paginator import (
-    ChineseDailyRewardPaginator,
-    DailyRewardPaginator,
-    DiaryPaginator,
-    MergedTransactions,
-    MergedWishHistory,
-    Transactions,
-    WishHistory,
-)
-from .utils import (
-    create_short_lang_code,
-    extract_authkey,
-    generate_cn_dynamic_secret,
-    generate_dynamic_secret,
-    get_authkey,
-    get_banner_ids,
-    get_browser_cookies,
-    get_from_static_cache,
-    handle_ratelimits,
-    is_chinese,
-    perm_cache,
-    recognize_server,
-    save_to_static_cache,
-)
+from .paginator import *
+from .utils import *
 
 __all__ = [
     "GenshinClient",
@@ -744,10 +722,10 @@ class GenshinClient:
             return [i for i in data if not isinstance(i, BaseException)]
 
         # try to get all the characters from the cache
-        coros = (
+        coros = [
             asyncio.create_task(self._check_cache(("character", uid, charid), lang=lang))
             for charid in character_ids
-        )
+        ]
         characters = await asyncio.gather(*coros)
         if all(characters):
             # mypy bug - all does not function as a type guard
@@ -946,24 +924,33 @@ class GenshinClient:
 
     async def calculate(
         self,
-        character: Tuple[int, int, int] = None,
+        character: Union[Tuple[int, int, int], Tuple[int, int, int, int]] = None,
         weapon: Tuple[int, int, int] = None,
         artifacts: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
         talents: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
         *,
         lang: str = None,
     ):
-        json = {}
+        json: Dict[str, Any] = {}
 
         if character:
+            if len(character) == 4:
+                # highly problematic section for mypy, we have to be very explicit
+                cid, json["element_attr_id"], cl, tl = cast(Tuple[int, int, int, int], character)
+                character = (cid, cl, tl)
+
             json.update(CalculatorObject(*character)._serialize(prefix="avatar_"))
-            json["element_attr_id"] = 3
+            if character[0] in (10000005, 10000007):
+                raise ValueError("No element provided for the traveler")
+
         if talents:
             if isinstance(talents, Mapping):
                 talents = [(k, *v) for k, v in talents.items()]
             json["skill_list"] = [CalculatorObject(*i)._serialize() for i in talents]
+
         if weapon:
             json["weapon"] = CalculatorObject(*weapon)._serialize()
+
         if artifacts:
             if isinstance(artifacts, Mapping):
                 artifacts = [(k, *v) for k, v in artifacts.items()]
@@ -972,76 +959,118 @@ class GenshinClient:
         data = await self.request_calculator("compute", lang=lang, json=json)
         return CalculatorResult(**data)
 
+    async def _get_calculator_items(
+        self,
+        slug: str,
+        filters: Dict[str, Any],
+        query: str = None,
+        *,
+        lang: str = None,
+    ) -> List[Dict[str, Any]]:
+        """Get all items of a specific slug from a calculator"""
+        if query and any(isinstance(v, list) and v for v in filters.values()):
+            raise TypeError("Cannot specify a query and filter at the same time")
+
+        data = await self.request_calculator(
+            f"{slug}/list",
+            lang=lang,
+            json=dict(
+                page=1,
+                size=69420,
+                keywords=query,
+                **filters,
+            ),
+        )
+        return data["list"]
+
     async def get_calculator_characters(
         self,
-        page: int = 1,
-        size: int = 20,
         *,
         query: str = None,
         elements: Sequence[int] = None,
         weapon_types: Sequence[int] = None,
         lang: str = None,
-    ):
-        data = await self.request_calculator(
-            "avatar/list",
+    ) -> List[CalculatorCharacter]:
+        """Get all characters provided by the Enhancement Progression Calculator
+
+        :param query: A query to use when searching; incompatible with other filters
+        :param elements: The elements of returned characters - refer to `.models.CALCULATOR_ELEMENTS`
+        :param weapon_types: The weapon types of returned characters - refer to `.models.CALCULATOR_WEAPON_TYPES`
+        :param lang: The language to use
+        """
+        data = await self._get_calculator_items(
+            "avatar",
             lang=lang,
-            json=dict(
-                page=page,
-                size=size,
-                keywords=query,
+            query=query,
+            filters=dict(
                 element_attr_ids=elements or [],
                 weapon_cat_ids=weapon_types or [],
             ),
         )
-        return [CalculatorCharacter(**i) for i in data["list"]]
+        return [CalculatorCharacter(**i) for i in data]
 
     async def get_calculator_weapons(
         self,
-        page: int = 1,
-        size: int = 20,
         *,
         query: str = None,
-        rarities: Sequence[int] = None,
         types: Sequence[int] = None,
+        rarities: Sequence[int] = None,
         lang: str = None,
-    ):
-        data = await self.request_calculator(
-            "weapon/list",
+    ) -> List[CalculatorWeapon]:
+        """Get all weapons provided by the Enhancement Progression Calculator
+
+        :param query: A query to use when searching; incompatible with other filters
+        :param types: The types of returned weapons - refer to `.models.CALCULATOR_WEAPON_TYPES`
+        :param rarities: The rarities of returned weapons
+        :param lang: The language to use
+        """
+        data = await self._get_calculator_items(
+            "weapon",
             lang=lang,
-            json=dict(
-                page=page,
-                size=size,
-                keywords=query,
-                weapon_levels=rarities or [],
+            query=query,
+            filters=dict(
                 weapon_cat_ids=types or [],
+                weapon_levels=rarities or [],
             ),
         )
-        return [CalculatorWeapon(**i) for i in data["list"]]
+        return [CalculatorWeapon(**i) for i in data]
 
     async def get_calculator_artifacts(
         self,
-        page: int = 1,
-        size: int = 20,
         *,
         query: str = None,
-        rarities: Sequence[int] = None,
         pos: int = 1,
+        rarities: Sequence[int] = None,
         lang: str = None,
-    ):
-        data = await self.request_calculator(
-            "reliquary/list",
+    ) -> List[CalculatorArtifact]:
+        """Get all artifacts provided by the Enhancement Progression Calculator
+
+        :param query: A query to use when searching; incompatible with other filters
+        :param pos: The slot position of the returned weapon
+        :param rarities: The rarities of returned artifacts
+        :param lang: The language to use
+        """
+        data = await self._get_calculator_items(
+            "reliquary",
             lang=lang,
-            json=dict(
-                page=page,
-                size=size,
-                keywords=query,
-                reliquary_levels=rarities or [],
+            query=query,
+            filters=dict(
                 reliquary_cat_id=pos,
+                reliquary_levels=rarities or [],
             ),
         )
-        return [CalculatorArtifact(**i) for i in data["list"]]
+        return [CalculatorArtifact(**i) for i in data]
 
-    async def get_character_talents(self, character_id: int, *, lang: str = None):
+    async def get_character_talents(
+        self,
+        character_id: int,
+        *,
+        lang: str = None,
+    ) -> List[CalculatorTalent]:
+        """Get the talents of a character
+
+        :param lang: The language to use
+        """
         data = await self.request_calculator(
             "avatar/skill_list",
             method="GET",
@@ -1050,7 +1079,16 @@ class GenshinClient:
         )
         return [CalculatorTalent(**i) for i in data["list"]]
 
-    async def get_complete_artifact_set(self, artifact_id: int, *, lang: str = None):
+    async def get_complete_artifact_set(
+        self,
+        artifact_id: int,
+        *,
+        lang: str = None,
+    ) -> List[CalculatorArtifact]:
+        """Get all other artifacts that share a set with any given artifact
+
+        :param lang: The language to use
+        """
         data = await self.request_calculator(
             "reliquary/set",
             method="GET",
@@ -1112,12 +1150,14 @@ class GenshinClient:
         """
         await self.request_daily_reward("sign", method="POST", lang=lang)
 
-        if reward:
-            info, rewards = await asyncio.gather(
-                self.get_reward_info(lang=lang),
-                self.get_monthly_rewards(lang=lang),
-            )
-            return rewards[info.claimed_rewards - 1]
+        if not reward:
+            return None
+
+        info, rewards = await asyncio.gather(
+            self.get_reward_info(lang=lang),
+            self.get_monthly_rewards(lang=lang),
+        )
+        return rewards[info.claimed_rewards - 1]
 
     # WISH HISTORY:
 
@@ -1373,7 +1413,7 @@ class GenshinClient:
 
         These are fetched from the currently authenticated user
         """
-        params = {}
+        params: Dict[str, Any] = {}
 
         uid = uid or self._uid
 
@@ -1615,12 +1655,14 @@ class ChineseClient(GenshinClient):
         """
         await self.request_daily_reward("sign", uid, method="POST")
 
-        if reward:
-            info, rewards = await asyncio.gather(
-                self.get_reward_info(),
-                self.get_monthly_rewards(),
-            )
-            return rewards[info.claimed_rewards - 1]
+        if not reward:
+            return None
+
+        info, rewards = await asyncio.gather(
+            self.get_reward_info(),
+            self.get_monthly_rewards(),
+        )
+        return rewards[info.claimed_rewards - 1]
 
 
 class MultiCookieClient(GenshinClient):
