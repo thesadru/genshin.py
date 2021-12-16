@@ -68,6 +68,7 @@ class GenshinClient:
     RECORD_URL = "https://bbs-api-os.mihoyo.com/game_record/"
     INFO_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_info"
     DETAIL_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_detail"
+    CALCULATOR_URL = "https://sg-public-api.mihoyo.com/event/calculateos/"
     REWARD_URL = "https://hk4e-api-os.mihoyo.com/event/sol/"
     GACHA_INFO_URL = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/"
     YSULOG_URL = "https://hk4e-api-os.mihoyo.com/ysulog/api/"
@@ -335,7 +336,7 @@ class GenshinClient:
         asyncio.create_task(self._fetch_mi18n())
 
         headers = headers or {}
-        headers["user-agent"] = self.USER_AGENT
+        headers["User-Agent"] = self.USER_AGENT
 
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
             r.raise_for_status()
@@ -464,6 +465,38 @@ class GenshinClient:
 
         return await self.request(url, params=params)
 
+    async def request_calculator(
+        self,
+        endpoint: str,
+        *,
+        method: str = "POST",
+        lang: str = None,
+        params: Dict[str, Any] = None,
+        json: Dict[str, Any] = None,
+        **kwargs: Any,
+    ) -> Dict[str, Any]:
+        """Make a request towards the calculator endpoint
+
+        Calculator database and resource calculation
+        """
+        params = params or {}
+        json = json or {}
+
+        if not self.cookies:
+            raise RuntimeError("No cookies provided")
+
+        url = URL(self.CALCULATOR_URL).join(URL(endpoint))
+
+        if method == "GET":
+            params["lang"] = lang or self.lang
+            json = None
+        else:
+            json["lang"] = lang or self.lang
+
+        self.logger.debug(f"CALC {method} {url.with_query(params)}")
+
+        return await self.request(url, method, params=params, json=json, **kwargs)
+
     async def request_daily_reward(
         self,
         endpoint: str,
@@ -477,8 +510,8 @@ class GenshinClient:
 
         Daily reward claiming and history
         """
-
         params = params or {}
+
         if not self.cookies:
             raise RuntimeError("No cookies provided")
 
@@ -595,6 +628,8 @@ class GenshinClient:
 
         :params lang: The language to use
         """
+        # TODO: Account for honkai accounts
+
         # fmt: off
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
@@ -695,7 +730,7 @@ class GenshinClient:
         if not character_ids:
             return []
 
-        character_ids = list(set(character_ids))
+        character_ids = sorted(set(character_ids))
 
         if individual:
             sem = asyncio.Semaphore(5)
@@ -716,7 +751,7 @@ class GenshinClient:
         characters = await asyncio.gather(*coros)
         if all(characters):
             # mypy bug - all does not function as a type guard
-            return characters  # type: ignore
+            return sorted(characters, key=lambda c: c["id"])  # type: ignore
 
         server = recognize_server(uid)
         data = await self.request_game_record(
@@ -734,7 +769,7 @@ class GenshinClient:
         ]
         await asyncio.wait(coros)
 
-        return characters
+        return sorted(characters, key=lambda c: c["id"])
 
     async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
         """Get a user's record card
@@ -810,9 +845,7 @@ class GenshinClient:
         :param lang: The language to use
         """
         data = await self.__fetch_characters(uid, character_ids, individual=individual, lang=lang)
-        characters = [Character(**i) for i in data]
-        key = lambda c: character_ids.index(c.id) if c.id in character_ids else float("inf")
-        return sorted(characters, key=key)
+        return [Character(**i) for i in data]
 
     async def get_spiral_abyss(
         self, uid: int, *, previous: bool = False, lang: str = None
@@ -908,6 +941,123 @@ class GenshinClient:
         """
         type = 2 if mora else 1
         return DiaryPaginator(self, uid, type, month, limit, lang)
+
+    # CALCULATOR
+
+    async def calculate(
+        self,
+        character: Tuple[int, int, int] = None,
+        weapon: Tuple[int, int, int] = None,
+        artifacts: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
+        talents: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
+        *,
+        lang: str = None,
+    ):
+        json = {}
+
+        if character:
+            json.update(CalculatorObject(*character)._serialize(prefix="avatar_"))
+            json["element_attr_id"] = 3
+        if talents:
+            if isinstance(talents, Mapping):
+                talents = [(k, *v) for k, v in talents.items()]
+            json["skill_list"] = [CalculatorObject(*i)._serialize() for i in talents]
+        if weapon:
+            json["weapon"] = CalculatorObject(*weapon)._serialize()
+        if artifacts:
+            if isinstance(artifacts, Mapping):
+                artifacts = [(k, *v) for k, v in artifacts.items()]
+            json["reliquary_list"] = [CalculatorObject(*i)._serialize() for i in artifacts]
+
+        data = await self.request_calculator("compute", lang=lang, json=json)
+        return CalculatorResult(**data)
+
+    async def get_calculator_characters(
+        self,
+        page: int = 1,
+        size: int = 20,
+        *,
+        query: str = None,
+        elements: Sequence[int] = None,
+        weapon_types: Sequence[int] = None,
+        lang: str = None,
+    ):
+        data = await self.request_calculator(
+            "avatar/list",
+            lang=lang,
+            json=dict(
+                page=page,
+                size=size,
+                keywords=query,
+                element_attr_ids=elements or [],
+                weapon_cat_ids=weapon_types or [],
+            ),
+        )
+        return [CalculatorCharacter(**i) for i in data["list"]]
+
+    async def get_calculator_weapons(
+        self,
+        page: int = 1,
+        size: int = 20,
+        *,
+        query: str = None,
+        rarities: Sequence[int] = None,
+        types: Sequence[int] = None,
+        lang: str = None,
+    ):
+        data = await self.request_calculator(
+            "weapon/list",
+            lang=lang,
+            json=dict(
+                page=page,
+                size=size,
+                keywords=query,
+                weapon_levels=rarities or [],
+                weapon_cat_ids=types or [],
+            ),
+        )
+        return [CalculatorWeapon(**i) for i in data["list"]]
+
+    async def get_calculator_artifacts(
+        self,
+        page: int = 1,
+        size: int = 20,
+        *,
+        query: str = None,
+        rarities: Sequence[int] = None,
+        pos: int = 1,
+        lang: str = None,
+    ):
+        data = await self.request_calculator(
+            "reliquary/list",
+            lang=lang,
+            json=dict(
+                page=page,
+                size=size,
+                keywords=query,
+                reliquary_levels=rarities or [],
+                reliquary_cat_id=pos,
+            ),
+        )
+        return [CalculatorArtifact(**i) for i in data["list"]]
+
+    async def get_character_talents(self, character_id: int, *, lang: str = None):
+        data = await self.request_calculator(
+            "avatar/skill_list",
+            method="GET",
+            lang=lang,
+            params=dict(avatar_id=character_id),
+        )
+        return [CalculatorTalent(**i) for i in data["list"]]
+
+    async def get_complete_artifact_set(self, artifact_id: int, *, lang: str = None):
+        data = await self.request_calculator(
+            "reliquary/set",
+            method="GET",
+            lang=lang,
+            params=dict(reliquary_id=artifact_id),
+        )
+        return [CalculatorArtifact(**i) for i in data["reliquary_list"]]
 
     # DAILY REWARDS:
 
@@ -1012,26 +1162,15 @@ class GenshinClient:
         :param authkey: The authkey to use when requesting data
         :param end_id: The ending id to start getting data from
         """
-        if isinstance(banner_type, int):
-            return WishHistory(
-                self,
-                banner_type,
-                lang=lang,
-                authkey=authkey,
-                limit=limit,
-                end_id=end_id,
-            )
-        else:
-            # fmt: off
-            return MergedWishHistory(
-                self, 
-                banner_type, 
-                lang=lang, 
-                authkey=authkey, 
-                limit=limit, 
-                end_id=end_id
-            )
-            # fmt: on
+        cls = WishHistory if isinstance(banner_type, int) else MergedWishHistory
+        return cls(
+            self,
+            banner_type,  # type: ignore
+            lang=lang,
+            authkey=authkey,
+            limit=limit,
+            end_id=end_id,
+        )
 
     async def get_banner_names(
         self, *, lang: str = None, authkey: str = None
@@ -1152,7 +1291,7 @@ class GenshinClient:
         lang: str = None,
         authkey: str = None,
         end_id: int = 0,
-    ) -> Union[Transactions, MergedTransactions]:
+    ) -> Union[Transactions[Any], MergedTransactions]:
         """Get the transaction log of a user
 
         :param kind: The kind(s) of transactions to get
@@ -1161,13 +1300,15 @@ class GenshinClient:
         :param authkey: The authkey to use when requesting data
         :param end_id: The ending id to start getting data from
         """
-        # TODO: Utilize the new diary
-        if isinstance(kind, str):
-            return Transactions(self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id)
-        else:
-            return MergedTransactions(
-                self, kind, lang=lang, authkey=authkey, limit=limit, end_id=end_id
-            )
+        cls = Transactions if isinstance(kind, str) else MergedTransactions
+        return cls(
+            self,
+            kind,  # type: ignore
+            lang=lang,
+            authkey=authkey,
+            limit=limit,
+            end_id=end_id,
+        )
 
     # INTERACTIVE MAP:
 

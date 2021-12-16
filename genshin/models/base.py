@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import abc
 import re
 import warnings
-from abc import ABC
 from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING, Any, ClassVar, Dict, Union
 
@@ -13,13 +13,14 @@ from ..constants import CHARACTER_NAMES, DBChar
 
 __all__ = [
     "GenshinModel",
+    "Unique",
     "CharacterIcon",
     "BaseCharacter",
     "PartialCharacter",
 ]
 
 
-class GenshinModel(BaseModel):
+class GenshinModel(BaseModel, abc.ABC):
     """A genshin model"""
 
     # nasty pydantic bug fixed only on the master branch - waiting for pypi release
@@ -67,10 +68,14 @@ class GenshinModel(BaseModel):
         for name in dir(type(self)):
             clsvalue = getattr(type(self), name)
             if isinstance(clsvalue, property):
-                value = getattr(self, name)
-                # skip context-specific properties
+                try:
+                    value = getattr(self, name)
+                except:
+                    continue
+
                 if value == "":
                     continue
+
                 self.__dict__[name] = value
 
         return super().dict(**kwargs)
@@ -84,6 +89,18 @@ class GenshinModel(BaseModel):
 
     class Config:
         allow_mutation = False
+
+
+class Unique(abc.ABC):
+    """A hashable model with an id"""
+
+    id: int
+
+    def __int__(self) -> int:
+        return self.id
+
+    def __hash__(self) -> int:
+        return hash(self.id)
 
 
 class CharacterIcon:
@@ -121,7 +138,7 @@ class CharacterIcon:
         return f"{type(self).__name__}({self.character_name!r})"
 
 
-class BaseCharacter(GenshinModel, ABC):
+class BaseCharacter(GenshinModel, Unique):
     """A Base character model"""
 
     id: int
@@ -135,12 +152,14 @@ class BaseCharacter(GenshinModel, ABC):
     @root_validator(pre=True)
     def __autocomplete(cls, values: Dict[str, Any]):
         """Complete missing data"""
+        partial: bool = False
+
         id, icon, name = values.get("id"), values.get("icon"), values.get("name")
 
         if id and id in CHARACTER_NAMES:
             char = CHARACTER_NAMES[id]
 
-        elif icon:
+        elif icon and "genshin" in icon:
             icon = CharacterIcon(icon)
             for char in CHARACTER_NAMES.values():
                 if char.icon_name == icon.character_name:
@@ -156,19 +175,32 @@ class BaseCharacter(GenshinModel, ABC):
                     break
             else:
                 warnings.warn("Completing data for a partial character")
+                partial = True
                 char = DBChar(0, name, name, "Anemo", 5)
 
         else:
             raise ValueError("Character data incomplete")
 
         values["id"] = values.get("id") or char.id
-        values["icon"] = CharacterIcon(values.get("icon") or char.icon_name).icon
+
+        # malformed icon handling (in calculation)
+        if "genshin" in (values.get("icon") or ""):
+            values["icon"] = CharacterIcon(values["icon"]).icon
+        elif values.get("icon"):
+            if not partial:
+                values["icon"] = CharacterIcon(char.icon_name).icon
+        else:
+            values["icon"] = CharacterIcon(char.icon_name).icon
+
         values["name"] = values.get("name") or char.name
         values["element"] = values.get("element") or char.element
         values["rarity"] = values.get("rarity") or char.rarity
 
         if values["rarity"] > 100:
             values["rarity"] -= 100
+            values["collab"] = True
+        elif values["id"] == 10000062:
+            # sometimes Alot has 5* like normal, like cmon
             values["collab"] = True
 
         return values

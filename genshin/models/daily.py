@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from pydantic import Field
 
-from .base import GenshinModel
+from .base import GenshinModel, Unique
 
 __all__ = ["DailyRewardInfo", "DailyReward", "ClaimedDailyReward"]
 
@@ -31,7 +31,7 @@ class DailyReward(GenshinModel):
     icon: str
 
 
-class ClaimedDailyReward(GenshinModel):
+class ClaimedDailyReward(GenshinModel, Unique):
     """A claimed daily reward"""
 
     id: int

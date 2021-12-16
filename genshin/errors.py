@@ -41,7 +41,15 @@ class GenshinException(Exception):
 
     def __repr__(self) -> str:
         response = {"retcode": self.retcode, "message": self.original}
-        return f"{type(self).__name__}({response}, {self.msg!r})"
+        args = [repr(response)]
+        if self.msg != self.original:
+            args.append(repr(self.msg))
+
+        return f"{type(self).__name__}({', '.join(args)})"
+
+    @property
+    def response(self) -> Dict[str, Any]:
+        return {"retcode": self.retcode, "message": self.original, "data": None}
 
 
 class AccountNotFound(GenshinException):

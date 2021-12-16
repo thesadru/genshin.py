@@ -5,7 +5,7 @@ from typing import List, Literal, Optional
 
 from pydantic import Field, validator
 
-from .base import GenshinModel
+from .base import GenshinModel, Unique
 
 __all__ = [
     "BannerType",
@@ -22,7 +22,7 @@ BannerType = Literal[100, 200, 301, 302, 400]
 BANNER_TYPES: List[BannerType] = [100, 200, 301, 302, 400]
 
 
-class Wish(GenshinModel):
+class Wish(GenshinModel, Unique):
     """A wish made on any banner"""
 
     uid: int
@@ -137,7 +137,7 @@ class BannerDetails(GenshinModel):
         return sorted(items, key=lambda x: x.order)
 
 
-class GachaItem(GenshinModel):
+class GachaItem(GenshinModel, Unique):
     """An item that can be gotten from the gacha"""
 
     name: str
