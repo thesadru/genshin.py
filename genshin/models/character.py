@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from pydantic import Field, validator
 
-from .base import GenshinModel, PartialCharacter
+from .base import GenshinModel, PartialCharacter, Unique
 
 __all__ = [
     "PartialCharacter",
@@ -16,7 +16,7 @@ __all__ = [
 ]
 
 
-class Weapon(GenshinModel):
+class Weapon(GenshinModel, Unique):
     """A character's equipped weapon"""
 
     id: int
@@ -42,7 +42,7 @@ class ArtifactSetEffect(GenshinModel):
         allow_mutation = True
 
 
-class ArtifactSet(GenshinModel):
+class ArtifactSet(GenshinModel, Unique):
     """An artifact set"""
 
     id: int
@@ -50,7 +50,7 @@ class ArtifactSet(GenshinModel):
     effects: List[ArtifactSetEffect] = Field(galias="affixes")
 
 
-class Artifact(GenshinModel):
+class Artifact(GenshinModel, Unique):
     """A character's equipped artifact"""
 
     id: int
@@ -63,7 +63,7 @@ class Artifact(GenshinModel):
     set: ArtifactSet
 
 
-class Constellation(GenshinModel):
+class Constellation(GenshinModel, Unique):
     """A character constellation"""
 
     id: int
@@ -79,7 +79,7 @@ class Constellation(GenshinModel):
         return "U" in self.icon
 
 
-class Outfit(GenshinModel):
+class Outfit(GenshinModel, Unique):
     """An unlocked outfit of a character"""
 
     id: int
@@ -96,7 +96,7 @@ class Character(PartialCharacter):
     outfits: List[Outfit] = Field(galias="costumes")
 
     @validator("artifacts")
-    def __add_artifact_effect_enabled(cls, artifacts: List[Artifact]):
+    def __add_artifact_effect_enabled(cls, artifacts: List[Artifact]) -> List[Artifact]:
         sets: Dict[int, List[Artifact]] = {}
         for arti in artifacts:
             sets.setdefault(arti.set.id, []).append(arti)

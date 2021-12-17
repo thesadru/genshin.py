@@ -67,8 +67,9 @@ _character_names = {
     10000052: ("Shougun", "Raiden Shogun", "Electro", 5),
     10000053: ("Sayu", "Sayu", "Anemo", 4),
     10000054: ("Kokomi", "Sangonomiya Kokomi", "Hydro", 5),
-    10000055: None,
+    10000055: ("Gorou", "Gorou", "Geo", 4),
     10000056: ("Sara", "Kujou Sara", "Electro", 4),
+    10000057: ("Itto", "Arataki Itoo", "Geo", 5),
     # collab:
     10000062: ("Aloy", "Aloy", "Cryo", 105),
 }

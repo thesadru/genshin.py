@@ -99,7 +99,7 @@ class SpiralAbyss(GenshinModel):
     floors: List[Floor]
 
     @root_validator(pre=True)
-    def __nest_ranks(cls, values: Dict[str, Any]):
+    def __nest_ranks(cls, values: Dict[str, Any]) -> Dict[str, AbyssCharacter]:
         """By default ranks are for some reason on the same level as the rest of the abyss"""
         values.setdefault("ranks", {}).update(values)
         return values

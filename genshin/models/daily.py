@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from pydantic import Field
 
-from .base import GenshinModel
+from .base import GenshinModel, Unique
 
 __all__ = ["DailyRewardInfo", "DailyReward", "ClaimedDailyReward"]
 
@@ -16,7 +16,7 @@ class DailyRewardInfo(NamedTuple):
     claimed_rewards: int
 
     @property
-    def missed_rewards(self):
+    def missed_rewards(self) -> int:
         cn_timezone = timezone(timedelta(hours=8))
         now = datetime.now(cn_timezone)
         month_days = calendar.monthrange(now.year, now.month)[1]
@@ -31,7 +31,7 @@ class DailyReward(GenshinModel):
     icon: str
 
 
-class ClaimedDailyReward(GenshinModel):
+class ClaimedDailyReward(GenshinModel, Unique):
     """A claimed daily reward"""
 
     id: int

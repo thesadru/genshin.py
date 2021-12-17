@@ -3,6 +3,7 @@ from . import *
 from .abyss import *
 from .activities import *
 from .base import *
+from .calculator import *
 from .character import *
 from .daily import *
 from .diary import *

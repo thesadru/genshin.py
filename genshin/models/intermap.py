@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime
-from typing import List, Tuple
+from typing import Any, Dict, List, Tuple
 
 from pydantic import Field, validator
 
@@ -20,7 +20,7 @@ class MapInfoDetails(GenshinModel):
     padding: Tuple[int, int]
 
     @validator("slices", pre=True)
-    def __flatten_slices(cls, v):
+    def __flatten_slices(cls, v: List[List[Dict[str, Any]]]) -> List[List[str]]:
         return [[j["url"] for j in i] for i in v]
 
 
@@ -34,7 +34,7 @@ class MapInfo(GenshinModel):
     details: MapInfoDetails = Field(galias="detail")
 
     @validator("details", pre=True)
-    def __parse_detail(cls, v):
+    def __parse_detail(cls, v: str) -> Any:
         return json.loads(v)
 
 
@@ -56,7 +56,7 @@ class MapNode(GenshinModel):
     is_all_area: bool
 
     @validator("name")
-    def __remove_style(cls, v):
+    def __remove_style(cls, v: str) -> str:
         return v.replace("\xa0", " ")
 
 

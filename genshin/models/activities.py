@@ -141,7 +141,7 @@ class Activities(GenshinModel):
     chess: Optional[ChineseActivity]
 
     @root_validator(pre=True)
-    def __flatten_activities(cls, values: Dict[str, Any]):
+    def __flatten_activities(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if not values.get("activities"):
             return values
 

@@ -1,11 +1,10 @@
 import re
 from datetime import datetime
-from enum import IntEnum
-from typing import List, Literal, Optional
+from typing import Any, List, Literal, Optional
 
 from pydantic import Field, validator
 
-from .base import GenshinModel
+from .base import GenshinModel, Unique
 
 __all__ = [
     "BannerType",
@@ -22,7 +21,7 @@ BannerType = Literal[100, 200, 301, 302, 400]
 BANNER_TYPES: List[BannerType] = [100, 200, 301, 302, 400]
 
 
-class Wish(GenshinModel):
+class Wish(GenshinModel, Unique):
     """A wish made on any banner"""
 
     uid: int
@@ -37,7 +36,7 @@ class Wish(GenshinModel):
     banner_name: str
 
     @validator("banner_type", pre=True)
-    def __cast_banner_type(cls, v):
+    def __cast_banner_type(cls, v: Any) -> int:
         return int(v)
 
 
@@ -61,7 +60,7 @@ class BannerDetailsUpItem(GenshinModel):
     icon: str = Field(galias="item_img")
 
     @validator("element", pre=True)
-    def __parse_element(cls, v):
+    def __parse_element(cls, v: str) -> str:
         return {
             "风": "Anemo",
             "火": "Pyro",
@@ -99,7 +98,7 @@ class BannerDetails(GenshinModel):
     r3_items: List[BannerDetailItem] = Field(galias="r3_prob_list")
 
     @validator("r5_up_items", "r4_up_items", pre=True)
-    def __replace_none(cls, v):
+    def __replace_none(cls, v: Optional[List[Any]]) -> List[Any]:
         return v or []
 
     @validator(
@@ -113,7 +112,7 @@ class BannerDetails(GenshinModel):
         "r3_guarantee_prob",
         pre=True,
     )
-    def __parse_percentage(cls, v):
+    def __parse_percentage(cls, v: str) -> Optional[float]:
         return None if v == "0%" else float(v[:-1].replace(",", "."))
 
     @property
@@ -137,7 +136,7 @@ class BannerDetails(GenshinModel):
         return sorted(items, key=lambda x: x.order)
 
 
-class GachaItem(GenshinModel):
+class GachaItem(GenshinModel, Unique):
     """An item that can be gotten from the gacha"""
 
     name: str
@@ -146,7 +145,7 @@ class GachaItem(GenshinModel):
     id: int = Field(galias="item_id")
 
     @validator("id")
-    def __format_id(cls, v):
+    def __format_id(cls, v: int) -> int:
         return 10000000 + v - 1000 if len(str(v)) == 4 else v
 
     def is_character(self) -> bool:
