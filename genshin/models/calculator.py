@@ -1,5 +1,5 @@
 import collections
-from typing import Any, Dict, List, NamedTuple
+from typing import Any, Dict, List, Literal, NamedTuple
 
 from pydantic import Field, validator
 
@@ -13,6 +13,7 @@ __all__ = [
     "CalculatorWeapon",
     "CalculatorArtifact",
     "CalculatorTalent",
+    "CalculatorCharacterDetails",
     "CalculatorConsumable",
     "CalculatorArtifactResult",
     "CalculatorResult",
@@ -50,7 +51,7 @@ class CalculatorCharacter(BaseCharacter):
     rarity: int = Field(galias="avatar_level")
     element: str = Field(galias="element_attr_id")
     weapon_type: str = Field(galias="weapon_cat_id")
-
+    level: int = Field(1, galias="level_current")
     max_level: int
 
     @validator("element")
@@ -70,6 +71,7 @@ class CalculatorWeapon(GenshinModel, Unique):
     icon: str
     rarity: int = Field(galias="weapon_level")
     type: str = Field(galias="weapon_cat_id")
+    level: int = Field(1, galias="level_current")
     max_level: int
 
     @validator("type")
@@ -85,6 +87,7 @@ class CalculatorArtifact(GenshinModel, Unique):
     icon: str
     rarity: int = Field(alias="reliquary_level")
     pos: int = Field(alias="reliquary_cat_id")
+    level: int = Field(1, galias="level_current")
     max_level: int
 
     @property
@@ -99,7 +102,35 @@ class CalculatorTalent(GenshinModel, Unique):
     group_id: int
     name: str
     icon: str
+    level: int = Field(1, galias="level_current")
     max_level: int
+
+    @property
+    def type(self) -> Literal["attack", "skill", "burst", "passive", "dash"]:
+        """The type of the talent, parsed from the group id"""
+        # It's Possible to parse this from the id too but group id feels more reliable
+
+        # 4139 -> group=41 identifier=3 order=9
+        group, relevant = divmod(self.group_id, 100)
+        identifier, order = divmod(relevant, 10)
+
+        if identifier == 2:
+            return "passive"
+        elif order == 1:
+            return "attack"
+        elif order == 2:
+            return "skill"
+        elif order == 9:
+            return "burst"
+        elif order == 3:
+            return "dash"
+        else:
+            raise ValueError(f"Cannot parse type for talent {self.group_id!r} (group {group})")
+
+    @property
+    def upgradeable(self) -> bool:
+        """Whether this talent can be leveled up"""
+        return self.type not in ("passive", "dash")
 
 
 class CalculatorConsumable(GenshinModel, Unique):
@@ -109,6 +140,14 @@ class CalculatorConsumable(GenshinModel, Unique):
     name: str
     icon: str
     amount: int = Field(galias="num")
+
+
+class CalculatorCharacterDetails(GenshinModel):
+    """Details of a synced calculator character"""
+
+    weapon: CalculatorWeapon = Field(galias="weapon")
+    talents: List[CalculatorTalent] = Field(galias="skill_list")
+    artifacts: List[CalculatorArtifact] = Field(galias="reliquary_list")
 
 
 class CalculatorArtifactResult(GenshinModel):

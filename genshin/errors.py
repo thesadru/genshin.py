@@ -123,6 +123,9 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     10102: DataNotPublic,
     10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
     10104: "Tried to use a beta feature in an invalid context",
+    # calculator
+    -500001: "Invalid fields in calculation",
+    -502001: "User does not have this character",
     # mixin
     -1: "Internal database error.",
     1009: AccountNotFound,

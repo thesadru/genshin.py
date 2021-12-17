@@ -50,7 +50,7 @@ async def test_abyss(client: GenshinClient, uid: int):
 async def test_notes(lclient: GenshinClient, uid: int):
     data = await lclient.get_notes(uid)
 
-    assert data.resin_recovered_at > datetime.now().astimezone()
+    assert data.resin_recovered_at >= datetime.now().astimezone()
     assert data.max_comissions == 4
     assert not (data.completed_commissions != 4 and data.claimed_comission_reward)
     assert len(data.expeditions) == 5

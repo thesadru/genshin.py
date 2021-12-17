@@ -14,6 +14,8 @@ async def aenumerate(iterable: AsyncIterable[T], start: int = 0) -> AsyncIterato
     :param iterable: An async iterable
     :param start: The starting value
     """
+    __tracebackhide__ = True  # for pytest
+
     i = start
     async for x in iterable:
         yield i, x
@@ -26,6 +28,8 @@ async def aislice(iterable: AsyncIterable[T], stop: int = None) -> AsyncIterator
     :param iterable: An async iterable
     :param stop: The stopping index, if any
     """
+    __tracebackhide__ = True  # for pytest
+
     async for i, x in aenumerate(iterable, start=1):
         yield x
 
@@ -53,13 +57,15 @@ async def _try_gather_first(iterators: Iterable[AsyncIterator[T]]) -> List[T]:
 
     :param iterators: Async iterators
     """
+    __tracebackhide__ = True  # for pytest
+
     coros = (it.__anext__() for it in iterators)
     gathered = await asyncio.gather(*coros, return_exceptions=True)
     values = []
     for x in gathered:
         if isinstance(x, BaseException):
             if not isinstance(x, StopAsyncIteration):
-                raise x
+                raise x from None
         else:
             values.append(x)
     return values
@@ -73,6 +79,8 @@ async def amerge(
     :param iterables: Async iterables
     :param key: Function to determine the sort order
     """
+    __tracebackhide__ = True  # for pytest
+
     key = key or (lambda x: x)
 
     iterators = [i.__aiter__() for i in iterables]

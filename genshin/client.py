@@ -965,21 +965,25 @@ class GenshinClient:
         filters: Dict[str, Any],
         query: str = None,
         *,
+        sync: Union[int, bool] = False,
         lang: str = None,
     ) -> List[Dict[str, Any]]:
         """Get all items of a specific slug from a calculator"""
+        # TODO: Include different traveler elements
         if query and any(isinstance(v, list) and v for v in filters.values()):
             raise TypeError("Cannot specify a query and filter at the same time")
 
+        endpoint = f"sync/{slug}/list" if sync else f"{slug}/list"
+        json: Dict[str, Any] = dict(page=1, size=69420, **filters)
+        if query:
+            json.update(keywords=query)
+        if sync:
+            json.update(await self._complete_uid(sync if sync > 1 else None))
+
         data = await self.request_calculator(
-            f"{slug}/list",
+            endpoint,
             lang=lang,
-            json=dict(
-                page=1,
-                size=69420,
-                keywords=query,
-                **filters,
-            ),
+            json=json,
         )
         return data["list"]
 
@@ -989,6 +993,7 @@ class GenshinClient:
         query: str = None,
         elements: Sequence[int] = None,
         weapon_types: Sequence[int] = None,
+        sync: Union[int, bool] = False,
         lang: str = None,
     ) -> List[CalculatorCharacter]:
         """Get all characters provided by the Enhancement Progression Calculator
@@ -998,9 +1003,11 @@ class GenshinClient:
         :param weapon_types: The weapon types of returned characters - refer to `.models.CALCULATOR_WEAPON_TYPES`
         :param lang: The language to use
         """
+        # TODO: Include traveler (is_all param)
         data = await self._get_calculator_items(
             "avatar",
             lang=lang,
+            sync=sync,
             query=query,
             filters=dict(
                 element_attr_ids=elements or [],
@@ -1061,6 +1068,30 @@ class GenshinClient:
         )
         return [CalculatorArtifact(**i) for i in data]
 
+    async def get_character_details(
+        self,
+        character_id: int,
+        *,
+        uid: int = None,
+        lang: str = None,
+    ) -> CalculatorCharacterDetails:
+        """Get the weapon, artifacts and talents of a character
+
+        Not related to the Battle Chronicle. This data is always private.
+
+        :param lang: The language to use
+        """
+        params = dict(avatar_id=character_id)
+        params.update(await self._complete_uid(uid))
+
+        data = await self.request_calculator(
+            "sync/avatar/detail",
+            method="GET",
+            lang=lang,
+            params=params,
+        )
+        return CalculatorCharacterDetails(**data)
+
     async def get_character_talents(
         self,
         character_id: int,
@@ -1068,6 +1099,9 @@ class GenshinClient:
         lang: str = None,
     ) -> List[CalculatorTalent]:
         """Get the talents of a character
+
+        This only gets the talent names, not their levels.
+        Use `get_character_details` for precise information.
 
         :param lang: The language to use
         """
@@ -1086,6 +1120,8 @@ class GenshinClient:
         lang: str = None,
     ) -> List[CalculatorArtifact]:
         """Get all other artifacts that share a set with any given artifact
+        
+        Doesn't return the artifact passed into this function.
 
         :param lang: The language to use
         """
