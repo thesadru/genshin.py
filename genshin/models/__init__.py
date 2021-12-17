@@ -13,3 +13,9 @@ from .notes import *
 from .stats import *
 from .transaction import *
 from .wish import *
+
+from .honkai_base import *
+from .honkai_character import *
+from .honkai_hoyolab import *
+from .honkai_permanent_modes import *
+from .honkai_stats import *
