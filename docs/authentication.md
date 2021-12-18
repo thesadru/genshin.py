@@ -9,7 +9,9 @@ This means it's highly recommended to use your own cookies only for local testin
 For authentication, you will need to send two cookies: `ltuid` and `ltoken`. `ltuid` is your hoyolab UID and `ltoken` is a unique token used for the actual authentication.
 
 ### Setting cookies
+
 There are several ways to set cookies but `set_cookies` is preferred.
+
 ```py
 # set as an __init__ parameter
 client = genshin.GenshinClient({"ltuid": ..., "ltoken": ...})
@@ -30,15 +32,18 @@ client.set_cookies("ltuid=...; ltoken=...") # cookie header
 5. Copy `ltuid` and `ltoken`.
 
 ### Setting cookies automatically
+
 For testing, you may want to use your own personal cookies.
 As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.get_browser_cookies()`.
 
 ### Installation
+
 ```console
 pip install genshin[cookies]
 ```
 
 ### Example
+
 ```py
 # get cookies from a browser and set them
 client = genshin.GenshinClient()
@@ -51,6 +56,7 @@ client.set_browser_cookies()
 ```
 
 In case of conflicts/errors, you may specify the browser you want to use.
+
 ```py
 cookies = genshin.get_browser_cookies("chrome")
 ```
@@ -58,7 +64,6 @@ cookies = genshin.get_browser_cookies("chrome")
 ### Details
 
 Sadly not even this is inconsistent enough. For some endpoints like `redeem_code`, you might need to set `account_id` and `cookie_token` cookies instead. You can get them by going to [genshin.mihoyo.com](https://genshin.mihoyo.com/en/gift).
-
 
 ## Authkey
 
@@ -69,6 +74,7 @@ These authkeys should always be a base64 encoded string and 1024 characters long
 ### Setting authkeys
 
 Similar to cookies, you may set authkeys through multiple ways.
+
 ```py
 # set as an __init__ parameter
 client = genshin.GenshinClient(authkey="...")
@@ -90,21 +96,21 @@ async for wish in client.wish_history(authkey="..."):
 To get your authkey manually from other platforms, you can use any of these approaches:
 
 - PC
-    - Open the wish history in the game and wait for it to load
-    - Open the file at `~\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt`
-    - Find the link which starts with `OnGetWebViewPageFinish` and copy it
+  - Open the wish history in the game and wait for it to load
+  - Open the file at `~\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt`
+  - Find the link which starts with `OnGetWebViewPageFinish` and copy it
 - Android
-    - Open the Paimon menu
-    - Click Feedback
-    - Wait for it to load, and a feedback page should open
-    - Turn off your Wi-Fi
-    - Refresh the page
-    - The page should display an error containing a link
-    - Copy the link
+  - Open the Paimon menu
+  - Click Feedback
+  - Wait for it to load, and a feedback page should open
+  - Turn off your Wi-Fi
+  - Refresh the page
+  - The page should display an error containing a link
+  - Copy the link
 - PS
-    - Open any event mail which contains a QR Code
-    - Scan the QR Code with your phone
-    - Copy the link
+  - Open any event mail which contains a QR Code
+  - Scan the QR Code with your phone
+  - Copy the link
     > You can only use this if you have an in-game mail with QR Code to open the web event
 
 After that, you can extract the authkey from the link using `genshin.extract_authkey`.

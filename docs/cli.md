@@ -5,6 +5,7 @@ Genshin.py is not only a library but also a <abbr title="Command Line Interface"
 For it to work you must be logged into your genshin account on any of your browsers. (Refer to [the authentication section](authentication.md#setting-cookies-automatically) for reasoning)
 
 ## Installation
+
 ```console
 pip install genshin[cli]
 ```
@@ -12,6 +13,7 @@ pip install genshin[cli]
 ## Usage
 
 ### Get help
+
 ```console
 $ genshin --help
 Usage: genshin [OPTIONS] COMMAND [ARGS]...
@@ -29,6 +31,7 @@ Commands:
 ```
 
 ### Run a command
+
 ```console
 $ genshin -m genshin stats 710785423
 User stats of 710785423

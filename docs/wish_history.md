@@ -57,6 +57,7 @@ banners = await client.get_banner_details()
 for banner in banners:
     print(banner.name)
 ```
+
 ```py
 # get a list of all items that can be gotten from the gacha
 items = await client.get_gacha_items()
@@ -65,6 +66,7 @@ items = await client.get_gacha_items()
 ## Optimizations
 
 You may start from any point in the paginator as long as you know the id of the previous item.
+
 ```py
 async for wish in client.wish_history(limit=20):
     print(wish)
@@ -73,8 +75,8 @@ async for wish in client.wish_history(limit=20, end_id=wish.id):
     print(wish)
 ```
 
-
 When getting data from a single banner you may use the `next_page` method to get the next 20 items in the paginator.
+
 ```py
 # a more accurate progress bar
 history = client.wish_history(200)
@@ -84,6 +86,7 @@ while not history.exhausted:
 ```
 
 `get_banner_details` requires ids to get the banner details. These ids change with every new banner so for user experience they are hosted on a remote repository maintained by me. In case you want to get proper data before I update the ids you may simply just get them yourself by openning every single details page in genshin and then running `genshin.get_banner_ids()`
+
 ```py
 banner_ids = genshin.get_banner_ids()
 banners = await client.get_banner_details(banner_ids)

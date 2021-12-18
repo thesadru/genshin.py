@@ -1,5 +1,5 @@
 import collections
-from typing import Any, Dict, List, Literal, NamedTuple
+from typing import Any, Dict, List, Literal, NamedTuple, Union
 
 from pydantic import Field, validator
 
@@ -51,15 +51,21 @@ class CalculatorCharacter(BaseCharacter):
     rarity: int = Field(galias="avatar_level")
     element: str = Field(galias="element_attr_id")
     weapon_type: str = Field(galias="weapon_cat_id")
-    level: int = Field(1, galias="level_current")
+    level: int = Field(0, galias="level_current")
     max_level: int
 
-    @validator("element")
+    @validator("element", pre=True)
     def __parse_element(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_ELEMENTS[int(v)]
 
-    @validator("weapon_type")
+    @validator("weapon_type", pre=True)
     def __parse_weapon_type(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
@@ -71,11 +77,14 @@ class CalculatorWeapon(GenshinModel, Unique):
     icon: str
     rarity: int = Field(galias="weapon_level")
     type: str = Field(galias="weapon_cat_id")
-    level: int = Field(1, galias="level_current")
+    level: int = Field(0, galias="level_current")
     max_level: int
 
-    @validator("type")
+    @validator("type", pre=True)
     def __parse_weapon_type(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
@@ -85,9 +94,9 @@ class CalculatorArtifact(GenshinModel, Unique):
     id: int
     name: str
     icon: str
-    rarity: int = Field(alias="reliquary_level")
-    pos: int = Field(alias="reliquary_cat_id")
-    level: int = Field(1, galias="level_current")
+    rarity: int = Field(galias="reliquary_level")
+    pos: int = Field(galias="reliquary_cat_id")
+    level: int = Field(0, galias="level_current")
     max_level: int
 
     @property
@@ -102,7 +111,7 @@ class CalculatorTalent(GenshinModel, Unique):
     group_id: int
     name: str
     icon: str
-    level: int = Field(1, galias="level_current")
+    level: int = Field(0, galias="level_current")
     max_level: int
 
     @property
@@ -132,6 +141,9 @@ class CalculatorTalent(GenshinModel, Unique):
         """Whether this talent can be leveled up"""
         return self.type not in ("passive", "dash")
 
+    def __int__(self) -> int:
+        return self.group_id
+
 
 class CalculatorConsumable(GenshinModel, Unique):
     """An item consumed when upgrading"""
@@ -149,12 +161,27 @@ class CalculatorCharacterDetails(GenshinModel):
     talents: List[CalculatorTalent] = Field(galias="skill_list")
     artifacts: List[CalculatorArtifact] = Field(galias="reliquary_list")
 
+    @validator("talents")
+    def __correct_talent_current_level(cls, v: List[CalculatorTalent]) -> List[CalculatorTalent]:
+        # passive talent have current levels at 0 for some reason
+        talents: List[CalculatorTalent] = []
+
+        for talent in v:
+            if talent.max_level == 1 and talent.level == 0:
+                raw = talent.dict()
+                raw["level"] = 1
+                talent = CalculatorTalent(**raw)
+
+            talents.append(talent)
+
+        return v
+
 
 class CalculatorArtifactResult(GenshinModel):
     """A calulation result for a specific artifact"""
 
-    artifact_id: int = Field(alias="reliquary_id")
-    list: List[CalculatorConsumable] = Field(alias="id_consume_list")
+    artifact_id: int = Field(galias="reliquary_id")
+    list: List[CalculatorConsumable] = Field(galias="id_consume_list")
 
 
 class CalculatorResult(GenshinModel):
@@ -190,14 +217,14 @@ class CalculatorResult(GenshinModel):
 class CalculatorObject(NamedTuple):
     """An object required in the calculation of required materials"""
 
-    id: int
+    id: Union[int, Unique]
     current: int
     target: int
 
-    def _serialize(self, prefix: str = "") -> Dict[str, Any]:
+    def _serialize(self, prefix: str = "") -> Dict[str, int]:
         """Serialize the object to a dict"""
         return {
-            prefix + "id": self.id,
-            prefix + "level_current": self.current,
-            prefix + "level_target": self.target,
+            prefix + "id": int(self.id),
+            prefix + "level_current": int(self.current),
+            prefix + "level_target": int(self.target),
         }

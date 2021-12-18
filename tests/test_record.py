@@ -48,6 +48,8 @@ async def test_abyss(client: GenshinClient, uid: int):
 
 @pytest.mark.asyncio
 async def test_notes(lclient: GenshinClient, uid: int):
+    pytest.skip("Notes depend on the player having their comissions completed")
+
     data = await lclient.get_notes(uid)
 
     assert data.resin_recovered_at >= datetime.now().astimezone()
