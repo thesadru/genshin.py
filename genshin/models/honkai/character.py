@@ -2,11 +2,10 @@ from typing import Any, Dict, List
 
 from pydantic import Field, root_validator
 
-from .base import GenshinModel, Unique
-from .honkai_base import BaseBattlesuit, Battlesuit
+from ..base import APIModel, BaseBattlesuit, Battlesuit, Unique
 
 
-class Equipment(GenshinModel, Unique):
+class Equipment(APIModel, Unique):
     """Represents a stigma or weapon."""
 
     # Actually works for both weapons and stigmata as the API returns the same data for them

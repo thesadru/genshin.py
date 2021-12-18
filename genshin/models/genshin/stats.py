@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
 
 from .abyss import SpiralAbyssPair
 from .activities import Activities
-from .base import GenshinModel, PartialCharacter
+from ..base import APIModel, PartialCharacter, BaseStats
 from .character import Character
 
 __all__ = [
@@ -22,7 +22,7 @@ __all__ = [
 ]
 
 # flake8: noqa: E222
-class Stats(GenshinModel):
+class Stats(BaseStats):
     """Overall user stats"""
 
     # This is such fucking bullshit, just why?
@@ -43,22 +43,15 @@ class Stats(GenshinModel):
     unlocked_domains: int =   Field(galias="domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
-    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
-        """Helper function which turns fields into properly named ones"""
-        return {
-            self._get_mi18n(field, lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-        }
 
-
-class Offering(GenshinModel):
+class Offering(APIModel):
     """An offering"""
 
     name: str
     level: int
 
 
-class Exploration(GenshinModel):
+class Exploration(APIModel):
     """Exploration data"""
 
     id: int
@@ -75,7 +68,7 @@ class Exploration(GenshinModel):
         return self.explored / 10
 
 
-class TeapotRealm(GenshinModel):
+class TeapotRealm(APIModel):
     """A specific teapot realm"""
 
     name: str
@@ -87,7 +80,7 @@ class TeapotRealm(GenshinModel):
         return int(match.group()) if match else 0
 
 
-class Teapot(GenshinModel):
+class Teapot(APIModel):
     """User's Serenitea Teapot"""
 
     realms: List[TeapotRealm]
@@ -99,7 +92,7 @@ class Teapot(GenshinModel):
     comfort_icon: str = Field(galias="comfort_level_icon")
 
 
-class PartialUserStats(GenshinModel):
+class PartialUserStats(APIModel):
     """User stats with characters without equipment"""
 
     stats: Stats

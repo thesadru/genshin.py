@@ -19,7 +19,7 @@ from yarl import URL
 from . import errors
 from .constants import CHARACTER_NAMES, LANGS
 from .models import *
-from .paginator import *
+from .paginators import *
 from .utils import *
 
 __all__ = [
@@ -1482,7 +1482,7 @@ class GenshinClient:
 
     async def _fetch_mi18n(self) -> Dict[str, Dict[str, str]]:
         if self.fetched_mi18n:
-            return GenshinModel._mi18n
+            return APIModel._mi18n
 
         self.fetched_mi18n = True
 
@@ -1493,12 +1493,12 @@ class GenshinClient:
 
             data = await self.request_webstatic(url.format(lang=lang))
             for k, v in data.items():
-                GenshinModel._mi18n.setdefault(key + "/" + k, {})[lang] = v
+                APIModel._mi18n.setdefault(key + "/" + k, {})[lang] = v
 
-        coros = (single(url, key) for key, url in GenshinModel._mi18n_urls.items())
+        coros = (single(url, key) for key, url in APIModel._mi18n_urls.items())
         await asyncio.gather(*coros)
 
-        return GenshinModel._mi18n
+        return APIModel._mi18n
 
     async def init(self, lang: str = None):
         """Request all static & permanent endpoints to not require them later

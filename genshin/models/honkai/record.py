@@ -1,11 +1,11 @@
 from pydantic import Field
 
-from .base import GenshinModel
+from ..base import APIModel
 
 __all__ = ("UserInfo",)
 
 
-class UserInfo(GenshinModel):
+class UserInfo(APIModel):
 
     nickname: str
     region: str

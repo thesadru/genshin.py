@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Literal, NamedTuple, Union
 
 from pydantic import Field, validator
 
-from .base import BaseCharacter, GenshinModel, Unique
+from ..base import BaseCharacter, APIModel, Unique
 
 __all__ = [
     "CALCULATOR_ELEMENTS",
@@ -69,7 +69,7 @@ class CalculatorCharacter(BaseCharacter):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorWeapon(GenshinModel, Unique):
+class CalculatorWeapon(APIModel, Unique):
     """A weapon meant to be used with calculators"""
 
     id: int
@@ -88,7 +88,7 @@ class CalculatorWeapon(GenshinModel, Unique):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorArtifact(GenshinModel, Unique):
+class CalculatorArtifact(APIModel, Unique):
     """An artifact meant to be used with calculators"""
 
     id: int
@@ -104,7 +104,7 @@ class CalculatorArtifact(GenshinModel, Unique):
         return CALCULATOR_ARTIFACTS[self.pos]
 
 
-class CalculatorTalent(GenshinModel, Unique):
+class CalculatorTalent(APIModel, Unique):
     """A talent of a character meant to be used with calculators"""
 
     id: int
@@ -145,7 +145,7 @@ class CalculatorTalent(GenshinModel, Unique):
         return self.group_id
 
 
-class CalculatorConsumable(GenshinModel, Unique):
+class CalculatorConsumable(APIModel, Unique):
     """An item consumed when upgrading"""
 
     id: int
@@ -154,7 +154,7 @@ class CalculatorConsumable(GenshinModel, Unique):
     amount: int = Field(galias="num")
 
 
-class CalculatorCharacterDetails(GenshinModel):
+class CalculatorCharacterDetails(APIModel):
     """Details of a synced calculator character"""
 
     weapon: CalculatorWeapon = Field(galias="weapon")
@@ -177,14 +177,14 @@ class CalculatorCharacterDetails(GenshinModel):
         return v
 
 
-class CalculatorArtifactResult(GenshinModel):
+class CalculatorArtifactResult(APIModel):
     """A calulation result for a specific artifact"""
 
     artifact_id: int = Field(galias="reliquary_id")
     list: List[CalculatorConsumable] = Field(galias="id_consume_list")
 
 
-class CalculatorResult(GenshinModel):
+class CalculatorResult(APIModel):
     """A calculation result"""
 
     character: List[CalculatorConsumable] = Field(galias="avatar_consume")

@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator
 
-from .base import BaseCharacter, GenshinModel
+from ..base import BaseCharacter, APIModel
 
 __all__ = [
     "AbyssRankCharacter",
@@ -32,7 +32,7 @@ class AbyssCharacter(BaseCharacter):
     level: int
 
 
-class CharacterRanks(GenshinModel):
+class CharacterRanks(APIModel):
     """A collection of rankings achieved during spiral abyss runs"""
 
     # fmt: off
@@ -52,7 +52,7 @@ class CharacterRanks(GenshinModel):
         }
 
 
-class Battle(GenshinModel):
+class Battle(APIModel):
     """A battle in the spiral abyss"""
 
     half: int = Field(galias="index")
@@ -60,7 +60,7 @@ class Battle(GenshinModel):
     characters: List[AbyssCharacter] = Field(galias="avatars")
 
 
-class Chamber(GenshinModel):
+class Chamber(APIModel):
     """A chamber of the spiral abyss"""
 
     chamber: int = Field(galias="index")
@@ -69,7 +69,7 @@ class Chamber(GenshinModel):
     battles: List[Battle]
 
 
-class Floor(GenshinModel):
+class Floor(APIModel):
     """A floor of the spiral abyss"""
 
     floor: int = Field(galias="index")
@@ -81,7 +81,7 @@ class Floor(GenshinModel):
     chambers: List[Chamber] = Field(galias="levels")
 
 
-class SpiralAbyss(GenshinModel):
+class SpiralAbyss(APIModel):
     """Information about Spiral Abyss runs during a specific season"""
 
     unlocked: bool = Field(galias="is_unlock")
@@ -105,7 +105,7 @@ class SpiralAbyss(GenshinModel):
         return values
 
 
-class SpiralAbyssPair(GenshinModel):
+class SpiralAbyssPair(APIModel):
     """A pair of both current and previous spiral abyss
 
     This may not be a namedtuple due to how pydantic handles them

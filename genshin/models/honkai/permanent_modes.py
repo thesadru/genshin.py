@@ -1,12 +1,11 @@
 import re
 from datetime import datetime
-from typing import Any, Dict, List, Literal, NamedTuple, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import Field, root_validator, validator
 
-from .base import GenshinModel, Unique
-from .honkai_base import Battlesuit
-from ..constants import REMEMBRANCE_SIGILS, RemembranceSigil
+from ..base import APIModel, Battlesuit, Unique
+from ...constants import REMEMBRANCE_SIGILS, RemembranceSigil
 
 __all__ = (
     "Boss",
@@ -21,13 +20,13 @@ __all__ = (
 # GENERIC
 
 
-class Boss(GenshinModel, Unique):
+class Boss(APIModel, Unique):
     id: int
     name: str
     icon: str = Field(galias="avatar")
 
 
-class ELF(GenshinModel, Unique):
+class ELF(APIModel, Unique):
 
     id: int
     name: str
@@ -69,7 +68,7 @@ def _prettify_abyss_rank(rank: int) -> str:
     )[rank - 1]
 
 
-class SuperstringAbyss(GenshinModel):
+class SuperstringAbyss(APIModel):
     """Represents one cycle of abyss (3 days per cycle, 2 cycles per week)"""
 
     score: int
@@ -113,7 +112,7 @@ def _prettify_MA_rank(rank: int) -> str:
     return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
 
 
-class MemorialBattle(GenshinModel):
+class MemorialBattle(APIModel):
     """Represents weekly performance against a single Memorial Arena boss."""
 
     score: int
@@ -122,7 +121,7 @@ class MemorialBattle(GenshinModel):
     boss: Boss
 
 
-class MemorialArena(GenshinModel):
+class MemorialArena(APIModel):
     """Represents aggregate weekly performance for the entire Memorial Arena rotation."""
 
     score: int
@@ -146,7 +145,7 @@ class MemorialArena(GenshinModel):
 # ELYSIAN REALMS
 
 
-class Signet(GenshinModel):
+class Signet(APIModel):
     id: int
     name: str
     icon: str
@@ -172,7 +171,7 @@ class Signet(GenshinModel):
         return self.icon.replace("@2x", "" if scale == 1 else f"@{scale}x")
 
 
-class ElysianRealm(GenshinModel):
+class ElysianRealm(APIModel):
     """Represents one completed run of Elysean Realms."""
 
     completed_at: datetime = Field(galias="settle_time_second")

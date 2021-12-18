@@ -3,12 +3,12 @@ from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator, validator
 
-from .base import BaseCharacter, GenshinModel
+from ..base import BaseCharacter, APIModel
 
 __all__ = ["Expedition", "Notes"]
 
 
-class Expedition(GenshinModel):
+class Expedition(APIModel):
     """A Real-Time note expedition"""
 
     character: BaseCharacter = Field(galias="avatar_side_icon")
@@ -38,7 +38,7 @@ class Expedition(GenshinModel):
         return BaseCharacter(icon=v)
 
 
-class Notes(GenshinModel):
+class Notes(APIModel):
     """Real-Time notes"""
 
     current_resin: int

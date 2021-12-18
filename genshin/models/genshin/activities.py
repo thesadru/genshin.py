@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field, root_validator
 
-from .base import BaseCharacter, GenshinModel
+from ..base import BaseCharacter, APIModel
 
 __all__ = [
     "HyakuninIkkiCharacter",
@@ -31,7 +31,7 @@ class HyakuninIkkiCharacter(BaseCharacter):
     trial: bool = Field(galias="is_trail_avatar")
 
 
-class HyakuninIkkiSkill(GenshinModel):
+class HyakuninIkkiSkill(APIModel):
     """A Hyakunin Ikki skill"""
 
     id: int
@@ -40,14 +40,14 @@ class HyakuninIkkiSkill(GenshinModel):
     description: str = Field(galias="desc")
 
 
-class HyakuninIkkiBattle(GenshinModel):
+class HyakuninIkkiBattle(APIModel):
     """A Hyakunin Ikki battle"""
 
     characters: List[HyakuninIkkiCharacter] = Field(galias="avatars")
     skills: List[HyakuninIkkiSkill] = Field(galias="skills")
 
 
-class HyakuninIkkiChallenge(GenshinModel):
+class HyakuninIkkiChallenge(APIModel):
     """A Hyakunin Ikki challenge"""
 
     id: int = Field(galias="challenge_id")
@@ -65,7 +65,7 @@ class HyakuninIkkiChallenge(GenshinModel):
         return match.group(1) if match else ""
 
 
-class HyakuninIkki(GenshinModel):
+class HyakuninIkki(APIModel):
     """A Hyakunin Ikki event"""
 
     challenges: List[HyakuninIkkiChallenge] = Field(galias="records")
@@ -81,7 +81,7 @@ class LabyrinthWarriorsCharacter(BaseCharacter):
     level: int
 
 
-class LabyrinthWarriorsRune(GenshinModel):
+class LabyrinthWarriorsRune(APIModel):
     """A Labyrinth Warriors rune"""
 
     id: int
@@ -91,7 +91,7 @@ class LabyrinthWarriorsRune(GenshinModel):
     element: str
 
 
-class LabyrinthWarriorsChallenge(GenshinModel):
+class LabyrinthWarriorsChallenge(APIModel):
     """A Labyrinth Warriors challenge"""
 
     id: int = Field(galias="challenge_id")
@@ -104,7 +104,7 @@ class LabyrinthWarriorsChallenge(GenshinModel):
     runes: List[LabyrinthWarriorsRune]
 
 
-class LabyrinthWarriors(GenshinModel):
+class LabyrinthWarriors(APIModel):
     """A Labyrinth Warriors event"""
 
     challenges: List[LabyrinthWarriorsChallenge] = Field(galias="records")
@@ -114,7 +114,7 @@ class LabyrinthWarriors(GenshinModel):
 # Chinese activities:
 
 
-class ChineseActivity(GenshinModel):
+class ChineseActivity(APIModel):
     """An arbitrary activty for chinese events"""
 
     start_time: datetime
@@ -128,7 +128,7 @@ class ChineseActivity(GenshinModel):
 # Activities:
 
 
-class Activities(GenshinModel):
+class Activities(APIModel):
     """A collection of genshin activities"""
 
     hyakunin_ikki: Optional[HyakuninIkki] = Field(None, gslug="sumo")

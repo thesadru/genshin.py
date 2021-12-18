@@ -1,17 +1,17 @@
 import abc
 from typing import Any, Dict, List
 
-from pydantic import Field, root_validator, validator
+from pydantic import Field, root_validator
 
-from .base import GenshinModel
-from .honkai_character import FullBattlesuit
-from .honkai_hoyolab import UserInfo
-from .honkai_permanent_modes import SuperstringAbyss, MemorialArena, ElysianRealm
-from .honkai_permanent_modes import (
+from .character import FullBattlesuit
+from .record import UserInfo
+from .permanent_modes import SuperstringAbyss, MemorialArena, ElysianRealm
+from .permanent_modes import (
     _prettify_abyss_rank,
     _prettify_MA_rank,
     _prettify_competitive_tier,
 )
+from ..base import APIModel, BaseStats
 
 __all__ = (
     "BaseStats",
@@ -20,16 +20,6 @@ __all__ = (
     "HonkaiUserStats",
     "HonkaiFullUserStats",
 )
-
-
-# Could be used as a base class for HonkaiStats and GenshinStats
-class BaseStats(GenshinModel, abc.ABC):
-    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
-        """Helper function which turns fields into properly named ones"""
-        return {
-            self._get_mi18n(field, lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-        }
 
 
 class HonkaiStats(BaseStats):
@@ -90,7 +80,7 @@ class HonkaiStats(BaseStats):
         return _prettify_abyss_rank(self.abyss_rank)
 
 
-class HonkaiPartialUserStats(GenshinModel):
+class HonkaiPartialUserStats(APIModel):
     """Represents basic user stats, showing only generic user data and stats."""
 
     info: UserInfo = Field(galias="role")
