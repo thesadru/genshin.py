@@ -31,26 +31,27 @@ markdown_extensions:
     - pymdownx.superfences
     - pymdownx.snippets
     - pymdownx.emoji:
-        emoji_index: !!python/name:materialx.emoji.twemoji
-        emoji_generator: !!python/name:materialx.emoji.to_svg
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
 nav:
     - index.md
     - credits.md
     - Usage:
-        - authentication.md
-        - battle_chronicle.md
-        - hoyolab.md
-        - daily_rewards.md
-        - wish_history.md
-        - transactions.md
+          - authentication.md
+          - battle_chronicle.md
+          - hoyolab.md
+          - daily_rewards.md
+          - calculator.md
+          - diary.md
+          - wish_history.md
+          - transactions.md
     - Advanced Usage:
-        - caching.md
-        - multicookie.md
-        - debugging.md
-    - Internationalization: 
-      - langs.md
-      - chinese.md
+          - caching.md
+          - multicookie.md
+          - debugging.md
+    - Internationalization:
+          - langs.md
+          - chinese.md
     - cli.md
     - genshin_api.md
     - doc.md
-

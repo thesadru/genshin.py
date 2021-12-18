@@ -6,7 +6,6 @@ The default language is English - `en-us`
 
 ## Quick example
 
-
 ```py
 client = genshin.GenshinClient(lang="fr-fr")
 user = await client.get_user(710785423)

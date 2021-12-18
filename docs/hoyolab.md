@@ -33,4 +33,4 @@ print(users[0].hoyolab_uid)
 
 # to actually get any useful data:
 # card = await client.get_record_card(users[0].hoyolab_uid)
-``` 
+```

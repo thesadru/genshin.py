@@ -14,7 +14,7 @@ async def test_calculator_characters(client: GenshinClient):
     assert character.name == "Kamisato Ayaka"
     assert "genshin" in character.icon
     assert character.max_level == 90
-    assert character.level == 1
+    assert character.level == 0
     assert not character.collab
 
 
@@ -28,7 +28,7 @@ async def test_calculator_weapons(client: GenshinClient):
     weapon = weapons[0]
     assert weapon.name == "Dull Blade"
     assert weapon.max_level == 70
-    assert weapon.level == 1
+    assert weapon.level == 0
 
 
 @pytest.mark.asyncio
@@ -41,7 +41,7 @@ async def test_calculator_artifacts(client: GenshinClient):
     artifact = artifacts[0]
     assert artifact.name == "Heart of Comradeship"
     assert artifact.max_level == 12
-    assert artifact.level == 1
+    assert artifact.level == 0
 
 
 @pytest.mark.asyncio
@@ -109,4 +109,14 @@ async def test_calculate(client: GenshinClient):
     assert cost.total[0].name == "Mora" and cost.total[0].amount == 9_533_850
 
 
-# TODO: Tests with synced calculation data
+@pytest.mark.asyncio
+async def test_calculator_characters_synced(lclient: GenshinClient):
+    characters = await lclient.get_calculator_characters(sync=True)
+    assert characters[0].level != 0
+
+
+@pytest.mark.asyncio
+async def test_character_details(lclient: GenshinClient):
+    # Hu Tao
+    details = await lclient.get_character_details(10000046)
+    assert details.weapon.level >= 80

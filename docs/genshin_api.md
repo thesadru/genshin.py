@@ -14,6 +14,7 @@ Internally, this page requests resources from https://api-os-takumi.mihoyo.com/g
 ### Request
 
 You are required to provide 4 headers:
+
 ```
 x-rpc-language - The chosen language in iso format (english is en-us)
 x-rpc-app_version - The api version you're using (currently 1.5.0)
@@ -22,7 +23,6 @@ ds - The dynamic secret
 ```
 
 In addition to that you must provide your own user cookies. These can either be a pair of `ltuid` and `ltoken` or a pair of `account_id` and `cookie_token`.
-
 
 To select a user you're requesting you must provide their uid and server.
 
@@ -35,6 +35,7 @@ The user's in-game uid
 ##### `server`
 
 The server a player belongs to, can be figured out from the first digit in the uid
+
 ```
 6XXXXXXXX = os_usa
 7XXXXXXXX = os_euro
@@ -42,11 +43,12 @@ The server a player belongs to, can be figured out from the first digit in the u
 9XXXXXXXX = os_cht
 ```
 
-
 #### Dynamic secret
+
 To generate the dynamic secret you must use the current time, a 6 character long string and a unique salt. Then generate the secret from its md5 hash. Dynamic secrets last for an hour so you should create a new one for each request.
 
 python example:
+
 ```py
 import time, hashlib
 
@@ -67,6 +69,7 @@ def generate_ds():
 #### Example Request
 
 curl:
+
 ```console
 curl 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/index?server=os_euro&role_id=710785423' \
   -H 'x-rpc-language: en-us' \
@@ -77,6 +80,7 @@ curl 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/index?server=os_e
 ```
 
 python:
+
 ```py
 url = 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/index?server=os_euro&role_id=710785423'
 headers = {
@@ -96,7 +100,9 @@ The response is always a json object.
 On success the data is returned in the data field, on failure a message and a retcode is given.
 
 #### Example Response structure
+
 Success:
+
 ```json
 {
     "data": {<data>},
@@ -106,11 +112,12 @@ Success:
 ```
 
 Failure:
+
 ```json
 {
-    "data": null,
-    "message": "An error occured.",
-    "retcode": 10000
+  "data": null,
+  "message": "An error occured.",
+  "retcode": 10000
 }
 ```
 
@@ -123,10 +130,11 @@ Basic user info.
 ```
 method: GET
 endpoint:  https://api-os-takumi.mihoyo.com/game_record/genshin/api/index
-params: 
+params:
     server
     role_id
 ```
+
 ```
 curl 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/index?server=os_euro&role_id=710785423' \
   -H 'x-rpc-language: en-us' \
@@ -154,6 +162,7 @@ body:
         "server": ...
     }
 ```
+
 ```
 curl 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/character' \
   -H 'x-rpc-language: en-us' \
@@ -173,11 +182,12 @@ This endpoint has an additional optional param called `schedule_type`, this can 
 ```
 method: POST
 endpoint: https://api-os-takumi.mihoyo.com/game_record/genshin/api/spiralAbyss
-params: 
+params:
     server
     role_id
     schedule_type
 ```
+
 ```
 curl 'https://api-os-takumi.mihoyo.com/game_record/genshin/api/index?server=os_euro&role_id=710785423&schedule_type=2' \
   -H 'x-rpc-language: en-us' \

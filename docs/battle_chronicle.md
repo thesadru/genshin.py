@@ -46,15 +46,17 @@ print(user.abyss.previous.total_stars)
 ```
 
 If you only want to get character data, you may batch-request characters using a uid and a list of character ids. You may want to utilize `genshin.CHARACTER_NAMES` to get the ids.
+
 ```py
 character_ids = [10000006, 10000014, 10000015, 10000021]
 characters = await client.get_characters(710785423, character_ids)
 print(characters[0].name)
 ```
 
-By default, when requesting data of another user, `get_user` returns only their 8 most used characters. You may provide `character_ids` to also request more users. 
+By default, when requesting data of another user, `get_user` returns only their 8 most used characters. You may provide `character_ids` to also request more users.
 
 In case you want to find out what all characters a user has you may get the ids by bruteforcing every single possible character id by setting `all_characters=True`. This is of course incredibly slow and you are therefore encouraged to cache the character ids in a database.
+
 ```py
 # get all of these character ids in addition to the 8 most used characters
 user = await client.get_user(710785423, character_ids=[10000006, 10000014, 10000015, 10000021])
