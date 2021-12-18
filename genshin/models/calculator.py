@@ -54,12 +54,18 @@ class CalculatorCharacter(BaseCharacter):
     level: int = Field(0, galias="level_current")
     max_level: int
 
-    @validator("element")
+    @validator("element", pre=True)
     def __parse_element(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_ELEMENTS[int(v)]
 
-    @validator("weapon_type")
+    @validator("weapon_type", pre=True)
     def __parse_weapon_type(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
@@ -74,8 +80,11 @@ class CalculatorWeapon(GenshinModel, Unique):
     level: int = Field(0, galias="level_current")
     max_level: int
 
-    @validator("type")
+    @validator("type", pre=True)
     def __parse_weapon_type(cls, v: Any) -> str:
+        if isinstance(v, str):
+            return v
+
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
@@ -85,8 +94,8 @@ class CalculatorArtifact(GenshinModel, Unique):
     id: int
     name: str
     icon: str
-    rarity: int = Field(alias="reliquary_level")
-    pos: int = Field(alias="reliquary_cat_id")
+    rarity: int = Field(galias="reliquary_level")
+    pos: int = Field(galias="reliquary_cat_id")
     level: int = Field(0, galias="level_current")
     max_level: int
 
@@ -171,8 +180,8 @@ class CalculatorCharacterDetails(GenshinModel):
 class CalculatorArtifactResult(GenshinModel):
     """A calulation result for a specific artifact"""
 
-    artifact_id: int = Field(alias="reliquary_id")
-    list: List[CalculatorConsumable] = Field(alias="id_consume_list")
+    artifact_id: int = Field(galias="reliquary_id")
+    list: List[CalculatorConsumable] = Field(galias="id_consume_list")
 
 
 class CalculatorResult(GenshinModel):

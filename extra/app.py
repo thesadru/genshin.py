@@ -26,42 +26,42 @@ async def index():
     return RedirectResponse("/docs")
 
 
-@app.get("/card/{hoyolab_uid}", response_model=genshin.models.RecordCard)
+@app.get("/card/{hoyolab_uid}", response_model=genshin.models.RecordCard, tags=["chronicle"])
 async def hoyolab_user(hoyolab_uid: int, lang: Lang = None):
     return await client.get_record_card(hoyolab_uid, lang=lang)
 
 
-@app.get("/user/{uid}", response_model=genshin.models.UserStats)
+@app.get("/user/{uid}", response_model=genshin.models.UserStats, tags=["chronicle"])
 async def user(uid: int, lang: Lang = None):
     return await client.get_user(uid, lang=lang)
 
 
-@app.get("/user/{uid}/abyss", response_model=genshin.models.SpiralAbyss)
+@app.get("/user/{uid}/abyss", response_model=genshin.models.SpiralAbyss, tags=["chronicle"])
 async def abyss(uid: int, previous: bool = False):
     return await client.get_spiral_abyss(uid, previous=previous)
 
 
-@app.get("/user/{uid}/notes", response_model=genshin.models.Notes)
+@app.get("/user/{uid}/notes", response_model=genshin.models.Notes, tags=["chronicle"])
 async def notes(uid: int, lang: Lang = None):
     return await client.get_notes(uid, lang=lang)
 
 
-@app.get("/user/{uid}/activities", response_model=genshin.models.Activities)
+@app.get("/user/{uid}/activities", response_model=genshin.models.Activities, tags=["chronicle"])
 async def activities(uid: int, lang: Lang = None):
     return await client.get_activities(uid, lang=lang)
 
 
-@app.get("/user/{uid}/partial", response_model=genshin.models.PartialUserStats)
+@app.get("/user/{uid}/partial", response_model=genshin.models.PartialUserStats, tags=["chronicle"])
 async def partial_user(uid: int, lang: Lang = None):
     return await client.get_partial_user(uid, lang=lang)
 
 
-@app.get("/user/{uid}/full", response_model=genshin.models.FullUserStats)
+@app.get("/user/{uid}/full", response_model=genshin.models.FullUserStats, tags=["chronicle"])
 async def full_user(uid: int, lang: Lang = None):
     return await client.get_full_user(uid, lang=lang)
 
 
-@app.get("/wish", response_model=List[genshin.models.Wish])
+@app.get("/wish", response_model=List[genshin.models.Wish], tags=["remote"])
 async def wish(
     authkey: str,
     banner: Literal["100", "200", "301", "302"] = None,
@@ -82,6 +82,7 @@ async def wish(
 @app.get(
     "/transaction",
     response_model=List[Union[genshin.models.Transaction, genshin.models.ItemTransaction]],
+    tags=["remote"],
 )
 async def transaction(
     authkey: str,
@@ -92,6 +93,49 @@ async def transaction(
 ):
     paginator = client.transaction_log(kind, limit=size, lang=lang, authkey=authkey, end_id=end_id)
     return await paginator.flatten()
+
+
+@app.get(
+    "/calculator/characters",
+    response_model=List[genshin.models.CalculatorCharacter],
+    tags=["calculator"],
+)
+async def calculator_characters(query: str = None, lang: Lang = None):
+    return await client.get_calculator_characters(query=query, lang=lang)
+
+
+@app.get(
+    "/calculator/weapons", response_model=List[genshin.models.CalculatorWeapon], tags=["calculator"]
+)
+async def calculator_weapons(query: str = None, lang: Lang = None):
+    return await client.get_calculator_weapons(query=query, lang=lang)
+
+
+@app.get(
+    "/calculator/artifacts",
+    response_model=List[genshin.models.CalculatorArtifact],
+    tags=["calculator"],
+)
+async def calculator_artifacts(query: str = None, pos: int = 1, lang: Lang = None):
+    return await client.get_calculator_artifacts(query=query, pos=pos, lang=lang)
+
+
+@app.get(
+    "/calculator/characters/{character_id}/talents",
+    response_model=List[genshin.models.CalculatorTalent],
+    tags=["calculator"],
+)
+async def calculator_character_talents(character_id: int, lang: Lang = None):
+    return await client.get_character_talents(character_id)
+
+
+@app.get(
+    "/calculator/artifacts/{artifact_id}/set",
+    response_model=List[genshin.models.CalculatorArtifact],
+    tags=["calculator"],
+)
+async def calculator_artifact_set(artifact_id: int, lang: Lang = None):
+    return await client.get_complete_artifact_set(artifact_id, lang=lang)
 
 
 @app.exception_handler(genshin.GenshinException)
