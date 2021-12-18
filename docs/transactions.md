@@ -4,7 +4,6 @@ Contains logs of changes to primogems, crystals, resin, artifacts and weapons.
 
 To request any of the wish history endpoints you must set an authkey. Refer to [the authentication section](authentication.md) for more information.
 
-
 Transaction kinds:
 
 | kind     | item             | description                                                |
@@ -34,6 +33,7 @@ print(log[-1].time)
 trans = await client.transaction_log("artifact").first()
 print(trans.name)
 ```
+
 ```py
 # get multiple transaction kinds combined together
 async for trans in client.transaction_log(["artifact", "weapon"]):

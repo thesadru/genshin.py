@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
-import json
+import json as json_
 import logging
 import os
 import uuid
@@ -286,6 +286,27 @@ class GenshinClient:
 
         self.cache[key] = data
 
+    async def _request_hook(
+        self,
+        method: str,
+        url: Union[str, URL],
+        *,
+        params: Dict[str, Any] = None,
+        json: Dict[str, Any] = None,
+        **kwargs: Any,
+    ) -> None:
+        """A hook before request, by default performs a debug log"""
+        url = URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != "authkey"}
+            url = url.with_query(params)
+
+        string = f"{method} {url}"
+        if json:
+            string += "\n" + json_.dumps(json, separators=(",", ":"))
+
+        self.logger.debug(string)
+
     # ASYNCIO HANDLERS:
 
     async def close(self) -> None:
@@ -316,6 +337,8 @@ class GenshinClient:
         headers = headers or {}
         headers["User-Agent"] = self.USER_AGENT
 
+        await self._request_hook(method, url, headers=headers, **kwargs)
+
         async with self.session.request(method, url, headers=headers, **kwargs) as r:
             r.raise_for_status()
             data = await r.json()
@@ -342,8 +365,6 @@ class GenshinClient:
 
         headers = headers or {}
         headers["user-agent"] = self.USER_AGENT
-
-        self.logger.debug(f"STATIC {url}")
 
         async with self.session.get(url, headers=headers, **kwargs) as r:
             r.raise_for_status()
@@ -386,9 +407,6 @@ class GenshinClient:
             "x-rpc-language": lang or self.lang,
             "ds": generate_dynamic_secret(self.DS_SALT),
         }
-
-        debug_url = url.with_query(kwargs.get("params", {}))
-        self.logger.debug(f"RECORD {method} {debug_url}")
 
         data = await self.request(url, method, headers=headers, **kwargs)
 
@@ -438,9 +456,6 @@ class GenshinClient:
         params["month"] = month or datetime.now().month
         params["lang"] = lang or self.lang
 
-        debug_url = url.with_query(params)
-        self.logger.debug(f"DIARY GET {debug_url}")
-
         return await self.request(url, params=params)
 
     async def request_calculator(
@@ -471,8 +486,6 @@ class GenshinClient:
         else:
             json["lang"] = lang or self.lang
 
-        self.logger.debug(f"CALC {method} {url.with_query(params)}")
-
         return await self.request(url, method, params=params, json=json, **kwargs)
 
     async def request_daily_reward(
@@ -497,8 +510,6 @@ class GenshinClient:
 
         params["lang"] = lang or self.lang
         params["act_id"] = self.ACT_ID
-
-        self.logger.debug(f"DAILY {method} {url.with_query(params)}")
 
         return await self.request(url, method, params=params, **kwargs)
 
@@ -529,9 +540,6 @@ class GenshinClient:
         params["authkey"] = unquote(authkey)
         params["lang"] = create_short_lang_code(lang or self.lang)
 
-        debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
-        self.logger.debug(f"GACHA {method} {debug_url}")
-
         return await self.request(url, method, params=params, **kwargs)
 
     async def request_transaction(
@@ -561,9 +569,6 @@ class GenshinClient:
         params["sign_type"] = 2
         params["authkey"] = unquote(authkey)
         params["lang"] = create_short_lang_code(lang or self.lang)
-
-        debug_url = url.with_query({k: v for k, v in params.items() if k != "authkey"})
-        self.logger.debug(f"TRANS {method} {debug_url}")
 
         return await self.request(url, method, params=params, **kwargs)
 
@@ -965,16 +970,16 @@ class GenshinClient:
         filters: Dict[str, Any],
         query: str = None,
         *,
+        is_all: bool = False,
         sync: Union[int, bool] = False,
         lang: str = None,
     ) -> List[Dict[str, Any]]:
         """Get all items of a specific slug from a calculator"""
-        # TODO: Include different traveler elements
         if query and any(isinstance(v, list) and v for v in filters.values()):
             raise TypeError("Cannot specify a query and filter at the same time")
 
         endpoint = f"sync/{slug}/list" if sync else f"{slug}/list"
-        json: Dict[str, Any] = dict(page=1, size=69420, **filters)
+        json: Dict[str, Any] = dict(page=1, size=69420, is_all=is_all, **filters)
         if query:
             json.update(keywords=query)
         if sync:
@@ -993,6 +998,7 @@ class GenshinClient:
         query: str = None,
         elements: Sequence[int] = None,
         weapon_types: Sequence[int] = None,
+        include_traveler: bool = False,
         sync: Union[int, bool] = False,
         lang: str = None,
     ) -> List[CalculatorCharacter]:
@@ -1003,10 +1009,10 @@ class GenshinClient:
         :param weapon_types: The weapon types of returned characters - refer to `.models.CALCULATOR_WEAPON_TYPES`
         :param lang: The language to use
         """
-        # TODO: Include traveler (is_all param)
         data = await self._get_calculator_items(
             "avatar",
             lang=lang,
+            is_all=include_traveler,
             sync=sync,
             query=query,
             filters=dict(
@@ -1120,7 +1126,7 @@ class GenshinClient:
         lang: str = None,
     ) -> List[CalculatorArtifact]:
         """Get all other artifacts that share a set with any given artifact
-        
+
         Doesn't return the artifact passed into this function.
 
         :param lang: The language to use
@@ -1574,9 +1580,6 @@ class ChineseClient(GenshinClient):
             "ds": generate_cn_dynamic_secret(self.DS_SALT, json, params),
         }
 
-        debug_url = url.with_query(params)
-        self.logger.debug(f"RECORD {method} {debug_url}")
-
         data = await self.request(url, method, headers=headers, json=json, params=params, **kwargs)
 
         if cache:
@@ -1604,9 +1607,6 @@ class ChineseClient(GenshinClient):
 
         params.update(await self._complete_uid(uid, "bind_uid", "bind_region"))
         params["month"] = month or datetime.now().month
-
-        debug_url = url.with_query(params)
-        self.logger.debug(f"DIARY GET {debug_url}")
 
         return await self.request(url, params=params)
 
@@ -1637,8 +1637,6 @@ class ChineseClient(GenshinClient):
         headers["ds"] = generate_dynamic_secret(self.SIGNIN_SALT)
 
         params["act_id"] = self.ACT_ID
-
-        self.logger.debug(f"DAILY {method} {url.with_query(params)}")
 
         return await self.request(url, method, params=params, headers=headers, **kwargs)
 
@@ -1752,7 +1750,7 @@ class MultiCookieClient(GenshinClient):
 
         if isinstance(cookie_list, str):
             with open(cookie_list) as file:
-                cookie_list = json.load(file)
+                cookie_list = json_.load(file)
 
             if not isinstance(cookie_list, list):
                 raise RuntimeError("Json file must contain a list of cookies")
