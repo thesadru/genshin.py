@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, NamedTuple, Optional
 
 from pydantic import Field, root_validator, validator
 
@@ -54,6 +54,21 @@ class ELF(GenshinModel, Unique):
 # highest level-bracket abyss mode for now: Superstring Dimension.
 
 
+def _prettify_abyss_rank(rank: int) -> str:
+    """Turn the rank returned by the API into the respective rank name displayed in-game."""
+    return (
+        "Forbidden",
+        "Sinful I",
+        "Sinful II",
+        "Sinful III",
+        "Agony I",
+        "Agony II",
+        "Agony III",
+        "Redlotus",
+        "Nirvana",
+    )[rank - 1]
+
+
 class SuperstringAbyss(GenshinModel):
     """Represents one cycle of abyss (3 days per cycle, 2 cycles per week)"""
 
@@ -66,29 +81,36 @@ class SuperstringAbyss(GenshinModel):
     placement: int = Field(galias="rank")
     trophies_gained: int = Field(galias="settled_cup_number")
     end_trophies: int = Field(galias="cup_number")
-    start_rank: str = Field(galias="level")
-    end_rank: str = Field(galias="settled_level")
-
-    @validator("start_rank", "end_rank", pre=True)
-    def __fix_ranks(cls, rank: int):
-        return (
-            "Forbidden",
-            "Sinful I",
-            "Sinful II",
-            "Sinful III",
-            "Agony I",
-            "Agony II",
-            "Agony III",
-            "Redlotus",
-            "Nirvana",
-        )[rank - 1]
+    start_rank: int = Field(galias="level")
+    end_rank: int = Field(galias="settled_level")
 
     @property
-    def start_trophies(self):
+    def start_rank_pretty(self) -> str:
+        """Get the rank the user started the abyss cycle with, as displayed in-game."""
+        return _prettify_abyss_rank(self.start_rank)
+
+    @property
+    def end_rank_pretty(self) -> str:
+        """Get the rank the user ended the abyss cycle with, as displayed in-game."""
+        return _prettify_abyss_rank(self.end_rank)
+
+    @property
+    def start_trophies(self) -> int:
         return self.end_trophies - self.trophies_gained
 
 
 # MEMORIAL ARENA
+
+
+def _prettify_competitive_tier(tier: int) -> str:
+    """Turn the tier returned by the API into the respective tier name displayed in-game"""
+    return ["Basic", "Elites", "Masters", "Exalted"][tier - 1]
+
+
+def _prettify_MA_rank(rank: int) -> str:
+    """Turn the rank returned by the API into the respective rank name displayed in-game."""
+    brackets = (0, 0.20, 2, 7, 17, 35, 65)
+    return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
 
 
 class MemorialBattle(GenshinModel):
@@ -105,22 +127,49 @@ class MemorialArena(GenshinModel):
 
     score: int
     ranking: float = Field(galias="ranking_percentage")
-    bracket: str = Field(galias="rank")
-    tier: str = Field(galias="area")
+    rank: int
+    tier: int = Field(galias="area")
     end_time: datetime = Field(galias="time_second")
     battle_data: List[MemorialBattle] = Field(galias="battle_infos")
 
-    @validator("bracket", pre=True)
-    def __fix_bracket(cls, rank: int) -> str:
-        brackets = (0, 0.20, 2, 7, 17, 35, 65)
-        return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
+    @property
+    def rank_pretty(self) -> str:
+        """Returns the user's Memorial Arena rank as displayed in-game."""
+        return _prettify_MA_rank(self.rank)
 
-    @validator("tier", pre=True)
-    def __fix_difficulty(cls, area: int) -> str:
-        return ["Basic", "Elites", "Masters", "Exalted"][area - 1]
+    @property
+    def tier_pretty(self) -> str:
+        """The user's Memorial Arena tier as displayed in-game."""
+        return _prettify_competitive_tier(self.tier)
 
 
 # ELYSIAN REALMS
+
+
+class Signet(GenshinModel):
+    id: int
+    name: str
+    icon: str
+    number: int
+
+    @root_validator(pre=True)
+    def __populate_name(cls, values: Dict[str, Any]):
+        values["name"] = [
+            "Deliverance",
+            "Gold",
+            "Decimation",
+            "Bodhi",
+            "Setsuna",
+            "Infinity",
+            "Vicissitude",
+            "■■",
+        ][values["id"] - 1]
+        return values
+
+    def get_scaled_icon(self, scale: Literal[1, 2, 3] = 2):
+        if not 1 <= scale <= 3:
+            raise ValueError("Scale must lie between 1 and 3.")
+        return self.icon.replace("@2x", "" if scale == 1 else f"@{scale}x")
 
 
 class ElysianRealm(GenshinModel):
@@ -129,13 +178,13 @@ class ElysianRealm(GenshinModel):
     completed_at: datetime = Field(galias="settle_time_second")
     score: int
     difficulty: int = Field(galias="punish_level")
-    # buffs
+    signets: List[Signet] = Field(galias="buffs")
     lineup: List[Battlesuit]
     elf: ELF
     remembrance_sigil: Optional[RemembranceSigil] = Field(galias="extra_item_icon")
 
     @root_validator(pre=True)
-    def __pack_lineup(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def __pack_lineup(cls, values: Dict[str, Any]):
         values["lineup"] = [values["main_avatar"], *values["support_avatars"]]
         return values
 

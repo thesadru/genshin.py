@@ -66,34 +66,50 @@ class BattlesuitIcon(GenshinModel):
 
     @property
     def banner(self):
+        """A wide, banner-like image of the battlesuit."""
         return self.create_image(f"AvatarCardFigures/{60000 + self.battlesuit_id}", scale=2)
 
     @property
     def cropped_icon(self):
+        """A square image showing the battlesuit's upper body."""
         return self.create_image(f"AvatarCardFigures/{60000 + self.battlesuit_id}", scale=1)
 
     @property
     def image(self):
+        """An image of the full battlesuit from the thighs up."""
         return self.create_image(f"AvatarCardFigures/{60000 + self.battlesuit_id}")
 
     @property
     def tall_icon(self):
+        """A thin but tall, cropped image showing most of the battlesuit."""
         return self.create_image(f"AvatarTachie/{self.icon_name}")
 
     @property
     def icon(self):
+        """The battlesuit's head cropped into a slanted frame, as displayed in the in-game Valkyrie menu.
+        Meant to be overlayed in front of `self.icon_background`.
+        """
         return self.create_image(f"AvatarIcon/{self.battlesuit_id}")
 
     @property
     def icon_background(self):
+        """The background colored after the battlesuit's type cropped into a slanted frame.
+        Meant to be layered behind `self.icon`.
+        """
         return self.create_image(f"AvatarIcon/Attr{self.battlesuit_type}")
 
     @property
     def closeup_icon(self):
+        """An extremely cropped rectangular image showing only the battlesuit's head.
+        Meant to be layered in front of `self.closeup_icon_background`.
+        """
         return self.create_image(f"AvatarCardIcons/{60000 + self.battlesuit_id}")
 
     @property
     def closeup_icon_background(self):
+        """The background colored after the battlesuit's type cropped into a rectangular frame.
+        Meant to be layered behind `self.closeup_icon`.
+        """
         return self.create_image(f"AvatarCardIcons/Attr{self.battlesuit_type}Small")
 
 
@@ -149,12 +165,15 @@ class Battlesuit(BaseBattlesuit):
 
     @property
     def image(self):
+        """An image of the full battlesuit from the thighs up."""
         return self.icon_data.image
 
     @property
     def banner(self):
+        """A wide, banner-like image of the battlesuit."""
         return self.icon_data.banner
 
     @property
     def icon(self):
+        """The battlesuit's head cropped into a slanted frame, as displayed in the in-game Valkyrie menu."""
         return self.icon_data.icon

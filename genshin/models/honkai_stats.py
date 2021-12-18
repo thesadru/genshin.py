@@ -7,6 +7,11 @@ from .base import GenshinModel
 from .honkai_character import FullBattlesuit
 from .honkai_hoyolab import UserInfo
 from .honkai_permanent_modes import SuperstringAbyss, MemorialArena, ElysianRealm
+from .honkai_permanent_modes import (
+    _prettify_abyss_rank,
+    _prettify_MA_rank,
+    _prettify_competitive_tier,
+)
 
 __all__ = (
     "BaseStats",
@@ -45,10 +50,10 @@ class HonkaiStats(BaseStats):
 
     # Perhaps combine these by category (MA, Abyss, ER) into submodels?
     MA_ranking: float =          Field(galias="battle_field_ranking_percentage", mi18n="")
-    MA_bracket: str =            Field(galias="battle_field_rank",               mi18n="")
+    MA_rank: int =               Field(galias="battle_field_rank",               mi18n="")
     MA_score: int =              Field(galias="battle_field_score",              mi18n="")
-    MA_tier: str =               Field(galias="battle_field_area",               mi18n="")
-    abyss_rank: str =            Field(                                          mi18n="")
+    MA_tier: int =               Field(galias="battle_field_area",               mi18n="")
+    abyss_rank: int =            Field(                                          mi18n="")
     abyss_trophies: int =        Field(                                          mi18n="")
     abyss_trophies_won: int =    Field(galias="abyss_score",                     mi18n="")
     ER_highest_difficulty: int = Field(galias="god_war_max_punish_level",        mi18n="")
@@ -69,28 +74,20 @@ class HonkaiStats(BaseStats):
         values["abyss_trophies"] = abyss["cup_number"]
         return values
 
-    @validator("abyss_rank", pre=True)
-    def __fix_abyss_rank(cls, rank: int):
-        return (
-            "Forbidden",
-            "Sinful I",
-            "Sinful II",
-            "Sinful III",
-            "Agony I",
-            "Agony II",
-            "Agony III",
-            "Redlotus",
-            "Nirvana",
-        )[rank - 1]
+    @property
+    def MA_rank_pretty(self) -> str:
+        """Returns the user's Memorial Arena rank as displayed in-game."""
+        return _prettify_MA_rank(self.MA_rank)
 
-    @validator("MA_bracket", pre=True)
-    def __fix_MA_bracket(cls, rank: int) -> str:
-        brackets = (0, 0.20, 2, 7, 17, 35, 65)
-        return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
+    @property
+    def MA_tier_pretty(self) -> str:
+        """Returns the user's Memorial Arena tier as displayed in-game."""
+        return _prettify_competitive_tier(self.MA_rank)
 
-    @validator("MA_tier", pre=True)
-    def __fix_MA_tier(cls, area: int) -> str:
-        return ["Basic", "Elites", "Masters", "Exalted"][area - 1]
+    @property
+    def abyss_rank_pretty(self) -> str:
+        """Returns the user's Abyss rank as displayed in-game."""
+        return _prettify_abyss_rank(self.abyss_rank)
 
 
 class HonkaiPartialUserStats(GenshinModel):
@@ -111,6 +108,7 @@ class HonkaiUserStats(HonkaiPartialUserStats):
 
 class HonkaiFullUserStats(HonkaiUserStats):
     """Represents a user's full stats, including characters, gear, and gamemode data"""
+
     # TODO: change abyss to List[Union[AbyssMode1 | AbyssMode2 | ...]]
     #       gonna be annoying as that'd make the typehinting a lot less useful.
 

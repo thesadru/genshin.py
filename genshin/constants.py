@@ -156,80 +156,35 @@ BATTLESUIT_NAMES = {
 }
 
 
-# NOTE: This is entirely optional; just felt like the signets were beyond useless as just an id and a pic,
-#       so I yoinked the name and description from the game. If this is considered outside of the scope of
-#       this project I'll just remove it, no sweat.
-
-tier_2_signet_fmt = "Portals carrying Signets of {} appear more often."
-tier_3_signet_fmt = "Grants 1 extra level when choosing a Signet of {}."
-
-
 class RemembranceSigil(NamedTuple):
 
     id: int
     name: str
     rarity: int
-    description: str
 
 
 _remembrance_sigils = {
-    119301: ("The MOTH Insignia", 1, "Restores 10% HP after battle."),
-    119302: (
-        "Home Lost",
-        1,
-        "Grants 3 portal resets but locks Remembrance Sigil and Support Valkyries",
-    ),
-    119303: ("False Hope", 1, "Valkyrie receives 50% less Total DMG when debuffed."),
-    119304: ("Tin Flask", 1, "Flame-Chaser support skills are triggered more often"),
-    119305: (
-        "Ruined Legacy",
-        1,
-        "Grants 30 bonus intial SP but consumes 10% current HP after battle.",
-    ),
-    119306: ("Burden", 2, tier_2_signet_fmt.format("Deliverance")),
-    119307: ("Gold Goblet", 2, tier_2_signet_fmt.format("Gold")),
-    119308: ("Mad King's Mask", 2, tier_2_signet_fmt.format("Decimation")),
-    119309: ("Light as a Bodhi Leaf", 2, tier_2_signet_fmt.format("Bodhi")),
-    119310: ("Forget-Me-Not", 2, tier_2_signet_fmt.format("Setsuna")),
-    119311: ("Forbidden Seed", 2, tier_2_signet_fmt.format("Infinity")),
-    119312: ("Memory", 2, tier_2_signet_fmt.format("Vicissitude")),
-    119313: ("Crystal Rose", 2, "Portals Carrying Signets of ■■ appear more often"),
-    119314: (
-        "Abandoned",
-        3,
-        f"{tier_3_signet_fmt.format('Deliverance')} Killing enemies reduces Ultimate CD by 30%",
-    ),
-    119315: (
-        "Good Old Days",
-        3,
-        f"{tier_3_signet_fmt.format('Gold')} Grants 1 extra level when choosing a Signet of Gold",
-    ),
-    119316: (
-        "Shattered Shackles",
-        3,
-        f"{tier_3_signet_fmt.format('Decimation')} At below 33% HP, Valkyrie is immune to most debuffs; at below 20% HP, Valkyrie will not be interrupted when hit.",
-    ),
-    119317: (
-        "Heavy as a Million Lives",
-        3,
-        f"{tier_3_signet_fmt.format('Bodhi')} Combo count will not be reset; the first hit that lands grants an additional 50 combo count.",
-    ),
-    119318: (
-        "Stained Sakura",
-        3,
-        f"{tier_3_signet_fmt.format('Setsuna')} When signet Setsuna Blade: Sakura Screen is active, every time Sakura Screen is triggered, its DMG conversion ratio increases by 10%.",
-    ),
-    119319: (
-        "The First Scale",
-        3,
-        f"{tier_3_signet_fmt.format('Infinity')} When the Signets of Infinite [X] are active, Valkyrie will enter a 3-sec Mind Sync when a battle starts.",
-    ),
-    119320: (
-        "Resolve",
-        3,
-        f"{tier_3_signet_fmt.format('Vicissitude')} When signet Vivid Vicissitude is active, Soldier's Resolve starts with 1 more stack and grands temporary invincibility when blocking DMG.",
-    ),
-    119321: ("Thorny Crown", 3, "???"),
+    119301: ("The MOTH Insignia", 1),
+    119302: ("Home Lost", 1),
+    119303: ("False Hope", 1),
+    119304: ("Tin Flask", 1),
+    119305: ("Ruined Legacy", 1),
+    119306: ("Burden", 2),
+    119307: ("Gold Goblet", 2),
+    119308: ("Mad King's Mask", 2),
+    119309: ("Light as a Bodhi Leaf", 2),
+    119310: ("Forget-Me-Not", 2),
+    119311: ("Forbidden Seed", 2),
+    119312: ("Memory", 2),
+    119313: ("Crystal Rose", 2),
+    119314: ("Abandoned", 3),
+    119315: ("Good Old Days", 3),
+    119316: ("Shattered Shackles", 3),
+    119317: ("Heavy as a Million Lives", 3),
+    119318: ("Stained Sakura", 3),
+    119319: ("The First Scale", 3),
+    119320: ("Resolve", 3),
+    119321: ("Thorny Crown", 3),
 }
 REMEMBRANCE_SIGILS = {id: RemembranceSigil(id, *data) for id, data in _remembrance_sigils.items()}
 
