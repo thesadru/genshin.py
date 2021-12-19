@@ -85,15 +85,15 @@ def recognize_id(id: int):
     if 10000000 < id < 20000000:
         return models.base.BaseCharacter
     elif 1000000 < id < 10000000:
-        return models.character.ArtifactSet
+        return models.genshin.character.ArtifactSet
     elif 100000 < id < 1000000:
-        return models.character.Outfit
+        return models.genshin.character.Outfit
     elif 50000 < id < 100000:
-        return models.character.Artifact
+        return models.genshin.character.Artifact
     elif 10000 < id < 50000:
-        return models.character.Weapon
+        return models.genshin.character.Weapon
     elif 100 < id < 1000:
-        return models.character.Constellation
+        return models.genshin.character.Constellation
     elif 10e17 < id < 10e19:
         return models.wish.Wish
     else:

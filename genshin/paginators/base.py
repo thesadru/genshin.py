@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import abc
 from typing import *
 
@@ -7,7 +9,7 @@ from ..utils import aislice
 if TYPE_CHECKING:
     from ..client import ChineseClient, GenshinClient
 
-all = (
+__all__ = (
     "BasePaginator",
     "DailyRewardPaginator",
     "ChineseDailyRewardPaginator",

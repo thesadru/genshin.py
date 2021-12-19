@@ -1,6 +1,5 @@
 """Pydantic models used for the Genshin Impact part of the Hoyolab API."""
 
-from . import *
 from .abyss import *
 from .activities import *
 from .calculator import *

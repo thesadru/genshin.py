@@ -29,10 +29,10 @@ def test_is_chinese(uid: int, chinese: bool):
     "id,result",
     [
         (10000002, genshin.models.base.BaseCharacter),  # ayaka
-        (11101, genshin.models.character.Weapon),  # dull blade
-        (2150011, genshin.models.character.ArtifactSet),  # gladiator's finale
-        (75544, genshin.models.character.Artifact),  # gladiator's nostalgia (flower)
+        (11101, genshin.models.genshin.character.Weapon),  # dull blade
+        (2150011, genshin.models.genshin.character.ArtifactSet),  # gladiator's finale
+        (75544, genshin.models.genshin.character.Artifact),  # gladiator's nostalgia (flower)
     ],
 )
-def test_recognize_id(id: int, result: genshin.models.base.GenshinModel):
+def test_recognize_id(id: int, result: genshin.models.base.APIModel):
     assert genshin.recognize_id(id) is result
