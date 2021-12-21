@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import Field
 
-from ..base import APIModel
+from genshin import models
 
 __all__ = [
     "BaseDiary",
@@ -16,7 +16,7 @@ __all__ = [
 ]
 
 
-class BaseDiary(APIModel):
+class BaseDiary(models.APIModel):
     """Base model for diary and diary page"""
 
     uid: int
@@ -25,7 +25,7 @@ class BaseDiary(APIModel):
     month: int = Field(galias="data_month")
 
 
-class DiaryActionCategory(APIModel):
+class DiaryActionCategory(models.APIModel):
     """A diary category for primogems"""
 
     id: int = Field(galias="action_id")
@@ -34,7 +34,7 @@ class DiaryActionCategory(APIModel):
     percentage: int = Field(galias="percent")
 
 
-class DiaryData(APIModel):
+class DiaryData(models.APIModel):
     """Diary data for a month"""
 
     current_primogems: int
@@ -46,7 +46,7 @@ class DiaryData(APIModel):
     categories: List[DiaryActionCategory] = Field(galias="group_by")
 
 
-class DayDiaryData(APIModel):
+class DayDiaryData(models.APIModel):
     """Diary data for a day"""
 
     current_primogems: int
@@ -60,7 +60,7 @@ class Diary(BaseDiary):
     day_data: DayDiaryData
 
 
-class DiaryAction(APIModel):
+class DiaryAction(models.APIModel):
     """An action which earned currency"""
 
     action_id: int

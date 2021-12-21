@@ -1,31 +1,23 @@
 import abc
 from typing import Any, Dict, List
 
+from genshin import models
+from genshin.models.honkai import base, battlesuit, permanent_modes, record
 from pydantic import Field, root_validator
 
-from .character import FullBattlesuit
-from .record import UserInfo
-from .permanent_modes import SuperstringAbyss, MemorialArena, ElysianRealm
-from .permanent_modes import (
-    _prettify_abyss_rank,
-    _prettify_MA_rank,
-    _prettify_competitive_tier,
-)
-from ..base import APIModel, BaseStats
-
-__all__ = (
-    "BaseStats",
+__all__ = [
     "HonkaiStats",
     "HonkaiPartialUserStats",
     "HonkaiUserStats",
     "HonkaiFullUserStats",
-)
+]
 
 
-class HonkaiStats(BaseStats):
+class HonkaiStats(models.APIModel):
     """Represents a user's stat page"""
 
     # TODO: Figure out mi18n locations
+    # TODO: Do we really have to use capitals here?
     # fmt: off
     active_days: int =           Field(galias="active_day_number",               mi18n="")
     achievements: int =          Field(galias="achievement_number",              mi18n="")
@@ -64,26 +56,27 @@ class HonkaiStats(BaseStats):
         values["abyss_trophies"] = abyss["cup_number"]
         return values
 
+    # TODO: use proper names instead of "pretty"
     @property
     def MA_rank_pretty(self) -> str:
         """Returns the user's Memorial Arena rank as displayed in-game."""
-        return _prettify_MA_rank(self.MA_rank)
+        return permanent_modes._prettify_MA_rank(self.MA_rank)
 
     @property
     def MA_tier_pretty(self) -> str:
         """Returns the user's Memorial Arena tier as displayed in-game."""
-        return _prettify_competitive_tier(self.MA_rank)
+        return permanent_modes._prettify_competitive_tier(self.MA_rank)
 
     @property
     def abyss_rank_pretty(self) -> str:
         """Returns the user's Abyss rank as displayed in-game."""
-        return _prettify_abyss_rank(self.abyss_rank)
+        return permanent_modes._prettify_abyss_rank(self.abyss_rank)
 
 
-class HonkaiPartialUserStats(APIModel):
+class HonkaiPartialUserStats(models.APIModel):
     """Represents basic user stats, showing only generic user data and stats."""
 
-    info: UserInfo = Field(galias="role")
+    info: record.UserInfo = Field(galias="role")
     stats: HonkaiStats
 
     # Absolutely no clue what this is for
@@ -93,7 +86,7 @@ class HonkaiPartialUserStats(APIModel):
 class HonkaiUserStats(HonkaiPartialUserStats):
     """Represents a user's stats, including characters and their gear"""
 
-    battlesuits: List[FullBattlesuit]
+    battlesuits: List[battlesuit.FullBattlesuit]
 
 
 class HonkaiFullUserStats(HonkaiUserStats):
@@ -101,7 +94,8 @@ class HonkaiFullUserStats(HonkaiUserStats):
 
     # TODO: change abyss to List[Union[AbyssMode1 | AbyssMode2 | ...]]
     #       gonna be annoying as that'd make the typehinting a lot less useful.
+    #       maybe we should just use properties to pick which abyss we want
 
-    abyss: List[SuperstringAbyss]
-    memorial_arena: List[MemorialArena]
-    elysian_realm: List[ElysianRealm]
+    abyss: List[permanent_modes.SuperstringAbyss]
+    memorial_arena: List[permanent_modes.MemorialArena]
+    elysian_realm: List[permanent_modes.ElysianRealm]

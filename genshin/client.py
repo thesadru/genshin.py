@@ -19,6 +19,7 @@ from yarl import URL
 from . import errors
 from .constants import CHARACTER_NAMES, LANGS
 from .models import *
+from .models.genshin import *
 from .paginators import *
 from .utils import *
 

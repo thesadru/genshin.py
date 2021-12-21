@@ -1,6 +1,5 @@
-import pytest
-
 import genshin
+import pytest
 
 
 @pytest.mark.parametrize("uid,is_uid", [(710785423, True), (8366222, False)])
@@ -28,10 +27,10 @@ def test_is_chinese(uid: int, chinese: bool):
 @pytest.mark.parametrize(
     "id,result",
     [
-        (10000002, genshin.models.base.BaseCharacter),  # ayaka
-        (11101, genshin.models.genshin.character.Weapon),  # dull blade
-        (2150011, genshin.models.genshin.character.ArtifactSet),  # gladiator's finale
-        (75544, genshin.models.genshin.character.Artifact),  # gladiator's nostalgia (flower)
+        (10000002, genshin.models.genshin.BaseCharacter),  # ayaka
+        (11101, genshin.models.genshin.Weapon),  # dull blade
+        (2150011, genshin.models.genshin.ArtifactSet),  # gladiator's finale
+        (75544, genshin.models.genshin.Artifact),  # gladiator's nostalgia (flower)
     ],
 )
 def test_recognize_id(id: int, result: genshin.models.base.APIModel):

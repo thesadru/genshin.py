@@ -6,12 +6,12 @@ from typing import Any, Dict, List, Tuple
 
 from pydantic import Field, validator
 
-from ..base import APIModel
+from genshin import models
 
 __all__ = ["MapInfoDetails", "MapInfo", "MapNode", "MapPoint", "MapLocation"]
 
 
-class MapInfoDetails(APIModel):
+class MapInfoDetails(models.APIModel):
     """Rendering details about a specific map"""
 
     slices: List[List[str]]
@@ -24,7 +24,7 @@ class MapInfoDetails(APIModel):
         return [[j["url"] for j in i] for i in v]
 
 
-class MapInfo(APIModel):
+class MapInfo(models.APIModel):
     """Information about a specific map"""
 
     id: int
@@ -38,7 +38,7 @@ class MapInfo(APIModel):
         return json.loads(v)
 
 
-class MapNode(APIModel):
+class MapNode(models.APIModel):
     """A label or category node"""
 
     id: int
@@ -60,7 +60,7 @@ class MapNode(APIModel):
         return v.replace("\xa0", " ")
 
 
-class MapPoint(APIModel):
+class MapPoint(models.APIModel):
     """A point on the map"""
 
     id: int
@@ -77,7 +77,7 @@ class MapPoint(APIModel):
         return self.x, self.y
 
 
-class MapLocation(APIModel):
+class MapLocation(models.APIModel):
     """A general location on the map"""
 
     id: int

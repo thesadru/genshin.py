@@ -2,10 +2,10 @@ from typing import Dict, List
 
 from pydantic import Field, validator
 
-from ..base import APIModel, PartialCharacter, Unique
+from genshin import models
+from genshin.models.genshin import base
 
 __all__ = [
-    "PartialCharacter",
     "Weapon",
     "ArtifactSetEffect",
     "ArtifactSet",
@@ -16,7 +16,7 @@ __all__ = [
 ]
 
 
-class Weapon(APIModel, Unique):
+class Weapon(models.APIModel, models.Unique):
     """A character's equipped weapon"""
 
     id: int
@@ -30,7 +30,7 @@ class Weapon(APIModel, Unique):
     refinement: int = Field(galias="affix_level")
 
 
-class ArtifactSetEffect(APIModel):
+class ArtifactSetEffect(models.APIModel):
     """An effect of an artifact set"""
 
     pieces: int = Field(galias="activation_number")
@@ -42,7 +42,7 @@ class ArtifactSetEffect(APIModel):
         allow_mutation = True
 
 
-class ArtifactSet(APIModel, Unique):
+class ArtifactSet(models.APIModel, models.Unique):
     """An artifact set"""
 
     id: int
@@ -50,7 +50,7 @@ class ArtifactSet(APIModel, Unique):
     effects: List[ArtifactSetEffect] = Field(galias="affixes")
 
 
-class Artifact(APIModel, Unique):
+class Artifact(models.APIModel, models.Unique):
     """A character's equipped artifact"""
 
     id: int
@@ -63,7 +63,7 @@ class Artifact(APIModel, Unique):
     set: ArtifactSet
 
 
-class Constellation(APIModel, Unique):
+class Constellation(models.APIModel, models.Unique):
     """A character constellation"""
 
     id: int
@@ -79,7 +79,7 @@ class Constellation(APIModel, Unique):
         return "U" in self.icon
 
 
-class Outfit(APIModel, Unique):
+class Outfit(models.APIModel, models.Unique):
     """An unlocked outfit of a character"""
 
     id: int
@@ -87,7 +87,7 @@ class Outfit(APIModel, Unique):
     name: str
 
 
-class Character(PartialCharacter):
+class Character(base.PartialCharacter):
     """A character with equipment"""
 
     weapon: Weapon

@@ -3,15 +3,16 @@ from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator, validator
 
-from ..base import BaseCharacter, APIModel
+from genshin import models
+from genshin.models.genshin import base
 
 __all__ = ["Expedition", "Notes"]
 
 
-class Expedition(APIModel):
+class Expedition(models.APIModel):
     """A Real-Time note expedition"""
 
-    character: BaseCharacter = Field(galias="avatar_side_icon")
+    character: base.BaseCharacter = Field(galias="avatar_side_icon")
     status: Literal["Ongoing", "Finished"]
     completed_at: datetime
 
@@ -34,11 +35,11 @@ class Expedition(APIModel):
         return values
 
     @validator("character", pre=True)
-    def __complete_character(cls, v: str) -> BaseCharacter:
-        return BaseCharacter(icon=v)
+    def __complete_character(cls, v: str) -> base.BaseCharacter:
+        return base.BaseCharacter(icon=v)
 
 
-class Notes(APIModel):
+class Notes(models.APIModel):
     """Real-Time notes"""
 
     current_resin: int

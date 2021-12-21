@@ -1,4 +1,4 @@
-"""Paginators for abstracting paginated resources"""
+"""Paginators for genshin impact"""
 from __future__ import annotations
 
 import asyncio
@@ -6,9 +6,9 @@ import heapq
 from datetime import datetime
 from typing import *
 
-from .base import BasePaginator
-from ..models import *
-from ..utils import aislice, amerge
+from genshin.models import genshin as gmodels
+from genshin.paginators import base
+from genshin.utils import aislice, amerge
 
 if TYPE_CHECKING:
     from ..client import GenshinClient
@@ -32,10 +32,10 @@ class _Model(Protocol):
 
 T = TypeVar("T", bound=Any)
 MT = TypeVar("MT", bound=_Model, covariant=True)
-TransactionT = TypeVar("TransactionT", bound=BaseTransaction, covariant=True)
+TransactionT = TypeVar("TransactionT", bound=gmodels.BaseTransaction, covariant=True)
 
 
-class DiaryPaginator(BasePaginator):
+class DiaryPaginator(base.BasePaginator):
     """A paginator specifically for diary entries"""
 
     # TODO: Option to merge all months together
@@ -47,7 +47,7 @@ class DiaryPaginator(BasePaginator):
     limit: Optional[int]
     lang: Optional[str]
 
-    _data: Optional[BaseDiary] = None
+    _data: Optional[gmodels.BaseDiary] = None
     page_size: int = 10
 
     def __init__(
@@ -85,7 +85,7 @@ class DiaryPaginator(BasePaginator):
     def __repr__(self) -> str:
         return f"{type(self).__name__}(uid={self.uid}, type={self.type}, limit={self.limit})"
 
-    async def _get_page(self, page: int) -> DiaryPage:
+    async def _get_page(self, page: int) -> gmodels.DiaryPage:
         data = await self.client.request_ledger(
             self.uid,
             detail=True,
@@ -93,9 +93,9 @@ class DiaryPaginator(BasePaginator):
             lang=self.lang,
             params=dict(type=self.type, page=page, limit=10),
         )
-        return DiaryPage(**data)
+        return gmodels.DiaryPage(**data)
 
-    async def next_page(self) -> List[DiaryAction]:
+    async def next_page(self) -> List[gmodels.DiaryAction]:
         """Get the next page of the paginator"""
         if self.current_page is None:
             raise Exception("No more pages")
@@ -112,19 +112,19 @@ class DiaryPaginator(BasePaginator):
         self.current_page += 1
         return actions
 
-    async def _iter(self) -> AsyncIterator[DiaryAction]:
+    async def _iter(self) -> AsyncIterator[gmodels.DiaryAction]:
         """Iterate over pages until the end"""
         while not self.exhausted:
             page = await self.next_page()
             for i in page:
                 yield i
 
-    def __aiter__(self) -> AsyncIterator[DiaryAction]:
+    def __aiter__(self) -> AsyncIterator[gmodels.DiaryAction]:
         """Iterate over all pages until the limit is reached"""
         return aislice(self._iter(), self.limit)
 
     @property
-    def data(self) -> BaseDiary:
+    def data(self) -> gmodels.BaseDiary:
         """Get data bound to the diary
 
         This requires at least one page to have been fetched
@@ -135,7 +135,7 @@ class DiaryPaginator(BasePaginator):
         return self._data
 
 
-class IDPagintor(BasePaginator, Generic[MT]):
+class IDPagintor(base.BasePaginator, Generic[MT]):
     """A paginator of genshin end_id pages"""
 
     __repr_args__: Sequence[str] = ["limit"]
@@ -245,7 +245,7 @@ class IDPagintor(BasePaginator, Generic[MT]):
 
 class AuthkeyPaginator(IDPagintor[MT]):
     """A paginator which utilizes authkeys"""
-    
+
     # TODO: Possibly move to paginators/base.py
 
     __repr_args__ = ["limit", "lang"]
@@ -288,15 +288,15 @@ class AuthkeyPaginator(IDPagintor[MT]):
         return authkey
 
 
-class WishHistory(AuthkeyPaginator[Wish]):
+class WishHistory(AuthkeyPaginator[gmodels.Wish]):
     """A paginator for wishes"""
 
     __repr_args__ = ["banner_type", "limit", "lang"]
 
     client: GenshinClient
-    banner_type: BannerType
+    banner_type: gmodels.BannerType
 
-    def __init__(self, client: GenshinClient, banner_type: BannerType, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, banner_type: gmodels.BannerType, **kwargs: Any) -> None:
         """Create a new wish history paginator
 
         :param client: A client for making http requests
@@ -319,7 +319,7 @@ class WishHistory(AuthkeyPaginator[Wish]):
         banner_types = await self.client.get_banner_names(lang=self._lang, authkey=self._authkey)
         return banner_types[self.banner_type]
 
-    async def _get_page(self, end_id: int) -> List[Wish]:
+    async def _get_page(self, end_id: int) -> List[gmodels.Wish]:
         data = await self.client.request_gacha_info(
             "getGachaLog",
             lang=self._lang,
@@ -327,7 +327,7 @@ class WishHistory(AuthkeyPaginator[Wish]):
             params=dict(gacha_type=self.banner_type, size=self.page_size, end_id=end_id),
         )
         banner_name = await self._get_banner_name()
-        return [Wish(**i, banner_name=banner_name) for i in data["list"]]
+        return [gmodels.Wish(**i, banner_name=banner_name) for i in data["list"]]
 
 
 class Transactions(AuthkeyPaginator[TransactionT]):
@@ -336,9 +336,9 @@ class Transactions(AuthkeyPaginator[TransactionT]):
     __repr_args__ = ["kind", "limit", "lang"]
 
     client: GenshinClient
-    kind: TransactionKind
+    kind: gmodels.TransactionKind
 
-    def __init__(self, client: GenshinClient, kind: TransactionKind, **kwargs: Any) -> None:
+    def __init__(self, client: GenshinClient, kind: gmodels.TransactionKind, **kwargs: Any) -> None:
         """Create a new transaction paginator
 
         :param client: A client for making http requests
@@ -371,7 +371,7 @@ class Transactions(AuthkeyPaginator[TransactionT]):
 
         transactions = []
         for trans in data["list"]:
-            cls = ItemTransaction if "name" in trans else Transaction
+            cls = gmodels.ItemTransaction if "name" in trans else gmodels.Transaction
             reason_id = trans["reason"]
             trans = {**trans, "reason_id": reason_id, "reason": reasons.get(reason_id, "")}
             transactions.append(cls(**trans, kind=self.kind))
@@ -382,7 +382,7 @@ class Transactions(AuthkeyPaginator[TransactionT]):
 class MergedPaginator(AuthkeyPaginator[MT]):
     """A paginator merging a collection of other paginators"""
 
-# TODO: Possibly move to paginators/base.py
+    # TODO: Possibly move to paginators/base.py
 
     _paginators: List[IDPagintor[MT]]
 
@@ -408,18 +408,18 @@ class MergedPaginator(AuthkeyPaginator[MT]):
         return list(heapq.merge(*lists, key=self._key))[: self.limit]
 
 
-class MergedWishHistory(MergedPaginator[Wish]):
+class MergedWishHistory(MergedPaginator[gmodels.Wish]):
     """A paginator for wish histories from multiple banners"""
 
     __repr_args__ = ["banner_types", "limit", "lang"]
 
     client: GenshinClient
-    banner_types: List[BannerType]
+    banner_types: List[gmodels.BannerType]
 
     def __init__(
         self,
         client: GenshinClient,
-        banner_types: List[BannerType] = None,
+        banner_types: List[gmodels.BannerType] = None,
         **kwargs: Any,
     ) -> None:
         """Create a new merged wish history paginator
@@ -436,24 +436,24 @@ class MergedWishHistory(MergedPaginator[Wish]):
 
         self._paginators = [WishHistory(client, b, **kwargs) for b in self.banner_types]
 
-    async def flatten(self, *, lazy: bool = False) -> List[Wish]:
+    async def flatten(self, *, lazy: bool = False) -> List[gmodels.Wish]:
         # before we gather all histories we should get the banner name
         asyncio.create_task(self.client.get_banner_names(lang=self._lang, authkey=self._authkey))
         return await super().flatten(lazy=lazy)
 
 
-class MergedTransactions(MergedPaginator[BaseTransaction]):
+class MergedTransactions(MergedPaginator[gmodels.BaseTransaction]):
     """A paginator for transactions from multiple banners"""
 
     __repr_args__ = ["kinds", "limit", "lang"]
 
     client: GenshinClient
-    kinds: List[TransactionKind]
+    kinds: List[gmodels.TransactionKind]
 
     def __init__(
         self,
         client: GenshinClient,
-        kinds: List[TransactionKind] = None,
+        kinds: List[gmodels.TransactionKind] = None,
         **kwargs: Any,
     ) -> None:
         """Create a new transaction paginator

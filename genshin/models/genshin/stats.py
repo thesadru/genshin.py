@@ -5,10 +5,11 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field, validator
 
-from .abyss import SpiralAbyssPair
-from .activities import Activities
-from ..base import APIModel, PartialCharacter, BaseStats
-from .character import Character
+from genshin import models
+from genshin.models.genshin import abyss as abyss_
+from genshin.models.genshin import activities as activities_
+from genshin.models.genshin import base
+from genshin.models.genshin import character as character
 
 __all__ = [
     "Stats",
@@ -22,7 +23,7 @@ __all__ = [
 ]
 
 # flake8: noqa: E222
-class Stats(BaseStats):
+class Stats(models.APIModel):
     """Overall user stats"""
 
     # This is such fucking bullshit, just why?
@@ -43,15 +44,19 @@ class Stats(BaseStats):
     unlocked_domains: int =   Field(galias="domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
+    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
+        """Helper function which turns fields into properly named ones"""
+        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}
 
-class Offering(APIModel):
+
+class Offering(models.APIModel):
     """An offering"""
 
     name: str
     level: int
 
 
-class Exploration(APIModel):
+class Exploration(models.APIModel):
     """Exploration data"""
 
     id: int
@@ -68,7 +73,7 @@ class Exploration(APIModel):
         return self.explored / 10
 
 
-class TeapotRealm(APIModel):
+class TeapotRealm(models.APIModel):
     """A specific teapot realm"""
 
     name: str
@@ -80,7 +85,7 @@ class TeapotRealm(APIModel):
         return int(match.group()) if match else 0
 
 
-class Teapot(APIModel):
+class Teapot(models.APIModel):
     """User's Serenitea Teapot"""
 
     realms: List[TeapotRealm]
@@ -92,11 +97,11 @@ class Teapot(APIModel):
     comfort_icon: str = Field(galias="comfort_level_icon")
 
 
-class PartialUserStats(APIModel):
+class PartialUserStats(models.APIModel):
     """User stats with characters without equipment"""
 
     stats: Stats
-    characters: List[PartialCharacter] = Field(galias="avatars")
+    characters: List[base.PartialCharacter] = Field(galias="avatars")
     explorations: List[Exploration] = Field(galias="world_explorations")
     teapot: Optional[Teapot] = Field(galias="homes")
 
@@ -112,11 +117,11 @@ class PartialUserStats(APIModel):
 class UserStats(PartialUserStats):
     """User stats with characters with equipment"""
 
-    characters: List[Character] = Field(galias="avatars")
+    characters: List[character.Character] = Field(galias="avatars")
 
 
 class FullUserStats(UserStats):
     """User stats with all data a user can have"""
 
-    abyss: SpiralAbyssPair
-    activities: Activities
+    abyss: abyss_.SpiralAbyssPair
+    activities: activities_.Activities

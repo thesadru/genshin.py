@@ -1,19 +1,21 @@
+"""Base and shared paginators"""
 from __future__ import annotations
 
 import abc
 from typing import *
 
-from ..models import *
+from genshin import models
+
 from ..utils import aislice
 
 if TYPE_CHECKING:
-    from ..client import ChineseClient, GenshinClient
+    from genshin.client import ChineseClient, GenshinClient
 
-__all__ = (
+__all__ = [
     "BasePaginator",
     "DailyRewardPaginator",
     "ChineseDailyRewardPaginator",
-)
+]
 
 
 class BasePaginator(abc.ABC):
@@ -70,12 +72,12 @@ class DailyRewardPaginator(BasePaginator):
     def __repr__(self) -> str:
         return f"{type(self).__name__}(limit={self.limit})"
 
-    async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
+    async def _get_page(self, page: int) -> List[models.ClaimedDailyReward]:
         params = dict(current_page=page)
         data = await self.client.request_daily_reward("award", params=params, lang=self.lang)
-        return [ClaimedDailyReward(**i) for i in data["list"]]
+        return [models.ClaimedDailyReward(**i) for i in data["list"]]
 
-    async def next_page(self) -> List[ClaimedDailyReward]:
+    async def next_page(self) -> List[models.ClaimedDailyReward]:
         """Get the next page of the paginator"""
         if self.current_page is None:
             raise Exception("No more pages")
@@ -89,14 +91,14 @@ class DailyRewardPaginator(BasePaginator):
         self.current_page += 1
         return data
 
-    async def _iter(self) -> AsyncIterator[ClaimedDailyReward]:
+    async def _iter(self) -> AsyncIterator[models.ClaimedDailyReward]:
         """Iterate over pages until the end"""
         while not self.exhausted:
             page = await self.next_page()
             for i in page:
                 yield i
 
-    def __aiter__(self) -> AsyncIterator[ClaimedDailyReward]:
+    def __aiter__(self) -> AsyncIterator[models.ClaimedDailyReward]:
         """Iterate over all pages until the limit is reached"""
         return aislice(self._iter(), self.limit)
 
@@ -122,7 +124,7 @@ class ChineseDailyRewardPaginator(DailyRewardPaginator):
         self.uid = uid
         self.limit = limit
 
-    async def _get_page(self, page: int) -> List[ClaimedDailyReward]:
+    async def _get_page(self, page: int) -> List[models.ClaimedDailyReward]:
         params = dict(current_page=page)
         data = await self.client.request_daily_reward("award", self.uid, params=params)
-        return [ClaimedDailyReward(**i) for i in data["list"]]
+        return [models.ClaimedDailyReward(**i) for i in data["list"]]

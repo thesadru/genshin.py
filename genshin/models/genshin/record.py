@@ -1,7 +1,8 @@
 from typing import Any, Dict, List
+
 from pydantic import Field
 
-from ..base import APIModel
+from genshin import models
 
 __all__ = [
     "GenshinAccount",
@@ -11,7 +12,7 @@ __all__ = [
 ]
 
 
-class GenshinAccount(APIModel):
+class GenshinAccount(models.APIModel):
     """A genshin account"""
 
     uid: int = Field(galias="game_uid")
@@ -21,14 +22,14 @@ class GenshinAccount(APIModel):
     server_name: str = Field(galias="region_name")
 
 
-class RecordCardData(APIModel):
+class RecordCardData(models.APIModel):
     """A data entry of a record card"""
 
     name: str
     value: str
 
 
-class RecordCardSetting(APIModel):
+class RecordCardSetting(models.APIModel):
     """A privacy setting of a record card"""
 
     id: int = Field(galias="switch_id")

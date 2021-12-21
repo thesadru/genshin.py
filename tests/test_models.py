@@ -1,8 +1,8 @@
-from genshin.models.base import BaseCharacter, CharacterIcon
+import genshin
 
 
 def test_character_icon():
-    i = CharacterIcon(10000002)
+    i = genshin.models.genshin.CharacterIcon(10000002)
 
     base = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
     assert i.icon == base + "character_icon/UI_AvatarIcon_Ayaka.png"
@@ -11,16 +11,16 @@ def test_character_icon():
 
 
 def test_base_character():
-    char = BaseCharacter(id=10000002)
+    char = genshin.models.genshin.BaseCharacter(id=10000002)
     assert char.name == "Kamisato Ayaka"
     assert char.element == "Cryo"
     assert char.rarity == 5
 
-    char = BaseCharacter(name="Aloy")
+    char = genshin.models.genshin.BaseCharacter(name="Aloy")
     assert char.name == "Aloy"
     assert char.rarity == 5
     assert char.collab
 
-    base = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
-    char = BaseCharacter(icon=base + "character_icon/UI_AvatarIcon_Kazuha.png")
+    url = "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Kazuha.png"
+    char = genshin.models.genshin.BaseCharacter(icon=url)
     assert char.name == "Kaedehara Kazuha"

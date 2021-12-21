@@ -4,9 +4,8 @@ import os
 import warnings
 from typing import Dict
 
-import pytest
-
 import genshin
+import pytest
 from genshin import ChineseClient, GenshinClient
 
 
@@ -73,15 +72,15 @@ async def client(cookies: Dict[str, str]):
         key = "|".join(map(str, k))
         cache[key] = v
         if k[0] == "user":
-            parsed[key] = json.loads(genshin.models.PartialUserStats(**v).json())
+            parsed[key] = json.loads(genshin.models.genshin.PartialUserStats(**v).json())
         elif k[0] == "character":
-            parsed[key] = json.loads(genshin.models.Character(**v).json())
+            parsed[key] = json.loads(genshin.models.genshin.Character(**v).json())
         elif k[0] == "abyss":
-            parsed[key] = json.loads(genshin.models.SpiralAbyss(**v).json())
+            parsed[key] = json.loads(genshin.models.genshin.SpiralAbyss(**v).json())
         elif k[0] == "record":
-            parsed[key] = json.loads(genshin.models.RecordCard(**v["list"][0]).json())
+            parsed[key] = json.loads(genshin.models.genshin.RecordCard(**v["list"][0]).json())
         elif k[0] == "activities":
-            parsed[key] = json.loads(genshin.models.Activities(**v).json())
+            parsed[key] = json.loads(genshin.models.genshin.Activities(**v).json())
 
     os.makedirs(".pytest_cache", exist_ok=True)
     with open(".pytest_cache/genshin_cache.json", "w") as file:

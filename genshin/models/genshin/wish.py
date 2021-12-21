@@ -4,7 +4,7 @@ from typing import Any, List, Literal, Optional
 
 from pydantic import Field, validator
 
-from ..base import APIModel, Unique
+from genshin import models
 
 __all__ = [
     "BannerType",
@@ -21,7 +21,7 @@ BannerType = Literal[100, 200, 301, 302, 400]
 BANNER_TYPES: List[BannerType] = [100, 200, 301, 302, 400]
 
 
-class Wish(APIModel, Unique):
+class Wish(models.APIModel, models.Unique):
     """A wish made on any banner"""
 
     uid: int
@@ -40,7 +40,7 @@ class Wish(APIModel, Unique):
         return int(v)
 
 
-class BannerDetailItem(APIModel):
+class BannerDetailItem(models.APIModel):
     """An item that may be gotten from a banner"""
 
     name: str = Field(galias="item_name")
@@ -51,7 +51,7 @@ class BannerDetailItem(APIModel):
     order: int = Field(galias="order_value")
 
 
-class BannerDetailsUpItem(APIModel):
+class BannerDetailsUpItem(models.APIModel):
     """An item that has a rate-up on a banner"""
 
     name: str = Field(galias="item_name")
@@ -73,7 +73,7 @@ class BannerDetailsUpItem(APIModel):
         }[v]
 
 
-class BannerDetails(APIModel):
+class BannerDetails(models.APIModel):
     """Details of a banner"""
 
     banner_type: int = Field(galias="gacha_type")
@@ -136,7 +136,7 @@ class BannerDetails(APIModel):
         return sorted(items, key=lambda x: x.order)
 
 
-class GachaItem(APIModel, Unique):
+class GachaItem(models.APIModel, models.Unique):
     """An item that can be gotten from the gacha"""
 
     name: str

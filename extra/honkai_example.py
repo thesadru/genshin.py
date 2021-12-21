@@ -2,9 +2,7 @@ import asyncio
 from typing import List
 
 import genshin
-
-from genshin.models import HonkaiFullUserStats, SuperstringAbyss
-
+from genshin.models.honkai import HonkaiFullUserStats, SuperstringAbyss
 
 # NOTE: First and foremost, these are all temporary. All of this uncomfortable stuff will soon:tm:
 # be replaced with the comfort of a HonkaiClient. Also, note that these examples won't work unless
@@ -26,7 +24,7 @@ abyss_data = asyncio.run(get_abyss_data(200365120))
 
 latest_abyss_run = abyss_data[0]
 lead_valkyrie = latest_abyss_run.lineup[0]
-print(lead_valkyrie.icon)
+print(lead_valkyrie.name)
 
 
 # To get all data shown on https://webstatic-sea.mihoyo.com/app/community-game-records-sea/index.html#/bh3,
@@ -55,5 +53,5 @@ async def get_full_user(uid: int) -> HonkaiFullUserStats:
 user_data = asyncio.run(get_full_user(200365120))
 
 print(user_data.stats.battlesuits_SSS)
-print(user_data.battlesuits[0].icon)
-print(user_data.abyss[0].lineup[0].icon)  # should print the same as the first print
+print(user_data.battlesuits[0].name)
+print(user_data.abyss[0].lineup[0].name)  # should print the same as the first print

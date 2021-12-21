@@ -1,13 +1,14 @@
 import re
 from enum import IntEnum
+
 from pydantic import Field, validator
 
-from .base import APIModel
+from genshin import models
 
-__all__ = (
+__all__ = [
     "Gender",
     "SearchUser",
-)
+]
 
 
 class Gender(IntEnum):
@@ -17,7 +18,7 @@ class Gender(IntEnum):
     other = 3
 
 
-class SearchUser(APIModel):
+class SearchUser(models.APIModel):
     """A user from a search result"""
 
     hoyolab_uid: int = Field(galias="uid")

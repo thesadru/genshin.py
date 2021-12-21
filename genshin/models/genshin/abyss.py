@@ -3,7 +3,8 @@ from typing import Any, Dict, List, Literal
 
 from pydantic import Field, root_validator
 
-from ..base import BaseCharacter, APIModel
+from genshin import models
+from genshin.models.genshin import base
 
 __all__ = [
     "AbyssRankCharacter",
@@ -17,7 +18,7 @@ __all__ = [
 ]
 
 
-class AbyssRankCharacter(BaseCharacter):
+class AbyssRankCharacter(base.BaseCharacter):
     """A character with a value of a rank"""
 
     id: int = Field(galias="avatar_id")
@@ -26,13 +27,13 @@ class AbyssRankCharacter(BaseCharacter):
     value: int
 
 
-class AbyssCharacter(BaseCharacter):
+class AbyssCharacter(base.BaseCharacter):
     """A character with just a level"""
 
     level: int
 
 
-class CharacterRanks(APIModel):
+class CharacterRanks(models.APIModel):
     """A collection of rankings achieved during spiral abyss runs"""
 
     # fmt: off
@@ -46,13 +47,10 @@ class CharacterRanks(APIModel):
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""
-        return {
-            self._get_mi18n(field, lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-        }
+        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}
 
 
-class Battle(APIModel):
+class Battle(models.APIModel):
     """A battle in the spiral abyss"""
 
     half: int = Field(galias="index")
@@ -60,7 +58,7 @@ class Battle(APIModel):
     characters: List[AbyssCharacter] = Field(galias="avatars")
 
 
-class Chamber(APIModel):
+class Chamber(models.APIModel):
     """A chamber of the spiral abyss"""
 
     chamber: int = Field(galias="index")
@@ -69,7 +67,7 @@ class Chamber(APIModel):
     battles: List[Battle]
 
 
-class Floor(APIModel):
+class Floor(models.APIModel):
     """A floor of the spiral abyss"""
 
     floor: int = Field(galias="index")
@@ -81,7 +79,7 @@ class Floor(APIModel):
     chambers: List[Chamber] = Field(galias="levels")
 
 
-class SpiralAbyss(APIModel):
+class SpiralAbyss(models.APIModel):
     """Information about Spiral Abyss runs during a specific season"""
 
     unlocked: bool = Field(galias="is_unlock")
@@ -105,7 +103,7 @@ class SpiralAbyss(APIModel):
         return values
 
 
-class SpiralAbyssPair(APIModel):
+class SpiralAbyssPair(models.APIModel):
     """A pair of both current and previous spiral abyss
 
     This may not be a namedtuple due to how pydantic handles them

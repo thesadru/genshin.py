@@ -2,31 +2,30 @@ import re
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
+from genshin import models
+from genshin.models.honkai import base
 from pydantic import Field, root_validator, validator
 
-from ..base import APIModel, Battlesuit, Unique
-from ...constants import REMEMBRANCE_SIGILS, RemembranceSigil
-
-__all__ = (
+__all__ = [
     "Boss",
     "ELF",
     "SuperstringAbyss",
     "MemorialBattle",
     "MemorialArena",
     "ElysianRealm",
-)
+]
 
 
 # GENERIC
 
 
-class Boss(APIModel, Unique):
+class Boss(models.APIModel, models.Unique):
     id: int
     name: str
     icon: str = Field(galias="avatar")
 
 
-class ELF(APIModel, Unique):
+class ELF(models.APIModel, models.Unique):
 
     id: int
     name: str
@@ -68,13 +67,13 @@ def _prettify_abyss_rank(rank: int) -> str:
     )[rank - 1]
 
 
-class SuperstringAbyss(APIModel):
+class SuperstringAbyss(models.APIModel):
     """Represents one cycle of abyss (3 days per cycle, 2 cycles per week)"""
 
     score: int
     end_time: datetime = Field(galias="updated_time_second")
     boss: Boss
-    lineup: List[Battlesuit]
+    lineup: List[base.Battlesuit]
     elf: ELF
 
     placement: int = Field(galias="rank")
@@ -100,6 +99,8 @@ class SuperstringAbyss(APIModel):
 
 # MEMORIAL ARENA
 
+# TODO: Remove the need for these
+
 
 def _prettify_competitive_tier(tier: int) -> str:
     """Turn the tier returned by the API into the respective tier name displayed in-game"""
@@ -112,16 +113,16 @@ def _prettify_MA_rank(rank: int) -> str:
     return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
 
 
-class MemorialBattle(APIModel):
+class MemorialBattle(models.APIModel):
     """Represents weekly performance against a single Memorial Arena boss."""
 
     score: int
-    lineup: List[Battlesuit]
+    lineup: List[base.Battlesuit]
     elf: ELF
     boss: Boss
 
 
-class MemorialArena(APIModel):
+class MemorialArena(models.APIModel):
     """Represents aggregate weekly performance for the entire Memorial Arena rotation."""
 
     score: int
@@ -145,7 +146,7 @@ class MemorialArena(APIModel):
 # ELYSIAN REALMS
 
 
-class Signet(APIModel):
+class Signet(models.APIModel):
     id: int
     name: str
     icon: str
@@ -171,23 +172,21 @@ class Signet(APIModel):
         return self.icon.replace("@2x", "" if scale == 1 else f"@{scale}x")
 
 
-class ElysianRealm(APIModel):
+class ElysianRealm(models.APIModel):
     """Represents one completed run of Elysean Realms."""
 
     completed_at: datetime = Field(galias="settle_time_second")
     score: int
     difficulty: int = Field(galias="punish_level")
     signets: List[Signet] = Field(galias="buffs")
-    lineup: List[Battlesuit]
+    lineup: List[base.Battlesuit]
     elf: ELF
-    remembrance_sigil: Optional[RemembranceSigil] = Field(galias="extra_item_icon")
+    # TODO: More information with rememberence sigil
+    remembrance_sigil: str = Field(galias="extra_item_icon")
 
     @root_validator(pre=True)
-    def __pack_lineup(cls, values: Dict[str, Any]):
+    def __pack_lineup(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        # TODO: Questionable, do we really want to separate them
+        # should use a property instead
         values["lineup"] = [values["main_avatar"], *values["support_avatars"]]
         return values
-
-    @validator("remembrance_sigil", pre=True)
-    def __parse_remembrance_sigil(cls, sigil_icon: str):
-        match = re.search(r"/(\d+).png", sigil_icon)
-        return None if match is None else REMEMBRANCE_SIGILS[int(match[1])]

@@ -1,11 +1,10 @@
+from genshin import models
 from pydantic import Field
 
-from ..base import APIModel
-
-__all__ = ("UserInfo",)
+__all__ = ["UserInfo"]
 
 
-class UserInfo(APIModel):
+class UserInfo(models.APIModel):
 
     nickname: str
     region: str

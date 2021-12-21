@@ -1,0 +1,1 @@
+"""Paginators for genshin honkai"""

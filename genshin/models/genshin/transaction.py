@@ -3,14 +3,14 @@ from typing import Literal
 
 from pydantic import Field
 
-from ..base import APIModel, Unique
+from genshin import models
 
-TransactionKind = Literal["primogem", "crystal", "resin", "artifact", "weapon"]
 
 __all__ = ["TransactionKind", "BaseTransaction", "Transaction", "ItemTransaction"]
 
+TransactionKind = Literal["primogem", "crystal", "resin", "artifact", "weapon"]
 
-class BaseTransaction(APIModel, Unique):
+class BaseTransaction(models.APIModel, models.Unique):
     """A genshin transaction"""
 
     kind: TransactionKind

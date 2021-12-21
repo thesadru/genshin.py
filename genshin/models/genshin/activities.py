@@ -4,7 +4,8 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import Field, root_validator
 
-from ..base import BaseCharacter, APIModel
+from genshin import models
+from genshin.models.genshin import base
 
 __all__ = [
     "HyakuninIkkiCharacter",
@@ -24,14 +25,14 @@ __all__ = [
 # Hyakunin Ikki:
 
 
-class HyakuninIkkiCharacter(BaseCharacter):
+class HyakuninIkkiCharacter(base.BaseCharacter):
     """A possibly trial character"""
 
     level: int
     trial: bool = Field(galias="is_trail_avatar")
 
 
-class HyakuninIkkiSkill(APIModel):
+class HyakuninIkkiSkill(models.APIModel):
     """A Hyakunin Ikki skill"""
 
     id: int
@@ -40,14 +41,14 @@ class HyakuninIkkiSkill(APIModel):
     description: str = Field(galias="desc")
 
 
-class HyakuninIkkiBattle(APIModel):
+class HyakuninIkkiBattle(models.APIModel):
     """A Hyakunin Ikki battle"""
 
     characters: List[HyakuninIkkiCharacter] = Field(galias="avatars")
     skills: List[HyakuninIkkiSkill] = Field(galias="skills")
 
 
-class HyakuninIkkiChallenge(APIModel):
+class HyakuninIkkiChallenge(models.APIModel):
     """A Hyakunin Ikki challenge"""
 
     id: int = Field(galias="challenge_id")
@@ -65,7 +66,7 @@ class HyakuninIkkiChallenge(APIModel):
         return match.group(1) if match else ""
 
 
-class HyakuninIkki(APIModel):
+class HyakuninIkki(models.APIModel):
     """A Hyakunin Ikki event"""
 
     challenges: List[HyakuninIkkiChallenge] = Field(galias="records")
@@ -75,13 +76,13 @@ class HyakuninIkki(APIModel):
 # Labyrinth Warriors:
 
 
-class LabyrinthWarriorsCharacter(BaseCharacter):
+class LabyrinthWarriorsCharacter(base.BaseCharacter):
     """A Labyrinth Warriors character"""
 
     level: int
 
 
-class LabyrinthWarriorsRune(APIModel):
+class LabyrinthWarriorsRune(models.APIModel):
     """A Labyrinth Warriors rune"""
 
     id: int
@@ -91,7 +92,7 @@ class LabyrinthWarriorsRune(APIModel):
     element: str
 
 
-class LabyrinthWarriorsChallenge(APIModel):
+class LabyrinthWarriorsChallenge(models.APIModel):
     """A Labyrinth Warriors challenge"""
 
     id: int = Field(galias="challenge_id")
@@ -104,7 +105,7 @@ class LabyrinthWarriorsChallenge(APIModel):
     runes: List[LabyrinthWarriorsRune]
 
 
-class LabyrinthWarriors(APIModel):
+class LabyrinthWarriors(models.APIModel):
     """A Labyrinth Warriors event"""
 
     challenges: List[LabyrinthWarriorsChallenge] = Field(galias="records")
@@ -114,7 +115,7 @@ class LabyrinthWarriors(APIModel):
 # Chinese activities:
 
 
-class ChineseActivity(APIModel):
+class ChineseActivity(models.APIModel):
     """An arbitrary activty for chinese events"""
 
     start_time: datetime
@@ -128,7 +129,7 @@ class ChineseActivity(APIModel):
 # Activities:
 
 
-class Activities(APIModel):
+class Activities(models.APIModel):
     """A collection of genshin activities"""
 
     hyakunin_ikki: Optional[HyakuninIkki] = Field(None, gslug="sumo")

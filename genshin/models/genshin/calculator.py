@@ -3,7 +3,8 @@ from typing import Any, Dict, List, Literal, NamedTuple, Union
 
 from pydantic import Field, validator
 
-from ..base import BaseCharacter, APIModel, Unique
+from genshin import models
+from genshin.models.genshin import base
 
 __all__ = [
     "CALCULATOR_ELEMENTS",
@@ -45,7 +46,7 @@ CALCULATOR_ARTIFACTS: Dict[int, str] = {
 }
 
 
-class CalculatorCharacter(BaseCharacter):
+class CalculatorCharacter(base.BaseCharacter):
     """A character meant to be used with calculators"""
 
     rarity: int = Field(galias="avatar_level")
@@ -69,7 +70,7 @@ class CalculatorCharacter(BaseCharacter):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorWeapon(APIModel, Unique):
+class CalculatorWeapon(models.APIModel, models.Unique):
     """A weapon meant to be used with calculators"""
 
     id: int
@@ -88,7 +89,7 @@ class CalculatorWeapon(APIModel, Unique):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorArtifact(APIModel, Unique):
+class CalculatorArtifact(models.APIModel, models.Unique):
     """An artifact meant to be used with calculators"""
 
     id: int
@@ -104,7 +105,7 @@ class CalculatorArtifact(APIModel, Unique):
         return CALCULATOR_ARTIFACTS[self.pos]
 
 
-class CalculatorTalent(APIModel, Unique):
+class CalculatorTalent(models.APIModel, models.Unique):
     """A talent of a character meant to be used with calculators"""
 
     id: int
@@ -145,7 +146,7 @@ class CalculatorTalent(APIModel, Unique):
         return self.group_id
 
 
-class CalculatorConsumable(APIModel, Unique):
+class CalculatorConsumable(models.APIModel, models.Unique):
     """An item consumed when upgrading"""
 
     id: int
@@ -154,7 +155,7 @@ class CalculatorConsumable(APIModel, Unique):
     amount: int = Field(galias="num")
 
 
-class CalculatorCharacterDetails(APIModel):
+class CalculatorCharacterDetails(models.APIModel):
     """Details of a synced calculator character"""
 
     weapon: CalculatorWeapon = Field(galias="weapon")
@@ -177,14 +178,14 @@ class CalculatorCharacterDetails(APIModel):
         return v
 
 
-class CalculatorArtifactResult(APIModel):
+class CalculatorArtifactResult(models.APIModel):
     """A calulation result for a specific artifact"""
 
     artifact_id: int = Field(galias="reliquary_id")
     list: List[CalculatorConsumable] = Field(galias="id_consume_list")
 
 
-class CalculatorResult(APIModel):
+class CalculatorResult(models.APIModel):
     """A calculation result"""
 
     character: List[CalculatorConsumable] = Field(galias="avatar_consume")
@@ -217,7 +218,7 @@ class CalculatorResult(APIModel):
 class CalculatorObject(NamedTuple):
     """An object required in the calculation of required materials"""
 
-    id: Union[int, Unique]
+    id: Union[int, models.Unique]
     current: int
     target: int
 
