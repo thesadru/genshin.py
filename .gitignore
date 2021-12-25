@@ -6,3 +6,4 @@ cookies.json
 docs/pdoc
 htmlcov/
 test.py
+.pytest_cache
