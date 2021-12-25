@@ -1,11 +1,15 @@
 """A cli for genshin.py"""
 import asyncio
 from functools import update_wrapper
-from typing import Any, Awaitable, Callable
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple, TypeVar
 
+import difflib
 import typer
+import click
 
 import genshin
+
+T = TypeVar("T", bound=Any)
 
 app = typer.Typer(name="genshin")
 
@@ -197,6 +201,45 @@ async def pity():
             else:
                 a = typer.style(str(90 - accum), bold=True)
                 typer.secho(f"Never pulled a 5*. At most {a} pulls left until pity")
+
+
+@app.command()
+@asynchronous
+async def calculate():
+    """Calcualte the amount of resources needed to upgrade anything"""
+    async with genshin.GenshinClient() as client:
+        client.set_browser_cookies()
+
+        characters = await client.get_calculator_characters()
+
+        inp: Any = typer.prompt(f"Character (name or id)")
+
+        names = {obj.name: obj for obj in characters}
+        matches = difflib.get_close_matches(inp, names, n=1)
+        if matches:
+            character = names[matches[0]]
+        elif not inp.isdigit():
+            raise click.ClickException("Invalid character name")
+        else:
+            inp = int(inp)
+            for character in characters:
+                if character.id == inp:
+                    break
+
+            raise click.ClickException("Invalid character format")
+
+        c: Any = (
+            character.id,
+            typer.prompt("Current level", type=int),
+            typer.prompt("Target level", type=int),
+        )
+        result = await client.calculate(c)
+
+        typer.echo()
+        typer.echo(f"Items needed to level up {character.name} from lvl {c[1]} to {c[2]}:")
+
+        for item in result.total:
+            typer.echo(f"{item.amount}x {item.name}")
 
 
 if __name__ == "__main__":

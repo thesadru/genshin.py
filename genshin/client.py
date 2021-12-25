@@ -1531,7 +1531,7 @@ class ChineseClient(GenshinClient):
     ACT_ID = "e202009291139501"
 
     TAKUMI_URL = "https://api-takumi.mihoyo.com/"
-    RECORD_URL = "https://api-takumi.mihoyo.com/game_record/app/"
+    RECORD_URL = "https://api-takumi-record.mihoyo.com/game_record/app/"
     INFO_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo"
     DETAIL_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail"
     REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
