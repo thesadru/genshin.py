@@ -843,6 +843,7 @@ class GenshinClient:
         schedule_type = 2 if previous else 1
         data = await self.request_game_record(
             "genshin/api/spiralAbyss",
+            lang=lang,
             params=dict(role_id=uid, server=server, schedule_type=schedule_type),
             cache=("abyss", uid, schedule_type),
         )
@@ -885,8 +886,8 @@ class GenshinClient:
         """
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_user(uid, lang=lang),
-            self.get_spiral_abyss(uid, previous=False),
-            self.get_spiral_abyss(uid, previous=True),
+            self.get_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_spiral_abyss(uid, lang=lang, previous=True),
             self.get_activities(uid, lang=lang),
         )
         abyss = {"current": abyss1, "previous": abyss2}

@@ -111,6 +111,46 @@ class LabyrinthWarriors(GenshinModel):
 
 
 # ---------------------------------------------------------
+# Energy Amplifier Fruition
+
+
+class EnergyAmplifierCharacter(BaseCharacter):
+    level: int
+
+
+class EnergyAmplifierCriteria(GenshinModel):
+    id: int
+    description: str = Field(galias="desc")
+    score: int
+
+
+class EnergyAmplifierBuff(GenshinModel):
+    id: int
+    name: str
+    quality: int
+    description: str = Field(galias="desc")
+    energy: int
+
+
+class EnergyAmplifierChallenge(GenshinModel):
+    id: int = Field(galias="challenge_id")
+    name: str = Field(galias="challenge_name")
+    characters: List[EnergyAmplifierCharacter] = Field(galias="avatars")
+    energy: int
+    difficulty: int
+    high_score: int = Field(galias="max_score")
+    criteria: List[EnergyAmplifierCriteria] = Field(galias="limit_conditions")
+    multiplier: int = Field(galias="score_multiple")
+    buffs: List[EnergyAmplifierBuff]
+
+
+class EnergyAmplifier(GenshinModel):
+    start_time: datetime
+    end_time: datetime
+    challenges: List[EnergyAmplifierChallenge] = Field(alias="records")
+
+
+# ---------------------------------------------------------
 # Chinese activities:
 
 
@@ -133,12 +173,7 @@ class Activities(GenshinModel):
 
     hyakunin_ikki: Optional[HyakuninIkki] = Field(None, gslug="sumo")
     labyrinth_warriors: Optional[LabyrinthWarriors] = Field(None, gslug="rogue")
-
-    effigy: Optional[ChineseActivity]
-    mechanicus: Optional[ChineseActivity]
-    challenger_slab: Optional[ChineseActivity]
-    martial_legend: Optional[ChineseActivity]
-    chess: Optional[ChineseActivity]
+    energy_amplifier: Optional[EnergyAmplifier] = Field(None, gslug="channeller_slab_copy")
 
     @root_validator(pre=True)
     def __flatten_activities(cls, values: Dict[str, Any]) -> Dict[str, Any]:

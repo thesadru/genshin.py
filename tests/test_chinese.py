@@ -53,8 +53,6 @@ async def test_abyss(cnclient: ChineseClient, cnuid: int):
 async def test_activities(cnclient: ChineseClient, cnuid: int):
     data = await cnclient.get_activities(cnuid)
 
-    assert data.chess is None
-
 
 @pytest.mark.asyncio
 async def test_full_user(cnclient: ChineseClient, cnuid: int):
