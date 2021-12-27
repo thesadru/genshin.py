@@ -94,13 +94,3 @@ class Unique(abc.ABC):
 
     def __hash__(self) -> int:
         return hash(self.id)
-
-
-# STATS
-# TODO: NO!
-
-
-class BaseStats(APIModel, abc.ABC):
-    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
-        """Helper function which turns fields into properly named ones"""
-        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}

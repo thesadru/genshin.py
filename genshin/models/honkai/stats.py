@@ -1,8 +1,7 @@
-import abc
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 from genshin import models
-from genshin.models.honkai import base, battlesuit, permanent_modes, record
+from genshin.models.honkai import battlesuit, permanent_modes, record
 from pydantic import Field, root_validator
 
 __all__ = [
@@ -17,7 +16,6 @@ class HonkaiStats(models.APIModel):
     """Represents a user's stat page"""
 
     # TODO: Figure out mi18n locations
-    # TODO: Do we really have to use capitals here?
     # fmt: off
     active_days: int =           Field(galias="active_day_number",               mi18n="")
     achievements: int =          Field(galias="achievement_number",              mi18n="")
@@ -31,18 +29,18 @@ class HonkaiStats(models.APIModel):
     outfits: int =               Field(galias="suit_number",                     mi18n="")
 
     # Perhaps combine these by category (MA, Abyss, ER) into submodels?
-    MA_ranking: float =          Field(galias="battle_field_ranking_percentage", mi18n="")
-    MA_rank: int =               Field(galias="battle_field_rank",               mi18n="")
-    MA_score: int =              Field(galias="battle_field_score",              mi18n="")
-    MA_tier: int =               Field(galias="battle_field_area",               mi18n="")
+    ma_ranking: float =          Field(galias="battle_field_ranking_percentage", mi18n="")
+    ma_rank: int =               Field(galias="battle_field_rank",               mi18n="")
+    ma_score: int =              Field(galias="battle_field_score",              mi18n="")
+    ma_tier: int =               Field(galias="battle_field_area",               mi18n="")
     abyss_rank: int =            Field(                                          mi18n="")
     abyss_trophies: int =        Field(                                          mi18n="")
     abyss_trophies_won: int =    Field(galias="abyss_score",                     mi18n="")
-    ER_highest_difficulty: int = Field(galias="god_war_max_punish_level",        mi18n="")
-    ER_remembrance_sigils: int = Field(galias="god_war_extra_item_number",       mi18n="")
-    ER_highest_score: int =      Field(galias="god_war_max_challenge_score",     mi18n="")
-    ER_highest_floor: int =      Field(galias="god_war_max_challenge_level",     mi18n="")
-    ER_max_level_suits: int =    Field(galias="god_war_max_level_avatar_number", mi18n="")
+    er_highest_difficulty: int = Field(galias="god_war_max_punish_level",        mi18n="")
+    er_remembrance_sigils: int = Field(galias="god_war_extra_item_number",       mi18n="")
+    er_highest_score: int =      Field(galias="god_war_max_challenge_score",     mi18n="")
+    er_highest_floor: int =      Field(galias="god_war_max_challenge_level",     mi18n="")
+    er_max_level_suits: int =    Field(galias="god_war_max_level_avatar_number", mi18n="")
     # fmt: on
 
     @root_validator(pre=True)
@@ -60,17 +58,25 @@ class HonkaiStats(models.APIModel):
     @property
     def MA_rank_pretty(self) -> str:
         """Returns the user's Memorial Arena rank as displayed in-game."""
-        return permanent_modes._prettify_MA_rank(self.MA_rank)
+        return permanent_modes._prettify_MA_rank(self.ma_rank)
 
     @property
     def MA_tier_pretty(self) -> str:
         """Returns the user's Memorial Arena tier as displayed in-game."""
-        return permanent_modes._prettify_competitive_tier(self.MA_rank)
+        return permanent_modes._prettify_competitive_tier(self.ma_rank)
 
     @property
     def abyss_rank_pretty(self) -> str:
         """Returns the user's Abyss rank as displayed in-game."""
-        return permanent_modes._prettify_abyss_rank(self.abyss_rank)
+        # MA and Abyss tier are guaranteed to be the same as it's level-bound
+        return permanent_modes._prettify_abyss_rank(self.abyss_rank, self.ma_tier)
+
+    def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
+        """Helper function which turns fields into properly named ones"""
+        return {
+            self._get_mi18n(field, lang): getattr(self, field.name)
+            for field in self.__fields__.values()
+        }
 
 
 class HonkaiPartialUserStats(models.APIModel):
@@ -92,10 +98,31 @@ class HonkaiUserStats(HonkaiPartialUserStats):
 class HonkaiFullUserStats(HonkaiUserStats):
     """Represents a user's full stats, including characters, gear, and gamemode data"""
 
-    # TODO: change abyss to List[Union[AbyssMode1 | AbyssMode2 | ...]]
-    #       gonna be annoying as that'd make the typehinting a lot less useful.
-    #       maybe we should just use properties to pick which abyss we want
-
-    abyss: List[permanent_modes.SuperstringAbyss]
+    abyss: List[Union[permanent_modes.SuperstringAbyss, permanent_modes.OldAbyss]]
     memorial_arena: List[permanent_modes.MemorialArena]
     elysian_realm: List[permanent_modes.ElysianRealm]
+
+    @property
+    def abyss_superstring(self) -> List[permanent_modes.SuperstringAbyss]:
+        """Filter `self.abyss` to only return instances of Superstring Abyss."""
+        return [
+            entry for entry in self.abyss if isinstance(entry, permanent_modes.SuperstringAbyss)
+        ]
+
+    @property
+    def abyss_q_singularis(self) -> List[permanent_modes.OldAbyss]:
+        """Filter `self.abyss` to only return instances of Q-Singularis."""
+        return [
+            entry
+            for entry in self.abyss
+            if isinstance(entry, permanent_modes.OldAbyss) and entry.type == "Q-Singularis"
+        ]
+
+    @property
+    def abyss_dirac_sea(self) -> List[permanent_modes.OldAbyss]:
+        """Filter `self.abyss` to only return instances of Dirac Sea."""
+        return [
+            entry
+            for entry in self.abyss
+            if isinstance(entry, permanent_modes.OldAbyss) and entry.type == "Dirac Sea"
+        ]
