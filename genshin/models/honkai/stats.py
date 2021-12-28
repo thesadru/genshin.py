@@ -15,32 +15,33 @@ __all__ = [
 class HonkaiStats(models.APIModel):
     """Represents a user's stat page"""
 
-    # TODO: Figure out mi18n locations
     # fmt: off
-    active_days: int =           Field(galias="active_day_number",               mi18n="")
-    achievements: int =          Field(galias="achievement_number",              mi18n="")
+    active_days: int =           Field(galias="active_day_number",               mi18n="bbs/active_day_number")
+    achievements: int =          Field(galias="achievement_number",              mi18n="bbs/achievment_complete_count")
 
-    battlesuits: int =           Field(galias="armor_number",                    mi18n="")
-    battlesuits_SSS: int =       Field(galias="sss_armor_number",                mi18n="")
-    stigmata: int =              Field(galias="stigmata_number",                 mi18n="")
-    stigmata_5star: int =        Field(galias="five_star_stigmata_number",       mi18n="")
-    weapons: int =               Field(galias="weapon_number",                   mi18n="")
-    weapons_5star: int =         Field(galias="five_star_weapon_number",         mi18n="")
-    outfits: int =               Field(galias="suit_number",                     mi18n="")
+    battlesuits: int =           Field(galias="armor_number",                    mi18n="bbs/armor_number")
+    battlesuits_SSS: int =       Field(galias="sss_armor_number",                mi18n="bbs/sss_armor_number")
+    stigmata: int =              Field(galias="stigmata_number",                 mi18n="bbs/stigmata_number")
+    stigmata_5star: int =        Field(galias="five_star_stigmata_number",       mi18n="bbs/stigmata_number_5")
+    weapons: int =               Field(galias="weapon_number",                   mi18n="bbs/weapon_number")
+    weapons_5star: int =         Field(galias="five_star_weapon_number",         mi18n="bbs/weapon_number_5")
+    outfits: int =               Field(galias="suit_number",                     mi18n="bbs/suit_number")
 
     # Perhaps combine these by category (MA, Abyss, ER) into submodels?
-    ma_ranking: float =          Field(galias="battle_field_ranking_percentage", mi18n="")
-    ma_rank: int =               Field(galias="battle_field_rank",               mi18n="")
-    ma_score: int =              Field(galias="battle_field_score",              mi18n="")
-    ma_tier: int =               Field(galias="battle_field_area",               mi18n="")
+    ma_ranking: float =          Field(galias="battle_field_ranking_percentage", mi18n="bbs/battle_field_ranking_percentage")
+    ma_rank: int =               Field(galias="battle_field_rank",               mi18n="bbs/rank")
+    ma_score: int =              Field(galias="battle_field_score",              mi18n="bbs/score")
+    ma_tier: int =               Field(galias="battle_field_area",               mi18n="bbs/settled_level")
+    # TODO: abyss_rank/trophies have 3 different mi18ns: bbs/level_of_ow, bbs/Quantum, bbs/super_space
+    # depending on abyss rotation and level, how the heck do we handle that?
     abyss_rank: int =            Field(                                          mi18n="")
     abyss_trophies: int =        Field(                                          mi18n="")
-    abyss_trophies_won: int =    Field(galias="abyss_score",                     mi18n="")
-    er_highest_difficulty: int = Field(galias="god_war_max_punish_level",        mi18n="")
-    er_remembrance_sigils: int = Field(galias="god_war_extra_item_number",       mi18n="")
-    er_highest_score: int =      Field(galias="god_war_max_challenge_score",     mi18n="")
-    er_highest_floor: int =      Field(galias="god_war_max_challenge_level",     mi18n="")
-    er_max_level_suits: int =    Field(galias="god_war_max_level_avatar_number", mi18n="")
+    abyss_score: int =           Field(                                          mi18n="bbs/explain_text_2")
+    er_highest_difficulty: int = Field(galias="god_war_max_punish_level",        mi18n="bbs/god_war_max_punish_level")
+    er_remembrance_sigils: int = Field(galias="god_war_extra_item_number",       mi18n="bbs/god_war_extra_item_number")
+    er_highest_score: int =      Field(galias="god_war_max_challenge_score",     mi18n="bbs/god_war_max_challenge_score")
+    er_highest_floor: int =      Field(galias="god_war_max_challenge_level",     mi18n="bbs/rogue_settled_level")
+    er_max_level_suits: int =    Field(galias="god_war_max_level_avatar_number", mi18n="bbs/explain_text_6")
     # fmt: on
 
     @root_validator(pre=True)
@@ -68,8 +69,8 @@ class HonkaiStats(models.APIModel):
     @property
     def abyss_rank_pretty(self) -> str:
         """Returns the user's Abyss rank as displayed in-game."""
-        # MA and Abyss tier are guaranteed to be the same as it's level-bound
-        return permanent_modes._prettify_abyss_rank(self.abyss_rank, self.ma_tier)
+        # fsr the api always returns rank as if the player were lv <81, so any tier != 4 will do
+        return permanent_modes._prettify_abyss_rank(self.abyss_rank, 1)
 
     def as_dict(self, lang: str = "en-us") -> Dict[str, Any]:
         """Helper function which turns fields into properly named ones"""

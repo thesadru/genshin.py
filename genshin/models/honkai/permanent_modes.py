@@ -79,18 +79,18 @@ def _prettify_abyss_rank(rank: int, tier: int) -> str:
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
 
     if tier == 4:
-        return (
-            "Forbidden",
-            "Sinful I",
-            "Sinful II",
-            "Sinful III",
-            "Agony I",
-            "Agony II",
-            "Agony III",
-            "Redlotus",
-            "Nirvana",
-        )[rank - 1]
-    return ("Forbidden", "Sinful", "Agony", "Redlotus")[rank - 1]
+        return ("Forbidden", "Sinful", "Agony", "Redlotus")[rank - 1]
+    return (
+        "Forbidden",
+        "Sinful I",
+        "Sinful II",
+        "Sinful III",
+        "Agony I",
+        "Agony II",
+        "Agony III",
+        "Redlotus",
+        "Nirvana",
+    )[rank - 1]
 
 
 class BaseAbyss(models.APIModel):
