@@ -692,7 +692,7 @@ class GenshinClient:
 
     # GAME RECORD:
 
-    async def __fetch_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
+    async def _fetch_raw_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
         """Low-level http method for fetching the game record index"""
         server = recognize_server(uid)
         data = await self.request_game_record(
@@ -703,56 +703,21 @@ class GenshinClient:
         )
         return data
 
-    async def __fetch_characters(
-        self, uid: int, character_ids: List[int], individual: bool = False, lang: str = None
-    ) -> List[Dict[str, Any]]:
+    async def _fetch_raw_characters(self, uid: int, *, lang: str = None) -> List[Dict[str, Any]]:
         """Low-level http method for fetching the game record characters
 
         Caching with characters is optimized
         """
-        if not character_ids:
-            return []
-
-        character_ids = sorted(set(character_ids))
-
-        if individual:
-            sem = asyncio.Semaphore(5)
-
-            async def _helper(character_id: int):
-                async with sem:
-                    c = await self.__fetch_characters(uid, [character_id], lang=lang)
-                return c[0]
-
-            data = await asyncio.gather(*map(_helper, character_ids), return_exceptions=True)
-            return [i for i in data if not isinstance(i, BaseException)]
-
-        # try to get all the characters from the cache
-        coros = [
-            asyncio.create_task(self._check_cache(("character", uid, charid), lang=lang))
-            for charid in character_ids
-        ]
-        characters = await asyncio.gather(*coros)
-        if all(characters):
-            # mypy bug - all does not function as a type guard
-            return sorted(characters, key=lambda c: c["id"])  # type: ignore
-
         server = recognize_server(uid)
         data = await self.request_game_record(
             "genshin/api/character",
             method="POST",
             lang=lang,
-            json=dict(character_ids=character_ids, role_id=uid, server=server),
+            json=dict(role_id=uid, server=server),
+            cache=("characters", uid),
         )
 
-        # update the cache one by one
-        characters = data["avatars"]
-        coros = [
-            asyncio.create_task(self._update_cache(char, ("character", uid, char["id"])))
-            for char in characters
-        ]
-        await asyncio.wait(coros)
-
-        return sorted(characters, key=lambda c: c["id"])
+        return data["avatars"]
 
     async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> RecordCard:
         """Get a user's record card
@@ -773,14 +738,7 @@ class GenshinClient:
 
         return RecordCard(**cards[0])
 
-    async def get_user(
-        self,
-        uid: int,
-        *,
-        character_ids: List[int] = None,
-        all_characters: bool = False,
-        lang: str = None,
-    ) -> UserStats:
+    async def get_user(self, uid: int, *, lang: str = None) -> UserStats:
         """Get a user's stats and characters
 
         :param uid: A Genshin uid
@@ -788,18 +746,11 @@ class GenshinClient:
         :param all_characters: Whether to get every single character a user has. Discouraged.
         :param lang: The language to use
         """
-        # TODO: Optimize all_characters
-        if character_ids is None:
-            character_ids = list(CHARACTER_NAMES) if all_characters else []
-
-        data = await self.__fetch_user(uid, lang=lang)
-        character_ids = [char["id"] for char in data["avatars"]] + character_ids
-        data["avatars"] = await self.__fetch_characters(
-            uid,
-            character_ids,
-            individual=all_characters,
-            lang=lang,
+        data, characters = await asyncio.gather(
+            self._fetch_raw_user(uid, lang=lang),
+            self._fetch_raw_characters(uid, lang=lang),
         )
+        data["avatars"] = characters
 
         return UserStats(**data)
 
@@ -809,25 +760,16 @@ class GenshinClient:
         :param uid: A Genshin uid
         :param lang: The language to use
         """
-        data = await self.__fetch_user(uid, lang=lang)
+        data = await self._fetch_raw_user(uid, lang=lang)
         return PartialUserStats(**data)
 
-    async def get_characters(
-        self,
-        uid: int,
-        character_ids: List[int],
-        *,
-        individual: bool = False,
-        lang: str = None,
-    ) -> List[Character]:
+    async def get_characters(self, uid: int, *, lang: str = None) -> List[Character]:
         """Helper function to fetch characters from just their ids
 
         :param uid: A Genshin uid
-        :param character_ids: The ids of characters you want to fetch
-        :param individual: Whether to get all characters individual in order to return only the ones the user has
         :param lang: The language to use
         """
-        data = await self.__fetch_characters(uid, character_ids, individual=individual, lang=lang)
+        data = await self._fetch_raw_characters(uid, lang=lang)
         return [Character(**i) for i in data]
 
     async def get_spiral_abyss(

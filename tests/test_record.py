@@ -31,14 +31,6 @@ async def test_partial_user(client: GenshinClient, uid: int):
 
 
 @pytest.mark.asyncio
-async def test_characters(client: GenshinClient, uid: int):
-    user, partial = await asyncio.gather(client.get_user(uid), client.get_partial_user(uid))
-
-    characters = await client.get_characters(uid, [c.id for c in partial.characters])
-    assert characters == user.characters
-
-
-@pytest.mark.asyncio
 async def test_abyss(client: GenshinClient, uid: int):
     data = await client.get_spiral_abyss(uid, previous=True)
 
