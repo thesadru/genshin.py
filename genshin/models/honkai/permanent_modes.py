@@ -2,10 +2,9 @@ import re
 from datetime import datetime
 from typing import List, Literal
 
-from pydantic import Field, validator
-
 from genshin import models
 from genshin.models.honkai import base
+from pydantic import Field, validator
 
 __all__ = [
     "Boss",
@@ -254,7 +253,7 @@ class RemembranceSigil(models.APIModel):
     @property
     def id(self):
         match = re.match(r".*/(\d+).png", self.icon)
-        return match[1] if match else 0
+        return int(match[1]) if match else 0
 
     @property
     def name(self):
