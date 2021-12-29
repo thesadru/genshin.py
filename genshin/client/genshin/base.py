@@ -1,114 +1,30 @@
 from __future__ import annotations
 
-import abc
 import asyncio
-import base64
 import functools
-import json as json_
-import logging
-import os
-import uuid
-import warnings
 from datetime import datetime
-from http.cookies import SimpleCookie
 from typing import *
 from urllib.parse import unquote
 
-import aiohttp
 from yarl import URL
 
 from genshin import errors
 from genshin import models as base_models
 from genshin import paginators, utils
-from genshin.constants import CHARACTER_NAMES, LANGS
+from genshin.client import adapter, base
 from genshin.models import genshin as gmodels
-
-from .. import base  # TODO: Normalize import
 
 CallableT = TypeVar("CallableT", bound=Callable[..., Any])
 
 
-@property
-@abc.abstractmethod
-def _abc_str(self) -> str:
-    ...
-
-
-abc_str = cast(str, _abc_str)
-
-
-def ensure_std_adapter(func: CallableT) -> CallableT:
-    def wrapper(self: BaseGenshinClient, *args: Any, **kwargs: Any) -> Any:
-        if isinstance(self, base.MultiCookieAdapter):
-            raise AttributeError(f"'{type(self)}' object has no method '{func.__name__}'")
-
-        return func(self, *args, **kwargs)
-
-    return functools.update_wrapper(wrapper, func)  # type: ignore
-
-
-class BaseGenshinClient(base.BaseAdapter):
-    DS_SALT: str = abc_str
-    ACT_ID: str = abc_str
-
-    TAKUMI_URL: str = abc_str
-    RECORD_URL: str = abc_str
-    INFO_LEDGER_URL: str = abc_str
-    DETAIL_LEDGER_URL: str = abc_str
-    CALCULATOR_URL: str = abc_str
-    REWARD_URL: str = abc_str
-    GACHA_INFO_URL: str = abc_str
-    YSULOG_URL: str = abc_str
-    MAP_URL: str = abc_str
-    STATIC_MAP_URL: str = abc_str
-
-    async def request_hoyolab(
-        self,
-        endpoint: Union[str, URL],
-        *,
-        method: str = "GET",
-        lang: str = None,
-        **kwargs: Any,
-    ) -> Dict[str, Any]:
-        """Make a request towards misc hoyolabs api
-
-        Community related data
-        """
-        if not self.cookies:
-            raise RuntimeError("No cookies provided")
-        if lang not in LANGS and lang is not None:
-            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(LANGS))
-
-        url = URL(self.TAKUMI_URL).join(URL(endpoint))
-
-        headers = {
-            "x-rpc-app_version": "1.5.0",
-            "x-rpc-client_type": "4",
-            "x-rpc-language": lang or self.lang,
-            "ds": utils.generate_dynamic_secret(self.DS_SALT),
-        }
-
-        data = await self.request(url, method=method, headers=headers, **kwargs)
-
-        return data
-
-    async def request_game_record(
-        self,
-        endpoint: str,
-        *,
-        method: str = "GET",
-        cache: Tuple[Any, ...] = None,
-        cache_check: Callable[[Any], bool] = None,
-        **kwargs: Any,
-    ):
-        """Make a request towards the game record endpoint
-
-        User stats related data
-        """
-        # this is simply just an alias for shorter request endpoints
-        url = URL(self.RECORD_URL).join(URL(endpoint))
-
-        return await self.request_hoyolab(url, method=method, cache=cache, cache_check=cache_check, **kwargs)
+class BaseGenshinClient(base.APIClient):
+    INFO_LEDGER_URL: base.ABCString
+    DETAIL_LEDGER_URL: base.ABCString
+    CALCULATOR_URL: base.ABCString
+    GACHA_INFO_URL: base.ABCString
+    YSULOG_URL: base.ABCString
+    MAP_URL: base.ABCString
+    STATIC_MAP_URL: base.ABCString
 
     async def request_ledger(
         self,
@@ -120,7 +36,6 @@ class BaseGenshinClient(base.BaseAdapter):
         params: Dict[str, Any] = None,
     ) -> Dict[str, Any]:
         """Make a request towards the ys ledger endpoint
-
         Traveler's diary related data
         """
         params = params or {}
@@ -162,31 +77,6 @@ class BaseGenshinClient(base.BaseAdapter):
             json["lang"] = lang or self.lang
 
         return await self.request(url, method=method, params=params, json=json, **kwargs)
-
-    async def request_daily_reward(
-        self,
-        endpoint: str,
-        *,
-        method: str = "GET",
-        lang: str = None,
-        params: Dict[str, Any] = None,
-        **kwargs: Any,
-    ) -> Dict[str, Any]:
-        """Make a request towards the daily reward endpoint
-
-        Daily reward claiming and history
-        """
-        params = params or {}
-
-        if not self.cookies:
-            raise RuntimeError("No cookies provided")
-
-        url = URL(self.REWARD_URL).join(URL(endpoint))
-
-        params["lang"] = lang or self.lang
-        params["act_id"] = self.ACT_ID
-
-        return await self.request(url, method=method, params=params, **kwargs)
 
     async def request_gacha_info(
         self,
@@ -247,7 +137,7 @@ class BaseGenshinClient(base.BaseAdapter):
 
         return await self.request(url, method=method, params=params, **kwargs)
 
-    @ensure_std_adapter
+    @base.ensure_std_adapter
     async def genshin_accounts(self, *, lang: str = None) -> List[gmodels.GenshinAccount]:
         """Get the genshin accounts of the currently logged-in user
 
@@ -269,7 +159,6 @@ class BaseGenshinClient(base.BaseAdapter):
             "community/search/wapi/search/user",
             lang=lang,
             params=dict(keyword=keyword, page_size=20),
-            cache=("search", keyword),
         )
         return [base_models.SearchUser(**i["user"]) for i in data["list"]]
 
@@ -295,7 +184,7 @@ class BaseGenshinClient(base.BaseAdapter):
         )
         return [base_models.SearchUser(**i["user"]) for i in data["list"]]
 
-    @ensure_std_adapter
+    @base.ensure_std_adapter
     async def redeem_code(self, code: str, uid: int = None, *, lang: str = None) -> None:
         """Redeems a gift code for the current user
 
@@ -330,7 +219,7 @@ class BaseGenshinClient(base.BaseAdapter):
 
     # GAME RECORD:
 
-    async def __fetch_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
+    async def _fetch_raw_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
         """Low-level http method for fetching the game record index"""
         server = utils.recognize_server(uid)
         data = await self.request_game_record(
@@ -341,54 +230,22 @@ class BaseGenshinClient(base.BaseAdapter):
         )
         return data
 
-    async def __fetch_characters(
-        self, uid: int, character_ids: List[int], individual: bool = False, lang: str = None
-    ) -> List[Dict[str, Any]]:
+    async def _fetch_raw_characters(self, uid: int, *, lang: str = None) -> List[Dict[str, Any]]:
         """Low-level http method for fetching the game record characters
-
         Caching with characters is optimized
         """
-        if not character_ids:
-            return []
-
-        character_ids = sorted(set(character_ids))
-
-        if individual:
-            sem = asyncio.Semaphore(5)
-
-            async def _helper(character_id: int):
-                async with sem:
-                    c = await self.__fetch_characters(uid, [character_id], lang=lang)
-                return c[0]
-
-            data = await asyncio.gather(*map(_helper, character_ids), return_exceptions=True)
-            return [i for i in data if not isinstance(i, BaseException)]
-
-        # try to get all the characters from the cache
-        coros = [
-            asyncio.create_task(self._check_cache(("character", uid, charid), lang=lang)) for charid in character_ids
-        ]
-        characters = await asyncio.gather(*coros)
-        if all(characters):
-            # mypy bug - all does not function as a type guard
-            return sorted(characters, key=lambda c: c["id"])  # type: ignore
-
         server = utils.recognize_server(uid)
         data = await self.request_game_record(
             "genshin/api/character",
             method="POST",
             lang=lang,
-            json=dict(character_ids=character_ids, role_id=uid, server=server),
+            json=dict(role_id=uid, server=server),
+            cache=("characters", uid),
         )
 
-        # update the cache one by one
-        characters = data["avatars"]
-        coros = [asyncio.create_task(self._update_cache(char, ("character", uid, char["id"]))) for char in characters]
-        await asyncio.wait(coros)
+        return data["avatars"]
 
-        return sorted(characters, key=lambda c: c["id"])
-
-    async def get_record_card(self, hoyolab_uid: int = None, *, lang: str = None) -> gmodels.RecordCard:
+    async def get_record_card(self, hoyolab_uid: int, *, lang: str = None) -> gmodels.RecordCard:
         """Get a user's record card
 
         :param hoyolab_uid: A hoyolab uid
@@ -397,9 +254,7 @@ class BaseGenshinClient(base.BaseAdapter):
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
             lang=lang,
-            params=dict(uid=hoyolab_uid or self.hoyolab_uid),
-            cache=("record", hoyolab_uid),
-            cache_check=lambda data: len(data["list"]) > 0,
+            params=dict(uid=hoyolab_uid),
         )
         cards = data["list"]
         if not cards:
@@ -407,14 +262,7 @@ class BaseGenshinClient(base.BaseAdapter):
 
         return gmodels.RecordCard(**cards[0])
 
-    async def get_user(
-        self,
-        uid: int,
-        *,
-        character_ids: List[int] = None,
-        all_characters: bool = False,
-        lang: str = None,
-    ) -> gmodels.UserStats:
+    async def get_user(self, uid: int, *, lang: str = None) -> gmodels.UserStats:
         """Get a user's stats and characters
 
         :param uid: A Genshin uid
@@ -422,18 +270,11 @@ class BaseGenshinClient(base.BaseAdapter):
         :param all_characters: Whether to get every single character a user has. Discouraged.
         :param lang: The language to use
         """
-        # TODO: Optimize all_characters
-        if character_ids is None:
-            character_ids = list(CHARACTER_NAMES) if all_characters else []
-
-        data = await self.__fetch_user(uid, lang=lang)
-        character_ids = [char["id"] for char in data["avatars"]] + character_ids
-        data["avatars"] = await self.__fetch_characters(
-            uid,
-            character_ids,
-            individual=all_characters,
-            lang=lang,
+        data, characters = await asyncio.gather(
+            self._fetch_raw_user(uid, lang=lang),
+            self._fetch_raw_characters(uid, lang=lang),
         )
+        data["avatars"] = characters
 
         return gmodels.UserStats(**data)
 
@@ -443,25 +284,15 @@ class BaseGenshinClient(base.BaseAdapter):
         :param uid: A Genshin uid
         :param lang: The language to use
         """
-        data = await self.__fetch_user(uid, lang=lang)
+        data = await self._fetch_raw_user(uid, lang=lang)
         return gmodels.PartialUserStats(**data)
 
-    async def get_characters(
-        self,
-        uid: int,
-        character_ids: List[int],
-        *,
-        individual: bool = False,
-        lang: str = None,
-    ) -> List[gmodels.Character]:
+    async def get_characters(self, uid: int, *, lang: str = None) -> List[gmodels.Character]:
         """Helper function to fetch characters from just their ids
-
         :param uid: A Genshin uid
-        :param character_ids: The ids of characters you want to fetch
-        :param individual: Whether to get all characters individual in order to return only the ones the user has
         :param lang: The language to use
         """
-        data = await self.__fetch_characters(uid, character_ids, individual=individual, lang=lang)
+        data = await self._fetch_raw_characters(uid, lang=lang)
         return [gmodels.Character(**i) for i in data]
 
     async def get_spiral_abyss(self, uid: int, *, previous: bool = False, lang: str = None) -> gmodels.SpiralAbyss:
@@ -477,7 +308,6 @@ class BaseGenshinClient(base.BaseAdapter):
             "genshin/api/spiralAbyss",
             lang=lang,
             params=dict(role_id=uid, server=server, schedule_type=schedule_type),
-            cache=("abyss", uid, schedule_type),
         )
         return gmodels.SpiralAbyss(**data)
 
@@ -794,42 +624,6 @@ class BaseGenshinClient(base.BaseAdapter):
         data = await func("home", lang=lang)
         return [base_models.DailyReward(**i) for i in data["awards"]]
 
-    def claimed_rewards(self, *, limit: int = None, lang: str = None) -> paginators.DailyRewardPaginator:
-        """Get all claimed rewards for the current user
-
-        NOTE: Languages are currently broken,
-        the language is based off the language used to claim the reward
-
-        :param limit: The maximum amount of rewards to get
-        :param lang: The language to use - currently broken
-        """
-        return paginators.DailyRewardPaginator(self, limit=limit, lang=lang)
-
-    @overload
-    async def claim_daily_reward(self, *, lang: str = None, reward: Literal[True] = ...) -> base_models.DailyReward:
-        ...
-
-    @overload
-    async def claim_daily_reward(self, *, lang: str = None, reward: Literal[False]) -> None:
-        ...
-
-    async def claim_daily_reward(self, *, lang: str = None, reward: bool = True) -> Optional[base_models.DailyReward]:
-        """Signs into hoyolab and claims the daily reward.
-
-        :param lang: The language to use
-        :param reward: Whether to also fetch the claimed reward
-        """
-        await self.request_daily_reward("sign", method="POST", lang=lang)
-
-        if not reward:
-            return None
-
-        info, rewards = await asyncio.gather(
-            self.get_reward_info(lang=lang),
-            self.get_monthly_rewards(lang=lang),
-        )
-        return rewards[info.claimed_rewards - 1]
-
     # WISH HISTORY:
 
     @overload
@@ -889,8 +683,7 @@ class BaseGenshinClient(base.BaseAdapter):
         :param lang: The language to use
         :param authkey: The authkey to use when requesting data
         """
-        func = perm_cache(("banners", lang or self.lang), self.request_gacha_info)
-        data = await func(
+        data = await self.request_gacha_info(
             "getConfigList",
             lang=lang,
             authkey=authkey,
@@ -906,7 +699,9 @@ class BaseGenshinClient(base.BaseAdapter):
         data = await self.request_webstatic(f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json")
         return gmodels.BannerDetails(**data)
 
-    async def get_banner_details(self, banner_ids: List[str] = None, *, lang: str = None) -> List[gmodels.BannerDetails]:
+    async def get_banner_details(
+        self, banner_ids: List[str] = None, *, lang: str = None
+    ) -> List[gmodels.BannerDetails]:
         """Get all banner details at once in a batch
 
         :param banner_ids: A list of banner ids, implicitly fetched when not provided
@@ -1041,26 +836,6 @@ class BaseGenshinClient(base.BaseAdapter):
 
         return params
 
-    async def _fetch_mi18n(self) -> Dict[str, Dict[str, str]]:
-        if self.fetched_mi18n:
-            return base_models.APIModel._mi18n
-
-        self.fetched_mi18n = True
-
-        async def single(url: str, key: str, lang: str = None):
-            if lang is None:
-                coros = (single(url, key, l) for l in LANGS)
-                return await asyncio.gather(*coros)
-
-            data = await self.request_webstatic(url.format(lang=lang))
-            for k, v in data.items():
-                base_models.APIModel._mi18n.setdefault(key + "/" + k, {})[lang] = v
-
-        coros = (single(url, key) for key, url in base_models.APIModel._mi18n_urls.items())
-        await asyncio.gather(*coros)
-
-        return base_models.APIModel._mi18n
-
     async def init(self, lang: str = None):
         """Request all static & permanent endpoints to not require them later
 
@@ -1079,38 +854,6 @@ class BaseGenshinClient(base.BaseAdapter):
     async def fetch_banner_ids(self) -> List[str]:
         """Fetch banner ids from a user-mantained repo"""
         url = "https://raw.githubusercontent.com/thesadru/genshindata/master/banner_ids.txt"
-        async with self.session.get(url) as r:
+        async with self.static_session.get(url) as r:
             data = await r.text()
         return data.splitlines()
-
-
-class BaseOverseasGenshinClient(BaseGenshinClient, base.BaseAdapter):
-    DS_SALT = "6cqshh5dhw73bzxn20oexa9k516chk7s"
-    ACT_ID = "e202102251931481"
-
-    WEBSTATIC_URL = "https://webstatic-sea.mihoyo.com/"
-    TAKUMI_URL = "https://api-os-takumi.mihoyo.com/"
-    RECORD_URL = "https://bbs-api-os.mihoyo.com/game_record/"
-    INFO_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_info"
-    DETAIL_LEDGER_URL = "https://hk4e-api-os.mihoyo.com/event/ysledgeros/month_detail"
-    CALCULATOR_URL = "https://sg-public-api.mihoyo.com/event/calculateos/"
-    REWARD_URL = "https://hk4e-api-os.mihoyo.com/event/sol/"
-    GACHA_INFO_URL = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/"
-    YSULOG_URL = "https://hk4e-api-os.mihoyo.com/ysulog/api/"
-    MAP_URL = "https://api-os-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
-    STATIC_MAP_URL = "https://api-os-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map"
-
-
-class BaseChineseGenshinClient(BaseGenshinClient, base.BaseAdapter):
-    DS_SALT = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
-    SIGNIN_SALT = "4a8knnbk5pbjqsrudp3dq484m9axoc5g"
-    ACT_ID = "e202009291139501"
-
-    TAKUMI_URL = "https://api-takumi.mihoyo.com/"
-    RECORD_URL = "https://api-takumi.mihoyo.com/game_record/app/"
-    INFO_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo"
-    DETAIL_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail"
-    REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
-    GACHA_INFO_URL = "https://hk4e-api.mihoyo.com/event/gacha_info/api/"
-    MAP_URL = "https://api-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
-    STATIC_MAP_URL = "https://api-static.mihoyo.com/common/map_user/ys_obc/v1/map"
