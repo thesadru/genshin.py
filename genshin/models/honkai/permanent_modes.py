@@ -265,7 +265,7 @@ class RemembranceSigil(models.APIModel):
     @property
     def id(self):
         match = re.match(r".*/(\d+).png", self.icon)
-        return match[1] if match else 0
+        return int(match[1]) if match else 0
 
     @property
     def name(self):
