@@ -1,11 +1,10 @@
 import re
 from datetime import datetime
-from typing import List, Literal
-
-from pydantic import Field, validator
+from typing import List, Literal, Optional
 
 from genshin import models
 from genshin.models.honkai import base
+from pydantic import Field, validator
 
 __all__ = [
     "Boss",
@@ -53,12 +52,22 @@ def _prettify_competitive_tier(tier: int) -> str:
 
 
 class Boss(models.APIModel, models.Unique):
+    """Represents a Boss encountered in Abyss or Memorial Arena."""
+
     id: int
     name: str
     icon: str = Field(galias="avatar")
 
+    @validator("icon")
+    def __fix_url(cls, url: str) -> str:
+        # I noticed that sometimes the urls are returned incorrectly, which appears to be
+        # a problem on the hoyolab website too, so I expect this to be fixed sometime.
+        # For now, this hotfix seems to work.
+        return re.sub(r"/boss_\d+\.", lambda m: str.upper(m[0]), url, flags=re.IGNORECASE)
+
 
 class ELF(models.APIModel, models.Unique):
+    """Represents an ELF equipped for a battle."""
 
     id: int
     name: str
@@ -79,18 +88,18 @@ def _prettify_abyss_rank(rank: int, tier: int) -> str:
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
 
     if tier == 4:
-        return ("Forbidden", "Sinful", "Agony", "Redlotus")[rank - 1]
-    return (
-        "Forbidden",
-        "Sinful I",
-        "Sinful II",
-        "Sinful III",
-        "Agony I",
-        "Agony II",
-        "Agony III",
-        "Redlotus",
-        "Nirvana",
-    )[rank - 1]
+        return (
+            "Forbidden",
+            "Sinful I",
+            "Sinful II",
+            "Sinful III",
+            "Agony I",
+            "Agony II",
+            "Agony III",
+            "Redlotus",
+            "Nirvana",
+        )[rank - 1]
+    return ("Forbidden", "Sinful", "Agony", "Redlotus")[rank - 1]
 
 
 class BaseAbyss(models.APIModel):
@@ -98,16 +107,16 @@ class BaseAbyss(models.APIModel):
 
     # somewhat feel like this is overkill
 
-    tier: int = Field(galias="area")
+    raw_tier: int = Field(galias="area")
     score: int
     lineup: List[base.Battlesuit]
     boss: Boss
-    elf: ELF
+    elf: Optional[ELF]
 
     @property
-    def tier_pretty(self):
+    def tier(self):
         """The user's Abyss tier as displayed in-game."""
-        return _prettify_competitive_tier(self.tier)
+        return _prettify_competitive_tier(self.raw_tier)
 
 
 class OldAbyss(BaseAbyss):
@@ -120,26 +129,26 @@ class OldAbyss(BaseAbyss):
     end_time: datetime = Field(galias="time_second")
     type: str = Field(mi18n="Quantum")
     result: str = Field(galias="reward_type")
-    level: str
+    raw_rank: int = Field(galias="level")
 
     @validator("type")
     def __parse_type(cls, type_: str) -> str:
         # Parse lazy alias to actual in-game name
         return {"OW": "Dirac Sea", "Quantum": "Q-Singularis"}[type_]
 
-    @validator("level", pre=True)
-    def __normalize_level(cls, level: str) -> int:
+    @validator("raw_rank", pre=True)
+    def __normalize_level(cls, rank: str) -> int:
         """The latestOldAbyssReport endpoint returns ranks as D/C/B/A,
         while newAbyssReport returns them as 1/2/3/4(/5) respectively.
         Having them as ints at base seems more useful than strs.
         (in-game, they use the same names (Sinful, Agony, etc.))
         """
-        return 69 - ord(level)
+        return 69 - ord(rank)
 
     @property
-    def rank_pretty(self):
+    def rank(self):
         """The user's Abyss rank as displayed in-game."""
-        return _prettify_abyss_rank(self.rank, self.tier)
+        return _prettify_abyss_rank(self.raw_rank, self.raw_tier)
 
 
 class SuperstringAbyss(BaseAbyss):
@@ -148,22 +157,22 @@ class SuperstringAbyss(BaseAbyss):
     # NOTE endpoint: game_record/honkai3rd/api/latestOldAbyssReport
 
     end_time: datetime = Field(galias="updated_time_second")
-    tier: int = 4  # Not returned by API, always the case
+    raw_tier: int = 4  # Not returned by API, always the case
     placement: int = Field(galias="rank")
     trophies_gained: int = Field(galias="settled_cup_number")
     end_trophies: int = Field(galias="cup_number")
-    start_rank: int = Field(galias="level")
-    end_rank: int = Field(galias="settled_level")
+    raw_start_rank: int = Field(galias="level")
+    raw_end_rank: int = Field(galias="settled_level")
 
     @property
-    def start_rank_pretty(self) -> str:
-        """Get the rank the user started the abyss cycle with, as displayed in-game."""
-        return _prettify_abyss_rank(self.start_rank, self.tier)
+    def start_rank(self) -> str:
+        """The rank the user started the abyss cycle with, as displayed in-game."""
+        return _prettify_abyss_rank(self.raw_start_rank, self.raw_tier)
 
     @property
-    def end_rank_pretty(self) -> str:
-        """Get the rank the user ended the abyss cycle with, as displayed in-game."""
-        return _prettify_abyss_rank(self.end_rank, self.tier)
+    def end_rank(self) -> str:
+        """The rank the user ended the abyss cycle with, as displayed in-game."""
+        return _prettify_abyss_rank(self.raw_end_rank, self.raw_tier)
 
     @property
     def start_trophies(self) -> int:
@@ -184,7 +193,7 @@ class MemorialBattle(models.APIModel):
 
     score: int
     lineup: List[base.Battlesuit]
-    elf: ELF
+    elf: Optional[ELF]
     boss: Boss
 
 
@@ -193,23 +202,25 @@ class MemorialArena(models.APIModel):
 
     score: int
     ranking: float = Field(galias="ranking_percentage")
-    rank: int
-    tier: int = Field(galias="area")
+    raw_rank: int = Field(galias="rank")
+    raw_tier: int = Field(galias="area")
     end_time: datetime = Field(galias="time_second")
     battle_data: List[MemorialBattle] = Field(galias="battle_infos")
 
     @property
-    def rank_pretty(self) -> str:
-        """Returns the user's Memorial Arena rank as displayed in-game."""
-        return _prettify_MA_rank(self.rank)
+    def rank(self) -> str:
+        """The user's Memorial Arena rank as displayed in-game."""
+        return _prettify_MA_rank(self.raw_rank)
 
     @property
-    def tier_pretty(self) -> str:
+    def tier(self) -> str:
         """The user's Memorial Arena tier as displayed in-game."""
-        return _prettify_competitive_tier(self.tier)
+        return _prettify_competitive_tier(self.raw_tier)
 
 
 # ELYSIAN REALMS
+# TODO: Implement a way to link response_json["avatar_transcript"] data to be added to
+#       ER lineup data; will require new Battlesuit subclass.
 
 
 class Condition(models.APIModel):
@@ -276,9 +287,9 @@ class ElysianRealm(models.APIModel):
     difficulty: int = Field(galias="punish_level")
     conditions: List[Condition]
     signets: List[Signet] = Field(galias="buffs")
-    leader: base.Battlesuit
-    supports: List[base.Battlesuit]
-    elf: ELF
+    leader: base.Battlesuit = Field(galias="main_avatar")
+    supports: List[base.Battlesuit] = Field(galias="support_avatars")
+    elf: Optional[ELF]
     remembrance_sigil: RemembranceSigil = Field(galias="extra_item_icon")
 
     @validator("remembrance_sigil", pre=True)
