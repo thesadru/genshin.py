@@ -206,7 +206,7 @@ class DiaryPaginator(BasePaginator):
             detail=True,
             month=self.month,
             lang=self.lang,
-            params=dict(type=self.type, page=page, limit=10),
+            params=dict(type=self.type, current_page=page, limit=10),
         )
         return DiaryPage(**data)
 

@@ -59,7 +59,7 @@ class Notes(GenshinModel):
     def until_resin_recovery(self) -> float:
         """The remaining time until resin recovery in seconds"""
         remaining = self.resin_recovered_at - datetime.now().astimezone()
-        return min(remaining.total_seconds(), 0)
+        return max(remaining.total_seconds(), 0)
 
     @root_validator(pre=True)
     def __process_timedelta(cls, values: Dict[str, Any]) -> Dict[str, Any]:
