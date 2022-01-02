@@ -7,6 +7,7 @@ from .base import *
 
 del typing  # TODO: Fix dummy
 
-from . import genshin, honkai
 from .daily import *
 from .hoyolab import *
+from .record import *
+from . import genshin, honkai

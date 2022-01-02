@@ -137,52 +137,27 @@ class BaseGenshinClient(base.APIClient):
 
         return await self.request(url, method=method, params=params, **kwargs)
 
-    @base.ensure_std_adapter
-    async def genshin_accounts(self, *, lang: str = None) -> List[gmodels.GenshinAccount]:
-        """Get the genshin accounts of the currently logged-in user
+    async def genshin_accounts(self, *, lang: str = None) -> List[base_models.GameAccount]:
+        """Get the Genshin accounts of the currently logged-in user
 
         :params lang: The language to use
         """
-        data = await self.request_hoyolab(
-            "binding/api/getUserGameRolesByCookie",
-            lang=lang,
-        )
-        return [gmodels.GenshinAccount(**i) for i in data["list"]]
-
-    async def search_users(self, keyword: str, *, lang: str = None) -> List[base_models.SearchUser]:
-        """Search hoyolab users
-
-        :param keyword: The keyword to search with
-        :params lang: The language to use
-        """
-        data = await self.request_hoyolab(
-            "community/search/wapi/search/user",
-            lang=lang,
-            params=dict(keyword=keyword, page_size=20),
-        )
-        return [base_models.SearchUser(**i["user"]) for i in data["list"]]
+        return [
+            account for account in await self.get_game_accounts(lang=lang)
+            if account.game is base_models.Game.genshin
+        ]
 
     async def set_visibility(self, public: bool) -> None:
         """Sets your data to public or private.
 
         :param public: Whether the data should now be public
         """
+        # TODO: Endpoint 404s, look for new endpoint.
         await self.request_game_record(
             "genshin/wapi/publishGameRecord",
             method="POST",
             json=dict(is_public=public, game_id=2),
         )
-
-    async def get_recommended_users(self, *, limit: int = 200) -> List[base_models.SearchUser]:
-        """Get a list of recommended active users
-
-        :param limit: The maximum amount of users to return
-        """
-        data = await self.request_hoyolab(
-            "community/user/wapi/recommendActive",
-            params=dict(page_size=limit),
-        )
-        return [base_models.SearchUser(**i["user"]) for i in data["list"]]
 
     @base.ensure_std_adapter
     async def redeem_code(self, code: str, uid: int = None, *, lang: str = None) -> None:
@@ -226,7 +201,7 @@ class BaseGenshinClient(base.APIClient):
             "genshin/api/index",
             lang=lang,
             params=dict(server=server, role_id=uid),
-            cache=("user", uid),
+            # cache=("user", uid),
         )
         return data
 
@@ -240,34 +215,30 @@ class BaseGenshinClient(base.APIClient):
             method="POST",
             lang=lang,
             json=dict(role_id=uid, server=server),
-            cache=("characters", uid),
+            # cache=("characters", uid),
         )
 
         return data["avatars"]
 
-    async def get_record_card(self, hoyolab_uid: int, *, lang: str = None) -> gmodels.RecordCard:
-        """Get a user's record card
+    async def get_record_card(
+        self,
+        hoyolab_uid: int,
+        *,
+        lang: str = None
+    ) -> List[gmodels.GenshinRecordCard]:
+        """Get a user's Genshin record card(s)
 
         :param hoyolab_uid: A hoyolab uid
         :param lang: The language to use
         """
-        data = await self.request_game_record(
-            "card/wapi/getGameRecordCard",
-            lang=lang,
-            params=dict(uid=hoyolab_uid),
-        )
-        cards = data["list"]
-        if not cards:
-            raise errors.DataNotPublic({"retcode": 10102})
-
-        return gmodels.RecordCard(**cards[0])
+        cards = await self.get_record_cards(hoyolab_uid, lang=lang)
+        return [card for card in cards if isinstance(card, gmodels.GenshinRecordCard)]
 
     async def get_user(self, uid: int, *, lang: str = None) -> gmodels.UserStats:
         """Get a user's stats and characters
 
         :param uid: A Genshin uid
         :param character_ids: The ids of characters you want to fetch
-        :param all_characters: Whether to get every single character a user has. Discouraged.
         :param lang: The language to use
         """
         data, characters = await asyncio.gather(
@@ -802,7 +773,7 @@ class BaseGenshinClient(base.APIClient):
             end_id=end_id,
         )
 
-    @ensure_std_adapter
+    @base.ensure_std_adapter
     async def _complete_uid(
         self,
         uid: Optional[int] = None,
