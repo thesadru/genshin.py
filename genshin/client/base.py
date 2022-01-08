@@ -45,7 +45,7 @@ class APIClient(adapter.BaseAdapter):
 
     if not TYPE_CHECKING:
 
-        def __new__(cls):
+        def __new__(cls, *args, **kwargs):
             """Create a new instance and check for the presence of ABCString"""
             attribs: List[str] = []
 
