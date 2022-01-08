@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from genshin import models
 from genshin.models.honkai import base
@@ -13,7 +13,7 @@ __all__ = [
     "SuperstringAbyss",
     "MemorialBattle",
     "MemorialArena",
-    "ElysianRealm",
+    "ElysianRealms",
 ]
 
 # TODO: decide on whether to keep or not; if so, move to constants?
@@ -219,8 +219,6 @@ class MemorialArena(models.APIModel):
 
 
 # ELYSIAN REALMS
-# TODO: Implement a way to link response_json["avatar_transcript"] data to be added to
-#       ER lineup data; will require new Battlesuit subclass.
 
 
 class Condition(models.APIModel):
@@ -278,8 +276,51 @@ class RemembranceSigil(models.APIModel):
         return sigil[1] if sigil else "Unknown"
 
 
-class ElysianRealm(models.APIModel):
-    """Represents one completed run of Elysean Realms."""
+class ElysianRealmBattlesuit(base.Battlesuit):
+    """Represents a Battlesuit with extra stats related to the Elysian Realms gamemode."""
+
+    level: int
+    successful_clears: int = Field(galias="challenge_success_times")
+    highest_difficulty: int = Field(galias="max_punish_level")
+    highest_score: int = Field(galias="max_challenge_score")
+    highest_floor: int = Field(galias="max_challenge_level")
+
+
+class ElysianRealmCollectionStat(models.APIModel):
+
+    collected: int = Field(galias="collected_number")
+    total: int = Field(galias="total_number")
+
+
+class ElysianRealmCollection(models.APIModel):
+    """Represents the user's collection completion."""
+
+    episodes: ElysianRealmCollectionStat = Field(galias="Evnet")
+    recollections: ElysianRealmCollectionStat = Field(galias="Text")
+    signets: ElysianRealmCollectionStat = Field(galias="Buff")
+    items: ElysianRealmCollectionStat = Field(galias="Item")
+
+
+class ElysianRealmSummary(models.APIModel):
+    """Represents the user's stats in the Elysian Realms gamemode.
+
+    Has a large amount of overlap with a user's general stats.
+    """
+
+    # overlap
+    highest_difficulty: int = Field(galias="max_punish_level")
+    remembrance_sigils: int = Field(galias="extra_item_number")
+    highest_score: int = Field(galias="max_challenge_score")
+    highest_floor: int = Field(galias="max_challenge_level")
+    max_level_suits: int = Field(galias="max_level_avatar_number")
+
+    # no overlap
+    unlocked_battlesuits: int = Field(galias="avatar_numbers")
+    diverging_paths_level: int = Field(galias="max_support_point")
+
+
+class ElysianRealmRun(models.APIModel):
+    """Represents one completed run of Elysian Realms."""
 
     completed_at: datetime = Field(galias="settle_time_second")
     floors_cleared: int = Field(galias="level")
@@ -299,3 +340,23 @@ class ElysianRealm(models.APIModel):
     @property
     def lineup(self) -> List[base.Battlesuit]:
         return [self.leader, *self.supports]
+
+
+class ElysianRealms(models.APIModel):
+    """Represents a user's complete Elysian Realms history."""
+
+    records: List[ElysianRealmRun]
+    collection: ElysianRealmCollection = Field(galias="collections")
+    summary: ElysianRealmSummary
+    battlesuit_info: List[ElysianRealmBattlesuit] = Field(galias="avatar_transcript")
+
+    @validator("collection", pre=True)
+    def __parse_stats(cls, values: List[Dict[str, Any]]):
+        return {stat["type"]: stat for stat in values}
+
+    @validator("battlesuit_info", pre=True)
+    def __unnest_avatar(cls, battlesuits: List[Dict[str, Any]]):
+        for battlesuit in battlesuits:
+            # level=0 defined in avatar, would overwrite actual level outside of avatar
+            battlesuit.update((k, v) for k, v in battlesuit["avatar"].items() if v)
+        return battlesuits

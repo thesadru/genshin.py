@@ -42,6 +42,7 @@ class GameAccount(models.APIModel):
         if isinstance(identifier, int):
             values["game"] = list(games.values())[identifier - 1]
         elif isinstance(identifier, str):
+            identifier = identifier.split("_")[0]
             values["game"] = games[identifier]
         else:
             pass  # Probably new game released, shouldn't break anything though

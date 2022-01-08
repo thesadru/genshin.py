@@ -1,24 +1,15 @@
 from __future__ import annotations
 
 import asyncio
-import functools
-from datetime import datetime
 from typing import *
-from urllib.parse import unquote
 
-from yarl import URL
-
-from genshin import errors
 from genshin import models as base_models
-from genshin import paginators, utils
 from genshin.client import adapter, base
 from genshin.models import honkai as hmodels
 
+from genshin.utils.honkai import recognize_honkai_server  # temp import
+
 CallableT = TypeVar("CallableT", bound=Callable[..., Any])
-
-
-# TODO: implement a recognize_server equivalent for honkai
-# EU = eur01; NA = usa01; SEA = overseas01; CN, JP unknown
 
 
 class BaseHonkaiClient(base.APIClient):
@@ -37,7 +28,7 @@ class BaseHonkaiClient(base.APIClient):
 
     async def _fetch_raw_user(self, uid: int, lang: str = None) -> Dict[str, Any]:
         """Low-level http method for fetching the game record index"""
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/index",
             lang=lang,
@@ -47,7 +38,7 @@ class BaseHonkaiClient(base.APIClient):
 
     async def _fetch_raw_characters(self, uid: int, *, lang: str = None) -> List[Dict[str, Any]]:
         """Low-level http method for fetching the game record characters"""
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/characters", lang=lang, params=dict(server=server, role_id=uid)
         )
@@ -106,7 +97,7 @@ class BaseHonkaiClient(base.APIClient):
         :param uid: A Honkai uid
         :param lang: The language to use
         """
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/newAbyssReport",
             lang=lang,
@@ -120,7 +111,7 @@ class BaseHonkaiClient(base.APIClient):
         :param uid: A Honkai uid
         :param lang: The language to use
         """
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/latestOldAbyssReport",
             lang=lang,
@@ -155,7 +146,7 @@ class BaseHonkaiClient(base.APIClient):
         :param uid: A Honkai uid
         :param lang: The language to use
         """
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/battleFieldReport",
             lang=lang,
@@ -163,20 +154,19 @@ class BaseHonkaiClient(base.APIClient):
         )
         return [hmodels.MemorialArena(**report) for report in data["reports"]]
 
-    async def get_elysian_realm(self, uid: int, *, lang: str = None) -> List[hmodels.ElysianRealm]:
+    async def get_elysian_realm(self, uid: int, *, lang: str = None) -> hmodels.ElysianRealms:
         """Get a list of Elysian Realm runs for the user
 
         :param uid: A Honkai uid
         :param lang: The language to use
         """
-        server = "eur01"  # TODO: recognize_server
+        server = recognize_honkai_server(uid)
         data = await self.request_game_record(
             "honkai3rd/api/godWar",
             lang=lang,
             params=dict(role_id=uid, server=server),
         )
-        # TODO: update ER model and update model construction accordingly
-        return [hmodels.ElysianRealm(**report) for report in data["records"]]
+        return hmodels.ElysianRealms(**data)
 
     async def get_full_user(self, uid: int, *, lang: str = None) -> hmodels.HonkaiFullUserStats:
         """Get a user with all their possible data

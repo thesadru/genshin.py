@@ -198,7 +198,7 @@ class HonkaiFullUserStats(HonkaiUserStats):
 
     abyss: List[Union[permanent_modes.SuperstringAbyss, permanent_modes.OldAbyss]]
     memorial_arena: List[permanent_modes.MemorialArena]
-    elysian_realm: List[permanent_modes.ElysianRealm]
+    elysian_realm: permanent_modes.ElysianRealms
 
     @property
     def abyss_superstring(self) -> List[permanent_modes.SuperstringAbyss]:
