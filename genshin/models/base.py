@@ -154,7 +154,9 @@ class BaseCharacter(GenshinModel, Unique):
         """Complete missing data"""
         partial: bool = False
 
-        id, icon, name = values.get("id"), values.get("icon"), values.get("name")
+        id = values.get("id")
+        icon = values.get("icon") or values.get("image")
+        name = values.get("name")
 
         if id and id in CHARACTER_NAMES:
             char = CHARACTER_NAMES[id]
