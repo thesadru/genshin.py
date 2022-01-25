@@ -52,7 +52,7 @@ def handle_ratelimits(
     """Handles ratelimits for requests"""
     # TODO: Support exponential backoff
 
-    def wrapper(func):
+    def wrapper(func) -> Any:
         async def inner(self, *args: Any, **kwargs: Any) -> Any:
             for _ in range(tries):
                 try:

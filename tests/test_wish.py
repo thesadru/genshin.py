@@ -18,8 +18,8 @@ async def test_merged_wish_history(lclient: GenshinClient):
 
 @pytest.mark.asyncio
 async def test_filtered_merged_wish_history(lclient: GenshinClient):
-    async for wish in lclient.wish_history([301, 302], limit=20):
-        assert wish.banner_type in [301, 302]
+    async for wish in lclient.wish_history([200, 302], limit=20):
+        assert wish.banner_type in [200, 302]
 
 
 @pytest.mark.asyncio

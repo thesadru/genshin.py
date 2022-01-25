@@ -45,6 +45,10 @@ class Notes(GenshinModel):
     max_resin: int
     resin_recovered_at: datetime
 
+    current_realm_currency: int = Field(galias="current_home_coin")
+    max_realm_currency: int = Field(galias="max_home_coin")
+    realm_currency_recovered_at: datetime = Field(galias="home_coin_recovery_time")
+
     completed_commissions: int = Field(galias="finished_task_num")
     max_comissions: int = Field(galias="total_task_num")
     claimed_comission_reward: bool = Field(galias="is_extra_task_reward_received")
@@ -61,9 +65,19 @@ class Notes(GenshinModel):
         remaining = self.resin_recovered_at - datetime.now().astimezone()
         return max(remaining.total_seconds(), 0)
 
+    @property
+    def until_realm_currency_recovery(self) -> float:
+        """The remaining time until resin recovery in seconds"""
+        remaining = self.realm_currency_recovered_at - datetime.now().astimezone()
+        return max(remaining.total_seconds(), 0)
+
     @root_validator(pre=True)
     def __process_timedelta(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        time = timedelta(seconds=int(values["resin_recovery_time"]))
-        values["resin_recovered_at"] = datetime.now().astimezone() + time
+        now = datetime.now().astimezone()
+
+        values["resin_recovered_at"] = now + timedelta(seconds=int(values["resin_recovery_time"]))
+
+        t = timedelta(seconds=int(values["realm_currency_recovered_at"]))
+        values["realm_currency_recovered_at"] = now + t
 
         return values

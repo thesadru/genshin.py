@@ -167,7 +167,7 @@ class BaseCharacter(GenshinModel, Unique):
                 if char.icon_name == icon.character_name:
                     break
             else:
-                warnings.warn("Completing data for an unknown character")
+                warnings.warn(f"Completing data for an unknown character\n{values!r}")
                 name = icon.character_name
                 char = DBChar(0, name, name, "Anemo", 5)
 
@@ -176,7 +176,7 @@ class BaseCharacter(GenshinModel, Unique):
                 if char.name == name:
                     break
             else:
-                warnings.warn("Completing data for a partial character")
+                warnings.warn(f"Completing data for a partial character\n{values!r}")
                 partial = True
                 char = DBChar(0, name, name, "Anemo", 5)
 
