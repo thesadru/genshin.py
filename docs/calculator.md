@@ -42,116 +42,71 @@ details = await client.get_character_details(10000002)
 
 ## Example Of Calculation
 
+### Basic Calculation
+
+The calculator uses builders to set data. All methods return `self` so they're chainable.
+
 ```py
-# calculate the amount of resources needed for any character
+# create a builder object
+builder = client.calculator()
+# calculate resoources needed to level up Hu Tao from lvl 1 to lvl 90
+builder.set_character(10000046, current=1, target=90)
+# calculate the amount of resources needed for a Staff of Homa from level 20 to level 70
+builder.set_weapon(13501, current=20, target=70)
 
-# id of Ayaka
-character_id = 10000002
-# a calulator object: calculate resources needed to level up ayaka from level 1 to 90
-obj = genshin.models.CalculatorObject(id=character_id, current=1, target=90)
-cost = await client.calculate(character=obj)
-
-# if you know what you're doing you may simply pass in a tuple
-# this is possible because is just a named tuple CalculatorObject
-# remember that CalculatorObject is optional literally everywhere
-cost = await client.calculate(character=(character_id, 1, 90))
+# execute the builder
+cost = await builder.calculate()
+print(cost)
 ```
 
 ```py
-# calculate the amount of resources needed for a weapon
-# here we want to level up Staff of Homa from level 20 to level 70
-cost = await client.calculate(weapon=(13501, 20, 70))
+# you may also chain the builder (recommended)
+cost = await (
+    client.calculator()
+    .set_character(10000046, current=1, target=90)
+    .set_weapon(13501, current=20, target=70)
+)
+
 ```
 
 ```py
-# calculate the amount of resources needed for an artifact
-
-# here we us the 5* gladiator's nostalgia
+# calculate the amount needed for a 5* gladiator's nostalgia
 artifact_id = 7554
-# we probably want all artifacts so we may use get_complete_artifact_set to get all others
-artifacts = await client.get_complete_artifact_set(artifact_id)
-
-# to calculate we can pass in a list or a dict
-# both of these are valid:
-cost = await client.calculate(
-    artifacts=[
-        (artifact_id, 0, 20),
-        (artifact[0].id, 0, 20),
-        (artifact[1].id, 0, 20),
-        (artifact[2].id, 0, 20),
-        (artifact[3].id, 0, 20),
-    ]
+cost = await (
+    client.calculator()
+    .add_artifact(artifact_id, current=0, target=20)
 )
-cost = await client.calculate(
-    artifacts={
-        artifact_id: (0, 20),
-        artifact[0].id: (0, 20),
-        artifact[1].id: (0, 20),
-        artifact[2].id: (0, 20),
-        artifact[3].id: (0, 20),
-    }
+
+# or calculate for a full set
+cost = await (
+    client.calculator()
+    .set_artifact_set(artifact_id, current=0, target=20)
+)
+```
+
+### Calculation based off a character
+
+If we assume we're calculating resources for the currently logged in user we can simply get their weapon and artifact levels directly.
+
+```py
+# Let's use the currently equipped weapon, artifacts and talents
+cost = await (
+    client.calculator()
+    .set_character(10000046, current=1, target=90)
+    .with_current_weapon(target=70)
+    .with_current_artifacts(target=20) # every artifact will be set to lvl 20
+    .with_current_talents(target=7) # every artifact will be set to lvl 7
 )
 ```
 
 ```py
-# calculate the amount of resources needed for a talent artifact
-talents = await client.get_character_talents(character_id)
-
-# we have to make sure that we only request upgradeable talents
-talents = [talent for talent in talents if talent.upgradeable]
-
-# talents, unlike other fields, require to be passed by their group_id
-cost = await client.calculate(
-    talents={
-        talents[0].group_id: (1, 10),
-        talents[1].group_id: (1, 10),
-        talents[2].group_id: (1, 10)
-    }
+# you may want to upgrade only specific talent or artifact types
+cost = await (
+    client.calculator()
+    .set_character(10000046, current=80, target=90)
+    # upgrade only the flower and feather
+    .with_current_artifacts(flower=16, feather=20)
+    # upgrade only the burst
+    .with_current_talents(burst=10)
 )
-```
-
-```py
-# finally we can combine them all together
-character_id = 10000002
-weapon_id = 13501
-artifact_id = 7554
-
-artifacts = await client.get_complete_artifact_set(artifact_id)
-artifact_ids = [artifact_id] + [a.id for a in artifacts]
-
-talents = await client.get_character_talents(character_id)
-talent_ids = [talent.group_id for talent in talents if talent.upgradeable]
-
-cost = await client.calculate(
-    character=(character_id, 0, 90),
-    weapon=(weapon_id, 0, 90),
-    artifacts={a: (0, 20) for a in artifact_ids},
-    talents={t: (0, 10) for t in talent_ids},
-)
-
-# let's see how much everything costs:
-print(cost.character)
-print(cost.weapon)
-print(cost.artifacts)
-print(cost.talents)
-
-# and see the total cost
-print(cost.total)
-```
-
-```py
-# alternatively, we can just try and upgrade everything our character has equipped
-characters = await client.get_calculator_characters(sync=True)
-character = characters[0]
-details = await client.get_character_details(character.id)
-
-cost = await client.calculate(
-    character=(character.id, character.level, character.max_level),
-    weapon=(details.weapon.id, details.weapon.level, details.weapon.max_level),
-    artifacts={a.id: (a.level, a.max_level) for a in details.artifacts},
-    talents={t.group_id: (t.level, t.max_level) for t in details.talents},
-)
-
-for item in cost.total:
-    print(f"{item.amount}x {item.name}")
 ```

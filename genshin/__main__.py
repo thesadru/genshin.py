@@ -228,15 +228,12 @@ async def calculate():
 
             raise click.ClickException("Invalid character format")
 
-        c: Any = (
-            character.id,
-            typer.prompt("Current level", type=int),
-            typer.prompt("Target level", type=int),
-        )
-        result = await client.calculate(c)
+        current: Any = typer.prompt("Current level", type=int)
+        target: Any = typer.prompt("Target level", type=int)
+        result = await client.calculator().set_character(character, current=current, target=target)
 
         typer.echo()
-        typer.echo(f"Items needed to level up {character.name} from lvl {c[1]} to {c[2]}:")
+        typer.echo(f"Items needed to level up {character.name} from lvl {current} to {target}:")
 
         for item in result.total:
             typer.echo(f"{item.amount}x {item.name}")

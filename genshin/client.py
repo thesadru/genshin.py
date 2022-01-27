@@ -884,41 +884,17 @@ class GenshinClient:
 
     # CALCULATOR
 
-    async def calculate(
-        self,
-        character: Union[Tuple[int, int, int], Tuple[int, int, int, int]] = None,
-        weapon: Tuple[int, int, int] = None,
-        artifacts: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
-        talents: Union[Sequence[Tuple[int, int, int]], Mapping[int, Tuple[int, int]]] = None,
-        *,
-        lang: str = None,
-    ):
-        json: Dict[str, Any] = {}
+    def calculator(self, *, lang: str = None) -> CalculatorBuilder:
+        """Calculate the resources needed to level up various equipment.
 
-        if character:
-            if len(character) == 4:
-                # highly problematic section for mypy, we have to be very explicit
-                cid, json["element_attr_id"], cl, tl = cast(Tuple[int, int, int, int], character)
-                character = (cid, cl, tl)
+        :param lang: The language to use
+        """
+        return CalculatorBuilder(self, lang=lang)
 
-            json.update(CalculatorObject(*character)._serialize(prefix="avatar_"))
-            if character[0] in (10000005, 10000007):
-                raise ValueError("No element provided for the traveler")
-
-        if talents:
-            if isinstance(talents, Mapping):
-                talents = [(k, *v) for k, v in talents.items()]
-            json["skill_list"] = [CalculatorObject(*i)._serialize() for i in talents]
-
-        if weapon:
-            json["weapon"] = CalculatorObject(*weapon)._serialize()
-
-        if artifacts:
-            if isinstance(artifacts, Mapping):
-                artifacts = [(k, *v) for k, v in artifacts.items()]
-            json["reliquary_list"] = [CalculatorObject(*i)._serialize() for i in artifacts]
-
-        data = await self.request_calculator("compute", lang=lang, json=json)
+    async def _execute_calculator(self, builder: CalculatorBuilder) -> CalculatorResult:
+        """Create a request to calculate the results of a builder"""
+        json = await builder.build()
+        data = await self.request_calculator("compute", lang=builder.lang, json=json)
         return CalculatorResult(**data)
 
     async def _get_calculator_items(

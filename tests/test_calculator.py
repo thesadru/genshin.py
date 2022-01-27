@@ -83,22 +83,12 @@ async def test_complete_artifact_set(client: GenshinClient):
 
 @pytest.mark.asyncio
 async def test_calculate(client: GenshinClient):
-    cost = await client.calculate(
-        character=(10000052, 1, 90),  # Raiden Shogun
-        weapon=(11509, 1, 90),  # Mistsplitter Reforged
-        artifacts={
-            # Emblem of Severed Fate
-            9651: (0, 20),  # goblet 4
-            9652: (0, 20),  # plume 2
-            9653: (0, 20),  # circlet 5
-            9654: (0, 20),  # flower 1
-            9655: (0, 20),  # sands 3
-        },
-        talents={
-            5231: (1, 10),  # attack
-            5232: (1, 10),  # skill
-            5239: (1, 10),  # burst
-        },
+    cost = await (
+        client.calculator()
+        .set_character(10000052, current=1, target=90)
+        .set_weapon(11509, current=1, target=90)
+        .add_artifact(9651, current=0, target=20, full_set=True)
+        .with_current_talents(current=1, target=10)
     )
 
     assert len(cost.character) == 11
