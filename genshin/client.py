@@ -835,6 +835,20 @@ class GenshinClient:
         abyss = {"current": abyss1, "previous": abyss2}
         return FullUserStats(**user.dict(), abyss=abyss, activities=activities)
 
+    async def set_top_characters(self, character_ids: List[int], *, uid: int = None) -> None:
+        """Set the top 8 visible characters for the current user
+
+        :param character_ids: IDs of characters to be shown
+        :param uid: Genshin uid of the currently logged-in user
+        """
+        json = dict(avatar_ids=character_ids)
+        json.update(await self._complete_uid(uid, uid_key="role_id", server_key="server"))
+        await self.request_game_record(
+            "genshin/api/character/top",
+            method="POST",
+            json=json,
+        )
+
     # LEDGER:
 
     async def get_diary(self, uid: int = None, *, month: int = None, lang: str = None) -> Diary:
