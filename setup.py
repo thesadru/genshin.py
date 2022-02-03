@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="genshin",
-    version="0.3.1",
+    version="0.4.0",
     author="thesadru",
     author_email="thesadru@gmail.com",
     description="An API wrapper for Genshin Impact.",
