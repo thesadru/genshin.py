@@ -133,7 +133,8 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     -1071: InvalidCookies,
     -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: "Redemption code has expired.",
-    -2003: "Invalid redemption code.",
+    -2004: "Invalid redemption code.",
+    -2016: "Redemption in cooldown.",
     -2017: "Redeption code has been claimed already.",
     -2021: "Cannot claim codes for account with adventure rank lower than 10.",
     # rewards
