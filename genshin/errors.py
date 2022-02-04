@@ -107,6 +107,24 @@ class AuthkeyTimeout(AuthkeyException):
 
     msg = "Authkey has timed out."
 
+class RedemptionException(GenshinException):
+    """Exception caused by redeeming a code"""
+
+class RedemptionInvalid(RedemptionException):
+    """ Invalid redemption code. """
+
+    msg = "Invalid redemption code."
+
+class RedemptionCooldown(RedemptionException):
+    """Cooldown for redeeming"""
+
+    msg = "Redemption is on cooldown."
+
+class RedemptionClaimed(RedemptionException):
+    """Redeption code has been claimed already."""
+
+    msg = "Code has been claimed already."
+
 
 _TGE = Type[GenshinException]
 _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
@@ -132,10 +150,11 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     # redemption
     -1071: InvalidCookies,
     -1073: (AccountNotFound, "Account has no game account bound to it."),
-    -2001: "Redemption code has expired.",
-    -2003: "Invalid redemption code.",
-    -2017: "Redeption code has been claimed already.",
-    -2021: "Cannot claim codes for account with adventure rank lower than 10.",
+    -2001: (RedemptionInvalid, "Redemption code has expired."),
+    -2004: RedemptionInvalid,
+    -2016: (RedemptionCooldown, "Redemption in cooldown."),
+    -2017: (RedemptionClaimed, "Redeption code has been claimed already."),
+    -2021: (RedemptionException, "Cannot claim codes for account with adventure rank lower than 10."),
     # rewards
     -5003: AlreadyClaimed,
     # chinese
