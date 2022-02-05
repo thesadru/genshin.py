@@ -10,8 +10,13 @@ __all__ = [
     "CookieException",
     "InvalidCookies",
     "TooManyRequests",
-    # redemption:
+    # daily:
     "AlreadyClaimed",
+    # redemption:
+    "RedemptionInvalid",
+    "RedemptionClaimed",
+    "RedemptionCooldown",
+    "RedemptionException",
     # authkeys:
     "AuthkeyException",
     "InvalidAuthkey",
@@ -107,18 +112,22 @@ class AuthkeyTimeout(AuthkeyException):
 
     msg = "Authkey has timed out."
 
+
 class RedemptionException(GenshinException):
     """Exception caused by redeeming a code"""
+
 
 class RedemptionInvalid(RedemptionException):
     """ Invalid redemption code. """
 
     msg = "Invalid redemption code."
 
+
 class RedemptionCooldown(RedemptionException):
     """Cooldown for redeeming"""
 
     msg = "Redemption is on cooldown."
+
 
 class RedemptionClaimed(RedemptionException):
     """Redeption code has been claimed already."""
@@ -204,7 +213,9 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
 
     elif m.startswith("character id"):
         char = m.split(":")[1].split()[0]
-        raise GenshinException(data, f"User does not have a character with id {char}")
+        raise GenshinException(
+            data, f"User does not have a character with id {char}"
+        )
 
     elif r in ERRORS:
         exctype, msg = ERRORS[r]
