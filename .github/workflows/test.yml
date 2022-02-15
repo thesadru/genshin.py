@@ -26,7 +26,7 @@ jobs:
           CN_LTUID: ${{ secrets.CN_LTUID }}
           CN_LTOKEN: ${{ secrets.CN_LTOKEN }}
         run: |
-          python -m pytest
+          python -m pytest -k "not chinese"
 
   lint:
     runs-on: ubuntu-latest
