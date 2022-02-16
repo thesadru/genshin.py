@@ -76,6 +76,7 @@ class BannerDetailsUpItem(GenshinModel):
 class BannerDetails(GenshinModel):
     """Details of a banner"""
 
+    banner_id: str
     banner_type: int = Field(galias="gacha_type")
     title: str
     content: str

@@ -239,5 +239,22 @@ async def calculate():
             typer.echo(f"{item.amount}x {item.name}")
 
 
+@app.command()
+@asynchronous
+async def banner_ids():
+    """Get the banner ids from logs"""
+    ids = genshin.get_banner_ids()
+
+    typer.echo("\n".join(ids) + "\n")
+
+    if len(ids) < 3:
+        typer.echo("Please open all detail pages!")
+        return
+
+    async with genshin.GenshinClient() as client:
+        for banner in await client.get_banner_details(ids):
+            typer.echo(f"{banner.banner_id} - {banner.banner_type_name} ({banner.banner_type})")
+
+
 if __name__ == "__main__":
     app()

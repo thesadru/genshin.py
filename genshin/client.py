@@ -1212,7 +1212,7 @@ class GenshinClient:
         data = await self.request_webstatic(
             f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json"
         )
-        return BannerDetails(**data)
+        return BannerDetails(**data, banner_id=banner_id)
 
     async def get_banner_details(
         self, banner_ids: List[str] = None, *, lang: str = None
@@ -1464,13 +1464,13 @@ class ChineseClient(GenshinClient):
     ACT_ID = "e202009291139501"
 
     TAKUMI_URL = "https://api-takumi.mihoyo.com/"
-    RECORD_URL = "https://api-takumi-record.hoyoverse.com/game_record/app/"
-    INFO_LEDGER_URL = "https://hk4e-api.hoyoverse.com/event/ys_ledger/monthInfo"
-    DETAIL_LEDGER_URL = "https://hk4e-api.hoyoverse.com/event/ys_ledger/monthDetail"
-    REWARD_URL = "https://api-takumi.hoyoverse.com/event/bbs_sign_reward/"
-    GACHA_INFO_URL = "https://hk4e-api.hoyoverse.com/event/gacha_info/api/"
-    MAP_URL = "https://api-takumi-static.hoyoverse.com/common/map_user/ys_obc/v1/map/"
-    STATIC_MAP_URL = "https://api-static.hoyoverse.com/common/map_user/ys_obc/v1/map"
+    RECORD_URL = "https://api-takumi-record.mihoyo.com/game_record/app/"
+    INFO_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo"
+    DETAIL_LEDGER_URL = "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail"
+    REWARD_URL = "https://api-takumi.mihoyo.com/event/bbs_sign_reward/"
+    GACHA_INFO_URL = "https://hk4e-api.mihoyo.com/event/gacha_info/api/"
+    MAP_URL = "https://api-takumi-static.mihoyo.com/common/map_user/ys_obc/v1/map/"
+    STATIC_MAP_URL = "https://api-static.mihoyo.com/common/map_user/ys_obc/v1/map"
 
     def __init__(
         self,

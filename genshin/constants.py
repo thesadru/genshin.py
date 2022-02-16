@@ -70,7 +70,7 @@ _character_names = {
     10000055: ("Gorou", "Gorou", "Geo", 4),
     10000056: ("Sara", "Kujou Sara", "Electro", 4),
     10000057: ("Itto", "Arataki Itoo", "Geo", 5),
-    10000058: None,
+    10000058: ("Yae", "Yae Miko", "Electro", 5),
     10000059: None,
     10000060: None,
     10000061: None,

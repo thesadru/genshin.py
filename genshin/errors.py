@@ -118,7 +118,7 @@ class RedemptionException(GenshinException):
 
 
 class RedemptionInvalid(RedemptionException):
-    """ Invalid redemption code. """
+    """Invalid redemption code."""
 
     msg = "Invalid redemption code."
 
@@ -163,7 +163,10 @@ _errors: Dict[int, Union[_TGE, str, Tuple[_TGE, Optional[str]]]] = {
     -2004: RedemptionInvalid,
     -2016: (RedemptionCooldown, "Redemption in cooldown."),
     -2017: (RedemptionClaimed, "Redeption code has been claimed already."),
-    -2021: (RedemptionException, "Cannot claim codes for account with adventure rank lower than 10."),
+    -2021: (
+        RedemptionException,
+        "Cannot claim codes for accounts with adventure rank lower than 10.",
+    ),
     # rewards
     -5003: AlreadyClaimed,
     # chinese
@@ -213,9 +216,7 @@ def raise_for_retcode(data: Dict[str, Any]) -> NoReturn:
 
     elif m.startswith("character id"):
         char = m.split(":")[1].split()[0]
-        raise GenshinException(
-            data, f"User does not have a character with id {char}"
-        )
+        raise GenshinException(data, f"User does not have a character with id {char}")
 
     elif r in ERRORS:
         exctype, msg = ERRORS[r]

@@ -50,6 +50,7 @@ async def test_notes(lclient: GenshinClient, uid: int):
     assert len(data.expeditions) == 5
 
 
+@pytest.mark.skip("Mihoyo temporarily removed all activities")
 @pytest.mark.asyncio
 async def test_activities(client: GenshinClient, uid: int):
     data = await client.get_activities(uid)
@@ -57,9 +58,8 @@ async def test_activities(client: GenshinClient, uid: int):
     assert data.hyakunin_ikki is not None
     assert data.hyakunin_ikki.challenges[0].medal == "gold"
 
-    # mihoyo removed these???
-    # assert data.labyrinth_warriors is not None
-    # assert data.labyrinth_warriors.challenges[0].runes[0].element == "Anemo"
+    assert data.labyrinth_warriors is not None
+    assert data.labyrinth_warriors.challenges[0].runes[0].element == "Anemo"
 
 
 @pytest.mark.asyncio
