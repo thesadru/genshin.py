@@ -60,6 +60,7 @@ Example with aioredis:
 ```py
 import aioredis
 import genshin
+import msgpack
 
 
 class RedisClient(genshin.GenshinClient):
@@ -71,14 +72,14 @@ class RedisClient(genshin.GenshinClient):
         """Check the cache for any entries"""
         key = ":".join(map(str, key + (lang or self.lang,)))
 
-        data = self.redis.get(key)
+        data = await self.redis.get(key)
         if data is None:
             return None
 
         if check is None or check(data):
-            return data
+            return msgpack.unpackb(data)
 
-        self.redis.delete(key)
+        await self.redis.delete(key)
 
         return None
 
@@ -89,5 +90,5 @@ class RedisClient(genshin.GenshinClient):
         if check is not None and not check(data):
             return
 
-        self.redis.set(key, data, ex=3600)
+        await self.redis.set(key, msgpack.packb(data), ex=3600)
 ```
