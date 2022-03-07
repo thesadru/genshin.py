@@ -23,14 +23,17 @@ typeCheckingMode = "strict"
 reportMissingTypeStubs = "none"
 reportImportCycles = "none"
 reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword-only arguments
+reportUnusedFunction = "none"  # Makes usage of validators impossible
 
 [tool.mypy]
 warn_unreachable = true
 
-# for pyright
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+
+# pyright
 warn_unused_ignores = false
 warn_redundant_casts = false
-
-# compatibility with pyright
 allow_redefinition = true
 disable_error_code = ["return-value"]

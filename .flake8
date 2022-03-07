@@ -1,22 +1,22 @@
 [flake8]
 exclude = tests, test.py
 ignore = 
+    A001, A002, A003,  # id variable/parameter/attribute
     C408,  # dict() with keyword arguments
     D105,  # Missing docstring in magic method
+    D106,  #  Missing docstring Model.Config
     S303,  # Use of md5
     S311,  # Use of pseudo-random generators
+
 
 # F401: unused import.
 # F403: cannot detect unused vars if we use starred import
 per-file-ignores =
     **/__init__.py:  F401, F403
-    genshin/utility/genshin.py: 
 
 max-complexity = 20
 max-function-length = 100
 max-line-length = 130
-show_source = False
-statistics = False
 
 accept-encodings = utf-8
 docstring-convention = numpy

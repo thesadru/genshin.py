@@ -1,1 +1,1 @@
-"""Honkai API models."""
+"""Honkai models."""

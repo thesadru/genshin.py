@@ -1,4 +1,4 @@
-"""API models."""
+"""Hoyolab models."""
 from .genshin import *
 from .honkai import *
-from .hoyolab import *
+from .record import *

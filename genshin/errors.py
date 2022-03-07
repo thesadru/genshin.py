@@ -2,27 +2,21 @@
 import typing
 
 __all__ = [
-    "GenshinException",
-    # game record:
     "AccountNotFound",
-    "DataNotPublic",
-    # cookies:
-    "CookieException",
-    "InvalidCookies",
-    "TooManyRequests",
-    # daily:
     "AlreadyClaimed",
-    # redemption:
-    "RedemptionInvalid",
+    "AuthkeyException",
+    "AuthkeyTimeout",
+    "CookieException",
+    "DataNotPublic",
+    "ERRORS",
+    "GenshinException",
+    "InvalidAuthkey",
+    "InvalidCookies",
     "RedemptionClaimed",
     "RedemptionCooldown",
     "RedemptionException",
-    # authkeys:
-    "AuthkeyException",
-    "InvalidAuthkey",
-    "AuthkeyTimeout",
-    # misc:
-    "ERRORS",
+    "RedemptionInvalid",
+    "TooManyRequests",
     "raise_for_retcode",
 ]
 

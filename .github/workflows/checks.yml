@@ -1,0 +1,74 @@
+name: Run checks
+
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: install prerequisites
+        run: |
+          python -m pip install -r dev-requirements.txt
+      - name: lint
+        run: |
+          python -m black genshin --check --verbose
+          python -m isort genshin -c --verbose
+          python -m flake8 genshin --verbose
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ubuntu-latest
+        python-version: ["3.9", "3.10"]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: install prerequisites
+        run: |
+          python -m pip install -r dev-requirements.txt
+      - name: Run tests
+        run: |
+          python -m pytest
+  type-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: install prerequisites
+        run: |
+          python -m pip install -r dev-requirements.txt
+      - name: Run type checker
+        run: |
+          python -m mypy genshin
+          python -m pyright genshin
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run prettier
+        run: |
+          npx prettier --check *.md

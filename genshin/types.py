@@ -1,5 +1,13 @@
 """Types used in the library."""
 import enum
+import typing
+
+if typing.TYPE_CHECKING:
+    from genshin.models.model import Unique
+
+__all__ = ["Game", "IDOr", "Region"]
+
+UniqueT = typing.TypeVar("UniqueT", bound="Unique")
 
 
 class Region(str, enum.Enum):
@@ -20,3 +28,7 @@ class Game(str, enum.Enum):
 
     HONKAI = "honkai3rd"
     """Honkai Impact 3rd"""
+
+
+IDOr = typing.Union[int, UniqueT]
+"""Allows partial objects."""

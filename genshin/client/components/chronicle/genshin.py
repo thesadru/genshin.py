@@ -3,6 +3,7 @@
 import typing
 
 from genshin import types
+from genshin.models.genshin import chronicle as models
 from genshin.utility import genshin as genshin_utility
 
 from . import base
@@ -20,7 +21,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ):
+    ) -> models.GenshinPartialUserStats:
         """Low-level http method for fetching the game record index."""
         data = await self.request_game_record(
             "index",
@@ -29,4 +30,4 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             region=_get_region(uid),
             params=dict(role_id=uid, server=genshin_utility.recognize_genshin_server(uid)),
         )
-        return data
+        return models.GenshinPartialUserStats(**data)

@@ -9,8 +9,8 @@ import typing
 from genshin import constants, types
 
 __all__ = [
-    "generate_dynamic_secret",
     "generate_cn_dynamic_secret",
+    "generate_dynamic_secret",
 ]
 
 

@@ -156,13 +156,13 @@ class BaseClient:
         url = yarl.URL(url)
         if params:
             params = {k: v for k, v in params.items() if k != "authkey"}
-            url = url.with_query(params)
+            url = url.update_query(params)
 
-        string = f"{method} {url}"
+        data_string = ""
         if data:
-            string += "\n" + json.dumps(data, separators=(",", ":"))
+            data_string = "\n" + json.dumps(data, separators=(",", ":"))
 
-        self.logger.debug(string)
+        self.logger.debug("%s %s%s", method, url, data_string)
 
     async def request(
         self,

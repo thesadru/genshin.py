@@ -3,6 +3,7 @@
 import typing
 
 from genshin import types
+from genshin.models.honkai import chronicle as models
 from genshin.utility import honkai as honkai_utility
 
 from . import base
@@ -16,7 +17,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ):
+    ) -> models.HonkaiPartialUserStats:
         """Low-level http method for fetching the game record index."""
         data = await self.request_game_record(
             "index",
@@ -25,4 +26,4 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             region=types.Region.OVERSEAS,
             params=dict(role_id=uid, server=honkai_utility.recognize_honkai_server(uid)),
         )
-        return data
+        return models.HonkaiPartialUserStats(**data)

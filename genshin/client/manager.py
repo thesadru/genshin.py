@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import abc
 import http.cookies
+import logging
 import typing
 
 import aiohttp
@@ -13,14 +14,19 @@ from genshin.utility import fs as fs_utility
 
 from . import ratelimit
 
-__all__ = ["AbstractCookieManager", "CookieManager"]
+_LOGGER = logging.getLogger(__name__)
+
+__all__ = ["AbstractCookieManager", "CookieManager", "RotatingCookieManager"]
 
 CookieOrHeader = typing.Union[http.cookies.BaseCookie[typing.Any], typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
 
 
-def parse_cookie(cookie: CookieOrHeader) -> typing.Dict[str, str]:
+def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, str]:
     """Parse a cookie or header into a cookie mapping."""
+    if cookie is None:
+        return {}
+
     if isinstance(cookie, str):
         cookie = http.cookies.SimpleCookie(cookie)
 
@@ -135,7 +141,7 @@ class CookieManager(AbstractCookieManager):
         cookies: typing.Optional[CookieOrHeader] = None,
         region: types.Region = types.Region.OVERSEAS,
     ) -> None:
-        self.cookies = cookies
+        self.cookies = parse_cookie(cookies)
         self.region = region
 
     def __repr__(self) -> str:
@@ -172,7 +178,7 @@ class CookieManager(AbstractCookieManager):
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
-        self.cookies = cookies or kwargs
+        self.cookies = parse_cookie(cookies or kwargs)
         return self.cookies
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> typing.Mapping[str, str]:
@@ -221,7 +227,7 @@ class RotatingCookieManager(AbstractCookieManager):
         cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
         region: types.Region = types.Region.OVERSEAS,
     ) -> None:
-        self.cookies = cookies
+        self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
         self.region = region
 
     @property
@@ -251,7 +257,7 @@ class RotatingCookieManager(AbstractCookieManager):
         cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
     ) -> typing.Sequence[typing.Mapping[str, str]]:
         """Parse and set cookies."""
-        self.cookies = cookies
+        self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
         return self.cookies
 
     def _sort_cookies(self) -> None:
@@ -274,8 +280,9 @@ class RotatingCookieManager(AbstractCookieManager):
 
         for index, (cookie, uses) in enumerate(self._cookies.copy()):
             try:
-                data = await self._request(method, url, cookies=self.cookies, **kwargs)
+                data = await self._request(method, url, cookies=cookie, **kwargs)
             except errors.TooManyRequests:
+                _LOGGER.debug("Putting cookie %s on cooldown.", cookie.get("account_id") or cookie.get("ltuid"))
                 self._cookies[index] = (cookie, self.MAX_USES)
             else:
                 self._cookies[index] = (cookie, 1 if uses >= self.MAX_USES else uses + 1)

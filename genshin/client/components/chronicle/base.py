@@ -2,9 +2,10 @@
 
 import typing
 
-from genshin import errors, types
+from genshin import errors, models, types
 from genshin.client import routes
 from genshin.client.components import base
+from genshin.utility import deprecation
 
 
 class BaseBattleChronicleClient(base.BaseClient):
@@ -34,7 +35,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         hoyolab_uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-    ):
+    ) -> typing.List[models.hoyolab.RecordCard]:
         """Get a user's record cards."""
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
@@ -46,4 +47,15 @@ class BaseBattleChronicleClient(base.BaseClient):
         if not cards:
             raise errors.DataNotPublic({"retcode": 10102})
 
-        return cards
+        return [models.hoyolab.RecordCard(**card) for card in cards]
+
+    @deprecation.deprecated(alternative="get_record_cards")
+    async def get_record_card(
+        self,
+        hoyolab_uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.hoyolab.RecordCard:
+        """Get a user's record card."""
+        cards = await self.get_record_cards(hoyolab_uid, lang=lang)
+        return cards[0]
