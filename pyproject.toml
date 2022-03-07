@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
+include = ".*pyi?$"
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest]
+asyncio_mode = "strict"
+testpaths = ["tests"]
+required_plugins = ["pytest-asyncio"]
+
+[tool.pyright]
+include = ["genshin"]
+
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "none"
+reportImportCycles = "none"
+reportIncompatibleMethodOverride = "none"  # This relies on ordering for key-word only arguments
+
+[tool.mypy]
+warn_unreachable = true
+
+# for pyright
+warn_unused_ignores = false
+warn_redundant_casts = false
+
+# compatibility with pyright
+allow_redefinition = true
+disable_error_code = ["return-value"]
