@@ -4,6 +4,8 @@ Documentation: https://thesadru.github.io/genshin.py
 
 Source Code: https://github.com/thesadru/genshin.py
 """
+from . import models  # type: ignore
+from .client import *
 from .constants import *
 from .errors import *
 from .types import *

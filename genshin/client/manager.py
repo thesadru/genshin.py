@@ -13,7 +13,7 @@ from genshin.utility import fs as fs_utility
 
 from . import ratelimit
 
-__all__ = ["BaseCookieManager", "CookieManager"]
+__all__ = ["AbstractCookieManager", "CookieManager"]
 
 CookieOrHeader = typing.Union[http.cookies.BaseCookie[typing.Any], typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
@@ -27,7 +27,7 @@ def parse_cookie(cookie: CookieOrHeader) -> typing.Dict[str, str]:
     return {str(k): v.value if isinstance(v, http.cookies.Morsel) else str(v) for k, v in cookie.items()}
 
 
-class BaseCookieManager(abc.ABC):
+class AbstractCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
     region: types.Region = types.Region.OVERSEAS
@@ -37,7 +37,7 @@ class BaseCookieManager(abc.ABC):
         cls,
         cookies: typing.Optional[AnyCookieOrHeader] = None,
         region: types.Region = types.Region.OVERSEAS,
-    ) -> BaseCookieManager:
+    ) -> AbstractCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
         if isinstance(cookies, typing.Sequence):
             return RotatingCookieManager(cookies, region=region)
@@ -57,6 +57,11 @@ class BaseCookieManager(abc.ABC):
         return manager
 
     @property
+    @abc.abstractmethod
+    def available(self) -> bool:
+        """Whether the authentication cookies are available."""
+
+    @property
     def user_id(self) -> typing.Optional[int]:
         """The id of the user that owns cookies.
 
@@ -64,10 +69,25 @@ class BaseCookieManager(abc.ABC):
         """
         return None
 
+    def get_user_id(self, fallback: typing.Optional[int]) -> int:
+        """Get the id of the user that owns cookies.
+
+        Raises an error if not found and fallback is not provided.
+        """
+        if fallback:
+            return fallback
+
+        if self.user_id:
+            return self.user_id
+
+        if self.available:
+            raise ValueError(f"Hoyolab ID must be provided when using {self.__class__}")
+
+        raise ValueError("No cookies have been provided.")
+
     def create_session(self, **kwargs: typing.Any) -> aiohttp.ClientSession:
         """Create a client session."""
         return aiohttp.ClientSession(
-            connector_owner=False,
             cookie_jar=aiohttp.DummyCookieJar(),
             **kwargs,
         )
@@ -105,7 +125,7 @@ class BaseCookieManager(abc.ABC):
         """Make an authenticated request."""
 
 
-class CookieManager(BaseCookieManager):
+class CookieManager(AbstractCookieManager):
     """Standard implementation of the cookie manager."""
 
     _cookies: typing.Dict[str, str]
@@ -117,6 +137,9 @@ class CookieManager(BaseCookieManager):
     ) -> None:
         self.cookies = cookies
         self.region = region
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.cookies})"
 
     @property
     def cookies(self) -> typing.Mapping[str, str]:
@@ -132,6 +155,10 @@ class CookieManager(BaseCookieManager):
         self._cookies = parse_cookie(cookies)
 
     @property
+    def available(self) -> bool:
+        return bool(self._cookies)
+
+    @property
     def jar(self) -> http.cookies.SimpleCookie[str]:
         """A client cookie jar."""
         return http.cookies.SimpleCookie(self.cookies)
@@ -145,7 +172,7 @@ class CookieManager(BaseCookieManager):
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
-        self.cookies = cookies
+        self.cookies = cookies or kwargs
         return self.cookies
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> typing.Mapping[str, str]:
@@ -162,9 +189,9 @@ class CookieManager(BaseCookieManager):
 
         Returns None if cookies are not set.
         """
-        for cookie in self.cookies:
-            if cookie in ("ltuid", "account_id"):
-                return int(cookie)
+        for name, value in self.cookies.items():
+            if name in ("ltuid", "account_id"):
+                return int(value)
 
         return None
 
@@ -179,10 +206,10 @@ class CookieManager(BaseCookieManager):
         if not self.cookies:
             raise RuntimeError("Tried to make a request before setting cookies")
 
-        return self._request(method, url, cookies=self.cookies, **kwargs)
+        return await self._request(method, url, cookies=self.cookies, **kwargs)
 
 
-class RotatingCookieManager(BaseCookieManager):
+class RotatingCookieManager(AbstractCookieManager):
     """Cookie Manager with rotating cookies."""
 
     MAX_USES: typing.ClassVar[int] = 30
@@ -211,6 +238,13 @@ class RotatingCookieManager(BaseCookieManager):
 
         self._cookies = [(parse_cookie(cookie), 0) for cookie in cookies]
         self._sort_cookies()
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} len={len(self._cookies)}>"
+
+    @property
+    def available(self) -> bool:
+        return bool(self._cookies)
 
     def set_cookies(
         self,

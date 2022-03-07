@@ -6,7 +6,7 @@ import urllib.parse
 
 from genshin.utility import fs
 
-__all__ = ["get_logfile", "extract_authkey", "get_authkey", "get_banner_ids"]
+__all__ = ["extract_authkey", "get_authkey", "get_banner_ids"]
 
 AUTHKEY_FILE = os.path.join(fs.get_tempdir(), "genshin_authkey.txt")
 

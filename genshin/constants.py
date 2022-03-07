@@ -25,8 +25,10 @@ DS_SALT = {
     types.Region.OVERSEAS: "6cqshh5dhw73bzxn20oexa9k516chk7s",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
 }
+"""Dynamic Secret Salts."""
 
 ACT_ID = {
     types.Region.OVERSEAS: "e202102251931481",
     types.Region.CHINESE: "e202009291139501",
 }
+"""ACT IDs used in daily reward claiming."""

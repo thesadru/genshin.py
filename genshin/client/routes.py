@@ -1,4 +1,5 @@
 """API routes."""
+import itertools
 import typing
 
 import yarl
@@ -18,34 +19,44 @@ __all__ = [
     "YSULOG_URL",
 ]
 
-REGIONS = (types.Region.OVERSEAS, types.Region.CHINESE)
-
 
 class Route:
     """A route which provides useful metadata."""
 
+    universal: typing.Optional[yarl.URL] = None
     urls: typing.Mapping[types.Region, yarl.URL]
 
-    def __init__(self, url: str, *urls: str) -> None:
-        if not urls:
-            self.urls = {types.Region.UNKNOWN: yarl.URL(url)}
-            return
-
-        urls = (url,) + urls
-        self.urls = {region: yarl.URL(url) for region, url in zip(REGIONS, urls)}
+    def __init__(self, overseas: str, chinese: typing.Optional[str] = None) -> None:
+        if not chinese:
+            self.universal = yarl.URL(overseas)
+            self.urls = {}
+        else:
+            self.urls = {
+                types.Region.OVERSEAS: yarl.URL(overseas),
+                types.Region.CHINESE: yarl.URL(chinese),
+            }
 
     @property
     def needs_authkey(self) -> bool:
         """Whether this route requires an authkey."""
-        for url in self.urls.values():
+        for url in itertools.chain(self.urls.values(), [self.universal]):
             if "gacha" in str(url) or "log" in str(url):
                 return True
 
         return False
 
-    def get_url(self, region: types.Region = types.Region.UNKNOWN) -> yarl.URL:
-        """Attempt to get a URL, fallback to UNKNOWN."""
-        return self.urls.get(region, self.urls[types.Region.UNKNOWN])
+    def get_url(self, region: typing.Optional[types.Region] = None) -> yarl.URL:
+        """Attempt to get a URL."""
+        if region is None:
+            if self.universal is None:
+                raise ValueError("Region must be provided for this Route.")
+
+            return self.universal
+
+        if region in self.urls:
+            return self.urls[region]
+
+        raise TypeError(f"Could not find URL for {region.name}.")
 
 
 WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
@@ -55,7 +66,7 @@ TAKUMI_URL = Route(
     "https://api-takumi.mihoyo.com/",
 )
 RECORD_URL = Route(
-    "https://bbs-api-os.hoyoverse.com/game_record/",
+    "https://bbs-api-os.hoyolab.com/game_record/",
     "https://api-takumi-record.mihoyo.com/game_record/app/",
 )
 

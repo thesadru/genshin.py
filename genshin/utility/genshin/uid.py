@@ -14,7 +14,7 @@ def create_short_lang_code(lang: str) -> str:
 
 
 def recognize_genshin_server(uid: int) -> str:
-    """Recognize which server a UID is from."""
+    """Recognize which server a Genshin UID is from."""
     server = {
         "1": "cn_gf01",
         "2": "cn_gf01",
@@ -27,8 +27,8 @@ def recognize_genshin_server(uid: int) -> str:
 
     if server:
         return server
-    else:
-        raise ValueError(f"UID {uid} isn't associated with any server")
+
+    raise ValueError(f"UID {uid} isn't associated with any server")
 
 
 def is_chinese(x: typing.Union[int, str]) -> bool:

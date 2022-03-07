@@ -1,0 +1,1 @@
+"""Genshin API models."""

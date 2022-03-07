@@ -13,6 +13,8 @@ __pycache__/
 .vscode/
 .vs/
 
+# Temporary test files
+test.py
 
 # Unit test / coverage reports
 htmlcov/
@@ -28,13 +30,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
-# Translations
-*.mo
-*.pot
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
 
 # Environments
 .env

@@ -2,3 +2,4 @@
 
 Abuses inheritance because it can.
 """
+from .client import *

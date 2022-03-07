@@ -1,6 +1,6 @@
-"""Base abc client."""
+"""Base ABC Client."""
 import base64
-import json as stdjson
+import json
 import logging
 import os
 import typing
@@ -16,7 +16,7 @@ from genshin.utility import genshin as genshin_utility
 
 
 class BaseClient:
-    """A simple HTTP client for API endpoints."""
+    """Base ABC Client."""
 
     WEBSTATIC_URL = "https://webstatic-sea.hoyoverse.com/"
 
@@ -24,9 +24,12 @@ class BaseClient:
 
     logger: logging.Logger = logging.getLogger(__name__)
 
-    cookie_manager: manager.BaseCookieManager
+    cookie_manager: manager.AbstractCookieManager
     _authkey: typing.Optional[str] = None
-    _lang: str
+    _lang: str = "en-us"
+    _region: types.Region = types.Region.OVERSEAS
+
+    _uids: typing.Dict[types.Game, int]
 
     def __init__(
         self,
@@ -37,11 +40,13 @@ class BaseClient:
         region: types.Region = types.Region.OVERSEAS,
         debug: bool = False,
     ) -> None:
-        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies)
+        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies, region=region)
         self.authkey = authkey
         self.lang = lang
         self.region = region
         self.debug = debug
+
+        self._uids = {}
 
     def __repr__(self) -> str:
         return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
@@ -65,6 +70,19 @@ class BaseClient:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
 
         self._lang = lang
+
+    @property
+    def region(self) -> types.Region:
+        """The default region."""
+        return self._region
+
+    @region.setter
+    def region(self, region: types.Region) -> None:
+        self._region = region
+        self.cookie_manager.region = region
+
+        if region is types.Region.CHINESE:
+            self.lang = "zh-cn"
 
     @property
     def authkey(self) -> typing.Optional[str]:
@@ -99,14 +117,16 @@ class BaseClient:
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
-        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies or kwargs, region=self.region)
+        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies or kwargs)
+        self.cookie_manager.region = self.region
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> None:
         """Extract cookies from your browser and set them as client cookies.
 
         Available browsers: chrome, chromium, opera, edge, firefox.
         """
-        self.cookie_manager = manager.BaseCookieManager.from_browser_cookies(browser, region=self.region)
+        self.cookie_manager = manager.AbstractCookieManager.from_browser_cookies(browser)
+        self.cookie_manager.region = self.region
 
     def set_authkey(self, authkey: typing.Optional[str] = None) -> None:
         """Set an authkey for wish & transaction logs.
@@ -140,7 +160,7 @@ class BaseClient:
 
         string = f"{method} {url}"
         if data:
-            string += "\n" + stdjson.dumps(data, separators=(",", ":"))
+            string += "\n" + json.dumps(data, separators=(",", ":"))
 
         self.logger.debug(string)
 
@@ -183,7 +203,7 @@ class BaseClient:
         url = yarl.URL(self.WEBSTATIC_URL).join(yarl.URL(url))
 
         headers = dict(headers or {})
-        headers["user-agent"] = self.USER_AGENT
+        headers["User-Agent"] = self.USER_AGENT
 
         async with self.cookie_manager.create_session() as session:
             async with session.get(url, headers=headers, **kwargs) as r:
@@ -197,6 +217,7 @@ class BaseClient:
         url: aiohttp.typedefs.StrOrURL,
         *,
         lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
         method: typing.Optional[str] = None,
         params: typing.Optional[typing.Mapping[str, str]] = None,
         data: typing.Any = None,
@@ -204,18 +225,44 @@ class BaseClient:
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request any hoyolab endpoint."""
-        if lang not in constants.LANGS and lang is not None:
+        if lang is not None and lang not in constants.LANGS:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
 
-        url = routes.TAKUMI_URL.get_url().join(yarl.URL(url))
+        lang = lang or self.lang
+        region = region or self.region
 
-        headers = {
-            "x-rpc-app_version": "1.5.0",
-            "x-rpc-client_type": "4",
-            "x-rpc-language": lang or self.lang,
-            "ds": ds.generate_dynamic_secret(constants.DS_SALT[self.region]),
-        }
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        if region is types.Region.OVERSEAS:
+            headers = {
+                "x-rpc-app_version": "1.5.0",
+                "x-rpc-client_type": "4",
+                "x-rpc-language": lang,
+                "ds": ds.generate_dynamic_secret(),
+            }
+        elif region is types.Region.CHINESE:
+            headers = {
+                "x-rpc-app_version": "2.11.1",
+                "x-rpc-client_type": "5",
+                "ds": ds.generate_cn_dynamic_secret(data, params),
+            }
+        else:
+            raise TypeError(f"{region!r} is not a valid region.")
 
         data = await self.request(url, method=method, params=params, headers=headers, **kwargs)
-
         return data
+
+    async def _complete_uid(
+        self,
+        game: types.Game,
+        uid: typing.Optional[int] = None,
+        *,
+        uid_key: str = "uid",
+        server_key: str = "region",
+    ) -> typing.Mapping[str, typing.Any]:
+        """Create a new dict with a uid and a server."""
+        # TODO: Implement for all games
+        if uid is None:
+            raise NotImplementedError("Completion not implented yet")
+
+        return {uid_key: uid, server_key: genshin_utility.recognize_genshin_server(uid)}

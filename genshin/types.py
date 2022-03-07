@@ -2,24 +2,21 @@
 import enum
 
 
-class Region(enum.Enum):
+class Region(str, enum.Enum):
     """Region to get data from."""
 
-    UNKNOWN = 0
-    """Unknown region."""
-
-    OVERSEAS = 1
+    OVERSEAS = "os"
     """Applies to all overseas APIs."""
 
-    CHINESE = 2
+    CHINESE = "cn"
     """Applies to all chinese mainland APIs."""
 
 
-class Game(enum.Enum):
+class Game(str, enum.Enum):
     """Hoyoverse game."""
 
-    GENSHIN = 1
+    GENSHIN = "genshin"
     """Genshin Impact"""
 
-    HONKAI = 2
+    HONKAI = "honkai3rd"
     """Honkai Impact 3rd"""

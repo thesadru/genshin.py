@@ -1,4 +1,5 @@
 """File system related utilities."""
+import http.cookiejar
 import os
 import tempfile
 import typing
@@ -19,7 +20,7 @@ def get_browser_cookies(
 
     import browser_cookie3
 
-    load = getattr(browser_cookie3, browser.lower()) if browser else browser_cookie3.load
+    load: typing.Callable[..., http.cookiejar.CookieJar] = getattr(browser_cookie3, browser or "load")  # type: ignore
 
     allowed_cookies = {"ltuid", "ltoken", "account_id", "cookie_token"}
     return {

@@ -17,11 +17,12 @@ required_plugins = ["pytest-asyncio"]
 
 [tool.pyright]
 include = ["genshin"]
+exclude = ["**/__init__.py"]
 
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "none"
 reportImportCycles = "none"
-reportIncompatibleMethodOverride = "none"  # This relies on ordering for key-word only arguments
+reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword-only arguments
 
 [tool.mypy]
 warn_unreachable = true

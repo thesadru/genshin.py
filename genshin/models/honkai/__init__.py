@@ -1,0 +1,1 @@
+"""Honkai API models."""

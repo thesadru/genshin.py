@@ -1,5 +1,7 @@
 [flake8]
+exclude = tests, test.py
 ignore = 
+    C408,  # dict() with keyword arguments
     D105,  # Missing docstring in magic method
     S303,  # Use of md5
     S311,  # Use of pseudo-random generators

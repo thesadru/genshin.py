@@ -6,13 +6,15 @@ import string
 import time
 import typing
 
+from genshin import constants, types
+
 __all__ = [
     "generate_dynamic_secret",
     "generate_cn_dynamic_secret",
 ]
 
 
-def generate_dynamic_secret(salt: str) -> str:
+def generate_dynamic_secret(salt: str = constants.DS_SALT[types.Region.OVERSEAS]) -> str:
     """Create a new overseas dynamic secret."""
     t = int(time.time())
     r = "".join(random.choices(string.ascii_letters, k=6))
@@ -21,9 +23,10 @@ def generate_dynamic_secret(salt: str) -> str:
 
 
 def generate_cn_dynamic_secret(
-    salt: str,
     body: typing.Any = None,
     query: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    *,
+    salt: str = constants.DS_SALT[types.Region.CHINESE],
 ) -> str:
     """Create a new chinese dynamic secret."""
     t = int(time.time())
