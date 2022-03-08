@@ -121,7 +121,7 @@ class AbstractCookieManager(abc.ABC):
         url: aiohttp.typedefs.StrOrURL,
         *,
         method: str = "GET",
-        params: typing.Optional[typing.Mapping[str, str]] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Any = None,
         json: typing.Any = None,
         cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None,

@@ -13,6 +13,17 @@ __pycache__/
 .vscode/
 .vs/
 
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+eggs/
+sdist/
+wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
 # Temporary test files
 test.py
 

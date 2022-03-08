@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button type="button" id="login">Login</button>
+  </body>
+  <script src="./gt.js"></script>
+  <script>
+    window
+      .fetch("/mmt")
+      .then((response) => response.json())
+      .then((mmt) =>
+        window.initGeetest(
+          {
+            gt: mmt.gt,
+            challenge: mmt.challenge,
+            new_captcha: mmt.new_captcha,
+            api_server: `api-na.geetest.com`,
+            lang: "en",
+            product: "bind",
+            https: false,
+          },
+          (captcha) => {
+            captcha.appendTo("login");
+            captcha.onSuccess(() => {
+              window.fetch("/login", {
+                method: "POST",
+                body: JSON.stringify(captcha.getValidate()),
+              });
+              document.body.innerHTML = "you may now close this window";
+            });
+            document.getElementById("login").onclick = () => {
+              return captcha.verify();
+            };
+          }
+        )
+      );
+  </script>
+</html>

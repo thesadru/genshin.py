@@ -1,4 +1,5 @@
 """Utilities for genshin.py."""
+from . import geetest  # type: ignore
 from .deprecation import *
 from .ds import *
 from .fs import *

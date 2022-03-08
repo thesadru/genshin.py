@@ -17,12 +17,18 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
-        "all": ["cachetools", "browser-cookie3", "typer"],
+        "all": ["cachetools", "browser-cookie3", "rsa"],
         "cookies": ["browser-cookie3"],
         "cache": ["cachetools"],
+        "geetest": ["rsa"],
     },
     include_package_data=True,
-    package_data={"genshin": ["py.typed"]},
+    package_data={
+        "genshin": [
+            "py.typed",
+            "resources/*.*",
+        ]
+    },
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="MIT",
@@ -33,7 +39,6 @@ setup(
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
