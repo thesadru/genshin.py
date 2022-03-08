@@ -2,9 +2,9 @@
 
 import typing
 
-from pydantic import validator
+import pydantic
 
-from genshin.models.genshin.character import BaseCharacter
+from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
@@ -19,7 +19,7 @@ __all__ = [
 ]
 
 
-class PartialCharacter(BaseCharacter):
+class PartialCharacter(character.BaseCharacter):
     """Character without any equipment."""
 
     level: int
@@ -106,7 +106,7 @@ class Character(PartialCharacter):
     constellations: typing.Sequence[Constellation]
     outfits: typing.Sequence[Outfit] = Aliased("costumes")
 
-    @validator("artifacts")
+    @pydantic.validator("artifacts")
     def __add_artifact_effect_enabled(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
         sets: typing.Dict[int, typing.List[Artifact]] = {}
         for arti in artifacts:

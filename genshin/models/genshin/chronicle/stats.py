@@ -7,7 +7,7 @@ from pydantic import validator
 
 from genshin.models.model import Aliased, APIModel
 
-from . import characters
+from . import abyss, activities, characters
 
 __all__ = [
     "Stats",
@@ -16,6 +16,8 @@ __all__ = [
     "TeapotRealm",
     "Teapot",
     "GenshinPartialUserStats",
+    "GenshinUserStats",
+    "GenshinFullUserStats",
 ]
 
 # flake8: noqa: E222
@@ -104,3 +106,16 @@ class GenshinPartialUserStats(APIModel):
         if isinstance(v, dict):
             return typing.cast("dict[str, typing.Any]", v)
         return {**v[0], "realms": v}
+
+
+class GenshinUserStats(GenshinPartialUserStats):
+    """User stats with characters with equipment"""
+
+    characters: typing.Sequence[characters.Character] = Aliased("avatars")
+
+
+class GenshinFullUserStats(GenshinUserStats):
+    """User stats with all data a user can have"""
+
+    abyss: abyss.SpiralAbyssPair
+    activities: activities.Activities
