@@ -11,13 +11,13 @@ target-version = ["py39"]
 profile = "black"
 
 [tool.pytest]
-asyncio_mode = "strict"
+asyncio-mode = "auto"
 testpaths = ["tests"]
 required_plugins = ["pytest-asyncio"]
 
 [tool.pyright]
 include = ["genshin"]
-exclude = ["**/__init__.py"]
+exclude = ["**/__init__.py", "tests/**"]
 
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "none"
@@ -26,7 +26,7 @@ reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword
 reportUnusedFunction = "none"  # Makes usage of validators impossible
 
 [tool.mypy]
-warn_unreachable = true
+warn_unreachable = false
 
 ignore_missing_imports = true
 install_types = true

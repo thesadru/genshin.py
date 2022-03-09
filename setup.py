@@ -23,12 +23,7 @@ setup(
         "geetest": ["rsa"],
     },
     include_package_data=True,
-    package_data={
-        "genshin": [
-            "py.typed",
-            "resources/*.*",
-        ]
-    },
+    package_data={"genshin": ["py.typed"]},
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="MIT",

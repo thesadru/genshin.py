@@ -1,7 +1,7 @@
 """Genshin model constants."""
 import typing
 
-__all__ = ["DBChar", "CHARACTER_NAMES"]
+__all__ = ["CHARACTER_NAMES", "DBChar"]
 
 
 class DBChar(typing.NamedTuple):

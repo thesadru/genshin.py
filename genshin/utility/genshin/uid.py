@@ -3,8 +3,8 @@ import typing
 
 __all__ = [
     "create_short_lang_code",
-    "recognize_genshin_server",
     "is_chinese",
+    "recognize_genshin_server",
 ]
 
 

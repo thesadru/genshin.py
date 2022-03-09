@@ -5,11 +5,54 @@ import asyncio
 import typing
 import webbrowser
 
+import aiohttp
 from aiohttp import web
 
 from genshin.utility import geetest
 
 from . import client
+
+INDEX = """
+<!DOCTYPE html>
+<html>
+  <body>
+    <button type="button" id="login">Login</button>
+  </body>
+  <script src="./gt.js"></script>
+  <script>
+    fetch("/mmt")
+      .then((response) => response.json())
+      .then((mmt) =>
+        window.initGeetest(
+          {
+            gt: mmt.gt,
+            challenge: mmt.challenge,
+            new_captcha: mmt.new_captcha,
+            api_server: "api-na.geetest.com",
+            lang: "en",
+            product: "bind",
+            https: false,
+          },
+          (captcha) => {
+            captcha.appendTo("login");
+            captcha.onSuccess(() => {
+              fetch("/login", {
+                method: "POST",
+                body: JSON.stringify(captcha.getValidate()),
+              });
+              document.body.innerHTML = "you may now close this window";
+            });
+            document.getElementById("login").onclick = () => {
+              return captcha.verify();
+            };
+          }
+        )
+      );
+  </script>
+</html>
+"""
+
+GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/static/libs/gt.js"
 
 
 async def login_with_app(client: client.GeetestClient, account: str, password: str, *, port: int = 5000) -> typing.Any:
@@ -21,11 +64,15 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
 
     @routes.get("/")
     async def index(request: web.Request) -> web.StreamResponse:
-        return web.FileResponse(geetest.INDEX_PATH)
+        return web.Response(body=INDEX, content_type="text/html")
 
     @routes.get("/gt.js")
     async def gt(request: web.Request) -> web.StreamResponse:
-        return web.FileResponse(geetest.GT_PATH)
+        async with aiohttp.ClientSession() as session:
+            r = await session.get(GT_URL)
+            content = await r.read()
+
+        return web.Response(body=content, content_type="text/javascript")
 
     @routes.get("/mmt")
     async def mmt_endpoint(request: web.Request) -> web.Response:

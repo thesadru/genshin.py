@@ -1,0 +1,7 @@
+pytest
+pytest-asyncio
+pytest-cov
+pytest-randomly
+
+coverage[toml]
+devtools

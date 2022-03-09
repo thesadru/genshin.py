@@ -14,7 +14,6 @@ from . import server
 __all__ = ["GeetestClient"]
 
 
-CREATE_MMT_URL = yarl.URL("https://webapi-os.account.hoyoverse.com/Api/create_mmt")
 WEB_LOGIN_URL = yarl.URL("https://api-account-os.hoyolab.com/account/auth/api/webLoginByPassword")
 
 
@@ -32,7 +31,7 @@ class GeetestClient(base.BaseClient):
         """Login with a password and a solved geetest."""
         payload = dict(
             account=account,
-            password=geetest_utility.encrypt_password(password),
+            password=geetest_utility.encrypt_geetest_password(password),
             is_crypto="true",
             source="account.mihoyo.com",
             mmt_key=mmt_key,

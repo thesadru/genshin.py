@@ -14,14 +14,13 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: install prerequisites
+      - name: install nox
         run: |
-          python -m pip install -r requirements.txt -r dev-requirements.txt
+          python -m pip install nox
       - name: lint
         run: |
-          python -m black genshin --check --verbose
-          python -m isort genshin -c --verbose
-          python -m flake8 genshin --verbose
+          python -m nox -s lint
+
   test:
     strategy:
       fail-fast: false
@@ -38,12 +37,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: install prerequisites
+      - name: install nox
         run: |
-          python -m pip install -r requirements.txt -r dev-requirements.txt
+          python -m pip install nox
       - name: Run tests
         run: |
-          python -m pytest
+          python -m nox -s test
+
   type-check:
     runs-on: ubuntu-latest
 
@@ -55,13 +55,13 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: install prerequisites
+      - name: install nox
         run: |
-          python -m pip install -r requirements.txt -r dev-requirements.txt
+          python -m pip install nox
       - name: Run type checker
         run: |
-          python -m mypy genshin
-          python -m pyright genshin
+          python -m nox -s type-check
+
   prettier:
     runs-on: ubuntu-latest
 

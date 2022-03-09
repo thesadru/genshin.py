@@ -7,11 +7,11 @@ from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
-    "AbyssRankCharacter",
     "AbyssCharacter",
-    "CharacterRanks",
+    "AbyssRankCharacter",
     "Battle",
     "Chamber",
+    "CharacterRanks",
     "Floor",
     "SpiralAbyss",
     "SpiralAbyssPair",

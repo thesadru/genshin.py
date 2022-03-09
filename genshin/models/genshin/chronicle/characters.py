@@ -8,14 +8,14 @@ from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
-    "PartialCharacter",
-    "Weapon",
-    "ArtifactSetEffect",
-    "ArtifactSet",
     "Artifact",
+    "ArtifactSet",
+    "ArtifactSetEffect",
+    "Character",
     "Constellation",
     "Outfit",
-    "Character",
+    "PartialCharacter",
+    "Weapon",
 ]
 
 

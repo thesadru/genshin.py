@@ -1,23 +1,5 @@
-typing-extensions
-
-# doc
-mkdocs-material
-pdoc
-
-# test
-pytest
-pytest-asyncio
-
-# type-check
-mypy
-pyright
-
-# lint
-black
-isort
-sort-all
-
 flake8 
+
 bandit==1.7.2          # temporariry freeze to bandit due to incompatibility with flake8-bandit
 flake8-bandit          # runs bandit
 flake8-black           # runs black

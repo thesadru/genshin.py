@@ -158,11 +158,10 @@ class BaseClient:
             params = {k: v for k, v in params.items() if k != "authkey"}
             url = url.update_query(params)
 
-        data_string = ""
         if data:
-            data_string = "\n" + json.dumps(data, separators=(",", ":"))
-
-        self.logger.debug("%s %s%s", method, url, data_string)
+            self.logger.debug("%s %s\n%s", method, url, json.dumps(data, separators=(",", ":")))
+        else:
+            self.logger.debug("%s %s", method, url)
 
     async def request(
         self,
@@ -181,13 +180,16 @@ class BaseClient:
         if method is None:
             method = "POST" if data else "GET"
 
+        if "json" in kwargs:
+            raise TypeError("Use data instead of json in request.")
+
         await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
 
         return await self.cookie_manager.request(
             url,
             method=method,
             params=params,
-            data=data,
+            json=data,
             headers=headers,
             **kwargs,
         )
@@ -249,7 +251,7 @@ class BaseClient:
         else:
             raise TypeError(f"{region!r} is not a valid region.")
 
-        data = await self.request(url, method=method, params=params, headers=headers, **kwargs)
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
 
     async def _complete_uid(

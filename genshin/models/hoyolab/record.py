@@ -8,11 +8,11 @@ import typing
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
+    "Gender",
     "GenshinAccount",
+    "RecordCard",
     "RecordCardData",
     "RecordCardSetting",
-    "RecordCard",
-    "Gender",
     "SearchUser",
 ]
 

@@ -50,11 +50,12 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
                 params=dict(role_id=uid, server=genshin_utility.recognize_genshin_server(uid)),
             ),
             self.request_game_record(
-                "index",
+                "character",
                 lang=lang,
                 game=types.Game.GENSHIN,
                 region=_get_region(uid),
-                data=dict(role_id=uid, server=genshin_utility.recognize_genshin_server(uid)),
+                method="POST",
+                data=dict(role_id=str(uid), server=genshin_utility.recognize_genshin_server(uid)),
             ),
         )
         data = {**data, **character_data}
@@ -79,7 +80,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         return models.SpiralAbyss(**data)
 
-    async def get_notes(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Notes:
+    async def get_genshin_notes(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Notes:
         """Get the real-time notes."""
         data = await self.request_game_record(
             "dailyNote",
@@ -101,7 +102,9 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         return models.Activities(**data)
 
-    async def get_full_user(self, uid: int, *, lang: typing.Optional[str] = None) -> models.GenshinFullUserStats:
+    async def get_full_genshin_user(
+        self, uid: int, *, lang: typing.Optional[str] = None
+    ) -> models.GenshinFullUserStats:
         """Get a user with all their possible data."""
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_genshin_user(uid, lang=lang),

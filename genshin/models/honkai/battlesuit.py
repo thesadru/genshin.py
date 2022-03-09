@@ -38,22 +38,25 @@ class Battlesuit(APIModel, Unique):
 
         suit_identifier = BATTLESUIT_IDENTIFIERS.get(values["id"])
         if not suit_identifier:
-            warnings.warn("Autocompleting data for a battlesuit that isn't (yet) in our database.")
+            warnings.warn(f"Completing data for an unknown battlesuit: id={values['id']}, name={values['name']}")
+
         return ICON_BASE + f"AvatarTachie/{suit_identifier or 'Unknown'}.png"
 
     @property
     def character(self) -> str:
         match = re.match(r".*/(\w+C\d+).png", self.tall_icon)
         char_raw = match.group(1) if match else ""
+
         if "Twin" in char_raw:
-            # fsr Roza and Lili share the same identifier so we'll have to manually parse the two
+            # Rozaliya and Liliya share the same identifier
             return {"TwinC1": "Liliya", "TwinC2": "Rozaliya"}[char_raw]
 
         char_name_raw = char_raw.rsplit("C", 1)[0]
         # fix mislocalized names (currently only one)
-        return {
-            "Fuka": "Fu Hua",  # jp -> en
-        }.get(char_name_raw, char_name_raw)
+        if char_name_raw == "Fuka":
+            char_name_raw = "Fu Hua"
+
+        return char_name_raw
 
     @property
     def rank(self) -> str:

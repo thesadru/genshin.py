@@ -1,12 +1,11 @@
 """Geetest utilities."""
 import base64
-import pathlib
 import time
 import typing
 
 import aiohttp
 
-__all__ = ["create_mmt", "encrypt_password"]
+__all__ = ["create_mmt", "encrypt_geetest_password"]
 
 
 LOGIN_KEY_CERT = b"""
@@ -32,19 +31,10 @@ async def create_mmt(now: typing.Optional[int] = None) -> typing.Mapping[str, ty
     return data["data"]["mmt_data"]
 
 
-def encrypt_password(text: str) -> str:
+def encrypt_geetest_password(text: str) -> str:
     """Encrypt text for geetest."""
     import rsa
 
     public_key = rsa.PublicKey.load_pkcs1_openssl_pem(LOGIN_KEY_CERT)
     crypto = rsa.encrypt(text.encode("utf-8"), public_key)
     return base64.b64encode(crypto).decode("utf-8")
-
-
-resource_path = pathlib.Path(__file__).joinpath("../../resources").resolve()
-
-GT_PATH = resource_path / "gt.js"
-"""Geetest source code."""
-
-INDEX_PATH = resource_path / "index.html"
-"""Index for the geetest webserver."""

@@ -43,11 +43,18 @@ class FullBattlesuit(battlesuit.Battlesuit):
     level: int
     weapon: Weapon
     stigmata: typing.Sequence[Stigma] = Aliased("stigmatas")
-    displayed: bool = Aliased("is_chosen")
 
     @pydantic.root_validator(pre=True)
     def __unnest_char_data(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        values.update(values.pop("character", {}))
-        values.update(values.pop("avatar", {}))
-        values.setdefault("stigmata", values.get("stigmatas"))
+        values.update(values.get("character", {}))
+        values.update(values.get("avatar", {}))
+
         return values
+
+    @pydantic.validator("stigmata")
+    def __remove_unequipped_stigmata(cls, value: typing.Sequence[Stigma]) -> typing.Sequence[Stigma]:
+        return [stigma for stigma in value if stigma.id != 0]
+
+
+# shuffle validators around because of nesting
+FullBattlesuit.__pre_root_validators__.reverse()

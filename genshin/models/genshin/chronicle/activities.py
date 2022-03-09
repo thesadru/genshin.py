@@ -9,17 +9,17 @@ from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
-    "HyakuninIkkiCharacter",
-    "HyakuninIkkiSkill",
+    "Activities",
+    "ChineseActivity",
+    "HyakuninIkki",
     "HyakuninIkkiBattle",
     "HyakuninIkkiChallenge",
-    "HyakuninIkki",
+    "HyakuninIkkiCharacter",
+    "HyakuninIkkiSkill",
+    "LabyrinthWarriors",
+    "LabyrinthWarriorsChallenge",
     "LabyrinthWarriorsCharacter",
     "LabyrinthWarriorsRune",
-    "LabyrinthWarriorsChallenge",
-    "LabyrinthWarriors",
-    "ChineseActivity",
-    "Activities",
 ]
 
 # ---------------------------------------------------------

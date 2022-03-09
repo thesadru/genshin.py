@@ -1,12 +1,16 @@
+"""Honkai stats models."""
 import typing
 
 import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
+from . import battlesuits, modes
+
 __all__ = [
+    "HonkaiFullUserStats",
     "HonkaiStats",
-    "HonkaiPartialUserStats",
+    "HonkaiUserStats",
 ]
 
 
@@ -21,15 +25,15 @@ class MemorialArenaStats(APIModel):
     raw_tier: int =  Aliased("battle_field_area",               mi18n="bbs/settled_level")
     # fmt: on
 
-    # @property
-    # def rank(self) -> str:
-    #     """The user's Memorial Arena rank as displayed in-game."""
-    #     return permanent_modes._prettify_MA_rank(self.raw_rank)
+    @property
+    def rank(self) -> str:
+        """The user's Memorial Arena rank as displayed in-game."""
+        return modes.prettify_MA_rank(self.raw_rank)
 
-    # @property
-    # def tier(self) -> str:
-    #     """The user's Memorial Arena tier as displayed in-game."""
-    #     return permanent_modes._prettify_competitive_tier(self.raw_tier)
+    @property
+    def tier(self) -> str:
+        """The user's Memorial Arena tier as displayed in-game."""
+        return modes.prettify_competitive_tier(self.raw_tier)
 
 
 # flake8: noqa: E222
@@ -46,16 +50,16 @@ class SuperstringAbyssStats(APIModel):
     # for consistency between types; also allows us to forego the mi18n fuckery
     latest_type: typing.ClassVar[str] = "Superstring"
 
-    # @property
-    # def rank(self) -> str:
-    #     """The user's Abyss rank as displayed in-game."""
-    #     # fsr the stats api always returns rank as if the player were lv <81; any tier < 4 works
-    #     return permanent_modes._prettify_abyss_rank(self.raw_rank, 1)
+    @property
+    def rank(self) -> str:
+        """The user's Abyss rank as displayed in-game."""
+        # fsr the stats api always returns rank as if the player were lv <81; any tier < 4 works
+        return modes.prettify_abyss_rank(self.raw_rank, 1)
 
-    # @property
-    # def tier(self) -> str:
-    #     """The user's Abyss tier as displayed in-game."""
-    #     return permanent_modes._prettify_competitive_tier(self.raw_tier)
+    @property
+    def tier(self) -> str:
+        """The user's Abyss tier as displayed in-game."""
+        return modes.prettify_competitive_tier(self.raw_tier)
 
 
 # flake8: noqa: E222
@@ -72,34 +76,34 @@ class OldAbyssStats(APIModel):
     # fmt: on
 
     @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
-    def __normalize_rank(cls, rank: str) -> int:  # permanent_modes.OldAbyss.__normalize_rank
+    def __normalize_rank(cls, rank: str) -> int:  # modes.OldAbyss.__normalize_rank
         return 69 - ord(rank)
 
     @pydantic.validator("latest_type")
-    def __parse_type(cls, type_: str) -> str:  # permanent_modes.OldAbyss.__parse_type
+    def __parse_type(cls, type_: str) -> str:  # modes.OldAbyss.__parse_type
         return {"OW": "Dirac Sea", "Quantum": "Q-Singularis"}[type_]
 
-    # @property
-    # def q_singularis_rank(self) -> str:
-    #     """The user's latest Q-singularis rank as displayed in-game."""
-    #     return permanent_modes._prettify_abyss_rank(self.raw_q_singularis_rank, self.raw_tier)
+    @property
+    def q_singularis_rank(self) -> str:
+        """The user's latest Q-singularis rank as displayed in-game."""
+        return modes.prettify_abyss_rank(self.raw_q_singularis_rank, self.raw_tier)
 
-    # @property
-    # def dirac_sea_rank(self) -> str:
-    #     """The user's latest Dirac Sea rank as displayed in-game."""
-    #     return permanent_modes._prettify_abyss_rank(self.raw_dirac_sea_rank, self.raw_tier)
+    @property
+    def dirac_sea_rank(self) -> str:
+        """The user's latest Dirac Sea rank as displayed in-game."""
+        return modes.prettify_abyss_rank(self.raw_dirac_sea_rank, self.raw_tier)
 
-    # @property
-    # def latest_rank(self) -> str:
-    #     """The user's latest abyss rank as displayed in-game. Seems to apply after weekly reset,
-    #     so this may differ from the user's Dirac Sea/Q-Singularis ranks if their rank changed.
-    #     """
-    #     return permanent_modes._prettify_abyss_rank(self.raw_latest_rank, self.raw_tier)
+    @property
+    def latest_rank(self) -> str:
+        """The user's latest abyss rank as displayed in-game. Seems to apply after weekly reset,
+        so this may differ from the user's Dirac Sea/Q-Singularis ranks if their rank changed.
+        """
+        return modes.prettify_abyss_rank(self.raw_latest_rank, self.raw_tier)
 
-    # @property
-    # def tier(self) -> str:
-    #     """The user's Abyss tier as displayed in-game."""
-    #     return permanent_modes._prettify_competitive_tier(self.raw_tier)
+    @property
+    def tier(self) -> str:
+        """The user's Abyss tier as displayed in-game."""
+        return modes.prettify_competitive_tier(self.raw_tier)
 
 
 # flake8: noqa: E222
@@ -137,18 +141,16 @@ class HonkaiStats(APIModel):
 
     @pydantic.root_validator(pre=True)
     def __pack_gamemode_stats(cls, values: typing.Dict[str, typing.Any]):
-        abyss_data = values.get("new_abyss")
+        if "new_abyss" in values:
+            values["abyss"] = SuperstringAbyssStats(**values["new_abyss"], **values)
+        elif "old_abyss" in values:
+            values["abyss"] = OldAbyssStats(**values["old_abyss"], **values)
 
-        if abyss_data:
-            # Superstring
-            values["abyss"] = SuperstringAbyssStats(**abyss_data, **values)
-        else:
-            # Either of the other two
-            abyss_data = values["old_abyss"]
-            values["abyss"] = OldAbyssStats(**abyss_data, **values)
+        if "memorial_arena" not in values:
+            values["memorial_arena"] = MemorialArenaStats(**values)
 
-        values["memorial_arena"] = MemorialArenaStats(**values)
-        values["elysian_realm"] = ElysianRealmStats(**values)
+        if "elysian_realm" not in values:
+            values["elysian_realm"] = ElysianRealmStats(**values)
 
         return values
 
@@ -162,8 +164,32 @@ class UserInfo(APIModel):
     icon: str = Aliased("AvatarUrl")
 
 
-class HonkaiPartialUserStats(APIModel):
+class HonkaiUserStats(APIModel):
     """Represents basic user stats, showing only generic user data and stats."""
 
     info: UserInfo = Aliased("role")
     stats: HonkaiStats
+
+
+class HonkaiFullUserStats(HonkaiUserStats):
+    """Represents a user's full stats, including characters, gear, and gamemode data"""
+
+    battlesuits: typing.Sequence[battlesuits.FullBattlesuit]
+    abyss: typing.Sequence[typing.Union[modes.SuperstringAbyss, modes.OldAbyss]]
+    memorial_arena: typing.Sequence[modes.MemorialArena]
+    elysian_realm: typing.Sequence[modes.ElysianRealm]
+
+    @property
+    def abyss_superstring(self) -> typing.Sequence[modes.SuperstringAbyss]:
+        """Filter `self.abyss` to only return instances of Superstring Abyss."""
+        return [entry for entry in self.abyss if isinstance(entry, modes.SuperstringAbyss)]
+
+    @property
+    def abyss_q_singularis(self) -> typing.Sequence[modes.OldAbyss]:
+        """Filter `self.abyss` to only return instances of Q-Singularis."""
+        return [entry for entry in self.abyss if isinstance(entry, modes.OldAbyss) and entry.type == "Q-Singularis"]
+
+    @property
+    def abyss_dirac_sea(self) -> typing.Sequence[modes.OldAbyss]:
+        """Filter `self.abyss` to only return instances of Dirac Sea."""
+        return [entry for entry in self.abyss if isinstance(entry, modes.OldAbyss) and entry.type == "Dirac Sea"]
