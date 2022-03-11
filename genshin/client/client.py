@@ -1,5 +1,5 @@
 """A simple HTTP client for API endpoints."""
-from . import chronicle, geetest
+from .components import chronicle, geetest
 
 __all__ = ["Client"]
 

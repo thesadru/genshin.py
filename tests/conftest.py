@@ -128,3 +128,16 @@ def genshin_cnuid():
 @pytest.fixture(scope="session")
 def miyoushe_uid():
     return 75276539
+
+
+def pytest_collection_modifyitems(items: typing.List[pytest.Item]):
+    for index, item in enumerate(items):
+        if "reserialization" in item.name:
+            break
+    else:
+        return items
+
+    item = items.pop(index)
+    items.append(item)
+
+    return items

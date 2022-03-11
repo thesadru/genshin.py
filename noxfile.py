@@ -35,7 +35,6 @@ def install_requirements(session: nox.Session, *requirements: str, literal: bool
     if not literal:
         requirements = (f"./genshin-dev[{', '.join(requirements)}]",)
 
-    session.install("--upgrade", "-r", "requirements.txt")
     session.install("--upgrade", *requirements)
 
 

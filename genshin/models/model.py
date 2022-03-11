@@ -12,8 +12,29 @@ __all__ = ["APIModel", "Aliased", "Unique"]
 _SENTINEL = object()
 
 
+def _get_init_fields(cls: typing.Type[APIModel]) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
+    api_init_fields: typing.Set[str] = set()
+    model_init_fields: typing.Set[str] = set()
+
+    for name, field in cls.__fields__.items():
+        alias = field.field_info.extra.get("galias")
+        if alias:
+            api_init_fields.add(alias)
+            model_init_fields.add(name)
+
+    for name in dir(cls):
+        obj = getattr(cls, name, None)
+        if isinstance(obj, property):
+            model_init_fields.add(name)
+
+    return api_init_fields, model_init_fields
+
+
 class APIModel(pydantic.BaseModel, abc.ABC):
     """Modified pydantic model."""
+
+    __api_init_fields__: typing.ClassVar[typing.Set[str]]
+    __model_init_fields__: typing.ClassVar[typing.Set[str]]
 
     def __init__(self, **data: typing.Any) -> None:
         """"""
@@ -21,6 +42,8 @@ class APIModel(pydantic.BaseModel, abc.ABC):
         super().__init__(**data)
 
     def __init_subclass__(cls) -> None:
+        cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
+
         # parse validators
         for name, field in cls.__fields__.items():
             callback = field.field_info.extra.get("validator")
@@ -32,6 +55,15 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     @pydantic.root_validator(pre=True)
     def __parse_galias(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Due to alias being reserved for actual aliases we use a custom alias."""
+        if cls.__model_init_fields__:
+            # has all model init fields
+            if cls.__model_init_fields__.issubset(set(values)):
+                return values
+
+            # has some model init fields but no api init fields
+            if set(values) & cls.__model_init_fields__ and not set(values) & cls.__api_init_fields__:
+                return values
+
         aliases: typing.Dict[str, str] = {}
         for name, field in cls.__fields__.items():
             alias = field.field_info.extra.get("galias")

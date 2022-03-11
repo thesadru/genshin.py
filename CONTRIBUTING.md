@@ -20,7 +20,7 @@ To call specific tasks you just call `nox -s name1 name2` where any number of ta
 
 It's worth noting that the reformat nox task (which is run by default) will reformat additions to the project in-order to make them match the expected style and that nox will generate virtual environments for each task instead of pollution the environment it was installed into.
 
-You may use `nox -- --skip-install` to avoid updating dependencies every run.
+You may use `nox --no-install` to avoid updating dependencies every run.
 
 ### Tests
 

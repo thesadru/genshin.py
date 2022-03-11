@@ -46,7 +46,9 @@ class FullBattlesuit(battlesuit.Battlesuit):
 
     @pydantic.root_validator(pre=True)
     def __unnest_char_data(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        values.update(values.get("character", {}))
+        if isinstance(values.get("character"), typing.Mapping):
+            values.update(values["character"])
+
         values.update(values.get("avatar", {}))
 
         return values

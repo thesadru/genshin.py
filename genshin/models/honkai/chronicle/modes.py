@@ -76,7 +76,10 @@ class ELF(APIModel, Unique):
     upgrade_level: int = Aliased("star")
 
     @pydantic.validator("rarity", pre=True)
-    def __fix_rank(cls, rarity: int):
+    def __fix_rank(cls, rarity: typing.Union[int, str]):
+        if isinstance(rarity, str):
+            return rarity
+
         # ELFs come in rarities A and S, API returns 3 and 4, respectively
         return ["A", "S"][rarity - 3]
 
@@ -86,9 +89,6 @@ class ELF(APIModel, Unique):
 
 def prettify_abyss_rank(rank: int, tier: int) -> str:
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
-    # TODO: Make this actually work properly
-    return ""
-
     if tier == 4:
         return (
             "Forbidden",
@@ -209,6 +209,9 @@ class MemorialBattle(APIModel):
 class MemorialArena(APIModel):
     """Represents aggregate weekly performance for the entire Memorial Arena rotation."""
 
+    def __init__(self, **data: typing.Any) -> None:
+        super().__init__(**data)
+
     score: int
     ranking: float = Aliased("ranking_percentage")
     raw_rank: int = Aliased("rank")
@@ -303,8 +306,11 @@ class ElysianRealm(APIModel):
     remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
 
     @pydantic.validator("remembrance_sigil", pre=True)
-    def __extend_sigil(cls, icon_url: str) -> RemembranceSigil:
-        return RemembranceSigil(icon=icon_url)
+    def __extend_sigil(cls, sigil: typing.Any) -> RemembranceSigil:
+        if isinstance(sigil, str):
+            return RemembranceSigil(icon=sigil)
+
+        return sigil
 
     @property
     def lineup(self) -> typing.Sequence[battlesuit.Battlesuit]:

@@ -50,12 +50,11 @@ class RecordCard(GenshinAccount):
         from .genshin import GenshinRecordCard
         from .honkai import HonkaiRecordCard
 
-        if kwargs["game_id"] == 1:
+        game_id = kwargs.get("game_id", 0)
+        if game_id == 1:
             cls = HonkaiRecordCard
-        elif kwargs["game_id"] == 2:
+        elif game_id == 2:
             cls = GenshinRecordCard
-        else:
-            cls = RecordCard
 
         return super().__new__(cls)
 

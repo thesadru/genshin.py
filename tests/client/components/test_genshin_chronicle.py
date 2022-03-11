@@ -52,4 +52,4 @@ async def test_exceptions(client: genshin.Client):
         await client.get_record_cards(10000000)
 
     with pytest.raises(genshin.AccountNotFound):
-        await client.get_genshin_user(70000001)
+        await client.get_genshin_spiral_abyss(70000001)
