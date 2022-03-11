@@ -53,8 +53,7 @@ class SuperstringAbyssStats(APIModel):
     @property
     def rank(self) -> str:
         """The user's Abyss rank as displayed in-game."""
-        # fsr the stats api always returns rank as if the player were lv <81; any tier < 4 works
-        return modes.prettify_abyss_rank(self.raw_rank, 1)
+        return modes.prettify_abyss_rank(self.raw_rank, self.raw_tier)
 
     @property
     def tier(self) -> str:

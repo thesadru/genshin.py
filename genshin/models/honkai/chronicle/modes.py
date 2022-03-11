@@ -86,8 +86,6 @@ class ELF(APIModel, Unique):
 
 def prettify_abyss_rank(rank: int, tier: int) -> str:
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
-    # TODO: Make this actually work properly
-    return ""
 
     if tier == 4:
         return (
