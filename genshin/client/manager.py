@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 
 __all__ = ["AbstractCookieManager", "CookieManager", "RotatingCookieManager"]
 
-CookieOrHeader = typing.Union[http.cookies.BaseCookie[typing.Any], typing.Mapping[typing.Any, typing.Any], str]
+CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
 
 

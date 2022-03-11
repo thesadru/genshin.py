@@ -25,7 +25,7 @@ class GeetestClient(base.BaseClient):
         account: str,
         password: str,
         mmt_key: str,
-        geetest: dict[str, str],
+        geetest: typing.Dict[str, str],
         token_type: int = 4,
     ) -> typing.Mapping[str, str]:
         """Login with a password and a solved geetest."""
