@@ -1,7 +1,7 @@
 [flake8]
 exclude = tests, test.py
 ignore = 
-    A001, A002, A003,  # id variable/parameter/attribute
+    A001, A002, A003,  # `id` variable/parameter/attribute
     C408,  # dict() with keyword arguments
     D105,  # Missing docstring in magic method
     D106,  # Missing docstring Model.Config

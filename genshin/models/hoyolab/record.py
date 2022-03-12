@@ -5,6 +5,7 @@ import enum
 import re
 import typing
 
+from genshin import types
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
@@ -20,11 +21,21 @@ __all__ = [
 class GenshinAccount(APIModel):
     """Genshin account."""
 
+    game_biz: str
     uid: int = Aliased("game_uid")
     level: int
     nickname: str
     server: str = Aliased("region")
     server_name: str = Aliased("region_name")
+
+    @property
+    def game(self) -> types.Game:
+        if "hk4e" in self.game_biz:
+            return types.Game.GENSHIN
+        elif "bh3" in self.game_biz:
+            return types.Game.HONKAI
+        else:
+            return types.Game(self.game_biz)
 
 
 class RecordCardData(APIModel):
@@ -58,6 +69,8 @@ class RecordCard(GenshinAccount):
 
         return super().__new__(cls)
 
+    game_id: int
+    game_biz: str = ""
     uid: int = Aliased("game_role_id")
 
     data: typing.Sequence[RecordCardData]

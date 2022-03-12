@@ -1,9 +1,16 @@
 """Honkai hoyolab models."""
+
+from genshin import types
+
 from . import record
 
 
 class HonkaiRecordCard(record.RecordCard):
     """Honkai record card."""
+
+    @property
+    def game(self) -> types.Game:
+        return types.Game.HONKAI
 
     @property
     def days_active(self) -> int:

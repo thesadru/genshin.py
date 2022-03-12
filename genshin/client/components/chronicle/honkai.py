@@ -9,6 +9,8 @@ from genshin.utility import honkai as honkai_utility
 
 from . import base
 
+__all__ = ["HonkaiBattleChronicleClient"]
+
 
 class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     """Honkai battle chronicle component."""

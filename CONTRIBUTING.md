@@ -53,3 +53,32 @@ good references for how projects should be type-hinted to be `type-complete`.
 - All public modules should be explicitly imported into its packages' `__init__.py` except for utilities and individual components which should only be exposed as an entire module.
 - `collections.abc.Awaitable` is generally preferred over `collections.abc.Coroutine` for interfaces and types.
 - Features should be split by API endpoint in components and by game and category in models.
+
+### Project structure
+
+```
+genshin
+│
+│   constants.py    = global constants like supported languages
+│   errors.py       = all errors raised in the library
+│   types.py        = enums required in some endpoint parameters
+│
+├───client          = client used for requests
+│   │   client.py       = final client made from
+│   │   manager.py      = cookie and auth managers
+│   │   ratelimit.py    = ratelimit handler
+│   │   routes.py       = routes for various endpoints
+│   │
+│   └───components      = separate client components separated by category
+│       │   base.py         = base client without any specific routes
+│       └   anything        = file or module that exports a single component
+│
+├───paginators      = paginators used in the library
+│
+├───models          = models used in the library
+│   │   model.py        = base model and helper fields
+│   │
+│   └───any dir         = separate module for each game or category
+│
+└───utility         = utilities for the library
+```

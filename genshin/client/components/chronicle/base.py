@@ -7,6 +7,8 @@ from genshin.client import routes
 from genshin.client.components import base
 from genshin.utility import deprecation
 
+__all__ = ["BaseBattleChronicleClient"]
+
 
 class BaseBattleChronicleClient(base.BaseClient):
     """Base battle chronicle component."""
@@ -40,7 +42,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
             lang=lang,
-            params=dict(uid=self.cookie_manager.get_user_id(hoyolab_uid)),
+            params=dict(uid=hoyolab_uid or self.cookie_manager.get_user_id()),
         )
 
         cards = data["list"]

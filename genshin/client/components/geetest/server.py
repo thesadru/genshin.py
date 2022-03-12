@@ -12,6 +12,8 @@ from genshin.utility import geetest
 
 from . import client
 
+__all__ = ["login_with_app"]
+
 INDEX = """
 <!DOCTYPE html>
 <html>

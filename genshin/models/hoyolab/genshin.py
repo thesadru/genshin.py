@@ -1,10 +1,16 @@
 """Genshin hoyolab models."""
 
+from genshin import types
+
 from . import record
 
 
 class GenshinRecordCard(record.RecordCard):
     """Genshin record card."""
+
+    @property
+    def game(self) -> types.Game:
+        return types.Game.GENSHIN
 
     @property
     def days_active(self) -> int:

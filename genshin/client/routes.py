@@ -54,6 +54,9 @@ class Route:
             return self.universal
 
         if region in self.urls:
+            if not self.urls[region]:
+                raise RuntimeError(f"URL does not support {region.name} region.")
+
             return self.urls[region]
 
         raise TypeError(f"Could not find URL for {region.name}.")
@@ -79,7 +82,10 @@ DETAIL_LEDGER_URL = Route(
     "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
 )
 
-CALCULATOR_URL = Route("https://sg-public-api.hoyoverse.com/event/calculateos/")
+CALCULATOR_URL = Route(
+    "https://sg-public-api.hoyoverse.com/event/calculateos/",
+    "",
+)
 
 REWARD_URL = Route(
     "https://hk4e-api-os.hoyoverse.com/event/sol/",
@@ -90,4 +96,7 @@ GACHA_INFO_URL = Route(
     "https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
     "https://hk4e-api.mihoyo.com/event/gacha_info/api",
 )
-YSULOG_URL = Route("https://hk4e-api-os.hoyoverse.com/ysulog/api/")
+YSULOG_URL = Route(
+    "https://hk4e-api-os.hoyoverse.com/ysulog/api/",
+    "",
+)

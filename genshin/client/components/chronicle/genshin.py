@@ -10,6 +10,8 @@ from genshin.utility import genshin as genshin_utility
 
 from . import base
 
+__all__ = ["GenshinBattleChronicleClient"]
+
 
 def _get_region(uid: int) -> types.Region:
     return types.Region.CHINESE if genshin_utility.is_chinese(uid) else types.Region.OVERSEAS
@@ -125,12 +127,15 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
     ) -> None:
         """Set the top 8 visible characters for the current user."""
-        payload: typing.Dict[str, typing.Any] = dict(avatar_ids=[int(character) for character in characters])
-        payload.update(await self._complete_uid(types.Game.GENSHIN, uid, uid_key="role_id", server_key="server"))
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
 
         await self.request_game_record(
             "character/top",
             game=types.Game.GENSHIN,
-            region=_get_region(payload["role_id"]),
-            data=payload,
+            region=_get_region(uid),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=genshin_utility.recognize_genshin_server(uid),
+            ),
         )

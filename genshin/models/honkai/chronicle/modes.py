@@ -76,7 +76,7 @@ class ELF(APIModel, Unique):
     upgrade_level: int = Aliased("star")
 
     @pydantic.validator("rarity", pre=True)
-    def __fix_rank(cls, rarity: typing.Union[int, str]):
+    def __fix_rank(cls, rarity: typing.Union[int, str]) -> str:
         if isinstance(rarity, str):
             return rarity
 
@@ -125,7 +125,7 @@ class BaseAbyss(APIModel):
     elf: typing.Optional[ELF]
 
     @property
-    def tier(self):
+    def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
         return prettify_competitive_tier(self.raw_tier)
 
@@ -155,7 +155,7 @@ class OldAbyss(BaseAbyss):
         return 69 - ord(rank)
 
     @property
-    def rank(self):
+    def rank(self) -> str:
         """The user's Abyss rank as displayed in-game."""
         return prettify_abyss_rank(self.raw_rank, self.raw_tier)
 
@@ -276,19 +276,19 @@ class RemembranceSigil(APIModel):
     icon: str
 
     @property
-    def id(self):
+    def id(self) -> int:
         match = re.match(r".*/(\d+).png", self.icon)
         return int(match[1]) if match else 0
 
     @property
-    def name(self):
+    def name(self) -> str:
         sigil = REMEMBRANCE_SIGILS.get(self.id)
         return sigil[0] if sigil else "Unknown"
 
     @property
-    def rarity(self):
+    def rarity(self) -> int:
         sigil = REMEMBRANCE_SIGILS.get(self.id)
-        return sigil[1] if sigil else "Unknown"
+        return sigil[1] if sigil else 1
 
 
 class ElysianRealm(APIModel):

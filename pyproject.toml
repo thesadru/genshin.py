@@ -28,6 +28,7 @@ reportUnusedFunction = "none"  # Makes usage of validators impossible
 [tool.mypy]
 warn_unreachable = false
 
+disallow_untyped_defs = true
 ignore_missing_imports = true
 install_types = true
 non_interactive = true

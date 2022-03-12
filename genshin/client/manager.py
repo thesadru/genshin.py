@@ -75,14 +75,11 @@ class AbstractCookieManager(abc.ABC):
         """
         return None
 
-    def get_user_id(self, fallback: typing.Optional[int]) -> int:
+    def get_user_id(self) -> int:
         """Get the id of the user that owns cookies.
 
         Raises an error if not found and fallback is not provided.
         """
-        if fallback:
-            return fallback
-
         if self.user_id:
             return self.user_id
 

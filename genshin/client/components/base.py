@@ -9,27 +9,30 @@ import urllib.parse
 import aiohttp.typedefs
 import yarl
 
-from genshin import constants, types
+from genshin import constants, errors, types
 from genshin.client import manager, routes
+from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import ds
 from genshin.utility import genshin as genshin_utility
+
+__all__ = ["BaseClient"]
 
 
 class BaseClient:
     """Base ABC Client."""
 
-    WEBSTATIC_URL = "https://webstatic-sea.hoyoverse.com/"
+    __slots__ = ("cookie_manager", "_authkey", "_lang", "_region", "uids")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
     logger: logging.Logger = logging.getLogger(__name__)
 
     cookie_manager: manager.AbstractCookieManager
-    _authkey: typing.Optional[str] = None
-    _lang: str = "en-us"
-    _region: types.Region = types.Region.OVERSEAS
+    _authkey: typing.Optional[str]
+    _lang: str
+    _region: types.Region
 
-    _uids: typing.Dict[types.Game, int]
+    uids: typing.Dict[types.Game, int]
 
     def __init__(
         self,
@@ -46,7 +49,7 @@ class BaseClient:
         self.region = region
         self.debug = debug
 
-        self._uids = {}
+        self.uids = {}
 
     def __repr__(self) -> str:
         return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
@@ -202,7 +205,7 @@ class BaseClient:
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Request a static json file."""
-        url = yarl.URL(self.WEBSTATIC_URL).join(yarl.URL(url))
+        url = yarl.URL(routes.WEBSTATIC_URL.get_url()).join(yarl.URL(url))
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
@@ -254,17 +257,35 @@ class BaseClient:
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
 
-    async def _complete_uid(
+    async def get_game_accounts(
         self,
-        game: types.Game,
-        uid: typing.Optional[int] = None,
         *,
-        uid_key: str = "uid",
-        server_key: str = "region",
-    ) -> typing.Mapping[str, typing.Any]:
-        """Create a new dict with a uid and a server."""
-        # TODO: Implement for all games
-        if uid is None:
-            raise NotImplementedError("Completion not implented yet")
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
+        """Get the game accounts of the currently logged-in user."""
+        data = await self.request_hoyolab(
+            "binding/api/getUserGameRolesByCookie",
+            lang=lang,
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 
-        return {uid_key: uid, server_key: genshin_utility.recognize_genshin_server(uid)}
+    async def _update_cached_uids(self) -> None:
+        """Update cached fallback uids."""
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+    async def _get_uid(self, game: types.Game) -> int:
+        """Get a cached fallback uid."""
+        if game not in self.uids:
+            await self._update_cached_uids()
+
+        # TODO: raise properly
+        if game not in self.uids:
+            errors.raise_for_retcode({"retcode": -1073})
+
+        return self.uids[game]

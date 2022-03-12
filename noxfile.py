@@ -15,12 +15,12 @@ GENERAL_TARGETS = ["./noxfile.py", "./genshin", "./tests"]
 nox_logger = logging.getLogger(nox.__name__)
 
 
-def _try_find_option(session: nox.Session, *names: str, fallback: typing.Optional[str] = None) -> typing.Optional[str]:
+def _try_find_option(session: nox.Session, *names: str) -> typing.Optional[str]:
     args_iter = iter(session.posargs)
 
     for arg in args_iter:
         if arg in names:
-            return next(args_iter, fallback)
+            return next(args_iter)
 
     return None
 
@@ -29,7 +29,7 @@ def install_requirements(session: nox.Session, *requirements: str, literal: bool
     """Install requirements."""
     # --no-install --no-venv leads to it trying to install in the global venv
     # as --no-install only skips "reused" venvs and global is not considered reused.
-    if _try_find_option(session, "--skip-install", fallback="True"):
+    if "--skip-install" in session.posargs:
         return
 
     if not literal:
@@ -89,7 +89,7 @@ def test(session: nox.Session) -> None:
 def type_check(session: nox.Session) -> None:
     """Statically analyse and veirfy this project using pyright and mypy."""
     install_requirements(session, "typecheck")
-    session.run("python", "-m", "pyright", PACKAGE)
+    session.run("python", "-m", "pyright", PACKAGE, env={"PYRIGHT_PYTHON_FORCE_VERSION": "latest"})
     session.run("python", "-m", "mypy", PACKAGE)
 
 
@@ -98,3 +98,9 @@ def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
     install_requirements(session, "typecheck")
     session.run("python", "-m", "pyright", "--verifytypes", PACKAGE, "--ignoreexternal")
+
+
+@nox.session()
+def prettier(session: nox.Session) -> None:
+    """Run prettier on markdown files."""
+    session.run("prettier", "-w", "*.md")
