@@ -21,7 +21,7 @@ __all__ = ["BaseClient"]
 class BaseClient:
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "_authkey", "_lang", "_region", "uids")
+    __slots__ = ("cookie_manager", "_authkey", "_lang", "_region", "_default_game", "uids")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
@@ -31,6 +31,7 @@ class BaseClient:
     _authkey: typing.Optional[str]
     _lang: str
     _region: types.Region
+    _default_game: typing.Optional[types.Game]
 
     uids: typing.Dict[types.Game, int]
 
@@ -41,12 +42,14 @@ class BaseClient:
         authkey: typing.Optional[str] = None,
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
+        game: typing.Optional[types.Game] = None,
         debug: bool = False,
     ) -> None:
-        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies, region=region)
+        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies)
         self.authkey = authkey
         self.lang = lang
         self.region = region
+        self.default_game = game
         self.debug = debug
 
         self.uids = {}
@@ -82,10 +85,18 @@ class BaseClient:
     @region.setter
     def region(self, region: types.Region) -> None:
         self._region = region
-        self.cookie_manager.region = region
 
         if region is types.Region.CHINESE:
             self.lang = "zh-cn"
+
+    @property
+    def default_game(self) -> typing.Optional[types.Game]:
+        """The default game."""
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[types.Game]) -> None:
+        self._default_game = game
 
     @property
     def authkey(self) -> typing.Optional[str]:
@@ -121,7 +132,6 @@ class BaseClient:
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
         self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies or kwargs)
-        self.cookie_manager.region = self.region
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> None:
         """Extract cookies from your browser and set them as client cookies.
@@ -129,7 +139,6 @@ class BaseClient:
         Available browsers: chrome, chromium, opera, edge, firefox.
         """
         self.cookie_manager = manager.AbstractCookieManager.from_browser_cookies(browser)
-        self.cookie_manager.region = self.region
 
     def set_authkey(self, authkey: typing.Optional[str] = None) -> None:
         """Set an authkey for wish & transaction logs.
@@ -263,6 +272,9 @@ class BaseClient:
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
+        if isinstance(self.cookie_manager, manager.RotatingCookieManager):
+            raise RuntimeError("Cannot get data of logged-in user with a multi-cookie managers.")
+
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,

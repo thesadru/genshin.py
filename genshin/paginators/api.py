@@ -39,6 +39,7 @@ class PagedPaginator(typing.Generic[T], APIPaginator[T]):
         super().__init__(limit=limit)
         self._getter = getter  # type: ignore [assignment]
         self._page_size = page_size
+        self.current_page = 1
 
     async def next_page(self) -> typing.Optional[typing.Iterable[T]]:
         """Get the next page of the paginator."""

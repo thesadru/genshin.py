@@ -25,20 +25,22 @@ def parse_requirements_file(path: pathlib.Path) -> typing.List[str]:
     return dependencies
 
 
-normal_requirements = parse_requirements_file(pathlib.Path("../requirements.txt"))
+dev_directory = pathlib.Path(__file__).parent
+
+normal_requirements = parse_requirements_file(dev_directory / ".." / "requirements.txt")
 
 all_extras: typing.Set[str] = set()
 extras: typing.Dict[str, typing.Sequence[str]] = {}
 
-for path in pathlib.Path(".").glob("*-requirements.txt"):
+for path in dev_directory.glob("*-requirements.txt"):
     name = path.name.split("-")[0]
 
     requirements = parse_requirements_file(path)
-    requirements += normal_requirements
 
     all_extras = all_extras.union(requirements)
     extras[name] = requirements
 
 extras["all"] = list(all_extras)
 
-setuptools.setup(name="genshin-dev", extras_require=extras)
+
+setuptools.setup(name="genshin-dev", install_requires=normal_requirements, extras_require=extras)

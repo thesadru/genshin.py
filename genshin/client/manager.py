@@ -9,7 +9,7 @@ import typing
 import aiohttp
 import aiohttp.typedefs
 
-from genshin import errors, types
+from genshin import errors
 from genshin.utility import fs as fs_utility
 
 from . import ratelimit
@@ -36,28 +36,18 @@ def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, st
 class AbstractCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
-    region: types.Region = types.Region.OVERSEAS
-
     @classmethod
-    def from_cookies(
-        cls,
-        cookies: typing.Optional[AnyCookieOrHeader] = None,
-        region: types.Region = types.Region.OVERSEAS,
-    ) -> AbstractCookieManager:
+    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> AbstractCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
         if isinstance(cookies, typing.Sequence):
-            return RotatingCookieManager(cookies, region=region)
+            return RotatingCookieManager(cookies)
 
-        return CookieManager(cookies, region)
+        return CookieManager(cookies)
 
     @classmethod
-    def from_browser_cookies(
-        cls,
-        browser: typing.Optional[str] = None,
-        region: types.Region = types.Region.OVERSEAS,
-    ) -> CookieManager:
+    def from_browser_cookies(cls, browser: typing.Optional[str] = None) -> CookieManager:
         """Create a cookie manager with browser cookies."""
-        manager = CookieManager(region=region)
+        manager = CookieManager()
         manager.set_browser_cookies(browser)
 
         return manager
@@ -136,10 +126,8 @@ class CookieManager(AbstractCookieManager):
     def __init__(
         self,
         cookies: typing.Optional[CookieOrHeader] = None,
-        region: types.Region = types.Region.OVERSEAS,
     ) -> None:
         self.cookies = parse_cookie(cookies)
-        self.region = region
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.cookies})"
@@ -219,13 +207,8 @@ class RotatingCookieManager(AbstractCookieManager):
 
     _cookies: typing.List[typing.Tuple[typing.Dict[str, str], int]]
 
-    def __init__(
-        self,
-        cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
-        region: types.Region = types.Region.OVERSEAS,
-    ) -> None:
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
-        self.region = region
 
     @property
     def cookies(self) -> typing.Sequence[typing.Mapping[str, str]]:

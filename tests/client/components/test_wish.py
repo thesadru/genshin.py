@@ -9,11 +9,6 @@ async def test_wish_history(lclient: genshin.Client):
 
 
 async def test_merged_wish_history(lclient: genshin.Client):
-    async for wish in lclient.wish_history(limit=30):
-        assert wish
-
-
-async def test_filtered_merged_wish_history(lclient: genshin.Client):
     async for wish in lclient.wish_history([200, 302], limit=20):
         assert wish.banner_type in [200, 302]
 

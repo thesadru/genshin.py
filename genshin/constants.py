@@ -24,6 +24,7 @@ LANGS = {
 DS_SALT = {
     types.Region.OVERSEAS: "6cqshh5dhw73bzxn20oexa9k516chk7s",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
+    "cn_signin": "4a8knnbk5pbjqsrudp3dq484m9axoc5g",
 }
 """Dynamic Secret Salts."""
 

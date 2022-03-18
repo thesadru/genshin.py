@@ -1,5 +1,5 @@
 """API routes."""
-import itertools
+import abc
 import typing
 
 import yarl
@@ -20,83 +20,109 @@ __all__ = [
 ]
 
 
-class Route:
+class BaseRoute(abc.ABC):
     """A route which provides useful metadata."""
 
-    universal: typing.Optional[yarl.URL] = None
+
+class Route(BaseRoute):
+    """Standard route."""
+
+    url: yarl.URL
+
+    def __init__(self, url: str) -> None:
+        self.url = yarl.URL(url)
+
+    def get_url(self) -> yarl.URL:
+        """Attempt to get a URL."""
+        return self.url
+
+
+class InternationalRoute(BaseRoute):
+    """Standard international route."""
+
     urls: typing.Mapping[types.Region, yarl.URL]
 
-    def __init__(self, overseas: str, chinese: typing.Optional[str] = None) -> None:
-        if not chinese:
-            self.universal = yarl.URL(overseas)
-            self.urls = {}
-        else:
-            self.urls = {
-                types.Region.OVERSEAS: yarl.URL(overseas),
-                types.Region.CHINESE: yarl.URL(chinese),
-            }
+    def __init__(self, overseas: str, chinese: str) -> None:
+        self.urls = {
+            types.Region.OVERSEAS: yarl.URL(overseas),
+            types.Region.CHINESE: yarl.URL(chinese),
+        }
 
-    @property
-    def needs_authkey(self) -> bool:
-        """Whether this route requires an authkey."""
-        for url in itertools.chain(self.urls.values(), [self.universal]):
-            if "gacha" in str(url) or "log" in str(url):
-                return True
-
-        return False
-
-    def get_url(self, region: typing.Optional[types.Region] = None) -> yarl.URL:
+    def get_url(self, region: types.Region) -> yarl.URL:
         """Attempt to get a URL."""
-        if region is None:
-            if self.universal is None:
-                raise ValueError("Region must be provided for this Route.")
+        if not self.urls[region]:
+            raise RuntimeError(f"URL does not support {region.name} region.")
 
-            return self.universal
+        return self.urls[region]
 
-        if region in self.urls:
-            if not self.urls[region]:
-                raise RuntimeError(f"URL does not support {region.name} region.")
 
-            return self.urls[region]
+class GameRoute(BaseRoute):
+    """Standard international game URL."""
 
-        raise TypeError(f"Could not find URL for {region.name}.")
+    urls: typing.Mapping[types.Region, typing.Mapping[types.Game, yarl.URL]]
+
+    def __init__(
+        self,
+        overseas: typing.Mapping[str, str],
+        chinese: typing.Mapping[str, str],
+    ) -> None:
+        self.urls = {
+            types.Region.OVERSEAS: {types.Game(game): yarl.URL(url) for game, url in overseas.items()},
+            types.Region.CHINESE: {types.Game(game): yarl.URL(url) for game, url in chinese.items()},
+        }
+
+    def get_url(self, region: types.Region, game: types.Game) -> yarl.URL:
+        """Attempt to get a URL."""
+        if not self.urls[region]:
+            raise RuntimeError(f"URL does not support {region.name} region.")
+
+        if not self.urls[region][game]:
+            raise RuntimeError(f"URL does not support {game.name} game for {region.name} region.")
+
+        return self.urls[region][game]
 
 
 WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
 
-TAKUMI_URL = Route(
-    "https://api-os-takumi.mihoyo.com/",
-    "https://api-takumi.mihoyo.com/",
+TAKUMI_URL = InternationalRoute(
+    overseas="https://api-os-takumi.mihoyo.com/",
+    chinese="https://api-takumi.mihoyo.com/",
 )
-RECORD_URL = Route(
-    "https://bbs-api-os.hoyolab.com/game_record/",
-    "https://api-takumi-record.mihoyo.com/game_record/app/",
-)
-
-INFO_LEDGER_URL = Route(
-    "https://hk4e-api-os.hoyoverse.com/event/ysledgeros/month_info",
-    "https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
-)
-DETAIL_LEDGER_URL = Route(
-    "https://hk4e-api-os.hoyoverse.com/event/ysledgeros/month_detail",
-    "https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
+RECORD_URL = InternationalRoute(
+    overseas="https://bbs-api-os.hoyolab.com/game_record/",
+    chinese="https://api-takumi-record.mihoyo.com/game_record/app/",
 )
 
-CALCULATOR_URL = Route(
-    "https://sg-public-api.hoyoverse.com/event/calculateos/",
-    "",
+INFO_LEDGER_URL = InternationalRoute(
+    overseas="https://hk4e-api-os.hoyoverse.com/event/ysledgeros/month_info",
+    chinese="https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
+)
+DETAIL_LEDGER_URL = InternationalRoute(
+    overseas="https://hk4e-api-os.hoyoverse.com/event/ysledgeros/month_detail",
+    chinese="https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
 )
 
-REWARD_URL = Route(
-    "https://hk4e-api-os.hoyoverse.com/event/sol/",
-    "https://api-takumi.mihoyo.com/event/bbs_sign_reward/",
+CALCULATOR_URL = InternationalRoute(
+    overseas="https://sg-public-api.hoyoverse.com/event/calculateos/",
+    chinese="",
 )
 
-GACHA_INFO_URL = Route(
-    "https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
-    "https://hk4e-api.mihoyo.com/event/gacha_info/api",
+REWARD_URL = GameRoute(
+    overseas=dict(
+        genshin="https://sg-hk4e-api.hoyolab.com/event/sol",
+        honkai3rd="https://sg-public-api.hoyolab.com/event/mani",
+    ),
+    chinese=dict(
+        genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/",
+        honkai3rd="",
+    ),
 )
-YSULOG_URL = Route(
-    "https://hk4e-api-os.hoyoverse.com/ysulog/api/",
-    "",
+
+GACHA_INFO_URL = InternationalRoute(
+    overseas="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
+    chinese="https://hk4e-api.mihoyo.com/event/gacha_info/api",
+)
+YSULOG_URL = InternationalRoute(
+    overseas="https://hk4e-api-os.hoyoverse.com/ysulog/api/",
+    chinese="",
 )

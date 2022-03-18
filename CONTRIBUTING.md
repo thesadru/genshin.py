@@ -53,6 +53,7 @@ good references for how projects should be type-hinted to be `type-complete`.
 - All public modules should be explicitly imported into its packages' `__init__.py` except for utilities and individual components which should only be exposed as an entire module.
 - `collections.abc.Awaitable` is generally preferred over `collections.abc.Coroutine` for interfaces and types.
 - Features should be split by API endpoint in components and by game and category in models.
+- Only abstract methods may be overwritten. Exceptions may be made only if there is no inheritence abuse.
 
 ### Project structure
 

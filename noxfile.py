@@ -74,6 +74,7 @@ def reformat(session: nox.Session) -> None:
 def test(session: nox.Session) -> None:
     """Run this project's tests using pytest."""
     install_requirements(session, "pytest")
+
     session.run(
         "pytest",
         "--asyncio-mode=auto",
@@ -82,6 +83,7 @@ def test(session: nox.Session) -> None:
         "html:coverage_html",
         "--cov-report",
         "xml:coverage.xml",
+        *session.posargs,
     )
 
 

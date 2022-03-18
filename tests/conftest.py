@@ -20,7 +20,7 @@ def event_loop():
 
 
 @pytest.fixture(scope="session")
-def cookies() -> typing.Dict[str, str]:
+def cookies() -> typing.Mapping[str, str]:
     try:
         return {"ltuid": os.environ["LTUID"], "ltoken": os.environ["LTOKEN"]}
     except KeyError:
@@ -29,7 +29,7 @@ def cookies() -> typing.Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-def browser_cookies() -> typing.Dict[str, str]:
+def browser_cookies() -> typing.Mapping[str, str]:
     try:
         return genshin.utility.get_browser_cookies()
     except Exception:
@@ -37,7 +37,7 @@ def browser_cookies() -> typing.Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-def chinese_cookies() -> typing.Dict[str, str]:
+def chinese_cookies() -> typing.Mapping[str, str]:
     try:
         return {"ltuid": os.environ["CN_LTUID"], "ltoken": os.environ["CN_LTOKEN"]}
     except KeyError:
@@ -46,7 +46,7 @@ def chinese_cookies() -> typing.Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-def local_chinese_cookies() -> typing.Dict[str, str]:
+def local_chinese_cookies() -> typing.Mapping[str, str]:
     try:
         return {
             "account_id": os.environ["LCN_ACCOUNT_ID"],
@@ -57,7 +57,7 @@ def local_chinese_cookies() -> typing.Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-async def client(cookies: typing.Dict[str, str]):
+async def client(cookies: typing.Mapping[str, str]):
     """Return a client with environment cookies."""
     client = genshin.Client()
     client.debug = True
@@ -67,13 +67,14 @@ async def client(cookies: typing.Dict[str, str]):
 
 
 @pytest.fixture(scope="session")
-async def lclient(browser_cookies: typing.Dict[str, str]):
+async def lclient(browser_cookies: typing.Mapping[str, str]):
     """Return the local client."""
     if not browser_cookies:
         pytest.skip("Skipped local test")
 
     client = genshin.Client()
     client.debug = True
+    client.default_game = genshin.Game.GENSHIN
     client.set_cookies(browser_cookies)
     client.set_authkey()
 
@@ -81,8 +82,8 @@ async def lclient(browser_cookies: typing.Dict[str, str]):
 
 
 @pytest.fixture(scope="session")
-async def cnclient(chinese_cookies: typing.Dict[str, str]):
-    """Return the client with chinese cookies"""
+async def cnclient(chinese_cookies: typing.Mapping[str, str]):
+    """Return the client with chinese cookies."""
     if not chinese_cookies:
         pytest.skip("Skipped chinese test")
 
@@ -95,7 +96,7 @@ async def cnclient(chinese_cookies: typing.Dict[str, str]):
 
 
 @pytest.fixture(scope="session")
-async def lcnclient(local_chinese_cookies: typing.Dict[str, str]):
+async def lcnclient(local_chinese_cookies: typing.Mapping[str, str]):
     """Return the local client with chinese cookies."""
     if not local_chinese_cookies:
         pytest.skip("Skipped local chinese test")
