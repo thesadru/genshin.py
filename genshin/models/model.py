@@ -44,14 +44,6 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     def __init_subclass__(cls) -> None:
         cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
 
-        # parse validators
-        for name, field in cls.__fields__.items():
-            callback = field.field_info.extra.get("validator")
-            if callback is not None:
-                pre = field.field_info.extra.get("validator_pre", False)
-                validator = pydantic.class_validators.Validator(callback, pre=pre)
-                cls.__validators__.setdefault(name, []).append(validator)  # type: ignore
-
     @pydantic.root_validator(pre=True)
     def __parse_galias(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Due to alias being reserved for actual aliases we use a custom alias."""
@@ -126,8 +118,6 @@ def Aliased(
     *,
     timezone: typing.Optional[typing.Union[int, datetime.datetime]] = None,
     mi18n: typing.Optional[str] = None,
-    validator: typing.Optional[typing.Callable[[typing.Any], typing.Any]] = None,
-    pre: bool = False,
     **kwargs: typing.Any,
 ) -> typing.Any:
     """Create an aliased field."""
@@ -137,7 +127,5 @@ def Aliased(
         kwargs.update(timezone=timezone)
     if mi18n is not None:
         kwargs.update(mi18n=mi18n)
-    if validator is not None:
-        kwargs.update(validator=validator, validator_pre=pre)
 
     return pydantic.Field(default, **kwargs)

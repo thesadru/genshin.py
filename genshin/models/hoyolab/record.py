@@ -5,6 +5,8 @@ import enum
 import re
 import typing
 
+import pydantic
+
 from genshin import types
 from genshin.models.model import Aliased, APIModel
 
@@ -66,11 +68,15 @@ class SearchUser(APIModel):
     """User from a search result."""
 
     hoyolab_uid: int = Aliased("uid")
-    nickname: str = Aliased(validator=lambda v: re.sub(r"<.+?>", "", v))
+    nickname: str
     introduction: str = Aliased("introduce")
     avatar_id: int = Aliased("avatar")
     gender: Gender
     icon: str = Aliased("avatar_url")
+
+    @pydantic.validator("nickname")
+    def __remove_highlight(cls, v: str) -> str:
+        return re.sub(r"<.+?>", "", v)
 
 
 class RecordCard(GenshinAccount):

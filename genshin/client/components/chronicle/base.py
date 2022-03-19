@@ -61,3 +61,19 @@ class BaseBattleChronicleClient(base.BaseClient):
         """Get a user's record card."""
         cards = await self.get_record_cards(hoyolab_uid, lang=lang)
         return cards[0]
+
+    async def set_visibility(self, public: bool, game: typing.Optional[types.Game] = None) -> None:
+        """Set your data to public or private."""
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError("No default game set.")
+
+            game = self.default_game
+
+        game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2}[game]
+
+        await self.request_game_record(
+            "genshin/wapi/publishGameRecord",
+            method="POST",
+            json=dict(is_public=public, game_id=game_id),
+        )
