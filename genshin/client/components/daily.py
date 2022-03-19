@@ -52,6 +52,7 @@ class DailyRewardClient(base.BaseClient):
             params["lang"] = lang or self.lang
 
         elif self.region is types.Region.CHINESE:
+            # TODO: Support cn honkai
             uid = await self._get_uid(types.Game.GENSHIN)
 
             params["uid"] = uid

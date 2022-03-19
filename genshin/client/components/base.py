@@ -55,7 +55,15 @@ class BaseClient:
         self.uids = {}
 
     def __repr__(self) -> str:
-        return f"<{type(self).__name__} lang={self.lang!r} hoyolab_uid={self.hoyolab_uid} debug={self.debug}>"
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_uid=self.hoyolab_uid,
+            authkey=self.authkey and self.authkey[:12] + "...",
+            debug=self.debug,
+        )
+        return f"<{type(self).__name__} {', '.join(f'{k}={v!r}' for k, v in kwargs.items() if v)}>"
 
     @property
     def hoyolab_uid(self) -> typing.Optional[int]:

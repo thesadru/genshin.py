@@ -1,5 +1,4 @@
 """Wish component."""
-
 import asyncio
 import functools
 import typing
@@ -139,7 +138,8 @@ class WishClient(base.BaseClient):
             if len(banner_ids) < 3:
                 banner_ids = await self.fetch_banner_ids()
 
-        data = await asyncio.gather(*(self._get_banner_details(i, lang=lang) for i in banner_ids))
+        coros = (self._get_banner_details(i, lang=lang) for i in banner_ids)
+        data = await asyncio.gather(*coros)
         return list(data)
 
     async def get_gacha_items(

@@ -5,31 +5,12 @@ from __future__ import annotations
 import abc
 import asyncio
 import heapq
+import random
 import typing
 
 __all__ = ["BufferedPaginator", "MergedPaginator", "Paginator"]
 
 T = typing.TypeVar("T")
-
-sentinel: typing.Any = object()
-
-
-async def _try_gather_first(iterators: typing.Iterable[typing.AsyncIterator[T]]) -> typing.Sequence[T]:
-    """Gather all the first values of iterators at once."""
-    coros = (it.__anext__() for it in iterators)
-    gathered = await asyncio.gather(*coros, return_exceptions=True)
-
-    values: typing.List[T] = []
-    for x in gathered:
-        if isinstance(x, BaseException):
-            if not isinstance(x, StopAsyncIteration):
-                raise x from None
-            else:
-                values.append(sentinel)
-        else:
-            values.append(x)
-
-    return values
 
 
 async def flatten(iterable: typing.AsyncIterable[T]) -> typing.Sequence[T]:
@@ -49,6 +30,45 @@ async def aiterate(iterable: typing.Iterable[T]) -> typing.AsyncIterator[T]:
 class Paginator(typing.Generic[T], abc.ABC):
     """Base paginator."""
 
+    __slots__ = ()
+
+    @property
+    def _repr_attributes(self) -> typing.Sequence[str]:
+        """Attributes to be used in repr."""
+        return [
+            attribute
+            for subclass in self.__class__.__mro__
+            for attribute in getattr(subclass, "__slots__", ())
+            if not attribute.startswith("_")
+        ]
+
+    def __repr__(self) -> str:
+        kwargs = ", ".join(f"{name}={getattr(self, name, 'undefined')!r}" for name in self._repr_attributes)
+        return f"{self.__class__.__name__}({kwargs})"
+
+    def __pretty__(
+        self,
+        fmt: typing.Callable[[typing.Any], str],
+        **kwargs: typing.Any,
+    ) -> typing.Iterator[typing.Any]:
+        """Devtools pretty formatting."""
+        yield self.__class__.__name__
+        yield "("
+        yield 1
+
+        for name in self._repr_attributes:
+            yield name
+            yield "="
+            if hasattr(self, name):
+                yield fmt(getattr(self, name))
+            else:
+                yield "<undefined>"
+
+            yield 0
+
+        yield -1
+        yield ")"
+
     async def next(self) -> T:
         """Return the next element."""
         try:
@@ -57,6 +77,7 @@ class Paginator(typing.Generic[T], abc.ABC):
             raise LookupError("No elements were found") from None
 
     def _complete(self) -> typing.NoReturn:
+        """Mark paginator as complete and clear memory."""
         raise StopAsyncIteration("No more items exist in this paginator. It has been exhausted.") from None
 
     def __aiter__(self) -> Paginator[T]:
@@ -77,6 +98,8 @@ class Paginator(typing.Generic[T], abc.ABC):
 class BasicPaginator(typing.Generic[T], Paginator[T], abc.ABC):
     """Paginator that simply iterates over an iterable."""
 
+    __slots__ = ("iterator",)
+
     iterator: typing.AsyncIterator[T]
     """Underlying iterator."""
 
@@ -96,7 +119,9 @@ class BasicPaginator(typing.Generic[T], Paginator[T], abc.ABC):
 class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
     """Paginator with a support for buffers."""
 
-    limit: typing.Optional[int] = None
+    __slots__ = ("limit", "_buffer", "_counter")
+
+    limit: typing.Optional[int]
     """Limit of items to be yielded."""
 
     _buffer: typing.Optional[typing.Iterator[T]]
@@ -107,6 +132,7 @@ class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
 
     def __init__(self, *, limit: typing.Optional[int] = None) -> None:
         self.limit = limit
+
         self._buffer = iter(())
         self._counter = 0
 
@@ -150,22 +176,29 @@ class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
 class MergedPaginator(typing.Generic[T], Paginator[T]):
     """A paginator merging a collection of iterators."""
 
-    heap: typing.List[typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
-    """Underlying heap queue."""
+    __slots__ = ("iterators", "_heap", "limit", "_key", "_prepared", "_counter")
 
-    _iterators: typing.Sequence[typing.AsyncIterator[T]]
+    # TODO: Use named tuples for the heap
+
+    iterators: typing.Sequence[typing.AsyncIterator[T]]
     """Entry iterators.
 
     Only used as pointers to a heap.
     """
 
-    limit: typing.Optional[int] = None
+    _heap: typing.List[typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    """Underlying heap queue.
+
+    List of (comparable, unique order id, value, iterator)
+    """
+
+    limit: typing.Optional[int]
     """Limit of items to be yielded"""
 
     _key: typing.Optional[typing.Callable[[T], typing.Any]]
     """Sorting key."""
 
-    _prepared: bool = False
+    _prepared: bool
     """Whether the paginator is prepared"""
 
     _counter: int
@@ -173,13 +206,12 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
 
     def __init__(
         self,
-        iterables: typing.Sequence[typing.AsyncIterable[T]],
+        iterables: typing.Collection[typing.AsyncIterable[T]],
         *,
         key: typing.Optional[typing.Callable[[T], typing.Any]] = None,
         limit: typing.Optional[int] = None,
     ) -> None:
-        self._iterators = [iterable.__aiter__() for iterable in iterables]
-        # TODO: Handle optional keys decently enough for mypy to pass
+        self.iterators = [iterable.__aiter__() for iterable in iterables]
         self._key = key
         self.limit = limit
 
@@ -187,22 +219,41 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         self._counter = 0
 
     def _complete(self) -> typing.NoReturn:
-        self.heap = []
-        self._iterators = []
+        """Mark paginator as complete and clear memory."""
+        # free memory in heaps
+        self._heap = []
+        self.iterators = []
 
         super()._complete()
         raise  # pyright bug
 
-    async def _prepare(self) -> None:
-        # TODO: Move _try_gather_first together
-        first_values = await _try_gather_first(self._iterators)
+    def _create_heap_item(
+        self,
+        value: T,
+        iterator: typing.AsyncIterator[T],
+        order: typing.Optional[int] = None,
+    ) -> typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+        """Create a new item for the heap queue."""
+        sort_value = self._key(value) if self._key else value
+        if order is None:
+            order = random.getrandbits(16)
 
-        self.heap = [
-            (self._key(value) if self._key else value, order, value, it)
-            for order, (it, value) in enumerate(zip(self._iterators, first_values))
-            if value is not sentinel
-        ]
-        heapq.heapify(self.heap)
+        return (sort_value, order, value, iterator)
+
+    async def _prepare(self) -> None:
+        """Prepare the heap queue by filling it with initial values."""
+        coros = (it.__anext__() for it in self.iterators)
+        first_values = await asyncio.gather(*coros, return_exceptions=True)
+
+        self._heap = []
+        for order, (it, value) in enumerate(zip(self.iterators, first_values)):
+            if isinstance(value, BaseException):
+                if isinstance(value, StopAsyncIteration):
+                    continue
+
+                raise value
+
+            heapq.heappush(self._heap, self._create_heap_item(value, iterator=it, order=order))
 
         self._prepared = True
 
@@ -210,7 +261,7 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         if not self._prepared:
             await self._prepare()
 
-        if not self.heap:
+        if not self._heap:
             self._complete()
 
         if self.limit and self._counter >= self.limit:
@@ -218,15 +269,15 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
 
         self._counter += 1
 
-        _, order, value, it = self.heap[0]
+        _, order, value, it = self._heap[0]
 
         try:
             new_value = await it.__anext__()
         except StopAsyncIteration:
-            heapq.heappop(self.heap)
+            heapq.heappop(self._heap)
             return value
 
-        heapq.heapreplace(self.heap, (self._key(new_value) if self._key else new_value, order, new_value, it))
+        heapq.heapreplace(self._heap, self._create_heap_item(new_value, iterator=it, order=order))
 
         return value
 
@@ -235,7 +286,7 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         if self.limit is not None and lazy:
             return [item async for item in self]
 
-        coros = (flatten(i) for i in self._iterators)
+        coros = (flatten(i) for i in self.iterators)
         lists = await asyncio.gather(*coros)
 
         return list(heapq.merge(*lists, key=self._key))[: self.limit]
