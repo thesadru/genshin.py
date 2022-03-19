@@ -53,14 +53,31 @@ class RecordCardSetting(APIModel):
     public: bool = Aliased("is_public")
 
 
+class Gender(enum.IntEnum):
+    """Gender used on hoyolab."""
+
+    unknown = 0
+    male = 1
+    female = 2
+    other = 3
+
+
+class SearchUser(APIModel):
+    """User from a search result."""
+
+    hoyolab_uid: int = Aliased("uid")
+    nickname: str = Aliased(validator=lambda v: re.sub(r"<.+?>", "", v))
+    introduction: str = Aliased("introduce")
+    avatar_id: int = Aliased("avatar")
+    gender: Gender
+    icon: str = Aliased("avatar_url")
+
+
 class RecordCard(GenshinAccount):
     """Hoyolab record card."""
 
     def __new__(cls, **kwargs: typing.Any) -> RecordCard:
         """Create the appropriate record card."""
-        from .genshin import GenshinRecordCard
-        from .honkai import HonkaiRecordCard
-
         game_id = kwargs.get("game_id", 0)
         if game_id == 1:
             cls = HonkaiRecordCard
@@ -86,21 +103,49 @@ class RecordCard(GenshinAccount):
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 
 
-class Gender(enum.IntEnum):
-    """Gender used on hoyolab."""
+class GenshinRecordCard(RecordCard):
+    """Genshin record card."""
 
-    unknown = 0
-    male = 1
-    female = 2
-    other = 3
+    @property
+    def game(self) -> types.Game:
+        return types.Game.GENSHIN
+
+    @property
+    def days_active(self) -> int:
+        return int(self.data[0].value)
+
+    @property
+    def characters(self) -> int:
+        return int(self.data[1].value)
+
+    @property
+    def achievements(self) -> int:
+        return int(self.data[2].value)
+
+    @property
+    def spiral_abyss(self) -> str:
+        return self.data[3].value
 
 
-class SearchUser(APIModel):
-    """User from a search result."""
+class HonkaiRecordCard(RecordCard):
+    """Honkai record card."""
 
-    hoyolab_uid: int = Aliased("uid")
-    nickname: str = Aliased(validator=lambda v: re.sub(r"<.+?>", "", v))
-    introduction: str = Aliased("introduce")
-    avatar_id: int = Aliased("avatar")
-    gender: Gender
-    icon: str = Aliased("avatar_url")
+    @property
+    def game(self) -> types.Game:
+        return types.Game.HONKAI
+
+    @property
+    def days_active(self) -> int:
+        return int(self.data[0].value)
+
+    @property
+    def stigmata(self) -> int:
+        return int(self.data[1].value)
+
+    @property
+    def battlesuits(self) -> int:
+        return int(self.data[2].value)
+
+    @property
+    def outfits(self) -> int:
+        return int(self.data[3].value)

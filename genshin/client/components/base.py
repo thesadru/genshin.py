@@ -1,4 +1,5 @@
 """Base ABC Client."""
+import abc
 import base64
 import json
 import logging
@@ -18,7 +19,7 @@ from genshin.utility import genshin as genshin_utility
 __all__ = ["BaseClient"]
 
 
-class BaseClient:
+class BaseClient(abc.ABC):
     """Base ABC Client."""
 
     __slots__ = ("cookie_manager", "_authkey", "_lang", "_region", "_default_game", "uids")

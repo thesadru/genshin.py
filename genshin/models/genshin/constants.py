@@ -71,9 +71,14 @@ _character_names = {
     10000054: ("Kokomi", "Sangonomiya Kokomi", "Hydro", 5),
     10000055: ("Gorou", "Gorou", "Geo", 4),
     10000056: ("Sara", "Kujou Sara", "Electro", 4),
-    10000057: ("Itto", "Arataki Itoo", "Geo", 5),
-    # collab:
+    10000057: ("Itto", "Arataki Ito", "Geo", 5),
+    10000058: ("YaeMiko", "Yae Miko", "Electro", 5),
+    10000059: None,
+    10000060: None,
+    10000061: None,
     10000062: ("Aloy", "Aloy", "Cryo", 105),
+    10000063: ("Shenhe", "Shenhe", "Cryo", 5),
+    10000064: ("YunJin", "Yun Jin", "Geo", 4),
 }
 CHARACTER_NAMES: typing.Dict[int, DBChar] = {
     id: DBChar(id, *data) for id, data in _character_names.items() if data is not None

@@ -13,7 +13,7 @@ __all__ = ["TransactionClient"]
 
 
 class TransactionClient(base.BaseClient):
-    """Diary component."""
+    """Transaction component."""
 
     async def request_transaction(
         self,
