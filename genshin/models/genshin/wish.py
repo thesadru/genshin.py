@@ -1,5 +1,6 @@
 """Genshin wish models."""
 import datetime
+import enum
 import re
 import typing
 
@@ -8,7 +9,6 @@ import pydantic
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
-    "BANNER_TYPES",
     "BannerDetailItem",
     "BannerDetails",
     "BannerDetailsUpItem",
@@ -17,9 +17,30 @@ __all__ = [
     "Wish",
 ]
 
-BannerType = typing.Literal[100, 200, 301, 302, 400]
 
-BANNER_TYPES: typing.Sequence[BannerType] = [100, 200, 301, 302, 400]
+class BannerType(enum.IntEnum):
+    """Banner types in wish histories."""
+
+    NOVICE = 100
+    """Temporary novice banner."""
+
+    STANDARD = 200
+    """Permanent standard banner."""
+
+    CHARACTER = 301
+    """Rotating character banner."""
+
+    WEAPON = 302
+    """Rotating weapon banner."""
+
+    # these are special cases
+    # they exist inside the history but should be counted as the same
+
+    CHARACTER1 = 301
+    """Character banner #1."""
+
+    CHARACTER2 = 400
+    """Character banner #2."""
 
 
 class Wish(APIModel, Unique):

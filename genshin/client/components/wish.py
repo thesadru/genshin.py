@@ -65,7 +65,7 @@ class WishClient(base.BaseClient):
 
     def wish_history(
         self,
-        banner_type: typing.Union[int, typing.Sequence[int], None] = None,
+        banner_type: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         *,
         limit: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,

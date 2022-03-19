@@ -9,6 +9,8 @@ from genshin.client.components import base
 from genshin.models.genshin import diary as models
 from genshin.utility import genshin as genshin_utility
 
+__all__ = ["DiaryClient"]
+
 
 class DiaryCallback(typing.Protocol):
     """Callback which requires a diary page."""
