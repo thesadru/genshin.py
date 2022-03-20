@@ -19,15 +19,27 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         self,
         endpoint: str,
         uid: int,
+        *,
         lang: typing.Optional[str] = None,
+        cache: bool = True,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.HONKAI,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+            )
+
         return await self.request_game_record(
             endpoint,
             lang=lang,
             game=types.Game.HONKAI,
             region=types.Region.OVERSEAS,
             params=dict(role_id=uid, server=honkai_utility.recognize_honkai_server(uid)),
+            cache=cache_key,
         )
 
     async def get_honkai_user(

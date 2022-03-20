@@ -1,4 +1,4 @@
-"""Errors recieved from the API."""
+"""Errors received from the API."""
 import typing
 
 __all__ = [
@@ -127,9 +127,9 @@ class RedemptionCooldown(RedemptionException):
 
 
 class RedemptionClaimed(RedemptionException):
-    """Redeption code has been claimed already."""
+    """Redemption code has been claimed already."""
 
-    msg = "Code has been claimed already."
+    msg = "Redemption code has been claimed already."
 
 
 _TGE = typing.Type[GenshinException]
@@ -158,8 +158,8 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: (RedemptionInvalid, "Redemption code has expired."),
     -2004: RedemptionInvalid,
-    -2016: (RedemptionCooldown, "Redemption in cooldown."),
-    -2017: (RedemptionClaimed, "Redeption code has been claimed already."),
+    -2016: RedemptionCooldown,
+    -2017: RedemptionClaimed,
     -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
     # rewards
     -5003: AlreadyClaimed,

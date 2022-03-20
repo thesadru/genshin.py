@@ -1,5 +1,7 @@
 """Daily reward component."""
 import asyncio
+import dataclasses
+import datetime
 import functools
 import typing
 import uuid
@@ -7,13 +9,22 @@ import uuid
 import aiohttp.typedefs
 
 from genshin import constants, paginators, types
-from genshin.client import manager, routes
+from genshin.client import cache, manager, routes
 from genshin.client.components import base
 from genshin.models.genshin import daily as models
 from genshin.utility import ds as ds_utility
 from genshin.utility import genshin as genshin_utility
 
 __all__ = ["DailyRewardClient"]
+
+
+@dataclasses.dataclass(unsafe_hash=True)
+class RewardsCacheKey(cache.CacheKey):
+    endpoint: str
+    month: int
+    region: types.Region
+    game: types.Game
+    lang: str
 
 
 class DailyRewardClient(base.BaseClient):
@@ -80,10 +91,23 @@ class DailyRewardClient(base.BaseClient):
         return models.DailyRewardInfo(data["is_sign"], data["total_sign_day"])
 
     async def get_monthly_rewards(
-        self, *, game: typing.Optional[types.Game] = None, lang: typing.Optional[str] = None
+        self,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.DailyReward]:
         """Get a list of all availible rewards for the current month."""
-        data = await self.request_daily_reward("home", game=game, lang=lang)
+        data = await self.request_daily_reward(
+            "home",
+            game=game,
+            static_cache=RewardsCacheKey(
+                "rewards",
+                datetime.datetime.utcnow().month,
+                region=self.region,
+                game=typing.cast("types.Game", game or self.default_game),  # (resolved later)
+                lang=lang or self.lang,
+            ),
+        )
         return [models.DailyReward(**i) for i in data["awards"]]
 
     async def _get_claimed_rewards_page(

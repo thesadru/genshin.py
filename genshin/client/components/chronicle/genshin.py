@@ -28,6 +28,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         method: str = "GET",
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = True,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
         payload = dict(payload or {})
@@ -39,6 +40,16 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         else:
             params = payload
 
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                params=tuple(payload.values()) if payload else (),
+                lang=lang or self.lang,
+            )
+
         return await self.request_game_record(
             endpoint,
             lang=lang,
@@ -46,6 +57,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             region=_get_region(uid),
             params=params,
             data=data,
+            cache=cache_key,
         )
 
     async def get_partial_genshin_user(
@@ -98,7 +110,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_notes(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Notes:
         """Get the real-time notes."""
-        data = await self.__get_genshin("dailyNote", uid, lang=lang)
+        data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 
     async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:

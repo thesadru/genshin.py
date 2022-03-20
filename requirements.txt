@@ -2,6 +2,6 @@ aiohttp
 pydantic
 
 # optional:
-cachetools
 browser-cookie3
 rsa
+aioredis

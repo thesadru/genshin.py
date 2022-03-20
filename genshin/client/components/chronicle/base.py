@@ -1,13 +1,33 @@
 """Base battle chronicle component."""
 
+import dataclasses
 import typing
 
 from genshin import errors, models, types
-from genshin.client import routes
+from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
+
+
+@dataclasses.dataclass(unsafe_hash=True)
+class HoyolabCacheKey(cache.CacheKey):
+    endpoint: str
+    hoyolab_uid: int
+    lang: str
+
+
+@dataclasses.dataclass(unsafe_hash=True)
+class ChronicleCacheKey(cache.CacheKey):
+    def __str__(self) -> str:
+        return "record" + ":" + super().__str__()
+
+    game: types.Game
+    endpoint: str
+    uid: int
+    lang: str
+    params: typing.Tuple[typing.Any, ...] = ()
 
 
 class BaseBattleChronicleClient(base.BaseClient):
@@ -39,10 +59,13 @@ class BaseBattleChronicleClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.List[models.hoyolab.RecordCard]:
         """Get a user's record cards."""
+        hoyolab_uid = hoyolab_uid or self.cookie_manager.get_user_id()
+
         data = await self.request_game_record(
             "card/wapi/getGameRecordCard",
             lang=lang,
-            params=dict(uid=hoyolab_uid or self.cookie_manager.get_user_id()),
+            params=dict(uid=hoyolab_uid),
+            cache=HoyolabCacheKey("records", hoyolab_uid, lang=lang or self.lang),
         )
 
         cards = data["list"]

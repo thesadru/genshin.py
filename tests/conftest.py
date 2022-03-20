@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import typing
 import warnings
@@ -62,8 +63,18 @@ async def client(cookies: typing.Mapping[str, str]):
     client = genshin.Client()
     client.debug = True
     client.set_cookies(cookies)
+    client.set_cache()
 
-    return client
+    yield client
+
+    # dump the entire cache into a json file
+    assert isinstance(client.cache, genshin.Cache)
+
+    cache = {str(key): value for key, (_, value) in client.cache.cache.items()}
+
+    os.makedirs(".pytest_cache", exist_ok=True)
+    with open(".pytest_cache/hoyo_cache.json", "w") as file:
+        json.dump(cache, file, indent=4)
 
 
 @pytest.fixture(scope="session")

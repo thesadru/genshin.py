@@ -11,6 +11,7 @@ import aiohttp.typedefs
 import yarl
 
 from genshin import constants, errors, types
+from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import ds
@@ -22,13 +23,14 @@ __all__ = ["BaseClient"]
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "_authkey", "_lang", "_region", "_default_game", "uids")
+    __slots__ = ("cookie_manager", "cache", "_authkey", "_lang", "_region", "_default_game", "uids")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
     logger: logging.Logger = logging.getLogger(__name__)
 
     cookie_manager: manager.AbstractCookieManager
+    cache: client_cache.BaseCache
     _authkey: typing.Optional[str]
     _lang: str
     _region: types.Region
@@ -44,9 +46,12 @@ class BaseClient(abc.ABC):
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
         game: typing.Optional[types.Game] = None,
+        cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
         self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.NOOPCache()
+
         self.authkey = authkey
         self.lang = lang
         self.region = region
@@ -161,6 +166,30 @@ class BaseClient(abc.ABC):
 
         self.authkey = authkey
 
+    def set_cache(
+        self,
+        maxsize: int = 1024,
+        *,
+        ttl: int = client_cache.HOUR,
+        static_ttl: int = client_cache.DAY,
+    ) -> None:
+        """Create and set a new cache."""
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self,
+        url: str,
+        *,
+        ttl: int = client_cache.HOUR,
+        static_ttl: int = client_cache.DAY,
+        **kwargs: typing.Any,
+    ) -> None:
+        """Create and set a new redis cache."""
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
     async def _request_hook(
         self,
         method: str,
@@ -192,9 +221,22 @@ class BaseClient(abc.ABC):
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Any = None,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request and return a parsed json response."""
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        # actual request
+
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
 
@@ -206,7 +248,7 @@ class BaseClient(abc.ABC):
 
         await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
 
-        return await self.cookie_manager.request(
+        response = await self.cookie_manager.request(
             url,
             method=method,
             params=params,
@@ -215,15 +257,30 @@ class BaseClient(abc.ABC):
             **kwargs,
         )
 
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(cache, response)
+
+        return response
+
     async def request_webstatic(
         self,
         url: aiohttp.typedefs.StrOrURL,
         *,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Request a static json file."""
-        url = yarl.URL(routes.WEBSTATIC_URL.get_url()).join(yarl.URL(url))
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url().join(yarl.URL(url))
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
@@ -232,6 +289,9 @@ class BaseClient(abc.ABC):
             async with session.get(url, headers=headers, **kwargs) as r:
                 r.raise_for_status()
                 data = await r.json()
+
+        if cache is not None:
+            await self.cache.set(cache, data)
 
         return data
 
@@ -287,6 +347,7 @@ class BaseClient(abc.ABC):
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,
+            cache=client_cache.UniqueCacheKey("accounts"),
         )
         return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 
