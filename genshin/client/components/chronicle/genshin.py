@@ -32,6 +32,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
         payload = dict(payload or {})
+        original_payload = payload.copy()
         payload.update(role_id=uid, server=genshin_utility.recognize_genshin_server(uid))
 
         data, params = None, None
@@ -46,8 +47,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
                 types.Game.GENSHIN,
                 endpoint,
                 uid,
-                params=tuple(payload.values()) if payload else (),
                 lang=lang or self.lang,
+                params=tuple(original_payload.values()),
             )
 
         return await self.request_game_record(
@@ -108,8 +109,15 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.SpiralAbyss(**data)
 
-    async def get_genshin_notes(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Notes:
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.Notes:
         """Get the real-time notes."""
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
         data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 

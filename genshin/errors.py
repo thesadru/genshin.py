@@ -149,6 +149,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     10104: "Tried to use a beta feature in an invalid context.",
     # calculator
     -500001: "Invalid fields in calculation.",
+    -500004: VisitsTooFrequently,
     -502001: "User does not have this character.",
     # mixin
     -1: "Internal database error.",

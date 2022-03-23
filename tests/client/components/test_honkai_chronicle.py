@@ -24,13 +24,13 @@ async def test_honkai_abyss(client: genshin.Client, honkai_uid: int):
 async def test_honkai_elysian_realm(client: genshin.Client, honkai_uid: int):
     data = await client.get_honkai_elysian_realm(honkai_uid)
 
-    assert data
+    assert data is not None
 
 
 async def test_honkai_memorial_arena(client: genshin.Client, honkai_uid: int):
     data = await client.get_honkai_memorial_arena(honkai_uid)
 
-    assert data
+    assert data is not None
 
 
 async def test_full_honkai_user(client: genshin.Client, honkai_uid: int):

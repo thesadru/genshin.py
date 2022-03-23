@@ -146,7 +146,16 @@ def miyoushe_uid():
     return 75276539
 
 
-def pytest_collection_modifyitems(items: typing.List[pytest.Item]):
+def pytest_addoption(parser: pytest.Parser):
+    parser.addoption("--cooperative", action="store_true")
+
+
+def pytest_collection_modifyitems(items: typing.List[pytest.Item], config: pytest.Config):
+    if config.option.cooperative:
+        for item in items:
+            if isinstance(item, pytest.Function) and asyncio.iscoroutinefunction(item.obj):
+                item.add_marker("asyncio_cooperative")
+
     for index, item in enumerate(items):
         if "reserialization" in item.name:
             break

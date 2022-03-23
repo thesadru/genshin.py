@@ -24,7 +24,7 @@ def _separate(values: typing.Iterable[typing.Any], sep: str = ":") -> str:
     parts: typing.List[str] = []
     for value in values:
         if value is None:
-            parts.append("nunoxll")
+            parts.append("null")
         elif isinstance(value, enum.Enum):
             parts.append(str(value.value))
         elif isinstance(value, tuple):

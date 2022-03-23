@@ -10,10 +10,9 @@ target-version = ["py39"]
 [tool.isort]
 profile = "black"
 
-[tool.pytest]
+[tool.pytest.ini_options]
 asyncio-mode = "auto"
 testpaths = ["tests"]
-required_plugins = ["pytest-asyncio"]
 
 [tool.pyright]
 include = ["genshin"]

@@ -75,15 +75,20 @@ def test(session: nox.Session) -> None:
     """Run this project's tests using pytest."""
     install_requirements(session, "pytest")
 
+    args: typing.List[str] = session.posargs.copy()
+    if "--cooperative" in args:
+        args += ["-p", "no:asyncio"]
+    else:
+        args += ["--asyncio-mode=auto"]
+
     session.run(
         "pytest",
-        "--asyncio-mode=auto",
         "--cov=" + PACKAGE,
         "--cov-report",
         "html:coverage_html",
         "--cov-report",
         "xml:coverage.xml",
-        *session.posargs,
+        *args,
     )
 
 

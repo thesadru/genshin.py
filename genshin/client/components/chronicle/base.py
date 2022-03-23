@@ -21,7 +21,7 @@ class HoyolabCacheKey(cache.CacheKey):
 @dataclasses.dataclass(unsafe_hash=True)
 class ChronicleCacheKey(cache.CacheKey):
     def __str__(self) -> str:
-        return "record" + ":" + super().__str__()
+        return "chronicle" + ":" + super().__str__()
 
     game: types.Game
     endpoint: str

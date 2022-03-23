@@ -7,7 +7,18 @@ import pydantic
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
-__all__ = ["Expedition", "Notes"]
+__all__ = ["Expedition", "ExpeditionCharacter", "Notes"]
+
+
+def _process_timedelta(time: typing.Union[int, datetime.datetime]) -> datetime.datetime:
+    if isinstance(time, int):
+        time = datetime.datetime.fromtimestamp(time).astimezone()
+
+    if time < datetime.datetime(2000, 1, 1).astimezone():
+        delta = datetime.timedelta(seconds=int(time.timestamp()))
+        time = datetime.datetime.now().astimezone() + delta
+
+    return time
 
 
 class ExpeditionCharacter(character.BaseCharacter):
@@ -19,7 +30,7 @@ class Expedition(APIModel):
 
     character: ExpeditionCharacter = Aliased("avatar_side_icon")
     status: typing.Literal["Ongoing", "Finished"]
-    completion_time: datetime.datetime
+    completion_time: datetime.datetime = Aliased("remained_time")
 
     @property
     def finished(self) -> bool:
@@ -32,15 +43,7 @@ class Expedition(APIModel):
         remaining = self.completion_time - datetime.datetime.now().astimezone()
         return max(remaining.total_seconds(), 0)
 
-    @pydantic.root_validator(pre=True)
-    def __process_timedelta(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        if values.get("completion_time"):
-            return values
-
-        time = datetime.timedelta(seconds=int(values["remained_time"]))
-        values["completion_time"] = datetime.datetime.now().astimezone() + time
-
-        return values
+    __fix_time = pydantic.validator("completion_time", allow_reuse=True)(_process_timedelta)
 
     @pydantic.validator("character", pre=True)
     def __complete_character(cls, v: typing.Any) -> ExpeditionCharacter:
@@ -55,7 +58,7 @@ class Notes(APIModel):
 
     current_resin: int
     max_resin: int
-    resin_recovery_time: datetime.datetime
+    resin_recovery_time: datetime.datetime = Aliased("resin_recovery_time")
 
     current_realm_currency: int = Aliased("current_home_coin")
     max_realm_currency: int = Aliased("max_home_coin")
@@ -75,7 +78,7 @@ class Notes(APIModel):
     def remaining_resin_recovery_time(self) -> float:
         """The remaining time until resin recovery in seconds."""
         remaining = self.resin_recovery_time - datetime.datetime.now().astimezone()
-        return min(remaining.total_seconds(), 0)
+        return max(remaining.total_seconds(), 0)
 
     @property
     def remaining_realm_currency_recovery_time(self) -> float:
@@ -83,12 +86,5 @@ class Notes(APIModel):
         remaining = self.realm_currency_recovery_time - datetime.datetime.now().astimezone()
         return max(remaining.total_seconds(), 0)
 
-    @pydantic.root_validator(pre=True)
-    def __process_timedelta(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        if isinstance(values.get("resin_recovery_time"), datetime.datetime):
-            return values
-
-        time = datetime.timedelta(seconds=int(values["resin_recovery_time"]))
-        values["resin_recovery_time"] = datetime.datetime.now().astimezone() + time
-
-        return values
+    __fix_resin_time = pydantic.validator("resin_recovery_time", allow_reuse=True)(_process_timedelta)
+    __fix_realm_time = pydantic.validator("realm_currency_recovery_time", allow_reuse=True)(_process_timedelta)
