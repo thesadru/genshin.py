@@ -1,5 +1,6 @@
 """Base ABC Client."""
 import abc
+import asyncio
 import base64
 import json
 import logging
@@ -14,6 +15,7 @@ from genshin import constants, errors, types
 from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.models import hoyolab as hoyolab_models
+from genshin.models import model as base_model
 from genshin.utility import ds
 from genshin.utility import genshin as genshin_utility
 
@@ -285,6 +287,8 @@ class BaseClient(abc.ABC):
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
 
+        await self._request_hook("GET", url, headers=headers, **kwargs)
+
         async with self.cookie_manager.create_session() as session:
             async with session.get(url, headers=headers, **kwargs) as r:
                 r.raise_for_status()
@@ -373,3 +377,23 @@ class BaseClient(abc.ABC):
             return uid
 
         raise errors.AccountNotFound(msg="No UID provided and account has no game account bound to it.")
+
+    async def _fetch_mi18n(self, url: str, key: str, lang: str) -> None:
+        """Update mi18n for a single url."""
+        data = await self.request_webstatic(url.format(lang=lang))
+        for k, v in data.items():
+            base_model.APIModel._mi18n.setdefault(key + "/" + k, {})[lang] = v  # pyright: ignore[reportPrivateUsage]
+
+    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS) -> None:
+        """Fetch mi18n for partially localized endpoints."""
+        if base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
+            return
+
+        langs = tuple(langs)
+
+        coros: typing.List[typing.Awaitable[None]] = []
+        for key, url in routes.MI18N.items():  # pyright: ignore[reportPrivateUsage]
+            for lang in langs:
+                coros.append(self._fetch_mi18n(url, key, lang))
+
+        await asyncio.gather(*coros)

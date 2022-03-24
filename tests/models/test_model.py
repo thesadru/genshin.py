@@ -17,3 +17,6 @@ genshin.models.APIModel.__new__ = APIModel___new__
 def test_model_reserialization():
     for cls, model in sorted(all_models.items(), key=lambda pair: pair[0].__name__):
         cls(**model.dict())
+
+        if hasattr(model, "as_dict"):
+            getattr(model, "as_dict")()

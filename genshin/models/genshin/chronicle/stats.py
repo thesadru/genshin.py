@@ -42,6 +42,10 @@ class Stats(APIModel):
     unlocked_domains: int =   Aliased("domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        """Helper function which turns fields into properly named ones"""
+        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}
+
 
 class Offering(APIModel):
     """Exploration offering."""

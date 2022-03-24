@@ -14,6 +14,20 @@ __all__ = [
 ]
 
 
+def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+    """Helper function which turns fields into properly named ones"""
+    ret: typing.Dict[str, typing.Any] = {}
+    for field in model.__fields__.values():
+        mi18n = model._get_mi18n(field, lang)  # pyright: ignore[reportPrivateUsage]
+        val = getattr(model, field.name)
+        if isinstance(val, APIModel):
+            ret[mi18n] = _model_to_dict(val, lang)
+        else:
+            ret[mi18n] = val
+
+    return ret
+
+
 # flake8: noqa: E222
 class MemorialArenaStats(APIModel):
     """Represents a user's stats regarding the Memorial Arena gamemodes."""
@@ -24,6 +38,9 @@ class MemorialArenaStats(APIModel):
     score: int =     Aliased("battle_field_score",              mi18n="bbs/score")
     raw_tier: int =  Aliased("battle_field_area",               mi18n="bbs/settled_level")
     # fmt: on
+
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
     @property
     def rank(self) -> str:
@@ -49,6 +66,9 @@ class SuperstringAbyssStats(APIModel):
 
     # for consistency between types; also allows us to forego the mi18n fuckery
     latest_type: typing.ClassVar[str] = "Superstring"
+
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
     @property
     def rank(self) -> str:
@@ -104,6 +124,9 @@ class OldAbyssStats(APIModel):
         """The user's Abyss tier as displayed in-game."""
         return modes.prettify_competitive_tier(self.raw_tier)
 
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
+
 
 # flake8: noqa: E222
 class ElysianRealmStats(APIModel):
@@ -116,6 +139,9 @@ class ElysianRealmStats(APIModel):
     highest_floor: int =      Aliased("god_war_max_challenge_level",     mi18n="bbs/rogue_setted_level")
     max_level_suits: int =    Aliased("god_war_max_level_avatar_number", mi18n="bbs/explain_text_6")
     # fmt: on
+
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
 
 class HonkaiStats(APIModel):
@@ -152,6 +178,9 @@ class HonkaiStats(APIModel):
             values["elysian_realm"] = ElysianRealmStats(**values)
 
         return values
+
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
 
 class UserInfo(APIModel):

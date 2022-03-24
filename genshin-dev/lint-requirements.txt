@@ -9,7 +9,6 @@ flake8-comprehensions  # comprehension checks
 flake8-deprecated      # deprecated call checks
 flake8-docstrings      # pydocstyle support
 flake8-executable      # shebangs
-flake8-html            # html output
 flake8-isort           # runs isort
 flake8-mutable         # mutable default argument detection
 flake8-pep3101         # new-style format strings only

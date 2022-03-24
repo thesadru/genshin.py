@@ -36,6 +36,12 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     __api_init_fields__: typing.ClassVar[typing.Set[str]]
     __model_init_fields__: typing.ClassVar[typing.Set[str]]
 
+    # nasty pydantic bug fixed only on the master branch - waiting for pypi release
+    if typing.TYPE_CHECKING:
+        _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]]
+    else:
+        _mi18n = {}
+
     def __init__(self, **data: typing.Any) -> None:
         """"""
         # clear the docstring for pdoc
@@ -93,6 +99,32 @@ class APIModel(pydantic.BaseModel, abc.ABC):
                 self.__dict__[name] = value
 
         return super().dict(**kwargs)
+
+    def _get_mi18n(
+        self,
+        field: typing.Union[pydantic.fields.ModelField, str],
+        lang: str,
+        *,
+        default: typing.Optional[str] = None,
+    ) -> str:
+        """Get localized name of a field."""
+        if isinstance(field, str):
+            key = field.lower()
+            default = default or key
+        else:
+            if not field.field_info.extra.get("mi18n"):
+                raise TypeError(f"{field!r} does not have mi18n.")
+
+            key = field.field_info.extra["mi18n"]
+            default = default or field.name
+
+        if key not in self._mi18n:
+            return default
+
+        if lang not in self._mi18n[key]:
+            raise TypeError(f"mi18n not loaded for {lang}")
+
+        return self._mi18n[key][lang]
 
     if not typing.TYPE_CHECKING:
 

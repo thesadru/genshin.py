@@ -126,3 +126,8 @@ YSULOG_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/ysulog/api/",
     chinese="",
 )
+
+MI18N = dict(
+    bbs="https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
+    inquiry="https://mi18n-os.hoyoverse.com/webstatic/admin/mi18n/hk4e_global/m02251421001311/m02251421001311-{lang}.json",
+)

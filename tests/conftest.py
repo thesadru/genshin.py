@@ -64,6 +64,7 @@ async def client(cookies: typing.Mapping[str, str]):
     client.debug = True
     client.set_cookies(cookies)
     client.set_cache()
+    await client.update_mi18n(["en-us"])
 
     yield client
 

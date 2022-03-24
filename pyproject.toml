@@ -11,7 +11,7 @@ target-version = ["py39"]
 profile = "black"
 
 [tool.pytest.ini_options]
-asyncio-mode = "auto"
+asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.pyright]
