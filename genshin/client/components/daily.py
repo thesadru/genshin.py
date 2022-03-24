@@ -30,6 +30,7 @@ class RewardsCacheKey(cache.CacheKey):
 class DailyRewardClient(base.BaseClient):
     """Daily reward component."""
 
+    @manager.no_multi
     async def request_daily_reward(
         self,
         endpoint: str,
@@ -44,9 +45,6 @@ class DailyRewardClient(base.BaseClient):
         """Make a request towards the daily reward endpoint."""
         params = dict(params or {})
         headers = dict(headers or {})
-
-        if isinstance(self.cookie_manager, manager.RotatingCookieManager):
-            raise RuntimeError("Cannot claim rewards with a multi-cookie manager.")
 
         if game is None:
             if self.default_game is None:

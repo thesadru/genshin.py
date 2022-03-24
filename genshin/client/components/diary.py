@@ -51,6 +51,7 @@ class DiaryPaginator(paginators.PagedPaginator[models.DiaryAction]):
 class DiaryClient(base.BaseClient):
     """Diary component."""
 
+    @manager.no_multi
     async def request_ledger(
         self,
         *,
@@ -63,9 +64,6 @@ class DiaryClient(base.BaseClient):
         """Make a request towards the ys ledger endpoint."""
         # TODO: Do not separate urls?
         params = dict(params or {})
-
-        if isinstance(self.cookie_manager, manager.RotatingCookieManager):
-            raise RuntimeError("Cannot claim rewards with a multi-cookie manager.")
 
         url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(self.region)
 

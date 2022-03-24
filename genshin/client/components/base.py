@@ -335,15 +335,13 @@ class BaseClient(abc.ABC):
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
 
+    @manager.no_multi
     async def get_game_accounts(
         self,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
-        if isinstance(self.cookie_manager, manager.RotatingCookieManager):
-            raise RuntimeError("Cannot get data of logged-in user with a multi-cookie managers.")
-
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,
@@ -363,11 +361,15 @@ class BaseClient(abc.ABC):
 
     async def _get_uid(self, game: types.Game) -> int:
         """Get a cached fallback uid."""
-        if game not in self.uids:
-            await self._update_cached_uids()
+        if uid := self.uids.get(game):
+            return uid
 
-        # TODO: raise properly
-        if game not in self.uids:
-            errors.raise_for_retcode({"retcode": -1073})
+        if self.cookie_manager.multi:
+            raise RuntimeError("UID must be provided when using multi-cookie managers.")
 
-        return self.uids[game]
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg="No UID provided and account has no game account bound to it.")

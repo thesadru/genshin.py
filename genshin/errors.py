@@ -24,17 +24,19 @@ __all__ = [
 class GenshinException(Exception):
     """A base genshin exception."""
 
-    retcode: int
-    original: str
+    retcode: int = 0
+    original: str = ""
     msg: str = ""
 
-    def __init__(self, response: typing.Mapping[str, typing.Any], msg: typing.Optional[str] = None) -> None:
-        self.retcode = response.get("retcode", 0)
+    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -> None:
+        self.retcode = response.get("retcode", self.retcode)
         self.original = response.get("message", "")
         self.msg = msg or self.msg or self.original
 
         if self.retcode:
             msg = f"[{self.retcode}] {self.msg}"
+        else:
+            msg = self.msg
 
         super().__init__(msg)
 
@@ -70,12 +72,14 @@ class CookieException(GenshinException):
 class InvalidCookies(CookieException):
     """Cookies weren't valid."""
 
+    retcode = -100
     msg = "Cookies are not valid."
 
 
 class TooManyRequests(CookieException):
     """Made too many requests and got ratelimited."""
 
+    retcode = 10101
     msg = "Cannot get data for more than 30 accounts per cookie per day."
 
 
@@ -85,12 +89,14 @@ class VisitsTooFrequently(GenshinException):
     Must be handled with exponential backoff.
     """
 
+    retcode = -110
     msg = "Visits too frequently."
 
 
 class AlreadyClaimed(GenshinException):
     """Already claimed the daily reward today."""
 
+    retcode = -5003
     msg = "Already claimed the daily reward today."
 
 
@@ -101,12 +107,14 @@ class AuthkeyException(GenshinException):
 class InvalidAuthkey(AuthkeyException):
     """Authkey is not valid."""
 
+    retcode = -100
     msg = "Authkey is not valid."
 
 
 class AuthkeyTimeout(AuthkeyException):
     """Authkey has timed out."""
 
+    retcode = -101
     msg = "Authkey has timed out."
 
 

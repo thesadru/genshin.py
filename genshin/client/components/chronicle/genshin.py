@@ -4,6 +4,7 @@ import asyncio
 import typing
 
 from genshin import types
+from genshin.client import manager
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 from genshin.utility import genshin as genshin_utility
@@ -20,10 +21,11 @@ def _get_region(uid: int) -> types.Region:
 class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     """Genshin battle chronicle component."""
 
+    @manager.no_multi
     async def __get_genshin(
         self,
         endpoint: str,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         method: str = "GET",
         lang: typing.Optional[str] = None,
@@ -33,6 +35,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get an arbitrary honkai object."""
         payload = dict(payload or {})
         original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
         payload.update(role_id=uid, server=genshin_utility.recognize_genshin_server(uid))
 
         data, params = None, None
@@ -116,8 +120,6 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.Notes:
         """Get the real-time notes."""
-        uid = uid or await self._get_uid(types.Game.GENSHIN)
-
         data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 

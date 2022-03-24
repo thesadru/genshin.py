@@ -35,6 +35,7 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.SearchUser(**i["user"]) for i in data["list"]]
 
+    @manager.no_multi
     async def redeem_code(
         self,
         code: str,
@@ -42,9 +43,6 @@ class HoyolabClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> None:
         """Redeems a gift code for the current genshin user."""
-        if isinstance(self.cookie_manager, manager.RotatingCookieManager):
-            raise RuntimeError("Cannot claim rewards with a multi-cookie manager.")
-
         uid = await self._get_uid(types.Game.GENSHIN)
 
         await self.request(

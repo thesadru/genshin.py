@@ -4,6 +4,7 @@ import asyncio
 import typing
 
 from genshin import types
+from genshin.client import manager
 from genshin.models.honkai import chronicle as models
 from genshin.utility import honkai as honkai_utility
 
@@ -15,15 +16,18 @@ __all__ = ["HonkaiBattleChronicleClient"]
 class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     """Honkai battle chronicle component."""
 
+    @manager.no_multi
     async def __get_honkai(
         self,
         endpoint: str,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
         cache: bool = True,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
+        uid = uid or await self._get_uid(types.Game.HONKAI)
+
         cache_key: typing.Optional[base.ChronicleCacheKey] = None
         if cache:
             cache_key = base.ChronicleCacheKey(

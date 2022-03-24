@@ -20,6 +20,7 @@ __all__ = ["AbstractCookieManager", "CookieManager", "RotatingCookieManager"]
 
 CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
+CallableT = typing.TypeVar("CallableT", bound="typing.Callable[..., object]")
 
 
 def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, str]:
@@ -56,6 +57,11 @@ class AbstractCookieManager(abc.ABC):
     @abc.abstractmethod
     def available(self) -> bool:
         """Whether the authentication cookies are available."""
+
+    @property
+    @abc.abstractmethod
+    def multi(self) -> bool:
+        """Whether the cookie manager contains multiple cookies and therefore should not cache private data."""
 
     @property
     def user_id(self) -> typing.Optional[int]:
@@ -150,6 +156,10 @@ class CookieManager(AbstractCookieManager):
         return bool(self._cookies)
 
     @property
+    def multi(self) -> bool:
+        return False
+
+    @property
     def jar(self) -> http.cookies.SimpleCookie[str]:
         """A client cookie jar."""
         return http.cookies.SimpleCookie(self.cookies)
@@ -232,6 +242,10 @@ class RotatingCookieManager(AbstractCookieManager):
     def available(self) -> bool:
         return bool(self._cookies)
 
+    @property
+    def multi(self) -> bool:
+        return True
+
     def set_cookies(
         self,
         cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
@@ -270,3 +284,17 @@ class RotatingCookieManager(AbstractCookieManager):
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
         raise errors.TooManyRequests({"retcode": 10101}, msg)
+
+
+def no_multi(func: CallableT) -> CallableT:
+    """Prevent function to be ran with a multi-cookie manager."""
+
+    def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
+        if not hasattr(self, "cookie_manager"):
+            raise TypeError("Cannot use @no_multi on a plain function.")
+        if self.cookie_manager.multi:
+            raise RuntimeError(f"Cannot use {func.__name__} with multi-cookie managers - data is private.")
+
+        return func(self, *args, **kwargs)
+
+    return typing.cast("CallableT", wrapper)
