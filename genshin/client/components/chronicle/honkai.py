@@ -3,7 +3,7 @@
 import asyncio
 import typing
 
-from genshin import types
+from genshin import errors, types
 from genshin.models.honkai import chronicle as models
 from genshin.utility import honkai as honkai_utility
 
@@ -64,15 +64,51 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("characters", uid, lang=lang)
         return [models.FullBattlesuit(**char["character"]) for char in data["characters"]]
 
-    async def get_honkai_abyss(
+    async def get_old_abyss(
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.OldAbyss]:
+        """Get honkai old abyss.
+
+        Only for level > 80.
+        """
+        data = await self.__get_honkai("latestOldAbyssReport", uid, lang=lang)
+        return [models.OldAbyss(**x) for x in data["reports"]]
+
+    async def get_superstring_abyss(
         self,
         uid: int,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.SuperstringAbyss]:
-        """Get honkai abyss."""
+        """Get honkai superstring abyss.
+
+        Only for level <= 80.
+        """
         data = await self.__get_honkai("newAbyssReport", uid, lang=lang)
         return [models.SuperstringAbyss(**x) for x in data["reports"]]
+
+    async def get_honkai_abyss(
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[typing.Union[models.SuperstringAbyss, models.OldAbyss]]:
+        """Get honkai abyss."""
+        possible = await asyncio.gather(
+            self.get_old_abyss(uid, lang=lang),
+            self.get_superstring_abyss(uid, lang=lang),
+            return_exceptions=True,
+        )
+        for abyss in possible:
+            if not isinstance(abyss, BaseException):
+                return abyss
+            if not isinstance(abyss, errors.InternalDatabaseError):
+                raise abyss from None
+
+        return []
 
     async def get_elysian_realm(
         self,

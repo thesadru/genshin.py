@@ -53,6 +53,12 @@ class GenshinException(Exception):
         return {"retcode": self.retcode, "message": self.original, "data": None}
 
 
+class InternalDatabaseError(GenshinException):
+    """Internal database error."""
+
+    retcode = -1
+
+
 class AccountNotFound(GenshinException):
     """Tried to get data with an invalid uid."""
 
@@ -160,7 +166,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -500004: VisitsTooFrequently,
     -502001: "User does not have this character.",
     # mixin
-    -1: "Internal database error.",
+    -1: InternalDatabaseError,
     1009: AccountNotFound,
     # redemption
     -1071: InvalidCookies,
