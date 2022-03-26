@@ -1,6 +1,6 @@
 name: Run checks
 
-on: push
+on: [push, pull_request]
 
 jobs:
   lint:
@@ -22,12 +22,11 @@ jobs:
           python -m nox -s lint
 
   test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     strategy:
-      fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
-
-    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
