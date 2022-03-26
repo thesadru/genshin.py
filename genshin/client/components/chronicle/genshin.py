@@ -4,7 +4,6 @@ import asyncio
 import typing
 
 from genshin import types
-from genshin.client import manager
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 from genshin.utility import genshin as genshin_utility
@@ -21,7 +20,6 @@ def _get_region(uid: int) -> types.Region:
 class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     """Genshin battle chronicle component."""
 
-    @manager.no_multi
     async def __get_genshin(
         self,
         endpoint: str,
@@ -81,7 +79,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
-        """Get user characters."""
+        """Get genshin user characters."""
         data = await self.__get_genshin("character", uid, lang=lang, method="POST")
         return [models.Character(**i) for i in data["avatars"]]
 
@@ -100,7 +98,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.GenshinUserStats(**data)
 
-    async def get_genshin_spiral_abyss(
+    async def get_spiral_abyss(
         self,
         uid: int,
         *,
@@ -113,7 +111,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.SpiralAbyss(**data)
 
-    async def get_genshin_notes(
+    async def get_notes(
         self,
         uid: typing.Optional[int] = None,
         *,
@@ -123,32 +121,35 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 
-    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
+    async def get_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
         """Get activities."""
         data = await self.__get_genshin("activities", uid, lang=lang)
         return models.Activities(**data)
 
     async def get_full_genshin_user(
-        self, uid: int, *, lang: typing.Optional[str] = None
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
     ) -> models.GenshinFullUserStats:
         """Get a user with all their possible data."""
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_genshin_user(uid, lang=lang),
-            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
-            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
-            self.get_genshin_activities(uid, lang=lang),
+            self.get_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_activities(uid, lang=lang),
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
         return models.GenshinFullUserStats(**user.dict(), abyss=abyss, activities=activities)
 
-    async def set_top_characters(
+    async def set_top_genshin_characters(
         self,
         characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
         *,
         uid: typing.Optional[int] = None,
     ) -> None:
-        """Set the top 8 visible characters for the current user."""
+        """Set the top 8 visible genshin characters for the current user."""
         uid = uid or await self._get_uid(types.Game.GENSHIN)
 
         await self.request_game_record(

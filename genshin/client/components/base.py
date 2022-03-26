@@ -16,7 +16,7 @@ from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models import model as base_model
-from genshin.utility import ds
+from genshin.utility import deprecation, ds
 from genshin.utility import genshin as genshin_utility
 
 __all__ = ["BaseClient"]
@@ -353,6 +353,16 @@ class BaseClient(abc.ABC):
         )
         return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 
+    @deprecation.deprecated("get_game_accounts")
+    async def genshin_accounts(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
+        """Get the genshin accounts of the currently logged-in user."""
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
     async def _update_cached_uids(self) -> None:
         """Update cached fallback uids."""
         mixed_accounts = await self.get_game_accounts()
@@ -365,6 +375,7 @@ class BaseClient(abc.ABC):
 
     async def _get_uid(self, game: types.Game) -> int:
         """Get a cached fallback uid."""
+        # TODO: use lock
         if uid := self.uids.get(game):
             return uid
 

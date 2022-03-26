@@ -74,7 +74,7 @@ class BaseBattleChronicleClient(base.BaseClient):
 
         return [models.hoyolab.RecordCard(**card) for card in cards]
 
-    @deprecation.deprecated(alternative="get_record_cards")
+    @deprecation.deprecated("get_record_cards")
     async def get_record_card(
         self,
         hoyolab_uid: typing.Optional[int] = None,

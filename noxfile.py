@@ -43,10 +43,19 @@ def docs(session: nox.Session) -> None:
     """Generate docs for this project using Pdoc."""
     install_requirements(session, "docs")
 
-    output_directory = pathlib.Path(_try_find_option(session, "-o", "--output") or "./docs")
+    output_directory = pathlib.Path(_try_find_option(session, "-o", "--output") or "./docs/pdoc/")
     session.log("Building docs into %s", output_directory)
 
-    session.run("pdoc3", "--html", "-o", str(output_directory), "--force", PACKAGE)
+    session.run(
+        "pdoc3",
+        "--html",
+        PACKAGE,
+        "--output-dir",
+        str(output_directory),
+        "--template-dir",
+        "./docs/pdoc",
+        "--force",
+    )
     session.log("Docs generated: %s", output_directory / "index.html")
 
 

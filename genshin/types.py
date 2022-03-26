@@ -5,7 +5,7 @@ import typing
 if typing.TYPE_CHECKING:
     from genshin.models.model import Unique
 
-__all__ = ["Game", "IDOr", "Region"]
+__all__ = ["Game", "Region"]
 
 UniqueT = typing.TypeVar("UniqueT", bound="Unique")
 

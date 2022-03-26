@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import abc
+import functools
 import http.cookies
 import logging
 import typing
@@ -289,6 +290,7 @@ class RotatingCookieManager(AbstractCookieManager):
 def no_multi(func: CallableT) -> CallableT:
     """Prevent function to be ran with a multi-cookie manager."""
 
+    @functools.wraps(func)
     def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
         if not hasattr(self, "cookie_manager"):
             raise TypeError("Cannot use @no_multi on a plain function.")

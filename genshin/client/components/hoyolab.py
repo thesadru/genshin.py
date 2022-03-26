@@ -39,11 +39,12 @@ class HoyolabClient(base.BaseClient):
     async def redeem_code(
         self,
         code: str,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> None:
         """Redeems a gift code for the current genshin user."""
-        uid = await self._get_uid(types.Game.GENSHIN)
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
 
         await self.request(
             "https://hk4e-api-os.mihoyo.com/common/apicdkey/api/webExchangeCdkey",

@@ -27,9 +27,3 @@ DS_SALT = {
     "cn_signin": "4a8knnbk5pbjqsrudp3dq484m9axoc5g",
 }
 """Dynamic Secret Salts."""
-
-ACT_ID = {
-    types.Region.OVERSEAS: "e202102251931481",
-    types.Region.CHINESE: "e202009291139501",
-}
-"""ACT IDs used in daily reward claiming."""

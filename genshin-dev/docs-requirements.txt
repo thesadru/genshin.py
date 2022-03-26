@@ -1,2 +1,3 @@
 mkdocs-material
 pdoc3
+sphobjinv

@@ -4,7 +4,6 @@ import asyncio
 import typing
 
 from genshin import types
-from genshin.client import manager
 from genshin.models.honkai import chronicle as models
 from genshin.utility import honkai as honkai_utility
 
@@ -16,7 +15,6 @@ __all__ = ["HonkaiBattleChronicleClient"]
 class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     """Honkai battle chronicle component."""
 
-    @manager.no_multi
     async def __get_honkai(
         self,
         endpoint: str,
@@ -76,7 +74,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("newAbyssReport", uid, lang=lang)
         return [models.SuperstringAbyss(**x) for x in data["reports"]]
 
-    async def get_honkai_elysian_realm(
+    async def get_elysian_realm(
         self,
         uid: int,
         *,
@@ -86,7 +84,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("godWar", uid, lang=lang)
         return [models.ElysianRealm(**x) for x in data["records"]]
 
-    async def get_honkai_memorial_arena(
+    async def get_memorial_arena(
         self,
         uid: int,
         *,
@@ -107,8 +105,8 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             self.get_honkai_user(uid, lang=lang),
             self.get_honkai_battlesuits(uid, lang=lang),
             self.get_honkai_abyss(uid, lang=lang),
-            self.get_honkai_memorial_arena(uid, lang=lang),
-            self.get_honkai_elysian_realm(uid, lang=lang),
+            self.get_memorial_arena(uid, lang=lang),
+            self.get_elysian_realm(uid, lang=lang),
         )
 
         return models.HonkaiFullUserStats(

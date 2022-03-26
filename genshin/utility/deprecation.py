@@ -17,9 +17,9 @@ def warn_deprecated(
 ) -> None:
     """Raise a deprecated warning."""
     if inspect.isclass(obj) or inspect.isfunction(obj):
-        obj = f"{obj.__module__}.{obj.__qualname__}"
+        obj = f"{obj.__qualname__}"
 
-    message = f"'{obj}' is deprecated and will be removed in the following version."
+    message = f"{obj} is deprecated and will be removed in the following version."
 
     if alternative is not None:
         message += f" You can use '{alternative}' instead."
@@ -31,14 +31,13 @@ def deprecated(alternative: typing.Optional[str] = None) -> typing.Callable[[T],
     """Mark a function as deprecated."""
 
     def decorator(obj: T) -> T:
-        type_str = "class" if inspect.isclass(obj) else "function"
         alternative_str = f"You can use `{alternative}` instead." if alternative else ""
 
         doc = inspect.getdoc(obj) or ""
         doc += (
-            "\n"
+            "\n\n"
             "!!! warning\n"
-            f"    This {type_str} is deprecated and will be removed in the following version..\n"
+            f"    This function is deprecated and will be removed in the following version.\n"
             f"    {alternative_str}\n"
         )
         obj.__doc__ = doc

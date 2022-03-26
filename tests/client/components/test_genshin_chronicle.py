@@ -23,20 +23,20 @@ async def test_partial_genshin_user(client: genshin.Client, genshin_uid: int):
     assert data
 
 
-async def test_genshin_abyss(client: genshin.Client, genshin_uid: int):
-    data = await client.get_genshin_spiral_abyss(genshin_uid, previous=True)
+async def test_spiral_abyss(client: genshin.Client, genshin_uid: int):
+    data = await client.get_spiral_abyss(genshin_uid, previous=True)
 
     assert data
 
 
-async def test_genshin_notes(lclient: genshin.Client, genshin_uid: int):
-    data = await lclient.get_genshin_notes(genshin_uid)
+async def test_notes(lclient: genshin.Client, genshin_uid: int):
+    data = await lclient.get_notes(genshin_uid)
 
     assert data
 
 
 async def test_genshin_activities(client: genshin.Client, genshin_uid: int):
-    data = await client.get_genshin_activities(genshin_uid)
+    data = await client.get_activities(genshin_uid)
 
     assert data
 
@@ -52,4 +52,4 @@ async def test_exceptions(client: genshin.Client):
         await client.get_record_cards(10000000)
 
     with pytest.raises(genshin.AccountNotFound):
-        await client.get_genshin_spiral_abyss(70000001)
+        await client.get_spiral_abyss(70000001)
