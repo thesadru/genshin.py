@@ -1,5 +1,6 @@
 """Base battle chronicle component."""
 
+import asyncio
 import dataclasses
 import typing
 
@@ -49,6 +50,8 @@ class BaseBattleChronicleClient(base.BaseClient):
             base_url = base_url / game.value / "api"
 
         url = base_url / endpoint
+
+        asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
 
         return await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
 

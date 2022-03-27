@@ -11,6 +11,7 @@ __all__ = [
     "DETAIL_LEDGER_URL",
     "GACHA_INFO_URL",
     "INFO_LEDGER_URL",
+    "MI18N",
     "RECORD_URL",
     "REWARD_URL",
     "Route",

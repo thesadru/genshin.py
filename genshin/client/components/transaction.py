@@ -1,4 +1,5 @@
 """Transaction client."""
+import asyncio
 import functools
 import typing
 import urllib.parse
@@ -54,18 +55,21 @@ class TransactionClient(base.BaseClient):
         kind = models.TransactionKind(kind)
         endpoint = "get" + kind.value.capitalize() + "Log"
 
+        mi18n_task = asyncio.create_task(self._fetch_mi18n("inquiry", lang=lang or self.lang))
+
         data = await self.request_transaction(
             endpoint,
             lang=lang,
             authkey=authkey,
             params=dict(end_id=end_id, size=20),
         )
+        await mi18n_task  # we need the mi18n before making the object
 
         transactions: typing.List[models.BaseTransaction] = []
         for trans in data["list"]:
             model = models.ItemTransaction if "name" in trans else models.Transaction
             model = typing.cast("type[models.BaseTransaction]", model)
-            transactions.append(model(**trans, kind=kind))
+            transactions.append(model(**trans, kind=kind, _reason_lang=lang or self.lang))
 
         return transactions
 

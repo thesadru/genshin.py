@@ -389,13 +389,20 @@ class BaseClient(abc.ABC):
 
         raise errors.AccountNotFound(msg="No UID provided and account has no game account bound to it.")
 
-    async def _fetch_mi18n(self, url: str, key: str, lang: str) -> None:
+    async def _fetch_mi18n(self, key: str, lang: str, *, force: bool = False) -> None:
         """Update mi18n for a single url."""
+        if not force:
+            if key in base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
+                return
+
+        base_model.APIModel._mi18n[key] = {}  # pyright: ignore[reportPrivateUsage]
+
+        url = routes.MI18N[key]
         data = await self.request_webstatic(url.format(lang=lang))
         for k, v in data.items():
             base_model.APIModel._mi18n.setdefault(key + "/" + k, {})[lang] = v  # pyright: ignore[reportPrivateUsage]
 
-    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS) -> None:
+    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
         """Fetch mi18n for partially localized endpoints."""
         if base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
             return
@@ -403,8 +410,8 @@ class BaseClient(abc.ABC):
         langs = tuple(langs)
 
         coros: typing.List[typing.Awaitable[None]] = []
-        for key, url in routes.MI18N.items():  # pyright: ignore[reportPrivateUsage]
+        for key in routes.MI18N:
             for lang in langs:
-                coros.append(self._fetch_mi18n(url, key, lang))
+                coros.append(self._fetch_mi18n(key, lang, force=force))
 
         await asyncio.gather(*coros)
