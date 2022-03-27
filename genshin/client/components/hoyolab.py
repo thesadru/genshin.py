@@ -2,6 +2,7 @@
 import typing
 
 from genshin import types
+from genshin.client import cache as client_cache
 from genshin.client import manager
 from genshin.client.components import base
 from genshin.models import hoyolab as models
@@ -13,17 +14,12 @@ __all__ = ["HoyolabClient"]
 class HoyolabClient(base.BaseClient):
     """Hoyolab component."""
 
-    async def search_users(
-        self,
-        keyword: str,
-        *,
-        lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.SearchUser]:
+    async def search_users(self, keyword: str) -> typing.Sequence[models.SearchUser]:
         """Search hoyolab users."""
         data = await self.request_hoyolab(
             "community/search/wapi/search/user",
-            lang=lang,
             params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key("search"),
         )
         return [models.SearchUser(**i["user"]) for i in data["list"]]
 
@@ -32,6 +28,7 @@ class HoyolabClient(base.BaseClient):
         data = await self.request_hoyolab(
             "community/user/wapi/recommendActive",
             params=dict(page_size=limit),
+            cache=client_cache.cache_key("recommended"),
         )
         return [models.SearchUser(**i["user"]) for i in data["list"]]
 

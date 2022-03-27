@@ -233,7 +233,7 @@ class BaseClient(abc.ABC):
             if value is not None:
                 return value
         elif static_cache is not None:
-            value = await self.cache.get_static(cache)
+            value = await self.cache.get_static(static_cache)
             if value is not None:
                 return value
 
@@ -264,7 +264,7 @@ class BaseClient(abc.ABC):
         if cache is not None:
             await self.cache.set(cache, response)
         elif static_cache is not None:
-            await self.cache.set_static(cache, response)
+            await self.cache.set_static(static_cache, response)
 
         return response
 
@@ -278,7 +278,7 @@ class BaseClient(abc.ABC):
     ) -> typing.Any:
         """Request a static json file."""
         if cache is not None:
-            value = await self.cache.get(cache)
+            value = await self.cache.get_static(cache)
             if value is not None:
                 return value
 
@@ -295,7 +295,7 @@ class BaseClient(abc.ABC):
                 data = await r.json()
 
         if cache is not None:
-            await self.cache.set(cache, data)
+            await self.cache.set_static(cache, data)
 
         return data
 
@@ -349,7 +349,7 @@ class BaseClient(abc.ABC):
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,
-            cache=client_cache.UniqueCacheKey("accounts"),
+            cache=client_cache.cache_key("accounts"),
         )
         return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 

@@ -43,9 +43,11 @@ class CacheKey:
         return _separate(values)
 
 
-@dataclasses.dataclass(unsafe_hash=True)
-class UniqueCacheKey(CacheKey):
-    key: str
+def cache_key(key: str, **kwargs: typing.Any) -> CacheKey:
+    name = key.capitalize() + "CacheKey"
+    fields = ["key"] + list(kwargs.keys())
+    cls = dataclasses.make_dataclass(name, fields, bases=(CacheKey,), unsafe_hash=True)
+    return typing.cast("CacheKey", cls(key, **kwargs))
 
 
 class BaseCache(abc.ABC):

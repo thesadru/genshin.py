@@ -1,6 +1,5 @@
 """Daily reward component."""
 import asyncio
-import dataclasses
 import datetime
 import functools
 import typing
@@ -16,15 +15,6 @@ from genshin.utility import ds as ds_utility
 from genshin.utility import genshin as genshin_utility
 
 __all__ = ["DailyRewardClient"]
-
-
-@dataclasses.dataclass(unsafe_hash=True)
-class RewardsCacheKey(cache.CacheKey):
-    endpoint: str
-    month: int
-    region: types.Region
-    game: types.Game
-    lang: str
 
 
 class DailyRewardClient(base.BaseClient):
@@ -96,9 +86,9 @@ class DailyRewardClient(base.BaseClient):
         data = await self.request_daily_reward(
             "home",
             game=game,
-            static_cache=RewardsCacheKey(
+            static_cache=cache.cache_key(
                 "rewards",
-                datetime.datetime.utcnow().month,
+                month=datetime.datetime.utcnow().month,
                 region=self.region,
                 game=typing.cast("types.Game", game or self.default_game),  # (resolved later)
                 lang=lang or self.lang,

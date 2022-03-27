@@ -58,19 +58,12 @@ def local_chinese_cookies() -> typing.Mapping[str, str]:
 
 
 @pytest.fixture(scope="session")
-async def client(cookies: typing.Mapping[str, str]):
-    """Return a client with environment cookies."""
-    client = genshin.Client()
-    client.debug = True
-    client.set_cookies(cookies)
-    client.set_cache()
+async def cache():
+    """Return a session that gets its contents dumped into a log file."""
+    cache = genshin.Cache()
+    yield cache
 
-    yield client
-
-    # dump the entire cache into a json file
-    assert isinstance(client.cache, genshin.Cache)
-
-    cache = {str(key): value for key, (_, value) in client.cache.cache.items()}
+    cache = {str(key): value for key, (_, value) in cache.cache.items()}
 
     os.makedirs(".pytest_cache", exist_ok=True)
     with open(".pytest_cache/hoyo_cache.json", "w") as file:
@@ -78,7 +71,18 @@ async def client(cookies: typing.Mapping[str, str]):
 
 
 @pytest.fixture(scope="session")
-async def lclient(browser_cookies: typing.Mapping[str, str]):
+async def client(cookies: typing.Mapping[str, str], cache: genshin.Cache):
+    """Return a client with environment cookies."""
+    client = genshin.Client()
+    client.debug = True
+    client.set_cookies(cookies)
+    client.cache = cache
+
+    return client
+
+
+@pytest.fixture(scope="session")
+async def lclient(browser_cookies: typing.Mapping[str, str], cache: genshin.Cache):
     """Return the local client."""
     if not browser_cookies:
         pytest.skip("Skipped local test")
@@ -88,6 +92,7 @@ async def lclient(browser_cookies: typing.Mapping[str, str]):
     client.default_game = genshin.Game.GENSHIN
     client.set_cookies(browser_cookies)
     client.set_authkey()
+    client.cache = cache
 
     return client
 

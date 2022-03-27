@@ -64,12 +64,15 @@ class BaseBattleChronicleClient(base.BaseClient):
         """Get a user's record cards."""
         hoyolab_uid = hoyolab_uid or self.cookie_manager.get_user_id()
 
-        data = await self.request_game_record(
-            "card/wapi/getGameRecordCard",
-            lang=lang,
-            params=dict(uid=hoyolab_uid),
-            cache=HoyolabCacheKey("records", hoyolab_uid, lang=lang or self.lang),
-        )
+        cache_key = HoyolabCacheKey("records", hoyolab_uid, lang=lang or self.lang)
+        if not (data := await self.cache.get(cache_key)):
+            data = await self.request_game_record(
+                "card/wapi/getGameRecordCard",
+                lang=lang,
+                params=dict(uid=hoyolab_uid),
+            )
+            if data["list"]:
+                await self.cache.set(cache_key, data)
 
         cards = data["list"]
         if not cards:

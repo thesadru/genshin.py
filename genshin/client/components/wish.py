@@ -7,6 +7,7 @@ import urllib.parse
 import aiohttp
 
 from genshin import paginators
+from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import wish as models
@@ -109,8 +110,9 @@ class WishClient(base.BaseClient):
             "getConfigList",
             lang=lang,
             authkey=authkey,
+            static_cache=client_cache.cache_key("banner", endpoint="names", lang=lang or self.lang),
         )
-        return {typing.cast("models.BannerType", int(i["key"])): i["name"] for i in data["gacha_type_list"]}
+        return {int(i["key"]): i["name"] for i in data["gacha_type_list"]}
 
     async def _get_banner_details(
         self,
@@ -119,7 +121,11 @@ class WishClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> models.BannerDetails:
         """Get details of a specific banner using its id."""
-        data = await self.request_webstatic(f"/hk4e/gacha_info/os_asia/{banner_id}/{lang or self.lang}.json")
+        lang = lang or self.lang
+        data = await self.request_webstatic(
+            f"/hk4e/gacha_info/os_asia/{banner_id}/{lang}.json",
+            cache=client_cache.cache_key("banner", endpoint="details", banner=banner_id, lang=lang),
+        )
         return models.BannerDetails(**data, banner_id=banner_id)
 
     async def get_banner_details(
@@ -149,7 +155,11 @@ class WishClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.GachaItem]:
         """Get the list of characters and weapons that can be gotten from the gacha."""
-        data = await self.request_webstatic(f"/hk4e/gacha_info/{server}/items/{lang or self.lang}.json")
+        lang = lang or self.lang
+        data = await self.request_webstatic(
+            f"/hk4e/gacha_info/{server}/items/{lang}.json",
+            cache=client_cache.cache_key("banner", endpoint="items", lang=lang),
+        )
         return [models.GachaItem(**i) for i in data]
 
     async def fetch_banner_ids(self) -> typing.Sequence[str]:
