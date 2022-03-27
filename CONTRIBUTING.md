@@ -34,7 +34,7 @@ In the rare case that filtering is not an option there's `nox -s test -- --coope
 All contributions to this project will have to be "type-complete" and, while [the nox tasks](###Pipelines) let you check that the type hints you've added/changed are type safe,
 [pyright's type-completness guidelines](https://github.com/microsoft/pyright/blob/main/docs/typed-libraries.md) and
 [standard typing library's type-completness guidelines](https://github.com/python/typing/blob/master/docs/libraries.md) are
-good references for how projects should be type-hinted to be `type-complete`.
+good references for how projects should be type-hinted to be type-complete.
 
 ---
 
@@ -54,9 +54,8 @@ good references for how projects should be type-hinted to be `type-complete`.
 - The maximum character count for a line is 120 characters.
 - Only entire modules may be imported with the exception of `Aliased` and constants.
 - All public modules should be explicitly imported into its packages' `__init__.py` except for utilities and individual components which should only be exposed as an entire module.
-- `collections.abc.Awaitable` is generally preferred over `collections.abc.Coroutine` for interfaces and types.
 - Features should be split by API endpoint in components and by game and category in models.
-- Only abstract methods may be overwritten. Exceptions may be made only if there is no inheritence abuse.
+- Only abstract methods may be overwritten.
 
 ### Project structure
 
@@ -69,6 +68,8 @@ genshin
 │
 ├───client          = client used for requests
 │   │   client.py       = final client made from
+│   │   cache.py        = client cache
+│   │   compat.py       = reverse-compatibility layer
 │   │   manager.py      = cookie and auth managers
 │   │   ratelimit.py    = ratelimit handler
 │   │   routes.py       = routes for various endpoints

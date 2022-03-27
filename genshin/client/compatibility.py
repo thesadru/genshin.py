@@ -30,6 +30,7 @@ class GenshinClient(client.Client):
         region: types.Region = types.Region.OVERSEAS,
         debug: bool = False,
     ) -> None:
+        deprecation.warn_deprecated(self.__class__, alternative="Client")
         super().__init__(
             cookies=cookies,
             authkey=authkey,
@@ -64,7 +65,8 @@ class GenshinClient(client.Client):
     @uid.setter
     def uid(self, uid: int) -> None:
         deprecation.warn_deprecated(
-            "Setting uid with GenshinClient.uid", alternative="Client.uids[genshin.Game.GENSHIN]"
+            "Setting uid with GenshinClient.uid",
+            alternative="Client.uids[genshin.Game.GENSHIN]",
         )
         self.uids[types.Game.GENSHIN] = uid
 

@@ -1,0 +1,120 @@
+# Changelog
+
+# 1.0.0
+
+## What's new
+
+- Added honkai endpoints.
+- Added login with username and password (`Client.login_with_password`)
+- Made the entire project be mypy and pyright strict compliant.
+
+## Changes
+
+- Caching is now handled through `Client.cache`
+- Moved `MultiCookieClient` functionality to `Client.cookie_manager`
+
+## Fixes
+
+- Reduced the amount of unexpected ratelimit exceptions
+- Made every single model be re-serializable.
+
+## Deprecation
+
+- `GenshinClient.cookies` were removed in favor of `cookie_manager`
+- `GenshinClient` and subclasses were merged into `Client`
+- `genshin_accounts` -> `get_game_accounts`
+- `get_record_card` -> `get_record_cards`
+- `get_[partial|full]_user` -> `get_[partial|full]_genshin_user`
+
+# 0.4.0 (2022-02-03)
+
+## What's new
+
+- Added Serenitea Pot's Jar of Riches to Real-Time Notes
+- Implemented `set_top_characters`
+- Added models for A Study in Potions
+
+## Changes
+
+- Made the Enhancement Progression Calculator use the builder pattern
+
+# 0.3.1 (2022-01-10)
+
+## Deprecation
+
+- Removed all_characters since the API no longer supports this feature
+
+## Fixes
+
+- Images are now accounted for during character data completion
+- Diary log no longer repeatedly returns the first page in some cases
+
+# 0.3.0 (2021-12-25)
+
+## What's new
+
+- Added full support for the Genshin Impact Enhancement Progression Calculator
+- Improved debug mode to be slightly more descriptive
+
+## Fixes
+
+- Fixed minor API inconsistencies including domain mismatches
+- Ensured some specific models no longer break when being revalidated
+
+# 0.2.0 (2021-12-03)
+
+## What's new
+
+- Added partial support for i18n
+- Added a way to specify the characters you want to get with `get_user`
+- Improved rate limit handling for certain endpoints
+- Made paginators awaitable
+
+## Fixes
+
+- Fixed breaking API changes caused by the second banner
+- Deprecated authkeys in support pages
+- Fixed pydantic bug with ClassVar not being recognized properly
+
+# 0.1.0 (2021-11-05)
+
+## What's new
+
+- Implemented the Traveler's Diary
+- Cache uids for daily rewards and similar endpoints.
+- Support artifact levels
+- Add an `enabled` field for artifact set effects
+
+## Fixes
+
+- Migrate server domains in accordance with the recent HoYoLAB server migration
+- Remove invalid authkey validation
+- Make permanent caches persist
+- No longer attempt to close non-existent sessions in `MultiCookieClient`
+- Fix minor problems with model validation
+
+# 0.0.2 (2021-10-25)
+
+## What's new
+
+- Implemented Real-Time notes
+- Added Labyrinth Warriors to activities
+- Made all `datetime` objects timezone aware.
+- Added public privacy settings to record cards.
+- Added basic support for Redis caches
+- Added new CLI commands
+- Added pdoc-generated API documentation
+  - Started using ReST-style docstrings
+  - Added module docstrings
+- Made `debug` a property instead of an `__init__` param
+
+## Fixes
+
+- Chinese daily reward claiming will no longer consistently raise errors due to invalid headers.
+- `get_banner_details` no longer requires gacha ids. They will be fetched from a user-maintained database from now on.
+- `genshin.models.base.BaseCharacter` is now a string instead of `CharacterIcon`
+- `genshin.models.base.GenshinModel.dict()` now also includes properties as it is immutable.
+
+## Documentation
+
+- Documented a large part of the library with at least simple examples

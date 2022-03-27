@@ -50,6 +50,7 @@ class TransactionClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         authkey: typing.Optional[str] = None,
     ) -> typing.Sequence[models.BaseTransaction]:
+        """Get a single page of transactions."""
         kind = models.TransactionKind(kind)
         endpoint = "get" + kind.value.capitalize() + "Log"
 
