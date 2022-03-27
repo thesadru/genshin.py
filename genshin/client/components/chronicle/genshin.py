@@ -105,7 +105,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         previous: bool = False,
         lang: typing.Optional[str] = None,
     ) -> models.SpiralAbyss:
-        """Get spiral abyss runs."""
+        """Get genshin spiral abyss runs."""
         payload = dict(schedule_type=2 if previous else 1)
         data = await self.__get_genshin("spiralAbyss", uid, lang=lang, payload=payload)
 
@@ -117,12 +117,12 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
     ) -> models.Notes:
-        """Get the real-time notes."""
+        """Get genshin real-time notes."""
         data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 
     async def get_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
-        """Get activities."""
+        """Get genshin activities."""
         data = await self.__get_genshin("activities", uid, lang=lang)
         return models.Activities(**data)
 
@@ -132,7 +132,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
     ) -> models.GenshinFullUserStats:
-        """Get a user with all their possible data."""
+        """Get a genshin user with all their possible data."""
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_genshin_user(uid, lang=lang),
             self.get_spiral_abyss(uid, lang=lang, previous=False),

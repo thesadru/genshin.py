@@ -52,7 +52,7 @@ class BaseClient(abc.ABC):
         debug: bool = False,
     ) -> None:
         self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies)
-        self.cache = cache or client_cache.NOOPCache()
+        self.cache = cache or client_cache.StaticCache()
 
         self.authkey = authkey
         self.lang = lang

@@ -41,7 +41,7 @@ class AbstractCookieManager(abc.ABC):
     @classmethod
     def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> AbstractCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
-        if isinstance(cookies, typing.Sequence):
+        if isinstance(cookies, typing.Sequence) and not isinstance(cookies, str):
             return RotatingCookieManager(cookies)
 
         return CookieManager(cookies)

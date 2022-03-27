@@ -62,13 +62,13 @@ class Exploration(APIModel):
     name: str
     type: str
     level: int
-    explored: int = Aliased("exploration_percentage")
+    raw_explored: int = Aliased("exploration_percentage")
     offerings: typing.Sequence[Offering]
 
     @property
-    def percentage(self) -> float:
+    def explored(self) -> float:
         """The percentage explored"""
-        return self.explored / 10
+        return self.raw_explored / 10
 
 
 class TeapotRealm(APIModel):

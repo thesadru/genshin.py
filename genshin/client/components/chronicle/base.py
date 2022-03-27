@@ -51,9 +51,11 @@ class BaseBattleChronicleClient(base.BaseClient):
 
         url = base_url / endpoint
 
-        asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
+        mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
+        data = await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
 
-        return await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
+        await mi18n_task
+        return data
 
     async def get_record_cards(
         self,

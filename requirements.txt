@@ -5,3 +5,4 @@ pydantic
 browser-cookie3
 rsa
 aioredis
+click

@@ -5,6 +5,7 @@ import abc
 import dataclasses
 import enum
 import json
+import sys
 import time
 import typing
 
@@ -36,17 +37,23 @@ def _separate(values: typing.Iterable[typing.Any], sep: str = ":") -> str:
     return sep.join(parts)
 
 
-@dataclasses.dataclass(unsafe_hash=True)
+@dataclasses.dataclass(eq=False)
 class CacheKey:
     def __str__(self) -> str:
         values = [getattr(self, field.name) for field in dataclasses.fields(self)]
         return _separate(values)
 
+    def __hash__(self) -> int:
+        return hash(str(self))
+
+    def __eq__(self, o: object) -> bool:
+        return isinstance(o, CacheKey) and str(self) == str(o)
+
 
 def cache_key(key: str, **kwargs: typing.Any) -> CacheKey:
     name = key.capitalize() + "CacheKey"
     fields = ["key"] + list(kwargs.keys())
-    cls = dataclasses.make_dataclass(name, fields, bases=(CacheKey,), unsafe_hash=True)
+    cls = dataclasses.make_dataclass(name, fields, bases=(CacheKey,), eq=False)
     return typing.cast("CacheKey", cls(key, **kwargs))
 
 
@@ -68,22 +75,6 @@ class BaseCache(abc.ABC):
     @abc.abstractmethod
     async def set_static(self, key: typing.Any, value: typing.Any) -> None:
         """Save a static object with a key."""
-
-
-class NOOPCache(BaseCache):
-    """NO-OP cache."""
-
-    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
-        """Do nothing."""
-
-    async def set(self, key: typing.Any, value: typing.Any) -> None:
-        """Do nothing."""
-
-    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
-        """Do nothing."""
-
-    async def set_static(self, key: typing.Any, value: typing.Any) -> None:
-        """Do nothing."""
 
 
 class Cache(BaseCache):
@@ -145,6 +136,16 @@ class Cache(BaseCache):
         self.cache[key] = (time.time() + self.static_ttl, value)
 
         self._clear_cache()
+
+
+class StaticCache(Cache):
+    """Cache for only static resources."""
+
+    def __init__(self, ttl: float = DAY) -> None:
+        super().__init__(maxsize=sys.maxsize, ttl=0, static_ttl=ttl)
+
+    async def set(self, key: typing.Any, value: typing.Any) -> None:
+        """Do nothing."""
 
 
 class RedisCache(BaseCache):
