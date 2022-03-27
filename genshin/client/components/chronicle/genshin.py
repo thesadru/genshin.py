@@ -98,7 +98,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.GenshinUserStats(**data)
 
-    async def get_spiral_abyss(
+    async def get_genshin_spiral_abyss(
         self,
         uid: int,
         *,
@@ -111,7 +111,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.SpiralAbyss(**data)
 
-    async def get_notes(
+    async def get_genshin_notes(
         self,
         uid: typing.Optional[int] = None,
         *,
@@ -121,7 +121,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
         return models.Notes(**data)
 
-    async def get_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
+    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
         """Get genshin activities."""
         data = await self.__get_genshin("activities", uid, lang=lang)
         return models.Activities(**data)
@@ -135,9 +135,9 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get a genshin user with all their possible data."""
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_genshin_user(uid, lang=lang),
-            self.get_spiral_abyss(uid, lang=lang, previous=False),
-            self.get_spiral_abyss(uid, lang=lang, previous=True),
-            self.get_activities(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
@@ -162,3 +162,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
                 server_key=genshin_utility.recognize_genshin_server(uid),
             ),
         )
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities

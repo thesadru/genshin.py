@@ -170,10 +170,10 @@ async def genshin_notes(client: genshin.Client) -> None:
 
     click.echo(f"{click.style('Resin:', bold=True)} {data.current_resin}/{data.max_resin}")
     click.echo(
-        f"{click.style('Comissions:', bold=True)} " f"{data.completed_commissions}/{data.max_comissions}",
+        f"{click.style('Commissions:', bold=True)} " f"{data.completed_commissions}/{data.max_commissions}",
         nl=False,
     )
-    if data.completed_commissions == data.max_comissions and not data.claimed_comission_reward:
+    if data.completed_commissions == data.max_commissions and not data.claimed_commission_reward:
         click.echo(f" | [{click.style('X', fg='red')}] Haven't claimed rewards")
     else:
         click.echo()

@@ -46,16 +46,7 @@ def docs(session: nox.Session) -> None:
     output_directory = pathlib.Path(_try_find_option(session, "-o", "--output") or "./docs/pdoc/")
     session.log("Building docs into %s", output_directory)
 
-    session.run(
-        "pdoc3",
-        "--html",
-        PACKAGE,
-        "--output-dir",
-        str(output_directory),
-        "--template-dir",
-        "./docs/pdoc",
-        "--force",
-    )
+    session.run("pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
     session.log("Docs generated: %s", output_directory / "index.html")
 
 
@@ -116,7 +107,7 @@ def verify_types(session: nox.Session) -> None:
     session.run("python", "-m", "pyright", "--verifytypes", PACKAGE, "--ignoreexternal")
 
 
-@nox.session()
+@nox.session(python=False)
 def prettier(session: nox.Session) -> None:
     """Run prettier on markdown files."""
-    session.run("prettier", "-w", "*.md")
+    session.run("prettier", "-w", "*.md", "docs/*.md", "*.yml")

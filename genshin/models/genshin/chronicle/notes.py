@@ -65,8 +65,8 @@ class Notes(APIModel):
     realm_currency_recovery_time: datetime.datetime = Aliased("home_coin_recovery_time")
 
     completed_commissions: int = Aliased("finished_task_num")
-    max_comissions: int = Aliased("total_task_num")
-    claimed_comission_reward: bool = Aliased("is_extra_task_reward_received")
+    max_commissions: int = Aliased("total_task_num")
+    claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
 
     remaining_resin_discounts: int = Aliased("remain_resin_discount_num")
     max_resin_discounts: int = Aliased("resin_discount_num_limit")

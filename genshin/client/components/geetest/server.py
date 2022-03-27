@@ -88,12 +88,17 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
     async def login_endpoint(request: web.Request) -> web.Response:
         body = await request.json()
 
-        data = await client.login_with_geetest(
-            account=account,
-            password=password,
-            mmt_key=mmt_key,
-            geetest=body,
-        )
+        try:
+            data = await client.login_with_geetest(
+                account=account,
+                password=password,
+                mmt_key=mmt_key,
+                geetest=body,
+            )
+        except Exception as e:
+            future.set_exception(e)
+            return web.json_response({}, status=500)
+
         future.set_result(data)
 
         return web.json_response(data)
@@ -110,9 +115,10 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
 
     await site.start()
 
-    data = await future
-
-    await asyncio.sleep(0.3)
-    await runner.shutdown()
+    try:
+        data = await future
+    finally:
+        await asyncio.sleep(0.3)
+        await runner.shutdown()
 
     return data

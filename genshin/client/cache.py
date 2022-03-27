@@ -12,7 +12,7 @@ import typing
 if typing.TYPE_CHECKING:
     import aioredis
 
-__all__ = ["BaseCache", "Cache", "RedisCache"]
+__all__ = ["BaseCache", "Cache", "RedisCache", "StaticCache"]
 
 MINUTE = 60
 HOUR = MINUTE * 60

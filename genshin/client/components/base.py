@@ -31,7 +31,7 @@ class BaseClient(abc.ABC):
 
     logger: logging.Logger = logging.getLogger(__name__)
 
-    cookie_manager: manager.AbstractCookieManager
+    cookie_manager: manager.BaseCookieManager
     cache: client_cache.BaseCache
     _authkey: typing.Optional[str]
     _lang: str
@@ -51,7 +51,7 @@ class BaseClient(abc.ABC):
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
-        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies)
+        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies)
         self.cache = cache or client_cache.StaticCache()
 
         self.authkey = authkey
@@ -147,14 +147,14 @@ class BaseClient(abc.ABC):
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
-        self.cookie_manager = manager.AbstractCookieManager.from_cookies(cookies or kwargs)
+        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies or kwargs)
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> None:
         """Extract cookies from your browser and set them as client cookies.
 
         Available browsers: chrome, chromium, opera, edge, firefox.
         """
-        self.cookie_manager = manager.AbstractCookieManager.from_browser_cookies(browser)
+        self.cookie_manager = manager.BaseCookieManager.from_browser_cookies(browser)
 
     def set_authkey(self, authkey: typing.Optional[str] = None) -> None:
         """Set an authkey for wish & transaction logs.

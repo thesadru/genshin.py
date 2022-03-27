@@ -17,7 +17,7 @@ from . import ratelimit
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = ["AbstractCookieManager", "CookieManager", "RotatingCookieManager"]
+__all__ = ["BaseCookieManager", "CookieManager", "RotatingCookieManager"]
 
 CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
@@ -35,11 +35,11 @@ def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, st
     return {str(k): v.value if isinstance(v, http.cookies.Morsel) else str(v) for k, v in cookie.items()}
 
 
-class AbstractCookieManager(abc.ABC):
+class BaseCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
     @classmethod
-    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> AbstractCookieManager:
+    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> BaseCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
         if isinstance(cookies, typing.Sequence) and not isinstance(cookies, str):
             return RotatingCookieManager(cookies)
@@ -55,14 +55,14 @@ class AbstractCookieManager(abc.ABC):
         return manager
 
     @property
-    @abc.abstractmethod
     def available(self) -> bool:
         """Whether the authentication cookies are available."""
+        return True
 
     @property
-    @abc.abstractmethod
     def multi(self) -> bool:
         """Whether the cookie manager contains multiple cookies and therefore should not cache private data."""
+        return False
 
     @property
     def user_id(self) -> typing.Optional[int]:
@@ -125,7 +125,7 @@ class AbstractCookieManager(abc.ABC):
         """Make an authenticated request."""
 
 
-class CookieManager(AbstractCookieManager):
+class CookieManager(BaseCookieManager):
     """Standard implementation of the cookie manager."""
 
     _cookies: typing.Dict[str, str]
@@ -211,7 +211,7 @@ class CookieManager(AbstractCookieManager):
         return await self._request(method, url, cookies=self.cookies, **kwargs)
 
 
-class RotatingCookieManager(AbstractCookieManager):
+class RotatingCookieManager(BaseCookieManager):
     """Cookie Manager with rotating cookies."""
 
     MAX_USES: typing.ClassVar[int] = 30

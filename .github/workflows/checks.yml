@@ -74,4 +74,4 @@ jobs:
 
       - name: Run prettier
         run: |
-          npx prettier --check *.md
+          npx prettier --check *.md docs/*.md *.yml

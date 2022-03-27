@@ -64,7 +64,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("characters", uid, lang=lang)
         return [models.FullBattlesuit(**char["character"]) for char in data["characters"]]
 
-    async def get_old_abyss(
+    async def get_honkai_old_abyss(
         self,
         uid: int,
         *,
@@ -77,7 +77,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("latestOldAbyssReport", uid, lang=lang)
         return [models.OldAbyss(**x) for x in data["reports"]]
 
-    async def get_superstring_abyss(
+    async def get_honkai_superstring_abyss(
         self,
         uid: int,
         *,
@@ -98,8 +98,8 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Sequence[typing.Union[models.SuperstringAbyss, models.OldAbyss]]:
         """Get honkai abyss."""
         possible = await asyncio.gather(
-            self.get_old_abyss(uid, lang=lang),
-            self.get_superstring_abyss(uid, lang=lang),
+            self.get_honkai_old_abyss(uid, lang=lang),
+            self.get_honkai_superstring_abyss(uid, lang=lang),
             return_exceptions=True,
         )
         for abyss in possible:
@@ -110,7 +110,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return []
 
-    async def get_elysian_realm(
+    async def get_honkai_elysian_realm(
         self,
         uid: int,
         *,
@@ -120,7 +120,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self.__get_honkai("godWar", uid, lang=lang)
         return [models.ElysianRealm(**x) for x in data["records"]]
 
-    async def get_memorial_arena(
+    async def get_honkai_memorial_arena(
         self,
         uid: int,
         *,
@@ -141,8 +141,8 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             self.get_honkai_user(uid, lang=lang),
             self.get_honkai_battlesuits(uid, lang=lang),
             self.get_honkai_abyss(uid, lang=lang),
-            self.get_memorial_arena(uid, lang=lang),
-            self.get_elysian_realm(uid, lang=lang),
+            self.get_honkai_memorial_arena(uid, lang=lang),
+            self.get_honkai_elysian_realm(uid, lang=lang),
         )
 
         return models.HonkaiFullUserStats(
@@ -152,3 +152,8 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             memorial_arena=mr,
             elysian_realm=er,
         )
+
+    get_old_abyss = get_honkai_old_abyss
+    get_superstring_abyss = get_honkai_superstring_abyss
+    get_elysian_realm = get_honkai_elysian_realm
+    get_memorial_arena = get_honkai_memorial_arena
