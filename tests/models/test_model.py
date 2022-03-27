@@ -1,3 +1,4 @@
+import os
 import typing
 
 import genshin
@@ -20,3 +21,10 @@ def test_model_reserialization():
 
         if hasattr(model, "as_dict"):
             getattr(model, "as_dict")()
+
+    # dump all parsed models
+    data = ",\n".join(f'"{cls.__name__}": {model.json(indent=4)}' for cls, model in all_models.items())
+    data = "{" + data + "}"
+    os.makedirs(".pytest_cache", exist_ok=True)
+    with open(".pytest_cache/hoyo_parsed.json", "w") as file:
+        file.write(data)

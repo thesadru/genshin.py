@@ -19,7 +19,7 @@ class HoyolabClient(base.BaseClient):
         data = await self.request_hoyolab(
             "community/search/wapi/search/user",
             params=dict(keyword=keyword, page_size=20),
-            cache=client_cache.cache_key("search"),
+            cache=client_cache.cache_key("search", keyword=keyword),
         )
         return [models.SearchUser(**i["user"]) for i in data["list"]]
 

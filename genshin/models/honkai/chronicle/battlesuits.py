@@ -33,7 +33,7 @@ class Stigma(Equipment):
     """Battlesuit stigma."""
 
 
-class Weapon(Equipment):
+class BattlesuitWeapon(Equipment):
     """Battlesuit weapon."""
 
 
@@ -41,7 +41,7 @@ class FullBattlesuit(battlesuit.Battlesuit):
     """Battlesuit complete with equipped weapon and stigmata."""
 
     level: int
-    weapon: Weapon
+    weapon: BattlesuitWeapon
     stigmata: typing.Sequence[Stigma] = Aliased("stigmatas")
 
     @pydantic.root_validator(pre=True)

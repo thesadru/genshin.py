@@ -12,10 +12,10 @@ __all__ = [
     "ArtifactSet",
     "ArtifactSetEffect",
     "Character",
+    "CharacterWeapon",
     "Constellation",
     "Outfit",
     "PartialCharacter",
-    "Weapon",
 ]
 
 
@@ -27,7 +27,7 @@ class PartialCharacter(character.BaseCharacter):
     constellation: int = Aliased("actived_constellation_num")
 
 
-class Weapon(APIModel, Unique):
+class CharacterWeapon(APIModel, Unique):
     """Character's equipped weapon."""
 
     id: int
@@ -101,7 +101,7 @@ class Outfit(APIModel, Unique):
 class Character(PartialCharacter):
     """Character with equipment."""
 
-    weapon: Weapon
+    weapon: CharacterWeapon
     artifacts: typing.Sequence[Artifact] = Aliased("reliquaries")
     constellations: typing.Sequence[Constellation]
     outfits: typing.Sequence[Outfit] = Aliased("costumes")
