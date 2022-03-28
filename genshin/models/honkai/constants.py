@@ -66,6 +66,7 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     703: "RitaC3",
     704: "RitaC4",
     705: "RitaC5",
+    706: "RitaC6",
 
     711: "SeeleC1",
     712: "SeeleC2",
@@ -74,6 +75,7 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     801: "DurandalC1",
     802: "DurandalC2",
     803: "DurandalC3",
+    804: "DurandalC4",
 
     901: "AsukaC1",
 
