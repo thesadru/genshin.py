@@ -1,7 +1,6 @@
 """Honkai battlesuit model."""
 import re
 import typing
-import warnings
 
 import pydantic
 
@@ -41,9 +40,6 @@ class Battlesuit(APIModel, Unique):
             return tall_icon
 
         suit_identifier = BATTLESUIT_IDENTIFIERS.get(values["id"])
-        if not suit_identifier:
-            warnings.warn(f"Completing data for an unknown battlesuit: id={values['id']}, name={values['name']}")
-
         return ICON_BASE + f"AvatarTachie/{suit_identifier or 'Unknown'}.png"
 
     @property

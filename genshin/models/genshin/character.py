@@ -2,7 +2,6 @@
 
 import re
 import typing
-import warnings
 
 import pydantic
 
@@ -59,7 +58,6 @@ def _get_db_char(
             CHARACTER_NAMES[char.id] = char
             return char
 
-        warnings.warn(f"Completing data for an unknown character: id={id}, icon={icon_name}, name={name}")
         return DBChar(0, icon_name, icon_name, element or "Anemo", rarity or 5, guessed=True)
 
     if name:
@@ -67,7 +65,6 @@ def _get_db_char(
             if char.name == name:
                 return char
 
-        warnings.warn(f"Completing data for a partial character: id={id}, name={name}")
         return DBChar(0, name, name, element or "Anemo", rarity or 5, guessed=True)
 
     raise ValueError("Character data incomplete")
@@ -89,7 +86,7 @@ class BaseCharacter(APIModel, Unique):
         """Complete missing data."""
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
-        char = _get_db_char(id, icon, name, element, rarity)
+        char = _get_db_char(id, name, icon, element, rarity)
         icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon")
 
         values["id"] = char.id
