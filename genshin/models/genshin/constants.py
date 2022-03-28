@@ -13,6 +13,8 @@ class DBChar(typing.NamedTuple):
     element: str
     rarity: int
 
+    guessed: bool = False
+
 
 _character_names = {
     10000001: None,

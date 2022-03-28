@@ -37,8 +37,10 @@ def _create_icon(icon: str, specifier: str, scale: int = 0) -> str:
 
 def _get_db_char(
     id: typing.Optional[int] = None,
-    icon: typing.Optional[str] = None,
     name: typing.Optional[str] = None,
+    icon: typing.Optional[str] = None,
+    element: typing.Optional[str] = None,
+    rarity: typing.Optional[int] = None,
 ) -> DBChar:
     """Get the appropriate DBChar object from specific fields."""
     if id and id in CHARACTER_NAMES:
@@ -51,8 +53,14 @@ def _get_db_char(
             if char.icon_name == icon_name:
                 return char
 
+        # might as well just update the CHARACTER_NAMES if we have all required data
+        if id and name and icon and element and rarity:
+            char = DBChar(id, icon_name, name, element, rarity, guessed=True)
+            CHARACTER_NAMES[char.id] = char
+            return char
+
         warnings.warn(f"Completing data for an unknown character: id={id}, icon={icon_name}, name={name}")
-        return DBChar(0, icon_name, icon_name, "Anemo", 5)
+        return DBChar(0, icon_name, icon_name, element or "Anemo", rarity or 5, guessed=True)
 
     if name:
         for char in CHARACTER_NAMES.values():
@@ -60,7 +68,7 @@ def _get_db_char(
                 return char
 
         warnings.warn(f"Completing data for a partial character: id={id}, name={name}")
-        return DBChar(0, name, name, "Anemo", 5)
+        return DBChar(0, name, name, element or "Anemo", rarity or 5, guessed=True)
 
     raise ValueError("Character data incomplete")
 
@@ -79,31 +87,24 @@ class BaseCharacter(APIModel, Unique):
     @pydantic.root_validator(pre=True)
     def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
-        id, icon, name = values.get("id"), values.get("icon"), values.get("name")
+        id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
-        char = _get_db_char(id, icon, name)
+        char = _get_db_char(id, icon, name, element, rarity)
         icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon")
 
-        values["id"] = values.get("id") or char.id
+        values["id"] = char.id
+        values["name"] = char.name
+        values["element"] = char.element
+        values["rarity"] = char.rarity
 
-        if not values.get("icon"):
+        if values.get("icon"):
             # there is an icon
-            if "genshin" in (values.get("icon") or ""):
-                # there is an icon and it's fine
+            if "genshin" not in values["icon"] and char.id != 0:
+                # corrupted icon that completion should be able to fix
                 values["icon"] = icon
-
-            else:
-                # there is an icon but it's corrupted
-                if char.id != 0:
-                    # since completion succeeded we can fix it
-                    values["icon"] = icon
         else:
             # there wasn't an icon so no need for special handling
             values["icon"] = icon
-
-        values["name"] = values.get("name") or char.name
-        values["element"] = values.get("element") or char.element
-        values["rarity"] = values.get("rarity") or char.rarity
 
         # collab characters are stored as 105 to show a red background
         if values["rarity"] > 100:

@@ -32,8 +32,12 @@ class Battlesuit(APIModel, Unique):
 
     @pydantic.validator("tall_icon")
     def __autocomplete_figpath(cls, tall_icon: str, values: typing.Dict[str, typing.Any]) -> str:
-        # figure_path is empty for gamemode endpoints, and cannot be inferred from other fields
+        """figure_path is empty for gamemode endpoints, and cannot be inferred from other fields."""
         if tall_icon:
+            # might as well just update the BATTLESUIT_IDENTIFIERS if we have the data
+            if values["id"] not in BATTLESUIT_IDENTIFIERS:
+                BATTLESUIT_IDENTIFIERS[values["id"]] = tall_icon.split("/")[-1].split(".")[0]
+
             return tall_icon
 
         suit_identifier = BATTLESUIT_IDENTIFIERS.get(values["id"])
