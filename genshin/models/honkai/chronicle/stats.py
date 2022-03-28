@@ -32,6 +32,8 @@ def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, 
 class MemorialArenaStats(APIModel):
     """Represents a user's stats regarding the Memorial Arena gamemodes."""
 
+    _stat_lang: str = "en-us"
+
     # fmt: off
     ranking: float = Aliased("battle_field_ranking_percentage", mi18n="bbs/battle_field_ranking_percentage")
     raw_rank: int =  Aliased("battle_field_rank",               mi18n="bbs/rank")
@@ -50,12 +52,19 @@ class MemorialArenaStats(APIModel):
     @property
     def tier(self) -> str:
         """The user's Memorial Arena tier as displayed in-game."""
-        return modes.prettify_competitive_tier(self.raw_tier)
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Memorial Arena tier in a specific language."""
+        key = modes.get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self._stat_lang)
 
 
 # flake8: noqa: E222
 class SuperstringAbyssStats(APIModel):
     """Represents a user's stats regarding Superstring Abyss."""
+
+    _stat_lang: str = "en-us"
 
     # fmt: off
     raw_rank: int = Aliased("level",             mi18n="bbs/rank")
@@ -73,17 +82,29 @@ class SuperstringAbyssStats(APIModel):
     @property
     def rank(self) -> str:
         """The user's Abyss rank as displayed in-game."""
-        return modes.prettify_abyss_rank(self.raw_rank, self.raw_tier)
+        return self.get_rank()
+
+    def get_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss rank in a specific language."""
+        key = modes.get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self._stat_lang)
 
     @property
     def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
-        return modes.prettify_competitive_tier(self.raw_tier)
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss tier in a specific language."""
+        key = modes.get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self._stat_lang)
 
 
 # flake8: noqa: E222
 class OldAbyssStats(APIModel):
     """Represents a user's stats regarding Q-Singularis and Dirac Sea."""
+
+    _stat_lang: str = "en-us"
 
     # fmt: off
     raw_q_singularis_rank: int = Aliased("level_of_quantum", mi18n="bbs/Quantum")
@@ -98,31 +119,40 @@ class OldAbyssStats(APIModel):
     def __normalize_rank(cls, rank: str) -> int:  # modes.OldAbyss.__normalize_rank
         return 69 - ord(rank)
 
-    @pydantic.validator("latest_type")
-    def __parse_type(cls, type_: str) -> str:  # modes.OldAbyss.__parse_type
-        return {"OW": "Dirac Sea", "Quantum": "Q-Singularis"}[type_]
-
     @property
     def q_singularis_rank(self) -> str:
-        """The user's latest Q-singularis rank as displayed in-game."""
-        return modes.prettify_abyss_rank(self.raw_q_singularis_rank, self.raw_tier)
+        """The user's latest Q-Singularis rank as displayed in-game."""
+        return self.get_rank(self.raw_q_singularis_rank)
 
     @property
     def dirac_sea_rank(self) -> str:
         """The user's latest Dirac Sea rank as displayed in-game."""
-        return modes.prettify_abyss_rank(self.raw_dirac_sea_rank, self.raw_tier)
+        return self.get_rank(self.raw_dirac_sea_rank)
 
     @property
     def latest_rank(self) -> str:
-        """The user's latest abyss rank as displayed in-game. Seems to apply after weekly reset,
+        """The user's latest Abyss rank as displayed in-game. Seems to apply after weekly reset,
         so this may differ from the user's Dirac Sea/Q-Singularis ranks if their rank changed.
         """
-        return modes.prettify_abyss_rank(self.raw_latest_rank, self.raw_tier)
+        return self.get_rank(self.raw_latest_rank)
+
+    def get_rank(self, rank: int, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss rank in a specific language.
+
+        Must be supplied with one of the raw ranks stored on this class.
+        """
+        key = modes.get_abyss_rank_mi18n(rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self._stat_lang)
 
     @property
     def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
-        return modes.prettify_competitive_tier(self.raw_tier)
+        return modes.get_competitive_tier_mi18n(self.raw_tier)
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss tier in a specific language."""
+        key = modes.get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self._stat_lang)
 
     def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
         return _model_to_dict(self, lang)

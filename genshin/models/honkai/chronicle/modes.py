@@ -48,9 +48,9 @@ REMEMBRANCE_SIGILS = {
 # GENERIC
 
 
-def prettify_competitive_tier(tier: int) -> str:
+def get_competitive_tier_mi18n(tier: int) -> str:
     """Turn the tier returned by the API into the respective tier name displayed in-game."""
-    return ["Basic", "Elites", "Masters", "Exalted"][tier - 1]
+    return "bbs/" + ("area1", "area2", "area3", "area4")[tier - 1]
 
 
 class Boss(APIModel, Unique):
@@ -89,27 +89,13 @@ class ELF(APIModel, Unique):
 # ABYSS
 
 
-def prettify_abyss_rank(rank: int, tier: int) -> str:
+def get_abyss_rank_mi18n(rank: int, tier: int) -> str:
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
     if tier == 4:
-        return (
-            "Forbidden",
-            "Sinful I",
-            "Sinful II",
-            "Sinful III",
-            "Agony I",
-            "Agony II",
-            "Agony III",
-            "Redlotus",
-            "Nirvana",
-        )[rank - 1]
+        mod = ("1", "2_1", "2_2", "2_3", "3_1", "3_2", "3_3", "4", "5")[rank - 1]
     else:
-        return (
-            "Forbidden",
-            "Sinful",
-            "Agony",
-            "Redlotus",
-        )[rank - 1]
+        mod = str(rank)
+    return f"bbs/level{mod}"
 
 
 class BaseAbyss(APIModel):
@@ -120,6 +106,8 @@ class BaseAbyss(APIModel):
 
     # somewhat feel like this is overkill
 
+    abyss_lang: str = "en-us"
+
     raw_tier: int = Aliased("area")
     score: int
     lineup: typing.Sequence[battlesuit.Battlesuit]
@@ -129,7 +117,12 @@ class BaseAbyss(APIModel):
     @property
     def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
-        return prettify_competitive_tier(self.raw_tier)
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss tier in a specific language."""
+        key = get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
 
 
 class OldAbyss(BaseAbyss):
@@ -139,14 +132,9 @@ class OldAbyss(BaseAbyss):
     """
 
     end_time: datetime.datetime = Aliased("time_second")
-    type: str = Aliased(mi18n="Quantum")
+    raw_type: str = Aliased("type")
     result: str = Aliased("reward_type")
     raw_rank: int = Aliased("level")
-
-    @pydantic.validator("type")
-    def __parse_type(cls, type_: str) -> str:
-        # Parse lazy alias to actual in-game name
-        return {"OW": "Dirac Sea", "Quantum": "Q-Singularis"}[type_]
 
     @pydantic.validator("raw_rank", pre=True)
     def __normalize_level(cls, rank: str) -> int:
@@ -159,7 +147,22 @@ class OldAbyss(BaseAbyss):
     @property
     def rank(self) -> str:
         """The user's Abyss rank as displayed in-game."""
-        return prettify_abyss_rank(self.raw_rank, self.raw_tier)
+        return self.get_rank()
+
+    def get_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss rank in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+    @property
+    def type(self) -> str:
+        """The name of this cycle's abyss type."""
+        return self.get_type()
+
+    def get_type(self, lang: typing.Optional[str] = None) -> str:
+        """Get the name of this cycle's abyss type in a specific language."""
+        key = "bbs/" + ("level_of_ow" if self.raw_type == "OW" else self.raw_type)
+        return self._get_mi18n(key, lang or self.abyss_lang)
 
 
 class SuperstringAbyss(BaseAbyss):
@@ -178,12 +181,22 @@ class SuperstringAbyss(BaseAbyss):
     @property
     def start_rank(self) -> str:
         """The rank the user started the abyss cycle with, as displayed in-game."""
-        return prettify_abyss_rank(self.raw_start_rank, self.raw_tier)
+        return self.get_start_rank()
+
+    def get_start_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the rank the user started the abyss cycle with in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_start_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
 
     @property
     def end_rank(self) -> str:
         """The rank the user ended the abyss cycle with, as displayed in-game."""
-        return prettify_abyss_rank(self.raw_end_rank, self.raw_tier)
+        return self.get_end_rank()
+
+    def get_end_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the rank the user ended the abyss cycle with in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_end_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
 
     @property
     def start_trophies(self) -> int:
@@ -193,7 +206,7 @@ class SuperstringAbyss(BaseAbyss):
 # MEMORIAL ARENA
 
 
-def prettify_MA_rank(rank: int) -> str:
+def prettify_MA_rank(rank: int) -> str:  # Independent of mi18n
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
     brackets = (0, 0.20, 2, 7, 17, 35, 65)
     return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
@@ -214,6 +227,8 @@ class MemorialArena(APIModel):
     def __init__(self, **data: typing.Any) -> None:
         super().__init__(**data)
 
+    ma_lang: str = "en-us"
+
     score: int
     ranking: float = Aliased("ranking_percentage")
     raw_rank: int = Aliased("rank")
@@ -229,7 +244,12 @@ class MemorialArena(APIModel):
     @property
     def tier(self) -> str:
         """The user's Memorial Arena tier as displayed in-game."""
-        return prettify_competitive_tier(self.raw_tier)
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Memorial Arena tier in a specific language."""
+        key = get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self.ma_lang)
 
 
 # ELYSIAN REALMS

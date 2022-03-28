@@ -75,7 +75,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         Only for level > 80.
         """
         data = await self.__get_honkai("latestOldAbyssReport", uid, lang=lang)
-        return [models.OldAbyss(**x) for x in data["reports"]]
+        return [models.OldAbyss(**x, abyss_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_honkai_superstring_abyss(
         self,
@@ -88,7 +88,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         Only for level <= 80.
         """
         data = await self.__get_honkai("newAbyssReport", uid, lang=lang)
-        return [models.SuperstringAbyss(**x) for x in data["reports"]]
+        return [models.SuperstringAbyss(**x, abyss_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_honkai_abyss(
         self,
@@ -128,7 +128,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Sequence[models.MemorialArena]:
         """Get honkai memorial arena."""
         data = await self.__get_honkai("battleFieldReport", uid, lang=lang)
-        return [models.MemorialArena(**x) for x in data["reports"]]
+        return [models.MemorialArena(**x, ma_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_full_honkai_user(
         self,

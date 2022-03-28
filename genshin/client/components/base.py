@@ -400,12 +400,14 @@ class BaseClient(abc.ABC):
         url = routes.MI18N[key]
         data = await self.request_webstatic(url.format(lang=lang))
         for k, v in data.items():
-            base_model.APIModel._mi18n.setdefault(key + "/" + k, {})[lang] = v  # pyright: ignore[reportPrivateUsage]
+            actual_key = str.lower(key + "/" + k)
+            base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v  # pyright: ignore[reportPrivateUsage]
 
     async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
         """Fetch mi18n for partially localized endpoints."""
-        if base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
-            return
+        if not force:
+            if base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
+                return
 
         langs = tuple(langs)
 

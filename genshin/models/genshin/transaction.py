@@ -31,7 +31,7 @@ class TransactionKind(str, enum.Enum):
 class BaseTransaction(APIModel, Unique):
     """Genshin transaction."""
 
-    _reason_lang: str = "en-us"
+    reason_lang: str = "en-us"
 
     kind: TransactionKind
 
@@ -48,7 +48,7 @@ class BaseTransaction(APIModel, Unique):
     def get_reason_name(self, lang: typing.Optional[str] = None) -> str:
         """Get the name of the reason in a specific language."""
         key = f"inquiry/selfinquiry_general_reason_{self.reason_id}"
-        return self._get_mi18n(key, lang or self._reason_lang, default=str(self.reason_id))
+        return self._get_mi18n(key, lang or self.reason_lang, default=str(self.reason_id))
 
 
 class Transaction(BaseTransaction):
