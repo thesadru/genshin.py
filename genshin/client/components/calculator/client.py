@@ -5,6 +5,7 @@ import typing
 
 import genshin.models.genshin as genshin_models
 from genshin import types
+from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import calculator as models
@@ -68,20 +69,26 @@ class CalculatorClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[typing.Mapping[str, typing.Any]]:
         """Get all items of a specific slug from a calculator."""
-        if query and any(filters.values()):
-            raise TypeError("Cannot specify a query and filter at the same time")
-
         endpoint = f"sync/{slug}/list" if sync else f"{slug}/list"
 
-        payload: typing.Dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
         if query:
-            payload.update(keywords=query)
+            if any(filters.values()):
+                raise TypeError("Cannot specify a query and filter at the same time")
+
+            filters = dict(keywords=query, **filters)
+
+        payload: typing.Dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
+
         if sync:
             uid = await self._get_uid(types.Game.GENSHIN)
             payload["uid"] = uid
             payload["region"] = genshin_utility.recognize_genshin_server(uid)
 
-        data = await self.request_calculator(endpoint, lang=lang, data=payload)
+        cache: typing.Optional[client_cache.CacheKey] = None
+        if not any(filters.values()) and not sync:
+            cache = client_cache.cache_key("calculator", slug=slug, lang=lang or self.lang)
+
+        data = await self.request_calculator(endpoint, lang=lang, data=payload, cache=cache)
         return data["list"]
 
     async def get_calculator_characters(
@@ -207,6 +214,7 @@ class CalculatorClient(base.BaseClient):
             method="GET",
             lang=lang,
             params=dict(reliquary_id=int(artifact)),
+            cache=client_cache.cache_key("calculator", slug="set", artifact=int(artifact), lang=lang or self.lang),
         )
         return [models.CalculatorArtifact(**i) for i in data["reliquary_list"]]
 
