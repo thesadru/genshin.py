@@ -52,7 +52,7 @@ class RandomCookieManager(genshin.BaseCookieManager):
 
     async def request(self, url, *, method = "GET", **kwargs):
         cookies = await self.database.get_random_cookies()
-        return await self._request(method, url, cookies=cookie, **kwargs)
+        return await self._request(method, url, cookies=cookies, **kwargs)
 
 ```
 
@@ -63,6 +63,8 @@ If you wish to use chinese cookies and chinese endpoints you must change the def
 
 ```py
 client = genshin.Client(region=genshin.Region.CHINESE)
+
+client.region = genshin.Region.CHINESE
 ```
 
 ## Default Game
@@ -71,4 +73,6 @@ Some endpoints may be the exact same for both genshin and honkai so they require
 
 ```py
 client = genshin.Client(game=genshin.Game.HONKAI)
+
+client.default_game = genshin.Game.HONKAI
 ```

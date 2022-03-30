@@ -1,8 +1,10 @@
 # Daily Rewards
 
-Since genshin forces users to claim their daily rewards through the website we can abuse that system and claim rewards automatically.
+Since hoyo forces users to claim their daily rewards through the website we can abuse that system and claim rewards automatically.
 
 To request any of the Battle Chronicle endpoints you must first be logged in. Refer to [the authentication section](authentication.md) for more information.
+
+These endpoints require a game to be specified. It's best to [configure the default game](configuration.md#default-game) or use the `game=` parameter.
 
 ## Quick Example
 

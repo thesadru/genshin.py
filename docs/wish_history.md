@@ -38,8 +38,8 @@ By default `client.wish_history()` gets data from all banners, you can filter th
 > This enum is contained in `genshin.models.BannerType`
 
 ```py
-# get wishes only from the permanent banner
-async for wish in client.wish_history(200, limit=20):
+# get wishes only from the standard permanent banner
+async for wish in client.wish_history(genshin.models.BannerType.STANDARD, limit=20):
     print(f"{wish.time} - {wish.name} ({wish.rarity}* {wish.type})")
 
 # get wishes from both the character and the weapon banner

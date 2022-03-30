@@ -24,7 +24,7 @@ class BannerType(enum.IntEnum):
     NOVICE = 100
     """Temporary novice banner."""
 
-    STANDARD = 200
+    STANDARD = PERMANENT = 200
     """Permanent standard banner."""
 
     CHARACTER = 301

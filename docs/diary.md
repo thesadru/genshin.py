@@ -21,6 +21,6 @@ async for action in client.diary_log(limit=50):
     print(f"{action.action} - {action.amount} primogems")
 
 # get the diary log for mora
-async for action in client.diary_log(mora=True, limit=50):
+async for action in client.diary_log(limit=50, type=genshin.models.DiaryType.MORA):
     print(f"{action.action} - {action.amount} mora")
 ```

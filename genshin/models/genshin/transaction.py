@@ -16,7 +16,7 @@ class TransactionKind(str, enum.Enum):
     """Primogem currency."""
 
     CRYSTAL = "crystal"
-    """Genesis crystal currenncy."""
+    """Genesis crystal currency."""
 
     RESIN = "resin"
     """Resin currency."""
