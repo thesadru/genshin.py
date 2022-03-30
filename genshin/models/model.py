@@ -93,7 +93,7 @@ class APIModel(pydantic.BaseModel, abc.ABC):
             if isinstance(obj, property):
                 value = getattr(self, name, _SENTINEL)
 
-                if value is _SENTINEL or value == "":
+                if name[0] == "_" or value is _SENTINEL or value == "":
                     continue
 
                 self.__dict__[name] = value

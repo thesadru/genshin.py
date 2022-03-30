@@ -58,14 +58,14 @@ def _get_db_char(
             CHARACTER_NAMES[char.id] = char
             return char
 
-        return DBChar(0, icon_name, icon_name, element or "Anemo", rarity or 5, guessed=True)
+        return DBChar(id or 0, icon_name, name or icon_name, element or "Anemo", rarity or 5, guessed=True)
 
     if name:
         for char in CHARACTER_NAMES.values():
             if char.name == name:
                 return char
 
-        return DBChar(0, name, name, element or "Anemo", rarity or 5, guessed=True)
+        return DBChar(id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True)
 
     raise ValueError("Character data incomplete")
 

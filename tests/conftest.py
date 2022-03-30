@@ -65,9 +65,14 @@ async def cache():
 
     cache = {str(key): value for key, (_, value) in cache.cache.items()}
 
+    cache.update(
+        CHARACTER_NAMES=genshin.models.CHARACTER_NAMES,
+        BATTLESUIT_IDENTIFIERS=genshin.models.BATTLESUIT_IDENTIFIERS,
+    )
+
     os.makedirs(".pytest_cache", exist_ok=True)
-    with open(".pytest_cache/hoyo_cache.json", "w") as file:
-        json.dump(cache, file, indent=4)
+    with open(".pytest_cache/hoyo_cache.json", "w", encoding="utf-8") as file:
+        json.dump(cache, file, indent=4, ensure_ascii=False)
 
 
 @pytest.fixture(scope="session")

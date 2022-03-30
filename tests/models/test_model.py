@@ -23,8 +23,11 @@ def test_model_reserialization():
             getattr(model, "as_dict")()
 
     # dump all parsed models
-    data = ",\n".join(f'"{cls.__name__}": {model.json(indent=4)}' for cls, model in all_models.items())
+    data = ",\n".join(
+        f'"{cls.__name__}": {model.json(indent=4, ensure_ascii=False, models_as_dict=True)}'
+        for cls, model in all_models.items()
+    )
     data = "{" + data + "}"
     os.makedirs(".pytest_cache", exist_ok=True)
-    with open(".pytest_cache/hoyo_parsed.json", "w") as file:
+    with open(".pytest_cache/hoyo_parsed.json", "w", encoding="utf-8") as file:
         file.write(data)
