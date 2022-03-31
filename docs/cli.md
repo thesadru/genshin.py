@@ -33,7 +33,7 @@ Commands:
 ### Run a command
 
 ```console
-$ genshin -m genshin stats 710785423
+$ genshin stats 710785423
 User stats of 710785423
 
 Stats:
