@@ -99,8 +99,8 @@ class BaseClient(abc.ABC):
         return self._region
 
     @region.setter
-    def region(self, region: types.Region) -> None:
-        self._region = region
+    def region(self, region: str) -> None:
+        self._region = types.Region(region)
 
         if region is types.Region.CHINESE:
             self.lang = "zh-cn"
@@ -111,8 +111,8 @@ class BaseClient(abc.ABC):
         return self._default_game
 
     @default_game.setter
-    def default_game(self, game: typing.Optional[types.Game]) -> None:
-        self._default_game = game
+    def default_game(self, game: typing.Optional[str]) -> None:
+        self._default_game = types.Game(game) if game else None
 
     @property
     def authkey(self) -> typing.Optional[str]:
