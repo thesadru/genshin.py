@@ -16,16 +16,6 @@ PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 LOGGER = logging.getLogger("nox")
 
 
-def _try_find_option(session: nox.Session, *names: str) -> typing.Optional[str]:
-    args_iter = iter(session.posargs)
-
-    for arg in args_iter:
-        if arg in names:
-            return next(args_iter)
-
-    return None
-
-
 def install_requirements(session: nox.Session, *requirements: str, literal: bool = False) -> None:
     """Install requirements."""
     if not literal and all(requirement.isalpha() for requirement in requirements):
@@ -42,7 +32,7 @@ def docs(session: nox.Session) -> None:
     """Generate docs for this project using Pdoc."""
     install_requirements(session, "docs")
 
-    output_directory = pathlib.Path(_try_find_option(session, "-o", "--output") or "./docs/pdoc/")
+    output_directory = pathlib.Path("./docs/pdoc/")
     session.log("Building docs into %s", output_directory)
 
     session.run("pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
