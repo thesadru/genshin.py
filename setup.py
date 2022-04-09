@@ -13,7 +13,7 @@ setup(
         "Documentation": "https://thesadru.github.io/genshin.py",
         "Issue tracker": "https://github.com/thesadru/genshin.py/issues",
     },
-    packages=find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["tests.*"]),
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={

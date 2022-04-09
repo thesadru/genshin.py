@@ -15,7 +15,7 @@ if os.name == "nt":
 
 T = typing.TypeVar("T", bound=typing.Any)
 
-cli = click.Group("cli")
+cli: click.Group = click.Group("cli")
 
 
 def asynchronous(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> typing.Callable[..., typing.Any]:
@@ -63,8 +63,8 @@ async def accounts(client: genshin.Client) -> None:
         )
 
 
-genshin_group = click.Group("genshin", help="Genshin-related commands.")
-honkai_group = click.Group("honkai", help="Honkai-related commands.")
+genshin_group: click.Group = click.Group("genshin", help="Genshin-related commands.")
+honkai_group: click.Group = click.Group("honkai", help="Honkai-related commands.")
 cli.add_command(genshin_group)
 cli.add_command(honkai_group)
 

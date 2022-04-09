@@ -20,7 +20,7 @@ __all__ = [
     "SuperstringAbyss",
 ]
 
-REMEMBRANCE_SIGILS = {
+REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
     119301: ("The MOTH Insignia", 1),
     119302: ("Home Lost", 1),
     119303: ("False Hope", 1),

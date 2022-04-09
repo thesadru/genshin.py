@@ -184,12 +184,12 @@ class BaseClient(abc.ABC):
         *,
         ttl: int = client_cache.HOUR,
         static_ttl: int = client_cache.DAY,
-        **kwargs: typing.Any,
+        **redis_kwargs: typing.Any,
     ) -> None:
         """Create and set a new redis cache."""
         import aioredis
 
-        redis = aioredis.Redis.from_url(url, **kwargs)  # pyright: ignore[reportUnknownMemberType]
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
         self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
 
     async def _request_hook(

@@ -66,21 +66,20 @@ class BaseBattleChronicleClient(base.BaseClient):
         """Get a user's record cards."""
         hoyolab_uid = hoyolab_uid or self.cookie_manager.get_user_id()
 
-        cache_key = HoyolabCacheKey("records", hoyolab_uid, lang=lang or self.lang)
+        cache_key = cache.cache_key("records", hoyolab_uid=hoyolab_uid, lang=lang or self.lang)
         if not (data := await self.cache.get(cache_key)):
             data = await self.request_game_record(
                 "card/wapi/getGameRecordCard",
                 lang=lang,
                 params=dict(uid=hoyolab_uid),
             )
+
             if data["list"]:
                 await self.cache.set(cache_key, data)
+            else:
+                raise errors.DataNotPublic({"retcode": 10102})
 
-        cards = data["list"]
-        if not cards:
-            raise errors.DataNotPublic({"retcode": 10102})
-
-        return [models.hoyolab.RecordCard(**card) for card in cards]
+        return [models.hoyolab.RecordCard(**card) for card in data["list"]]
 
     @deprecation.deprecated("get_record_cards")
     async def get_record_card(

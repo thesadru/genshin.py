@@ -3,7 +3,7 @@ import typing
 
 from genshin import types
 from genshin.client import cache as client_cache
-from genshin.client import manager
+from genshin.client import manager, routes
 from genshin.client.components import base
 from genshin.models import hoyolab as models
 from genshin.utility import genshin as genshin_utility
@@ -44,7 +44,7 @@ class HoyolabClient(base.BaseClient):
         uid = uid or await self._get_uid(types.Game.GENSHIN)
 
         await self.request(
-            "https://hk4e-api-os.mihoyo.com/common/apicdkey/api/webExchangeCdkey",
+            routes.CODE_URL.get_url(),
             params=dict(
                 uid=uid,
                 region=genshin_utility.recognize_genshin_server(uid),

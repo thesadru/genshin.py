@@ -1,2 +1,4 @@
 mypy
 pyright
+
+types-click

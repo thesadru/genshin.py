@@ -116,6 +116,10 @@ class CharacterResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
 
 
 class WeaponResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
+    id: int
+    current: int
+    target: int
+
     def __init__(self, weapon: int, current: int, target: int) -> None:
         self.id = weapon
         self.current = current
@@ -130,6 +134,10 @@ class WeaponResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
 
 
 class CurrentWeaponResolver(WeaponResolver):
+    id: int
+    current: int
+    target: int
+
     def __init__(self, target: int):
         self.target = target
 
