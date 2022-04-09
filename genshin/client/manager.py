@@ -141,7 +141,7 @@ class CookieManager(BaseCookieManager):
 
     @property
     def cookies(self) -> typing.Mapping[str, str]:
-        """Cookies used for authentication"""
+        """Cookies used for authentication."""
         return self._cookies
 
     @cookies.setter
@@ -162,8 +162,16 @@ class CookieManager(BaseCookieManager):
 
     @property
     def jar(self) -> http.cookies.SimpleCookie[str]:
-        """A client cookie jar."""
+        """SimpleCookie containing the cookies."""
         return http.cookies.SimpleCookie(self.cookies)
+
+    @property
+    def header(self) -> str:
+        """Header representation of cookies.
+
+        This representation is reparsable by the manager.
+        """
+        return self.jar.output(header="", sep=";").strip()
 
     def set_cookies(
         self,
