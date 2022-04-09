@@ -29,7 +29,8 @@ def _try_find_option(session: nox.Session, *names: str) -> typing.Optional[str]:
 def install_requirements(session: nox.Session, *requirements: str, literal: bool = False) -> None:
     """Install requirements."""
     if not literal and all(requirement.isalpha() for requirement in requirements):
-        requirements = (f"./genshin-dev[{', '.join(requirements)}]",)
+        files = ["requirements.txt"] + [f"./genshin-dev/{requirement}-requirements.txt" for requirement in requirements]
+        requirements = tuple(arg for file in files for arg in ("-r", file))
 
     verbose = LOGGER.getEffectiveLevel() == logging.DEBUG - 1  # OUTPUT
 
