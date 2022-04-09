@@ -175,6 +175,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -2004: RedemptionInvalid,
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
+    -2018: RedemptionClaimed,
     -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
     # rewards
     -5003: AlreadyClaimed,
