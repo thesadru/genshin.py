@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install nox
+          python -m pip install nox mkdocs-material
 
       - name: Generate API Documentation
         run: |

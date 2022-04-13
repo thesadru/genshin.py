@@ -34,7 +34,7 @@ def _get_browser_cookies(
 
     Available browsers: chrome, chromium, opera, edge, firefox.
     """
-    import browser_cookie3
+    import browser_cookie3  # pyright: ignore
 
     _fix_windows_chrome_temp()
 
