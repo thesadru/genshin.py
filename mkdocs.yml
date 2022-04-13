@@ -1,0 +1,52 @@
+site_name: Genshin.py
+site_description: Modern API wrapper for Genshin Impact built on asyncio and pydantic.
+site_url: https://thesadru.github.io/genshin.py
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: amber
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+    - scheme: slate
+      primary: blue grey
+      accent: amber
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.expand
+  language: en
+repo_name: thesadru/genshin.py
+repo_url: https://github.com/thesadru/genshin.py
+plugins:
+  - search
+markdown_extensions:
+  - tables
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+nav:
+  - index.md
+  - credits.md
+  - Usage:
+      - authentication.md
+      - battle_chronicle.md
+      - hoyolab.md
+      - daily_rewards.md
+      - calculator.md
+      - diary.md
+      - wish_history.md
+      - transactions.md
+  - Advanced Usage:
+      - configuration.md
+      - caching.md
+      - debugging.md
+  - cli.md

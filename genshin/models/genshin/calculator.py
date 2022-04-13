@@ -1,0 +1,218 @@
+"""Genshin calculator models."""
+from __future__ import annotations
+
+import collections
+import typing
+
+import pydantic
+
+from genshin.models.model import Aliased, APIModel, Unique
+
+from . import character
+
+__all__ = [
+    "CALCULATOR_ARTIFACTS",
+    "CALCULATOR_ELEMENTS",
+    "CALCULATOR_WEAPON_TYPES",
+    "CalculatorArtifact",
+    "CalculatorArtifactResult",
+    "CalculatorCharacter",
+    "CalculatorCharacterDetails",
+    "CalculatorConsumable",
+    "CalculatorResult",
+    "CalculatorTalent",
+    "CalculatorWeapon",
+]
+
+CALCULATOR_ELEMENTS: typing.Mapping[int, str] = {
+    1: "Pyro",
+    2: "Anemo",
+    3: "Geo",
+    4: "Dendro",
+    5: "Electro",
+    6: "Hydro",
+    7: "Cryo",
+}
+CALCULATOR_WEAPON_TYPES: typing.Mapping[int, str] = {
+    1: "Sword",
+    10: "Catalyst",
+    11: "Claymore",
+    12: "Bow",
+    13: "Polearm",
+}
+CALCULATOR_ARTIFACTS: typing.Mapping[int, str] = {
+    1: "Flower of Life",
+    2: "Plume of Death",
+    3: "Sands of Eon",
+    4: "Goblet of Eonothem",
+    5: "Circlet of Logos",
+}
+
+
+class CalculatorCharacter(character.BaseCharacter):
+    """Character meant to be used with calculators."""
+
+    rarity: int = Aliased("avatar_level")
+    element: str = Aliased("element_attr_id")
+    weapon_type: str = Aliased("weapon_cat_id")
+    level: int = Aliased("level_current", default=0)
+    max_level: int
+
+    @pydantic.validator("element", pre=True)
+    def __parse_element(cls, v: typing.Any) -> str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_ELEMENTS[int(v)]
+
+    @pydantic.validator("weapon_type", pre=True)
+    def __parse_weapon_type(cls, v: typing.Any) -> str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_WEAPON_TYPES[int(v)]
+
+
+class CalculatorWeapon(APIModel, Unique):
+    """Weapon meant to be used with calculators."""
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased("weapon_level")
+    type: str = Aliased("weapon_cat_id")
+    level: int = Aliased("level_current", default=0)
+    max_level: int
+
+    @pydantic.validator("type", pre=True)
+    def __parse_weapon_type(cls, v: typing.Any) -> str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_WEAPON_TYPES[int(v)]
+
+
+class CalculatorArtifact(APIModel, Unique):
+    """Artifact meant to be used with calculators."""
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased("reliquary_level")
+    pos: int = Aliased("reliquary_cat_id")
+    level: int = Aliased("level_current", default=0)
+    max_level: int
+
+    @property
+    def pos_name(self) -> str:
+        return CALCULATOR_ARTIFACTS[self.pos]
+
+
+class CalculatorTalent(APIModel, Unique):
+    """Talent of a character meant to be used with calculators."""
+
+    id: int
+    group_id: int
+    name: str
+    icon: str
+    level: int = Aliased("level_current", default=0)
+    max_level: int
+
+    @property
+    def type(self) -> typing.Literal["attack", "skill", "burst", "passive", "dash"]:
+        """The type of the talent, parsed from the group id"""
+        # It's Possible to parse this from the id too but group id feels more reliable
+
+        # 4139 -> group=41 identifier=3 order=9
+        group, relevant = divmod(self.group_id, 100)
+        identifier, order = divmod(relevant, 10)
+
+        if identifier == 2:
+            return "passive"
+        elif order == 1:
+            return "attack"
+        elif order == 2:
+            return "skill"
+        elif order == 9:
+            return "burst"
+        elif order == 3:
+            return "dash"
+        else:
+            raise ValueError(f"Cannot parse type for talent {self.group_id!r} (group {group})")
+
+    @property
+    def upgradeable(self) -> bool:
+        """Whether this talent can be leveled up."""
+        return self.type not in ("passive", "dash")
+
+    def __int__(self) -> int:
+        return self.group_id
+
+
+class CalculatorConsumable(APIModel, Unique):
+    """Item consumed when upgrading."""
+
+    id: int
+    name: str
+    icon: str
+    amount: int = Aliased("num")
+
+
+class CalculatorCharacterDetails(APIModel):
+    """Details of a synced calculator character."""
+
+    weapon: CalculatorWeapon = Aliased("weapon")
+    talents: typing.Sequence[CalculatorTalent] = Aliased("skill_list")
+    artifacts: typing.Sequence[CalculatorArtifact] = Aliased("reliquary_list")
+
+    @pydantic.validator("talents")
+    def __correct_talent_current_level(cls, v: typing.Sequence[CalculatorTalent]) -> typing.Sequence[CalculatorTalent]:
+        # passive talent have current levels at 0 for some reason
+        talents: typing.List[CalculatorTalent] = []
+
+        for talent in v:
+            if talent.max_level == 1 and talent.level == 0:
+                raw = talent.dict()
+                raw["level"] = 1
+                talent = CalculatorTalent(**raw)
+
+            talents.append(talent)
+
+        return v
+
+
+class CalculatorArtifactResult(APIModel):
+    """Calculation result for a specific artifact."""
+
+    artifact_id: int = Aliased("reliquary_id")
+    list: typing.Sequence[CalculatorConsumable] = Aliased("id_consume_list")
+
+
+class CalculatorResult(APIModel):
+    """Calculation result."""
+
+    character: typing.List[CalculatorConsumable] = Aliased("avatar_consume")
+    weapon: typing.List[CalculatorConsumable] = Aliased("weapon_consume")
+    talents: typing.List[CalculatorConsumable] = Aliased("avatar_skill_consume")
+    artifacts: typing.List[CalculatorArtifactResult] = Aliased("reliquary_consume")
+
+    @property
+    def total(self) -> typing.Sequence[CalculatorConsumable]:
+        artifacts = [i for a in self.artifacts for i in a.list]
+        combined = self.character + self.weapon + self.talents + artifacts
+
+        grouped: typing.Dict[int, typing.List[CalculatorConsumable]] = collections.defaultdict(list)
+        for i in combined:
+            grouped[i.id].append(i)
+
+        total = [
+            CalculatorConsumable(
+                id=x[0].id,
+                name=x[0].name,
+                icon=x[0].icon,
+                amount=sum(i.amount for i in x),
+            )
+            for x in grouped.values()
+        ]
+
+        return total

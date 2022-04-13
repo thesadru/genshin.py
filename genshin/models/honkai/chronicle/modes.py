@@ -1,0 +1,339 @@
+"""Honkai battle chronicle models."""
+from __future__ import annotations
+
+import datetime
+import re
+import typing
+
+import pydantic
+
+from genshin.models.honkai import battlesuit
+from genshin.models.model import Aliased, APIModel, Unique
+
+__all__ = [
+    "Boss",
+    "ELF",
+    "ElysianRealm",
+    "MemorialArena",
+    "MemorialBattle",
+    "OldAbyss",
+    "SuperstringAbyss",
+]
+
+REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
+    119301: ("The MOTH Insignia", 1),
+    119302: ("Home Lost", 1),
+    119303: ("False Hope", 1),
+    119304: ("Tin Flask", 1),
+    119305: ("Ruined Legacy", 1),
+    119306: ("Burden", 2),
+    119307: ("Gold Goblet", 2),
+    119308: ("Mad King's Mask", 2),
+    119309: ("Light as a Bodhi Leaf", 2),
+    119310: ("Forget-Me-Not", 2),
+    119311: ("Forbidden Seed", 2),
+    119312: ("Memory", 2),
+    119313: ("Crystal Rose", 2),
+    119314: ("Abandoned", 3),
+    119315: ("Good Old Days", 3),
+    119316: ("Shattered Shackles", 3),
+    119317: ("Heavy as a Million Lives", 3),
+    119318: ("Stained Sakura", 3),
+    119319: ("The First Scale", 3),
+    119320: ("Resolve", 3),
+    119321: ("Thorny Crown", 3),
+}
+
+
+# GENERIC
+
+
+def get_competitive_tier_mi18n(tier: int) -> str:
+    """Turn the tier returned by the API into the respective tier name displayed in-game."""
+    return "bbs/" + ("area1", "area2", "area3", "area4")[tier - 1]
+
+
+class Boss(APIModel, Unique):
+    """Represents a Boss encountered in Abyss or Memorial Arena."""
+
+    id: int
+    name: str
+    icon: str = Aliased("avatar")
+
+    @pydantic.validator("icon")
+    def __fix_url(cls, url: str) -> str:
+        # I noticed that sometimes the urls are returned incorrectly, which appears to be
+        # a problem on the hoyolab website too, so I expect this to be fixed sometime.
+        # For now, this hotfix seems to work.
+        return re.sub(r"/boss_\d+\.", lambda m: str.upper(m[0]), url, flags=re.IGNORECASE)
+
+
+class ELF(APIModel, Unique):
+    """Represents an ELF equipped for a battle."""
+
+    id: int
+    name: str
+    icon: str = Aliased("avatar")
+    rarity: str
+    upgrade_level: int = Aliased("star")
+
+    @pydantic.validator("rarity", pre=True)
+    def __fix_rank(cls, rarity: typing.Union[int, str]) -> str:
+        if isinstance(rarity, str):
+            return rarity
+
+        # ELFs come in rarities A and S, API returns 3 and 4, respectively
+        return ["A", "S"][rarity - 3]
+
+
+# ABYSS
+
+
+def get_abyss_rank_mi18n(rank: int, tier: int) -> str:
+    """Turn the rank returned by the API into the respective rank name displayed in-game."""
+    if tier == 4:
+        mod = ("1", "2_1", "2_2", "2_3", "3_1", "3_2", "3_3", "4", "5")[rank - 1]
+    else:
+        mod = str(rank)
+    return f"bbs/level{mod}"
+
+
+class BaseAbyss(APIModel):
+    """Represents one cycle of abyss.
+
+    (3 days per cycle, 2 cycles per week)
+    """
+
+    # somewhat feel like this is overkill
+
+    abyss_lang: str = "en-us"
+
+    raw_tier: int = Aliased("area")
+    score: int
+    lineup: typing.Sequence[battlesuit.Battlesuit]
+    boss: Boss
+    elf: typing.Optional[ELF]
+
+    @property
+    def tier(self) -> str:
+        """The user's Abyss tier as displayed in-game."""
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss tier in a specific language."""
+        key = get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+
+class OldAbyss(BaseAbyss):
+    """Represents once cycle of Quantum Singularis or Dirac Sea.
+
+    Exclusive to players of level 80 and below.
+    """
+
+    end_time: datetime.datetime = Aliased("time_second")
+    raw_type: str = Aliased("type")
+    result: str = Aliased("reward_type")
+    raw_rank: int = Aliased("level")
+
+    @pydantic.validator("raw_rank", pre=True)
+    def __normalize_level(cls, rank: str) -> int:
+        # The latestOldAbyssReport endpoint returns ranks as D/C/B/A,
+        # while newAbyssReport returns them as 1/2/3/4(/5) respectively.
+        # Having them as ints at base seems more useful than strs.
+        # (in-game, they use the same names (Sinful, Agony, etc.))
+        return 69 - ord(rank)
+
+    @property
+    def rank(self) -> str:
+        """The user's Abyss rank as displayed in-game."""
+        return self.get_rank()
+
+    def get_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Abyss rank in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+    @property
+    def type(self) -> str:
+        """The name of this cycle's abyss type."""
+        return self.get_type()
+
+    def get_type(self, lang: typing.Optional[str] = None) -> str:
+        """Get the name of this cycle's abyss type in a specific language."""
+        key = "bbs/" + ("level_of_ow" if self.raw_type == "OW" else self.raw_type)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+
+class SuperstringAbyss(BaseAbyss):
+    """Represents one cycle of Superstring Abyss, exclusive to players of level 81 and up."""
+
+    # NOTE endpoint: game_record/honkai3rd/api/latestOldAbyssReport
+
+    end_time: datetime.datetime = Aliased("updated_time_second")
+    raw_tier: int = 4  # Not returned by API, always the case
+    placement: int = Aliased("rank")
+    trophies_gained: int = Aliased("settled_cup_number")
+    end_trophies: int = Aliased("cup_number")
+    raw_start_rank: int = Aliased("level")
+    raw_end_rank: int = Aliased("settled_level")
+
+    @property
+    def start_rank(self) -> str:
+        """The rank the user started the abyss cycle with, as displayed in-game."""
+        return self.get_start_rank()
+
+    def get_start_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the rank the user started the abyss cycle with in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_start_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+    @property
+    def end_rank(self) -> str:
+        """The rank the user ended the abyss cycle with, as displayed in-game."""
+        return self.get_end_rank()
+
+    def get_end_rank(self, lang: typing.Optional[str] = None) -> str:
+        """Get the rank the user ended the abyss cycle with in a specific language."""
+        key = get_abyss_rank_mi18n(self.raw_end_rank, self.raw_tier)
+        return self._get_mi18n(key, lang or self.abyss_lang)
+
+    @property
+    def start_trophies(self) -> int:
+        return self.end_trophies - self.trophies_gained
+
+
+# MEMORIAL ARENA
+
+
+def prettify_MA_rank(rank: int) -> str:  # Independent of mi18n
+    """Turn the rank returned by the API into the respective rank name displayed in-game."""
+    brackets = (0, 0.20, 2, 7, 17, 35, 65)
+    return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
+
+
+class MemorialBattle(APIModel):
+    """Represents weekly performance against a single Memorial Arena boss."""
+
+    score: int
+    lineup: typing.Sequence[battlesuit.Battlesuit]
+    elf: typing.Optional[ELF]
+    boss: Boss
+
+
+class MemorialArena(APIModel):
+    """Represents aggregate weekly performance for the entire Memorial Arena rotation."""
+
+    def __init__(self, **data: typing.Any) -> None:
+        super().__init__(**data)
+
+    ma_lang: str = "en-us"
+
+    score: int
+    ranking: float = Aliased("ranking_percentage")
+    raw_rank: int = Aliased("rank")
+    raw_tier: int = Aliased("area")
+    end_time: datetime.datetime = Aliased("time_second")
+    battle_data: typing.Sequence[MemorialBattle] = Aliased("battle_infos")
+
+    @property
+    def rank(self) -> str:
+        """The user's Memorial Arena rank as displayed in-game."""
+        return prettify_MA_rank(self.raw_rank)
+
+    @property
+    def tier(self) -> str:
+        """The user's Memorial Arena tier as displayed in-game."""
+        return self.get_tier()
+
+    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+        """Get the user's Memorial Arena tier in a specific language."""
+        key = get_competitive_tier_mi18n(self.raw_tier)
+        return self._get_mi18n(key, lang or self.ma_lang)
+
+
+# ELYSIAN REALMS
+# TODO: Implement a way to link response_json["avatar_transcript"] data to be added to
+#       ER lineup data; will require new Battlesuit subclass.
+
+
+class Condition(APIModel):
+    """Represents a debuff picked at the beginning of an Elysian Realms run."""
+
+    name: str
+    description: str = Aliased("desc")
+    difficulty: int
+
+
+class Signet(APIModel):
+    """Represents a buff Signet picked in an Elysian Realms run."""
+
+    id: int
+    icon: str
+    number: int
+
+    @property
+    def name(self) -> str:
+        return [
+            "Deliverance",
+            "Gold",
+            "Decimation",
+            "Bodhi",
+            "Setsuna",
+            "Infinity",
+            "Vicissitude",
+            "■■",
+        ][self.id - 1]
+
+    def get_scaled_icon(self, scale: typing.Literal[1, 2, 3] = 2) -> str:
+        if not 1 <= scale <= 3:
+            raise ValueError("Scale must lie between 1 and 3.")
+
+        return self.icon.replace("@2x", "" if scale == 1 else f"@{scale}x")
+
+
+class RemembranceSigil(APIModel):
+    """Represents a Remembrance Sigil from Elysian Realms."""
+
+    icon: str
+
+    @property
+    def id(self) -> int:
+        match = re.match(r".*/(\d+).png", self.icon)
+        return int(match[1]) if match else 0
+
+    @property
+    def name(self) -> str:
+        sigil = REMEMBRANCE_SIGILS.get(self.id)
+        return sigil[0] if sigil else "Unknown"
+
+    @property
+    def rarity(self) -> int:
+        sigil = REMEMBRANCE_SIGILS.get(self.id)
+        return sigil[1] if sigil else 1
+
+
+class ElysianRealm(APIModel):
+    """Represents one completed run of Elysean Realms."""
+
+    completed_at: datetime.datetime = Aliased("settle_time_second")
+    floors_cleared: int = Aliased("level")
+    score: int
+    difficulty: int = Aliased("punish_level")
+    conditions: typing.Sequence[Condition]
+    signets: typing.Sequence[Signet] = Aliased("buffs")
+    leader: battlesuit.Battlesuit = Aliased("main_avatar")
+    supports: typing.Sequence[battlesuit.Battlesuit] = Aliased("support_avatars")
+    elf: typing.Optional[ELF]
+    remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
+
+    @pydantic.validator("remembrance_sigil", pre=True)
+    def __extend_sigil(cls, sigil: typing.Any) -> RemembranceSigil:
+        if isinstance(sigil, str):
+            return RemembranceSigil(icon=sigil)
+
+        return sigil
+
+    @property
+    def lineup(self) -> typing.Sequence[battlesuit.Battlesuit]:
+        return [self.leader, *self.supports]

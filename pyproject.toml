@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
+include = ".*pyi?$"
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.pyright]
+include = ["genshin"]
+exclude = ["**/__init__.py", "tests/**"]
+
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "none"
+reportImportCycles = "none"
+reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword-only arguments
+reportUnusedFunction = "none"  # Makes usage of validators impossible
+
+[tool.mypy]
+warn_unreachable = false
+
+disallow_untyped_defs = true
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+
+# pyright
+warn_unused_ignores = false
+warn_redundant_casts = false
+allow_redefinition = true
+disable_error_code = ["return-value"]

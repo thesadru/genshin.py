@@ -1,0 +1,8 @@
+aiohttp
+pydantic
+
+# optional:
+browser-cookie3
+rsa
+aioredis
+click
