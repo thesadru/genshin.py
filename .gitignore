@@ -1,8 +1,0 @@
-.coverage
-.env
-.vscode
-__pycache__
-cookies.json
-docs/pdoc
-htmlcov/
-test.py
