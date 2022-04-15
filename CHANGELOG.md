@@ -1,5 +1,12 @@
 # Changelog
 
+# 1.0.1 (2022-04-15)
+
+## Fixes
+
+- Added mi18n to the cache.
+- Optimized `_get_uid`.
+
 # 1.0.0 (2022-04-13)
 
 ## What's new
