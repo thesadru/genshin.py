@@ -135,7 +135,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.HonkaiFullUserStats:
+    ) -> models.FullHonkaiUserStats:
         """Get a full honkai user."""
         user, battlesuits, abyss, mr, er = await asyncio.gather(
             self.get_honkai_user(uid, lang=lang),
@@ -145,7 +145,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             self.get_honkai_elysian_realm(uid, lang=lang),
         )
 
-        return models.HonkaiFullUserStats(
+        return models.FullHonkaiUserStats(
             **user.dict(),
             battlesuits=battlesuits,
             abyss=abyss,

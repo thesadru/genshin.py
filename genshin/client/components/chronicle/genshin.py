@@ -68,10 +68,10 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.GenshinPartialUserStats:
+    ) -> models.PartialGenshinUserStats:
         """Get partial genshin user without character equipment."""
         data = await self.__get_genshin("index", uid, lang=lang)
-        return models.GenshinPartialUserStats(**data)
+        return models.PartialGenshinUserStats(**data)
 
     async def get_genshin_characters(
         self,
@@ -131,7 +131,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.GenshinFullUserStats:
+    ) -> models.FullGenshinUserStats:
         """Get a genshin user with all their possible data."""
         user, abyss1, abyss2, activities = await asyncio.gather(
             self.get_genshin_user(uid, lang=lang),
@@ -141,7 +141,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
-        return models.GenshinFullUserStats(**user.dict(), abyss=abyss, activities=activities)
+        return models.FullGenshinUserStats(**user.dict(), abyss=abyss, activities=activities)
 
     async def set_top_genshin_characters(
         self,

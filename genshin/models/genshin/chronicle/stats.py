@@ -11,10 +11,10 @@ from . import abyss, activities, characters
 
 __all__ = [
     "Exploration",
-    "GenshinFullUserStats",
-    "GenshinPartialUserStats",
+    "FullGenshinUserStats",
     "GenshinUserStats",
     "Offering",
+    "PartialGenshinUserStats",
     "Stats",
     "Teapot",
     "TeapotRealm",
@@ -95,7 +95,7 @@ class Teapot(APIModel):
     comfort_icon: str = Aliased("comfort_level_icon")
 
 
-class GenshinPartialUserStats(APIModel):
+class PartialGenshinUserStats(APIModel):
     """User stats with characters without equipment."""
 
     stats: Stats
@@ -112,13 +112,13 @@ class GenshinPartialUserStats(APIModel):
         return {**v[0], "realms": v}
 
 
-class GenshinUserStats(GenshinPartialUserStats):
+class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
 
     characters: typing.Sequence[characters.Character] = Aliased("avatars")
 
 
-class GenshinFullUserStats(GenshinUserStats):
+class FullGenshinUserStats(GenshinUserStats):
     """User stats with all data a user can have"""
 
     abyss: abyss.SpiralAbyssPair

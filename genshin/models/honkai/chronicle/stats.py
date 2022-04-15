@@ -8,7 +8,7 @@ from genshin.models.model import Aliased, APIModel
 from . import battlesuits, modes
 
 __all__ = [
-    "HonkaiFullUserStats",
+    "FullHonkaiUserStats",
     "HonkaiStats",
     "HonkaiUserStats",
 ]
@@ -229,7 +229,7 @@ class HonkaiUserStats(APIModel):
     stats: HonkaiStats
 
 
-class HonkaiFullUserStats(HonkaiUserStats):
+class FullHonkaiUserStats(HonkaiUserStats):
     """Represents a user's full stats, including characters, gear, and gamemode data"""
 
     battlesuits: typing.Sequence[battlesuits.FullBattlesuit]

@@ -83,7 +83,7 @@ class GenshinClient(clients.Client):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.GenshinPartialUserStats:
+    ) -> models.PartialGenshinUserStats:
         """Get partial genshin user without character equipment."""
         return await self.get_partial_genshin_user(uid, lang=lang)
 
@@ -113,7 +113,7 @@ class GenshinClient(clients.Client):
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.GenshinFullUserStats:
+    ) -> models.FullGenshinUserStats:
         """Get a user with all their possible data."""
         return await self.get_full_genshin_user(uid, lang=lang)
 
