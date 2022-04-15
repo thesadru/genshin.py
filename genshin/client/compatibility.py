@@ -8,12 +8,12 @@ import aiohttp
 from genshin import models, types
 from genshin.utility import deprecation
 
-from . import client
+from . import clients
 
 __all__ = ["ChineseClient", "ChineseMultiCookieClient", "GenshinClient", "MultiCookieClient"]
 
 
-class GenshinClient(client.Client):
+class GenshinClient(clients.Client):
     """A simple http client for genshin endpoints.
 
     !!! warning

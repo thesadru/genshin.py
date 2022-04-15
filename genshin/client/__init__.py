@@ -1,6 +1,6 @@
 """Default client implementation."""
+from . import components
 from .cache import *
-from .client import *
+from .clients import *
 from .compatibility import *
-from .components import *
 from .manager import *

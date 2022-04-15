@@ -7,7 +7,7 @@ import typing
 
 import nox
 
-nox.options.sessions = ["reformat", "lint", "type-check", "test", "verify-types"]
+nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test"]
 nox.options.reuse_existing_virtualenvs = True
 PACKAGE = "genshin"
 GENERAL_TARGETS = ["./noxfile.py", "./genshin", "./tests"]
