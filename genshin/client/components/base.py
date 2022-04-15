@@ -16,7 +16,7 @@ from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models import model as base_model
-from genshin.utility import deprecation, ds
+from genshin.utility import concurrency, deprecation, ds
 from genshin.utility import genshin as genshin_utility
 
 __all__ = ["BaseClient"]
@@ -349,7 +349,7 @@ class BaseClient(abc.ABC):
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,
-            cache=client_cache.cache_key("accounts"),
+            cache=client_cache.cache_key("accounts", hoyolab_uid=self.hoyolab_uid),
         )
         return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 
@@ -373,6 +373,7 @@ class BaseClient(abc.ABC):
 
         self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
 
+    @concurrency.prevent_concurrency
     async def _get_uid(self, game: types.Game) -> int:
         """Get a cached fallback uid."""
         # TODO: use lock
@@ -398,7 +399,9 @@ class BaseClient(abc.ABC):
         base_model.APIModel._mi18n[key] = {}  # pyright: ignore[reportPrivateUsage]
 
         url = routes.MI18N[key]
-        data = await self.request_webstatic(url.format(lang=lang))
+        cache_key = client_cache.cache_key("mi18n", mi18n=key, lang=lang)
+
+        data = await self.request_webstatic(url.format(lang=lang), cache=cache_key)
         for k, v in data.items():
             actual_key = str.lower(key + "/" + k)
             base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v  # pyright: ignore[reportPrivateUsage]

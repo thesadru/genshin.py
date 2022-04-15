@@ -4,7 +4,7 @@ import functools
 import typing
 
 from genshin import paginators, types
-from genshin.client import manager, routes
+from genshin.client import cache, manager, routes
 from genshin.client.components import base
 from genshin.models.genshin import diary as models
 from genshin.utility import genshin as genshin_utility
@@ -83,7 +83,8 @@ class DiaryClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> models.Diary:
         """Get a traveler's diary with earning details for the month."""
-        data = await self.request_ledger(month=month, lang=lang)
+        cache_key = cache.cache_key("diary", month=month or datetime.datetime.now().month, lang=lang or self.lang)
+        data = await self.request_ledger(month=month, lang=lang, cache=cache_key)
         return models.Diary(**data)
 
     async def _get_diary_page(

@@ -4,9 +4,9 @@ import inspect
 import typing
 import warnings
 
-__all__: typing.List[str] = ["deprecated", "warn_deprecated"]
+__all__ = ["deprecated", "warn_deprecated"]
 
-T = typing.TypeVar("T", bound=typing.Callable[..., typing.Any])
+CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Any])
 
 
 def warn_deprecated(
@@ -27,10 +27,10 @@ def warn_deprecated(
     warnings.warn(message, category=DeprecationWarning, stacklevel=stack_level)
 
 
-def deprecated(alternative: typing.Optional[str] = None) -> typing.Callable[[T], T]:
+def deprecated(alternative: typing.Optional[str] = None) -> typing.Callable[[CallableT], CallableT]:
     """Mark a function as deprecated."""
 
-    def decorator(obj: T) -> T:
+    def decorator(obj: CallableT) -> CallableT:
         alternative_str = f"You can use `{alternative}` instead." if alternative else ""
 
         doc = inspect.getdoc(obj) or ""
@@ -47,6 +47,6 @@ def deprecated(alternative: typing.Optional[str] = None) -> typing.Callable[[T],
             warn_deprecated(obj, alternative=alternative, stack_level=3)
             return obj(*args, **kwargs)
 
-        return typing.cast("T", wrapper)
+        return typing.cast("CallableT", wrapper)
 
     return decorator
