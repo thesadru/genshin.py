@@ -36,8 +36,11 @@ class GenshinAccount(APIModel):
             return types.Game.GENSHIN
         elif "bh3" in self.game_biz:
             return types.Game.HONKAI
-        else:
+
+        try:
             return types.Game(self.game_biz)
+        except ValueError:
+            return self.game_biz  # type: ignore
 
 
 class RecordCardData(APIModel):

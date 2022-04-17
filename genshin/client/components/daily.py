@@ -45,10 +45,10 @@ class DailyRewardClient(base.BaseClient):
         base_url = routes.REWARD_URL.get_url(self.region, game)
         url = (base_url / endpoint).update_query(base_url.query)
 
-        if self.region is types.Region.OVERSEAS:
+        if self.region == types.Region.OVERSEAS:
             params["lang"] = lang or self.lang
 
-        elif self.region is types.Region.CHINESE:
+        elif self.region == types.Region.CHINESE:
             # TODO: Support cn honkai
             uid = await self._get_uid(types.Game.GENSHIN)
 

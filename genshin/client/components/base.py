@@ -102,7 +102,7 @@ class BaseClient(abc.ABC):
     def region(self, region: str) -> None:
         self._region = types.Region(region)
 
-        if region is types.Region.CHINESE:
+        if region == types.Region.CHINESE:
             self.lang = "zh-cn"
 
     @property
@@ -320,14 +320,14 @@ class BaseClient(abc.ABC):
 
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
-        if region is types.Region.OVERSEAS:
+        if region == types.Region.OVERSEAS:
             headers = {
                 "x-rpc-app_version": "1.5.0",
                 "x-rpc-client_type": "4",
                 "x-rpc-language": lang,
                 "ds": ds.generate_dynamic_secret(),
             }
-        elif region is types.Region.CHINESE:
+        elif region == types.Region.CHINESE:
             headers = {
                 "x-rpc-app_version": "2.11.1",
                 "x-rpc-client_type": "5",
