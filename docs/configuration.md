@@ -56,6 +56,15 @@ class RandomCookieManager(genshin.BaseCookieManager):
 
 ```
 
+## Cached UIDs
+
+Some endpoints require a uid despite being private. Genshin.py chooses to fetch and cache these uids instead of forcing users to provide it themselves.
+This may however cause some obvious performance issues, so it is recommended to set the uids yourself in case you cannot afford to always have an extra delay when creating a new client.
+
+```py
+client.uids[genshin.Game.GENSHIN] = 710785423
+```
+
 ## Default Region
 
 By default all requests will be assumed to be meant to be used with overseas cookies.

@@ -22,6 +22,32 @@ from genshin.utility import genshin as genshin_utility
 __all__ = ["BaseClient"]
 
 
+def _recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game]:
+    """Recognize the game of a uid."""
+    if len(str(uid)) == 8:
+        return types.Game.HONKAI
+    elif len(str(uid)) != 9:
+        return None
+
+    first = len(str(uid)[0])
+    if region == types.Region.OVERSEAS:
+        if first in [1, 2]:
+            return types.Game.HONKAI
+        if first in [6, 7, 8, 9]:
+            return types.Game.GENSHIN
+    if region == types.Region.CHINESE:
+        if first == 1:
+            return types.Game.GENSHIN
+        if first == 2:
+            return types.Game.GENSHIN  # kinda arbitrary, maybe reconsider this?
+        if first in [3, 4]:
+            return types.Game.HONKAI
+        if first == 5:
+            return types.Game.GENSHIN
+
+    return None
+
+
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
@@ -68,6 +94,7 @@ class BaseClient(abc.ABC):
             region=self.region.value,
             default_game=self.default_game and self.default_game.value,
             hoyolab_uid=self.hoyolab_uid,
+            uid=self.default_game and self.uid,
             authkey=self.authkey and self.authkey[:12] + "...",
             debug=self.debug,
         )
@@ -113,6 +140,29 @@ class BaseClient(abc.ABC):
     @default_game.setter
     def default_game(self, game: typing.Optional[str]) -> None:
         self._default_game = types.Game(game) if game else None
+
+    @property
+    def uid(self) -> typing.Optional[int]:
+        """UID of the default game."""
+        if self.default_game is None:
+            raise RuntimeError("No default game.")
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -> None:
+        if uid is None:
+            if self.default_game:
+                del self.uids[self.default_game]
+                return
+            else:
+                raise RuntimeError("No default game")
+
+        self._default_game = self._default_game or _recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError("No default game")
+
+        self.uids[self.default_game] = uid
 
     @property
     def authkey(self) -> typing.Optional[str]:

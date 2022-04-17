@@ -42,7 +42,7 @@ client.set_cookies("ltuid=...; ltoken=...") # cookie header
 ### Setting cookies automatically
 
 For testing, you may want to use your own personal cookies.
-As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.get_browser_cookies()`.
+As long as you are logged into your account on one of your browsers, you can get these dynamically with `genshin.utility.get_browser_cookies()`.
 
 #### Installation
 
@@ -67,7 +67,7 @@ print(cookies)
 In case of conflicts/errors, you may specify the browser you want to use.
 
 ```py
-cookies = genshin.get_browser_cookies("chrome")
+cookies = genshin.utility.get_browser_cookies("chrome")
 ```
 
 ### Details
@@ -127,11 +127,11 @@ To get your authkey manually from other platforms, you can use any of these appr
 - Copy the link
   > You can only use this if you have an in-game mail with QR Code to open the web event
 
-After that, you can extract the authkey from the link using `genshin.extract_authkey`.
+After that, you can extract the authkey from the link using `genshin.utility.extract_authkey`.
 
 ```py
 url = "https://webstatic-sea.mihoyo.com/ys/event/im-service/index.html?..."
-authkey = genshin.extract_authkey(url)
+authkey = genshin.utility.extract_authkey(url)
 
 client = genshin.Client()
 client.authkey = authkey
@@ -139,12 +139,12 @@ client.authkey = authkey
 
 ### Setting authkeys automatically
 
-If you open a wish history or a wish details page in genshin, then the authkey will show up in your logfiles. It's possible to dynamically get the authkey using `genshin.get_authkey()`.
+If you open a wish history or a wish details page in genshin, then the authkey will show up in your logfiles. It's possible to dynamically get the authkey using `genshin.utility.get_authkey()`.
 
 ```py
 # get the authkey from a logfile
 client = genshin.Client()
-client.authkey = genshin.get_authkey()
+client.authkey = genshin.utility.get_authkey()
 
 # implicitly set the authkey
 client = genshin.Client()
