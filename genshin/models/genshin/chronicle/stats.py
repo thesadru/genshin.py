@@ -86,7 +86,6 @@ class Exploration(APIModel):
         offerings: typing.Sequence[Offering],
         values: typing.Dict[str, typing.Any],
     ) -> typing.Sequence[Offering]:
-        print(values)
         if values["type"] == "Reputation" and not any(values["type"] == o.name for o in offerings):
             offerings = [*offerings, Offering(name=values["type"], level=values["level"])]
 
