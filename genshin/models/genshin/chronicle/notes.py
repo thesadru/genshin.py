@@ -10,9 +10,12 @@ from genshin.models.model import Aliased, APIModel
 __all__ = ["Expedition", "ExpeditionCharacter", "Notes"]
 
 
-def _process_timedelta(time: typing.Union[int, datetime.datetime]) -> datetime.datetime:
+def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.datetime]) -> datetime.datetime:
     if isinstance(time, int):
         time = datetime.datetime.fromtimestamp(time).astimezone()
+
+    if isinstance(time, datetime.timedelta):
+        time = datetime.datetime.now().astimezone() + time
 
     if time < datetime.datetime(2000, 1, 1).astimezone():
         delta = datetime.timedelta(seconds=int(time.timestamp()))
@@ -71,6 +74,8 @@ class Notes(APIModel):
     remaining_resin_discounts: int = Aliased("remain_resin_discount_num")
     max_resin_discounts: int = Aliased("resin_discount_num_limit")
 
+    transformer_recovery_time: typing.Optional[datetime.datetime]
+
     expeditions: typing.Sequence[Expedition]
     max_expeditions: int = Aliased("max_expedition_num")
 
@@ -86,5 +91,28 @@ class Notes(APIModel):
         remaining = self.realm_currency_recovery_time - datetime.datetime.now().astimezone()
         return max(remaining.total_seconds(), 0)
 
+    @property
+    def remaining_transformer_recovery_time(self) -> typing.Optional[float]:
+        """The remaining time until realm currency recovery in seconds."""
+        if self.transformer_recovery_time is None:
+            return None
+
+        remaining = self.transformer_recovery_time - datetime.datetime.now().astimezone()
+        return max(remaining.total_seconds(), 0)
+
     __fix_resin_time = pydantic.validator("resin_recovery_time", allow_reuse=True)(_process_timedelta)
     __fix_realm_time = pydantic.validator("realm_currency_recovery_time", allow_reuse=True)(_process_timedelta)
+
+    @pydantic.root_validator(pre=True)
+    def __flatten_transformer(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        if "transformer_recovery_time" in values:
+            return values
+
+        if values.get("transformer") and values["transformer"]["obtained"]:
+            t = values["transformer"]["recovery_time"]
+            delta = datetime.timedelta(days=t["Day"], hours=t["Hour"], minutes=t["Minute"], seconds=t["Second"])
+            values["transformer_recovery_time"] = _process_timedelta(delta)
+        else:
+            values["transformer_recovery_time"] = None
+
+        return values
