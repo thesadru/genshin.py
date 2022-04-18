@@ -4,23 +4,44 @@ import re
 import typing
 
 import pydantic
+import pydantic.generics
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
     "Activities",
-    "ChineseActivity",
+    "Activity",
+    "EnergyAmplifier",
     "HyakuninIkki",
-    "HyakuninIkkiBattle",
-    "HyakuninIkkiChallenge",
-    "HyakuninIkkiCharacter",
-    "HyakuninIkkiSkill",
     "LabyrinthWarriors",
-    "LabyrinthWarriorsChallenge",
-    "LabyrinthWarriorsCharacter",
-    "LabyrinthWarriorsRune",
+    "OldActivity",
+    "Potion",
 ]
+
+ModelT = typing.TypeVar("ModelT", bound=APIModel)
+
+
+class OldActivity(APIModel, pydantic.generics.GenericModel, typing.Generic[ModelT]):
+    """Arbitrary activity for chinese events."""
+
+    # sometimes __parameters__ may not be provided in older versions
+    __parameters__: typing.ClassVar[typing.Tuple[typing.Any, ...]] = (ModelT,)  # type: ignore
+
+    exists_data: bool
+    records: typing.Sequence[ModelT]
+
+
+class Activity(OldActivity[ModelT]):
+    """Arbitrary activity for chinese events."""
+
+    start_time: datetime.datetime
+    end_time: datetime.datetime
+    total_score: int
+
+    # cn only
+    total_times: int = 1
+
 
 # ---------------------------------------------------------
 # Hyakunin Ikki:
@@ -49,7 +70,7 @@ class HyakuninIkkiBattle(APIModel):
     skills: typing.Sequence[HyakuninIkkiSkill] = Aliased("skills")
 
 
-class HyakuninIkkiChallenge(APIModel):
+class HyakuninIkki(APIModel):
     """Hyakunin Ikki challenge."""
 
     id: int = Aliased("challenge_id")
@@ -65,12 +86,6 @@ class HyakuninIkkiChallenge(APIModel):
     def medal(self) -> str:
         match = re.search(r"heraldry_(\w+)\.png", self.medal_icon)
         return match.group(1) if match else ""
-
-
-class HyakuninIkki(APIModel):
-    """Hyakunin Ikki event."""
-
-    challenges: typing.Sequence[HyakuninIkkiChallenge] = Aliased("records")
 
 
 # ---------------------------------------------------------
@@ -93,7 +108,7 @@ class LabyrinthWarriorsRune(APIModel):
     element: str
 
 
-class LabyrinthWarriorsChallenge(APIModel):
+class LabyrinthWarriors(APIModel):
     """Labyrinth Warriors challenge."""
 
     id: int = Aliased("challenge_id")
@@ -106,24 +121,91 @@ class LabyrinthWarriorsChallenge(APIModel):
     runes: typing.Sequence[LabyrinthWarriorsRune]
 
 
-class LabyrinthWarriors(APIModel):
-    """Labyrinth Warriors event."""
+# ---------------------------------------------------------
+# Energy Amplifier Fruition:
 
-    challenges: typing.Sequence[LabyrinthWarriorsChallenge] = Aliased("records")
+
+class EnergyAmplifierCharacter(character.BaseCharacter):
+    """Energy Amplifier character."""
+
+    level: int
+
+
+class EnergyAmplifierCriteria(APIModel):
+    """Energy Amplifier criteria."""
+
+    id: int
+    description: str = Aliased("desc")
+    score: int
+
+
+class EnergyAmplifierBuff(APIModel):
+    """Energy Amplifier buff."""
+
+    id: int
+    name: str
+    quality: int
+    description: str = Aliased("desc")
+    energy: int
+
+
+class EnergyAmplifier(APIModel):
+    """Energy Amplifier challenge."""
+
+    id: int = Aliased("challenge_id")
+    name: str = Aliased("challenge_name")
+    energy: int
+    difficulty: int
+    max_score: int
+    score_multiplier: int = Aliased("score_multiple")
+
+    characters: typing.Sequence[EnergyAmplifierCharacter] = Aliased("avatars")
+    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased("limit_conditions")
+    buffs: typing.Sequence[EnergyAmplifierBuff]
 
 
 # ---------------------------------------------------------
-# Chinese activities:
+# A Study In Potions:
 
 
-class ChineseActivity(APIModel):
-    """Srbitrary activity for chinese events."""
+class PotionCharacter(APIModel):
+    """Study In Potions character."""
 
-    start_time: datetime.datetime
-    end_time: datetime.datetime
-    total_score: int
-    total_times: int
-    records: typing.Sequence[typing.Any]
+    level: int
+    trial: bool = Aliased("is_trial")
+
+
+class PotionBuff(APIModel):
+    """Study In Potions buff."""
+
+    id: int
+    name: str
+    description: str = Aliased("desc")
+    quality: int
+    icon: str
+    mark: str = Aliased("cornor_mark")
+
+
+class PotionStage(APIModel):
+    """Study In Potions stage."""
+
+    name: str = Aliased("level_name")
+    difficulty: int
+    difficulty_id: int
+    score: int
+    score_multiplier: int = Aliased("factor")
+
+    characters: typing.Sequence[PotionCharacter] = Aliased("avatars")
+    buffs: typing.Sequence[PotionBuff]
+
+
+class Potion(APIModel):
+    """Study In Potions challenge."""
+
+    name: str = Aliased("stage_name")
+    score: int = Aliased("stage_score")
+    finished: bool
+    stages: typing.Sequence[PotionStage] = Aliased("levels")
 
 
 # ---------------------------------------------------------
@@ -133,14 +215,18 @@ class ChineseActivity(APIModel):
 class Activities(APIModel):
     """Collection of genshin activities."""
 
-    hyakunin_ikki: typing.Optional[HyakuninIkki] = pydantic.Field(None, gslug="sumo")
-    labyrinth_warriors: typing.Optional[LabyrinthWarriors] = pydantic.Field(None, gslug="rogue")
+    hyakunin_ikki_v21: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(None, gslug="sumo")
+    hyakunin_ikki_v25: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(None, gslug="sumo_second")
+    labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(None, gslug="rogue")
+    energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(None, gslug="channeller_slab_copy")
+    study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, gslug="potion")
 
-    effigy: typing.Optional[ChineseActivity] = None
-    mechanicus: typing.Optional[ChineseActivity] = None
-    challenger_slab: typing.Optional[ChineseActivity] = None
-    martial_legend: typing.Optional[ChineseActivity] = None
-    chess: typing.Optional[ChineseActivity] = None
+    effigy: typing.Optional[Activity[typing.Any]] = None
+    mechanicus: typing.Optional[Activity[typing.Any]] = None
+    fleur_fair: typing.Optional[Activity[typing.Any]] = None
+    channeller_slab: typing.Optional[Activity[typing.Any]] = None
+    martial_legend: typing.Optional[Activity[typing.Any]] = None
+    chess: typing.Optional[Activity[typing.Any]] = None
 
     @pydantic.root_validator(pre=True)
     def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
