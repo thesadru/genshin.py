@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 import typing
 
-from pydantic import validator
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
@@ -52,23 +52,45 @@ class Offering(APIModel):
 
     name: str
     level: int
+    icon: str = ""
 
 
 class Exploration(APIModel):
     """Exploration data."""
 
     id: int
-    icon: str
+    parent_id: int
     name: str
+    raw_explored: int = Aliased("exploration_percentage")
+
+    # deprecated in a sense:
     type: str
     level: int
-    raw_explored: int = Aliased("exploration_percentage")
+
+    icon: str
+    inner_icon: str
+    background_image: str
+    cover: str
+    map_url: str
+
     offerings: typing.Sequence[Offering]
 
     @property
     def explored(self) -> float:
-        """The percentage explored"""
+        """The percentage explored."""
         return self.raw_explored / 10
+
+    @pydantic.validator("offerings")
+    def __add_base_offering(
+        cls,
+        offerings: typing.Sequence[Offering],
+        values: typing.Dict[str, typing.Any],
+    ) -> typing.Sequence[Offering]:
+        print(values)
+        if values["type"] == "Reputation" and not any(values["type"] == o.name for o in offerings):
+            offerings = [*offerings, Offering(name=values["type"], level=values["level"])]
+
+        return offerings
 
 
 class TeapotRealm(APIModel):
@@ -103,7 +125,7 @@ class PartialGenshinUserStats(APIModel):
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
-    @validator("teapot", pre=True)
+    @pydantic.validator("teapot", pre=True)
     def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
         if not v:
             return None
