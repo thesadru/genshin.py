@@ -4,11 +4,10 @@ import functools
 import typing
 import urllib.parse
 
-from genshin import paginators
+from genshin import paginators, utility
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import transaction as models
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["TransactionClient"]
 
@@ -39,7 +38,7 @@ class TransactionClient(base.BaseClient):
         params["authkey_ver"] = 1
         params["sign_type"] = 2
         params["authkey"] = urllib.parse.unquote(authkey)
-        params["lang"] = genshin_utility.create_short_lang_code(lang or self.lang)
+        params["lang"] = utility.create_short_lang_code(lang or self.lang)
 
         return await self.request(url, method=method, params=params, **kwargs)
 

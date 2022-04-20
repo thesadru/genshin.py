@@ -1,12 +1,11 @@
 """Hoyolab component."""
 import typing
 
-from genshin import types
+from genshin import types, utility
 from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.client.components import base
 from genshin.models import hoyolab as models
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["HoyolabClient"]
 
@@ -47,9 +46,9 @@ class HoyolabClient(base.BaseClient):
             routes.CODE_URL.get_url(),
             params=dict(
                 uid=uid,
-                region=genshin_utility.recognize_genshin_server(uid),
+                region=utility.recognize_genshin_server(uid),
                 cdkey=code,
                 game_biz="hk4e_global",
-                lang=genshin_utility.create_short_lang_code(lang or self.lang),
+                lang=utility.create_short_lang_code(lang or self.lang),
             ),
         )

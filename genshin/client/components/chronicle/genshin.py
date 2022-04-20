@@ -3,18 +3,13 @@
 import asyncio
 import typing
 
-from genshin import types
+from genshin import types, utility
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
-from genshin.utility import genshin as genshin_utility
 
 from . import base
 
 __all__ = ["GenshinBattleChronicleClient"]
-
-
-def _get_region(uid: int) -> types.Region:
-    return types.Region.CHINESE if genshin_utility.is_chinese(uid) else types.Region.OVERSEAS
 
 
 class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
@@ -35,7 +30,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         original_payload = payload.copy()
 
         uid = uid or await self._get_uid(types.Game.GENSHIN)
-        payload.update(role_id=uid, server=genshin_utility.recognize_genshin_server(uid))
+        payload.update(role_id=uid, server=utility.recognize_genshin_server(uid))
 
         data, params = None, None
         if method == "POST":
@@ -57,7 +52,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             endpoint,
             lang=lang,
             game=types.Game.GENSHIN,
-            region=_get_region(uid),
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
             params=params,
             data=data,
             cache=cache_key,
@@ -155,11 +150,11 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         await self.request_game_record(
             "character/top",
             game=types.Game.GENSHIN,
-            region=_get_region(uid),
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
             data=dict(
                 avatar_ids=[int(character) for character in characters],
                 uid_key=uid,
-                server_key=genshin_utility.recognize_genshin_server(uid),
+                server_key=utility.recognize_genshin_server(uid),
             ),
         )
 

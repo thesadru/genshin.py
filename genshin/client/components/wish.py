@@ -6,12 +6,11 @@ import urllib.parse
 
 import aiohttp
 
-from genshin import paginators
+from genshin import paginators, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import wish as models
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["WishClient"]
 
@@ -40,7 +39,7 @@ class WishClient(base.BaseClient):
 
         params["authkey_ver"] = 1
         params["authkey"] = urllib.parse.unquote(authkey)
-        params["lang"] = genshin_utility.create_short_lang_code(lang or self.lang)
+        params["lang"] = utility.create_short_lang_code(lang or self.lang)
 
         return await self.request(url, params=params, **kwargs)
 
@@ -137,7 +136,7 @@ class WishClient(base.BaseClient):
         """Get all banner details at once in a batch."""
         if not banner_ids:
             try:
-                banner_ids = genshin_utility.get_banner_ids()
+                banner_ids = utility.get_banner_ids()
             except FileNotFoundError:
                 banner_ids = []
 

@@ -11,41 +11,14 @@ import urllib.parse
 import aiohttp.typedefs
 import yarl
 
-from genshin import constants, errors, types
+from genshin import constants, errors, types, utility
 from genshin.client import cache as client_cache
 from genshin.client import manager, routes
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models import model as base_model
 from genshin.utility import concurrency, deprecation, ds
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["BaseClient"]
-
-
-def _recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game]:
-    """Recognize the game of a uid."""
-    if len(str(uid)) == 8:
-        return types.Game.HONKAI
-    elif len(str(uid)) != 9:
-        return None
-
-    first = len(str(uid)[0])
-    if region == types.Region.OVERSEAS:
-        if first in [1, 2]:
-            return types.Game.HONKAI
-        if first in [6, 7, 8, 9]:
-            return types.Game.GENSHIN
-    if region == types.Region.CHINESE:
-        if first == 1:
-            return types.Game.GENSHIN
-        if first == 2:
-            return types.Game.GENSHIN  # kinda arbitrary, maybe reconsider this?
-        if first in [3, 4]:
-            return types.Game.HONKAI
-        if first == 5:
-            return types.Game.GENSHIN
-
-    return None
 
 
 class BaseClient(abc.ABC):
@@ -158,9 +131,9 @@ class BaseClient(abc.ABC):
             else:
                 raise RuntimeError("No default game")
 
-        self._default_game = self._default_game or _recognize_game(uid, region=self.region)
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
         if self.default_game is None:
-            raise RuntimeError("No default game")
+            raise RuntimeError("No default game.")
 
         self.uids[self.default_game] = uid
 
@@ -212,9 +185,9 @@ class BaseClient(abc.ABC):
         Accepts an authkey, a url containing an authkey or a path towards a logfile.
         """
         if authkey is None or os.path.isfile(authkey):
-            authkey = genshin_utility.get_authkey(authkey)
+            authkey = utility.get_authkey(authkey)
         else:
-            authkey = genshin_utility.extract_authkey(authkey) or authkey
+            authkey = utility.extract_authkey(authkey) or authkey
 
         self.authkey = authkey
 

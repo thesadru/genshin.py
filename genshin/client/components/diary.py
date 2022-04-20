@@ -3,11 +3,10 @@ import datetime
 import functools
 import typing
 
-from genshin import paginators, types
+from genshin import paginators, types, utility
 from genshin.client import cache, manager, routes
 from genshin.client.components import base
 from genshin.models.genshin import diary as models
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["DiaryClient"]
 
@@ -69,7 +68,7 @@ class DiaryClient(base.BaseClient):
 
         uid = await self._get_uid(types.Game.GENSHIN)
         params["uid"] = uid
-        params["region"] = genshin_utility.recognize_genshin_server(uid)
+        params["region"] = utility.recognize_genshin_server(uid)
 
         params["month"] = month or datetime.datetime.now().month
         params["lang"] = lang or self.lang

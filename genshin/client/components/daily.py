@@ -7,12 +7,11 @@ import uuid
 
 import aiohttp.typedefs
 
-from genshin import constants, paginators, types
+from genshin import constants, paginators, types, utility
 from genshin.client import cache, manager, routes
 from genshin.client.components import base
 from genshin.models.genshin import daily as models
 from genshin.utility import ds as ds_utility
-from genshin.utility import genshin as genshin_utility
 
 __all__ = ["DailyRewardClient"]
 
@@ -53,7 +52,7 @@ class DailyRewardClient(base.BaseClient):
             uid = await self._get_uid(types.Game.GENSHIN)
 
             params["uid"] = uid
-            params["region"] = genshin_utility.recognize_genshin_server(uid)
+            params["region"] = utility.recognize_genshin_server(uid)
 
             headers["x-rpc-app_version"] = "2.10.1"
             headers["x-rpc-client_type"] = "5"

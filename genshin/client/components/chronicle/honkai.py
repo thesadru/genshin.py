@@ -3,9 +3,8 @@
 import asyncio
 import typing
 
-from genshin import errors, types
+from genshin import errors, types, utility
 from genshin.models.honkai import chronicle as models
-from genshin.utility import honkai as honkai_utility
 
 from . import base
 
@@ -40,7 +39,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
             lang=lang,
             game=types.Game.HONKAI,
             region=types.Region.OVERSEAS,
-            params=dict(role_id=uid, server=honkai_utility.recognize_honkai_server(uid)),
+            params=dict(role_id=uid, server=utility.recognize_honkai_server(uid)),
             cache=cache_key,
         )
 

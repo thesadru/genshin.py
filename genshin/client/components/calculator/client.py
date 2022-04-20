@@ -4,12 +4,11 @@ from __future__ import annotations
 import typing
 
 import genshin.models.genshin as genshin_models
-from genshin import types
+from genshin import types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import calculator as models
-from genshin.utility import genshin as genshin_utility
 
 from .calculator import Calculator
 
@@ -82,7 +81,7 @@ class CalculatorClient(base.BaseClient):
         if sync:
             uid = await self._get_uid(types.Game.GENSHIN)
             payload["uid"] = uid
-            payload["region"] = genshin_utility.recognize_genshin_server(uid)
+            payload["region"] = utility.recognize_genshin_server(uid)
 
         cache: typing.Optional[client_cache.CacheKey] = None
         if not any(filters.values()) and not sync:
@@ -175,7 +174,7 @@ class CalculatorClient(base.BaseClient):
             params=dict(
                 avatar_id=int(character),
                 uid=uid,
-                region=genshin_utility.recognize_genshin_server(uid),
+                region=utility.recognize_genshin_server(uid),
             ),
         )
         return models.CalculatorCharacterDetails(**data)
