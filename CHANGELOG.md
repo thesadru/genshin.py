@@ -1,5 +1,22 @@
 # Changelog
 
+# 1.1.0 (2022-04-22)
+
+## What's new
+
+- Added the Parametric Transformer to notes.
+- Provided a direct `Client.uid` property for easier use with `default_game`.
+- Added missing activities.
+
+## Changes
+
+- Improved the structure of Exploration models.
+- Removed `is_chinese` with `recognize_region` which now requires a `genshin.Game`.
+
+## Fixes
+
+- Character model validation now works for foreign languages.
+
 # 1.0.1 (2022-04-15)
 
 ## Fixes
