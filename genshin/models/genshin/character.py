@@ -30,6 +30,9 @@ def _parse_icon(icon: typing.Union[str, int]) -> str:
 
 
 def _create_icon(icon: str, specifier: str, scale: int = 0) -> str:
+    if "http" in icon and "genshin" not in icon:
+        return icon  # no point in trying to parse invalid urls
+
     icon_name = _parse_icon(icon)
     return ICON_BASE + f"{specifier}_{icon_name}{f'@{scale}x' if scale else ''}.png"
 
@@ -43,13 +46,20 @@ def _get_db_char(
 ) -> DBChar:
     """Get the appropriate DBChar object from specific fields."""
     if id and id in CHARACTER_NAMES:
-        return CHARACTER_NAMES[id]
+        char = CHARACTER_NAMES[id]
+        if name is not None:
+            char = char._replace(name=name)
+
+        return char
 
     if icon and "genshin" in icon:
         icon_name = _parse_icon(icon)
 
         for char in CHARACTER_NAMES.values():
             if char.icon_name == icon_name:
+                if name is not None:
+                    char = char._replace(name=name)
+
                 return char
 
         # might as well just update the CHARACTER_NAMES if we have all required data

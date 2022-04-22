@@ -1,7 +1,125 @@
 import os
 import typing
 
+import pytest
+
 import genshin
+
+
+class LiteralCharacter(genshin.models.BaseCharacter):
+    ...
+
+
+LiteralCharacter.__pre_root_validators__ = LiteralCharacter.__pre_root_validators__[:-1]
+
+
+@pytest.mark.parametrize(
+    ("data", "expected"),
+    (
+        # complete should give an identity
+        (
+            {
+                "id": 10000002,
+                "name": "Kamisato Ayaka",
+                "element": "Cryo",
+                "rarity": 5,
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Ayaka.png",
+            },
+            LiteralCharacter(
+                id=10000002,
+                name="Kamisato Ayaka",
+                element="Cryo",
+                rarity=5,
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Ayaka.png",
+            ),
+        ),
+        # partial should provide the proper name
+        (
+            {
+                "id": 10000003,
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Qin.png",
+            },
+            LiteralCharacter(
+                id=10000003,
+                name="Jean",
+                element="Anemo",
+                rarity=5,
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Qin.png",
+            ),
+        ),
+        # partial for an unknown character should return the icon name
+        (
+            {
+                "id": 10000001,
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Signora.png",
+                "rarity": 6,
+            },
+            LiteralCharacter(
+                id=10000001,
+                name="Signora",
+                element="Anemo",  # Anemo is the arbitrary fallback
+                rarity=6,  # 5 is the arbitrary fallback
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Signora.png",
+            ),
+        ),
+        # messed up icon should be replaced
+        (
+            {
+                "id": 10000041,
+                "name": "Mona",
+                "element": "Hydro",
+                "rarity": 5,
+                "icon": "https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/9a8c420feda33f36680839c8b8dc1d83.png",
+            },
+            LiteralCharacter(
+                id=10000041,
+                name="Mona",
+                element="Hydro",
+                rarity=5,
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Mona.png",
+            ),
+        ),
+        # messed up icon for unknown character should be kept
+        (
+            {
+                "id": 10000000,
+                "name": "Katherine",
+                "element": "Geo",
+                "rarity": 6,
+                "icon": "https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
+            },
+            LiteralCharacter(
+                id=10000000,
+                name="Katherine",
+                element="Geo",
+                rarity=6,
+                icon="https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
+            ),
+        ),
+        # foreign languages should be kept
+        (
+            {
+                "id": 10000046,
+                "name": "胡桃",
+                "element": "Pyro",
+                "rarity": 5,
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Hutao.png",
+            },
+            LiteralCharacter(
+                id=10000046,
+                name="胡桃",
+                element="Pyro",
+                rarity=5,
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Hutao.png",
+            ),
+        ),
+    ),
+)
+def test_genshin_base_character_model(data: typing.Dict[str, typing.Any], expected: genshin.models.BaseCharacter):
+    assert genshin.models.BaseCharacter(**data) == expected
+
+
+# reserialization stuff
 
 all_models: typing.Dict[typing.Type[genshin.models.APIModel], genshin.models.APIModel] = {}
 
