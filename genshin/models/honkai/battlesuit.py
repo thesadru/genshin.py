@@ -1,4 +1,5 @@
 """Honkai battlesuit model."""
+import logging
 import re
 import typing
 
@@ -9,6 +10,8 @@ from genshin.models.model import Aliased, APIModel, Unique
 from .constants import BATTLESUIT_IDENTIFIERS
 
 __all__ = ["Battlesuit"]
+
+_LOGGER = logging.getLogger(__name__)
 
 BATTLESUIT_TYPES = {
     "ShengWu": "BIO",
@@ -35,6 +38,7 @@ class Battlesuit(APIModel, Unique):
         if tall_icon:
             # might as well just update the BATTLESUIT_IDENTIFIERS if we have the data
             if values["id"] not in BATTLESUIT_IDENTIFIERS:
+                _LOGGER.debug("Updating BATTLESUIT_IDENTIFIERS with %s", tall_icon)
                 BATTLESUIT_IDENTIFIERS[values["id"]] = tall_icon.split("/")[-1].split(".")[0]
 
             return tall_icon

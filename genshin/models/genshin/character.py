@@ -1,5 +1,6 @@
 """Genshin character model."""
 
+import logging
 import re
 import typing
 
@@ -10,6 +11,8 @@ from genshin.models.model import APIModel, Unique
 from .constants import CHARACTER_NAMES, DBChar
 
 __all__ = ["BaseCharacter"]
+
+_LOGGER = logging.getLogger(__name__)
 
 ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
 
@@ -65,6 +68,7 @@ def _get_db_char(
         # might as well just update the CHARACTER_NAMES if we have all required data
         if id and name and icon and element and rarity:
             char = DBChar(id, icon_name, name, element, rarity, guessed=True)
+            _LOGGER.debug("Updating CHARACTER_NAMES with %s", char)
             CHARACTER_NAMES[char.id] = char
             return char
 
