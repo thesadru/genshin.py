@@ -70,6 +70,10 @@ class Diary(BaseDiary):
     data: MonthDiaryData = Aliased("month_data")
     day_data: DayDiaryData
 
+    @property
+    def month_data(self) -> MonthDiaryData:
+        return self.data
+
 
 class DiaryAction(APIModel):
     """Action which earned currency."""

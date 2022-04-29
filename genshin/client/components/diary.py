@@ -26,20 +26,20 @@ class DiaryPaginator(paginators.PagedPaginator[models.DiaryAction]):
     """Metadata of the paginator"""
 
     def __init__(self, getter: DiaryCallback, *, limit: typing.Optional[int] = None) -> None:
-        self._getter = getter
+        self._get_page = getter
         self._data = None
 
-        super().__init__(self._get_page, limit=limit, page_size=10)
+        super().__init__(self._getter, limit=limit, page_size=10)
 
-    async def _get_page(self, page: int) -> typing.Sequence[models.DiaryAction]:
-        self._data = await self._getter(page)
+    async def _getter(self, page: int) -> typing.Sequence[models.DiaryAction]:
+        self._data = await self._get_page(page)
         return self._data.actions
 
     @property
     def data(self) -> models.BaseDiary:
         """Get data bound to the diary.
 
-        This requires at least one page to have been fetched
+        This requires at least one page to have been fetched.
         """
         if self._data is None:
             raise RuntimeError("At least one item must be fetched before data can be gotten.")
