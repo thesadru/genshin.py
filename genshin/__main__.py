@@ -1,5 +1,6 @@
 """CLI tools."""
 import asyncio
+import datetime
 import functools
 import http.cookies
 import os
@@ -69,6 +70,26 @@ cli.add_command(genshin_group)
 cli.add_command(honkai_group)
 
 
+@honkai_group.command("stats")
+@click.argument("uid", type=int)
+@client_command
+async def honkai_stats(client: genshin.Client, uid: int) -> None:
+    """Show simple honkai statistics."""
+    cuid = click.style(str(uid), fg="blue")
+    click.echo(f"User stats of {cuid}\n")
+
+    data = await client.get_honkai_user(uid)
+
+    click.secho("Stats:", fg="yellow")
+    for k, v in data.stats.as_dict(lang=client.lang).items():
+        if isinstance(v, dict):
+            click.echo(f"{k}:")
+            for nested_k, nested_v in typing.cast("dict[str, object]", v).items():
+                click.echo(f"  {nested_k}: {click.style(str(nested_v), bold=True)}")
+        else:
+            click.echo(f"{k}: {click.style(str(v), bold=True)}")
+
+
 @genshin_group.command("stats")
 @click.argument("uid", type=int)
 @client_command
@@ -88,7 +109,8 @@ async def genshin_stats(client: genshin.Client, uid: int) -> None:
     click.secho("Explorations:", fg="yellow")
     for area in data.explorations:
         perc = click.style(str(area.explored) + "%", bold=True)
-        click.echo(f"{area.name}: explored {perc} | {area.type} level {area.level}")
+        offerings = ", ".join(f"{o.name} {click.style(str(o.level), bold=True)}" for o in area.offerings)
+        click.echo(f"{area.name} - explored {perc} | {offerings}")
 
     if data.teapot is not None:
         click.echo()
@@ -97,26 +119,6 @@ async def genshin_stats(client: genshin.Client, uid: int) -> None:
         comfort = click.style(str(data.teapot.comfort), bold=True)
         click.echo(f"level {level} | comfort {comfort} ({data.teapot.comfort_name})")
         click.echo(f"Unlocked realms: {', '.join(r.name for r in data.teapot.realms)}")
-
-
-@honkai_group.command("stats")
-@click.argument("uid", type=int)
-@client_command
-async def honkai_stats(client: genshin.Client, uid: int) -> None:
-    """Show simple honkai statistics."""
-    cuid = click.style(str(uid), fg="blue")
-    click.echo(f"User stats of {cuid}\n")
-
-    data = await client.get_honkai_user(uid)
-
-    click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.as_dict(lang=client.lang).items():
-        if isinstance(v, dict):
-            click.echo(f"{k}:")
-            for nested_k, nested_v in typing.cast("dict[str, object]", v).items():
-                click.echo(f"  {nested_k}: {click.style(str(nested_v), bold=True)}")
-        else:
-            click.echo(f"{k}: {click.style(str(v), bold=True)}")
 
 
 @genshin_group.command("characters")
@@ -139,7 +141,7 @@ async def genshin_characters(client: genshin.Client, uid: int) -> None:
             "Cryo": "bright_cyan",
             "Geo": "yellow",
             "Dendro": "green",
-        }[char.element]
+        }.get(char.element)
 
         click.echo()
         name = click.style(char.name, bold=True)
@@ -161,14 +163,16 @@ async def genshin_characters(client: genshin.Client, uid: int) -> None:
 
 
 @genshin_group.command("notes")
+@click.argument("uid", type=int, default=None, required=False)
 @client_command
-async def genshin_notes(client: genshin.Client) -> None:
+async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> None:
     """Show real-Time notes."""
     click.echo("Real-Time notes.")
 
-    data = await client.get_notes()
+    data = await client.get_notes(uid)
 
     click.echo(f"{click.style('Resin:', bold=True)} {data.current_resin}/{data.max_resin}")
+    click.echo(f"{click.style('Realm currency:', bold=True)} {data.current_realm_currency}/{data.max_realm_currency}")
     click.echo(
         f"{click.style('Commissions:', bold=True)} " f"{data.completed_commissions}/{data.max_commissions}",
         nl=False,
@@ -181,8 +185,10 @@ async def genshin_notes(client: genshin.Client) -> None:
         f"{click.style('Used resin cost-halving opportunities:', bold=True)} "
         f"{data.max_resin_discounts - data.remaining_resin_discounts}/{data.max_resin_discounts}"
     )
+    if data.transformer_recovery_time and data.transformer_recovery_time > datetime.datetime.now(datetime.timezone.utc):
+        click.echo(f"{click.style('Transformer recovery:', bold=True)} {data.transformer_recovery_time}")
 
-    click.echo(f"\n{click.style('Expeditions:', bold=True)} " f"{len(data.expeditions)}/{data.max_expeditions}")
+    click.echo(f"\n{click.style('Expeditions:', bold=True)} {len(data.expeditions)}/{data.max_expeditions}")
     for expedition in data.expeditions:
         if expedition.remaining_time > 0:
             seconds = expedition.remaining_time
@@ -258,8 +264,8 @@ def authkey() -> None:
 
 
 @cli.command()
-@click.argument("account")
-@click.argument("password")
+@click.option("-a", "--account", default=None, prompt=True)
+@click.option("-p", "--password", default=None, prompt=True, hide_input=True)
 @click.option("--port", help="Webserver port.", type=int, default=5000)
 @asynchronous
 async def login(account: str, password: str, port: int) -> None:

@@ -17,9 +17,8 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
-        "all": ["cachetools", "browser-cookie3", "rsa", "click"],
+        "all": ["browser-cookie3", "rsa", "click"],
         "cookies": ["browser-cookie3"],
-        "cache": ["cachetools"],
         "geetest": ["rsa"],
         "cli": ["click"],
     },
