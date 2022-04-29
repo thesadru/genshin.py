@@ -1,5 +1,5 @@
 site_name: Genshin.py
-site_description: Modern API wrapper for Genshin Impact built on asyncio and pydantic.
+site_description: Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and pydantic.
 site_url: https://thesadru.github.io/genshin.py
 theme:
   name: material

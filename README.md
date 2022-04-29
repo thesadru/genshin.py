@@ -1,6 +1,6 @@
 # genshin.py
 
-Modern API wrapper for Genshin Impact built on asyncio and pydantic.
+Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and pydantic.
 
 ---
 

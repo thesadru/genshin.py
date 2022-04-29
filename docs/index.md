@@ -1,6 +1,6 @@
 # Overview
 
-Modern API wrapper for Genshin Impact built on [asyncio](https://docs.python.org/3/library/asyncio.html) and [pydantic](https://pydantic-docs.helpmanual.io/).
+Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on [asyncio](https://docs.python.org/3/library/asyncio.html) and [pydantic](https://pydantic-docs.helpmanual.io/).
 
 The primary focus of genshin.py is convenience. The entire project is fully type-hinted and abstracts a large amount of the api to be easier to use.
 
