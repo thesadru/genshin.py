@@ -62,7 +62,16 @@ Some endpoints require a uid despite being private. Genshin.py chooses to fetch 
 This may however cause some obvious performance issues, so it is recommended to set the uids yourself in case you cannot afford to always have an extra delay when creating a new client.
 
 ```py
+client = genshin.Client(game=genshin.Game.GENSHIN)
+
+client.uid = 710785423
+```
+
+You can set a UID for a specific game if there's no default game set.
+
+```py
 client.uids[genshin.Game.GENSHIN] = 710785423
+client.uids[genshin.Game.HONKAI] = 200476231
 ```
 
 ## Default Region

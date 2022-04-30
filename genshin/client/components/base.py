@@ -47,6 +47,7 @@ class BaseClient(abc.ABC):
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
         game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
@@ -60,6 +61,7 @@ class BaseClient(abc.ABC):
         self.debug = debug
 
         self.uids = {}
+        self.uid = uid
 
     def __repr__(self) -> str:
         kwargs = dict(
@@ -127,9 +129,10 @@ class BaseClient(abc.ABC):
         if uid is None:
             if self.default_game:
                 del self.uids[self.default_game]
-                return
             else:
-                raise RuntimeError("No default game")
+                self.uids.clear()
+
+            return
 
         self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
         if self.default_game is None:
@@ -392,6 +395,9 @@ class BaseClient(abc.ABC):
 
         game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
         for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
             game_accounts.setdefault(account.game, []).append(account)
 
         self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}

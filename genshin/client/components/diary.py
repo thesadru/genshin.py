@@ -53,6 +53,7 @@ class DiaryClient(base.BaseClient):
     @manager.no_multi
     async def request_ledger(
         self,
+        uid: typing.Optional[int] = None,
         *,
         detail: bool = False,
         month: typing.Optional[int] = None,
@@ -66,7 +67,7 @@ class DiaryClient(base.BaseClient):
 
         url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(self.region)
 
-        uid = await self._get_uid(types.Game.GENSHIN)
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
         params["uid"] = uid
         params["region"] = utility.recognize_genshin_server(uid)
 
@@ -77,24 +78,27 @@ class DiaryClient(base.BaseClient):
 
     async def get_diary(
         self,
+        uid: typing.Optional[int] = None,
         *,
         month: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
     ) -> models.Diary:
         """Get a traveler's diary with earning details for the month."""
         cache_key = cache.cache_key("diary", month=month or datetime.datetime.now().month, lang=lang or self.lang)
-        data = await self.request_ledger(month=month, lang=lang, cache=cache_key)
+        data = await self.request_ledger(uid, month=month, lang=lang, cache=cache_key)
         return models.Diary(**data)
 
     async def _get_diary_page(
         self,
         page: int,
         *,
+        uid: typing.Optional[int] = None,
         type: int = models.DiaryType.PRIMOGEMS,
         month: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
     ) -> models.DiaryPage:
         data = await self.request_ledger(
+            uid,
             detail=True,
             month=month,
             lang=lang,
@@ -104,6 +108,7 @@ class DiaryClient(base.BaseClient):
 
     def diary_log(
         self,
+        uid: typing.Optional[int] = None,
         *,
         limit: typing.Optional[int] = None,
         type: int = models.DiaryType.PRIMOGEMS,
@@ -114,6 +119,7 @@ class DiaryClient(base.BaseClient):
         return DiaryPaginator(
             functools.partial(
                 self._get_diary_page,
+                uid=uid,
                 type=type,
                 month=month,
                 lang=lang,

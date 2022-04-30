@@ -63,6 +63,7 @@ class CalculatorClient(base.BaseClient):
         filters: typing.Mapping[str, typing.Any],
         query: typing.Optional[str] = None,
         *,
+        uid: typing.Optional[int] = None,
         is_all: bool = False,
         sync: bool = False,
         lang: typing.Optional[str] = None,
@@ -79,7 +80,7 @@ class CalculatorClient(base.BaseClient):
         payload: typing.Dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
 
         if sync:
-            uid = await self._get_uid(types.Game.GENSHIN)
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
             payload["uid"] = uid
             payload["region"] = utility.recognize_genshin_server(uid)
 
@@ -98,6 +99,7 @@ class CalculatorClient(base.BaseClient):
         weapon_types: typing.Optional[typing.Sequence[int]] = None,
         include_traveler: bool = False,
         sync: bool = False,
+        uid: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorCharacter]:
         """Get all characters provided by the Enhancement Progression Calculator."""
@@ -106,6 +108,7 @@ class CalculatorClient(base.BaseClient):
             lang=lang,
             is_all=include_traveler,
             sync=sync,
+            uid=uid,
             query=query,
             filters=dict(
                 element_attr_ids=elements or [],
@@ -158,6 +161,7 @@ class CalculatorClient(base.BaseClient):
         self,
         character: types.IDOr[genshin_models.BaseCharacter],
         *,
+        uid: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
     ) -> models.CalculatorCharacterDetails:
         """Get the weapon, artifacts and talents of a character.
@@ -165,7 +169,7 @@ class CalculatorClient(base.BaseClient):
         Not related to the Battle Chronicle.
         This data is always private.
         """
-        uid = await self._get_uid(types.Game.GENSHIN)
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
 
         data = await self.request_calculator(
             "sync/avatar/detail",
