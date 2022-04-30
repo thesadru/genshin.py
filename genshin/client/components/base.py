@@ -402,6 +402,9 @@ class BaseClient(abc.ABC):
 
         self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
 
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
     @concurrency.prevent_concurrency
     async def _get_uid(self, game: types.Game) -> int:
         """Get a cached fallback uid."""
