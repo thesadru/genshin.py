@@ -390,7 +390,7 @@ class Calculator:
 
     async def calculate(self) -> models.CalculatorResult:
         """Execute the calculator."""
-        return await self.client._execute_calculator(await self.build(), lang=self.lang)  # pyright: ignore # noqa
+        return await self.client._execute_calculator(await self.build(), lang=self.lang)
 
     def __await__(self) -> typing.Generator[typing.Any, None, models.CalculatorResult]:
         return self.calculate().__await__()

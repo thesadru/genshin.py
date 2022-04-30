@@ -422,10 +422,10 @@ class BaseClient(abc.ABC):
     async def _fetch_mi18n(self, key: str, lang: str, *, force: bool = False) -> None:
         """Update mi18n for a single url."""
         if not force:
-            if key in base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
+            if key in base_model.APIModel._mi18n:
                 return
 
-        base_model.APIModel._mi18n[key] = {}  # pyright: ignore[reportPrivateUsage]
+        base_model.APIModel._mi18n[key] = {}
 
         url = routes.MI18N[key]
         cache_key = client_cache.cache_key("mi18n", mi18n=key, lang=lang)
@@ -433,12 +433,12 @@ class BaseClient(abc.ABC):
         data = await self.request_webstatic(url.format(lang=lang), cache=cache_key)
         for k, v in data.items():
             actual_key = str.lower(key + "/" + k)
-            base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v  # pyright: ignore[reportPrivateUsage]
+            base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v
 
     async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
         """Fetch mi18n for partially localized endpoints."""
         if not force:
-            if base_model.APIModel._mi18n:  # pyright: ignore[reportPrivateUsage]
+            if base_model.APIModel._mi18n:
                 return
 
         langs = tuple(langs)

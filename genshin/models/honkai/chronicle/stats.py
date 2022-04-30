@@ -18,7 +18,7 @@ def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, 
     """Helper function which turns fields into properly named ones"""
     ret: typing.Dict[str, typing.Any] = {}
     for field in model.__fields__.values():
-        mi18n = model._get_mi18n(field, lang)  # pyright: ignore[reportPrivateUsage]
+        mi18n = model._get_mi18n(field, lang)
         val = getattr(model, field.name)
         if isinstance(val, APIModel):
             ret[mi18n] = _model_to_dict(val, lang)

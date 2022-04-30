@@ -23,6 +23,7 @@ reportMissingTypeStubs = "none"
 reportImportCycles = "none"
 reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword-only arguments
 reportUnusedFunction = "none"  # Makes usage of validators impossible
+reportPrivateUsage = "none"
 
 [tool.mypy]
 warn_unreachable = false
