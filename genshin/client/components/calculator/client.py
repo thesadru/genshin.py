@@ -1,6 +1,7 @@
 """Calculator client."""
 from __future__ import annotations
 
+import logging
 import typing
 
 import genshin.models.genshin as genshin_models
@@ -13,6 +14,9 @@ from genshin.models.genshin import calculator as models
 from .calculator import Calculator
 
 __all__ = ["CalculatorClient"]
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class CalculatorClient(base.BaseClient):
@@ -225,3 +229,17 @@ class CalculatorClient(base.BaseClient):
         """Get all artifact ids in the same set as a given artifact id."""
         others = await self.get_complete_artifact_set(artifact_id)
         return [artifact_id] + [other.id for other in others]
+
+    async def update_character_names(self, *, lang: typing.Optional[str] = None) -> None:
+        """Update stored db characters with the names from the calculator."""
+        characters = await self.get_calculator_characters(lang=lang, include_traveler=True)
+
+        _LOGGER.debug("Updating CHARACTER_NAMES with calculator data")
+
+        for char in characters:
+            icon = genshin_models.character._parse_icon(char.icon)
+            dbchar = genshin_models.DBChar(
+                char.id, icon, char.name, "" if "Player" in icon else char.element, char.rarity
+            )
+
+            genshin_models.CHARACTER_NAMES[dbchar.id] = dbchar

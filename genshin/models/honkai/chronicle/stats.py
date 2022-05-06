@@ -41,6 +41,10 @@ class MemorialArenaStats(APIModel):
     raw_tier: int =  Aliased("battle_field_area",               mi18n="bbs/settled_level")
     # fmt: on
 
+    @pydantic.validator("ranking", pre=True)
+    def __normalize_ranking(cls, value: typing.Union[str, float]) -> float:
+        return float(value) if value else 0
+
     def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
         return _model_to_dict(self, lang)
 

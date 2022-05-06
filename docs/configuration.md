@@ -33,6 +33,13 @@ user = await client.get_genshin_user(710785423, lang="zh-cn")
 
 > This mapping is contained in `genshin.LANGS`
 
+### Character Name Language
+
+Some genshin endpoints fail to return character names. Genshin.py will attempt to guess them from their icons and IDs, however this behavior by default only works in English.
+To modify this behavior you must either overwrite `genshin.models.CHARACTER_NAMES` or run `client.update_character_names()` with the appropriate language.
+
+> Note that this only works with one language at a time. Once support for multiple languages is added all of this will be done implicitly for you.
+
 ## Cookie Manager
 
 By default `Client` uses a single cookie. This behavior may be changed by overwriting `client.cookie_manager` with a subclass of `BaseCookieManager`.
