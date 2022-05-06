@@ -47,7 +47,5 @@ async def main():
     data = await client.get_genshin_user(710785423)
     print(f"User has a total of {len(data.characters)} characters")
 
-    await client.close()
-
 asyncio.run(main())
 ```
