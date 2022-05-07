@@ -108,6 +108,8 @@ CALCULATOR_URL = InternationalRoute(
     chinese="",
 )
 
+WIKI_URL = Route("https://sg-wiki-api.hoyolab.com/hoyowiki/wapi")
+
 REWARD_URL = GameRoute(
     overseas=dict(
         genshin="https://sg-hk4e-api.hoyolab.com/event/sol?act_id=e202102251931481",

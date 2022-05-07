@@ -7,6 +7,7 @@ from .components import (
     geetest,
     hoyolab,
     transaction,
+    wiki,
     wish,
 )
 
@@ -19,6 +20,7 @@ class Client(
     daily.DailyRewardClient,
     calculator.CalculatorClient,
     diary.DiaryClient,
+    wiki.WikiClient,
     wish.WishClient,
     transaction.TransactionClient,
     geetest.GeetestClient,
