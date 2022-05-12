@@ -190,9 +190,8 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
 
     click.echo(f"\n{click.style('Expeditions:', bold=True)} {len(data.expeditions)}/{data.max_expeditions}")
     for expedition in data.expeditions:
-        if expedition.remaining_time > 0:
-            seconds = expedition.remaining_time
-            remaining = f"{seconds // 3600:02.0f}:{seconds % 3600 // 60:02.0f} remaining"
+        if expedition.remaining_time > datetime.timedelta(0):
+            remaining = f"{expedition.remaining_time} remaining"
             click.echo(f" - {expedition.status} | {remaining} - {expedition.character.name}")
         else:
             click.echo(f" - {expedition.status} | {expedition.character.name}")

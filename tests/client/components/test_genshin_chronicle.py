@@ -34,6 +34,9 @@ async def test_notes(lclient: genshin.Client, genshin_uid: int):
 
     assert data
 
+    if td := data.remaining_transformer_recovery_time:
+        assert sum(1 for i in (td.days, td.hours, td.minutes, td.seconds) if i) == 1
+
 
 async def test_genshin_activities(client: genshin.Client, genshin_uid: int):
     data = await client.get_activities(genshin_uid)
