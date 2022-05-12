@@ -63,6 +63,18 @@ class RandomCookieManager(genshin.BaseCookieManager):
 
 ```
 
+### International Cookie Manager
+
+When providing data for both cn and os players you might want to share the same client for them and in extension things like the cache. To achieve that you have to set cookies for all regions with `InternationalCookieManager`.
+
+```py
+
+client.cookie_manager = genshin.InternationalCookieManager({
+    genshin.Region.OVESEAS: [{...}, ...],
+    genshin.Region.CHINESE: [{...}, ...],
+})
+```
+
 ## Cached UIDs
 
 Some endpoints require a uid despite being private. Genshin.py chooses to fetch and cache these uids instead of forcing users to provide it themselves.

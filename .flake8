@@ -5,6 +5,7 @@ ignore =
     C408,  # dict() with keyword arguments
     D105,  # Missing docstring in magic method
     D106,  # Missing docstring Model.Config
+    S101,  # Use of assert for type checking
     S303,  # Use of md5
     S311,  # Use of pseudo-random generators
 

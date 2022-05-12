@@ -9,19 +9,23 @@ import typing
 
 import aiohttp
 import aiohttp.typedefs
+import yarl
 
-from genshin import errors
+from genshin import errors, types
 from genshin.utility import fs as fs_utility
 
 from . import ratelimit
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = ["BaseCookieManager", "CookieManager", "RotatingCookieManager"]
+__all__ = ["BaseCookieManager", "CookieManager", "InternationalCookieManager", "RotatingCookieManager"]
 
 CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
+
+T = typing.TypeVar("T")
 CallableT = typing.TypeVar("CallableT", bound="typing.Callable[..., object]")
+MaybeSequence = typing.Union[T, typing.Sequence[T]]
 
 
 def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, str]:
@@ -219,10 +223,8 @@ class CookieManager(BaseCookieManager):
         return await self._request(method, url, cookies=self.cookies, **kwargs)
 
 
-class RotatingCookieManager(BaseCookieManager):
-    """Cookie Manager with rotating cookies."""
-
-    MAX_USES: typing.ClassVar[int] = 30
+class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
+    MAX_USES: int = 30
 
     _cookies: typing.List[typing.Tuple[typing.Dict[str, str], int]]
 
@@ -247,6 +249,40 @@ class RotatingCookieManager(BaseCookieManager):
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} len={len(self._cookies)}>"
 
+    def _sort_cookies(self) -> None:
+        """Sort cookies by remaining uses."""
+        self._cookies.sort(key=lambda x: 0 if x[1] >= self.MAX_USES else x[1], reverse=True)
+
+    def __getitem__(self, index: int) -> typing.Mapping[str, str]:  # type: ignore # I can't be fucked with slices
+        return self.cookies[index]
+
+    def __len__(self) -> int:
+        return len(self.cookies)
+
+    def __iter__(self) -> typing.Iterator[typing.Mapping[str, str]]:
+        return iter(self.cookies)
+
+
+class RotatingCookieManager(BaseCookieManager):
+    """Cookie Manager with rotating cookies."""
+
+    _cookies: CookieSequence
+
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -> typing.Sequence[typing.Mapping[str, str]]:
+        """Cookies used for authentication"""
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -> None:
+        self._cookies.cookies = cookies  # type: ignore # mypy does not understand property setters
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} len={len(self._cookies)}>"
+
     @property
     def available(self) -> bool:
         return bool(self._cookies)
@@ -260,13 +296,8 @@ class RotatingCookieManager(BaseCookieManager):
         cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
     ) -> typing.Sequence[typing.Mapping[str, str]]:
         """Parse and set cookies."""
-        self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
+        self._cookies = CookieSequence(cookies)
         return self.cookies
-
-    def _sort_cookies(self) -> None:
-        """Sort cookies by remaining uses."""
-        # TODO: different strategy
-        self._cookies.sort(key=lambda x: 0 if x[1] >= self.MAX_USES else x[1], reverse=True)
 
     async def request(
         self,
@@ -279,16 +310,101 @@ class RotatingCookieManager(BaseCookieManager):
         if not self.cookies:
             raise RuntimeError("Tried to make a request before setting cookies")
 
-        self._sort_cookies()
-
-        for index, (cookie, uses) in enumerate(self._cookies.copy()):
+        for index, (cookie, uses) in enumerate(self._cookies._cookies.copy()):
             try:
                 data = await self._request(method, url, cookies=cookie, **kwargs)
             except errors.TooManyRequests:
-                _LOGGER.debug("Putting cookie %s on cooldown.", cookie.get("account_id") or cookie.get("ltuid"))
-                self._cookies[index] = (cookie, self.MAX_USES)
+                cookie_id = cookie.get("account_id") or cookie.get("ltuid")
+                _LOGGER.debug("Putting cookie %s on cooldown.", cookie_id)
+                self._cookies._cookies[index] = (cookie, self._cookies.MAX_USES)
             else:
-                self._cookies[index] = (cookie, 1 if uses >= self.MAX_USES else uses + 1)
+                self._cookies._cookies[index] = (cookie, 1 if uses >= self._cookies.MAX_USES else uses + 1)
+                return data
+
+        msg = "All cookies have hit their request limit of 30 accounts per day."
+        raise errors.TooManyRequests({"retcode": 10101}, msg)
+
+
+class InternationalCookieManager(BaseCookieManager):
+    """Cookie Manager with international rotating cookies."""
+
+    _cookies: typing.Mapping[types.Region, CookieSequence]
+
+    def __init__(self, cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None) -> None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -> typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        """Cookies used for authentication"""
+        return self._cookies
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__}>"
+
+    @property
+    def available(self) -> bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -> bool:
+        return True
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None,
+    ) -> typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        """Parse and set cookies."""
+        self._cookies = {}
+        if not cookies:
+            return {}
+
+        for region, regional_cookies in cookies.items():
+            if not isinstance(regional_cookies, typing.Sequence):
+                regional_cookies = [regional_cookies]
+
+            self._cookies[types.Region(region)] = CookieSequence(regional_cookies)
+
+        return self.cookies
+
+    def guess_region(self, url: yarl.URL) -> types.Region:
+        """Guess the region from the URL."""
+        assert url.host is not None
+
+        if "os" in url.host or "os" in url.path:
+            return types.Region.OVERSEAS
+
+        if "takumi" in url.host:
+            return types.Region.CHINESE
+
+        if "sg" in url.host:
+            return types.Region.OVERSEAS
+
+        return types.Region.CHINESE
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = "GET",
+        **kwargs: typing.Any,
+    ) -> typing.Any:
+        """Make an authenticated request."""
+        if not self.cookies:
+            raise RuntimeError("Tried to make a request before setting cookies")
+
+        region = self.guess_region(yarl.URL(url))
+
+        # TODO: less copy-paste
+        for index, (cookie, uses) in enumerate(self._cookies[region]._cookies.copy()):
+            try:
+                data = await self._request(method, url, cookies=cookie, **kwargs)
+            except errors.TooManyRequests:
+                cookie_id = cookie.get("account_id") or cookie.get("ltuid")
+                _LOGGER.debug("Putting cookie %s for %s on cooldown.", cookie_id, region)
+                self._cookies[region]._cookies[index] = (cookie, self._cookies[region].MAX_USES)
+            else:
+                uses = 1 if uses >= self._cookies[region].MAX_USES else uses + 1
+                self._cookies[region]._cookies[index] = (cookie, uses)
                 return data
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
