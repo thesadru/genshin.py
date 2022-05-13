@@ -9,6 +9,7 @@ import typing
 import urllib.parse
 
 import aiohttp.typedefs
+import pydantic
 import yarl
 
 from genshin import constants, errors, types, utility
@@ -24,7 +25,7 @@ __all__ = ["BaseClient"]
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "cache", "_authkey", "_lang", "_region", "_default_game", "uids")
+    __slots__ = ("cookie_manager", "cache", "_authkey", "_lang", "_region", "_default_game", "uids", "_proxy")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
@@ -36,6 +37,7 @@ class BaseClient(abc.ABC):
     _lang: str
     _region: types.Region
     _default_game: typing.Optional[types.Game]
+    _proxy: typing.Optional[typing.Union[pydantic.AnyUrl, str]]
 
     uids: typing.Dict[types.Game, int]
 
@@ -47,6 +49,7 @@ class BaseClient(abc.ABC):
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
         game: typing.Optional[types.Game] = None,
+        proxy: typing.Optional[typing.Union[pydantic.AnyUrl, str]] = None,
         uid: typing.Optional[int] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
@@ -57,6 +60,12 @@ class BaseClient(abc.ABC):
         self.authkey = authkey
         self.lang = lang
         self.region = region
+        if not isinstance(proxy, pydantic.AnyUrl):
+            try:
+                pydantic.parse_obj_as(pydantic.AnyUrl, proxy)
+            except pydantic.error_wrappers.ValidationError:
+                proxy = None
+        self.proxy = proxy
         self.default_game = game
         self.debug = debug
 
@@ -67,6 +76,7 @@ class BaseClient(abc.ABC):
         kwargs = dict(
             lang=self.lang,
             region=self.region.value,
+            proxy=self.proxy,
             default_game=self.default_game and self.default_game.value,
             hoyolab_uid=self.hoyolab_uid,
             uid=self.default_game and self.uid,
@@ -106,6 +116,15 @@ class BaseClient(abc.ABC):
 
         if region == types.Region.CHINESE:
             self.lang = "zh-cn"
+
+    @property
+    def proxy(self) -> typing.Optional[typing.Union[pydantic.AnyUrl, str]]:
+        """The default proxy"""
+        return self._proxy
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[typing.Union[pydantic.AnyUrl, str]]) -> None:
+        self._proxy = proxy if proxy else None
 
     @property
     def default_game(self) -> typing.Optional[types.Game]:
@@ -263,6 +282,9 @@ class BaseClient(abc.ABC):
             if value is not None:
                 return value
 
+        """Set proxy"""
+        proxy = self.proxy
+
         # actual request
 
         headers = dict(headers or {})
@@ -282,6 +304,7 @@ class BaseClient(abc.ABC):
             params=params,
             json=data,
             headers=headers,
+            proxy=proxy,
             **kwargs,
         )
 
@@ -308,6 +331,9 @@ class BaseClient(abc.ABC):
             if value is not None:
                 return value
 
+        """Set proxy"""
+        proxy = self.proxy
+
         url = routes.WEBSTATIC_URL.get_url().join(yarl.URL(url))
 
         headers = dict(headers or {})
@@ -316,7 +342,7 @@ class BaseClient(abc.ABC):
         await self._request_hook("GET", url, headers=headers, **kwargs)
 
         async with self.cookie_manager.create_session() as session:
-            async with session.get(url, headers=headers, **kwargs) as r:
+            async with session.get(url, headers=headers, proxy=proxy, **kwargs) as r:
                 r.raise_for_status()
                 data = await r.json()
 
