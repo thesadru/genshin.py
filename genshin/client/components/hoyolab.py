@@ -52,3 +52,9 @@ class HoyolabClient(base.BaseClient):
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
         )
+
+    @manager.no_multi
+    async def check_in_community(self) -> None:
+        """Check in to the hoyolab community and claim your daily 5 community exp."""
+        url = routes.COMMUNITY_URL.get_url(self.region) / "wapi/mission/signIn"
+        await self.request(url, method="POST", data={})
