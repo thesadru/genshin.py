@@ -111,33 +111,45 @@ class OldAbyssStats(APIModel):
     _stat_lang: str = "en-us"
 
     # fmt: off
-    raw_q_singularis_rank: int = Aliased("level_of_quantum", mi18n="bbs/Quantum")
-    raw_dirac_sea_rank: int =    Aliased("level_of_ow",      mi18n="bbs/level_of_ow")
-    score: int =                 Aliased("abyss_score",      mi18n="bbs/explain_text_2")
-    raw_tier: int =              Aliased("latest_area",      mi18n="bbs/settled_level")
-    raw_latest_rank: int =       Aliased("latest_level",     mi18n="bbs/rank")
+    raw_q_singularis_rank: typing.Optional[int] = Aliased("level_of_quantum", mi18n="bbs/Quantum")
+    raw_dirac_sea_rank: typing.Optional[int] =    Aliased("level_of_ow",      mi18n="bbs/level_of_ow")
+    score: int =                                  Aliased("abyss_score",      mi18n="bbs/explain_text_2")
+    raw_tier: int =                               Aliased("latest_area",      mi18n="bbs/settled_level")
+    raw_latest_rank: typing.Optional[int] =       Aliased("latest_level",     mi18n="bbs/rank")
     latest_type: str
     # fmt: on
 
     @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
-    def __normalize_rank(cls, rank: str) -> int:  # modes.OldAbyss.__normalize_rank
+    def __normalize_rank(cls, rank: str) -> typing.Optional[int]:  # modes.OldAbyss.__normalize_rank
+        if "Unknown" in rank:
+            return None
+
         return 69 - ord(rank)
 
     @property
-    def q_singularis_rank(self) -> str:
+    def q_singularis_rank(self) -> typing.Optional[str]:
         """The user's latest Q-Singularis rank as displayed in-game."""
+        if self.raw_q_singularis_rank is None:
+            return None
+
         return self.get_rank(self.raw_q_singularis_rank)
 
     @property
-    def dirac_sea_rank(self) -> str:
+    def dirac_sea_rank(self) -> typing.Optional[str]:
         """The user's latest Dirac Sea rank as displayed in-game."""
+        if self.raw_dirac_sea_rank is None:
+            return None
+
         return self.get_rank(self.raw_dirac_sea_rank)
 
     @property
-    def latest_rank(self) -> str:
+    def latest_rank(self) -> typing.Optional[str]:
         """The user's latest Abyss rank as displayed in-game. Seems to apply after weekly reset,
         so this may differ from the user's Dirac Sea/Q-Singularis ranks if their rank changed.
         """
+        if self.raw_latest_rank is None:
+            return None
+
         return self.get_rank(self.raw_latest_rank)
 
     def get_rank(self, rank: int, lang: typing.Optional[str] = None) -> str:
