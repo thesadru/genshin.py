@@ -8,6 +8,7 @@ from genshin import types
 
 __all__ = [
     "CALCULATOR_URL",
+    "COMMUNITY_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_INFO_URL",
     "INFO_LEDGER_URL",
@@ -88,6 +89,10 @@ WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
 TAKUMI_URL = InternationalRoute(
     overseas="https://api-os-takumi.mihoyo.com/",
     chinese="https://api-takumi.mihoyo.com/",
+)
+COMMUNITY_URL = InternationalRoute(
+    overseas="https://bbs-api-os.hoyolab.com/community/apihub/",
+    chinese="https://api-takumi-record.mihoyo.com/community/apihub/",
 )
 RECORD_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/game_record/",
