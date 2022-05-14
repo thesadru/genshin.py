@@ -1,5 +1,24 @@
 # Changelog
 
+# 1.2.0
+
+## What's new
+
+- Added a `client.uid` as a simpler alias for `client.uids`.
+- Allowed explicit UIDs in diary and calculator endpoints.
+- Implemented an international cookie manager.
+- Implemented wiki endpoints (only raw data is supported)
+- Implemented hoyolab community checkin
+
+## Changes
+
+- The password is now hidden in `python -m genshin login`
+- Stored timedeltas instead of datetimes in real-time notes.
+
+## Fixes
+
+- Fixed honkai stats for users without any unlocked abyss.
+
 # 1.1.0 (2022-04-22)
 
 ## What's new
