@@ -79,7 +79,7 @@ class BaseCookieManager(abc.ABC):
         return None
 
     @property
-    def proxy(self) -> yarl.URL | None:
+    def proxy(self) -> typing.Optional[yarl.URL]:
         """Get proxy setting"""
         return self._proxy
 

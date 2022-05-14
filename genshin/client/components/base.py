@@ -222,7 +222,7 @@ class BaseClient(abc.ABC):
         """Set proxy."""
         self.cookie_manager.proxy = proxy
 
-    def get_proxy(self) -> yarl.URL | None:
+    def get_proxy(self) -> typing.Optional[yarl.URL]:
         """Get proxy setting."""
         return self.cookie_manager.proxy
 
