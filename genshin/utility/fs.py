@@ -1,7 +1,6 @@
 """File system related utilities."""
 import functools
 import os
-import pathlib
 import tempfile
 import typing
 
@@ -9,19 +8,6 @@ __all__ = ["get_browser_cookies"]
 
 DOMAINS: typing.Final[typing.Sequence[str]] = ("mihoyo", "hoyolab", "hoyoverse")
 ALLOWED_COOKIES: typing.Final[typing.Sequence[str]] = ("ltuid", "ltoken", "account_id", "cookie_token")
-
-
-def _fix_windows_chrome_temp() -> None:
-    # temporary non-invasive fix for chrome
-    # https://github.com/borisbabic/browser_cookie3/issues/106#issuecomment-1000200958
-    try:
-        local_appdata = pathlib.Path(os.environ["LOCALAPPDATA"])
-        chrome_dir = local_appdata / "Google/Chrome/User Data/Default"
-
-        os.link(chrome_dir / "Network/Cookies", chrome_dir / "Cookies")
-
-    except (OSError, KeyError):
-        pass
 
 
 def _get_browser_cookies(
@@ -35,8 +21,6 @@ def _get_browser_cookies(
     Available browsers: chrome, chromium, opera, edge, firefox.
     """
     import browser_cookie3  # pyright: ignore
-
-    _fix_windows_chrome_temp()
 
     loader: typing.Callable[..., typing.Any]
 
