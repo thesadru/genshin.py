@@ -80,14 +80,15 @@ class BaseCookieManager(abc.ABC):
 
     @property
     def proxy(self) -> typing.Optional[yarl.URL]:
-        """Get proxy setting"""
+        """Proxy for http(s) requests."""
         return self._proxy
 
     @proxy.setter
     def proxy(self, proxy: yarl.URL) -> None:
-        """Set proxy, aiohttp only support [http, https, ws, wss] proxy."""
-        if str(proxy.scheme) in {"https", "http", "ws", "wss"}:
-            self._proxy = proxy
+        if str(proxy.scheme) not in ("https", "http", "ws", "wss"):
+            raise ValueError("URL must have a valid scheme.")
+
+        self._proxy = proxy
 
     def get_user_id(self) -> int:
         """Get the id of the user that owns cookies.
