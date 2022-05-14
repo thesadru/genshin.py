@@ -218,13 +218,15 @@ class BaseClient(abc.ABC):
         redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
         self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
 
-    def set_proxy(self, proxy: yarl.URL) -> None:
-        """Set proxy."""
-        self.cookie_manager.proxy = proxy
-
-    def get_proxy(self) -> typing.Optional[yarl.URL]:
+    @property
+    def proxy(self) -> typing.Optional[yarl.URL]:
         """Get proxy setting."""
         return self.cookie_manager.proxy
+
+    @proxy.setter
+    def proxy(self, proxy: yarl.URL) -> None:
+        """Set proxy."""
+        self.cookie_manager.proxy = proxy
 
     async def _request_hook(
         self,
@@ -324,7 +326,7 @@ class BaseClient(abc.ABC):
         await self._request_hook("GET", url, headers=headers, **kwargs)
 
         async with self.cookie_manager.create_session() as session:
-            async with session.get(url, headers=headers, **kwargs) as r:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
                 r.raise_for_status()
                 data = await r.json()
 
