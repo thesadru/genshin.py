@@ -42,6 +42,8 @@ def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, st
 class BaseCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
+    _proxy: typing.Optional[yarl.URL] = None
+
     @classmethod
     def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> BaseCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
@@ -76,6 +78,17 @@ class BaseCookieManager(abc.ABC):
         """
         return None
 
+    @property
+    def proxy(self) -> yarl.URL | None:
+        """Get proxy setting"""
+        return self._proxy
+
+    @proxy.setter
+    def proxy(self, proxy: yarl.URL) -> None:
+        """Set proxy, aiohttp only support [http, https, ws, wss] proxy."""
+        if str(proxy.scheme) in {"https", "http", "ws", "wss"}:
+            self._proxy = proxy
+
     def get_user_id(self) -> int:
         """Get the id of the user that owns cookies.
 
@@ -105,7 +118,7 @@ class BaseCookieManager(abc.ABC):
     ) -> typing.Any:
         """Make a request towards any json resource."""
         async with self.create_session() as session:
-            async with session.request(method, str_or_url, **kwargs) as response:
+            async with session.request(method, str_or_url, proxy=self.proxy, **kwargs) as response:
                 data = await response.json()
 
         if data["retcode"] == 0:

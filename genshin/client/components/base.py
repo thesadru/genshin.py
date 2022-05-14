@@ -218,6 +218,14 @@ class BaseClient(abc.ABC):
         redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
         self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
 
+    def set_proxy(self, proxy: yarl.URL) -> None:
+        """Set proxy."""
+        self.cookie_manager.proxy = proxy
+
+    def get_proxy(self) -> yarl.URL | None:
+        """Get proxy setting."""
+        return self.cookie_manager.proxy
+
     async def _request_hook(
         self,
         method: str,
