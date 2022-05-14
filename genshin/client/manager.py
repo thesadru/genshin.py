@@ -120,6 +120,10 @@ class BaseCookieManager(abc.ABC):
         """Make a request towards any json resource."""
         async with self.create_session() as session:
             async with session.request(method, str_or_url, proxy=self.proxy, **kwargs) as response:
+                if response.content_type != "application/json":
+                    content = await response.text()
+                    raise errors.GenshinException(msg="Recieved a response with an invalid content type:\n" + content)
+
                 data = await response.json()
 
         if data["retcode"] == 0:
