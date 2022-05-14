@@ -31,3 +31,11 @@ async def test_redeem_code(lclient: genshin.Client):
     # inconsistent
     with contextlib.suppress(genshin.RedemptionClaimed):
         await lclient.redeem_code("genshingift")
+
+
+async def test_check_in_community(lclient: genshin.Client):
+    try:
+        await lclient.check_in_community()
+    except genshin.GenshinException as e:
+        if e.retcode != 2001:
+            raise
