@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v3
         with:
-          python-version: 3.9
+          python-version: "3.10"
 
       - name: install nox
         run: |
@@ -29,10 +29,10 @@ jobs:
         python-version: ["3.8", "3.9", "3.10"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -46,7 +46,47 @@ jobs:
           CN_LTUID: ${{ secrets.CN_LTUID }}
           CN_LTOKEN: ${{ secrets.CN_LTOKEN }}
         run: |
-          python -m nox -s test
+          python -m nox -s test -- --cov-append
+          mv .coverage .coverage.${{ matrix.python-version }}
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: .coverage.${{ matrix.python-version }}
+          retention-days: 1
+          if-no-files-found: error
+
+  upload-coverage:
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Download coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
+
+      - name: Combine coverage
+        run: |
+          pip install -r ./genshin-dev/pytest-requirements.txt
+          coverage combine
+          coverage xml -i
+
+      - name: Upload coverage to codeclimate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: cd8c7d84ae5f98d86882d666dce0946fe5aae1e63f442995bd9c6e17869e6513
+        with:
+          coverageLocations: .coverage.xml:coverage.py
 
   type-check:
     runs-on: ubuntu-latest
@@ -54,10 +94,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python 3.9
+      - name: Setup Python 3.10
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: "3.10"
 
       - name: install nox
         run: |
@@ -72,10 +112,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python 3.9
+      - name: Setup Python 3.10
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: "3.10"
 
       - name: install nox
         run: |
