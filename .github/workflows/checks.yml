@@ -45,6 +45,8 @@ jobs:
           LTOKEN: ${{ secrets.LTOKEN }}
           CN_LTUID: ${{ secrets.CN_LTUID }}
           CN_LTOKEN: ${{ secrets.CN_LTOKEN }}
+          LOCAL_LTUID: ${{ secrets.LOCAL_LTUID }}
+          LOCAL_LTOKEN: ${{ secrets.LOCAL_LTOKEN }}
         run: |
           python -m nox -s test -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}

@@ -37,7 +37,7 @@ def local_cookies() -> typing.Mapping[str, str]:
         pass
 
     try:
-        return {"ltuid": os.environ["LOCAL_LTUID"], "ltoken": os.environ["LOCAL_LTOKEN"]}
+        return {"ltuid": os.environ["LOCAL_ACCOUNT_ID"], "ltoken": os.environ["LOCAL_COOKIE_TOKEN"]}
     except KeyError:
         return {}
 
@@ -96,7 +96,11 @@ async def lclient(local_cookies: typing.Mapping[str, str], cache: genshin.Cache)
     client.debug = True
     client.default_game = genshin.Game.GENSHIN
     client.set_cookies(local_cookies)
-    client.set_authkey()
+    try:
+        client.set_authkey()
+    except FileNotFoundError:
+        pass
+
     client.cache = cache
 
     return client
