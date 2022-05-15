@@ -1,6 +1,5 @@
 pytest
 pytest-asyncio
-pytest-asyncio-cooperative
 pytest-cov
 pytest-dotenv
 

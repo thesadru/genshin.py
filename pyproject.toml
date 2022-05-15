@@ -40,5 +40,11 @@ allow_redefinition = true
 disable_error_code = ["return-value"]
 
 
-[tool.coverage.report]
+[tool.coverage.run]
+source = ["genshin"]
 omit = ["**/__init__.py", "**/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+sort = "cover"

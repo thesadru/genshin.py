@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import logging
 import pathlib
-import typing
 
 import nox
 
@@ -65,20 +64,18 @@ def test(session: nox.Session) -> None:
     """Run this project's tests using pytest."""
     install_requirements(session, "pytest")
 
-    args: typing.List[str] = session.posargs.copy()
-    if "--cooperative" in args:
-        args += ["-p", "no:asyncio"]
-    else:
-        args += ["--asyncio-mode=auto"]
-
     session.run(
         "pytest",
-        "--cov=" + PACKAGE,
+        "--asyncio-mode=auto",
+        "--cov",
+        PACKAGE,
+        "--cov-report",
+        "term",
         "--cov-report",
         "html:coverage_html",
         "--cov-report",
-        "xml:coverage.xml",
-        *args,
+        "xml",
+        *session.posargs,
     )
 
 
