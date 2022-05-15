@@ -46,6 +46,7 @@ class BaseClient(abc.ABC):
         authkey: typing.Optional[str] = None,
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
         game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         cache: typing.Optional[client_cache.Cache] = None,
@@ -62,6 +63,7 @@ class BaseClient(abc.ABC):
 
         self.uids = {}
         self.uid = uid
+        self.proxy = proxy
 
     def __repr__(self) -> str:
         kwargs = dict(
@@ -71,6 +73,7 @@ class BaseClient(abc.ABC):
             hoyolab_uid=self.hoyolab_uid,
             uid=self.default_game and self.uid,
             authkey=self.authkey and self.authkey[:12] + "...",
+            proxy=self.proxy,
             debug=self.debug,
         )
         return f"<{type(self).__name__} {', '.join(f'{k}={v!r}' for k, v in kwargs.items() if v)}>"
@@ -219,14 +222,20 @@ class BaseClient(abc.ABC):
         self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
 
     @property
-    def proxy(self) -> typing.Optional[yarl.URL]:
+    def proxy(self) -> typing.Optional[str]:
         """Get proxy setting."""
-        return self.cookie_manager.proxy
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
 
     @proxy.setter
-    def proxy(self, proxy: yarl.URL) -> None:
+    def proxy(self, proxy: typing.Optional[str]) -> None:
         """Set proxy."""
-        self.cookie_manager.proxy = proxy
+        if proxy is None:
+            self.cookie_manager.proxy = None
+        else:
+            self.cookie_manager.proxy = yarl.URL(proxy)
 
     async def _request_hook(
         self,
