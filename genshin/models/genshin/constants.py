@@ -81,7 +81,7 @@ _character_names: typing.Mapping[int, typing.Optional[_RAW_DB_CHAR]] = {
     10000061: None,
     10000062: ("Aloy", "Cryo", 105),
     10000063: ("Shenhe", "Cryo", 5),
-    10000064: ("YunJin", "Yun Jin", "Geo", 4),
+    10000064: ("Yunjin", "Yun Jin", "Geo", 4),
     10000065: None,
     10000066: ("Ayato", "Hydro", 5),
 }
