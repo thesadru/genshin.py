@@ -30,10 +30,15 @@ def cookies() -> typing.Mapping[str, str]:
 
 
 @pytest.fixture(scope="session")
-def browser_cookies() -> typing.Mapping[str, str]:
+def local_cookies() -> typing.Mapping[str, str]:
     try:
         return genshin.utility.get_browser_cookies()
     except Exception:
+        pass
+
+    try:
+        return {"ltuid": os.environ["LOCAL_LTUID"], "ltoken": os.environ["LOCAL_LTOKEN"]}
+    except KeyError:
         return {}
 
 
@@ -49,10 +54,7 @@ def chinese_cookies() -> typing.Mapping[str, str]:
 @pytest.fixture(scope="session")
 def local_chinese_cookies() -> typing.Mapping[str, str]:
     try:
-        return {
-            "account_id": os.environ["LCN_ACCOUNT_ID"],
-            "cookie_token": os.environ["LCN_COOKIE_TOKEN"],
-        }
+        return {"account_id": os.environ["LOCAL_CN_ACCOUNT_ID"], "cookie_token": os.environ["LOCAL_CN_COOKIE_TOKEN"]}
     except KeyError:
         return {}
 
@@ -85,19 +87,32 @@ async def client(cookies: typing.Mapping[str, str], cache: genshin.Cache):
 
 
 @pytest.fixture(scope="session")
-async def lclient(browser_cookies: typing.Mapping[str, str], cache: genshin.Cache):
+async def lclient(local_cookies: typing.Mapping[str, str], cache: genshin.Cache):
     """Return the local client."""
-    if not browser_cookies:
+    if not local_cookies:
         pytest.skip("Skipped local test")
 
     client = genshin.Client()
     client.debug = True
     client.default_game = genshin.Game.GENSHIN
-    client.set_cookies(browser_cookies)
+    client.set_cookies(local_cookies)
     client.set_authkey()
     client.cache = cache
 
     return client
+
+
+@pytest.fixture(scope="session")
+async def authkey(lclient: genshin.GenshinClient):
+    if lclient.authkey is None:
+        pytest.skip("Skipped authkey test")
+
+    try:
+        await lclient.wish_history(200, limit=1)
+    except genshin.AuthkeyException:
+        pytest.skip("Skipped authkey test")
+
+    return lclient.authkey
 
 
 @pytest.fixture(scope="session")

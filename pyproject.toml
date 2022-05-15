@@ -38,3 +38,7 @@ warn_unused_ignores = false
 warn_redundant_casts = false
 allow_redefinition = true
 disable_error_code = ["return-value"]
+
+
+[tool.coverage.report]
+omit = ["**/__init__.py", "**/__main__.py"]
