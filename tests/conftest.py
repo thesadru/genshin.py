@@ -37,7 +37,7 @@ def local_cookies() -> typing.Mapping[str, str]:
         pass
 
     try:
-        return {"ltuid": os.environ["LOCAL_ACCOUNT_ID"], "ltoken": os.environ["LOCAL_COOKIE_TOKEN"]}
+        return {"account_id": os.environ["LOCAL_ACCOUNT_ID"], "cookie_token": os.environ["LOCAL_COOKIE_TOKEN"]}
     except KeyError:
         return {}
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import logging
 import pathlib
+import typing
 
 import nox
 
@@ -15,15 +16,23 @@ PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 LOGGER = logging.getLogger("nox")
 
 
+def isverbose() -> bool:
+    """Whether the verbose flag is set."""
+    return LOGGER.getEffectiveLevel() == logging.DEBUG - 1
+
+
+def verbose_args() -> typing.Sequence[str]:
+    """Return --verbose if the verbose flag is set."""
+    return ["--verbose"] if isverbose() else []
+
+
 def install_requirements(session: nox.Session, *requirements: str, literal: bool = False) -> None:
     """Install requirements."""
     if not literal and all(requirement.isalpha() for requirement in requirements):
         files = ["requirements.txt"] + [f"./genshin-dev/{requirement}-requirements.txt" for requirement in requirements]
         requirements = tuple(arg for file in files for arg in ("-r", file))
 
-    verbose = LOGGER.getEffectiveLevel() == logging.DEBUG - 1  # OUTPUT
-
-    session.install("--upgrade", *requirements, silent=not verbose)
+    session.install("--upgrade", *requirements, silent=not isverbose())
 
 
 @nox.session()
@@ -43,15 +52,15 @@ def lint(session: nox.Session) -> None:
     """Run this project's modules against the pre-defined flake8 linters."""
     install_requirements(session, "lint")
     session.run("flake8", "--version")
-    session.run("flake8", *GENERAL_TARGETS)
+    session.run("flake8", *GENERAL_TARGETS, *verbose_args())
 
 
 @nox.session()
 def reformat(session: nox.Session) -> None:
     """Reformat this project's modules to fit the standard style."""
     install_requirements(session, "reformat")
-    session.run("black", *GENERAL_TARGETS)
-    session.run("isort", *GENERAL_TARGETS)
+    session.run("black", *GENERAL_TARGETS, *verbose_args())
+    session.run("isort", *GENERAL_TARGETS, *verbose_args())
 
     session.log("sort-all")
     LOGGER.disabled = True
@@ -67,6 +76,9 @@ def test(session: nox.Session) -> None:
     session.run(
         "pytest",
         "--asyncio-mode=auto",
+        "-r",
+        "sfE",
+        *verbose_args(),
         "--cov",
         PACKAGE,
         "--cov-report",
@@ -83,8 +95,8 @@ def test(session: nox.Session) -> None:
 def type_check(session: nox.Session) -> None:
     """Statically analyse and veirfy this project using pyright and mypy."""
     install_requirements(session, "typecheck")
-    session.run("python", "-m", "pyright", PACKAGE, env=PYRIGHT_ENV)
-    session.run("python", "-m", "mypy", PACKAGE)
+    session.run("pyright", PACKAGE, *verbose_args(), env=PYRIGHT_ENV)
+    session.run("mypy", PACKAGE, *verbose_args())
 
 
 @nox.session(name="verify-types")
@@ -92,7 +104,8 @@ def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
     install_requirements(session, ".", "--force-reinstall", "--no-deps")
     install_requirements(session, "typecheck")
-    session.run("python", "-m", "pyright", "--verifytypes", PACKAGE, "--ignoreexternal", env=PYRIGHT_ENV)
+
+    session.run("pyright", "--verifytypes", PACKAGE, "--ignoreexternal", *verbose_args(), env=PYRIGHT_ENV)
 
 
 @nox.session(python=False)
