@@ -3,8 +3,7 @@
 [![Downloads](https://pepy.tech/badge/genshin)](https://pepy.tech/project/genshin)
 [![PyPI package](https://img.shields.io/pypi/v/genshin)](https://pypi.org/project/genshin/)
 [![Last Commit](https://img.shields.io/github/last-commit/thesadru/genshin.py)](https://github.com/thesadru/genshin.py/commits/master)
-[![Repo Size](https://img.shields.io/github/repo-size/thesadru/genshin.py)](https://github.com/thesadru/genshin.py/graphs/code-frequency)
-[![License](https://img.shields.io/github/license/thesadru/genshin.py)](https://github.com/thesadru/genshin.py/blob/master/LICENSE)
+[![Coverage](https://img.shields.io/codeclimate/coverage/thesadru/genshin.py)](https://codeclimate.com/github/thesadru/genshin.py)
 [![Discord](https://img.shields.io/discord/570841314200125460?color=7289DA)](https://discord.gg/sMkSKRPuCR)
 
 Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and pydantic.
