@@ -1,17 +1,14 @@
 flake8 
 
-bandit==1.7.2          # temporariry freeze to bandit due to incompatibility with flake8-bandit
-flake8-bandit          # runs bandit
-flake8-black           # runs black
-flake8-broken-line     # forbey "\" linebreaks
-flake8-builtins        # builtin shadowing checks
-flake8-comprehensions  # comprehension checks
-flake8-deprecated      # deprecated call checks
-flake8-docstrings      # pydocstyle support
-flake8-executable      # shebangs
-flake8-isort           # runs isort
-flake8-mutable         # mutable default argument detection
-flake8-pep3101         # new-style format strings only
-flake8-print           # complain about print statements in code
-flake8-pytest-style    # pytest checks
-flake8-raise           # exception raising lintings
+flake8-annotations-complexity # complex annotation
+flake8-bandit       # runs bandit
+flake8-black        # runs black
+flake8-builtins     # builtin shadowing
+flake8-docstrings   # proper formatting and grammar in docstrings
+flake8-isort        # runs isort
+flake8-mutable      # mutable default argument detection
+flake8-pep3101      # new-style format strings only
+flake8-print        # complain about print statements in code
+flake8-pytest-style # pytest checks
+flake8-raise        # exception raising
+flake8-requirements # requirements.txt check

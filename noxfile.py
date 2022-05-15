@@ -43,6 +43,7 @@ def docs(session: nox.Session) -> None:
 def lint(session: nox.Session) -> None:
     """Run this project's modules against the pre-defined flake8 linters."""
     install_requirements(session, "lint")
+    session.run("flake8", "--version")
     session.run("flake8", *GENERAL_TARGETS)
 
 

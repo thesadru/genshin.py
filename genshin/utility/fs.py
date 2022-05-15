@@ -1,6 +1,6 @@
 """File system related utilities."""
 import functools
-import os
+import pathlib
 import tempfile
 import typing
 
@@ -56,10 +56,12 @@ def get_browser_cookies(
     return {name: value for name, value in cookies.items() if name in allowed_cookies}
 
 
-def get_tempdir() -> str:
+def get_tempdir() -> pathlib.Path:
     """Get the temporary directory to be used by genshin.py."""
-    directory = os.path.join(tempfile.gettempdir(), "genshin.py")
-    os.makedirs(directory, exist_ok=True)
+    tempdir = pathlib.Path(tempfile.gettempdir())
+    directory = tempdir / "genshin.py"
+    directory.mkdir(exist_ok=True, parents=True)
+
     return directory
 
 
