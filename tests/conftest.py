@@ -22,41 +22,51 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def cookies() -> typing.Mapping[str, str]:
-    try:
-        return {"ltuid": os.environ["LTUID"], "ltoken": os.environ["LTOKEN"]}
-    except KeyError:
+    cookies = {"ltuid": os.environ.get("LTUID", ""), "ltoken": os.environ.get("LTOKEN", "")}
+
+    if not all(cookies.values()):
         pytest.exit("No cookies set", 1)
-        return {}
+
+    return cookies
 
 
 @pytest.fixture(scope="session")
 def local_cookies() -> typing.Mapping[str, str]:
     try:
-        return genshin.utility.get_browser_cookies()
+        cookies = genshin.utility.get_browser_cookies()
     except Exception:
-        pass
+        cookies = {
+            "account_id": os.environ.get("LOCAL_ACCOUNT_ID", ""),
+            "cookie_token": os.environ.get("LOCAL_COOKIE_TOKEN", ""),
+        }
 
-    try:
-        return {"account_id": os.environ["LOCAL_ACCOUNT_ID"], "cookie_token": os.environ["LOCAL_COOKIE_TOKEN"]}
-    except KeyError:
+    if not all(cookies.values()):
         return {}
+
+    return cookies
 
 
 @pytest.fixture(scope="session")
 def chinese_cookies() -> typing.Mapping[str, str]:
-    try:
-        return {"ltuid": os.environ["CN_LTUID"], "ltoken": os.environ["CN_LTOKEN"]}
-    except KeyError:
-        warnings.warn("No chinese cookies were set for tests")
+    cookies = {"ltuid": os.environ.get("CN_LTUID", ""), "ltoken": os.environ.get("CN_LTOKEN", "")}
+
+    if not all(cookies.values()):
         return {}
+
+    return cookies
 
 
 @pytest.fixture(scope="session")
 def local_chinese_cookies() -> typing.Mapping[str, str]:
-    try:
-        return {"account_id": os.environ["LOCAL_CN_ACCOUNT_ID"], "cookie_token": os.environ["LOCAL_CN_COOKIE_TOKEN"]}
-    except KeyError:
+    cookies = {
+        "account_id": os.environ.get("LOCAL_CN_ACCOUNT_ID", ""),
+        "cookie_token": os.environ.get("LOCAL_CN_COOKIE_TOKEN", ""),
+    }
+
+    if not all(cookies.values()):
         return {}
+
+    return cookies
 
 
 @pytest.fixture(scope="session")
