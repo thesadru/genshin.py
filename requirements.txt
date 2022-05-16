@@ -1,7 +1,10 @@
 aiohttp
 pydantic
 
-# optional:
+# subdependencies
+yarl
+
+# optional
 browser-cookie3
 rsa
 aioredis

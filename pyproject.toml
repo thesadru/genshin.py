@@ -3,6 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
+exclude = ["__pycache__"]
 line-length = 120
 include = ".*pyi?$"
 target-version = ["py39"]
@@ -38,3 +39,13 @@ warn_unused_ignores = false
 warn_redundant_casts = false
 allow_redefinition = true
 disable_error_code = ["return-value"]
+
+
+[tool.coverage.run]
+source = ["genshin"]
+omit = ["**/__init__.py", "**/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+sort = "cover"

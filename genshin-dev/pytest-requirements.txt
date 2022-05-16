@@ -1,8 +1,7 @@
 pytest
 pytest-asyncio
-pytest-asyncio-cooperative
 pytest-cov
-pytest-randomly
+pytest-dotenv
 
 coverage[toml]
 devtools
