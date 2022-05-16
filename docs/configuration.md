@@ -114,18 +114,14 @@ client = genshin.Client(game=genshin.Game.HONKAI)
 client.default_game = genshin.Game.HONKAI
 ```
 
-## Proxy Support
+## Proxy
 
-Some endpoints may block your IP, you can set up a proxy, aiohttp only support `http/https/ws/wss` proxy for now.
+Some endpoints may block chinese IPs. Setting up a proxy in this case is recommended.
 
-For more information, check https://docs.aiohttp.org/en/stable/client_advanced.html
+For more information, [check out the aiohttp docs](https://docs.aiohttp.org/en/stable/client_advanced.html#proxy-support).
 
 ```py
 client = genshin.Client(proxy="http://127.0.0.1:1080")
-# or
-client = genshin.Client()
-client.proxy = "http://127.0.0.1:1080"
 
-# Clear Proxy Setting
-client.proxy = None
+client.proxy = "http://127.0.0.1:1080"
 ```

@@ -4,11 +4,12 @@
 
 ## What's new
 
-- Added a `client.uid` as a simpler alias for `client.uids`.
+- Added `client.uid` as a simpler alias for `client.uids`.
 - Allowed explicit UIDs in diary and calculator endpoints.
 - Implemented an international cookie manager.
-- Implemented wiki endpoints (only raw data is supported)
-- Implemented hoyolab community checkin
+- Added `client.proxy`.
+- Implemented very basic wiki endpoints.
+- Implemented hoyolab community check-in.
 
 ## Changes
 

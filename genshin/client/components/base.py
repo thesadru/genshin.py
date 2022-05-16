@@ -223,19 +223,15 @@ class BaseClient(abc.ABC):
 
     @property
     def proxy(self) -> typing.Optional[str]:
-        """Get proxy setting."""
+        """Proxy for http requests."""
         if self.cookie_manager.proxy is None:
             return None
 
         return str(self.cookie_manager.proxy)
 
     @proxy.setter
-    def proxy(self, proxy: typing.Optional[str]) -> None:
-        """Set proxy."""
-        if proxy is None:
-            self.cookie_manager.proxy = None
-        else:
-            self.cookie_manager.proxy = yarl.URL(proxy)
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -> None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
 
     async def _request_hook(
         self,

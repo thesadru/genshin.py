@@ -26,8 +26,7 @@ You may use `nox --no-install` to avoid updating dependencies every run.
 
 All changes contributed to this project should be tested. This repository uses pytest and `nox -s test` for an easier and less likely to be problematic way to run the tests.
 
-If the tests are way too slow on your machine you may want to filter them using `nox -s test -- -k "foo"`. (For example `nox -s test -- -k "wish"` for only wish-related tests.)
-In the rare case that filtering is not an option there's `nox -s test -- --cooperative` to run all tests at the same time. This is very unstable.
+If the tests are way too slow on your machine you may want to filter them using `nox -s test -- -k "foo"`. (For example `nox -s test -- -k "wish"` for only wish-related tests)
 
 ### Type checking
 

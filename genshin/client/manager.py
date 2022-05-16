@@ -84,11 +84,12 @@ class BaseCookieManager(abc.ABC):
         return self._proxy
 
     @proxy.setter
-    def proxy(self, proxy: typing.Optional[yarl.URL]) -> None:
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -> None:
         if proxy is None:
             self._proxy = None
             return
 
+        proxy = yarl.URL(proxy)
         if str(proxy.scheme) not in ("https", "http", "ws", "wss"):
             raise ValueError("Proxy URL must have a valid scheme.")
 
