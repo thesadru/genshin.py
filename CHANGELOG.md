@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.2.1
+
+## Fixes
+
+- Fix error when using `game` without `uid`
+
 # 1.2.0 (2022-05-19)
 
 ## What's new

@@ -130,11 +130,7 @@ class BaseClient(abc.ABC):
     @uid.setter
     def uid(self, uid: typing.Optional[int]) -> None:
         if uid is None:
-            if self.default_game:
-                del self.uids[self.default_game]
-            else:
-                self.uids.clear()
-
+            self.uids.clear()
             return
 
         self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
