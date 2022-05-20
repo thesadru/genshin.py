@@ -37,7 +37,7 @@ LiteralCharacter.__pre_root_validators__ = LiteralCharacter.__pre_root_validator
         (
             {
                 "id": 10000003,
-                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Qin.png",
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_side_icon/UI_AvatarIcon_Side_Qin.png",
             },
             LiteralCharacter(
                 id=10000003,

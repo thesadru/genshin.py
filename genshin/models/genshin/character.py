@@ -110,8 +110,8 @@ class BaseCharacter(APIModel, Unique):
 
         if values.get("icon"):
             # there is an icon
-            if "genshin" not in values["icon"] and char.id != 0:
-                # corrupted icon that completion should be able to fix
+            if "genshin" in values["icon"] or char.id != 0:
+                # side icon OR corrupted icon completion should be able to fix
                 values["icon"] = icon
         else:
             # there wasn't an icon so no need for special handling
