@@ -3,7 +3,7 @@
 import asyncio
 import typing
 
-from genshin import types, utility
+from genshin import errors, types, utility
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 
@@ -113,7 +113,14 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.Notes:
         """Get genshin real-time notes."""
-        data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
+        try:
+            data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
+        except errors.DataNotPublic:
+            # error raised only when real-time notes are not enabled
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            # ugly recursion but it is what it is
+            return await self.get_genshin_notes(uid, lang=lang)
+
         return models.Notes(**data)
 
     async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
