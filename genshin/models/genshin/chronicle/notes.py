@@ -40,7 +40,7 @@ class Expedition(APIModel):
     @property
     def finished(self) -> bool:
         """Whether the expedition has finished."""
-        return self.remaining_time > datetime.timedelta(0)
+        return self.remaining_time <= datetime.timedelta(0)
 
     @property
     def completion_time(self) -> datetime.datetime:
