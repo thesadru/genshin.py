@@ -5,8 +5,9 @@ import dataclasses
 import typing
 
 from genshin import errors, models, types
-from genshin.client import cache, routes
+from genshin.client import cache, manager, routes
 from genshin.client.components import base
+from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
@@ -92,8 +93,21 @@ class BaseBattleChronicleClient(base.BaseClient):
         cards = await self.get_record_cards(hoyolab_uid, lang=lang)
         return cards[0]
 
-    async def set_visibility(self, public: bool, game: typing.Optional[types.Game] = None) -> None:
-        """Set your data to public or private."""
+    @manager.no_multi
+    async def update_settings(
+        self,
+        setting: types.IDOr[hoyolab_models.RecordCardSetting],
+        on: bool,
+        *,
+        game: typing.Optional[types.Game] = None,
+    ) -> None:
+        """Update user settings.
+
+        Setting IDs:
+            1: Show your Battle Chronicle on your profile.
+            2: Show your Character Details in the Battle Chronicle.
+            3: Enable your Real-Time Notes. (only for Genshin Impact)
+        """
         if game is None:
             if self.default_game is None:
                 raise RuntimeError("No default game set.")
@@ -103,7 +117,12 @@ class BaseBattleChronicleClient(base.BaseClient):
         game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2}[game]
 
         await self.request_game_record(
-            "genshin/wapi/publishGameRecord",
+            "card/wapi/changeDataSwitch",
             method="POST",
-            json=dict(is_public=public, game_id=game_id),
+            data=dict(switch_id=int(setting), is_public=on, game_id=game_id),
         )
+
+    @deprecation.deprecated("update_settings")
+    async def set_visibility(self, public: bool, *, game: typing.Optional[types.Game] = None) -> None:
+        """Set your data to public or private."""
+        await self.update_settings(1, public, game=game)

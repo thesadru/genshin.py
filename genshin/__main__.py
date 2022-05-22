@@ -24,7 +24,7 @@ def asynchronous(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> ty
 
     @functools.wraps(func)
     def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-        return asyncio.run(func(*args, **kwargs))
+        return asyncio.run(func(*args, **kwargs))  # type: ignore # unsure what is wrong here
 
     return wrapper
 

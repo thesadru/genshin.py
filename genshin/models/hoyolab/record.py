@@ -8,7 +8,7 @@ import typing
 import pydantic
 
 from genshin import types
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
     "Gender",
@@ -16,6 +16,7 @@ __all__ = [
     "RecordCard",
     "RecordCardData",
     "RecordCardSetting",
+    "RecordCardSettingType",
     "SearchUser",
 ]
 
@@ -50,12 +51,20 @@ class RecordCardData(APIModel):
     value: str
 
 
-class RecordCardSetting(APIModel):
+class RecordCardSetting(APIModel, Unique):
     """Privacy setting of a record card."""
 
     id: int = Aliased("switch_id")
     description: str = Aliased("switch_name")
     public: bool = Aliased("is_public")
+
+
+class RecordCardSettingType(enum.IntEnum):
+    """Privacy setting of a record card."""
+
+    SHOW_CHRONICLE = 1
+    SHOW_CHARACTER_DETAILS = 2
+    ENABLE_REAL_TIME_NOTES = 3
 
 
 class Gender(enum.IntEnum):
