@@ -29,7 +29,7 @@ class DiaryPaginator(paginators.PagedPaginator[models.DiaryAction]):
         self._get_page = getter
         self._data = None
 
-        super().__init__(self._getter, limit=limit, page_size=10)
+        super().__init__(self._getter, limit=limit, page_size=100)
 
     async def _getter(self, page: int) -> typing.Sequence[models.DiaryAction]:
         self._data = await self._get_page(page)
@@ -102,7 +102,7 @@ class DiaryClient(base.BaseClient):
             detail=True,
             month=month,
             lang=lang,
-            params=dict(type=type, current_page=page, limit=10),
+            params=dict(type=type, current_page=page, page_size=100),
         )
         return models.DiaryPage(**data)
 
