@@ -60,10 +60,9 @@ class BaseClient(abc.ABC):
         self.region = region
         self.default_game = game
         self.debug = debug
-
+        self.proxy = proxy
         self.uids = {}
         self.uid = uid
-        self.proxy = proxy
 
     def __repr__(self) -> str:
         kwargs = dict(
@@ -119,11 +118,16 @@ class BaseClient(abc.ABC):
     def default_game(self, game: typing.Optional[str]) -> None:
         self._default_game = types.Game(game) if game else None
 
+    game = default_game
+
     @property
     def uid(self) -> typing.Optional[int]:
         """UID of the default game."""
         if self.default_game is None:
-            raise RuntimeError("No default game.")
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
 
         return self.uids.get(self.default_game)
 
@@ -135,7 +139,7 @@ class BaseClient(abc.ABC):
 
         self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
         if self.default_game is None:
-            raise RuntimeError("No default game.")
+            raise RuntimeError("No default game set. Cannot set uid.")
 
         self.uids[self.default_game] = uid
 

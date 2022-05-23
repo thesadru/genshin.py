@@ -15,7 +15,7 @@ __all__ = ["GenshinBattleChronicleClient"]
 class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     """Genshin battle chronicle component."""
 
-    async def __get_genshin(
+    async def _request_genshin_record(
         self,
         endpoint: str,
         uid: typing.Optional[int] = None,
@@ -65,7 +65,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.PartialGenshinUserStats:
         """Get partial genshin user without character equipment."""
-        data = await self.__get_genshin("index", uid, lang=lang)
+        data = await self._request_genshin_record("index", uid, lang=lang)
         return models.PartialGenshinUserStats(**data)
 
     async def get_genshin_characters(
@@ -75,7 +75,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
         """Get genshin user characters."""
-        data = await self.__get_genshin("character", uid, lang=lang, method="POST")
+        data = await self._request_genshin_record("character", uid, lang=lang, method="POST")
         return [models.Character(**i) for i in data["avatars"]]
 
     async def get_genshin_user(
@@ -86,8 +86,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.GenshinUserStats:
         """Get genshin user."""
         data, character_data = await asyncio.gather(
-            self.__get_genshin("index", uid, lang=lang),
-            self.__get_genshin("character", uid, lang=lang, method="POST"),
+            self._request_genshin_record("index", uid, lang=lang),
+            self._request_genshin_record("character", uid, lang=lang, method="POST"),
         )
         data = {**data, **character_data}
 
@@ -102,7 +102,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.SpiralAbyss:
         """Get genshin spiral abyss runs."""
         payload = dict(schedule_type=2 if previous else 1)
-        data = await self.__get_genshin("spiralAbyss", uid, lang=lang, payload=payload)
+        data = await self._request_genshin_record("spiralAbyss", uid, lang=lang, payload=payload)
 
         return models.SpiralAbyss(**data)
 
@@ -114,7 +114,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.Notes:
         """Get genshin real-time notes."""
         try:
-            data = await self.__get_genshin("dailyNote", uid, lang=lang, cache=False)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
         except errors.DataNotPublic:
             # error raised only when real-time notes are not enabled
             await self.update_settings(3, True, game=types.Game.GENSHIN)
@@ -125,7 +125,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
         """Get genshin activities."""
-        data = await self.__get_genshin("activities", uid, lang=lang)
+        data = await self._request_genshin_record("activities", uid, lang=lang)
         return models.Activities(**data)
 
     async def get_full_genshin_user(

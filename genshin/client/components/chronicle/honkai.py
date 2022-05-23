@@ -14,7 +14,7 @@ __all__ = ["HonkaiBattleChronicleClient"]
 class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     """Honkai battle chronicle component."""
 
-    async def __get_honkai(
+    async def _request_honkai_record(
         self,
         endpoint: str,
         uid: typing.Optional[int] = None,
@@ -50,7 +50,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.HonkaiUserStats:
         """Get honkai user stats."""
-        data = await self.__get_honkai("index", uid, lang=lang)
+        data = await self._request_honkai_record("index", uid, lang=lang)
         return models.HonkaiUserStats(**data)
 
     async def get_honkai_battlesuits(
@@ -60,7 +60,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.FullBattlesuit]:
         """Get honkai battlesuits."""
-        data = await self.__get_honkai("characters", uid, lang=lang)
+        data = await self._request_honkai_record("characters", uid, lang=lang)
         return [models.FullBattlesuit(**char["character"]) for char in data["characters"]]
 
     async def get_honkai_old_abyss(
@@ -73,7 +73,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
 
         Only for level > 80.
         """
-        data = await self.__get_honkai("latestOldAbyssReport", uid, lang=lang)
+        data = await self._request_honkai_record("latestOldAbyssReport", uid, lang=lang)
         return [models.OldAbyss(**x, abyss_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_honkai_superstring_abyss(
@@ -86,7 +86,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
 
         Only for level <= 80.
         """
-        data = await self.__get_honkai("newAbyssReport", uid, lang=lang)
+        data = await self._request_honkai_record("newAbyssReport", uid, lang=lang)
         return [models.SuperstringAbyss(**x, abyss_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_honkai_abyss(
@@ -116,7 +116,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.ElysianRealm]:
         """Get honkai elysian realm."""
-        data = await self.__get_honkai("godWar", uid, lang=lang)
+        data = await self._request_honkai_record("godWar", uid, lang=lang)
         return [models.ElysianRealm(**x) for x in data["records"]]
 
     async def get_honkai_memorial_arena(
@@ -126,7 +126,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.MemorialArena]:
         """Get honkai memorial arena."""
-        data = await self.__get_honkai("battleFieldReport", uid, lang=lang)
+        data = await self._request_honkai_record("battleFieldReport", uid, lang=lang)
         return [models.MemorialArena(**x, ma_lang=lang or self.lang) for x in data["reports"]]
 
     async def get_full_honkai_user(
