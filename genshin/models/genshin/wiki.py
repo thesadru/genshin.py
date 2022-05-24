@@ -2,6 +2,7 @@
 import enum
 import json
 import typing
+import unicodedata
 
 import pydantic
 
@@ -65,7 +66,13 @@ class CharacterPreview(BaseWikiPreview):
 
     @pydantic.validator("rarity", pre=True)
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
-        return int(value[0]) if isinstance(value, str) else value
+        if not isinstance(value, str):
+            return value
+
+        if value[0].isdigit():
+            return int(value[0])
+
+        return int(unicodedata.numeric(value[0]))
 
 
 class WeaponPreview(BaseWikiPreview):
@@ -77,7 +84,13 @@ class WeaponPreview(BaseWikiPreview):
 
     @pydantic.validator("rarity", pre=True)
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
-        return int(value[0]) if isinstance(value, str) else value
+        if not isinstance(value, str):
+            return value
+
+        if value[0].isdigit():
+            return int(value[0])
+
+        return int(unicodedata.numeric(value[0]))
 
 
 class ArtifactPreview(BaseWikiPreview):

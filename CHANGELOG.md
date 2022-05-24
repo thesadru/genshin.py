@@ -6,7 +6,6 @@
 
 - Increase page size of diaries to 100.
 - Automatically enable real-time notes when used for the first time.
-- Fix error when using `game` without `uid`.
 
 # 1.2.0 (2022-05-19)
 
