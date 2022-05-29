@@ -38,9 +38,9 @@ Key features:
 pip install genshin
 ```
 
-## Example
+## Programmatic example
 
-A very simple example of how genshin.py would be used:
+A very simple example of how the genshin.py API could be consumed:
 
 ```py
 import asyncio
@@ -55,6 +55,31 @@ async def main():
 
 asyncio.run(main())
 ```
+
+## End-user (CLI) example
+
+Example [using genshin.py on the command-line](https://thesadru.github.io/genshin.py/cli/):
+
+```shell
+$ pip install --user genshin[cli] click rsa
+
+$ python -m genshin login
+Account: user@example.org
+Password:
+Opened browser in http://localhost:5000
+Your cookies are:  account_id=NNNNNNNN; cookie_token=some-value; ltuid=NNNNNNNN
+
+$ python -m genshin accounts --cookies "account_id=NNNNNNNN; cookie_token=some-value; ltuid=NNNNNNNN"
+7YYYYYYYY - Traveler AR 44 (Europe Server)
+
+$ python -m genshin genshin stats 7YYYYYYYY --cookies "account_id=NNNNNNNN; cookie_token=some-value; ltuid=NNNNNNNN"
+
+Stats:
+Achievements: 154
+Days Active: 176
+(...)
+```
+
 
 ## Contributing
 
