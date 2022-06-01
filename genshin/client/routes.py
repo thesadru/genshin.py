@@ -126,7 +126,7 @@ REWARD_URL = GameRoute(
     ),
 )
 
-CODE_URL = Route("https://hk4e-api-os.mihoyo.com/common/apicdkey/api/webExchangeCdkey")
+CODE_URL = Route("https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey")
 
 GACHA_INFO_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
