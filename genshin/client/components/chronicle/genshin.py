@@ -111,15 +111,20 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
+        autoauth: bool = True,
     ) -> models.Notes:
         """Get genshin real-time notes."""
         try:
             data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
-        except errors.DataNotPublic:
+        except errors.DataNotPublic as e:
             # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, "Cannot view real-time notes of other users.") from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, "Real-time notes are not enabled.") from e
+
             await self.update_settings(3, True, game=types.Game.GENSHIN)
-            # ugly recursion but it is what it is
-            return await self.get_genshin_notes(uid, lang=lang)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
 
         return models.Notes(**data)
 

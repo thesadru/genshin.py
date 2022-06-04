@@ -5,7 +5,7 @@ import logging
 import typing
 
 import genshin.models.genshin as genshin_models
-from genshin import types, utility
+from genshin import errors, types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
@@ -61,6 +61,10 @@ class CalculatorClient(base.BaseClient):
         """Create a calculator builder object."""
         return Calculator(self, lang=lang)
 
+    async def _enable_calculator_sync(self, enabled: bool = True) -> None:
+        """Enable data syncing in calculator."""
+        await self.request_calculator("avatar/auth", method="POST", data=dict(avatar_auth=int(enabled)))
+
     async def _get_calculator_items(
         self,
         slug: str,
@@ -71,6 +75,7 @@ class CalculatorClient(base.BaseClient):
         is_all: bool = False,
         sync: bool = False,
         lang: typing.Optional[str] = None,
+        autoauth: bool = True,
     ) -> typing.Sequence[typing.Mapping[str, typing.Any]]:
         """Get all items of a specific slug from a calculator."""
         endpoint = f"sync/{slug}/list" if sync else f"{slug}/list"
@@ -92,7 +97,17 @@ class CalculatorClient(base.BaseClient):
         if not any(filters.values()) and not sync:
             cache = client_cache.cache_key("calculator", slug=slug, lang=lang or self.lang)
 
-        data = await self.request_calculator(endpoint, lang=lang, data=payload, cache=cache)
+        try:
+            data = await self.request_calculator(endpoint, lang=lang, data=payload, cache=cache)
+        except errors.GenshinException as e:
+            if e.retcode != -502002:  # Sync not enabled
+                raise
+            if not autoauth:
+                raise errors.GenshinException(e.response, "Calculator sync is not enabled") from e
+
+            await self._enable_calculator_sync()
+            data = await self.request_calculator(endpoint, lang=lang, data=payload, cache=cache)
+
         return data["list"]
 
     async def get_calculator_characters(

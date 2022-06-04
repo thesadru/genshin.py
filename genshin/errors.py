@@ -160,11 +160,12 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     10101: TooManyRequests,
     10102: DataNotPublic,
     10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
-    10104: "Tried to use a beta feature in an invalid context.",
+    10104: "Cannot view real-time notes of other users.",
     # calculator
     -500001: "Invalid fields in calculation.",
     -500004: VisitsTooFrequently,
     -502001: "User does not have this character.",
+    -502002: "Calculator sync is not enabled.",
     # mixin
     -1: InternalDatabaseError,
     1009: AccountNotFound,
