@@ -173,6 +173,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -1071: InvalidCookies,
     -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: (RedemptionInvalid, "Redemption code has expired."),
+    -2003: (RedemptionInvalid, "Redemption code is incorrectly formatted."),
     -2004: RedemptionInvalid,
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
@@ -216,9 +217,11 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
         else:
             raise AuthkeyException(data)
 
-    elif r in ERRORS:
+    if r in ERRORS:
         exctype, msg = ERRORS[r]
         raise exctype(data, msg)
 
-    else:
-        raise GenshinException(data)
+    if "redemption" in m:
+        raise RedemptionException(data)
+
+    raise GenshinException(data)

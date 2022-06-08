@@ -51,7 +51,7 @@ def _get_db_char(
     if id and id in CHARACTER_NAMES:
         char = CHARACTER_NAMES[id]
         if name is not None:
-            char = char._replace(name=name, element=char.element or element)
+            char = char._replace(name=name, element=char.element or element or "")
 
         return char
 
