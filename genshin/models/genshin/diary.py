@@ -31,7 +31,7 @@ class BaseDiary(APIModel):
     """Base model for diary and diary page."""
 
     uid: int
-    region: str
+    server: str = Aliased("region")
     nickname: str
     month: int = Aliased("data_month")
 

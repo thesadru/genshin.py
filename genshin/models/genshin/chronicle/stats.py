@@ -5,6 +5,7 @@ import typing
 
 import pydantic
 
+from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
 
 from . import abyss, activities, characters
@@ -119,6 +120,7 @@ class Teapot(APIModel):
 class PartialGenshinUserStats(APIModel):
     """User stats with characters without equipment."""
 
+    info: hoyolab.UserInfo = Aliased("role")
     stats: Stats
     characters: typing.Sequence[characters.PartialCharacter] = Aliased("avatars")
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")

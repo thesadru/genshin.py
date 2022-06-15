@@ -29,7 +29,7 @@ async def test_recommended_users(client: genshin.Client):
 
 async def test_redeem_code(lclient: genshin.Client):
     # inconsistent
-    with contextlib.suppress(genshin.RedemptionClaimed, genshin.RedemptionCooldown):
+    with contextlib.suppress(genshin.RedemptionException):
         await lclient.redeem_code("genshingift")
 
 

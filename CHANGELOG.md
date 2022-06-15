@@ -1,10 +1,20 @@
 # Changelog
 
+# 1.2.2
+
+## What's new
+
+- Added user info to genshin stats.
+
+## Fixes
+
+- Fixed enabling of real-time notes and calculator sync.
+
 # 1.2.1 (2022-05-28)
 
 ## Fixes
 
-- Increase page size of diaries to 100.
+- Increased page size of diaries to 100.
 - Automatically enable real-time notes when used for the first time.
 
 # 1.2.0 (2022-05-19)

@@ -3,6 +3,7 @@ import typing
 
 import pydantic
 
+from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
 
 from . import battlesuits, modes
@@ -230,19 +231,10 @@ class HonkaiStats(APIModel):
         return _model_to_dict(self, lang)
 
 
-class UserInfo(APIModel):
-    """Honkai user info."""
-
-    nickname: str
-    region: str
-    level: int
-    icon: str = Aliased("AvatarUrl")
-
-
 class HonkaiUserStats(APIModel):
     """Represents basic user stats, showing only generic user data and stats."""
 
-    info: UserInfo = Aliased("role")
+    info: hoyolab.UserInfo = Aliased("role")
     stats: HonkaiStats
 
 

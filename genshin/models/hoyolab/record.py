@@ -18,6 +18,7 @@ __all__ = [
     "RecordCardSetting",
     "RecordCardSettingType",
     "SearchUser",
+    "UserInfo",
 ]
 
 
@@ -42,6 +43,15 @@ class GenshinAccount(APIModel):
             return types.Game(self.game_biz)
         except ValueError:
             return self.game_biz  # type: ignore
+
+
+class UserInfo(APIModel):
+    """Chronicle user info."""
+
+    nickname: str
+    server: str = Aliased("region")
+    level: int
+    icon: str = Aliased("AvatarUrl")
 
 
 class RecordCardData(APIModel):
