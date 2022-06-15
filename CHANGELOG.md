@@ -9,6 +9,7 @@
 ## Fixes
 
 - Fixed enabling of real-time notes and calculator sync.
+- Do not require cookies for authkey endpoints.
 
 # 1.2.1 (2022-05-28)
 

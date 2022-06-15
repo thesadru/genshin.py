@@ -240,9 +240,6 @@ class CookieManager(BaseCookieManager):
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Make an authenticated request."""
-        if not self.cookies:
-            raise RuntimeError("Tried to make a request before setting cookies")
-
         return await self._request(method, url, cookies=self.cookies, **kwargs)
 
 
