@@ -47,7 +47,7 @@ As long as you are logged into your account on one of your browsers, you can get
 #### Installation
 
 ```console
-pip install genshin[cookies, rsa]
+pip install genshin[cookies,rsa]
 ```
 
 #### Example
