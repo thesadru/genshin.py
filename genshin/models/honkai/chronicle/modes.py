@@ -82,8 +82,8 @@ class ELF(APIModel, Unique):
         if isinstance(rarity, str):
             return rarity
 
-        # ELFs come in rarities A and S, API returns 3 and 4, respectively
-        return ["A", "S"][rarity - 3]
+        # ELFs come in rarities A and S, API returns 4 and 5, respectively
+        return ["A", "S"][rarity - 4]
 
 
 # ABYSS

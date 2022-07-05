@@ -38,7 +38,7 @@ def _get_browser_cookies(
         loader = functools.partial(loader, cookie_file=cookie_file)
 
     domains = domains or [""]
-    return {cookie.name: cookie.value for domain in domains for cookie in loader(domain_name=domain)}
+    return {cookie.name: str(cookie.value) for domain in domains for cookie in loader(domain_name=domain)}
 
 
 def get_browser_cookies(

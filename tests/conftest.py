@@ -108,7 +108,7 @@ async def lclient(local_cookies: typing.Mapping[str, str], cache: genshin.Cache)
     client.set_cookies(local_cookies)
     try:
         client.set_authkey()
-    except FileNotFoundError:
+    except (FileNotFoundError, ValueError):
         pass
 
     client.cache = cache

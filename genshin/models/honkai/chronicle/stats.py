@@ -19,6 +19,9 @@ def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, 
     """Helper function which turns fields into properly named ones"""
     ret: typing.Dict[str, typing.Any] = {}
     for field in model.__fields__.values():
+        if not field.field_info.extra.get("mi18n"):
+            continue
+
         mi18n = model._get_mi18n(field, lang)
         val = getattr(model, field.name)
         if isinstance(val, APIModel):
@@ -33,7 +36,7 @@ def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, 
 class MemorialArenaStats(APIModel):
     """Represents a user's stats regarding the Memorial Arena gamemodes."""
 
-    _stat_lang: str = "en-us"
+    stat_lang: str = "en-us"
 
     # fmt: off
     ranking: float = Aliased("battle_field_ranking_percentage", mi18n="bbs/battle_field_ranking_percentage")
@@ -62,14 +65,18 @@ class MemorialArenaStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Memorial Arena tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self._stat_lang)
+        return self._get_mi18n(key, lang or self.stat_lang)
+
+    class Config:
+        # this is for the "stat_lang" field, hopefully nobody abuses this
+        allow_mutation = True
 
 
 # flake8: noqa: E222
 class SuperstringAbyssStats(APIModel):
     """Represents a user's stats regarding Superstring Abyss."""
 
-    _stat_lang: str = "en-us"
+    stat_lang: str = "en-us"
 
     # fmt: off
     raw_rank: int = Aliased("level",             mi18n="bbs/rank")
@@ -92,7 +99,7 @@ class SuperstringAbyssStats(APIModel):
     def get_rank(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss rank in a specific language."""
         key = modes.get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self._stat_lang)
+        return self._get_mi18n(key, lang or self.stat_lang)
 
     @property
     def tier(self) -> str:
@@ -102,14 +109,18 @@ class SuperstringAbyssStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self._stat_lang)
+        return self._get_mi18n(key, lang or self.stat_lang)
+
+    class Config:
+        # this is for the "stat_lang" field, hopefully nobody abuses this
+        allow_mutation = True
 
 
 # flake8: noqa: E222
 class OldAbyssStats(APIModel):
     """Represents a user's stats regarding Q-Singularis and Dirac Sea."""
 
-    _stat_lang: str = "en-us"
+    stat_lang: str = "en-us"
 
     # fmt: off
     raw_q_singularis_rank: typing.Optional[int] = Aliased("level_of_quantum", mi18n="bbs/Quantum")
@@ -160,7 +171,7 @@ class OldAbyssStats(APIModel):
         Must be supplied with one of the raw ranks stored on this class.
         """
         key = modes.get_abyss_rank_mi18n(rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self._stat_lang)
+        return self._get_mi18n(key, lang or self.stat_lang)
 
     @property
     def tier(self) -> str:
@@ -170,10 +181,14 @@ class OldAbyssStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self._stat_lang)
+        return self._get_mi18n(key, lang or self.stat_lang)
 
     def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
         return _model_to_dict(self, lang)
+
+    class Config:
+        # this is for the "stat_lang" field, hopefully nobody abuses this
+        allow_mutation = True
 
 
 # flake8: noqa: E222

@@ -51,7 +51,11 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.HonkaiUserStats:
         """Get honkai user stats."""
         data = await self._request_honkai_record("index", uid, lang=lang)
-        return models.HonkaiUserStats(**data)
+        stats = models.HonkaiUserStats(**data)
+        stats.stats.abyss.stat_lang = lang or self.lang
+        stats.stats.memorial_arena.stat_lang = lang or self.lang
+
+        return stats
 
     async def get_honkai_battlesuits(
         self,
