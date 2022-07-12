@@ -166,15 +166,20 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -500004: VisitsTooFrequently,
     -502001: "User does not have this character.",
     -502002: "Calculator sync is not enabled.",
+    # diary
+    -400005: "Parameter error",
+    -501101: "This character has not reached Lv.10, please select another character.",
     # mixin
     -1: InternalDatabaseError,
     1009: AccountNotFound,
     # redemption
+    -1065: RedemptionInvalid,
     -1071: InvalidCookies,
     -1073: (AccountNotFound, "Account has no game account bound to it."),
     -2001: (RedemptionInvalid, "Redemption code has expired."),
     -2003: (RedemptionInvalid, "Redemption code is incorrectly formatted."),
     -2004: RedemptionInvalid,
+    -2014: (RedemptionInvalid, "Redemption code not activated"),
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
     -2018: RedemptionClaimed,
