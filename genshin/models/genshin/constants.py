@@ -76,14 +76,14 @@ _character_names: typing.Mapping[int, typing.Optional[_RAW_DB_CHAR]] = {
     10000056: ("Sara", "Kujou Sara", "Electro", 4),
     10000057: ("Itto", "Arataki Itto", "Geo", 5),
     10000058: ("Yae", "Yae Miko", "Electro", 5),
-    10000059: None,
+    10000059: ("Heizo", "Shikanoin Heizou", "Anemo", 4),
     10000060: ("Yelan", "Hydro", 5),
     10000061: None,
     10000062: ("Aloy", "Cryo", 105),
     10000063: ("Shenhe", "Cryo", 5),
     10000064: ("Yunjin", "Yun Jin", "Geo", 4),
-    10000065: None,
-    10000066: ("Ayato", "Hydro", 5),
+    10000065: ("Shinobu", "Kuki Shinobu", "Electro", 4),
+    10000066: ("Ayato", "Kamisato Ayato", "Hydro", 5),
 }
 CHARACTER_NAMES: typing.Dict[int, DBChar] = {
     id: (DBChar(id, *data) if len(data) == 4 else DBChar(id, data[0], *data))
