@@ -166,9 +166,6 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -500004: VisitsTooFrequently,
     -502001: "User does not have this character.",
     -502002: "Calculator sync is not enabled.",
-    # diary
-    -400005: "Parameter error",
-    -501101: "This character has not reached Lv.10, please select another character.",
     # mixin
     -1: InternalDatabaseError,
     1009: AccountNotFound,
