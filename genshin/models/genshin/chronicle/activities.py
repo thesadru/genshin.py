@@ -17,6 +17,7 @@ __all__ = [
     "LabyrinthWarriors",
     "OldActivity",
     "Potion",
+    "Summer",
 ]
 
 ModelT = typing.TypeVar("ModelT", bound=APIModel)
@@ -41,6 +42,68 @@ class Activity(OldActivity[ModelT]):
 
     # cn only
     total_times: int = 1
+
+
+class DateTime(APIModel):
+    """DateTime model."""
+
+    year: int
+    month: int
+    day: int
+    hour: int
+    minute: int
+
+# ---------------------------------------------------------
+# Summer：
+
+
+class SummerStoryRecord(APIModel):
+    """Summer story record."""
+    finish_time: typing.Optional[DateTime] = Aliased("finish_time")
+    finished: bool
+    icon: str
+    name: str
+
+
+class SummerStory(APIModel):
+    """Summer story."""
+    records: typing.Sequence[SummerStoryRecord] = Aliased("records")
+
+
+class SummerSailingRecord(APIModel):
+    cost_time: int
+    finished: bool
+    id: int
+
+
+class SummerSailing(APIModel):
+    """Summer Sailing."""
+    records: typing.Sequence[SummerSailingRecord] = Aliased("records")
+
+
+class SummerChallengeRecord(APIModel):
+    id: int
+    finish_time: typing.Optional[DateTime] = Aliased("finish_time")
+    finished: bool
+    success_num: int
+    skill_use_num: int
+    name: str
+    icon: str
+
+        
+class SummerChallenge(APIModel):
+    records: typing.Sequence[SummerChallengeRecord] = Aliased("records")
+
+
+class Summer(APIModel):
+    """Summer event."""
+
+    anchor_number: int = Aliased("anchor_number")
+    chest_number: int = Aliased("chest_number")
+    way_point_number: int = Aliased("way_point_number")
+    sailing: typing.Optional[SummerSailing] = Aliased("sailing")
+    story: typing.Optional[SummerStory] = Aliased("story")
+    challenge: typing.Optional[SummerChallenge] = Aliased("challenge")
 
 
 # ---------------------------------------------------------
@@ -220,6 +283,7 @@ class Activities(APIModel):
     labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(None, gslug="rogue")
     energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(None, gslug="channeller_slab_copy")
     study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, gslug="potion")
+    summer: typing.Optional[Summer] = pydantic.Field(None, gslug="summer_v2")
 
     effigy: typing.Optional[Activity[typing.Any]] = None
     mechanicus: typing.Optional[Activity[typing.Any]] = None
