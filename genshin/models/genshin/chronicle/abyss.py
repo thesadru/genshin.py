@@ -55,7 +55,7 @@ class Battle(APIModel):
     """Battle in the spiral abyss."""
 
     half: int = Aliased("index")
-    timestamp: datetime.date
+    timestamp: datetime.datetime
     characters: typing.Sequence[AbyssCharacter] = Aliased("avatars")
 
 
