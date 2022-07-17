@@ -51,7 +51,7 @@ class Activity(OldActivity[ModelT]):
 class SummerStoryRecord(APIModel):
     """Summer story record."""
 
-    finish_time: typing.Optional[datetime.datetime] = Aliased("finish_time")
+    finish_time = Aliased("finish_time")
     finished: bool
     icon: str
     name: str
@@ -81,7 +81,7 @@ class SummerChallengeRecord(APIModel):
     """Summer challenge record."""
 
     id: int
-    finish_time: typing.Optional[datetime.datetime] = Aliased("finish_time")
+    finish_time = Aliased("finish_time")
     finished: bool
     success: int = Aliased("success_num")
     skill_use: int = Aliased("skill_use_num")
