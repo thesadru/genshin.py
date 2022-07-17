@@ -75,6 +75,7 @@ class SummerStory(APIModel):
 
 class SummerSailingRecord(APIModel):
     """Summer sailing record."""
+
     cost_time: int
     finished: bool
     id: int
@@ -88,6 +89,7 @@ class SummerSailing(APIModel):
 
 class SummerChallengeRecord(APIModel):
     """Summer challenge record."""
+
     id: int
     finish_time: typing.Optional[DateTime] = Aliased("finish_time")
     finished: bool
@@ -98,7 +100,8 @@ class SummerChallengeRecord(APIModel):
 
 
 class SummerChallenge(APIModel):
-    """Summer challenge."""
+    """Summer challenge.""""
+
     records: typing.Sequence[SummerChallengeRecord] = Aliased("records")
 
 
