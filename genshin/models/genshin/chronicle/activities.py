@@ -153,7 +153,7 @@ class HyakuninIkki(APIModel):
 
     battles: typing.Sequence[HyakuninIkkiBattle] = Aliased("lineups")
 
-    @ property
+    @property
     def medal(self) -> str:
         match = re.search(r"heraldry_(\w+)\.png", self.medal_icon)
         return match.group(1) if match else ""
@@ -187,10 +187,8 @@ class LabyrinthWarriors(APIModel):
     passed: bool = Aliased("is_passed")
     level: int = Aliased("settled_level")
 
-    main_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(
-        "main_avatars")
-    support_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(
-        "support_avatars")
+    main_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased("main_avatars")
+    support_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased("support_avatars")
     runes: typing.Sequence[LabyrinthWarriorsRune]
 
 
@@ -233,8 +231,7 @@ class EnergyAmplifier(APIModel):
     score_multiplier: int = Aliased("score_multiple")
 
     characters: typing.Sequence[EnergyAmplifierCharacter] = Aliased("avatars")
-    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased(
-        "limit_conditions")
+    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased("limit_conditions")
     buffs: typing.Sequence[EnergyAmplifierBuff]
 
 
