@@ -27,7 +27,8 @@ class OldActivity(APIModel, pydantic.generics.GenericModel, typing.Generic[Model
     """Arbitrary activity for chinese events."""
 
     # sometimes __parameters__ may not be provided in older versions
-    __parameters__: typing.ClassVar[typing.Tuple[typing.Any, ...]] = (ModelT,)  # type: ignore
+    __parameters__: typing.ClassVar[typing.Tuple[typing.Any, ...]] = (
+        ModelT,)  # type: ignore
 
     exists_data: bool
     records: typing.Sequence[ModelT]
@@ -53,12 +54,14 @@ class DateTime(APIModel):
     hour: int
     minute: int
 
+
 # ---------------------------------------------------------
 # Summer：
 
 
 class SummerStoryRecord(APIModel):
     """Summer story record."""
+
     finish_time: typing.Optional[DateTime] = Aliased("finish_time")
     finished: bool
     icon: str
@@ -67,10 +70,12 @@ class SummerStoryRecord(APIModel):
 
 class SummerStory(APIModel):
     """Summer story."""
+
     records: typing.Sequence[SummerStoryRecord] = Aliased("records")
 
 
 class SummerSailingRecord(APIModel):
+    """Summer sailing record."""
     cost_time: int
     finished: bool
     id: int
@@ -78,10 +83,12 @@ class SummerSailingRecord(APIModel):
 
 class SummerSailing(APIModel):
     """Summer Sailing."""
+
     records: typing.Sequence[SummerSailingRecord] = Aliased("records")
 
 
 class SummerChallengeRecord(APIModel):
+    """Summer challenge record."""
     id: int
     finish_time: typing.Optional[DateTime] = Aliased("finish_time")
     finished: bool
@@ -90,8 +97,9 @@ class SummerChallengeRecord(APIModel):
     name: str
     icon: str
 
-        
+
 class SummerChallenge(APIModel):
+    """Summer challenge."""
     records: typing.Sequence[SummerChallengeRecord] = Aliased("records")
 
 
@@ -145,7 +153,7 @@ class HyakuninIkki(APIModel):
 
     battles: typing.Sequence[HyakuninIkkiBattle] = Aliased("lineups")
 
-    @property
+    @ property
     def medal(self) -> str:
         match = re.search(r"heraldry_(\w+)\.png", self.medal_icon)
         return match.group(1) if match else ""
@@ -179,8 +187,10 @@ class LabyrinthWarriors(APIModel):
     passed: bool = Aliased("is_passed")
     level: int = Aliased("settled_level")
 
-    main_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased("main_avatars")
-    support_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased("support_avatars")
+    main_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(
+        "main_avatars")
+    support_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(
+        "support_avatars")
     runes: typing.Sequence[LabyrinthWarriorsRune]
 
 
@@ -223,7 +233,8 @@ class EnergyAmplifier(APIModel):
     score_multiplier: int = Aliased("score_multiple")
 
     characters: typing.Sequence[EnergyAmplifierCharacter] = Aliased("avatars")
-    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased("limit_conditions")
+    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased(
+        "limit_conditions")
     buffs: typing.Sequence[EnergyAmplifierBuff]
 
 
@@ -292,7 +303,7 @@ class Activities(APIModel):
     martial_legend: typing.Optional[Activity[typing.Any]] = None
     chess: typing.Optional[Activity[typing.Any]] = None
 
-    @pydantic.root_validator(pre=True)
+    @ pydantic.root_validator(pre=True)
     def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if not values.get("activities"):
             return values
