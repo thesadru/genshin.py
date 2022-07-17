@@ -44,16 +44,6 @@ class Activity(OldActivity[ModelT]):
     total_times: int = 1
 
 
-class DateTime(APIModel):
-    """DateTime model."""
-
-    year: int
-    month: int
-    day: int
-    hour: int
-    minute: int
-
-
 # ---------------------------------------------------------
 # Summer：
 
@@ -61,7 +51,7 @@ class DateTime(APIModel):
 class SummerStoryRecord(APIModel):
     """Summer story record."""
 
-    finish_time: typing.Optional[DateTime] = Aliased("finish_time")
+    finish_time: typing.Optional[datetime.datetime] = Aliased("finish_time")
     finished: bool
     icon: str
     name: str
@@ -91,16 +81,16 @@ class SummerChallengeRecord(APIModel):
     """Summer challenge record."""
 
     id: int
-    finish_time: typing.Optional[DateTime] = Aliased("finish_time")
+    finish_time: typing.Optional[datetime.datetime] = Aliased("finish_time")
     finished: bool
-    success_num: int
-    skill_use_num: int
+    success: int = Aliased("success_num")
+    skill_use: int = Aliased("skill_use_num")
     name: str
     icon: str
 
 
 class SummerChallenge(APIModel):
-    """Summer challenge.""""
+    """Summer challenge."""
 
     records: typing.Sequence[SummerChallengeRecord] = Aliased("records")
 
@@ -111,9 +101,9 @@ class Summer(APIModel):
     anchor_number: int = Aliased("anchor_number")
     chest_number: int = Aliased("chest_number")
     way_point_number: int = Aliased("way_point_number")
-    sailing: typing.Optional[SummerSailing] = Aliased("sailing")
-    story: typing.Optional[SummerStory] = Aliased("story")
-    challenge: typing.Optional[SummerChallenge] = Aliased("challenge")
+    sailing: typing.Optional[SummerSailing] = Aliased(None, "sailing")
+    story: typing.Optional[SummerStory] = Aliased(None, "story")
+    challenge: typing.Optional[SummerChallenge] = Aliased(None, "challenge")
 
 
 # ---------------------------------------------------------
@@ -301,6 +291,13 @@ class Activities(APIModel):
     channeller_slab: typing.Optional[Activity[typing.Any]] = None
     martial_legend: typing.Optional[Activity[typing.Any]] = None
     chess: typing.Optional[Activity[typing.Any]] = None
+
+    @pydantic.validator("finish_time", pre=True)
+    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
+        if isinstance(value, datetime.datetime):
+            return value
+
+        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
 
     @pydantic.root_validator(pre=True)
     def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
