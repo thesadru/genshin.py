@@ -56,6 +56,13 @@ class SummerStoryRecord(APIModel):
     icon: str
     name: str
 
+    @pydantic.validator("finish_time", pre=True, check_fields=False)
+    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
+        if isinstance(value, datetime.datetime):
+            return value
+
+        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
+
 
 class SummerStory(APIModel):
     """Summer story."""
@@ -88,6 +95,13 @@ class SummerChallengeRecord(APIModel):
     name: str
     icon: str
 
+    @pydantic.validator("finish_time", pre=True, check_fields=False)
+    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
+        if isinstance(value, datetime.datetime):
+            return value
+
+        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
+
 
 class SummerChallenge(APIModel):
     """Summer challenge."""
@@ -98,9 +112,9 @@ class SummerChallenge(APIModel):
 class Summer(APIModel):
     """Summer event."""
 
-    anchor_number: int = Aliased("anchor_number")
-    chest_number: int = Aliased("chest_number")
-    way_point_number: int = Aliased("way_point_number")
+    anchor: int = Aliased("anchor_number")
+    chest: int = Aliased("chest_number")
+    way_point: int = Aliased("way_point_number")
     sailing: typing.Optional[SummerSailing] = Aliased(None, "sailing")
     story: typing.Optional[SummerStory] = Aliased(None, "story")
     challenge: typing.Optional[SummerChallenge] = Aliased(None, "challenge")
@@ -291,13 +305,6 @@ class Activities(APIModel):
     channeller_slab: typing.Optional[Activity[typing.Any]] = None
     martial_legend: typing.Optional[Activity[typing.Any]] = None
     chess: typing.Optional[Activity[typing.Any]] = None
-
-    @pydantic.validator("finish_time", pre=True)
-    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
-        if isinstance(value, datetime.datetime):
-            return value
-
-        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
 
     @pydantic.root_validator(pre=True)
     def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
