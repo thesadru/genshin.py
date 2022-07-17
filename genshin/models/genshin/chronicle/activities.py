@@ -56,7 +56,7 @@ class SummerStoryRecord(APIModel):
     icon: str
     name: str
 
-    @pydantic.validator("finish_time", pre=True, check_fields=False)
+    @pydantic.validator("finish_time", pre=True)
     def __validate_time(cls, value: typing.Any) -> datetime.datetime:
         if isinstance(value, datetime.datetime):
             return value
@@ -95,7 +95,7 @@ class SummerChallengeRecord(APIModel):
     name: str
     icon: str
 
-    @pydantic.validator("finish_time", pre=True, check_fields=False)
+    @pydantic.validator("finish_time", pre=True)
     def __validate_time(cls, value: typing.Any) -> datetime.datetime:
         if isinstance(value, datetime.datetime):
             return value
