@@ -51,13 +51,15 @@ class Activity(OldActivity[ModelT]):
 class SummerStoryRecord(APIModel):
     """Summer story record."""
 
-    finish_time: typing.Optional[datetime.datetime] = Aliased(None, "finish_time")
+    finish_time: typing.Optional[datetime.datetime]
     finished: bool
     icon: str
     name: str
 
     @pydantic.validator("finish_time", pre=True)
     def __validate_time(cls, value: typing.Any) -> datetime.datetime:
+        if value is None:
+            return None  # type: ignore
         if isinstance(value, datetime.datetime):
             return value
 
@@ -97,6 +99,8 @@ class SummerChallengeRecord(APIModel):
 
     @pydantic.validator("finish_time", pre=True)
     def __validate_time(cls, value: typing.Any) -> datetime.datetime:
+        if value is None:
+            return None  # type: ignore
         if isinstance(value, datetime.datetime):
             return value
 
