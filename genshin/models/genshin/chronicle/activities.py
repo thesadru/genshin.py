@@ -45,86 +45,6 @@ class Activity(OldActivity[ModelT]):
 
 
 # ---------------------------------------------------------
-# Summer：
-
-
-class SummerStoryRecord(APIModel):
-    """Summer story record."""
-
-    finish_time: typing.Optional[datetime.datetime]
-    finished: bool
-    icon: str
-    name: str
-
-    @pydantic.validator("finish_time", pre=True)
-    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
-        if value is None:
-            return None  # type: ignore
-        if isinstance(value, datetime.datetime):
-            return value
-
-        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
-
-
-class SummerStory(APIModel):
-    """Summer story."""
-
-    records: typing.Sequence[SummerStoryRecord] = Aliased("records")
-
-
-class SummerSailingRecord(APIModel):
-    """Summer sailing record."""
-
-    cost_time: int
-    finished: bool
-    id: int
-
-
-class SummerSailing(APIModel):
-    """Summer Sailing."""
-
-    records: typing.Sequence[SummerSailingRecord] = Aliased("records")
-
-
-class SummerChallengeRecord(APIModel):
-    """Summer challenge record."""
-
-    id: int
-    finish_time: typing.Optional[datetime.datetime] = Aliased(None, "finish_time")
-    finished: bool
-    success: int = Aliased("success_num")
-    skill_use: int = Aliased("skill_use_num")
-    name: str
-    icon: str
-
-    @pydantic.validator("finish_time", pre=True)
-    def __validate_time(cls, value: typing.Any) -> datetime.datetime:
-        if value is None:
-            return None  # type: ignore
-        if isinstance(value, datetime.datetime):
-            return value
-
-        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
-
-
-class SummerChallenge(APIModel):
-    """Summer challenge."""
-
-    records: typing.Sequence[SummerChallengeRecord] = Aliased("records")
-
-
-class Summer(APIModel):
-    """Summer event."""
-
-    anchor: int = Aliased("anchor_number")
-    chest: int = Aliased("chest_number")
-    way_point: int = Aliased("way_point_number")
-    sailing: typing.Optional[SummerSailing] = Aliased(None, "sailing")
-    story: typing.Optional[SummerStory] = Aliased(None, "story")
-    challenge: typing.Optional[SummerChallenge] = Aliased(None, "challenge")
-
-
-# ---------------------------------------------------------
 # Hyakunin Ikki:
 
 
@@ -290,6 +210,72 @@ class Potion(APIModel):
 
 
 # ---------------------------------------------------------
+# Summer：
+
+
+class SummerMemories(APIModel):
+    """Summer story record."""
+
+    finish_time: typing.Optional[datetime.datetime]
+    finished: bool
+    icon: str
+    name: str
+
+    @pydantic.validator("finish_time", pre=True)
+    def __validate_time(cls, value: typing.Any) -> typing.Optional[datetime.datetime]:
+        if value is None or isinstance(value, datetime.datetime):
+            return value
+
+        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
+
+
+class SummerSurfpiercer(APIModel):
+    """Summer sailing record."""
+
+    id: int
+    time: int = Aliased("cost_time")
+    finished: bool
+
+
+class SummerRealmExploration(APIModel):
+    """Summer challenge record."""
+
+    id: int
+    finish_time: typing.Optional[datetime.datetime] = Aliased("finish_time")
+    finished: bool
+    success: int = Aliased("success_num")
+    skills_used: int = Aliased("skill_use_num")
+    name: str
+    icon: str
+
+    @pydantic.validator("finish_time", pre=True)
+    def __validate_time(cls, value: typing.Any) -> typing.Optional[datetime.datetime]:
+        if value is None or isinstance(value, datetime.datetime):
+            return value
+
+        return datetime.datetime(value["year"], value["month"], value["day"], value["hour"], value["minute"])
+
+
+class Summer(APIModel):
+    """Summer event."""
+
+    waverider_waypoints: int = Aliased("anchor_number")
+    waypoints: int = Aliased("way_point_number")
+    treasure_chests: int = Aliased("chest_number")
+
+    surfpiercer: typing.Sequence[SummerSurfpiercer] = Aliased("sailing")
+    memories: typing.Sequence[SummerMemories] = Aliased("story")
+    realm_exploration: typing.Sequence[SummerRealmExploration] = Aliased("challenge")
+
+    @pydantic.validator("surfpiercer", "memories", "realm_exploration", pre=True)
+    def __flatten_records(cls, value: typing.Any) -> typing.Sequence[typing.Any]:
+        if isinstance(value, typing.Sequence):
+            return typing.cast("typing.Sequence[object]", value)
+
+        return value["records"]
+
+
+# ---------------------------------------------------------
 # Activities:
 
 
@@ -301,7 +287,7 @@ class Activities(APIModel):
     labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(None, gslug="rogue")
     energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(None, gslug="channeller_slab_copy")
     study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, gslug="potion")
-    summer: typing.Optional[Summer] = pydantic.Field(None, gslug="summer_v2")
+    summertime_odyssey: typing.Optional[Summer] = pydantic.Field(None, gslug="summer_v2")
 
     effigy: typing.Optional[Activity[typing.Any]] = None
     mechanicus: typing.Optional[Activity[typing.Any]] = None
