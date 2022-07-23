@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.client.components.calculator.calculator API documentation</title>
+<meta name="description" content="Calculator builder object …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.calculator.calculator</code></h1>
+</header>
+<section id="section-intro">
+<p>Calculator builder object.</p>
+<p>Over-engineered for the sake of extendability and maintainability.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Calculator builder object.
+
+Over-engineered for the sake of extendability and maintainability.
+&#34;&#34;&#34;
+from __future__ import annotations
+
+import abc
+import asyncio
+import typing
+
+import genshin.models.genshin as genshin_models
+from genshin import types
+from genshin.models.genshin import calculator as models
+
+if typing.TYPE_CHECKING:
+    from .client import CalculatorClient as Client
+
+__all__ = [&#34;Calculator&#34;]
+
+T = typing.TypeVar(&#34;T&#34;)
+CallableT = typing.TypeVar(&#34;CallableT&#34;, bound=&#34;typing.Callable[..., typing.Awaitable[object]]&#34;)
+
+
+def _cache(func: CallableT) -&gt; CallableT:
+    &#34;&#34;&#34;Cache a method.&#34;&#34;&#34;
+
+    async def wrapper(self: CalculatorState, *args: typing.Any, **kwargs: typing.Any) -&gt; typing.Any:
+        async with self.lock:
+            if value := self.cache.get(func.__name__):
+                return value
+
+            value = await func(self, *args, **kwargs)
+            self.cache[func.__name__] = value
+
+        return value
+
+    return typing.cast(&#34;CallableT&#34;, wrapper)
+
+
+class CalculatorState:
+    &#34;&#34;&#34;Stores character details if multiple objects require them.&#34;&#34;&#34;
+
+    client: Client
+    cache: typing.Dict[str, typing.Any]
+    lock: asyncio.Lock
+
+    character_id: typing.Optional[int] = None
+
+    def __init__(self, client: Client) -&gt; None:
+        self.client = client
+        self.cache = {}
+        self.lock = asyncio.Lock()
+
+    @_cache
+    async def get_character_details(self) -&gt; models.CalculatorCharacterDetails:
+        &#34;&#34;&#34;Get character details.&#34;&#34;&#34;
+        if self.character_id is None:
+            raise TypeError(&#34;No specified character.&#34;)
+
+        return await self.client.get_character_details(self.character_id)
+
+    @_cache
+    async def get_character_talents(self) -&gt; typing.Sequence[models.CalculatorTalent]:
+        &#34;&#34;&#34;Get talent ids.&#34;&#34;&#34;
+        if self.character_id is None:
+            raise TypeError(&#34;No specified character.&#34;)
+
+        return await self.client.get_character_talents(self.character_id)
+
+    @_cache
+    async def get_artifact_ids(self, artifact_id: int) -&gt; typing.Sequence[int]:
+        &#34;&#34;&#34;Get artifact ids.&#34;&#34;&#34;
+        others = await self.client.get_complete_artifact_set(artifact_id)
+        return [artifact_id] + [other.id for other in others]
+
+
+class CalculatorResolver(abc.ABC, typing.Generic[T]):
+    &#34;&#34;&#34;Auto-resolving calculator object.&#34;&#34;&#34;
+
+    @abc.abstractmethod
+    async def __call__(self, state: CalculatorState) -&gt; T:
+        &#34;&#34;&#34;Resolve the object into concrete data.&#34;&#34;&#34;
+
+
+class CharacterResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
+    def __init__(
+        self,
+        character: types.IDOr[genshin_models.BaseCharacter],
+        current: typing.Optional[int] = None,
+        target: typing.Optional[int] = None,
+        *,
+        element: typing.Optional[int] = None,
+    ) -&gt; None:
+        if isinstance(character, genshin_models.BaseCharacter):
+            current = current or getattr(character, &#34;level&#34;, None)
+            character = character.id
+
+        self.id = character
+        self.current = current
+        self.target = target
+        self.element = element
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Mapping[str, typing.Any]:
+        if self.current is None or self.target is None:
+            return {}
+
+        data = dict(
+            avatar_id=self.id,
+            avatar_level_current=self.current,
+            avatar_level_target=self.target,
+        )
+        if self.element:
+            data.update(element_attr_id=self.element)
+
+        return data
+
+
+class WeaponResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
+    id: int
+    current: int
+    target: int
+
+    def __init__(self, weapon: int, current: int, target: int) -&gt; None:
+        self.id = weapon
+        self.current = current
+        self.target = target
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Mapping[str, typing.Any]:
+        return dict(
+            id=self.id,
+            level_current=self.current,
+            level_target=self.target,
+        )
+
+
+class CurrentWeaponResolver(WeaponResolver):
+    id: int
+    current: int
+    target: int
+
+    def __init__(self, target: int):
+        self.target = target
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Mapping[str, typing.Any]:
+        details = await state.get_character_details()
+        self.id = details.weapon.id
+        self.current = details.weapon.level
+        return await super().__call__(state)
+
+
+class ArtifactResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
+    data: typing.List[typing.Mapping[str, typing.Any]]
+
+    def __init__(self) -&gt; None:
+        self.data = []
+
+    def add_artifact(self, id: int, current: int, target: int) -&gt; None:
+        self.data.append(dict(id=id, level_current=current, level_target=target))
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Sequence[typing.Mapping[str, typing.Any]]:
+        return self.data
+
+
+class ArtifactSetResolver(ArtifactResolver):
+    def __init__(self, any_artifact_id: int, current: int, target: int) -&gt; None:
+        self.id = any_artifact_id
+        self.current = current
+        self.target = target
+
+        super().__init__()
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Sequence[typing.Mapping[str, typing.Any]]:
+        artifact_ids = await state.get_artifact_ids(self.id)
+
+        for artifact_id in artifact_ids:
+            self.add_artifact(artifact_id, self.current, self.target)
+
+        return self.data
+
+
+class CurrentArtifactResolver(ArtifactResolver):
+    artifacts: typing.Sequence[typing.Optional[int]]
+
+    def __init__(
+        self,
+        target: typing.Optional[int] = None,
+        *,
+        flower: typing.Optional[int] = None,
+        feather: typing.Optional[int] = None,
+        sands: typing.Optional[int] = None,
+        goblet: typing.Optional[int] = None,
+        circlet: typing.Optional[int] = None,
+    ) -&gt; None:
+        if target:
+            self.artifacts = (target,) * 5
+        else:
+            self.artifacts = (flower, feather, sands, goblet, circlet)
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Sequence[typing.Mapping[str, typing.Any]]:
+        details = await state.get_character_details()
+
+        for artifact in details.artifacts:
+            if target := self.artifacts[artifact.pos - 1]:
+                self.add_artifact(artifact.id, artifact.level, target)
+
+        return self.data
+
+
+class TalentResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
+    data: typing.List[typing.Mapping[str, typing.Any]]
+
+    def __init__(self) -&gt; None:
+        self.data = []
+
+    def add_talent(self, id: int, current: int, target: int) -&gt; None:
+        self.data.append(dict(id=id, level_current=current, level_target=target))
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Sequence[typing.Mapping[str, typing.Any]]:
+        return self.data
+
+
+class CurrentTalentResolver(TalentResolver):
+    talents: typing.Mapping[str, typing.Optional[int]]
+
+    def __init__(
+        self,
+        target: typing.Optional[int] = None,
+        current: typing.Optional[int] = None,
+        *,
+        attack: typing.Optional[int] = None,
+        skill: typing.Optional[int] = None,
+        burst: typing.Optional[int] = None,
+    ) -&gt; None:
+        self.current = current
+        if target:
+            self.talents = {
+                &#34;attack&#34;: target,
+                &#34;skill&#34;: target,
+                &#34;burst&#34;: target,
+            }
+        else:
+            self.talents = {
+                &#34;attack&#34;: attack,
+                &#34;skill&#34;: skill,
+                &#34;burst&#34;: burst,
+            }
+
+        super().__init__()
+
+    async def __call__(self, state: CalculatorState) -&gt; typing.Sequence[typing.Mapping[str, typing.Any]]:
+        if self.current:
+            talents = await state.get_character_talents()
+        else:
+            details = await state.get_character_details()
+            talents = details.talents
+            self.current = 0
+
+        for talent in talents:
+            if target := self.talents.get(talent.type):
+                self.add_talent(talent.group_id, talent.level or self.current, target)
+
+        return self.data
+
+
+class Calculator:
+    &#34;&#34;&#34;Builder for the genshin impact enhancement calculator.&#34;&#34;&#34;
+
+    client: Client
+    lang: typing.Optional[str]
+
+    character: typing.Optional[CharacterResolver]
+    weapon: typing.Optional[WeaponResolver]
+    artifacts: typing.Optional[ArtifactResolver]
+    talents: typing.Optional[TalentResolver]
+
+    _state: CalculatorState
+
+    def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -&gt; None:
+        self.client = client
+        self.lang = lang
+
+        self.character = None
+        self.weapon = None
+        self.artifacts = None
+        self.talents = None
+
+        self._state = CalculatorState(client)
+
+    def set_character(
+        self,
+        character: types.IDOr[genshin_models.BaseCharacter],
+        current: typing.Optional[int] = None,
+        target: typing.Optional[int] = None,
+        *,
+        element: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Set the character.&#34;&#34;&#34;
+        self.character = CharacterResolver(character, current, target, element=element)
+        self._state.character_id = self.character.id
+        return self
+
+    def set_weapon(self, id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set the weapon.&#34;&#34;&#34;
+        self.weapon = WeaponResolver(id, current, target)
+        return self
+
+    def add_artifact(self, id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Add an artifact.&#34;&#34;&#34;
+        if type(self.artifacts) is not ArtifactResolver:
+            self.artifacts = ArtifactResolver()
+
+        self.artifacts.add_artifact(id, current, target)
+        return self
+
+    def set_artifact_set(self, any_artifact_id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set an artifact set.&#34;&#34;&#34;
+        self.artifacts = ArtifactSetResolver(any_artifact_id, current, target)
+        return self
+
+    def add_talent(self, group_id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Add a talent.&#34;&#34;&#34;
+        if type(self.talents) is not TalentResolver:
+            self.talents = TalentResolver()
+
+        self.talents.add_talent(group_id, current, target)
+        return self
+
+    def with_current_weapon(self, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set the weapon of the selected character.&#34;&#34;&#34;
+        self.weapon = CurrentWeaponResolver(target)
+        return self
+
+    def with_current_artifacts(
+        self,
+        target: typing.Optional[int] = None,
+        *,
+        flower: typing.Optional[int] = None,
+        feather: typing.Optional[int] = None,
+        sands: typing.Optional[int] = None,
+        goblet: typing.Optional[int] = None,
+        circlet: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Add all artifacts of the selected character.&#34;&#34;&#34;
+        self.artifacts = CurrentArtifactResolver(
+            target,
+            flower=flower,
+            feather=feather,
+            sands=sands,
+            goblet=goblet,
+            circlet=circlet,
+        )
+        return self
+
+    def with_current_talents(
+        self,
+        target: typing.Optional[int] = None,
+        current: typing.Optional[int] = None,
+        *,
+        attack: typing.Optional[int] = None,
+        skill: typing.Optional[int] = None,
+        burst: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Add all talents of the currently selected character.&#34;&#34;&#34;
+        self.talents = CurrentTalentResolver(
+            target=target,
+            current=current,
+            attack=attack,
+            skill=skill,
+            burst=burst,
+        )
+        return self
+
+    async def build(self) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Build the calculator object.&#34;&#34;&#34;
+        data: typing.Dict[str, typing.Any] = {}
+
+        if self.character:
+            data.update(await self.character(self._state))
+
+        if self.weapon:
+            data[&#34;weapon&#34;] = await self.weapon(self._state)
+
+        if self.artifacts:
+            data[&#34;reliquary_list&#34;] = await self.artifacts(self._state)
+
+        if self.talents:
+            data[&#34;skill_list&#34;] = await self.talents(self._state)
+
+        return data
+
+    async def calculate(self) -&gt; models.CalculatorResult:
+        &#34;&#34;&#34;Execute the calculator.&#34;&#34;&#34;
+        return await self.client._execute_calculator(await self.build(), lang=self.lang)
+
+    def __await__(self) -&gt; typing.Generator[typing.Any, None, models.CalculatorResult]:
+        return self.calculate().__await__()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.calculator.calculator.Calculator"><code class="flex name class">
+<span>class <span class="ident">Calculator</span></span>
+<span>(</span><span>client: Client, *, lang: typing.Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Builder for the genshin impact enhancement calculator.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Calculator:
+    &#34;&#34;&#34;Builder for the genshin impact enhancement calculator.&#34;&#34;&#34;
+
+    client: Client
+    lang: typing.Optional[str]
+
+    character: typing.Optional[CharacterResolver]
+    weapon: typing.Optional[WeaponResolver]
+    artifacts: typing.Optional[ArtifactResolver]
+    talents: typing.Optional[TalentResolver]
+
+    _state: CalculatorState
+
+    def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -&gt; None:
+        self.client = client
+        self.lang = lang
+
+        self.character = None
+        self.weapon = None
+        self.artifacts = None
+        self.talents = None
+
+        self._state = CalculatorState(client)
+
+    def set_character(
+        self,
+        character: types.IDOr[genshin_models.BaseCharacter],
+        current: typing.Optional[int] = None,
+        target: typing.Optional[int] = None,
+        *,
+        element: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Set the character.&#34;&#34;&#34;
+        self.character = CharacterResolver(character, current, target, element=element)
+        self._state.character_id = self.character.id
+        return self
+
+    def set_weapon(self, id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set the weapon.&#34;&#34;&#34;
+        self.weapon = WeaponResolver(id, current, target)
+        return self
+
+    def add_artifact(self, id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Add an artifact.&#34;&#34;&#34;
+        if type(self.artifacts) is not ArtifactResolver:
+            self.artifacts = ArtifactResolver()
+
+        self.artifacts.add_artifact(id, current, target)
+        return self
+
+    def set_artifact_set(self, any_artifact_id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set an artifact set.&#34;&#34;&#34;
+        self.artifacts = ArtifactSetResolver(any_artifact_id, current, target)
+        return self
+
+    def add_talent(self, group_id: int, current: int, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Add a talent.&#34;&#34;&#34;
+        if type(self.talents) is not TalentResolver:
+            self.talents = TalentResolver()
+
+        self.talents.add_talent(group_id, current, target)
+        return self
+
+    def with_current_weapon(self, target: int) -&gt; Calculator:
+        &#34;&#34;&#34;Set the weapon of the selected character.&#34;&#34;&#34;
+        self.weapon = CurrentWeaponResolver(target)
+        return self
+
+    def with_current_artifacts(
+        self,
+        target: typing.Optional[int] = None,
+        *,
+        flower: typing.Optional[int] = None,
+        feather: typing.Optional[int] = None,
+        sands: typing.Optional[int] = None,
+        goblet: typing.Optional[int] = None,
+        circlet: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Add all artifacts of the selected character.&#34;&#34;&#34;
+        self.artifacts = CurrentArtifactResolver(
+            target,
+            flower=flower,
+            feather=feather,
+            sands=sands,
+            goblet=goblet,
+            circlet=circlet,
+        )
+        return self
+
+    def with_current_talents(
+        self,
+        target: typing.Optional[int] = None,
+        current: typing.Optional[int] = None,
+        *,
+        attack: typing.Optional[int] = None,
+        skill: typing.Optional[int] = None,
+        burst: typing.Optional[int] = None,
+    ) -&gt; Calculator:
+        &#34;&#34;&#34;Add all talents of the currently selected character.&#34;&#34;&#34;
+        self.talents = CurrentTalentResolver(
+            target=target,
+            current=current,
+            attack=attack,
+            skill=skill,
+            burst=burst,
+        )
+        return self
+
+    async def build(self) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Build the calculator object.&#34;&#34;&#34;
+        data: typing.Dict[str, typing.Any] = {}
+
+        if self.character:
+            data.update(await self.character(self._state))
+
+        if self.weapon:
+            data[&#34;weapon&#34;] = await self.weapon(self._state)
+
+        if self.artifacts:
+            data[&#34;reliquary_list&#34;] = await self.artifacts(self._state)
+
+        if self.talents:
+            data[&#34;skill_list&#34;] = await self.talents(self._state)
+
+        return data
+
+    async def calculate(self) -&gt; models.CalculatorResult:
+        &#34;&#34;&#34;Execute the calculator.&#34;&#34;&#34;
+        return await self.client._execute_calculator(await self.build(), lang=self.lang)
+
+    def __await__(self) -&gt; typing.Generator[typing.Any, None, models.CalculatorResult]:
+        return self.calculate().__await__()</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.calculator.calculator.Calculator.artifacts"><code class="name">var <span class="ident">artifacts</span> : typing.Optional[ArtifactResolver]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.character"><code class="name">var <span class="ident">character</span> : typing.Optional[CharacterResolver]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.client"><code class="name">var <span class="ident">client</span> : Client</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.lang"><code class="name">var <span class="ident">lang</span> : typing.Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.talents"><code class="name">var <span class="ident">talents</span> : typing.Optional[TalentResolver]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.weapon"><code class="name">var <span class="ident">weapon</span> : typing.Optional[WeaponResolver]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.calculator.calculator.Calculator.add_artifact"><code class="name flex">
+<span>def <span class="ident">add_artifact</span></span>(<span>self, id: int, current: int, target: int) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add an artifact.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_artifact(self, id: int, current: int, target: int) -&gt; Calculator:
+    &#34;&#34;&#34;Add an artifact.&#34;&#34;&#34;
+    if type(self.artifacts) is not ArtifactResolver:
+        self.artifacts = ArtifactResolver()
+
+    self.artifacts.add_artifact(id, current, target)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.add_talent"><code class="name flex">
+<span>def <span class="ident">add_talent</span></span>(<span>self, group_id: int, current: int, target: int) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a talent.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_talent(self, group_id: int, current: int, target: int) -&gt; Calculator:
+    &#34;&#34;&#34;Add a talent.&#34;&#34;&#34;
+    if type(self.talents) is not TalentResolver:
+        self.talents = TalentResolver()
+
+    self.talents.add_talent(group_id, current, target)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.build"><code class="name flex">
+<span>async def <span class="ident">build</span></span>(<span>self) ‑> Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Build the calculator object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def build(self) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Build the calculator object.&#34;&#34;&#34;
+    data: typing.Dict[str, typing.Any] = {}
+
+    if self.character:
+        data.update(await self.character(self._state))
+
+    if self.weapon:
+        data[&#34;weapon&#34;] = await self.weapon(self._state)
+
+    if self.artifacts:
+        data[&#34;reliquary_list&#34;] = await self.artifacts(self._state)
+
+    if self.talents:
+        data[&#34;skill_list&#34;] = await self.talents(self._state)
+
+    return data</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.calculate"><code class="name flex">
+<span>async def <span class="ident">calculate</span></span>(<span>self) ‑> <a title="genshin.models.genshin.calculator.CalculatorResult" href="../../../models/genshin/calculator.html#genshin.models.genshin.calculator.CalculatorResult">CalculatorResult</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Execute the calculator.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def calculate(self) -&gt; models.CalculatorResult:
+    &#34;&#34;&#34;Execute the calculator.&#34;&#34;&#34;
+    return await self.client._execute_calculator(await self.build(), lang=self.lang)</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.set_artifact_set"><code class="name flex">
+<span>def <span class="ident">set_artifact_set</span></span>(<span>self, any_artifact_id: int, current: int, target: int) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set an artifact set.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_artifact_set(self, any_artifact_id: int, current: int, target: int) -&gt; Calculator:
+    &#34;&#34;&#34;Set an artifact set.&#34;&#34;&#34;
+    self.artifacts = ArtifactSetResolver(any_artifact_id, current, target)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.set_character"><code class="name flex">
+<span>def <span class="ident">set_character</span></span>(<span>self, character: types.IDOr[genshin_models.BaseCharacter], current: typing.Optional[int] = None, target: typing.Optional[int] = None, *, element: typing.Optional[int] = None) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the character.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_character(
+    self,
+    character: types.IDOr[genshin_models.BaseCharacter],
+    current: typing.Optional[int] = None,
+    target: typing.Optional[int] = None,
+    *,
+    element: typing.Optional[int] = None,
+) -&gt; Calculator:
+    &#34;&#34;&#34;Set the character.&#34;&#34;&#34;
+    self.character = CharacterResolver(character, current, target, element=element)
+    self._state.character_id = self.character.id
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.set_weapon"><code class="name flex">
+<span>def <span class="ident">set_weapon</span></span>(<span>self, id: int, current: int, target: int) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the weapon.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_weapon(self, id: int, current: int, target: int) -&gt; Calculator:
+    &#34;&#34;&#34;Set the weapon.&#34;&#34;&#34;
+    self.weapon = WeaponResolver(id, current, target)
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.with_current_artifacts"><code class="name flex">
+<span>def <span class="ident">with_current_artifacts</span></span>(<span>self, target: typing.Optional[int] = None, *, flower: typing.Optional[int] = None, feather: typing.Optional[int] = None, sands: typing.Optional[int] = None, goblet: typing.Optional[int] = None, circlet: typing.Optional[int] = None) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add all artifacts of the selected character.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def with_current_artifacts(
+    self,
+    target: typing.Optional[int] = None,
+    *,
+    flower: typing.Optional[int] = None,
+    feather: typing.Optional[int] = None,
+    sands: typing.Optional[int] = None,
+    goblet: typing.Optional[int] = None,
+    circlet: typing.Optional[int] = None,
+) -&gt; Calculator:
+    &#34;&#34;&#34;Add all artifacts of the selected character.&#34;&#34;&#34;
+    self.artifacts = CurrentArtifactResolver(
+        target,
+        flower=flower,
+        feather=feather,
+        sands=sands,
+        goblet=goblet,
+        circlet=circlet,
+    )
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.with_current_talents"><code class="name flex">
+<span>def <span class="ident">with_current_talents</span></span>(<span>self, target: typing.Optional[int] = None, current: typing.Optional[int] = None, *, attack: typing.Optional[int] = None, skill: typing.Optional[int] = None, burst: typing.Optional[int] = None) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add all talents of the currently selected character.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def with_current_talents(
+    self,
+    target: typing.Optional[int] = None,
+    current: typing.Optional[int] = None,
+    *,
+    attack: typing.Optional[int] = None,
+    skill: typing.Optional[int] = None,
+    burst: typing.Optional[int] = None,
+) -&gt; Calculator:
+    &#34;&#34;&#34;Add all talents of the currently selected character.&#34;&#34;&#34;
+    self.talents = CurrentTalentResolver(
+        target=target,
+        current=current,
+        attack=attack,
+        skill=skill,
+        burst=burst,
+    )
+    return self</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.components.calculator.calculator.Calculator.with_current_weapon"><code class="name flex">
+<span>def <span class="ident">with_current_weapon</span></span>(<span>self, target: int) ‑> <a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the weapon of the selected character.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def with_current_weapon(self, target: int) -&gt; Calculator:
+    &#34;&#34;&#34;Set the weapon of the selected character.&#34;&#34;&#34;
+    self.weapon = CurrentWeaponResolver(target)
+    return self</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components.calculator" href="index.html">genshin.client.components.calculator</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.calculator.calculator.Calculator" href="#genshin.client.components.calculator.calculator.Calculator">Calculator</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.add_artifact" href="#genshin.client.components.calculator.calculator.Calculator.add_artifact">add_artifact</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.add_talent" href="#genshin.client.components.calculator.calculator.Calculator.add_talent">add_talent</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.artifacts" href="#genshin.client.components.calculator.calculator.Calculator.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.build" href="#genshin.client.components.calculator.calculator.Calculator.build">build</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.calculate" href="#genshin.client.components.calculator.calculator.Calculator.calculate">calculate</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.character" href="#genshin.client.components.calculator.calculator.Calculator.character">character</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.client" href="#genshin.client.components.calculator.calculator.Calculator.client">client</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.lang" href="#genshin.client.components.calculator.calculator.Calculator.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.set_artifact_set" href="#genshin.client.components.calculator.calculator.Calculator.set_artifact_set">set_artifact_set</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.set_character" href="#genshin.client.components.calculator.calculator.Calculator.set_character">set_character</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.set_weapon" href="#genshin.client.components.calculator.calculator.Calculator.set_weapon">set_weapon</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.talents" href="#genshin.client.components.calculator.calculator.Calculator.talents">talents</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.weapon" href="#genshin.client.components.calculator.calculator.Calculator.weapon">weapon</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.with_current_artifacts" href="#genshin.client.components.calculator.calculator.Calculator.with_current_artifacts">with_current_artifacts</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.with_current_talents" href="#genshin.client.components.calculator.calculator.Calculator.with_current_talents">with_current_talents</a></code></li>
+<li><code><a title="genshin.client.components.calculator.calculator.Calculator.with_current_weapon" href="#genshin.client.components.calculator.calculator.Calculator.with_current_weapon">with_current_weapon</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

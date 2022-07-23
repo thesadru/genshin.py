@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.errors API documentation</title>
+<meta name="description" content="Errors received from the API." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.errors</code></h1>
+</header>
+<section id="section-intro">
+<p>Errors received from the API.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Errors received from the API.&#34;&#34;&#34;
+import typing
+
+__all__ = [
+    &#34;AccountNotFound&#34;,
+    &#34;AlreadyClaimed&#34;,
+    &#34;AuthkeyException&#34;,
+    &#34;AuthkeyTimeout&#34;,
+    &#34;CookieException&#34;,
+    &#34;DataNotPublic&#34;,
+    &#34;ERRORS&#34;,
+    &#34;GenshinException&#34;,
+    &#34;InvalidAuthkey&#34;,
+    &#34;InvalidCookies&#34;,
+    &#34;RedemptionClaimed&#34;,
+    &#34;RedemptionCooldown&#34;,
+    &#34;RedemptionException&#34;,
+    &#34;RedemptionInvalid&#34;,
+    &#34;TooManyRequests&#34;,
+    &#34;raise_for_retcode&#34;,
+]
+
+
+class GenshinException(Exception):
+    &#34;&#34;&#34;A base genshin exception.&#34;&#34;&#34;
+
+    retcode: int = 0
+    original: str = &#34;&#34;
+    msg: str = &#34;&#34;
+
+    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -&gt; None:
+        self.retcode = response.get(&#34;retcode&#34;, self.retcode)
+        self.original = response.get(&#34;message&#34;, &#34;&#34;)
+        self.msg = msg or self.msg or self.original
+
+        if self.retcode:
+            msg = f&#34;[{self.retcode}] {self.msg}&#34;
+        else:
+            msg = self.msg
+
+        super().__init__(msg)
+
+    def __repr__(self) -&gt; str:
+        response = {&#34;retcode&#34;: self.retcode, &#34;message&#34;: self.original}
+        args = [repr(response)]
+        if self.msg != self.original:
+            args.append(repr(self.msg))
+
+        return f&#34;{type(self).__name__}({&#39;, &#39;.join(args)})&#34;
+
+    @property
+    def response(self) -&gt; typing.Mapping[str, typing.Any]:
+        return {&#34;retcode&#34;: self.retcode, &#34;message&#34;: self.original, &#34;data&#34;: None}
+
+
+class InternalDatabaseError(GenshinException):
+    &#34;&#34;&#34;Internal database error.&#34;&#34;&#34;
+
+    retcode = -1
+
+
+class AccountNotFound(GenshinException):
+    &#34;&#34;&#34;Tried to get data with an invalid uid.&#34;&#34;&#34;
+
+    msg = &#34;Could not find user; uid may be invalid.&#34;
+
+
+class DataNotPublic(GenshinException):
+    &#34;&#34;&#34;User hasn&#39;t set their data to public.&#34;&#34;&#34;
+
+    msg = &#34;User&#39;s data is not public.&#34;
+
+
+class CookieException(GenshinException):
+    &#34;&#34;&#34;Base error for cookies.&#34;&#34;&#34;
+
+
+class InvalidCookies(CookieException):
+    &#34;&#34;&#34;Cookies weren&#39;t valid.&#34;&#34;&#34;
+
+    retcode = -100
+    msg = &#34;Cookies are not valid.&#34;
+
+
+class TooManyRequests(CookieException):
+    &#34;&#34;&#34;Made too many requests and got ratelimited.&#34;&#34;&#34;
+
+    retcode = 10101
+    msg = &#34;Cannot get data for more than 30 accounts per cookie per day.&#34;
+
+
+class VisitsTooFrequently(GenshinException):
+    &#34;&#34;&#34;Visited a page too frequently.
+
+    Must be handled with exponential backoff.
+    &#34;&#34;&#34;
+
+    retcode = -110
+    msg = &#34;Visits too frequently.&#34;
+
+
+class AlreadyClaimed(GenshinException):
+    &#34;&#34;&#34;Already claimed the daily reward today.&#34;&#34;&#34;
+
+    retcode = -5003
+    msg = &#34;Already claimed the daily reward today.&#34;
+
+
+class AuthkeyException(GenshinException):
+    &#34;&#34;&#34;Base error for authkeys.&#34;&#34;&#34;
+
+
+class InvalidAuthkey(AuthkeyException):
+    &#34;&#34;&#34;Authkey is not valid.&#34;&#34;&#34;
+
+    retcode = -100
+    msg = &#34;Authkey is not valid.&#34;
+
+
+class AuthkeyTimeout(AuthkeyException):
+    &#34;&#34;&#34;Authkey has timed out.&#34;&#34;&#34;
+
+    retcode = -101
+    msg = &#34;Authkey has timed out.&#34;
+
+
+class RedemptionException(GenshinException):
+    &#34;&#34;&#34;Exception caused by redeeming a code.&#34;&#34;&#34;
+
+
+class RedemptionInvalid(RedemptionException):
+    &#34;&#34;&#34;Invalid redemption code.&#34;&#34;&#34;
+
+    msg = &#34;Invalid redemption code.&#34;
+
+
+class RedemptionCooldown(RedemptionException):
+    &#34;&#34;&#34;Redemption is on cooldown.&#34;&#34;&#34;
+
+    msg = &#34;Redemption is on cooldown.&#34;
+
+
+class RedemptionClaimed(RedemptionException):
+    &#34;&#34;&#34;Redemption code has been claimed already.&#34;&#34;&#34;
+
+    msg = &#34;Redemption code has been claimed already.&#34;
+
+
+_TGE = typing.Type[GenshinException]
+_errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Optional[str]]]] = {
+    # misc hoyolab
+    -100: InvalidCookies,
+    -108: &#34;Invalid language.&#34;,
+    -110: VisitsTooFrequently,
+    # game record
+    10001: InvalidCookies,
+    -10001: &#34;Malformed request.&#34;,
+    -10002: &#34;No genshin account associated with cookies.&#34;,
+    # database game record
+    10101: TooManyRequests,
+    10102: DataNotPublic,
+    10103: (InvalidCookies, &#34;Cookies are valid but do not have a hoyolab account bound to them.&#34;),
+    10104: &#34;Cannot view real-time notes of other users.&#34;,
+    # calculator
+    -500001: &#34;Invalid fields in calculation.&#34;,
+    -500004: VisitsTooFrequently,
+    -502001: &#34;User does not have this character.&#34;,
+    -502002: &#34;Calculator sync is not enabled.&#34;,
+    # mixin
+    -1: InternalDatabaseError,
+    1009: AccountNotFound,
+    # redemption
+    -1065: RedemptionInvalid,
+    -1071: InvalidCookies,
+    -1073: (AccountNotFound, &#34;Account has no game account bound to it.&#34;),
+    -2001: (RedemptionInvalid, &#34;Redemption code has expired.&#34;),
+    -2003: (RedemptionInvalid, &#34;Redemption code is incorrectly formatted.&#34;),
+    -2004: RedemptionInvalid,
+    -2014: (RedemptionInvalid, &#34;Redemption code not activated&#34;),
+    -2016: RedemptionCooldown,
+    -2017: RedemptionClaimed,
+    -2018: RedemptionClaimed,
+    -2021: (RedemptionException, &#34;Cannot claim codes for accounts with adventure rank lower than 10.&#34;),
+    # rewards
+    -5003: AlreadyClaimed,
+    # chinese
+    1008: AccountNotFound,
+    -1104: &#34;This action must be done in the app.&#34;,
+}
+
+ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {
+    retcode: ((exc, None) if isinstance(exc, type) else (GenshinException, exc) if isinstance(exc, str) else exc)
+    for retcode, exc in _errors.items()
+}
+
+
+def raise_for_retcode(data: typing.Dict[str, typing.Any]) -&gt; typing.NoReturn:
+    &#34;&#34;&#34;Raise an equivalent error to a response.
+
+    game record:
+        10001 = invalid cookie
+        101xx = generic errors
+    authkey:
+        -100 = invalid authkey
+        -101 = authkey timed out
+    code redemption:
+        20xx = invalid code or state
+        -107x = invalid cookies
+    daily reward:
+        -500x = already claimed the daily reward
+    &#34;&#34;&#34;
+    r, m = data.get(&#34;retcode&#34;, 0), data.get(&#34;message&#34;, &#34;&#34;)
+
+    if m.startswith(&#34;authkey&#34;):
+        if r == -100:
+            raise InvalidAuthkey(data)
+        elif r == -101:
+            raise AuthkeyTimeout(data)
+        else:
+            raise AuthkeyException(data)
+
+    if r in ERRORS:
+        exctype, msg = ERRORS[r]
+        raise exctype(data, msg)
+
+    if &#34;redemption&#34; in m:
+        raise RedemptionException(data)
+
+    raise GenshinException(data)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="genshin.errors.raise_for_retcode"><code class="name flex">
+<span>def <span class="ident">raise_for_retcode</span></span>(<span>data: Dict[str, Any]) ‑> NoReturn</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raise an equivalent error to a response.</p>
+<p>game record:
+10001 = invalid cookie
+101xx = generic errors
+authkey:
+-100 = invalid authkey
+-101 = authkey timed out
+code redemption:
+20xx = invalid code or state
+-107x = invalid cookies
+daily reward:
+-500x = already claimed the daily reward</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def raise_for_retcode(data: typing.Dict[str, typing.Any]) -&gt; typing.NoReturn:
+    &#34;&#34;&#34;Raise an equivalent error to a response.
+
+    game record:
+        10001 = invalid cookie
+        101xx = generic errors
+    authkey:
+        -100 = invalid authkey
+        -101 = authkey timed out
+    code redemption:
+        20xx = invalid code or state
+        -107x = invalid cookies
+    daily reward:
+        -500x = already claimed the daily reward
+    &#34;&#34;&#34;
+    r, m = data.get(&#34;retcode&#34;, 0), data.get(&#34;message&#34;, &#34;&#34;)
+
+    if m.startswith(&#34;authkey&#34;):
+        if r == -100:
+            raise InvalidAuthkey(data)
+        elif r == -101:
+            raise AuthkeyTimeout(data)
+        else:
+            raise AuthkeyException(data)
+
+    if r in ERRORS:
+        exctype, msg = ERRORS[r]
+        raise exctype(data, msg)
+
+    if &#34;redemption&#34; in m:
+        raise RedemptionException(data)
+
+    raise GenshinException(data)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.errors.AccountNotFound"><code class="flex name class">
+<span>class <span class="ident">AccountNotFound</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Tried to get data with an invalid uid.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AccountNotFound(GenshinException):
+    &#34;&#34;&#34;Tried to get data with an invalid uid.&#34;&#34;&#34;
+
+    msg = &#34;Could not find user; uid may be invalid.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.AccountNotFound.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AccountNotFound.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AccountNotFound.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.AlreadyClaimed"><code class="flex name class">
+<span>class <span class="ident">AlreadyClaimed</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Already claimed the daily reward today.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AlreadyClaimed(GenshinException):
+    &#34;&#34;&#34;Already claimed the daily reward today.&#34;&#34;&#34;
+
+    retcode = -5003
+    msg = &#34;Already claimed the daily reward today.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.AlreadyClaimed.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AlreadyClaimed.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AlreadyClaimed.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.AuthkeyException"><code class="flex name class">
+<span>class <span class="ident">AuthkeyException</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base error for authkeys.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthkeyException(GenshinException):
+    &#34;&#34;&#34;Base error for authkeys.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.AuthkeyTimeout" href="#genshin.errors.AuthkeyTimeout">AuthkeyTimeout</a></li>
+<li><a title="genshin.errors.InvalidAuthkey" href="#genshin.errors.InvalidAuthkey">InvalidAuthkey</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.AuthkeyException.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AuthkeyException.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AuthkeyException.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.AuthkeyTimeout"><code class="flex name class">
+<span>class <span class="ident">AuthkeyTimeout</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Authkey has timed out.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthkeyTimeout(AuthkeyException):
+    &#34;&#34;&#34;Authkey has timed out.&#34;&#34;&#34;
+
+    retcode = -101
+    msg = &#34;Authkey has timed out.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.AuthkeyException" href="#genshin.errors.AuthkeyException">AuthkeyException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.AuthkeyTimeout.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AuthkeyTimeout.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.AuthkeyTimeout.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.CookieException"><code class="flex name class">
+<span>class <span class="ident">CookieException</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base error for cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CookieException(GenshinException):
+    &#34;&#34;&#34;Base error for cookies.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.InvalidCookies" href="#genshin.errors.InvalidCookies">InvalidCookies</a></li>
+<li><a title="genshin.errors.TooManyRequests" href="#genshin.errors.TooManyRequests">TooManyRequests</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.CookieException.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.CookieException.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.CookieException.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.DataNotPublic"><code class="flex name class">
+<span>class <span class="ident">DataNotPublic</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User hasn't set their data to public.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataNotPublic(GenshinException):
+    &#34;&#34;&#34;User hasn&#39;t set their data to public.&#34;&#34;&#34;
+
+    msg = &#34;User&#39;s data is not public.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.DataNotPublic.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.DataNotPublic.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.DataNotPublic.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.GenshinException"><code class="flex name class">
+<span>class <span class="ident">GenshinException</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A base genshin exception.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinException(Exception):
+    &#34;&#34;&#34;A base genshin exception.&#34;&#34;&#34;
+
+    retcode: int = 0
+    original: str = &#34;&#34;
+    msg: str = &#34;&#34;
+
+    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -&gt; None:
+        self.retcode = response.get(&#34;retcode&#34;, self.retcode)
+        self.original = response.get(&#34;message&#34;, &#34;&#34;)
+        self.msg = msg or self.msg or self.original
+
+        if self.retcode:
+            msg = f&#34;[{self.retcode}] {self.msg}&#34;
+        else:
+            msg = self.msg
+
+        super().__init__(msg)
+
+    def __repr__(self) -&gt; str:
+        response = {&#34;retcode&#34;: self.retcode, &#34;message&#34;: self.original}
+        args = [repr(response)]
+        if self.msg != self.original:
+            args.append(repr(self.msg))
+
+        return f&#34;{type(self).__name__}({&#39;, &#39;.join(args)})&#34;
+
+    @property
+    def response(self) -&gt; typing.Mapping[str, typing.Any]:
+        return {&#34;retcode&#34;: self.retcode, &#34;message&#34;: self.original, &#34;data&#34;: None}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.AccountNotFound" href="#genshin.errors.AccountNotFound">AccountNotFound</a></li>
+<li><a title="genshin.errors.AlreadyClaimed" href="#genshin.errors.AlreadyClaimed">AlreadyClaimed</a></li>
+<li><a title="genshin.errors.AuthkeyException" href="#genshin.errors.AuthkeyException">AuthkeyException</a></li>
+<li><a title="genshin.errors.CookieException" href="#genshin.errors.CookieException">CookieException</a></li>
+<li><a title="genshin.errors.DataNotPublic" href="#genshin.errors.DataNotPublic">DataNotPublic</a></li>
+<li>genshin.errors.InternalDatabaseError</li>
+<li><a title="genshin.errors.RedemptionException" href="#genshin.errors.RedemptionException">RedemptionException</a></li>
+<li>genshin.errors.VisitsTooFrequently</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.GenshinException.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.GenshinException.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.GenshinException.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.errors.GenshinException.response"><code class="name">var <span class="ident">response</span> : Mapping[str, Any]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def response(self) -&gt; typing.Mapping[str, typing.Any]:
+    return {&#34;retcode&#34;: self.retcode, &#34;message&#34;: self.original, &#34;data&#34;: None}</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.InvalidAuthkey"><code class="flex name class">
+<span>class <span class="ident">InvalidAuthkey</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Authkey is not valid.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InvalidAuthkey(AuthkeyException):
+    &#34;&#34;&#34;Authkey is not valid.&#34;&#34;&#34;
+
+    retcode = -100
+    msg = &#34;Authkey is not valid.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.AuthkeyException" href="#genshin.errors.AuthkeyException">AuthkeyException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.InvalidAuthkey.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.InvalidAuthkey.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.InvalidAuthkey.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.InvalidCookies"><code class="flex name class">
+<span>class <span class="ident">InvalidCookies</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cookies weren't valid.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InvalidCookies(CookieException):
+    &#34;&#34;&#34;Cookies weren&#39;t valid.&#34;&#34;&#34;
+
+    retcode = -100
+    msg = &#34;Cookies are not valid.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.CookieException" href="#genshin.errors.CookieException">CookieException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.InvalidCookies.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.InvalidCookies.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.InvalidCookies.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.RedemptionClaimed"><code class="flex name class">
+<span>class <span class="ident">RedemptionClaimed</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Redemption code has been claimed already.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedemptionClaimed(RedemptionException):
+    &#34;&#34;&#34;Redemption code has been claimed already.&#34;&#34;&#34;
+
+    msg = &#34;Redemption code has been claimed already.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.RedemptionException" href="#genshin.errors.RedemptionException">RedemptionException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.RedemptionClaimed.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionClaimed.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionClaimed.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.RedemptionCooldown"><code class="flex name class">
+<span>class <span class="ident">RedemptionCooldown</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Redemption is on cooldown.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedemptionCooldown(RedemptionException):
+    &#34;&#34;&#34;Redemption is on cooldown.&#34;&#34;&#34;
+
+    msg = &#34;Redemption is on cooldown.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.RedemptionException" href="#genshin.errors.RedemptionException">RedemptionException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.RedemptionCooldown.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionCooldown.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionCooldown.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.RedemptionException"><code class="flex name class">
+<span>class <span class="ident">RedemptionException</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Exception caused by redeeming a code.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedemptionException(GenshinException):
+    &#34;&#34;&#34;Exception caused by redeeming a code.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.RedemptionClaimed" href="#genshin.errors.RedemptionClaimed">RedemptionClaimed</a></li>
+<li><a title="genshin.errors.RedemptionCooldown" href="#genshin.errors.RedemptionCooldown">RedemptionCooldown</a></li>
+<li><a title="genshin.errors.RedemptionInvalid" href="#genshin.errors.RedemptionInvalid">RedemptionInvalid</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.RedemptionException.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionException.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionException.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.RedemptionInvalid"><code class="flex name class">
+<span>class <span class="ident">RedemptionInvalid</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Invalid redemption code.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedemptionInvalid(RedemptionException):
+    &#34;&#34;&#34;Invalid redemption code.&#34;&#34;&#34;
+
+    msg = &#34;Invalid redemption code.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.RedemptionException" href="#genshin.errors.RedemptionException">RedemptionException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.RedemptionInvalid.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionInvalid.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.RedemptionInvalid.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.errors.TooManyRequests"><code class="flex name class">
+<span>class <span class="ident">TooManyRequests</span></span>
+<span>(</span><span>response: Mapping[str, Any] = {}, msg: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Made too many requests and got ratelimited.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TooManyRequests(CookieException):
+    &#34;&#34;&#34;Made too many requests and got ratelimited.&#34;&#34;&#34;
+
+    retcode = 10101
+    msg = &#34;Cannot get data for more than 30 accounts per cookie per day.&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.errors.CookieException" href="#genshin.errors.CookieException">CookieException</a></li>
+<li><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.errors.TooManyRequests.msg"><code class="name">var <span class="ident">msg</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.TooManyRequests.original"><code class="name">var <span class="ident">original</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.errors.TooManyRequests.retcode"><code class="name">var <span class="ident">retcode</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin" href="index.html">genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="genshin.errors.raise_for_retcode" href="#genshin.errors.raise_for_retcode">raise_for_retcode</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.errors.AccountNotFound" href="#genshin.errors.AccountNotFound">AccountNotFound</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.AccountNotFound.msg" href="#genshin.errors.AccountNotFound.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.AccountNotFound.original" href="#genshin.errors.AccountNotFound.original">original</a></code></li>
+<li><code><a title="genshin.errors.AccountNotFound.retcode" href="#genshin.errors.AccountNotFound.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.AlreadyClaimed" href="#genshin.errors.AlreadyClaimed">AlreadyClaimed</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.AlreadyClaimed.msg" href="#genshin.errors.AlreadyClaimed.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.AlreadyClaimed.original" href="#genshin.errors.AlreadyClaimed.original">original</a></code></li>
+<li><code><a title="genshin.errors.AlreadyClaimed.retcode" href="#genshin.errors.AlreadyClaimed.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.AuthkeyException" href="#genshin.errors.AuthkeyException">AuthkeyException</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.AuthkeyException.msg" href="#genshin.errors.AuthkeyException.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.AuthkeyException.original" href="#genshin.errors.AuthkeyException.original">original</a></code></li>
+<li><code><a title="genshin.errors.AuthkeyException.retcode" href="#genshin.errors.AuthkeyException.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.AuthkeyTimeout" href="#genshin.errors.AuthkeyTimeout">AuthkeyTimeout</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.AuthkeyTimeout.msg" href="#genshin.errors.AuthkeyTimeout.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.AuthkeyTimeout.original" href="#genshin.errors.AuthkeyTimeout.original">original</a></code></li>
+<li><code><a title="genshin.errors.AuthkeyTimeout.retcode" href="#genshin.errors.AuthkeyTimeout.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.CookieException" href="#genshin.errors.CookieException">CookieException</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.CookieException.msg" href="#genshin.errors.CookieException.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.CookieException.original" href="#genshin.errors.CookieException.original">original</a></code></li>
+<li><code><a title="genshin.errors.CookieException.retcode" href="#genshin.errors.CookieException.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.DataNotPublic" href="#genshin.errors.DataNotPublic">DataNotPublic</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.DataNotPublic.msg" href="#genshin.errors.DataNotPublic.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.DataNotPublic.original" href="#genshin.errors.DataNotPublic.original">original</a></code></li>
+<li><code><a title="genshin.errors.DataNotPublic.retcode" href="#genshin.errors.DataNotPublic.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.GenshinException" href="#genshin.errors.GenshinException">GenshinException</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.GenshinException.msg" href="#genshin.errors.GenshinException.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.GenshinException.original" href="#genshin.errors.GenshinException.original">original</a></code></li>
+<li><code><a title="genshin.errors.GenshinException.response" href="#genshin.errors.GenshinException.response">response</a></code></li>
+<li><code><a title="genshin.errors.GenshinException.retcode" href="#genshin.errors.GenshinException.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.InvalidAuthkey" href="#genshin.errors.InvalidAuthkey">InvalidAuthkey</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.InvalidAuthkey.msg" href="#genshin.errors.InvalidAuthkey.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.InvalidAuthkey.original" href="#genshin.errors.InvalidAuthkey.original">original</a></code></li>
+<li><code><a title="genshin.errors.InvalidAuthkey.retcode" href="#genshin.errors.InvalidAuthkey.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.InvalidCookies" href="#genshin.errors.InvalidCookies">InvalidCookies</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.InvalidCookies.msg" href="#genshin.errors.InvalidCookies.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.InvalidCookies.original" href="#genshin.errors.InvalidCookies.original">original</a></code></li>
+<li><code><a title="genshin.errors.InvalidCookies.retcode" href="#genshin.errors.InvalidCookies.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.RedemptionClaimed" href="#genshin.errors.RedemptionClaimed">RedemptionClaimed</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.RedemptionClaimed.msg" href="#genshin.errors.RedemptionClaimed.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.RedemptionClaimed.original" href="#genshin.errors.RedemptionClaimed.original">original</a></code></li>
+<li><code><a title="genshin.errors.RedemptionClaimed.retcode" href="#genshin.errors.RedemptionClaimed.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.RedemptionCooldown" href="#genshin.errors.RedemptionCooldown">RedemptionCooldown</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.RedemptionCooldown.msg" href="#genshin.errors.RedemptionCooldown.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.RedemptionCooldown.original" href="#genshin.errors.RedemptionCooldown.original">original</a></code></li>
+<li><code><a title="genshin.errors.RedemptionCooldown.retcode" href="#genshin.errors.RedemptionCooldown.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.RedemptionException" href="#genshin.errors.RedemptionException">RedemptionException</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.RedemptionException.msg" href="#genshin.errors.RedemptionException.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.RedemptionException.original" href="#genshin.errors.RedemptionException.original">original</a></code></li>
+<li><code><a title="genshin.errors.RedemptionException.retcode" href="#genshin.errors.RedemptionException.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.RedemptionInvalid" href="#genshin.errors.RedemptionInvalid">RedemptionInvalid</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.RedemptionInvalid.msg" href="#genshin.errors.RedemptionInvalid.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.RedemptionInvalid.original" href="#genshin.errors.RedemptionInvalid.original">original</a></code></li>
+<li><code><a title="genshin.errors.RedemptionInvalid.retcode" href="#genshin.errors.RedemptionInvalid.retcode">retcode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.errors.TooManyRequests" href="#genshin.errors.TooManyRequests">TooManyRequests</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.errors.TooManyRequests.msg" href="#genshin.errors.TooManyRequests.msg">msg</a></code></li>
+<li><code><a title="genshin.errors.TooManyRequests.original" href="#genshin.errors.TooManyRequests.original">original</a></code></li>
+<li><code><a title="genshin.errors.TooManyRequests.retcode" href="#genshin.errors.TooManyRequests.retcode">retcode</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

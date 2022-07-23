@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.models.genshin.constants API documentation</title>
+<meta name="description" content="Genshin model constants." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.constants</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin model constants.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Genshin model constants.&#34;&#34;&#34;
+import typing
+
+__all__ = [&#34;CHARACTER_NAMES&#34;, &#34;DBChar&#34;]
+
+
+class DBChar(typing.NamedTuple):
+    &#34;&#34;&#34;Partial genshin character data.&#34;&#34;&#34;
+
+    id: int
+    icon_name: str  # standardized icon name
+    name: str  # english name
+    element: str
+    rarity: int
+
+    guessed: bool = False
+
+
+_RAW_DB_CHAR = typing.Union[typing.Tuple[str, str, str, int], typing.Tuple[str, str, int]]
+_character_names: typing.Mapping[int, typing.Optional[_RAW_DB_CHAR]] = {
+    10000001: None,
+    10000002: (&#34;Ayaka&#34;, &#34;Kamisato Ayaka&#34;, &#34;Cryo&#34;, 5),
+    10000003: (&#34;Qin&#34;, &#34;Jean&#34;, &#34;Anemo&#34;, 5),
+    10000004: None,
+    10000005: (&#34;PlayerBoy&#34;, &#34;Traveler&#34;, &#34;&#34;, 5),
+    10000006: (&#34;Lisa&#34;, &#34;Electro&#34;, 4),
+    10000007: (&#34;PlayerGirl&#34;, &#34;Traveler&#34;, &#34;&#34;, 5),
+    10000008: None,
+    10000009: None,
+    10000010: None,
+    10000011: None,
+    10000012: None,
+    10000013: None,
+    10000014: (&#34;Barbara&#34;, &#34;Hydro&#34;, 4),
+    10000015: (&#34;Kaeya&#34;, &#34;Cryo&#34;, 4),
+    10000016: (&#34;Diluc&#34;, &#34;Pyro&#34;, 5),
+    10000017: None,
+    10000018: None,
+    10000019: None,
+    10000020: (&#34;Razor&#34;, &#34;Electro&#34;, 4),
+    10000021: (&#34;Ambor&#34;, &#34;Amber&#34;, &#34;Pyro&#34;, 4),
+    10000022: (&#34;Venti&#34;, &#34;Anemo&#34;, 5),
+    10000023: (&#34;Xiangling&#34;, &#34;Pyro&#34;, 4),
+    10000024: (&#34;Beidou&#34;, &#34;Electro&#34;, 4),
+    10000025: (&#34;Xingqiu&#34;, &#34;Hydro&#34;, 4),
+    10000026: (&#34;Xiao&#34;, &#34;Anemo&#34;, 5),
+    10000027: (&#34;Ningguang&#34;, &#34;Geo&#34;, 4),
+    10000028: None,
+    10000029: (&#34;Klee&#34;, &#34;Pyro&#34;, 5),
+    10000030: (&#34;Zhongli&#34;, &#34;Geo&#34;, 5),
+    10000031: (&#34;Fischl&#34;, &#34;Electro&#34;, 4),
+    10000032: (&#34;Bennett&#34;, &#34;Pyro&#34;, 4),
+    10000033: (&#34;Tartaglia&#34;, &#34;Hydro&#34;, 5),
+    10000034: (&#34;Noel&#34;, &#34;Noelle&#34;, &#34;Geo&#34;, 4),
+    10000035: (&#34;Qiqi&#34;, &#34;Cryo&#34;, 5),
+    10000036: (&#34;Chongyun&#34;, &#34;Cryo&#34;, 4),
+    10000037: (&#34;Ganyu&#34;, &#34;Cryo&#34;, 5),
+    10000038: (&#34;Albedo&#34;, &#34;Geo&#34;, 5),
+    10000039: (&#34;Diona&#34;, &#34;Cryo&#34;, 4),
+    10000040: None,
+    10000041: (&#34;Mona&#34;, &#34;Hydro&#34;, 5),
+    10000042: (&#34;Keqing&#34;, &#34;Electro&#34;, 5),
+    10000043: (&#34;Sucrose&#34;, &#34;Anemo&#34;, 4),
+    10000044: (&#34;Xinyan&#34;, &#34;Pyro&#34;, 4),
+    10000045: (&#34;Rosaria&#34;, &#34;Cryo&#34;, 4),
+    10000046: (&#34;Hutao&#34;, &#34;Hu Tao&#34;, &#34;Pyro&#34;, 5),
+    10000047: (&#34;Kazuha&#34;, &#34;Kaedehara Kazuha&#34;, &#34;Anemo&#34;, 5),
+    10000048: (&#34;Feiyan&#34;, &#34;Yanfei&#34;, &#34;Pyro&#34;, 4),
+    10000049: (&#34;Yoimiya&#34;, &#34;Pyro&#34;, 5),
+    10000050: (&#34;Tohma&#34;, &#34;Thoma&#34;, &#34;Pyro&#34;, 4),
+    10000051: (&#34;Eula&#34;, &#34;Cryo&#34;, 5),
+    10000052: (&#34;Shougun&#34;, &#34;Raiden Shogun&#34;, &#34;Electro&#34;, 5),
+    10000053: (&#34;Sayu&#34;, &#34;Anemo&#34;, 4),
+    10000054: (&#34;Kokomi&#34;, &#34;Sangonomiya Kokomi&#34;, &#34;Hydro&#34;, 5),
+    10000055: (&#34;Gorou&#34;, &#34;Geo&#34;, 4),
+    10000056: (&#34;Sara&#34;, &#34;Kujou Sara&#34;, &#34;Electro&#34;, 4),
+    10000057: (&#34;Itto&#34;, &#34;Arataki Itto&#34;, &#34;Geo&#34;, 5),
+    10000058: (&#34;Yae&#34;, &#34;Yae Miko&#34;, &#34;Electro&#34;, 5),
+    10000059: (&#34;Heizo&#34;, &#34;Shikanoin Heizou&#34;, &#34;Anemo&#34;, 4),
+    10000060: (&#34;Yelan&#34;, &#34;Hydro&#34;, 5),
+    10000061: None,
+    10000062: (&#34;Aloy&#34;, &#34;Cryo&#34;, 105),
+    10000063: (&#34;Shenhe&#34;, &#34;Cryo&#34;, 5),
+    10000064: (&#34;Yunjin&#34;, &#34;Yun Jin&#34;, &#34;Geo&#34;, 4),
+    10000065: (&#34;Shinobu&#34;, &#34;Kuki Shinobu&#34;, &#34;Electro&#34;, 4),
+    10000066: (&#34;Ayato&#34;, &#34;Kamisato Ayato&#34;, &#34;Hydro&#34;, 5),
+}
+CHARACTER_NAMES: typing.Dict[int, DBChar] = {
+    id: (DBChar(id, *data) if len(data) == 4 else DBChar(id, data[0], *data))
+    for id, data in _character_names.items()
+    if data is not None
+}</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.constants.DBChar"><code class="flex name class">
+<span>class <span class="ident">DBChar</span></span>
+<span>(</span><span>id: int, icon_name: str, name: str, element: str, rarity: int, guessed: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Partial genshin character data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DBChar(typing.NamedTuple):
+    &#34;&#34;&#34;Partial genshin character data.&#34;&#34;&#34;
+
+    id: int
+    icon_name: str  # standardized icon name
+    name: str  # english name
+    element: str
+    rarity: int
+
+    guessed: bool = False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.constants.DBChar.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 3</p></div>
+</dd>
+<dt id="genshin.models.genshin.constants.DBChar.guessed"><code class="name">var <span class="ident">guessed</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 5</p></div>
+</dd>
+<dt id="genshin.models.genshin.constants.DBChar.icon_name"><code class="name">var <span class="ident">icon_name</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 1</p></div>
+</dd>
+<dt id="genshin.models.genshin.constants.DBChar.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 0</p></div>
+</dd>
+<dt id="genshin.models.genshin.constants.DBChar.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 2</p></div>
+</dd>
+<dt id="genshin.models.genshin.constants.DBChar.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 4</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin" href="index.html">genshin.models.genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.constants.DBChar" href="#genshin.models.genshin.constants.DBChar">DBChar</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.constants.DBChar.element" href="#genshin.models.genshin.constants.DBChar.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.constants.DBChar.guessed" href="#genshin.models.genshin.constants.DBChar.guessed">guessed</a></code></li>
+<li><code><a title="genshin.models.genshin.constants.DBChar.icon_name" href="#genshin.models.genshin.constants.DBChar.icon_name">icon_name</a></code></li>
+<li><code><a title="genshin.models.genshin.constants.DBChar.id" href="#genshin.models.genshin.constants.DBChar.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.constants.DBChar.name" href="#genshin.models.genshin.constants.DBChar.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.constants.DBChar.rarity" href="#genshin.models.genshin.constants.DBChar.rarity">rarity</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

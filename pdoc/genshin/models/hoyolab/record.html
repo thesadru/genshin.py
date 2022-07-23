@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.models.hoyolab.record API documentation</title>
+<meta name="description" content="Base hoyolab APIModels." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.hoyolab.record</code></h1>
+</header>
+<section id="section-intro">
+<p>Base hoyolab APIModels.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Base hoyolab APIModels.&#34;&#34;&#34;
+from __future__ import annotations
+
+import enum
+import re
+import typing
+
+import pydantic
+
+from genshin import types
+from genshin.models.model import Aliased, APIModel, Unique
+
+__all__ = [
+    &#34;Gender&#34;,
+    &#34;GenshinAccount&#34;,
+    &#34;RecordCard&#34;,
+    &#34;RecordCardData&#34;,
+    &#34;RecordCardSetting&#34;,
+    &#34;RecordCardSettingType&#34;,
+    &#34;SearchUser&#34;,
+    &#34;UserInfo&#34;,
+]
+
+
+class GenshinAccount(APIModel):
+    &#34;&#34;&#34;Genshin account.&#34;&#34;&#34;
+
+    game_biz: str
+    uid: int = Aliased(&#34;game_uid&#34;)
+    level: int
+    nickname: str
+    server: str = Aliased(&#34;region&#34;)
+    server_name: str = Aliased(&#34;region_name&#34;)
+
+    @property
+    def game(self) -&gt; types.Game:
+        if &#34;hk4e&#34; in self.game_biz:
+            return types.Game.GENSHIN
+        elif &#34;bh3&#34; in self.game_biz:
+            return types.Game.HONKAI
+
+        try:
+            return types.Game(self.game_biz)
+        except ValueError:
+            return self.game_biz  # type: ignore
+
+
+class UserInfo(APIModel):
+    &#34;&#34;&#34;Chronicle user info.&#34;&#34;&#34;
+
+    nickname: str
+    server: str = Aliased(&#34;region&#34;)
+    level: int
+    icon: str = Aliased(&#34;AvatarUrl&#34;)
+
+
+class RecordCardData(APIModel):
+    &#34;&#34;&#34;Data entry of a record card.&#34;&#34;&#34;
+
+    name: str
+    value: str
+
+
+class RecordCardSetting(APIModel, Unique):
+    &#34;&#34;&#34;Privacy setting of a record card.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;switch_id&#34;)
+    description: str = Aliased(&#34;switch_name&#34;)
+    public: bool = Aliased(&#34;is_public&#34;)
+
+
+class RecordCardSettingType(enum.IntEnum):
+    &#34;&#34;&#34;Privacy setting of a record card.&#34;&#34;&#34;
+
+    SHOW_CHRONICLE = 1
+    SHOW_CHARACTER_DETAILS = 2
+    ENABLE_REAL_TIME_NOTES = 3
+
+
+class Gender(enum.IntEnum):
+    &#34;&#34;&#34;Gender used on hoyolab.&#34;&#34;&#34;
+
+    unknown = 0
+    male = 1
+    female = 2
+    other = 3
+
+
+class SearchUser(APIModel):
+    &#34;&#34;&#34;User from a search result.&#34;&#34;&#34;
+
+    hoyolab_uid: int = Aliased(&#34;uid&#34;)
+    nickname: str
+    introduction: str = Aliased(&#34;introduce&#34;)
+    avatar_id: int = Aliased(&#34;avatar&#34;)
+    gender: Gender
+    icon: str = Aliased(&#34;avatar_url&#34;)
+
+    @pydantic.validator(&#34;nickname&#34;)
+    def __remove_highlight(cls, v: str) -&gt; str:
+        return re.sub(r&#34;&lt;.+?&gt;&#34;, &#34;&#34;, v)
+
+
+class RecordCard(GenshinAccount):
+    &#34;&#34;&#34;Hoyolab record card.&#34;&#34;&#34;
+
+    def __new__(cls, **kwargs: typing.Any) -&gt; RecordCard:
+        &#34;&#34;&#34;Create the appropriate record card.&#34;&#34;&#34;
+        game_id = kwargs.get(&#34;game_id&#34;, 0)
+        if game_id == 1:
+            cls = HonkaiRecordCard
+        elif game_id == 2:
+            cls = GenshinRecordCard
+
+        return super().__new__(cls)
+
+    game_id: int
+    game_biz: str = &#34;&#34;
+    uid: int = Aliased(&#34;game_role_id&#34;)
+
+    data: typing.Sequence[RecordCardData]
+    settings: typing.Sequence[RecordCardSetting] = Aliased(&#34;data_switches&#34;)
+
+    public: bool = Aliased(&#34;is_public&#34;)
+    background_image: str
+    has_uid: bool = Aliased(&#34;has_role&#34;)
+    url: str
+
+    def as_dict(self) -&gt; typing.Dict[str, typing.Any]:
+        &#34;&#34;&#34;Return data as a dictionary.&#34;&#34;&#34;
+        return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
+
+
+class GenshinRecordCard(RecordCard):
+    &#34;&#34;&#34;Genshin record card.&#34;&#34;&#34;
+
+    @property
+    def game(self) -&gt; types.Game:
+        return types.Game.GENSHIN
+
+    @property
+    def days_active(self) -&gt; int:
+        return int(self.data[0].value)
+
+    @property
+    def characters(self) -&gt; int:
+        return int(self.data[1].value)
+
+    @property
+    def achievements(self) -&gt; int:
+        return int(self.data[2].value)
+
+    @property
+    def spiral_abyss(self) -&gt; str:
+        return self.data[3].value
+
+
+class HonkaiRecordCard(RecordCard):
+    &#34;&#34;&#34;Honkai record card.&#34;&#34;&#34;
+
+    @property
+    def game(self) -&gt; types.Game:
+        return types.Game.HONKAI
+
+    @property
+    def days_active(self) -&gt; int:
+        return int(self.data[0].value)
+
+    @property
+    def stigmata(self) -&gt; int:
+        return int(self.data[1].value)
+
+    @property
+    def battlesuits(self) -&gt; int:
+        return int(self.data[2].value)
+
+    @property
+    def outfits(self) -&gt; int:
+        return int(self.data[3].value)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.hoyolab.record.Gender"><code class="flex name class">
+<span>class <span class="ident">Gender</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gender used on hoyolab.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Gender(enum.IntEnum):
+    &#34;&#34;&#34;Gender used on hoyolab.&#34;&#34;&#34;
+
+    unknown = 0
+    male = 1
+    female = 2
+    other = 3</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.Gender.female"><code class="name">var <span class="ident">female</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.Gender.male"><code class="name">var <span class="ident">male</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.Gender.other"><code class="name">var <span class="ident">other</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.Gender.unknown"><code class="name">var <span class="ident">unknown</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount"><code class="flex name class">
+<span>class <span class="ident">GenshinAccount</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Genshin account.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinAccount(APIModel):
+    &#34;&#34;&#34;Genshin account.&#34;&#34;&#34;
+
+    game_biz: str
+    uid: int = Aliased(&#34;game_uid&#34;)
+    level: int
+    nickname: str
+    server: str = Aliased(&#34;region&#34;)
+    server_name: str = Aliased(&#34;region_name&#34;)
+
+    @property
+    def game(self) -&gt; types.Game:
+        if &#34;hk4e&#34; in self.game_biz:
+            return types.Game.GENSHIN
+        elif &#34;bh3&#34; in self.game_biz:
+            return types.Game.HONKAI
+
+        try:
+            return types.Game(self.game_biz)
+        except ValueError:
+            return self.game_biz  # type: ignore</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.hoyolab.record.RecordCard" href="#genshin.models.hoyolab.record.RecordCard">RecordCard</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.game_biz"><code class="name">var <span class="ident">game_biz</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.server"><code class="name">var <span class="ident">server</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.server_name"><code class="name">var <span class="ident">server_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.uid"><code class="name">var <span class="ident">uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.GenshinAccount.game"><code class="name">var <span class="ident">game</span> : <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def game(self) -&gt; types.Game:
+    if &#34;hk4e&#34; in self.game_biz:
+        return types.Game.GENSHIN
+    elif &#34;bh3&#34; in self.game_biz:
+        return types.Game.HONKAI
+
+    try:
+        return types.Game(self.game_biz)
+    except ValueError:
+        return self.game_biz  # type: ignore</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.model.APIModel.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard"><code class="flex name class">
+<span>class <span class="ident">RecordCard</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Hoyolab record card.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecordCard(GenshinAccount):
+    &#34;&#34;&#34;Hoyolab record card.&#34;&#34;&#34;
+
+    def __new__(cls, **kwargs: typing.Any) -&gt; RecordCard:
+        &#34;&#34;&#34;Create the appropriate record card.&#34;&#34;&#34;
+        game_id = kwargs.get(&#34;game_id&#34;, 0)
+        if game_id == 1:
+            cls = HonkaiRecordCard
+        elif game_id == 2:
+            cls = GenshinRecordCard
+
+        return super().__new__(cls)
+
+    game_id: int
+    game_biz: str = &#34;&#34;
+    uid: int = Aliased(&#34;game_role_id&#34;)
+
+    data: typing.Sequence[RecordCardData]
+    settings: typing.Sequence[RecordCardSetting] = Aliased(&#34;data_switches&#34;)
+
+    public: bool = Aliased(&#34;is_public&#34;)
+    background_image: str
+    has_uid: bool = Aliased(&#34;has_role&#34;)
+    url: str
+
+    def as_dict(self) -&gt; typing.Dict[str, typing.Any]:
+        &#34;&#34;&#34;Return data as a dictionary.&#34;&#34;&#34;
+        return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.hoyolab.record.GenshinAccount" href="#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>genshin.models.hoyolab.record.GenshinRecordCard</li>
+<li>genshin.models.hoyolab.record.HonkaiRecordCard</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.RecordCard.background_image"><code class="name">var <span class="ident">background_image</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.data"><code class="name">var <span class="ident">data</span> : Sequence[<a title="genshin.models.hoyolab.record.RecordCardData" href="#genshin.models.hoyolab.record.RecordCardData">RecordCardData</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.game_biz"><code class="name">var <span class="ident">game_biz</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.game_id"><code class="name">var <span class="ident">game_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.has_uid"><code class="name">var <span class="ident">has_uid</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.public"><code class="name">var <span class="ident">public</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.settings"><code class="name">var <span class="ident">settings</span> : Sequence[<a title="genshin.models.hoyolab.record.RecordCardSetting" href="#genshin.models.hoyolab.record.RecordCardSetting">RecordCardSetting</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.uid"><code class="name">var <span class="ident">uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCard.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.RecordCard.as_dict"><code class="name flex">
+<span>def <span class="ident">as_dict</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return data as a dictionary.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def as_dict(self) -&gt; typing.Dict[str, typing.Any]:
+    &#34;&#34;&#34;Return data as a dictionary.&#34;&#34;&#34;
+    return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.hoyolab.record.GenshinAccount" href="#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardData"><code class="flex name class">
+<span>class <span class="ident">RecordCardData</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Data entry of a record card.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecordCardData(APIModel):
+    &#34;&#34;&#34;Data entry of a record card.&#34;&#34;&#34;
+
+    name: str
+    value: str</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.RecordCardData.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardData.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.model.APIModel.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSetting"><code class="flex name class">
+<span>class <span class="ident">RecordCardSetting</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Privacy setting of a record card.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecordCardSetting(APIModel, Unique):
+    &#34;&#34;&#34;Privacy setting of a record card.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;switch_id&#34;)
+    description: str = Aliased(&#34;switch_name&#34;)
+    public: bool = Aliased(&#34;is_public&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.RecordCardSetting.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSetting.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSetting.public"><code class="name">var <span class="ident">public</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.model.APIModel.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSettingType"><code class="flex name class">
+<span>class <span class="ident">RecordCardSettingType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Privacy setting of a record card.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecordCardSettingType(enum.IntEnum):
+    &#34;&#34;&#34;Privacy setting of a record card.&#34;&#34;&#34;
+
+    SHOW_CHRONICLE = 1
+    SHOW_CHARACTER_DETAILS = 2
+    ENABLE_REAL_TIME_NOTES = 3</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.RecordCardSettingType.ENABLE_REAL_TIME_NOTES"><code class="name">var <span class="ident">ENABLE_REAL_TIME_NOTES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHARACTER_DETAILS"><code class="name">var <span class="ident">SHOW_CHARACTER_DETAILS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHRONICLE"><code class="name">var <span class="ident">SHOW_CHRONICLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser"><code class="flex name class">
+<span>class <span class="ident">SearchUser</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User from a search result.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SearchUser(APIModel):
+    &#34;&#34;&#34;User from a search result.&#34;&#34;&#34;
+
+    hoyolab_uid: int = Aliased(&#34;uid&#34;)
+    nickname: str
+    introduction: str = Aliased(&#34;introduce&#34;)
+    avatar_id: int = Aliased(&#34;avatar&#34;)
+    gender: Gender
+    icon: str = Aliased(&#34;avatar_url&#34;)
+
+    @pydantic.validator(&#34;nickname&#34;)
+    def __remove_highlight(cls, v: str) -&gt; str:
+        return re.sub(r&#34;&lt;.+?&gt;&#34;, &#34;&#34;, v)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.SearchUser.avatar_id"><code class="name">var <span class="ident">avatar_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser.gender"><code class="name">var <span class="ident">gender</span> : <a title="genshin.models.hoyolab.record.Gender" href="#genshin.models.hoyolab.record.Gender">Gender</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser.hoyolab_uid"><code class="name">var <span class="ident">hoyolab_uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser.introduction"><code class="name">var <span class="ident">introduction</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.SearchUser.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.model.APIModel.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.hoyolab.record.UserInfo"><code class="flex name class">
+<span>class <span class="ident">UserInfo</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Chronicle user info.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserInfo(APIModel):
+    &#34;&#34;&#34;Chronicle user info.&#34;&#34;&#34;
+
+    nickname: str
+    server: str = Aliased(&#34;region&#34;)
+    level: int
+    icon: str = Aliased(&#34;AvatarUrl&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.record.UserInfo.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.UserInfo.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.UserInfo.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.record.UserInfo.server"><code class="name">var <span class="ident">server</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.model.APIModel.dict" href="../model.html#genshin.models.model.APIModel.dict">dict</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.hoyolab" href="index.html">genshin.models.hoyolab</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.Gender" href="#genshin.models.hoyolab.record.Gender">Gender</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.record.Gender.female" href="#genshin.models.hoyolab.record.Gender.female">female</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.Gender.male" href="#genshin.models.hoyolab.record.Gender.male">male</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.Gender.other" href="#genshin.models.hoyolab.record.Gender.other">other</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.Gender.unknown" href="#genshin.models.hoyolab.record.Gender.unknown">unknown</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.GenshinAccount" href="#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.game" href="#genshin.models.hoyolab.record.GenshinAccount.game">game</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.game_biz" href="#genshin.models.hoyolab.record.GenshinAccount.game_biz">game_biz</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.level" href="#genshin.models.hoyolab.record.GenshinAccount.level">level</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.nickname" href="#genshin.models.hoyolab.record.GenshinAccount.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.server" href="#genshin.models.hoyolab.record.GenshinAccount.server">server</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.server_name" href="#genshin.models.hoyolab.record.GenshinAccount.server_name">server_name</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.GenshinAccount.uid" href="#genshin.models.hoyolab.record.GenshinAccount.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.RecordCard" href="#genshin.models.hoyolab.record.RecordCard">RecordCard</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.as_dict" href="#genshin.models.hoyolab.record.RecordCard.as_dict">as_dict</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.background_image" href="#genshin.models.hoyolab.record.RecordCard.background_image">background_image</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.data" href="#genshin.models.hoyolab.record.RecordCard.data">data</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.game_biz" href="#genshin.models.hoyolab.record.RecordCard.game_biz">game_biz</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.game_id" href="#genshin.models.hoyolab.record.RecordCard.game_id">game_id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.has_uid" href="#genshin.models.hoyolab.record.RecordCard.has_uid">has_uid</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.public" href="#genshin.models.hoyolab.record.RecordCard.public">public</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.settings" href="#genshin.models.hoyolab.record.RecordCard.settings">settings</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.uid" href="#genshin.models.hoyolab.record.RecordCard.uid">uid</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCard.url" href="#genshin.models.hoyolab.record.RecordCard.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.RecordCardData" href="#genshin.models.hoyolab.record.RecordCardData">RecordCardData</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.record.RecordCardData.name" href="#genshin.models.hoyolab.record.RecordCardData.name">name</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCardData.value" href="#genshin.models.hoyolab.record.RecordCardData.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.RecordCardSetting" href="#genshin.models.hoyolab.record.RecordCardSetting">RecordCardSetting</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSetting.description" href="#genshin.models.hoyolab.record.RecordCardSetting.description">description</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSetting.id" href="#genshin.models.hoyolab.record.RecordCardSetting.id">id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSetting.public" href="#genshin.models.hoyolab.record.RecordCardSetting.public">public</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.RecordCardSettingType" href="#genshin.models.hoyolab.record.RecordCardSettingType">RecordCardSettingType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSettingType.ENABLE_REAL_TIME_NOTES" href="#genshin.models.hoyolab.record.RecordCardSettingType.ENABLE_REAL_TIME_NOTES">ENABLE_REAL_TIME_NOTES</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHARACTER_DETAILS" href="#genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHARACTER_DETAILS">SHOW_CHARACTER_DETAILS</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHRONICLE" href="#genshin.models.hoyolab.record.RecordCardSettingType.SHOW_CHRONICLE">SHOW_CHRONICLE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.SearchUser" href="#genshin.models.hoyolab.record.SearchUser">SearchUser</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.avatar_id" href="#genshin.models.hoyolab.record.SearchUser.avatar_id">avatar_id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.gender" href="#genshin.models.hoyolab.record.SearchUser.gender">gender</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.hoyolab_uid" href="#genshin.models.hoyolab.record.SearchUser.hoyolab_uid">hoyolab_uid</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.icon" href="#genshin.models.hoyolab.record.SearchUser.icon">icon</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.introduction" href="#genshin.models.hoyolab.record.SearchUser.introduction">introduction</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.SearchUser.nickname" href="#genshin.models.hoyolab.record.SearchUser.nickname">nickname</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.record.UserInfo" href="#genshin.models.hoyolab.record.UserInfo">UserInfo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.record.UserInfo.icon" href="#genshin.models.hoyolab.record.UserInfo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.UserInfo.level" href="#genshin.models.hoyolab.record.UserInfo.level">level</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.UserInfo.nickname" href="#genshin.models.hoyolab.record.UserInfo.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.hoyolab.record.UserInfo.server" href="#genshin.models.hoyolab.record.UserInfo.server">server</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.client.manager API documentation</title>
+<meta name="description" content="Cookie managers for making authenticated requests." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.manager</code></h1>
+</header>
+<section id="section-intro">
+<p>Cookie managers for making authenticated requests.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Cookie managers for making authenticated requests.&#34;&#34;&#34;
+from __future__ import annotations
+
+import abc
+import functools
+import http.cookies
+import logging
+import typing
+
+import aiohttp
+import aiohttp.typedefs
+import yarl
+
+from genshin import errors, types
+from genshin.utility import fs as fs_utility
+
+from . import ratelimit
+
+_LOGGER = logging.getLogger(__name__)
+
+__all__ = [&#34;BaseCookieManager&#34;, &#34;CookieManager&#34;, &#34;InternationalCookieManager&#34;, &#34;RotatingCookieManager&#34;]
+
+CookieOrHeader = typing.Union[&#34;http.cookies.BaseCookie[typing.Any]&#34;, typing.Mapping[typing.Any, typing.Any], str]
+AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
+
+T = typing.TypeVar(&#34;T&#34;)
+CallableT = typing.TypeVar(&#34;CallableT&#34;, bound=&#34;typing.Callable[..., object]&#34;)
+MaybeSequence = typing.Union[T, typing.Sequence[T]]
+
+
+def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -&gt; typing.Dict[str, str]:
+    &#34;&#34;&#34;Parse a cookie or header into a cookie mapping.&#34;&#34;&#34;
+    if cookie is None:
+        return {}
+
+    if isinstance(cookie, str):
+        cookie = http.cookies.SimpleCookie(cookie)
+
+    return {str(k): v.value if isinstance(v, http.cookies.Morsel) else str(v) for k, v in cookie.items()}
+
+
+class BaseCookieManager(abc.ABC):
+    &#34;&#34;&#34;A cookie manager for making requests.&#34;&#34;&#34;
+
+    _proxy: typing.Optional[yarl.URL] = None
+
+    @classmethod
+    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -&gt; BaseCookieManager:
+        &#34;&#34;&#34;Create an arbitrary cookie manager implementation instance.&#34;&#34;&#34;
+        if isinstance(cookies, typing.Sequence) and not isinstance(cookies, str):
+            return RotatingCookieManager(cookies)
+
+        return CookieManager(cookies)
+
+    @classmethod
+    def from_browser_cookies(cls, browser: typing.Optional[str] = None) -&gt; CookieManager:
+        &#34;&#34;&#34;Create a cookie manager with browser cookies.&#34;&#34;&#34;
+        manager = CookieManager()
+        manager.set_browser_cookies(browser)
+
+        return manager
+
+    @property
+    def available(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the authentication cookies are available.&#34;&#34;&#34;
+        return True
+
+    @property
+    def multi(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the cookie manager contains multiple cookies and therefore should not cache private data.&#34;&#34;&#34;
+        return False
+
+    @property
+    def user_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The id of the user that owns cookies.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return None
+
+    @property
+    def proxy(self) -&gt; typing.Optional[yarl.URL]:
+        &#34;&#34;&#34;Proxy for http(s) requests.&#34;&#34;&#34;
+        return self._proxy
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        if proxy is None:
+            self._proxy = None
+            return
+
+        proxy = yarl.URL(proxy)
+        if str(proxy.scheme) not in (&#34;https&#34;, &#34;http&#34;, &#34;ws&#34;, &#34;wss&#34;):
+            raise ValueError(&#34;Proxy URL must have a valid scheme.&#34;)
+
+        self._proxy = proxy
+
+    def get_user_id(self) -&gt; int:
+        &#34;&#34;&#34;Get the id of the user that owns cookies.
+
+        Raises an error if not found and fallback is not provided.
+        &#34;&#34;&#34;
+        if self.user_id:
+            return self.user_id
+
+        if self.available:
+            raise ValueError(f&#34;Hoyolab ID must be provided when using {self.__class__}&#34;)
+
+        raise ValueError(&#34;No cookies have been provided.&#34;)
+
+    def create_session(self, **kwargs: typing.Any) -&gt; aiohttp.ClientSession:
+        &#34;&#34;&#34;Create a client session.&#34;&#34;&#34;
+        return aiohttp.ClientSession(
+            cookie_jar=aiohttp.DummyCookieJar(),
+            **kwargs,
+        )
+
+    @ratelimit.handle_ratelimits()
+    async def _request(
+        self,
+        method: str,
+        str_or_url: aiohttp.typedefs.StrOrURL,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make a request towards any json resource.&#34;&#34;&#34;
+        async with self.create_session() as session:
+            async with session.request(method, str_or_url, proxy=self.proxy, **kwargs) as response:
+                if response.content_type != &#34;application/json&#34;:
+                    content = await response.text()
+                    raise errors.GenshinException(msg=&#34;Recieved a response with an invalid content type:\n&#34; + content)
+
+                data = await response.json()
+
+        if data[&#34;retcode&#34;] == 0:
+            return data[&#34;data&#34;]
+
+        errors.raise_for_retcode(data)
+
+    @abc.abstractmethod
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        json: typing.Any = None,
+        cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+
+
+class CookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Standard implementation of the cookie manager.&#34;&#34;&#34;
+
+    _cookies: typing.Dict[str, str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[CookieOrHeader] = None,
+    ) -&gt; None:
+        self.cookies = parse_cookie(cookies)
+
+    def __repr__(self) -&gt; str:
+        return f&#34;{self.__class__.__name__}({self.cookies})&#34;
+
+    @property
+    def cookies(self) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Cookies used for authentication.&#34;&#34;&#34;
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[CookieOrHeader]) -&gt; None:
+        if not cookies:
+            self._cookies = {}
+            return
+
+        self._cookies = parse_cookie(cookies)
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return False
+
+    @property
+    def jar(self) -&gt; http.cookies.SimpleCookie[str]:
+        &#34;&#34;&#34;SimpleCookie containing the cookies.&#34;&#34;&#34;
+        return http.cookies.SimpleCookie(self.cookies)
+
+    @property
+    def header(self) -&gt; str:
+        &#34;&#34;&#34;Header representation of cookies.
+
+        This representation is reparsable by the manager.
+        &#34;&#34;&#34;
+        return self.jar.output(header=&#34;&#34;, sep=&#34;;&#34;).strip()
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[CookieOrHeader] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookies = parse_cookie(cookies or kwargs)
+        return self.cookies
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookies = fs_utility.get_browser_cookies(browser)
+        return self.cookies
+
+    @property
+    def user_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The id of the user that owns cookies.
+
+        Returns None if cookies are not set.
+        &#34;&#34;&#34;
+        for name, value in self.cookies.items():
+            if name in (&#34;ltuid&#34;, &#34;account_id&#34;):
+                return int(value)
+
+        return None
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        return await self._request(method, url, cookies=self.cookies, **kwargs)
+
+
+class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
+    MAX_USES: int = 30
+
+    _cookies: typing.List[typing.Tuple[typing.Dict[str, str], int]]
+
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -&gt; None:
+        self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
+
+    @property
+    def cookies(self) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+        &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+        self._sort_cookies()
+        return [cookie for cookie, _ in self._cookies]
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -&gt; None:
+        if not cookies:
+            self._cookies = []
+            return
+
+        self._cookies = [(parse_cookie(cookie), 0) for cookie in cookies]
+        self._sort_cookies()
+
+    def __repr__(self) -&gt; str:
+        return f&#34;&lt;{self.__class__.__name__} len={len(self._cookies)}&gt;&#34;
+
+    def _sort_cookies(self) -&gt; None:
+        &#34;&#34;&#34;Sort cookies by remaining uses.&#34;&#34;&#34;
+        self._cookies.sort(key=lambda x: 0 if x[1] &gt;= self.MAX_USES else x[1], reverse=True)
+
+    def __getitem__(self, index: int) -&gt; typing.Mapping[str, str]:  # type: ignore # I can&#39;t be fucked with slices
+        return self.cookies[index]
+
+    def __len__(self) -&gt; int:
+        return len(self.cookies)
+
+    def __iter__(self) -&gt; typing.Iterator[typing.Mapping[str, str]]:
+        return iter(self.cookies)
+
+
+class RotatingCookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Cookie Manager with rotating cookies.&#34;&#34;&#34;
+
+    _cookies: CookieSequence
+
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -&gt; None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+        &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -&gt; None:
+        self._cookies.cookies = cookies  # type: ignore # mypy does not understand property setters
+
+    def __repr__(self) -&gt; str:
+        return f&#34;&lt;{self.__class__.__name__} len={len(self._cookies)}&gt;&#34;
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return True
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
+    ) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        self._cookies = CookieSequence(cookies)
+        return self.cookies
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        if not self.cookies:
+            raise RuntimeError(&#34;Tried to make a request before setting cookies&#34;)
+
+        for index, (cookie, uses) in enumerate(self._cookies._cookies.copy()):
+            try:
+                data = await self._request(method, url, cookies=cookie, **kwargs)
+            except errors.TooManyRequests:
+                cookie_id = cookie.get(&#34;account_id&#34;) or cookie.get(&#34;ltuid&#34;)
+                _LOGGER.debug(&#34;Putting cookie %s on cooldown.&#34;, cookie_id)
+                self._cookies._cookies[index] = (cookie, self._cookies.MAX_USES)
+            else:
+                self._cookies._cookies[index] = (cookie, 1 if uses &gt;= self._cookies.MAX_USES else uses + 1)
+                return data
+
+        msg = &#34;All cookies have hit their request limit of 30 accounts per day.&#34;
+        raise errors.TooManyRequests({&#34;retcode&#34;: 10101}, msg)
+
+
+class InternationalCookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Cookie Manager with international rotating cookies.&#34;&#34;&#34;
+
+    _cookies: typing.Mapping[types.Region, CookieSequence]
+
+    def __init__(self, cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None) -&gt; None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+        return self._cookies
+
+    def __repr__(self) -&gt; str:
+        return f&#34;&lt;{self.__class__.__name__}&gt;&#34;
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return True
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None,
+    ) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        self._cookies = {}
+        if not cookies:
+            return {}
+
+        for region, regional_cookies in cookies.items():
+            if not isinstance(regional_cookies, typing.Sequence):
+                regional_cookies = [regional_cookies]
+
+            self._cookies[types.Region(region)] = CookieSequence(regional_cookies)
+
+        return self.cookies
+
+    def guess_region(self, url: yarl.URL) -&gt; types.Region:
+        &#34;&#34;&#34;Guess the region from the URL.&#34;&#34;&#34;
+        assert url.host is not None
+
+        if &#34;os&#34; in url.host or &#34;os&#34; in url.path:
+            return types.Region.OVERSEAS
+
+        if &#34;takumi&#34; in url.host:
+            return types.Region.CHINESE
+
+        if &#34;sg&#34; in url.host:
+            return types.Region.OVERSEAS
+
+        return types.Region.CHINESE
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        if not self.cookies:
+            raise RuntimeError(&#34;Tried to make a request before setting cookies&#34;)
+
+        region = self.guess_region(yarl.URL(url))
+
+        # TODO: less copy-paste
+        for index, (cookie, uses) in enumerate(self._cookies[region]._cookies.copy()):
+            try:
+                data = await self._request(method, url, cookies=cookie, **kwargs)
+            except errors.TooManyRequests:
+                cookie_id = cookie.get(&#34;account_id&#34;) or cookie.get(&#34;ltuid&#34;)
+                _LOGGER.debug(&#34;Putting cookie %s for %s on cooldown.&#34;, cookie_id, region)
+                self._cookies[region]._cookies[index] = (cookie, self._cookies[region].MAX_USES)
+            else:
+                uses = 1 if uses &gt;= self._cookies[region].MAX_USES else uses + 1
+                self._cookies[region]._cookies[index] = (cookie, uses)
+                return data
+
+        msg = &#34;All cookies have hit their request limit of 30 accounts per day.&#34;
+        raise errors.TooManyRequests({&#34;retcode&#34;: 10101}, msg)
+
+
+def no_multi(func: CallableT) -&gt; CallableT:
+    &#34;&#34;&#34;Prevent function to be ran with a multi-cookie manager.&#34;&#34;&#34;
+
+    @functools.wraps(func)
+    def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -&gt; typing.Any:
+        if not hasattr(self, &#34;cookie_manager&#34;):
+            raise TypeError(&#34;Cannot use @no_multi on a plain function.&#34;)
+        if self.cookie_manager.multi:
+            raise RuntimeError(f&#34;Cannot use {func.__name__} with multi-cookie managers - data is private.&#34;)
+
+        return func(self, *args, **kwargs)
+
+    return typing.cast(&#34;CallableT&#34;, wrapper)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.manager.BaseCookieManager"><code class="flex name class">
+<span>class <span class="ident">BaseCookieManager</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A cookie manager for making requests.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseCookieManager(abc.ABC):
+    &#34;&#34;&#34;A cookie manager for making requests.&#34;&#34;&#34;
+
+    _proxy: typing.Optional[yarl.URL] = None
+
+    @classmethod
+    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -&gt; BaseCookieManager:
+        &#34;&#34;&#34;Create an arbitrary cookie manager implementation instance.&#34;&#34;&#34;
+        if isinstance(cookies, typing.Sequence) and not isinstance(cookies, str):
+            return RotatingCookieManager(cookies)
+
+        return CookieManager(cookies)
+
+    @classmethod
+    def from_browser_cookies(cls, browser: typing.Optional[str] = None) -&gt; CookieManager:
+        &#34;&#34;&#34;Create a cookie manager with browser cookies.&#34;&#34;&#34;
+        manager = CookieManager()
+        manager.set_browser_cookies(browser)
+
+        return manager
+
+    @property
+    def available(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the authentication cookies are available.&#34;&#34;&#34;
+        return True
+
+    @property
+    def multi(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the cookie manager contains multiple cookies and therefore should not cache private data.&#34;&#34;&#34;
+        return False
+
+    @property
+    def user_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The id of the user that owns cookies.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return None
+
+    @property
+    def proxy(self) -&gt; typing.Optional[yarl.URL]:
+        &#34;&#34;&#34;Proxy for http(s) requests.&#34;&#34;&#34;
+        return self._proxy
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        if proxy is None:
+            self._proxy = None
+            return
+
+        proxy = yarl.URL(proxy)
+        if str(proxy.scheme) not in (&#34;https&#34;, &#34;http&#34;, &#34;ws&#34;, &#34;wss&#34;):
+            raise ValueError(&#34;Proxy URL must have a valid scheme.&#34;)
+
+        self._proxy = proxy
+
+    def get_user_id(self) -&gt; int:
+        &#34;&#34;&#34;Get the id of the user that owns cookies.
+
+        Raises an error if not found and fallback is not provided.
+        &#34;&#34;&#34;
+        if self.user_id:
+            return self.user_id
+
+        if self.available:
+            raise ValueError(f&#34;Hoyolab ID must be provided when using {self.__class__}&#34;)
+
+        raise ValueError(&#34;No cookies have been provided.&#34;)
+
+    def create_session(self, **kwargs: typing.Any) -&gt; aiohttp.ClientSession:
+        &#34;&#34;&#34;Create a client session.&#34;&#34;&#34;
+        return aiohttp.ClientSession(
+            cookie_jar=aiohttp.DummyCookieJar(),
+            **kwargs,
+        )
+
+    @ratelimit.handle_ratelimits()
+    async def _request(
+        self,
+        method: str,
+        str_or_url: aiohttp.typedefs.StrOrURL,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make a request towards any json resource.&#34;&#34;&#34;
+        async with self.create_session() as session:
+            async with session.request(method, str_or_url, proxy=self.proxy, **kwargs) as response:
+                if response.content_type != &#34;application/json&#34;:
+                    content = await response.text()
+                    raise errors.GenshinException(msg=&#34;Recieved a response with an invalid content type:\n&#34; + content)
+
+                data = await response.json()
+
+        if data[&#34;retcode&#34;] == 0:
+            return data[&#34;data&#34;]
+
+        errors.raise_for_retcode(data)
+
+    @abc.abstractmethod
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        json: typing.Any = None,
+        cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.manager.CookieManager" href="#genshin.client.manager.CookieManager">CookieManager</a></li>
+<li><a title="genshin.client.manager.InternationalCookieManager" href="#genshin.client.manager.InternationalCookieManager">InternationalCookieManager</a></li>
+<li><a title="genshin.client.manager.RotatingCookieManager" href="#genshin.client.manager.RotatingCookieManager">RotatingCookieManager</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="genshin.client.manager.BaseCookieManager.from_browser_cookies"><code class="name flex">
+<span>def <span class="ident">from_browser_cookies</span></span>(<span>browser: typing.Optional[str] = None) ‑> <a title="genshin.client.manager.CookieManager" href="#genshin.client.manager.CookieManager">CookieManager</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a cookie manager with browser cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def from_browser_cookies(cls, browser: typing.Optional[str] = None) -&gt; CookieManager:
+    &#34;&#34;&#34;Create a cookie manager with browser cookies.&#34;&#34;&#34;
+    manager = CookieManager()
+    manager.set_browser_cookies(browser)
+
+    return manager</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.from_cookies"><code class="name flex">
+<span>def <span class="ident">from_cookies</span></span>(<span>cookies: typing.Optional[AnyCookieOrHeader] = None) ‑> <a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create an arbitrary cookie manager implementation instance.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -&gt; BaseCookieManager:
+    &#34;&#34;&#34;Create an arbitrary cookie manager implementation instance.&#34;&#34;&#34;
+    if isinstance(cookies, typing.Sequence) and not isinstance(cookies, str):
+        return RotatingCookieManager(cookies)
+
+    return CookieManager(cookies)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.manager.BaseCookieManager.available"><code class="name">var <span class="ident">available</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether the authentication cookies are available.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def available(self) -&gt; bool:
+    &#34;&#34;&#34;Whether the authentication cookies are available.&#34;&#34;&#34;
+    return True</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.multi"><code class="name">var <span class="ident">multi</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether the cookie manager contains multiple cookies and therefore should not cache private data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def multi(self) -&gt; bool:
+    &#34;&#34;&#34;Whether the cookie manager contains multiple cookies and therefore should not cache private data.&#34;&#34;&#34;
+    return False</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.proxy"><code class="name">var <span class="ident">proxy</span> : Optional[yarl.URL]</code></dt>
+<dd>
+<div class="desc"><p>Proxy for http(s) requests.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def proxy(self) -&gt; typing.Optional[yarl.URL]:
+    &#34;&#34;&#34;Proxy for http(s) requests.&#34;&#34;&#34;
+    return self._proxy</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.user_id"><code class="name">var <span class="ident">user_id</span> : Optional[int]</code></dt>
+<dd>
+<div class="desc"><p>The id of the user that owns cookies.</p>
+<p>Returns None if not found or not applicable.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def user_id(self) -&gt; typing.Optional[int]:
+    &#34;&#34;&#34;The id of the user that owns cookies.
+
+    Returns None if not found or not applicable.
+    &#34;&#34;&#34;
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.manager.BaseCookieManager.create_session"><code class="name flex">
+<span>def <span class="ident">create_session</span></span>(<span>self, **kwargs: typing.Any) ‑> aiohttp.client.ClientSession</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a client session.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_session(self, **kwargs: typing.Any) -&gt; aiohttp.ClientSession:
+    &#34;&#34;&#34;Create a client session.&#34;&#34;&#34;
+    return aiohttp.ClientSession(
+        cookie_jar=aiohttp.DummyCookieJar(),
+        **kwargs,
+    )</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.get_user_id"><code class="name flex">
+<span>def <span class="ident">get_user_id</span></span>(<span>self) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the id of the user that owns cookies.</p>
+<p>Raises an error if not found and fallback is not provided.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_user_id(self) -&gt; int:
+    &#34;&#34;&#34;Get the id of the user that owns cookies.
+
+    Raises an error if not found and fallback is not provided.
+    &#34;&#34;&#34;
+    if self.user_id:
+        return self.user_id
+
+    if self.available:
+        raise ValueError(f&#34;Hoyolab ID must be provided when using {self.__class__}&#34;)
+
+    raise ValueError(&#34;No cookies have been provided.&#34;)</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.BaseCookieManager.request"><code class="name flex">
+<span>async def <span class="ident">request</span></span>(<span>self, url: aiohttp.typedefs.StrOrURL, *, method: str = 'GET', params: typing.Optional[typing.Mapping[str, typing.Any]] = None, data: typing.Any = None, json: typing.Any = None, cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None, headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None, **kwargs: typing.Any) ‑> typing.Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make an authenticated request.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def request(
+    self,
+    url: aiohttp.typedefs.StrOrURL,
+    *,
+    method: str = &#34;GET&#34;,
+    params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    data: typing.Any = None,
+    json: typing.Any = None,
+    cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None,
+    headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Any:
+    &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.client.manager.CookieManager"><code class="flex name class">
+<span>class <span class="ident">CookieManager</span></span>
+<span>(</span><span>cookies: typing.Optional[CookieOrHeader] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Standard implementation of the cookie manager.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Standard implementation of the cookie manager.&#34;&#34;&#34;
+
+    _cookies: typing.Dict[str, str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[CookieOrHeader] = None,
+    ) -&gt; None:
+        self.cookies = parse_cookie(cookies)
+
+    def __repr__(self) -&gt; str:
+        return f&#34;{self.__class__.__name__}({self.cookies})&#34;
+
+    @property
+    def cookies(self) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Cookies used for authentication.&#34;&#34;&#34;
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[CookieOrHeader]) -&gt; None:
+        if not cookies:
+            self._cookies = {}
+            return
+
+        self._cookies = parse_cookie(cookies)
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return False
+
+    @property
+    def jar(self) -&gt; http.cookies.SimpleCookie[str]:
+        &#34;&#34;&#34;SimpleCookie containing the cookies.&#34;&#34;&#34;
+        return http.cookies.SimpleCookie(self.cookies)
+
+    @property
+    def header(self) -&gt; str:
+        &#34;&#34;&#34;Header representation of cookies.
+
+        This representation is reparsable by the manager.
+        &#34;&#34;&#34;
+        return self.jar.output(header=&#34;&#34;, sep=&#34;;&#34;).strip()
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[CookieOrHeader] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookies = parse_cookie(cookies or kwargs)
+        return self.cookies
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookies = fs_utility.get_browser_cookies(browser)
+        return self.cookies
+
+    @property
+    def user_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The id of the user that owns cookies.
+
+        Returns None if cookies are not set.
+        &#34;&#34;&#34;
+        for name, value in self.cookies.items():
+            if name in (&#34;ltuid&#34;, &#34;account_id&#34;):
+                return int(value)
+
+        return None
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        return await self._request(method, url, cookies=self.cookies, **kwargs)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.manager.CookieManager.cookies"><code class="name">var <span class="ident">cookies</span> : Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"><p>Cookies used for authentication.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def cookies(self) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Cookies used for authentication.&#34;&#34;&#34;
+    return self._cookies</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.CookieManager.header"><code class="name">var <span class="ident">header</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Header representation of cookies.</p>
+<p>This representation is reparsable by the manager.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def header(self) -&gt; str:
+    &#34;&#34;&#34;Header representation of cookies.
+
+    This representation is reparsable by the manager.
+    &#34;&#34;&#34;
+    return self.jar.output(header=&#34;&#34;, sep=&#34;;&#34;).strip()</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.CookieManager.jar"><code class="name">var <span class="ident">jar</span> : http.cookies.SimpleCookie[str]</code></dt>
+<dd>
+<div class="desc"><p>SimpleCookie containing the cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def jar(self) -&gt; http.cookies.SimpleCookie[str]:
+    &#34;&#34;&#34;SimpleCookie containing the cookies.&#34;&#34;&#34;
+    return http.cookies.SimpleCookie(self.cookies)</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.CookieManager.user_id"><code class="name">var <span class="ident">user_id</span> : Optional[int]</code></dt>
+<dd>
+<div class="desc"><p>The id of the user that owns cookies.</p>
+<p>Returns None if cookies are not set.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def user_id(self) -&gt; typing.Optional[int]:
+    &#34;&#34;&#34;The id of the user that owns cookies.
+
+    Returns None if cookies are not set.
+    &#34;&#34;&#34;
+    for name, value in self.cookies.items():
+        if name in (&#34;ltuid&#34;, &#34;account_id&#34;):
+            return int(value)
+
+    return None</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.manager.CookieManager.set_browser_cookies"><code class="name flex">
+<span>def <span class="ident">set_browser_cookies</span></span>(<span>self, browser: typing.Optional[str] = None) ‑> Mapping[str, str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extract cookies from your browser and set them as client cookies.</p>
+<p>Available browsers: chrome, chromium, opera, edge, firefox.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+    Available browsers: chrome, chromium, opera, edge, firefox.
+    &#34;&#34;&#34;
+    self.cookies = fs_utility.get_browser_cookies(browser)
+    return self.cookies</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.CookieManager.set_cookies"><code class="name flex">
+<span>def <span class="ident">set_cookies</span></span>(<span>self, cookies: typing.Optional[CookieOrHeader] = None, **kwargs: typing.Any) ‑> Mapping[str, str]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parse and set cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_cookies(
+    self,
+    cookies: typing.Optional[CookieOrHeader] = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+    if not bool(cookies) ^ bool(kwargs):
+        raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+    self.cookies = parse_cookie(cookies or kwargs)
+    return self.cookies</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.manager.BaseCookieManager.available" href="#genshin.client.manager.BaseCookieManager.available">available</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.create_session" href="#genshin.client.manager.BaseCookieManager.create_session">create_session</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_browser_cookies" href="#genshin.client.manager.BaseCookieManager.from_browser_cookies">from_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_cookies" href="#genshin.client.manager.BaseCookieManager.from_cookies">from_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.get_user_id" href="#genshin.client.manager.BaseCookieManager.get_user_id">get_user_id</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.multi" href="#genshin.client.manager.BaseCookieManager.multi">multi</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.proxy" href="#genshin.client.manager.BaseCookieManager.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.request" href="#genshin.client.manager.BaseCookieManager.request">request</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.client.manager.InternationalCookieManager"><code class="flex name class">
+<span>class <span class="ident">InternationalCookieManager</span></span>
+<span>(</span><span>cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cookie Manager with international rotating cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class InternationalCookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Cookie Manager with international rotating cookies.&#34;&#34;&#34;
+
+    _cookies: typing.Mapping[types.Region, CookieSequence]
+
+    def __init__(self, cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None) -&gt; None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+        return self._cookies
+
+    def __repr__(self) -&gt; str:
+        return f&#34;&lt;{self.__class__.__name__}&gt;&#34;
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return True
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None,
+    ) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        self._cookies = {}
+        if not cookies:
+            return {}
+
+        for region, regional_cookies in cookies.items():
+            if not isinstance(regional_cookies, typing.Sequence):
+                regional_cookies = [regional_cookies]
+
+            self._cookies[types.Region(region)] = CookieSequence(regional_cookies)
+
+        return self.cookies
+
+    def guess_region(self, url: yarl.URL) -&gt; types.Region:
+        &#34;&#34;&#34;Guess the region from the URL.&#34;&#34;&#34;
+        assert url.host is not None
+
+        if &#34;os&#34; in url.host or &#34;os&#34; in url.path:
+            return types.Region.OVERSEAS
+
+        if &#34;takumi&#34; in url.host:
+            return types.Region.CHINESE
+
+        if &#34;sg&#34; in url.host:
+            return types.Region.OVERSEAS
+
+        return types.Region.CHINESE
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        if not self.cookies:
+            raise RuntimeError(&#34;Tried to make a request before setting cookies&#34;)
+
+        region = self.guess_region(yarl.URL(url))
+
+        # TODO: less copy-paste
+        for index, (cookie, uses) in enumerate(self._cookies[region]._cookies.copy()):
+            try:
+                data = await self._request(method, url, cookies=cookie, **kwargs)
+            except errors.TooManyRequests:
+                cookie_id = cookie.get(&#34;account_id&#34;) or cookie.get(&#34;ltuid&#34;)
+                _LOGGER.debug(&#34;Putting cookie %s for %s on cooldown.&#34;, cookie_id, region)
+                self._cookies[region]._cookies[index] = (cookie, self._cookies[region].MAX_USES)
+            else:
+                uses = 1 if uses &gt;= self._cookies[region].MAX_USES else uses + 1
+                self._cookies[region]._cookies[index] = (cookie, uses)
+                return data
+
+        msg = &#34;All cookies have hit their request limit of 30 accounts per day.&#34;
+        raise errors.TooManyRequests({&#34;retcode&#34;: 10101}, msg)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.manager.InternationalCookieManager.cookies"><code class="name">var <span class="ident">cookies</span> : Mapping[<a title="genshin.types.Region" href="../types.html#genshin.types.Region">Region</a>, Sequence[Mapping[str, str]]]</code></dt>
+<dd>
+<div class="desc"><p>Cookies used for authentication</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def cookies(self) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+    &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+    return self._cookies</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.manager.InternationalCookieManager.guess_region"><code class="name flex">
+<span>def <span class="ident">guess_region</span></span>(<span>self, url: yarl.URL) ‑> <a title="genshin.types.Region" href="../types.html#genshin.types.Region">Region</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Guess the region from the URL.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def guess_region(self, url: yarl.URL) -&gt; types.Region:
+    &#34;&#34;&#34;Guess the region from the URL.&#34;&#34;&#34;
+    assert url.host is not None
+
+    if &#34;os&#34; in url.host or &#34;os&#34; in url.path:
+        return types.Region.OVERSEAS
+
+    if &#34;takumi&#34; in url.host:
+        return types.Region.CHINESE
+
+    if &#34;sg&#34; in url.host:
+        return types.Region.OVERSEAS
+
+    return types.Region.CHINESE</code></pre>
+</details>
+</dd>
+<dt id="genshin.client.manager.InternationalCookieManager.set_cookies"><code class="name flex">
+<span>def <span class="ident">set_cookies</span></span>(<span>self, cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None) ‑> Mapping[<a title="genshin.types.Region" href="../types.html#genshin.types.Region">Region</a>, Sequence[Mapping[str, str]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parse and set cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_cookies(
+    self,
+    cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None,
+) -&gt; typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
+    &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+    self._cookies = {}
+    if not cookies:
+        return {}
+
+    for region, regional_cookies in cookies.items():
+        if not isinstance(regional_cookies, typing.Sequence):
+            regional_cookies = [regional_cookies]
+
+        self._cookies[types.Region(region)] = CookieSequence(regional_cookies)
+
+    return self.cookies</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.manager.BaseCookieManager.available" href="#genshin.client.manager.BaseCookieManager.available">available</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.create_session" href="#genshin.client.manager.BaseCookieManager.create_session">create_session</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_browser_cookies" href="#genshin.client.manager.BaseCookieManager.from_browser_cookies">from_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_cookies" href="#genshin.client.manager.BaseCookieManager.from_cookies">from_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.get_user_id" href="#genshin.client.manager.BaseCookieManager.get_user_id">get_user_id</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.multi" href="#genshin.client.manager.BaseCookieManager.multi">multi</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.proxy" href="#genshin.client.manager.BaseCookieManager.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.request" href="#genshin.client.manager.BaseCookieManager.request">request</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.user_id" href="#genshin.client.manager.BaseCookieManager.user_id">user_id</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.client.manager.RotatingCookieManager"><code class="flex name class">
+<span>class <span class="ident">RotatingCookieManager</span></span>
+<span>(</span><span>cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cookie Manager with rotating cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RotatingCookieManager(BaseCookieManager):
+    &#34;&#34;&#34;Cookie Manager with rotating cookies.&#34;&#34;&#34;
+
+    _cookies: CookieSequence
+
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -&gt; None:
+        self.set_cookies(cookies)
+
+    @property
+    def cookies(self) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+        &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+        return self._cookies
+
+    @cookies.setter
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -&gt; None:
+        self._cookies.cookies = cookies  # type: ignore # mypy does not understand property setters
+
+    def __repr__(self) -&gt; str:
+        return f&#34;&lt;{self.__class__.__name__} len={len(self._cookies)}&gt;&#34;
+
+    @property
+    def available(self) -&gt; bool:
+        return bool(self._cookies)
+
+    @property
+    def multi(self) -&gt; bool:
+        return True
+
+    def set_cookies(
+        self,
+        cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
+    ) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        self._cookies = CookieSequence(cookies)
+        return self.cookies
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: str = &#34;GET&#34;,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Make an authenticated request.&#34;&#34;&#34;
+        if not self.cookies:
+            raise RuntimeError(&#34;Tried to make a request before setting cookies&#34;)
+
+        for index, (cookie, uses) in enumerate(self._cookies._cookies.copy()):
+            try:
+                data = await self._request(method, url, cookies=cookie, **kwargs)
+            except errors.TooManyRequests:
+                cookie_id = cookie.get(&#34;account_id&#34;) or cookie.get(&#34;ltuid&#34;)
+                _LOGGER.debug(&#34;Putting cookie %s on cooldown.&#34;, cookie_id)
+                self._cookies._cookies[index] = (cookie, self._cookies.MAX_USES)
+            else:
+                self._cookies._cookies[index] = (cookie, 1 if uses &gt;= self._cookies.MAX_USES else uses + 1)
+                return data
+
+        msg = &#34;All cookies have hit their request limit of 30 accounts per day.&#34;
+        raise errors.TooManyRequests({&#34;retcode&#34;: 10101}, msg)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.manager.RotatingCookieManager.cookies"><code class="name">var <span class="ident">cookies</span> : Sequence[Mapping[str, str]]</code></dt>
+<dd>
+<div class="desc"><p>Cookies used for authentication</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def cookies(self) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+    &#34;&#34;&#34;Cookies used for authentication&#34;&#34;&#34;
+    return self._cookies</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.manager.RotatingCookieManager.set_cookies"><code class="name flex">
+<span>def <span class="ident">set_cookies</span></span>(<span>self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) ‑> Sequence[Mapping[str, str]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Parse and set cookies.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_cookies(
+    self,
+    cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
+) -&gt; typing.Sequence[typing.Mapping[str, str]]:
+    &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+    self._cookies = CookieSequence(cookies)
+    return self.cookies</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.manager.BaseCookieManager.available" href="#genshin.client.manager.BaseCookieManager.available">available</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.create_session" href="#genshin.client.manager.BaseCookieManager.create_session">create_session</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_browser_cookies" href="#genshin.client.manager.BaseCookieManager.from_browser_cookies">from_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_cookies" href="#genshin.client.manager.BaseCookieManager.from_cookies">from_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.get_user_id" href="#genshin.client.manager.BaseCookieManager.get_user_id">get_user_id</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.multi" href="#genshin.client.manager.BaseCookieManager.multi">multi</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.proxy" href="#genshin.client.manager.BaseCookieManager.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.request" href="#genshin.client.manager.BaseCookieManager.request">request</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.user_id" href="#genshin.client.manager.BaseCookieManager.user_id">user_id</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client" href="index.html">genshin.client</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.manager.BaseCookieManager" href="#genshin.client.manager.BaseCookieManager">BaseCookieManager</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.manager.BaseCookieManager.available" href="#genshin.client.manager.BaseCookieManager.available">available</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.create_session" href="#genshin.client.manager.BaseCookieManager.create_session">create_session</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_browser_cookies" href="#genshin.client.manager.BaseCookieManager.from_browser_cookies">from_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.from_cookies" href="#genshin.client.manager.BaseCookieManager.from_cookies">from_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.get_user_id" href="#genshin.client.manager.BaseCookieManager.get_user_id">get_user_id</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.multi" href="#genshin.client.manager.BaseCookieManager.multi">multi</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.proxy" href="#genshin.client.manager.BaseCookieManager.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.request" href="#genshin.client.manager.BaseCookieManager.request">request</a></code></li>
+<li><code><a title="genshin.client.manager.BaseCookieManager.user_id" href="#genshin.client.manager.BaseCookieManager.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.manager.CookieManager" href="#genshin.client.manager.CookieManager">CookieManager</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.client.manager.CookieManager.cookies" href="#genshin.client.manager.CookieManager.cookies">cookies</a></code></li>
+<li><code><a title="genshin.client.manager.CookieManager.header" href="#genshin.client.manager.CookieManager.header">header</a></code></li>
+<li><code><a title="genshin.client.manager.CookieManager.jar" href="#genshin.client.manager.CookieManager.jar">jar</a></code></li>
+<li><code><a title="genshin.client.manager.CookieManager.set_browser_cookies" href="#genshin.client.manager.CookieManager.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.CookieManager.set_cookies" href="#genshin.client.manager.CookieManager.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.CookieManager.user_id" href="#genshin.client.manager.CookieManager.user_id">user_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.manager.InternationalCookieManager" href="#genshin.client.manager.InternationalCookieManager">InternationalCookieManager</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.manager.InternationalCookieManager.cookies" href="#genshin.client.manager.InternationalCookieManager.cookies">cookies</a></code></li>
+<li><code><a title="genshin.client.manager.InternationalCookieManager.guess_region" href="#genshin.client.manager.InternationalCookieManager.guess_region">guess_region</a></code></li>
+<li><code><a title="genshin.client.manager.InternationalCookieManager.set_cookies" href="#genshin.client.manager.InternationalCookieManager.set_cookies">set_cookies</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.manager.RotatingCookieManager" href="#genshin.client.manager.RotatingCookieManager">RotatingCookieManager</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.manager.RotatingCookieManager.cookies" href="#genshin.client.manager.RotatingCookieManager.cookies">cookies</a></code></li>
+<li><code><a title="genshin.client.manager.RotatingCookieManager.set_cookies" href="#genshin.client.manager.RotatingCookieManager.set_cookies">set_cookies</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

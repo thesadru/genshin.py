@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>genshin.models.honkai.constants API documentation</title>
+<meta name="description" content="Honkai model constants." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.honkai.constants</code></h1>
+</header>
+<section id="section-intro">
+<p>Honkai model constants.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Honkai model constants.&#34;&#34;&#34;
+import typing
+
+__all__ = [&#34;BATTLESUIT_IDENTIFIERS&#34;]
+
+# TODO: Make this more dynamic
+# fmt: off
+BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
+    101: &#34;KianaC2&#34;,
+    102: &#34;KianaC1&#34;,
+    103: &#34;KianaC4&#34;,
+    104: &#34;KianaC3&#34;,
+    105: &#34;KianaC6&#34;,
+
+    111: &#34;KallenC1&#34;,
+    112: &#34;KallenC2&#34;,
+    113: &#34;KianaC5&#34;,
+    114: &#34;KallenC3&#34;,
+
+    201: &#34;MeiC2&#34;,
+    202: &#34;MeiC3&#34;,
+    203: &#34;MeiC1&#34;,
+    204: &#34;MeiC4&#34;,
+    205: &#34;MeiC5&#34;,
+
+    211: &#34;SakuraC1&#34;,
+    212: &#34;SakuraC2&#34;,
+    213: &#34;SakuraC3&#34;,
+    214: &#34;SakuraC4&#34;,
+
+    301: &#34;BronyaC1&#34;,
+    302: &#34;BronyaC2&#34;,
+    303: &#34;BronyaC3&#34;,
+    304: &#34;BronyaC4&#34;,
+    311: &#34;BronyaC5&#34;,
+    312: &#34;BronyaC6&#34;,
+    313: &#34;BronyaC7&#34;,
+    314: &#34;BronyaC8&#34;,
+    315: &#34;BronyaC10&#34;,
+
+    401: &#34;HimekoC1&#34;,
+    402: &#34;HimekoC2&#34;,
+    403: &#34;HimekoC3&#34;,
+    404: &#34;HimekoC4&#34;,
+    411: &#34;HimekoC5&#34;,
+    412: &#34;HimekoC6&#34;,
+
+    421: &#34;TwinC1&#34;,
+    422: &#34;TwinC2&#34;,
+
+    501: &#34;TheresaC1&#34;,
+    502: &#34;TheresaC2&#34;,
+    503: &#34;TheresaC3&#34;,
+    504: &#34;TheresaC4&#34;,
+    506: &#34;TheresaC6&#34;,
+    511: &#34;TheresaC5&#34;,
+
+    601: &#34;FukaC1&#34;,
+    602: &#34;FukaC2&#34;,
+    603: &#34;FukaC3&#34;,
+    604: &#34;FukaC4&#34;,
+    611: &#34;FukaC5&#34;,
+    612: &#34;FukaC6&#34;,
+
+    702: &#34;RitaC2&#34;,
+    703: &#34;RitaC3&#34;,
+    704: &#34;RitaC4&#34;,
+    705: &#34;RitaC5&#34;,
+    706: &#34;RitaC6&#34;,
+
+    711: &#34;SeeleC1&#34;,
+    712: &#34;SeeleC2&#34;,
+    713: &#34;SeeleC3&#34;,
+
+    801: &#34;DurandalC1&#34;,
+    802: &#34;DurandalC2&#34;,
+    803: &#34;DurandalC3&#34;,
+    804: &#34;DurandalC4&#34;,
+
+    901: &#34;AsukaC1&#34;,
+
+    2101: &#34;FischlC1&#34;,
+    2201: &#34;ElysiaC1&#34;,
+    2301: &#34;MobiusC1&#34;,
+    2401: &#34;RavenC1&#34;,
+    2501: &#34;CaroleC1&#34;,
+    2601: &#34;PardofelisC1&#34;,
+    2701: &#34;AponiaC1&#34;,
+    2801: &#34;EdenC1&#34;,
+    2901: &#34;GriseoC1&#34;,
+}
+# fmt: on</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.honkai" href="index.html">genshin.models.honkai</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
