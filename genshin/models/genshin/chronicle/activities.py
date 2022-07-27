@@ -70,6 +70,11 @@ class HyakuninIkkiBattle(APIModel):
     characters: typing.Sequence[HyakuninIkkiCharacter] = Aliased("avatars")
     skills: typing.Sequence[HyakuninIkkiSkill] = Aliased("skills")
 
+    @pydantic.validator("characters", pre=True)
+    def __validate_characters(cls, value: typing.Sequence[typing.Any]) -> typing.Sequence[typing.Any]:
+        """Remove characters with a null id."""
+        return [character for character in value if character["id"]]
+
 
 class HyakuninIkki(APIModel):
     """Hyakunin Ikki challenge."""
