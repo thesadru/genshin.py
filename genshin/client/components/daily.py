@@ -54,7 +54,7 @@ class DailyRewardClient(base.BaseClient):
             params["uid"] = uid
             params["region"] = utility.recognize_genshin_server(uid)
 
-            headers["x-rpc-app_version"] = "2.10.1"
+            headers["x-rpc-app_version"] = "2.34.1"
             headers["x-rpc-client_type"] = "5"
             headers["x-rpc-device_id"] = str(uuid.uuid4())
 
