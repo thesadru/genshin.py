@@ -1,5 +1,16 @@
 # Changelog
 
+# 1.2.3 (2020-08-05)
+
+## What's new
+
+- Added the golden apple archipelago activity.
+
+## Fixes
+
+- Updated ds salt for cn daily rewards.
+- Exclude partial and empty characters from responses.
+
 # 1.2.2 (2022-07-05)
 
 ## What's new
