@@ -30,7 +30,7 @@ def install_requirements(session: nox.Session, *requirements: str, literal: bool
     """Install requirements."""
     if not literal and all(requirement.isalpha() for requirement in requirements):
         files = ["requirements.txt"] + [f"./genshin-dev/{requirement}-requirements.txt" for requirement in requirements]
-        requirements = tuple(arg for file in files for arg in ("-r", file))
+        requirements = ("pip",) + tuple(arg for file in files for arg in ("-r", file))
 
     session.install("--upgrade", *requirements, silent=not isverbose())
 

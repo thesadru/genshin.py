@@ -86,7 +86,7 @@ class WikiClient(base.BaseClient):
 
         cls = models._ENTRY_PAGE_MODELS.get(typing.cast(models.WikiPageType, menu), models.BaseWikiPreview)
 
-        return [cls(**i) for i in data["list"]]
+        return [cls(**i) for i in data["list"] if i["icon_url"]]
 
     async def get_wiki_page(
         self,
