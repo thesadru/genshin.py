@@ -208,7 +208,7 @@ class SuperstringAbyss(BaseAbyss):
 
 def prettify_MA_rank(rank: int) -> str:  # Independent of mi18n
     """Turn the rank returned by the API into the respective rank name displayed in-game."""
-    brackets = (0, 0.20, 2, 7, 17, 35, 65)
+    brackets = (0, 0.20, 2, 7, 17, 35, 65, 100)
     return f"{brackets[rank - 1]:1.2f} ~ {brackets[rank]:1.2f}"
 
 
