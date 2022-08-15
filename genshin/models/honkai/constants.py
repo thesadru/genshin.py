@@ -88,5 +88,6 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     2701: "AponiaC1",
     2801: "EdenC1",
     2901: "GriseoC1",
+    3001: "Vill_VC1",
 }
 # fmt: on
