@@ -198,7 +198,7 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
 
 
 @cli.command()
-@click.option("--limit", help="The maximum amount of wishes to show.", default=None)
+@click.option("--limit", help="The maximum amount of wishes to show.", type=int, default=None)
 @client_command
 async def wishes(client: genshin.Client, limit: typing.Optional[int] = None) -> None:
     """Show a nicely formatted wish history."""
