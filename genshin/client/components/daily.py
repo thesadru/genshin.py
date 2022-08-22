@@ -42,7 +42,7 @@ class DailyRewardClient(base.BaseClient):
             game = self.default_game
 
         base_url = routes.REWARD_URL.get_url(self.region, game)
-        url = (base_url / endpoint).update_query(base_url.query)
+        url = (base_url / endpoint).update_query(**base_url.query)
 
         if self.region == types.Region.OVERSEAS:
             params["lang"] = lang or self.lang

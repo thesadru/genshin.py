@@ -282,6 +282,11 @@ class Signet(APIModel):
             "Setsuna",
             "Infinity",
             "Vicissitude",
+            "Discipline",
+            "Helix",
+            "Daybreak",
+            "Stars",
+            "Reverie",
             "■■",
         ][self.id - 1]
 
