@@ -33,6 +33,7 @@ class Stats(APIModel):
     spiral_abyss: str =       Aliased("spiral_abyss",           mi18n="bbs/unlock_portal")
     anemoculi: int =          Aliased("anemoculus_number",      mi18n="bbs/wind_god")
     geoculi: int =            Aliased("geoculus_number",        mi18n="bbs/rock_god")
+    dendroculi: int =         Aliased("dendroculus_number",     mi18n="bbs/dendro_culus")
     electroculi: int =        Aliased("electroculus_number",    mi18n="bbs/electroculus_god")
     common_chests: int =      Aliased("common_chest_number",    mi18n="bbs/general_treasure_box_count")
     exquisite_chests: int =   Aliased("exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")

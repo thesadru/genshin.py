@@ -28,8 +28,8 @@ async def test_calculator_artifacts(client: genshin.Client):
     assert len(artifacts) >= 69
 
     artifact = min(artifacts, key=lambda artifact: artifact.id)
-    assert artifact.name == "Heart of Comradeship"
-    assert artifact.max_level == 12
+    assert artifact.name == "Labyrinth Wayfarer"
+    assert artifact.max_level == 16
     assert artifact.level == 0
 
 

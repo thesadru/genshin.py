@@ -58,7 +58,7 @@ BaseWikiPreview.__pre_root_validators__.reverse()
 class CharacterPreview(BaseWikiPreview):
     """Character wiki preview."""
 
-    bonus_attribute: str = Aliased("property")
+    bonus_attribute: str = Aliased("", "property")
     rarity: int
     region: str = ""
     element: str = Aliased("vision", "")
@@ -158,7 +158,7 @@ class WikiPage(APIModel):
         modules: typing.Dict[str, typing.Dict[str, typing.Any]] = {}
         for module in value:
             components: typing.Dict[str, typing.Dict[str, typing.Any]] = {
-                component["component_id"]: json.loads(component["data"]) for component in module["components"]
+                component["component_id"]: json.loads(component["data"] or "{}") for component in module["components"]
             }
 
             components.pop("map", None)  # not worth storing
