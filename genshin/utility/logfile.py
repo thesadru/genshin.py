@@ -2,7 +2,7 @@
 import pathlib
 import re
 import typing
-from urllib.parse import unquote
+import urllib.parse
 
 from genshin.utility import fs
 
@@ -11,52 +11,32 @@ __all__ = ["extract_authkey", "get_authkey", "get_banner_ids"]
 PathLike = typing.Union[str, pathlib.Path]
 
 AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
-GAME_LOCATION = fs.get_tempdir() / "genshin_location.txt"
 
 
-def set_geme_location(location: PathLike):
-    """Set game directory for searching for logfile."""
-    game_dir = pathlib.Path(location).expanduser()
-    # Probably it's different for Chinese version
-    log = game_dir / "Genshin Impact game" / "GenshinImpact_Data" / "webCaches" / "Cache" / "Cache_Data" / "data_2"
-    if log.is_file():
-        GAME_LOCATION.write_text(str(location))
-    else:
-        raise FileNotFoundError(
-            "Incorrect game location, remember to set it before \"Genshin Impact game\" folder!"
-        )
-
-
-def get_logfile() -> typing.Optional[pathlib.Path]:
+def get_logfile(game_location: typing.Optional[PathLike] = None) -> typing.Optional[pathlib.Path]:
     """Find a Genshin Impact logfile."""
-    if GAME_LOCATION.exists() is False or GAME_LOCATION.read_text() == "":
-        output_log = pathlib.Path(
-            "C:/Program Files/Genshin Impact/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2"
-        )
-    else:
-        output_log = pathlib.Path(
-            f"{GAME_LOCATION.read_text()}/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2"
-        )
-    if output_log.is_file():
-        return output_log
+    if game_location is None:
+        game_location = "C:/Program Files/Genshin Impact"
+
+    for name in ("Genshin Impact", "原神", "YuanShen"):
+        output_log = pathlib.Path(f"{game_location}/{name} game/{name.replace(' ', '')}_Data/webCaches/Cache/Cache_Data/data_2")
+        if output_log.is_file():
+            return output_log
 
     return None  # no genshin installation
 
 
-def _read_logfile(logfile: typing.Optional[PathLike] = None) -> str:
+def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
     """Return the contents of a logfile."""
-    if isinstance(logfile, str):
-        logfile = pathlib.Path(logfile)
-
-    logfile = logfile or get_logfile()
+    logfile = get_logfile(game_location)
     if logfile is None:
         raise FileNotFoundError(
-            "No Genshin Installation was found, could not get gacha data."
-            "Pleas set game location using genshin.utility.logfile.set_geme_location(game location)"
+            "No Genshin Installation was found, could not get gacha data. "
+            "Please check if you set correct game location."
         )
 
     try:
-        # won't work if genshin is running or script using this function is run as administrator
+        # won't work if genshin is running or script using this function isn't run as administrator
         return logfile.read_text(errors='replace')
     except PermissionError as ex:
         raise PermissionError(
@@ -72,13 +52,13 @@ def extract_authkey(string: str) -> typing.Optional[str]:
         re.MULTILINE
     )
     if match is not None:
-        return unquote(match.group(1))
+        return urllib.parse.unquote(match.group(1))
     return None
 
 
-def get_authkey(logfile: typing.Optional[PathLike] = None) -> str:
+def get_authkey(game_location: typing.Optional[PathLike] = None) -> str:
     """Get an authkey contained in a logfile."""
-    authkey = extract_authkey(_read_logfile(logfile))
+    authkey = extract_authkey(_read_logfile(game_location))
     if authkey is not None:
         AUTHKEY_FILE.write_text(authkey)
         return authkey
