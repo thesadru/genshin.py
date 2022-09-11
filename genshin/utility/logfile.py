@@ -14,7 +14,7 @@ AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 GAME_LOCATION = fs.get_tempdir() / "genshin_location.txt"
 
 
-def set_geme_location(location: PathLike) -> None:
+def set_geme_location(location: PathLike):
     """Set game directory for searching for logfile."""
     game_dir = pathlib.Path(location).expanduser()
     # Probably it's different for Chinese version
