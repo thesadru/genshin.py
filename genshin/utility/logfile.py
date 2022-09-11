@@ -25,9 +25,10 @@ def set_geme_location(location: typing.Optional[PathLike]):
     
 def get_logfile() -> typing.Optional[pathlib.Path]:
     """Find a Genshin Impact logfile."""
-    output_log = pathlib.Path(f"{GAME_LOCATION.read_text()}/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2")
-    if GAME_LOCATION.read_text() == "":
+    if GAME_LOCATION.exists() == False or GAME_LOCATION.read_text() == "":
         output_log = pathlib.Path(f"C:/Program Files/Genshin Impact/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2")
+    else:
+        output_log = pathlib.Path(f"{GAME_LOCATION.read_text()}/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2")
     if output_log.is_file():
         return output_log
 
