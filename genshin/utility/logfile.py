@@ -16,14 +16,27 @@ AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 def get_logfile(game_location: typing.Optional[PathLike] = None) -> typing.Optional[pathlib.Path]:
     """Find a Genshin Impact logfile."""
     if game_location is None:
-        game_location = "C:/Program Files/Genshin Impact"
+        mihoyo_dir = pathlib.Path("~/AppData/LocalLow/miHoYo/").expanduser()
+        for name in ("Genshin Impact", "原神", "YuanShen"):
+            output_log = mihoyo_dir / name / "output_log.txt"
+            if output_log.is_file():
+                logfile = output_log.read_text()
+                match = re.search(r"Warmup file .+?_Data", logfile, re.MULTILINE)
+                if match is None:
+                    return None  # no genshin installation location in logfile
+                else:
+                    output_log = pathlib.Path(f"{str(match.group(0))[12:]}/webCaches/Cache/Cache_Data/data_2")
+                    if output_log.is_file():
+                        return output_log
+    else:
+        for name in ("Genshin Impact", "原神", "YuanShen"):
+            output_log = pathlib.Path(
+                f"{game_location}/{name} game/{name.replace(' ', '')}_Data/webCaches/Cache/Cache_Data/data_2"
+            )
+            if output_log.is_file():
+                return output_log
 
-    for name in ("Genshin Impact", "原神", "YuanShen"):
-        output_log = pathlib.Path(f"{game_location}/{name} game/{name.replace(' ', '')}_Data/webCaches/Cache/Cache_Data/data_2")
-        if output_log.is_file():
-            return output_log
-
-    return None  # no genshin installation
+    return None  # no genshin install found
 
 
 def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
@@ -37,7 +50,7 @@ def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
 
     try:
         # won't work if genshin is running or script using this function isn't run as administrator
-        return logfile.read_text(errors='replace')
+        return logfile.read_text(errors="replace")
     except PermissionError as ex:
         raise PermissionError(
             "Pleas turn off genshin impact or try running script as administrator!"
@@ -46,11 +59,7 @@ def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
 
 def extract_authkey(string: str) -> typing.Optional[str]:
     """Extract an authkey from the provided string."""
-    match = re.search(
-        r"https://webstatic-sea.hoyoverse.com/genshin/event/e20190909gacha-v2.+?authkey=([^&#]+)",
-        string,
-        re.MULTILINE
-    )
+    match = re.search(r"https://.+?authkey=([^&#]+)&game_biz=hk4e_", string, re.MULTILINE)
     if match is not None:
         return urllib.parse.unquote(match.group(1))
     return None
