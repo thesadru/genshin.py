@@ -1,10 +1,9 @@
 import genshin
 
+# async def test_wiki_previews(client: genshin.Client):
+#     preview = await client.get_wiki_previews(genshin.models.WikiPageType.CHARACTER)
 
-async def test_wiki_previews(client: genshin.Client):
-    preview = await client.get_wiki_previews(genshin.models.WikiPageType.CHARACTER)
-
-    assert preview
+#     assert preview
 
 
 async def test_wiki_page(client: genshin.Client):

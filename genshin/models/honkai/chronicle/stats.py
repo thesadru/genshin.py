@@ -6,7 +6,8 @@ import pydantic
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
 
-from . import battlesuits, modes
+from . import battlesuits as honkai_battlesuits
+from . import modes
 
 __all__ = [
     "FullHonkaiUserStats",
@@ -256,7 +257,7 @@ class HonkaiUserStats(APIModel):
 class FullHonkaiUserStats(HonkaiUserStats):
     """Represents a user's full stats, including characters, gear, and gamemode data"""
 
-    battlesuits: typing.Sequence[battlesuits.FullBattlesuit]
+    battlesuits: typing.Sequence[honkai_battlesuits.FullBattlesuit]
     abyss: typing.Sequence[typing.Union[modes.SuperstringAbyss, modes.OldAbyss]]
     memorial_arena: typing.Sequence[modes.MemorialArena]
     elysian_realm: typing.Sequence[modes.ElysianRealm]

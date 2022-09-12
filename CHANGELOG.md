@@ -1,6 +1,13 @@
 # Changelog
 
-# 1.2.3 (2020-08-05)
+# 1.2.4 (2022-09-12)
+
+## Fixes
+
+- Added dendoruculus to chronicle stats.
+- Added new genshin and honkai characters.
+
+# 1.2.3 (2022-08-05)
 
 ## What's new
 
