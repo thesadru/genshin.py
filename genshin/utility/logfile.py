@@ -52,9 +52,7 @@ def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
         # won't work if genshin is running or script using this function isn't run as administrator
         return logfile.read_text(errors="replace")
     except PermissionError as ex:
-        raise PermissionError(
-            "Pleas turn off genshin impact or try running script as administrator!"
-        ) from ex
+        raise PermissionError("Pleas turn off genshin impact or try running script as administrator!") from ex
 
 
 def extract_authkey(string: str) -> typing.Optional[str]:
