@@ -13,40 +13,59 @@ PathLike = typing.Union[str, pathlib.Path]
 AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 
 
-def get_logfile() -> typing.Optional[pathlib.Path]:
+def get_logfile(game_location: typing.Optional[PathLike] = None) -> typing.Optional[pathlib.Path]:
     """Find a Genshin Impact logfile."""
-    mihoyo_dir = pathlib.Path("~/AppData/LocalLow/miHoYo/").expanduser()
-    for name in ("Genshin Impact", "原神", "YuanShen"):
-        output_log = mihoyo_dir / name / "output_log.txt"
-        if output_log.is_file():
-            return output_log
+    if game_location is None:
+        mihoyo_dir = pathlib.Path("~/AppData/LocalLow/miHoYo/").expanduser()
+        for name in ("Genshin Impact", "原神", "YuanShen"):
+            output_log = mihoyo_dir / name / "output_log.txt"
+            if output_log.is_file():
+                logfile = output_log.read_text()
+                match = re.search(r"Warmup file .+?_Data", logfile, re.MULTILINE)
+                if match is None:
+                    return None  # no genshin installation location in logfile
+                else:
+                    output_log = pathlib.Path(f"{str(match.group(0))[12:]}/webCaches/Cache/Cache_Data/data_2")
+                    if output_log.is_file():
+                        return output_log
+    else:
+        for name in ("Genshin Impact", "原神", "YuanShen"):
+            output_log = pathlib.Path(
+                f"{game_location}/{name} game/{name.replace(' ', '')}_Data/webCaches/Cache/Cache_Data/data_2"
+            )
+            if output_log.is_file():
+                return output_log
 
-    return None  # no genshin installation
+    return None  # no genshin install found
 
 
-def _read_logfile(logfile: typing.Optional[PathLike] = None) -> str:
+def _read_logfile(game_location: typing.Optional[PathLike] = None) -> str:
     """Return the contents of a logfile."""
-    if isinstance(logfile, str):
-        logfile = pathlib.Path(logfile)
-
-    logfile = logfile or get_logfile()
+    logfile = get_logfile(game_location)
     if logfile is None:
-        raise FileNotFoundError("No Genshin Installation was found, could not get gacha data.")
+        raise FileNotFoundError(
+            "No Genshin Installation was found, could not get gacha data. "
+            "Please check if you set correct game location."
+        )
 
-    return logfile.read_text()
+    try:
+        # won't work if genshin is running or script using this function isn't run as administrator
+        return logfile.read_text(errors="replace")
+    except PermissionError as ex:
+        raise PermissionError("Pleas turn off genshin impact or try running script as administrator!") from ex
 
 
 def extract_authkey(string: str) -> typing.Optional[str]:
     """Extract an authkey from the provided string."""
-    match = re.search(r"https://.+?authkey=([^&#]+)", string, re.MULTILINE)
+    match = re.findall(r"https://.+?authkey=([^&#]+)&game_biz=", string, re.MULTILINE)
     if match is not None:
-        return urllib.parse.unquote(match.group(1))
+        return urllib.parse.unquote(match[-1])
     return None
 
 
-def get_authkey(logfile: typing.Optional[PathLike] = None) -> str:
+def get_authkey(game_location: typing.Optional[PathLike] = None) -> str:
     """Get an authkey contained in a logfile."""
-    authkey = extract_authkey(_read_logfile(logfile))
+    authkey = extract_authkey(_read_logfile(game_location))
     if authkey is not None:
         AUTHKEY_FILE.write_text(authkey)
         return authkey
