@@ -80,7 +80,10 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     901: "AsukaC1",
 
     2101: "FischlC1",
+
     2201: "ElysiaC1",
+    2202: "ElysiaC2",
+
     2301: "MobiusC1",
     2401: "RavenC1",
     2501: "CaroleC1",
