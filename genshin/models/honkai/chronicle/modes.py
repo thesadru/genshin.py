@@ -282,13 +282,14 @@ class Signet(APIModel):
             "Setsuna",
             "Infinity",
             "Vicissitude",
-            "Discipline",
-            "Helix",
-            "Daybreak",
-            "Stars",
-            "Reverie",
-            "■■",
-        ][self.id - 1]
+            "Ego",
+            "Unknown",      # Unused, no signet with id 9.
+            "Discipline",   # icon 12
+            "Helix",        # icon 13
+            "Daybreak",     # icon 9
+            "Stars",        # icon 10
+            "Reverie",      # icon 11
+        ][self.id - 1]  # fmt: skip
 
     def get_scaled_icon(self, scale: typing.Literal[1, 2, 3] = 2) -> str:
         if not 1 <= scale <= 3:
