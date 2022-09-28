@@ -87,6 +87,9 @@ _character_names: typing.Mapping[int, typing.Optional[_RAW_DB_CHAR]] = {
     10000067: ("Collei", "Dendro", 4),
     10000068: ("Dori", "Electro", 4),
     10000069: ("Tighnari", "Dendro", 5),
+    10000070: ("Nilou", "Hydro", 5),
+    10000071: ("Cyno", "Electro", 5),
+    10000072: ("Candace", "Hydro", 4),
 }
 CHARACTER_NAMES: typing.Dict[int, DBChar] = {
     id: (DBChar(id, *data) if len(data) == 4 else DBChar(id, data[0], *data))
