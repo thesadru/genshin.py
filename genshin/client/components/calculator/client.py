@@ -10,6 +10,7 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import calculator as models
+from genshin.utility import deprecation
 
 from .calculator import Calculator
 
@@ -245,11 +246,10 @@ class CalculatorClient(base.BaseClient):
         others = await self.get_complete_artifact_set(artifact_id)
         return [artifact_id] + [other.id for other in others]
 
+    @deprecation.deprecated("await genshin.utility.update_characters_enka()")
     async def update_character_names(self, *, lang: typing.Optional[str] = None) -> None:
         """Update stored db characters with the names from the calculator."""
         characters = await self.get_calculator_characters(lang=lang, include_traveler=True)
-
-        _LOGGER.debug("Updating CHARACTER_NAMES with calculator data")
 
         for char in characters:
             icon = genshin_models.character._parse_icon(char.icon)
@@ -257,4 +257,4 @@ class CalculatorClient(base.BaseClient):
                 char.id, icon, char.name, "" if "Player" in icon else char.element, char.rarity
             )
 
-            genshin_models.CHARACTER_NAMES[dbchar.id] = dbchar
+            genshin_models.CHARACTER_NAMES[lang or self.lang][dbchar.id] = dbchar

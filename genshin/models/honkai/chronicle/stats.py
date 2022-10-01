@@ -37,8 +37,6 @@ def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, 
 class MemorialArenaStats(APIModel):
     """Represents a user's stats regarding the Memorial Arena gamemodes."""
 
-    stat_lang: str = "en-us"
-
     # fmt: off
     ranking: float = Aliased("battle_field_ranking_percentage", mi18n="bbs/battle_field_ranking_percentage")
     raw_rank: int =  Aliased("battle_field_rank",               mi18n="bbs/rank")
@@ -50,8 +48,8 @@ class MemorialArenaStats(APIModel):
     def __normalize_ranking(cls, value: typing.Union[str, float]) -> float:
         return float(value) if value else 0
 
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang)
+    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang or self.lang)
 
     @property
     def rank(self) -> str:
@@ -66,18 +64,12 @@ class MemorialArenaStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Memorial Arena tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.stat_lang)
-
-    class Config:
-        # this is for the "stat_lang" field, hopefully nobody abuses this
-        allow_mutation = True
+        return self._get_mi18n(key, lang or self.lang)
 
 
 # flake8: noqa: E222
 class SuperstringAbyssStats(APIModel):
     """Represents a user's stats regarding Superstring Abyss."""
-
-    stat_lang: str = "en-us"
 
     # fmt: off
     raw_rank: int = Aliased("level",             mi18n="bbs/rank")
@@ -89,8 +81,8 @@ class SuperstringAbyssStats(APIModel):
     # for consistency between types; also allows us to forego the mi18n fuckery
     latest_type: typing.ClassVar[str] = "Superstring"
 
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang)
+    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang or self.lang)
 
     @property
     def rank(self) -> str:
@@ -100,7 +92,7 @@ class SuperstringAbyssStats(APIModel):
     def get_rank(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss rank in a specific language."""
         key = modes.get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.stat_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
     @property
     def tier(self) -> str:
@@ -110,18 +102,12 @@ class SuperstringAbyssStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.stat_lang)
-
-    class Config:
-        # this is for the "stat_lang" field, hopefully nobody abuses this
-        allow_mutation = True
+        return self._get_mi18n(key, lang or self.lang)
 
 
 # flake8: noqa: E222
 class OldAbyssStats(APIModel):
     """Represents a user's stats regarding Q-Singularis and Dirac Sea."""
-
-    stat_lang: str = "en-us"
 
     # fmt: off
     raw_q_singularis_rank: typing.Optional[int] = Aliased("level_of_quantum", mi18n="bbs/Quantum")
@@ -172,7 +158,7 @@ class OldAbyssStats(APIModel):
         Must be supplied with one of the raw ranks stored on this class.
         """
         key = modes.get_abyss_rank_mi18n(rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.stat_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
     @property
     def tier(self) -> str:
@@ -182,10 +168,10 @@ class OldAbyssStats(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.stat_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang)
+    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang or self.lang)
 
     class Config:
         # this is for the "stat_lang" field, hopefully nobody abuses this

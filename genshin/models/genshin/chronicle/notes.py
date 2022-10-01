@@ -47,9 +47,9 @@ class Expedition(APIModel):
         return datetime.datetime.now().astimezone() + self.remaining_time
 
     @pydantic.validator("character", pre=True)
-    def __complete_character(cls, v: typing.Any) -> ExpeditionCharacter:
+    def __complete_character(cls, v: typing.Any) -> typing.Any:
         if isinstance(v, str):
-            return ExpeditionCharacter(icon=v)  # type: ignore
+            return dict(icon=v)  # type: ignore
 
         return v
 

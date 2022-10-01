@@ -10,6 +10,8 @@ from genshin.models.genshin import diary as models
 
 __all__ = ["DiaryClient"]
 
+CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
+
 
 class DiaryCallback(typing.Protocol):
     """Callback which requires a diary page."""
@@ -71,7 +73,7 @@ class DiaryClient(base.BaseClient):
         params["uid"] = uid
         params["region"] = utility.recognize_genshin_server(uid)
 
-        params["month"] = month or datetime.datetime.now().month
+        params["month"] = month or datetime.datetime.now(CN_TIMEZONE).month
         params["lang"] = lang or self.lang
 
         return await self.request(url, params=params, **kwargs)
@@ -84,7 +86,9 @@ class DiaryClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> models.Diary:
         """Get a traveler's diary with earning details for the month."""
-        cache_key = cache.cache_key("diary", month=month or datetime.datetime.now().month, lang=lang or self.lang)
+        cache_key = cache.cache_key(
+            "diary", month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+        )
         data = await self.request_ledger(uid, month=month, lang=lang, cache=cache_key)
         return models.Diary(**data)
 

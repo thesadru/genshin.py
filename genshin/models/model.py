@@ -3,9 +3,13 @@ from __future__ import annotations
 
 import abc
 import datetime
+import sys
+import types
 import typing
 
 import pydantic
+
+import genshin.constants as genshin_constants
 
 __all__ = ["APIModel", "Aliased", "Unique"]
 
@@ -42,10 +46,45 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     else:
         _mi18n = {}
 
+    lang: str = "UNKNOWN"
+
     def __init__(self, **data: typing.Any) -> None:
         """"""
-        # clear the docstring for pdoc
-        super().__init__(**data)
+        from genshin.client.components import base as client_base
+
+        lang = data.pop("lang", None)
+
+        if lang is None:
+            frame = sys._getframe(1)
+            if frame.f_code.co_name == "<listcomp>":
+                frame = typing.cast("types.FrameType", frame.f_back)
+                assert frame
+
+            if isinstance(frame.f_locals.get("lang"), str):
+                lang = frame.f_locals["lang"]
+
+            for name, value in frame.f_locals.items():
+                if isinstance(value, (APIModel, client_base.BaseClient)):
+                    lang = value.lang
+
+            if lang is None:
+                # validator, it's a skipper
+                if isinstance(frame.f_locals.get("cls"), type) and issubclass(frame.f_locals["cls"], APIModel):
+                    lang = None
+                else:
+                    raise Exception("lang not found", frame)
+
+        object.__setattr__(self, "lang", lang)
+        super().__init__(**data, lang=lang)
+
+        for name in self.__fields__.keys():
+            value = getattr(self, name)
+            if isinstance(value, APIModel):
+
+                object.__setattr__(value, "lang", self.lang)
+
+        if self.lang not in genshin_constants.LANGS:
+            raise Exception(f"Invalid model lang: {self.lang}")
 
     def __init_subclass__(cls) -> None:
         cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)

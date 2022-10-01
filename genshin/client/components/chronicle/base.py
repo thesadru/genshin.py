@@ -3,11 +3,13 @@
 import asyncio
 import dataclasses
 import typing
+import warnings
 
-from genshin import errors, models, types
+from genshin import errors, models, types, utility
 from genshin.client import cache, manager, routes
 from genshin.client.components import base
 from genshin.models import hoyolab as hoyolab_models
+from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
@@ -53,9 +55,19 @@ class BaseBattleChronicleClient(base.BaseClient):
         url = base_url / endpoint
 
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
+        if not model_constants.CHARACTER_NAMES.get(lang or self.lang):
+            update_task = asyncio.create_task(utility.update_characters_enka())
+        else:
+            update_task = asyncio.create_task(asyncio.sleep(0))
+
         data = await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
 
         await mi18n_task
+        try:
+            await update_task
+        except Exception as e:
+            warnings.warn(f"Failed to update characters with enka: {e!r}")
+
         return data
 
     async def get_record_cards(

@@ -77,7 +77,7 @@ async def cache():
 
     cache = {str(key): value for key, (_, value) in cache.cache.items()}
 
-    cache["CHARACTER_NAMES"] = [c._asdict() for c in genshin.models.CHARACTER_NAMES.values()]
+    cache["CHARACTER_NAMES"] = {lang: [c._asdict() for c in chars.values()] for lang, chars in genshin.models.CHARACTER_NAMES.items()}
     cache["BATTLESUIT_IDENTIFIERS"] = genshin.models.BATTLESUIT_IDENTIFIERS
 
     os.makedirs(".pytest_cache", exist_ok=True)

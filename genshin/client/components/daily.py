@@ -15,6 +15,8 @@ from genshin.utility import ds as ds_utility
 
 __all__ = ["DailyRewardClient"]
 
+CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
+
 
 class DailyRewardClient(base.BaseClient):
     """Daily reward component."""
@@ -87,7 +89,7 @@ class DailyRewardClient(base.BaseClient):
             game=game,
             static_cache=cache.cache_key(
                 "rewards",
-                month=datetime.datetime.utcnow().month,
+                month=datetime.datetime.now(CN_TIMEZONE).month,
                 region=self.region,
                 game=typing.cast("types.Game", game or self.default_game),  # (resolved later)
                 lang=lang or self.lang,

@@ -44,9 +44,9 @@ class Stats(APIModel):
     unlocked_domains: int =   Aliased("domain_number",          mi18n="bbs/unlock_secret_area")
     # fmt: on
 
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
         """Helper function which turns fields into properly named ones"""
-        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}
+        return {self._get_mi18n(field, lang or self.lang): getattr(self, field.name) for field in self.__fields__.values() if field.name != "lang"}
 
 
 class Offering(APIModel):
@@ -85,11 +85,11 @@ class Exploration(APIModel):
     @pydantic.validator("offerings")
     def __add_base_offering(
         cls,
-        offerings: typing.Sequence[Offering],
+        offerings: typing.Sequence[typing.Any],
         values: typing.Dict[str, typing.Any],
-    ) -> typing.Sequence[Offering]:
+    ) -> typing.Sequence[typing.Any]:
         if values["type"] == "Reputation" and not any(values["type"] == o.name for o in offerings):
-            offerings = [*offerings, Offering(name=values["type"], level=values["level"])]
+            offerings = [*offerings, dict(name=values["type"], level=values["level"])]
 
         return offerings
 

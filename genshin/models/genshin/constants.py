@@ -9,7 +9,7 @@ class DBChar(typing.NamedTuple):
 
     id: int
     icon_name: str  # standardized icon name
-    name: str  # english name
+    name: str  # localized name
     element: str
     rarity: int
 
@@ -91,8 +91,10 @@ _character_names: typing.Mapping[int, typing.Optional[_RAW_DB_CHAR]] = {
     10000071: ("Cyno", "Electro", 5),
     10000072: ("Candace", "Hydro", 4),
 }
-CHARACTER_NAMES: typing.Dict[int, DBChar] = {
-    id: (DBChar(id, *data) if len(data) == 4 else DBChar(id, data[0], *data))
-    for id, data in _character_names.items()
-    if data is not None
+CHARACTER_NAMES: typing.Dict[str, typing.Dict[int, DBChar]] = {
+    "en-us": {
+        id: (DBChar(id, *data) if len(data) == 4 else DBChar(id, data[0], *data))
+        for id, data in _character_names.items()
+        if data is not None
+    }
 }

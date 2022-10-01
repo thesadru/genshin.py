@@ -130,8 +130,6 @@ class BaseAbyss(APIModel):
 
     # somewhat feel like this is overkill
 
-    abyss_lang: str = "en-us"
-
     raw_tier: int = Aliased("area")
     score: int
     lineup: typing.Sequence[battlesuit.Battlesuit]
@@ -146,7 +144,7 @@ class BaseAbyss(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss tier in a specific language."""
         key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.abyss_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
 
 class OldAbyss(BaseAbyss):
@@ -176,7 +174,7 @@ class OldAbyss(BaseAbyss):
     def get_rank(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Abyss rank in a specific language."""
         key = get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.abyss_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
     @property
     def type(self) -> str:
@@ -186,7 +184,7 @@ class OldAbyss(BaseAbyss):
     def get_type(self, lang: typing.Optional[str] = None) -> str:
         """Get the name of this cycle's abyss type in a specific language."""
         key = "bbs/" + ("level_of_ow" if self.raw_type == "OW" else self.raw_type)
-        return self._get_mi18n(key, lang or self.abyss_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
 
 class SuperstringAbyss(BaseAbyss):
@@ -210,7 +208,7 @@ class SuperstringAbyss(BaseAbyss):
     def get_start_rank(self, lang: typing.Optional[str] = None) -> str:
         """Get the rank the user started the abyss cycle with in a specific language."""
         key = get_abyss_rank_mi18n(self.raw_start_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.abyss_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
     @property
     def end_rank(self) -> str:
@@ -220,7 +218,7 @@ class SuperstringAbyss(BaseAbyss):
     def get_end_rank(self, lang: typing.Optional[str] = None) -> str:
         """Get the rank the user ended the abyss cycle with in a specific language."""
         key = get_abyss_rank_mi18n(self.raw_end_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.abyss_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
     @property
     def start_trophies(self) -> int:
@@ -248,11 +246,6 @@ class MemorialBattle(APIModel):
 class MemorialArena(APIModel):
     """Represents aggregate weekly performance for the entire Memorial Arena rotation."""
 
-    def __init__(self, **data: typing.Any) -> None:
-        super().__init__(**data)
-
-    ma_lang: str = "en-us"
-
     score: int
     ranking: float = Aliased("ranking_percentage")
     raw_rank: int = Aliased("rank")
@@ -273,7 +266,7 @@ class MemorialArena(APIModel):
     def get_tier(self, lang: typing.Optional[str] = None) -> str:
         """Get the user's Memorial Arena tier in a specific language."""
         key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.ma_lang)
+        return self._get_mi18n(key, lang or self.lang)
 
 
 # ELYSIAN REALMS
@@ -358,9 +351,9 @@ class ElysianRealm(APIModel):
     remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
 
     @pydantic.validator("remembrance_sigil", pre=True)
-    def __extend_sigil(cls, sigil: typing.Any) -> RemembranceSigil:
+    def __extend_sigil(cls, sigil: typing.Any) -> typing.Any:
         if isinstance(sigil, str):
-            return RemembranceSigil(icon=sigil)
+            return dict(icon=sigil)
 
         return sigil
 

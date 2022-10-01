@@ -19,11 +19,12 @@ ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
 
 def _parse_icon(icon: typing.Union[str, int]) -> str:
     if isinstance(icon, int):
-        char = CHARACTER_NAMES.get(icon)
-        if char is None:
-            raise ValueError(f"Invalid character id {icon}")
+        for names in CHARACTER_NAMES.values():
+            char = names.get(icon)
+            if char:
+                return char.icon_name
 
-        return char.icon_name
+        raise ValueError(f"Invalid character id {icon}")
 
     match = re.search(r"UI_AvatarIcon(?:_Side)?_(.*).png", icon)
     if match:
@@ -46,10 +47,17 @@ def _get_db_char(
     icon: typing.Optional[str] = None,
     element: typing.Optional[str] = None,
     rarity: typing.Optional[int] = None,
+    *,
+    lang: str,
 ) -> DBChar:
     """Get the appropriate DBChar object from specific fields."""
-    if id and id in CHARACTER_NAMES:
-        char = CHARACTER_NAMES[id]
+    if lang not in CHARACTER_NAMES:
+        raise Exception(
+            f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_enka()`."
+        )
+
+    if id and id in CHARACTER_NAMES[lang]:
+        char = CHARACTER_NAMES[lang][id]
         if name is not None:
             char = char._replace(name=name, element=char.element or element or "")
 
@@ -58,7 +66,7 @@ def _get_db_char(
     if icon and "genshin" in icon:
         icon_name = _parse_icon(icon)
 
-        for char in CHARACTER_NAMES.values():
+        for char in CHARACTER_NAMES[lang].values():
             if char.icon_name == icon_name:
                 if name is not None:
                     char = char._replace(name=name)
@@ -69,13 +77,13 @@ def _get_db_char(
         if id and name and icon and element and rarity:
             char = DBChar(id, icon_name, name, element, rarity, guessed=True)
             _LOGGER.debug("Updating CHARACTER_NAMES with %s", char)
-            CHARACTER_NAMES[char.id] = char
+            CHARACTER_NAMES[lang][char.id] = char
             return char
 
         return DBChar(id or 0, icon_name, name or icon_name, element or "Anemo", rarity or 5, guessed=True)
 
     if name:
-        for char in CHARACTER_NAMES.values():
+        for char in CHARACTER_NAMES[lang].values():
             if char.name == name:
                 return char
 
@@ -100,7 +108,7 @@ class BaseCharacter(APIModel, Unique):
         """Complete missing data."""
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
-        char = _get_db_char(id, name, icon, element, rarity)
+        char = _get_db_char(id, name, icon, element, rarity, lang=values["lang"])
         icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon")
 
         values["id"] = char.id

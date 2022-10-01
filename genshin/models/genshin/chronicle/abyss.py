@@ -46,9 +46,9 @@ class CharacterRanks(APIModel):
     most_skills_used: typing.Sequence[AbyssRankCharacter] = Aliased("normal_skill_rank", default=[], mi18n="bbs/element_skill_use_count")
     # fmt: on
 
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
         """Helper function which turns fields into properly named ones"""
-        return {self._get_mi18n(field, lang): getattr(self, field.name) for field in self.__fields__.values()}
+        return {self._get_mi18n(field, lang or self.lang): getattr(self, field.name) for field in self.__fields__.values() if field.name != "lang"}
 
 
 class Battle(APIModel):
