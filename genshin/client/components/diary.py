@@ -70,8 +70,15 @@ class DiaryClient(base.BaseClient):
         url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(self.region)
 
         uid = uid or await self._get_uid(types.Game.GENSHIN)
-        params["uid"] = uid
-        params["region"] = utility.recognize_genshin_server(uid)
+
+        if self.region == types.Region.OVERSEAS:
+            params["uid"] = uid
+            params["region"] = utility.recognize_genshin_server(uid)
+        elif self.region == types.Region.CHINESE:
+            params["bind_uid"] = uid
+            params["bind_region"] = utility.recognize_genshin_server(uid)
+        else:
+            raise TypeError(f"{self.region!r} is not a valid region.")
 
         params["month"] = month or datetime.datetime.now(CN_TIMEZONE).month
         params["lang"] = lang or self.lang
