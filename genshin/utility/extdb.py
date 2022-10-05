@@ -8,8 +8,12 @@ import aiohttp
 from genshin.constants import LANGS
 from genshin.models.genshin import constants as model_constants
 
-__all__ = ("update_characters_ambr", "update_characters_enka")
+__all__ = ("update_characters_ambr", "update_characters_enka", "update_characters_genshindata")
 
+GENSHINDATA_CHARACTERS_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json"  # fmt: off  # noqa
+GENSHINDATA_TALENT_DEPOT_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"  # fmt: off  # noqa
+GENSHINDATA_TALENT_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillExcelConfigData.json"  # fmt: off  # noqa
+GENSHINDATA_TEXTMAP_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/TextMap/TextMap{lang}.json"
 ENKA_CHARACTERS_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json"
 ENKA_LOC_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json"
 AMBR_URL = "https://api.ambr.top/v2/{lang}/avatar"
@@ -23,7 +27,27 @@ ELEMENTS_MAP = {
     "Rock": "Geo",
     "Grass": "Dendro",
 }
-
+RARITY_MAP = {
+    "QUALITY_PURPLE": 4,
+    "QUALITY_ORANGE": 5,
+    "QUALITY_PURPLE_SP": 104,
+    "QUALITY_ORANGE_SP": 105,
+}
+LANG_MAP = {
+    "zh-cn": "chs",
+    "zh-tw": "cht",
+    "de-de": "de",
+    "en-us": "en",
+    "es-es": "es",
+    "fr-fr": "fr",
+    "id-id": "id",
+    "ja-jp": "jp",
+    "ko-kr": "kr",
+    "pt-pt": "pt",
+    "ru-ru": "ru",
+    "th-th": "th",
+    "vi-vn": "vi",
+}
 ENKA_LANG_MAP = {
     "zh-CN": "zh-cn",
     "zh-TW": "zh-tw",
@@ -38,28 +62,6 @@ ENKA_LANG_MAP = {
     "ru": "ru-ru",
     "th": "th-th",
     "vi": "vi-vn",
-}
-ENKA_RARITY_MAP = {
-    "QUALITY_PURPLE": 4,
-    "QUALITY_ORANGE": 5,
-    "QUALITY_PURPLE_SP": 104,
-    "QUALITY_ORANGE_SP": 105,
-}
-
-AMBR_LANG_MAP = {
-    "zh-cn": "chs",
-    "zh-tw": "cht",
-    "de-de": "de",
-    "en-us": "en",
-    "es-es": "es",
-    "fr-fr": "fr",
-    "id-id": "id",
-    "ja-jp": "ja",
-    "ko-kr": "ko",
-    "pt-pt": "pt",
-    "ru-ru": "ru",
-    "th-th": "th",
-    "vi-vn": "vi",
 }
 
 
@@ -87,6 +89,46 @@ def update_character_name(
     model_constants.CHARACTER_NAMES.setdefault(lang, {})[id] = char
 
 
+async def update_characters_genshindata(langs: typing.Sequence[str] = ()) -> None:
+    """Update characters with https://github.com/Dimbreath/GenshinData/.
+
+    This method requires the download of >20MB per language so it's not recommended.
+    """
+    langs = langs or list(LANGS.keys())
+    urls = [GENSHINDATA_TEXTMAP_URL.format(lang=LANG_MAP[lang].upper()) for lang in langs]
+
+    # I love spamming github
+    characters, talent_depot, talents, *textmaps = await _fetch_jsons(
+        GENSHINDATA_CHARACTERS_URL,
+        GENSHINDATA_TALENT_DEPOT_URL,
+        GENSHINDATA_TALENT_URL,
+        *urls,
+    )
+
+    talent_depot = {talent["id"]: talent for talent in talent_depot}
+    talents = {talent["id"]: talent for talent in talents}
+
+    for char in characters:
+        for lang, textmap in zip(langs, textmaps):
+            if char["skillDepotId"] == 101 or char["iconName"].endswith("_Kate") or str(char["id"])[:2] == "11":
+                continue  # test character
+
+            if char["candSkillDepotIds"]:
+                raw_element = "Wind"  # traveler
+            else:
+                talent = talent_depot[char["skillDepotId"]]
+                raw_element = talents[talent["energySkill"]]["costElemType"]
+
+            update_character_name(
+                lang=lang,
+                id=char["id"],
+                icon_name=char["iconName"][len("UI_AvatarIcon_") :],  # noqa: E203
+                name=textmap[str(char["nameTextMapHash"])],
+                element=ELEMENTS_MAP[raw_element],
+                rarity=RARITY_MAP[char["qualityType"]],
+            )
+
+
 async def update_characters_enka() -> None:
     """Update characters with https://github.com/EnkaNetwork/API-docs/."""
     characters, locs = await _fetch_jsons(ENKA_CHARACTERS_URL, ENKA_LOC_URL)
@@ -102,21 +144,21 @@ async def update_characters_enka() -> None:
                 icon_name=char["SideIconName"][len("UI_AvatarIcon_Side_") :],  # noqa: E203
                 name=loc[str(char["NameTextMapHash"])],
                 element=ELEMENTS_MAP[char["Element"]],
-                rarity=ENKA_RARITY_MAP[char["QualityType"]],
+                rarity=RARITY_MAP[char["QualityType"]],
             )
 
 
 async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
     """Update characters with https://ambr.top/."""
     langs = langs or list(LANGS.keys())
-    urls = [AMBR_URL.format(lang=AMBR_LANG_MAP[lang]) for lang in langs]
+    urls = [AMBR_URL.format(lang=LANG_MAP[lang]) for lang in langs]
 
     characters_list = await _fetch_jsons(*urls)
 
     for lang, characters in zip(langs, characters_list):
         for strid, char in characters["data"]["items"].items():
             if "-" in strid and "anemo" not in strid:
-                continue
+                continue  # traveler element
 
             update_character_name(
                 lang=lang,
