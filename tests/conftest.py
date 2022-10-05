@@ -77,7 +77,9 @@ async def cache():
 
     cache = {str(key): value for key, (_, value) in cache.cache.items()}
 
-    cache["CHARACTER_NAMES"] = {lang: [c._asdict() for c in chars.values()] for lang, chars in genshin.models.CHARACTER_NAMES.items()}
+    cache["CHARACTER_NAMES"] = {
+        lang: [c._asdict() for c in chars.values()] for lang, chars in genshin.models.CHARACTER_NAMES.items()
+    }
     cache["BATTLESUIT_IDENTIFIERS"] = genshin.models.BATTLESUIT_IDENTIFIERS
 
     os.makedirs(".pytest_cache", exist_ok=True)
@@ -123,8 +125,8 @@ async def authkey(lclient: genshin.GenshinClient):
 
     try:
         await lclient.wish_history(200, limit=1)
-    except genshin.AuthkeyException:
-        pytest.skip("Skipped authkey test")
+    except genshin.AuthkeyException as e:
+        pytest.skip(f"Skipped authkey test ({e.msg})")
 
     return lclient.authkey
 
