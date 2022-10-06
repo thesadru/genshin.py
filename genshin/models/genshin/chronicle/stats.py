@@ -46,7 +46,11 @@ class Stats(APIModel):
 
     def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
         """Helper function which turns fields into properly named ones"""
-        return {self._get_mi18n(field, lang or self.lang): getattr(self, field.name) for field in self.__fields__.values() if field.name != "lang"}
+        return {
+            self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
+            for field in self.__fields__.values()
+            if field.name != "lang"
+        }
 
 
 class Offering(APIModel):
@@ -82,13 +86,13 @@ class Exploration(APIModel):
         """The percentage explored."""
         return self.raw_explored / 10
 
-    @pydantic.validator("offerings")
+    @pydantic.validator("offerings", pre=True)
     def __add_base_offering(
         cls,
         offerings: typing.Sequence[typing.Any],
         values: typing.Dict[str, typing.Any],
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(values["type"] == o.name for o in offerings):
+        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
             offerings = [*offerings, dict(name=values["type"], level=values["level"])]
 
         return offerings
