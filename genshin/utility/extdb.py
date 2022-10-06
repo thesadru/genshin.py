@@ -1,14 +1,31 @@
 """External databases for Genshin Impact data."""
 
 import asyncio
+import json
+import time
 import typing
+import warnings
 
 import aiohttp
 
 from genshin.constants import LANGS
 from genshin.models.genshin import constants as model_constants
+from genshin.utility import fs
 
 __all__ = ("update_characters_ambr", "update_characters_enka", "update_characters_genshindata")
+
+CACHE_FILE = fs.get_tempdir() / "characters.json"
+
+if CACHE_FILE.exists() and time.time() - CACHE_FILE.stat().st_mtime < 7 * 24 * 60 * 60:
+    names = json.loads(CACHE_FILE.read_text())
+    try:
+        model_constants.CHARACTER_NAMES = {
+            lang: {int(char_id): model_constants.DBChar(*char) for char_id, char in chars.items()}
+            for lang, chars in names.items()
+        }
+    except Exception:
+        warnings.warn("Failed to load character names from cache")
+        CACHE_FILE.unlink()
 
 GENSHINDATA_CHARACTERS_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json"  # fmt: off  # noqa
 GENSHINDATA_TALENT_DEPOT_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"  # fmt: off  # noqa
@@ -128,6 +145,8 @@ async def update_characters_genshindata(langs: typing.Sequence[str] = ()) -> Non
                 rarity=RARITY_MAP[char["qualityType"]],
             )
 
+    CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))
+
 
 async def update_characters_enka() -> None:
     """Update characters with https://github.com/EnkaNetwork/API-docs/."""
@@ -146,6 +165,8 @@ async def update_characters_enka() -> None:
                 element=ELEMENTS_MAP[char["Element"]],
                 rarity=RARITY_MAP[char["QualityType"]],
             )
+
+    CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))
 
 
 async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
@@ -168,3 +189,5 @@ async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
                 element=ELEMENTS_MAP[char["element"]],
                 rarity=char["rank"],
             )
+
+    CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))

@@ -8,7 +8,7 @@ import pydantic
 
 from genshin.models.model import APIModel, Unique
 
-from .constants import CHARACTER_NAMES, DBChar
+from . import constants
 
 __all__ = ["BaseCharacter"]
 
@@ -19,7 +19,7 @@ ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
 
 def _parse_icon(icon: typing.Union[str, int]) -> str:
     if isinstance(icon, int):
-        for names in CHARACTER_NAMES.values():
+        for names in constants.CHARACTER_NAMES.values():
             char = names.get(icon)
             if char:
                 return char.icon_name
@@ -49,15 +49,15 @@ def _get_db_char(
     rarity: typing.Optional[int] = None,
     *,
     lang: str,
-) -> DBChar:
+) -> constants.DBChar:
     """Get the appropriate DBChar object from specific fields."""
-    if lang not in CHARACTER_NAMES:
+    if lang not in constants.CHARACTER_NAMES:
         raise Exception(
             f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_enka()`."
         )
 
-    if id and id in CHARACTER_NAMES[lang]:
-        char = CHARACTER_NAMES[lang][id]
+    if id and id in constants.CHARACTER_NAMES[lang]:
+        char = constants.CHARACTER_NAMES[lang][id]
         if name is not None:
             char = char._replace(name=name, element=char.element or element or "")
 
@@ -66,7 +66,7 @@ def _get_db_char(
     if icon and "genshin" in icon:
         icon_name = _parse_icon(icon)
 
-        for char in CHARACTER_NAMES[lang].values():
+        for char in constants.CHARACTER_NAMES[lang].values():
             if char.icon_name == icon_name:
                 if name is not None:
                     char = char._replace(name=name)
@@ -75,19 +75,19 @@ def _get_db_char(
 
         # might as well just update the CHARACTER_NAMES if we have all required data
         if id and name and icon and element and rarity:
-            char = DBChar(id, icon_name, name, element, rarity, guessed=True)
+            char = constants.DBChar(id, icon_name, name, element, rarity, guessed=True)
             _LOGGER.debug("Updating CHARACTER_NAMES with %s", char)
-            CHARACTER_NAMES[lang][char.id] = char
+            constants.CHARACTER_NAMES[lang][char.id] = char
             return char
 
-        return DBChar(id or 0, icon_name, name or icon_name, element or "Anemo", rarity or 5, guessed=True)
+        return constants.DBChar(id or 0, icon_name, name or icon_name, element or "Anemo", rarity or 5, guessed=True)
 
     if name:
-        for char in CHARACTER_NAMES[lang].values():
+        for char in constants.CHARACTER_NAMES[lang].values():
             if char.name == name:
                 return char
 
-        return DBChar(id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True)
+        return constants.DBChar(id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True)
 
     raise ValueError("Character data incomplete")
 

@@ -59,7 +59,7 @@ def get_browser_cookies(
 def get_tempdir() -> pathlib.Path:
     """Get the temporary directory to be used by genshin.py."""
     tempdir = pathlib.Path(tempfile.gettempdir())
-    directory = tempdir / "genshin.py"
+    directory = tempdir / "genshinpy"
     directory.mkdir(exist_ok=True, parents=True)
 
     return directory

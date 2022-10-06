@@ -1,8 +1,10 @@
 """Calculator client."""
 from __future__ import annotations
 
+import asyncio
 import logging
 import typing
+import warnings
 
 import genshin.models.genshin as genshin_models
 from genshin import errors, types, utility
@@ -10,6 +12,7 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import calculator as models
+from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
 
 from .calculator import Calculator
@@ -46,7 +49,19 @@ class CalculatorClient(base.BaseClient):
             data = dict(data or {})
             data["lang"] = lang or self.lang
 
-        return await self.request(url, method=method, params=params, data=data, **kwargs)
+        if not model_constants.CHARACTER_NAMES.get(lang or self.lang):
+            update_task = asyncio.create_task(utility.update_characters_enka())
+        else:
+            update_task = asyncio.create_task(asyncio.sleep(0))
+
+        data = await self.request(url, method=method, params=params, data=data, **kwargs)
+
+        try:
+            await update_task
+        except Exception as e:
+            warnings.warn(f"Failed to update characters with enka: {e!r}")
+
+        return data
 
     async def _execute_calculator(
         self,
