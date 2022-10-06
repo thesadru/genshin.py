@@ -35,10 +35,15 @@ user = await client.get_genshin_user(710785423, lang="zh-cn")
 
 ### Character Name Language
 
-Some genshin endpoints fail to return character names. Genshin.py will attempt to guess them from their icons and IDs, however this behavior by default only works in English.
-To modify this behavior you must either overwrite `genshin.models.CHARACTER_NAMES` or run `client.update_character_names()` with the appropriate language.
+Some genshin endpoints fail to return character names. Genshin.py therefore fetches character names from a 3rd party database.
+By default the [enka repository](https://github.com/EnkaNetwork/API-docs/) is used but others can be chosen.
+These functions only need to be ran once on startup.
 
-> Note that this only works with one language at a time. Once support for multiple languages is added all of this will be done implicitly for you.
+| Function                                                | Source                                                   | Notes                                                                                           |
+| ------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `await genshin.utility.update_characters_genshindata()` | [GenshinData](https://github.com/Dimbreath/GenshinData/) | Source of data for all other 3rd party services, has to downloads >20MB per language to be used |
+| `await genshin.utility.update_characters_enka()`        | [EnkaNetwork](https://github.com/EnkaNetwork/API-docs/)  | Repository updates take a while, not reliable right after a genshin update                      |
+| `await genshin.utility.update_characters_ambr()`        | [Project Amber](https://ambr.top/)                       | Uses a 3rd party API that may be subject to change, does a unique request for every language    |
 
 ## Cookie Manager
 
