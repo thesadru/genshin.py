@@ -68,8 +68,8 @@ def _read_datafile(game_location: typing.Optional[PathLike] = None) -> str:
 
 def extract_authkey(string: str) -> typing.Optional[str]:
     """Extract an authkey from the provided string."""
-    match = re.findall(r"https://.+?authkey=([^&#]+)&game_biz=", string, re.MULTILINE)
-    if not match:
+    match = re.findall(r"https://.+?authkey=([^&#]+)", string, re.MULTILINE)
+    if match:
         return urllib.parse.unquote(match[-1])
 
     return None
