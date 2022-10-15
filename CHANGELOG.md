@@ -1,5 +1,16 @@
 # Changelog
 
+# 1.3.0 (2022-10-15)
+
+## What's new
+
+- Character data may be updated using 3rd party databases.
+
+## Fixes
+
+- Character names are no longer in a different language.
+- Authkeys can be grabbed from local files again.
+
 # 1.2.4 (2022-09-12)
 
 ## Fixes
