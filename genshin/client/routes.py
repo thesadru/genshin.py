@@ -110,7 +110,7 @@ DETAIL_LEDGER_URL = InternationalRoute(
 
 CALCULATOR_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/calculateos/",
-    chinese="",
+    chinese="https://api-takumi.mihoyo.com/event/e20200928calculate/v1/",
 )
 
 WIKI_URL = Route("https://sg-wiki-api.hoyolab.com/hoyowiki/wapi")
