@@ -53,6 +53,7 @@ async def main():
     data = await client.get_genshin_user(710785423)
     print(f"User has a total of {data.stats.characters} characters")
 
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())
 ```
 
