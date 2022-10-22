@@ -93,8 +93,9 @@ class DiaryClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> models.Diary:
         """Get a traveler's diary with earning details for the month."""
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
         cache_key = cache.cache_key(
-            "diary", month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+            "diary", uid=uid, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
         )
         data = await self.request_ledger(uid, month=month, lang=lang, cache=cache_key)
         return models.Diary(**data)
