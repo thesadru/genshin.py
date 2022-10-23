@@ -33,12 +33,12 @@ def _parse_icon(icon: typing.Union[str, int]) -> str:
     return icon
 
 
-def _create_icon(icon: str, specifier: str, scale: int = 0) -> str:
+def _create_icon(icon: str, specifier: str) -> str:
     if "http" in icon and "genshin" not in icon:
         return icon  # no point in trying to parse invalid urls
 
     icon_name = _parse_icon(icon)
-    return ICON_BASE + f"{specifier}_{icon_name}{f'@{scale}x' if scale else ''}.png"
+    return ICON_BASE + f"{specifier.format(icon_name)}.png"
 
 
 def _get_db_char(
@@ -109,7 +109,7 @@ class BaseCharacter(APIModel, Unique):
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
         char = _get_db_char(id, name, icon, element, rarity, lang=values["lang"])
-        icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon")
+        icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon_{}")
 
         values["id"] = char.id
         values["name"] = char.name
@@ -138,11 +138,15 @@ class BaseCharacter(APIModel, Unique):
 
     @property
     def image(self) -> str:
-        return _create_icon(self.icon, "character_image/UI_AvatarIcon", scale=2)
+        return _create_icon(self.icon, "character_image/UI_AvatarIcon_{}@2x")
 
     @property
     def side_icon(self) -> str:
-        return _create_icon(self.icon, "character_side_icon/UI_AvatarIcon_Side")
+        return _create_icon(self.icon, "character_side_icon/UI_AvatarIcon_Side_{}")
+
+    @property
+    def card_icon(self) -> str:
+        return _create_icon(self.icon, "character_card_icon/UI_AvatarIcon_{}_Card")
 
     @property
     def traveler_name(self) -> str:
