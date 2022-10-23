@@ -21,6 +21,12 @@ async def test_search(client: genshin.Client, hoyolab_uid: int):
     assert user.nickname == "sadru"
 
 
+async def test_hoyolab_user(client: genshin.Client, hoyolab_uid: int):
+    user = await client.get_hoyolab_user(hoyolab_uid)
+
+    assert user.nickname == "sadru"
+
+
 async def test_recommended_users(client: genshin.Client):
     users = await client.get_recommended_users()
 

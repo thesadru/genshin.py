@@ -11,13 +11,16 @@ from genshin import types
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
+    "FullHoyolabUser",
     "Gender",
     "GenshinAccount",
+    "HoyolabUserCertification",
+    "HoyolabUserLevel",
+    "PartialHoyolabUser",
     "RecordCard",
     "RecordCardData",
     "RecordCardSetting",
     "RecordCardSettingType",
-    "SearchUser",
     "UserInfo",
 ]
 
@@ -86,8 +89,8 @@ class Gender(enum.IntEnum):
     other = 3
 
 
-class SearchUser(APIModel):
-    """User from a search result."""
+class PartialHoyolabUser(APIModel):
+    """Partial hoyolab user from a search result."""
 
     hoyolab_uid: int = Aliased("uid")
     nickname: str
@@ -99,6 +102,40 @@ class SearchUser(APIModel):
     @pydantic.validator("nickname")
     def __remove_highlight(cls, v: str) -> str:
         return re.sub(r"<.+?>", "", v)
+
+
+class HoyolabUserCertification(APIModel):
+    """Hoyolab user certification.
+
+    For example artist's type is 2.
+    """
+
+    icon_url: str
+    description: str = Aliased("desc")
+    type: int
+
+
+class HoyolabUserLevel(APIModel):
+    """Hoyolab user level."""
+
+    level: int
+    exp: int
+    level_desc: str
+    bg_color: str
+    bg_image: str
+
+
+class FullHoyolabUser(PartialHoyolabUser):
+    """Full hoyolab user.
+
+    Not actually full, but most of the data is useless.
+    """
+
+    certification: typing.Optional[HoyolabUserCertification] = None
+    level: HoyolabUserLevel
+    pendant_url: str = Aliased("pendant")
+    bg_url: str
+    pc_bg_url: str
 
 
 class RecordCard(GenshinAccount):

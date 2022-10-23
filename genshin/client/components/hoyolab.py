@@ -13,23 +13,39 @@ __all__ = ["HoyolabClient"]
 class HoyolabClient(base.BaseClient):
     """Hoyolab component."""
 
-    async def search_users(self, keyword: str) -> typing.Sequence[models.SearchUser]:
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.PartialHoyolabUser]:
         """Search hoyolab users."""
         data = await self.request_hoyolab(
             "community/search/wapi/search/user",
+            lang=lang,
             params=dict(keyword=keyword, page_size=20),
-            cache=client_cache.cache_key("search", keyword=keyword),
+            cache=client_cache.cache_key("search", keyword=keyword, lang=self.lang),
         )
-        return [models.SearchUser(**i["user"]) for i in data["list"]]
+        return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.SearchUser]:
+    async def get_hoyolab_user(self, hoyolab_id: int, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
+        """Get a hoyolab user."""
+        data = await self.request_hoyolab(
+            "https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full",
+            lang=lang,
+            params=dict(uid=hoyolab_id),
+            cache=client_cache.cache_key("hoyolab", uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data["user_info"])
+
+    async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
         data = await self.request_hoyolab(
             "community/user/wapi/recommendActive",
             params=dict(page_size=limit),
             cache=client_cache.cache_key("recommended"),
         )
-        return [models.SearchUser(**i["user"]) for i in data["list"]]
+        return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
     @manager.no_multi
     async def redeem_code(
