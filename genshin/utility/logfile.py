@@ -95,5 +95,5 @@ def get_authkey(game_location: typing.Optional[PathLike] = None) -> str:
 def get_banner_ids(logfile: typing.Optional[PathLike] = None) -> typing.Sequence[str]:
     """Get all banner ids from a log file."""
     log = _read_datafile(logfile)
-    ids = re.findall(r"OnGetWebViewPageFinish:https://.+?gacha_id=([^&#]+)", log)
+    ids = re.findall(r"https://.+?gacha_id=([^&#]+)", log, re.MULTILINE)
     return list(set(ids))

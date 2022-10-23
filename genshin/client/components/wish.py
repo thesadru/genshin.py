@@ -4,8 +4,6 @@ import functools
 import typing
 import urllib.parse
 
-import aiohttp
-
 from genshin import paginators, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
@@ -135,13 +133,9 @@ class WishClient(base.BaseClient):
     ) -> typing.Sequence[models.BannerDetails]:
         """Get all banner details at once in a batch."""
         if not banner_ids:
-            try:
-                banner_ids = utility.get_banner_ids()
-            except FileNotFoundError:
-                banner_ids = []
-
-            if len(banner_ids) < 3:
-                banner_ids = await self.fetch_banner_ids()
+            banner_ids = utility.get_banner_ids()
+            if not banner_ids:
+                raise ValueError("No banner IDs provided.")
 
         coros = (self._get_banner_details(i, lang=lang) for i in banner_ids)
         data = await asyncio.gather(*coros)
@@ -160,12 +154,3 @@ class WishClient(base.BaseClient):
             cache=client_cache.cache_key("banner", endpoint="items", lang=lang),
         )
         return [models.GachaItem(**i) for i in data]
-
-    async def fetch_banner_ids(self) -> typing.Sequence[str]:
-        """Fetch banner ids from a user-mantained github repository."""
-        url = "https://raw.githubusercontent.com/thesadru/genshindata/master/banner_ids.txt"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as r:
-                data = await r.text()
-
-        return data.splitlines()
