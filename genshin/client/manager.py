@@ -6,6 +6,7 @@ import functools
 import http.cookies
 import logging
 import typing
+import warnings
 
 import aiohttp
 import aiohttp.typedefs
@@ -246,7 +247,8 @@ class CookieManager(BaseCookieManager):
 class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
     MAX_USES: int = 30
 
-    _cookies: typing.List[typing.Tuple[typing.Dict[str, str], int]]
+    # {id: ({cookie}, uses), ...}
+    _cookies: typing.Dict[int, typing.Tuple[typing.Dict[str, str], int]]
 
     def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
@@ -254,24 +256,32 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
     @property
     def cookies(self) -> typing.Sequence[typing.Mapping[str, str]]:
         """Cookies used for authentication"""
-        self._sort_cookies()
-        return [cookie for cookie, _ in self._cookies]
+        cookies = sorted(self._cookies.values(), key=lambda x: 0 if x[1] >= self.MAX_USES else x[1], reverse=True)
+        return [cookies for cookies, _ in cookies]
 
     @cookies.setter
     def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -> None:
         if not cookies:
-            self._cookies = []
+            self._cookies = {}
             return
 
-        self._cookies = [(parse_cookie(cookie), 0) for cookie in cookies]
-        self._sort_cookies()
+        self._cookies = {}
+        for cookie in cookies:
+            cookie = parse_cookie(cookie)
+
+            account_id = cookie.get("account_id") or cookie.get("ltuid")
+            if not account_id or not account_id.isdigit():
+                raise ValueError(f"Cookies must contain a valid account_id or ltuid: {cookie}")
+
+            account_id = int(account_id)
+
+            if account_id in self._cookies:
+                raise ValueError(f"Cannot use the same account_id or ltuid for multiple cookies: {account_id}.")
+
+            self._cookies[account_id] = (cookie, 0)
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} len={len(self._cookies)}>"
-
-    def _sort_cookies(self) -> None:
-        """Sort cookies by remaining uses."""
-        self._cookies.sort(key=lambda x: 0 if x[1] >= self.MAX_USES else x[1], reverse=True)
 
     def __getitem__(self, index: int) -> typing.Mapping[str, str]:  # type: ignore # I can't be fucked with slices
         return self.cookies[index]
@@ -330,15 +340,19 @@ class RotatingCookieManager(BaseCookieManager):
         if not self.cookies:
             raise RuntimeError("Tried to make a request before setting cookies")
 
-        for index, (cookie, uses) in enumerate(self._cookies._cookies.copy()):
+        for account_id, (cookie, uses) in self._cookies._cookies.copy().items():
             try:
                 data = await self._request(method, url, cookies=cookie, **kwargs)
             except errors.TooManyRequests:
-                cookie_id = cookie.get("account_id") or cookie.get("ltuid")
-                _LOGGER.debug("Putting cookie %s on cooldown.", cookie_id)
-                self._cookies._cookies[index] = (cookie, self._cookies.MAX_USES)
+                _LOGGER.debug("Putting cookie %s on cooldown.", account_id)
+                self._cookies._cookies[account_id] = (cookie, self._cookies.MAX_USES)
+            except errors.InvalidCookies:
+                warnings.warn(f"Deleting invalid cookie {cookie}")
+                # prevent race conditions
+                if account_id in self._cookies._cookies:
+                    del self._cookies._cookies[account_id]
             else:
-                self._cookies._cookies[index] = (cookie, 1 if uses >= self._cookies.MAX_USES else uses + 1)
+                self._cookies._cookies[account_id] = (cookie, 1 if uses >= self._cookies.MAX_USES else uses + 1)
                 return data
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
@@ -415,16 +429,22 @@ class InternationalCookieManager(BaseCookieManager):
         region = self.guess_region(yarl.URL(url))
 
         # TODO: less copy-paste
-        for index, (cookie, uses) in enumerate(self._cookies[region]._cookies.copy()):
+        for account_id, (cookie, uses) in self._cookies[region]._cookies.copy().items():
             try:
                 data = await self._request(method, url, cookies=cookie, **kwargs)
             except errors.TooManyRequests:
-                cookie_id = cookie.get("account_id") or cookie.get("ltuid")
-                _LOGGER.debug("Putting cookie %s for %s on cooldown.", cookie_id, region)
-                self._cookies[region]._cookies[index] = (cookie, self._cookies[region].MAX_USES)
+                _LOGGER.debug("Putting cookie %s on cooldown.", account_id)
+                self._cookies[region]._cookies[account_id] = (cookie, self._cookies[region].MAX_USES)
+            except errors.InvalidCookies:
+                warnings.warn(f"Deleting invalid cookie {cookie}")
+                # prevent race conditions
+                if account_id in self._cookies[region]._cookies:
+                    del self._cookies[region]._cookies[account_id]
             else:
-                uses = 1 if uses >= self._cookies[region].MAX_USES else uses + 1
-                self._cookies[region]._cookies[index] = (cookie, uses)
+                self._cookies[region]._cookies[account_id] = (
+                    cookie,
+                    1 if uses >= self._cookies[region].MAX_USES else uses + 1,
+                )
                 return data
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
