@@ -177,7 +177,7 @@ class Unique(abc.ABC):
     id: int
 
     def __int__(self) -> int:
-        return self.id
+        return hash(self.id)
 
     def __hash__(self) -> int:
         return hash(self.id)

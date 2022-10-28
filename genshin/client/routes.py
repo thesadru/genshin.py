@@ -12,6 +12,7 @@ __all__ = [
     "DETAIL_LEDGER_URL",
     "GACHA_INFO_URL",
     "INFO_LEDGER_URL",
+    "LINEUP_URL",
     "MI18N",
     "RECORD_URL",
     "REWARD_URL",
@@ -97,6 +98,10 @@ COMMUNITY_URL = InternationalRoute(
 RECORD_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/game_record/",
     chinese="https://api-takumi-record.mihoyo.com/game_record/app/",
+)
+LINEUP_URL = InternationalRoute(
+    overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
+    chinese="",
 )
 
 INFO_LEDGER_URL = InternationalRoute(
