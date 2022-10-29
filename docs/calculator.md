@@ -3,7 +3,7 @@
 A wrapper around the [Genshin Impact Enhancment Progress Calculator](https://webstatic-sea.mihoyo.com/ys/event/calculator-sea/index.html) page.
 Contains a database of all characters, weapons and artifacts. Also the only way to recieve talents.
 
-To request any of the calculator endpoints you must first be logged in. Refer to [the authentication section](authentication.md) for more information.
+To request many of the calculator endpoints you must first be logged in. Refer to [the authentication section](authentication.md) for more information.
 
 ## Quick Example
 
