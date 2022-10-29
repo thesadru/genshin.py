@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
     from genshin import models
 
 
-__all__ = ["CursorPaginator", "PagedPaginator"]
+__all__ = ["CursorPaginator", "PagedPaginator", "TokenPaginator"]
 
 T = typing.TypeVar("T")
 T_co = typing.TypeVar("T_co", covariant=True)
@@ -26,12 +26,20 @@ class GetterCallback(typing.Protocol[T_co]):
         ...
 
 
+class TokenGetterCallback(typing.Protocol[T_co]):
+    """Callback for returning resources based on a page or cursor."""
+
+    async def __call__(self, token: str, /) -> typing.Tuple[str, typing.Sequence[T_co]]:
+        """Return a sequence of resources."""
+        ...
+
+
 class APIPaginator(typing.Generic[T], base.BufferedPaginator[T], abc.ABC):
     """Paginator for interaction with the api."""
 
     __slots__ = ("getter",)
 
-    getter: GetterCallback[T]
+    getter: typing.Callable[..., typing.Awaitable[object]]
     """Underlying getter that yields the next page."""
 
 
@@ -84,6 +92,50 @@ class PagedPaginator(typing.Generic[T], APIPaginator[T]):
         return data
 
 
+class TokenPaginator(typing.Generic[T], APIPaginator[T]):
+    """Paginator for resources which require a token."""
+
+    __slots__ = ("_page_size", "token")
+
+    getter: TokenGetterCallback[T]
+    """Underlying getter that yields the next page."""
+
+    _page_size: typing.Optional[int]
+    """Expected non-zero page size to be able to tell the end."""
+
+    token: typing.Optional[str]
+
+    def __init__(
+        self,
+        getter: TokenGetterCallback[T],
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+    ) -> None:
+        super().__init__(limit=limit)
+        self.getter = getter
+        self._page_size = page_size
+
+        self.token = ""
+
+    async def next_page(self) -> typing.Optional[typing.Iterable[T]]:
+        """Get the next page of the paginator."""
+        if self.token is None:
+            return None
+
+        self.token, data = await self.getter(self.token)
+
+        if self._page_size is None:
+            warnings.warn("No page size specified for resource, having to guess.")
+            self._page_size = len(data)
+
+        if len(data) < self._page_size:
+            self.token = None
+            return data
+
+        return data
+
+
 class CursorPaginator(typing.Generic[UniqueT], APIPaginator[UniqueT]):
     """Paginator based on end_id cursors."""
 
@@ -92,11 +144,11 @@ class CursorPaginator(typing.Generic[UniqueT], APIPaginator[UniqueT]):
     getter: GetterCallback[UniqueT]
     """Underlying getter that yields the next page."""
 
-    end_id: typing.Optional[int]
-    """Current end id. If none then exhausted."""
-
     _page_size: typing.Optional[int]
     """Expected non-zero page size to be able to tell the end."""
+
+    end_id: typing.Optional[int]
+    """Current end id. If none then exhausted."""
 
     def __init__(
         self,
@@ -115,7 +167,7 @@ class CursorPaginator(typing.Generic[UniqueT], APIPaginator[UniqueT]):
     async def next_page(self) -> typing.Optional[typing.Iterable[UniqueT]]:
         """Get the next page of the paginator."""
         if self.end_id is None:
-            self._complete()
+            return None
 
         data = await self.getter(self.end_id)
 

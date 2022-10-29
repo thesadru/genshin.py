@@ -13,10 +13,14 @@ __all__ = [
     "Lineup",
     "LineupAbyssScenarios",
     "LineupAbyssScenarios",
+    "LineupArtifactStat",
+    "LineupArtifactStatFields",
     "LineupCharacter",
     "LineupCharacterPreview",
     "LineupFields",
+    "LineupFields",
     "LineupPreview",
+    "LineupPrimaryArtifactStat",
     "LineupScenario",
     "LineupWorldScenarios",
     "PartialLineupArtifactSet",
@@ -49,7 +53,10 @@ class PartialLineupCharacter(character.BaseCharacter):
         }[int(value)]
 
     @pydantic.validator("weapon_type", pre=True)
-    def __parse_weapon_type(cls, value: int) -> str:
+    def __parse_weapon_type(cls, value: typing.Any) -> str:
+        if isinstance(value, str) and not value.isdigit():
+            return value
+
         return {
             0: "Unknown",
             1: "Sword",
@@ -57,7 +64,7 @@ class PartialLineupCharacter(character.BaseCharacter):
             11: "Claymore",
             12: "Bow",
             13: "Polearm",
-        }[value]
+        }[int(value)]
 
 
 class PartialLineupWeapon(APIModel, Unique):
@@ -71,6 +78,9 @@ class PartialLineupWeapon(APIModel, Unique):
 
     @pydantic.validator("type", pre=True)
     def __parse_weapon_type(cls, value: int) -> str:
+        if isinstance(value, str) and not value.isdigit():
+            return value
+
         return {
             1: "Sword",
             10: "Catalyst",
@@ -89,6 +99,51 @@ class PartialLineupArtifactSet(APIModel, Unique):
     rarity: int = Aliased("level")
 
 
+class LineupArtifactStatFields(APIModel):
+    """Lineup artifact stat fields."""
+
+    flower: typing.Mapping[int, str] = pydantic.Field(artifact_id=1)
+    plume: typing.Mapping[int, str] = pydantic.Field(artifact_id=2)
+    sands: typing.Mapping[int, str] = pydantic.Field(artifact_id=3)
+    goblet: typing.Mapping[int, str] = pydantic.Field(artifact_id=4)
+    circlet: typing.Mapping[int, str] = pydantic.Field(artifact_id=5)
+
+    secondary_stats: typing.Mapping[int, str] = Aliased("reliquary_sec_attr")
+
+    @pydantic.root_validator(pre=True)
+    def __flatten_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        """Name certain stats."""
+        if "reliquary_fst_attr" not in values:
+            return values
+
+        artifact_ids = {
+            field.field_info.extra["artifact_id"]: name
+            for name, field in cls.__fields__.items()
+            if field.field_info.extra.get("artifact_id")
+        }
+
+        for scenario in values["reliquary_fst_attr"]:
+            if scenario["key"] not in artifact_ids:
+                continue
+
+            name = artifact_ids[scenario["key"]]
+            values[name] = scenario["value"]
+
+        return values
+
+    @pydantic.validator("secondary_stats", "flower", "plume", "sands", "goblet", "circlet", pre=True)
+    def __parse_secondary_stats(cls, value: typing.Any) -> typing.Dict[int, str]:
+        if not isinstance(value, typing.Sequence):
+            return value
+
+        return {stat["id"]: stat["name"] for stat in value}  # type: ignore
+
+    @property
+    def all_stats(self) -> typing.Mapping[int, str]:
+        """All possible stats for any artifact."""
+        return {**self.flower, **self.plume, **self.sands, **self.goblet, **self.circlet, **self.secondary_stats}
+
+
 class LineupFields(APIModel):
     """Configuration lineup fields."""
 
@@ -96,8 +151,23 @@ class LineupFields(APIModel):
     weapons: typing.Sequence[PartialLineupWeapon] = Aliased("all_weapon")
     artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased("all_set")
 
+    artifact_stats: LineupArtifactStatFields = Aliased("extra_config")
 
-class LineupScenario(APIModel):
+
+class LineupArtifactStat(APIModel, Unique):
+    """Lineup artifact stat."""
+
+    id: int
+    name: str
+
+
+class LineupPrimaryArtifactStat(LineupArtifactStat):
+    """Lineup primary artifact stat."""
+
+    artifact_type: int = Aliased("cat_id")
+
+
+class LineupScenario(APIModel, Unique):
     """Lineup scenario such as domain, boss or spiral abyss."""
 
     id: int
@@ -160,7 +230,10 @@ class LineupCharacterPreview(PartialLineupCharacter):
     role: str = Aliased("avatar_tag")
 
     @pydantic.validator("role", pre=True)
-    def __parse_role(cls, value: typing.Dict[str, typing.Any]) -> str:
+    def __parse_role(cls, value: typing.Any) -> str:
+        if isinstance(value, str):
+            return value
+
         return value["name"]
 
 
@@ -169,6 +242,9 @@ class LineupCharacter(LineupCharacterPreview):
 
     weapon: PartialLineupWeapon
     artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased("set_list")
+
+    artifact_attributes: typing.Sequence[LineupPrimaryArtifactStat] = Aliased("first_attr")
+    secondary_attributes: typing.Sequence[LineupArtifactStat] = Aliased("secondary_attr_name")
 
 
 class LineupPreview(APIModel, Unique):
@@ -192,7 +268,10 @@ class LineupPreview(APIModel, Unique):
     original_lang: str = Aliased("trans_from")
 
     @pydantic.validator("characters", pre=True)
-    def __parse_characters(cls, value: typing.List[typing.Dict[str, typing.Any]]) -> typing.Any:
+    def __parse_characters(cls, value: typing.Any) -> typing.Any:
+        if isinstance(value[0], typing.Sequence):
+            return value
+
         return [[character for character in group["group"]] for group in value]
 
 
@@ -203,7 +282,3 @@ class Lineup(LineupPreview):
     views: int = Aliased("view_cnt")
 
     characters: typing.Sequence[typing.Sequence[LineupCharacter]] = Aliased("avatar_group")
-
-    @pydantic.validator("characters", pre=True)
-    def __parse_characters(cls, value: typing.Sequence[typing.Dict[str, typing.Any]]) -> typing.Any:
-        return [[character for character in group["group"]] for group in value]
