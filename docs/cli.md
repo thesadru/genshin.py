@@ -21,13 +21,12 @@ Usage: python -m genshin [OPTIONS] COMMAND [ARGS]...
 Options:
   --help  Show this message and exit.
 
-Groups:
-  genshin     Genshin-related commands.
-  honkai      Honkai-related commands.
-
 Commands:
   accounts    Get all of your genshin accounts.
   banner-ids  Get the banner ids from logs.
+  genshin     Genshin-related commands.
+  honkai      Honkai-related commands.
+  lineups     Show popular genshin lineups.
   login       Login with a password.
   pity        Calculate the amount of pulls until pity.
   wishes      Show a nicely formatted wish history.

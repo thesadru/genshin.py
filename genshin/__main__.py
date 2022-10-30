@@ -198,6 +198,43 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
 
 
 @cli.command()
+@click.option("--scenario", help="Scenario ID or name to use (eg '12-3').", type=str, default=None)
+@client_command
+async def lineups(client: genshin.Client, scenario: typing.Optional[str]) -> None:
+    """Show popular genshin lineups."""
+    scenarios = await client.get_lineup_scenarios()
+
+    if scenario is None:
+        scenario_id = None
+    elif scenario.isdigit():
+        scenario_id = int(scenario)
+    else:
+        for s in scenarios.all_children:
+            if s.name.lower() == scenario.lower():
+                scenario_id = s.id
+                break
+        else:
+            raise Exception(f"Scenario {scenario!r} not found.")
+
+    lineups = await client.get_lineups(scenario_id, limit=10, page_size=10)
+
+    for lineup in lineups:
+        scenario_names = [s.name for s in scenarios.all_children if s.id in lineup.scenario_ids]
+
+        click.echo(f"{click.style(lineup.title, fg='cyan')} | {click.style(str(lineup.likes), fg='green')} likes")
+        click.echo(f"{click.style('Author:', bold=True)} {lineup.author_nickname} (AR {lineup.author_level})")
+        click.echo(f"{click.style('Scenarios:', bold=True)} {', '.join(scenario_names)}")
+        click.echo(f"{click.style('Characters:', bold=True)}")
+        for group, characters in enumerate(lineup.characters, 1):
+            if len(lineup.characters) > 1:
+                click.echo(f"- Group {group }:")
+            for character in characters:
+                click.echo(f" - {character.name} ({character.role})")
+
+        click.echo("")
+
+
+@cli.command()
 @click.option("--limit", help="The maximum amount of wishes to show.", type=int, default=None)
 @client_command
 async def wishes(client: genshin.Client, limit: typing.Optional[int] = None) -> None:
