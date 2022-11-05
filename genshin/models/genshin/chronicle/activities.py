@@ -36,9 +36,9 @@ class OldActivity(APIModel, pydantic.generics.GenericModel, typing.Generic[Model
 class Activity(OldActivity[ModelT]):
     """Arbitrary activity for chinese events."""
 
-    start_time: datetime.datetime
-    end_time: datetime.datetime
-    total_score: int
+    start_time: typing.Optional[datetime.datetime] = None
+    end_time: typing.Optional[datetime.datetime] = None
+    total_score: int = 0
 
     # cn only
     total_times: int = 1
