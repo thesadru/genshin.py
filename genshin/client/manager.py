@@ -121,16 +121,24 @@ class BaseCookieManager(abc.ABC):
         self,
         method: str,
         str_or_url: aiohttp.typedefs.StrOrURL,
+        cookies: typing.MutableMapping[str, str],
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Make a request towards any json resource."""
         async with self.create_session() as session:
-            async with session.request(method, str_or_url, proxy=self.proxy, **kwargs) as response:
+            async with session.request(method, str_or_url, proxy=self.proxy, cookies=cookies, **kwargs) as response:
                 if response.content_type != "application/json":
                     content = await response.text()
                     raise errors.GenshinException(msg="Recieved a response with an invalid content type:\n" + content)
 
                 data = await response.json()
+
+                if not self.multi:
+                    new_cookies = parse_cookie(response.cookies)
+                    new_keys = new_cookies.keys() - cookies.keys()
+                    if new_keys:
+                        cookies.update(new_cookies)
+                        _LOGGER.debug("Updating cookies for %s: %s", self.user_id, new_keys)
 
         if data["retcode"] == 0:
             return data["data"]
@@ -168,7 +176,7 @@ class CookieManager(BaseCookieManager):
         return f"{self.__class__.__name__}({self.cookies})"
 
     @property
-    def cookies(self) -> typing.Mapping[str, str]:
+    def cookies(self) -> typing.MutableMapping[str, str]:
         """Cookies used for authentication."""
         return self._cookies
 
@@ -205,7 +213,7 @@ class CookieManager(BaseCookieManager):
         self,
         cookies: typing.Optional[CookieOrHeader] = None,
         **kwargs: typing.Any,
-    ) -> typing.Mapping[str, str]:
+    ) -> typing.MutableMapping[str, str]:
         """Parse and set cookies."""
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
@@ -218,7 +226,7 @@ class CookieManager(BaseCookieManager):
 
         Available browsers: chrome, chromium, opera, edge, firefox.
         """
-        self.cookies = fs_utility.get_browser_cookies(browser)
+        self.cookies = parse_cookie(fs_utility.get_browser_cookies(browser))
         return self.cookies
 
     @property
