@@ -19,7 +19,13 @@ from . import ratelimit
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = ["BaseCookieManager", "CookieManager", "InternationalCookieManager", "RotatingCookieManager"]
+__all__ = [
+    "BaseCookieManager",
+    "CookieManager",
+    "InternationalCookieManager",
+    "RotatingCookieManager",
+    "complete_cookies",
+]
 
 CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
 AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]]
@@ -457,6 +463,13 @@ class InternationalCookieManager(BaseCookieManager):
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
         raise errors.TooManyRequests({"retcode": 10101}, msg)
+
+
+async def complete_cookies(cookies: CookieOrHeader) -> typing.Mapping[str, str]:
+    """Add ltoken and ltuid to a cookie with only a cookie_token and an account_id."""
+    manager = CookieManager(cookies)
+    await manager.request("https://bbs-api-os.hoyolab.com/community/misc/wapi/langs")
+    return manager.cookies
 
 
 def no_multi(func: CallableT) -> CallableT:
