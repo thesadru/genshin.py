@@ -87,13 +87,18 @@ class GameRoute(BaseRoute):
 
 WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
 
+ACCOUNT_URL = InternationalRoute(
+    "https://webapi-os.account.hoyoverse.com/Api/",
+    "https://webapi.account.mihoyo.com/Api/",
+)
+
 TAKUMI_URL = InternationalRoute(
     overseas="https://api-os-takumi.mihoyo.com/",
     chinese="https://api-takumi.mihoyo.com/",
 )
 COMMUNITY_URL = InternationalRoute(
-    overseas="https://bbs-api-os.hoyolab.com/community/apihub/",
-    chinese="https://api-takumi-record.mihoyo.com/community/apihub/",
+    overseas="https://bbs-api-os.hoyolab.com/community/",
+    chinese="https://api-takumi-record.mihoyo.com/community/",
 )
 RECORD_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/game_record/",

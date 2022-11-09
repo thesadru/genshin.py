@@ -13,6 +13,7 @@ import aiohttp.typedefs
 import yarl
 
 from genshin import errors, types
+from genshin.client import routes
 from genshin.utility import fs as fs_utility
 
 from . import ratelimit
@@ -32,6 +33,7 @@ AnyCookieOrHeader = typing.Union[CookieOrHeader, typing.Sequence[CookieOrHeader]
 
 T = typing.TypeVar("T")
 CallableT = typing.TypeVar("CallableT", bound="typing.Callable[..., object]")
+AsyncCallableT = typing.TypeVar("AsyncCallableT", bound="typing.Callable[..., typing.Awaitable[object]]")
 MaybeSequence = typing.Union[T, typing.Sequence[T]]
 
 
@@ -145,6 +147,9 @@ class BaseCookieManager(abc.ABC):
                     if new_keys:
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", self.user_id, new_keys)
+
+        if "retcode" not in data:  # special request
+            return data.get("data", data)
 
         if data["retcode"] == 0:
             return data["data"]
@@ -465,10 +470,54 @@ class InternationalCookieManager(BaseCookieManager):
         raise errors.TooManyRequests({"retcode": 10101}, msg)
 
 
-async def complete_cookies(cookies: CookieOrHeader) -> typing.Mapping[str, str]:
+async def _fetch_cookie_token_info(
+    cookies: CookieOrHeader,
+    *,
+    region: types.Region = types.Region.OVERSEAS,
+) -> typing.Mapping[str, typing.Any]:
+    """Fetch cookie token info."""
+    manager = CookieManager(cookies)
+
+    base_url = routes.ACCOUNT_URL.get_url(region)
+    url = base_url / "fetch_cookie_accountinfo"
+
+    data = await manager.request(url)
+
+    return data["cookie_info"]
+
+
+async def reload_cookie_token(
+    cookies: CookieOrHeader,
+    *,
+    region: types.Region = types.Region.OVERSEAS,
+) -> typing.MutableMapping[str, str]:
+    """Reload cookie token."""
+    cookies = parse_cookie(cookies)
+
+    info = await _fetch_cookie_token_info(cookies, region=region)
+    cookies["account_id"] = info["account_id"]
+    cookies["cookie_token"] = info["cookie_token"]
+
+    return cookies
+
+
+async def complete_cookies(
+    cookies: CookieOrHeader,
+    *,
+    reload: bool = True,
+    region: types.Region = types.Region.OVERSEAS,
+) -> typing.Mapping[str, str]:
     """Add ltoken and ltuid to a cookie with only a cookie_token and an account_id."""
     manager = CookieManager(cookies)
-    await manager.request("https://bbs-api-os.hoyolab.com/community/misc/wapi/langs")
+
+    if reload:
+        manager.cookies = await reload_cookie_token(manager.cookies)
+
+    base_url = routes.COMMUNITY_URL.get_url(region)
+    url = base_url / "misc/wapi/langs"
+
+    await manager.request(url)
+
     return manager.cookies
 
 
@@ -485,3 +534,29 @@ def no_multi(func: CallableT) -> CallableT:
         return func(self, *args, **kwargs)
 
     return typing.cast("CallableT", wrapper)
+
+
+def requires_cookie_token(func: AsyncCallableT) -> AsyncCallableT:
+    """Prevent function to be ran without a cookie_token."""
+
+    @functools.wraps(func)
+    async def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
+        if not hasattr(self, "cookie_manager"):
+            raise TypeError("Cannot use @requires_cookie_token on a plain function.")
+        if self.cookie_manager.multi:
+            raise RuntimeError(f"Cannot use {func.__name__} with multi-cookie managers - data is private.")
+        if not isinstance(self.cookie_manager, CookieManager):
+            raise RuntimeError(
+                f"Cannot use {func.__name__} with a custom cookie manager - a consistent API is expected."
+            )
+        if "cookie_token" not in self.cookie_manager.cookies or "account_id" not in self.cookie_manager.cookies:
+            raise ValueError("Missing cookie_token or account_id in cookies.")
+
+        try:
+            return await func(self, *args, **kwargs)
+        except errors.InvalidCookies:
+            _LOGGER.debug("reloading cookie_token for %s", self.cookie_manager.cookies["account_id"])
+            await reload_cookie_token(self.cookie_manager.cookies)
+            return await func(self, *args, **kwargs)
+
+    return typing.cast("AsyncCallableT", wrapper)

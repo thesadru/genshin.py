@@ -47,7 +47,7 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    @manager.no_multi
+    @manager.requires_cookie_token
     async def redeem_code(
         self,
         code: str,
@@ -72,5 +72,5 @@ class HoyolabClient(base.BaseClient):
     @manager.no_multi
     async def check_in_community(self) -> None:
         """Check in to the hoyolab community and claim your daily 5 community exp."""
-        url = routes.COMMUNITY_URL.get_url(self.region) / "wapi/mission/signIn"
+        url = routes.COMMUNITY_URL.get_url(self.region) / "apihub/wapi/mission/signIn"
         await self.request(url, method="POST", data={})
