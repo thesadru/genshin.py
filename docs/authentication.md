@@ -72,7 +72,9 @@ cookies = genshin.utility.get_browser_cookies("chrome")
 
 ### Details
 
-Sadly not even this is inconsistent enough. For some endpoints like `redeem_code`, you might need to set `account_id` and `cookie_token` cookies instead. You can get them by going to [genshin.mihoyo.com](https://genshin.mihoyo.com/en/gift).
+For some endpoints like `redeem_code`, you might need to set `account_id` and `cookie_token` cookies instead. You can get them by going to [genshin.hoyoverse.com](https://genshin.hoyoverse.com/en/gift).
+
+If you know you will be redeeming gifts and also use other endpoints, you should "complete" your cookies before saving them in for example database with `cookies = await genshin.complete_cookies(...)`
 
 ## Authkey
 

@@ -148,9 +148,6 @@ class BaseCookieManager(abc.ABC):
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", self.user_id, new_keys)
 
-        if "retcode" not in data:  # special request
-            return data.get("data", data)
-
         if data["retcode"] == 0:
             return data["data"]
 
@@ -476,22 +473,29 @@ async def _fetch_cookie_token_info(
     region: types.Region = types.Region.OVERSEAS,
 ) -> typing.Mapping[str, typing.Any]:
     """Fetch cookie token info."""
-    manager = CookieManager(cookies)
+    cookies = parse_cookie(cookies)
 
     base_url = routes.ACCOUNT_URL.get_url(region)
     url = base_url / "fetch_cookie_accountinfo"
 
-    data = await manager.request(url)
+    async with aiohttp.ClientSession(cookies=cookies) as session:
+        r = await session.request("GET", url)
+        data = await r.json()
+
+    data = data["data"]
+
+    if data["status"] != 1:
+        raise errors.CookieException(msg=f"Error fetching cookie token info {data['status']}")
 
     return data["cookie_info"]
 
 
-async def reload_cookie_token(
+async def refresh_cookie_token(
     cookies: CookieOrHeader,
     *,
     region: types.Region = types.Region.OVERSEAS,
 ) -> typing.MutableMapping[str, str]:
-    """Reload cookie token."""
+    """Refresh a cookie token to make it last longer."""
     cookies = parse_cookie(cookies)
 
     info = await _fetch_cookie_token_info(cookies, region=region)
@@ -504,14 +508,17 @@ async def reload_cookie_token(
 async def complete_cookies(
     cookies: CookieOrHeader,
     *,
-    reload: bool = True,
+    refresh: bool = True,
     region: types.Region = types.Region.OVERSEAS,
 ) -> typing.Mapping[str, str]:
-    """Add ltoken and ltuid to a cookie with only a cookie_token and an account_id."""
+    """Add ltoken and ltuid to a cookie with only a cookie_token and an account_id.
+
+    If refresh is True, the cookie token will be refreshed to last longer.
+    """
     manager = CookieManager(cookies)
 
-    if reload:
-        manager.cookies = await reload_cookie_token(manager.cookies)
+    if refresh:
+        manager.cookies = await refresh_cookie_token(manager.cookies)
 
     base_url = routes.COMMUNITY_URL.get_url(region)
     url = base_url / "misc/wapi/langs"
@@ -545,18 +552,10 @@ def requires_cookie_token(func: AsyncCallableT) -> AsyncCallableT:
             raise TypeError("Cannot use @requires_cookie_token on a plain function.")
         if self.cookie_manager.multi:
             raise RuntimeError(f"Cannot use {func.__name__} with multi-cookie managers - data is private.")
-        if not isinstance(self.cookie_manager, CookieManager):
-            raise RuntimeError(
-                f"Cannot use {func.__name__} with a custom cookie manager - a consistent API is expected."
-            )
-        if "cookie_token" not in self.cookie_manager.cookies or "account_id" not in self.cookie_manager.cookies:
-            raise ValueError("Missing cookie_token or account_id in cookies.")
+        if isinstance(self.cookie_manager, CookieManager):
+            if "cookie_token" not in self.cookie_manager.cookies or "account_id" not in self.cookie_manager.cookies:
+                raise ValueError("Missing cookie_token or account_id in cookies.")
 
-        try:
-            return await func(self, *args, **kwargs)
-        except errors.InvalidCookies:
-            _LOGGER.debug("reloading cookie_token for %s", self.cookie_manager.cookies["account_id"])
-            await reload_cookie_token(self.cookie_manager.cookies)
-            return await func(self, *args, **kwargs)
+        return await func(self, *args, **kwargs)
 
     return typing.cast("AsyncCallableT", wrapper)
