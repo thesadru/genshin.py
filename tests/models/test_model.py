@@ -12,7 +12,8 @@ class LiteralCharacter(genshin.models.BaseCharacter):
 
 LiteralCharacter.__pre_root_validators__ = LiteralCharacter.__pre_root_validators__[:-1]
 
-lang = "en-us" # initiate local scope
+lang = "en-us"  # initiate local scope
+
 
 @pytest.mark.parametrize(
     ("data", "expected"),

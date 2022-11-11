@@ -41,12 +41,9 @@ jobs:
           python -m pip install nox
       - name: Run tests
         env:
-          LTUID: ${{ secrets.LTUID }}
-          LTOKEN: ${{ secrets.LTOKEN }}
-          CN_LTUID: ${{ secrets.CN_LTUID }}
-          CN_LTOKEN: ${{ secrets.CN_LTOKEN }}
-          LOCAL_ACCOUNT_ID: ${{ matrix.python-version == '3.10' && secrets.LOCAL_ACCOUNT_ID || '' }}
-          LOCAL_COOKIE_TOKEN: ${{ matrix.python-version == '3.10' && secrets.LOCAL_COOKIE_TOKEN || '' }}
+          GENSHIN_COOKIES: ${{ secrets.GENSHIN_COOKIES }}
+          LOCAL_GENSHIN_COOKIES: ${{ matrix.python-version == '3.10' && secrets.LOCAL_GENSHIN_COOKIES || '' }}
+
         run: |
           python -m nox -s test --verbose -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}

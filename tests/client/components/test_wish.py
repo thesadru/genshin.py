@@ -1,3 +1,5 @@
+import pytest
+
 import genshin
 
 
@@ -19,7 +21,12 @@ async def test_banner_types(lclient: genshin.Client, authkey: str):
 
 
 async def test_banner_details(lclient: genshin.Client):
-    banners = await lclient.get_banner_details()
+    try:
+        banners = await lclient.get_banner_details()
+    except FileNotFoundError:
+        # running in a vm
+        pytest.skip("No genshin installation.")
+
     for details in banners:
         assert details.banner_type in [100, 200, 301, 302, 400]
 

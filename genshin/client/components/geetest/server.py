@@ -18,7 +18,7 @@ INDEX = """
 <!DOCTYPE html>
 <html>
   <body>
-    <button type="button" id="login">Login</button>
+    <button hidden type="button" id="login">Login</button>
   </body>
   <script src="./gt.js"></script>
   <script>
@@ -37,6 +37,7 @@ INDEX = """
           },
           (captcha) => {
             captcha.appendTo("login");
+            document.getElementById("login").hidden = false;
             captcha.onSuccess(() => {
               fetch("/login", {
                 method: "POST",

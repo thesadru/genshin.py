@@ -22,10 +22,10 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def cookies() -> typing.Mapping[str, str]:
-    cookies = {"ltuid": os.environ.get("LTUID", ""), "ltoken": os.environ.get("LTOKEN", "")}
-
-    if not all(cookies.values()):
+    if not os.environ.get("GENSHIN_COOKIES"):
         pytest.exit("No cookies set", 1)
+
+    cookies = genshin.client.manager.parse_cookie(os.environ["GENSHIN_COOKIES"])
 
     return cookies
 
@@ -35,36 +35,33 @@ def local_cookies() -> typing.Mapping[str, str]:
     try:
         cookies = genshin.utility.get_browser_cookies()
     except Exception:
-        cookies = {
-            "account_id": os.environ.get("LOCAL_ACCOUNT_ID", ""),
-            "cookie_token": os.environ.get("LOCAL_COOKIE_TOKEN", ""),
-        }
+        cookies = {}
 
-    if not all(cookies.values()):
-        return {}
+    if not cookies:
+        if not os.environ.get("LOCAL_GENSHIN_COOKIES"):
+            return {}
+
+        cookies = genshin.client.manager.parse_cookie(os.environ["LOCAL_GENSHIN_COOKIES"])
 
     return cookies
 
 
 @pytest.fixture(scope="session")
 def chinese_cookies() -> typing.Mapping[str, str]:
-    cookies = {"ltuid": os.environ.get("CN_LTUID", ""), "ltoken": os.environ.get("CN_LTOKEN", "")}
-
-    if not all(cookies.values()):
+    if not os.environ.get("CHINESE_GENSHIN_COOKIES"):
         return {}
+
+    cookies = genshin.client.manager.parse_cookie(os.environ["GENSHIN_COOKIES"])
 
     return cookies
 
 
 @pytest.fixture(scope="session")
 def local_chinese_cookies() -> typing.Mapping[str, str]:
-    cookies = {
-        "account_id": os.environ.get("LOCAL_CN_ACCOUNT_ID", ""),
-        "cookie_token": os.environ.get("LOCAL_CN_COOKIE_TOKEN", ""),
-    }
-
-    if not all(cookies.values()):
+    if not os.environ.get("LOCAL_CHINESE_GENSHIN_COOKIES"):
         return {}
+
+    cookies = genshin.client.manager.parse_cookie(os.environ["LOCAL_GENSHIN_COOKIES"])
 
     return cookies
 
