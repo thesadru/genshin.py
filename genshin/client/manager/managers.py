@@ -13,10 +13,8 @@ import aiohttp.typedefs
 import yarl
 
 from genshin import errors, types
-from genshin.client import routes
+from genshin.client import ratelimit
 from genshin.utility import fs as fs_utility
-
-from . import ratelimit
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +23,7 @@ __all__ = [
     "CookieManager",
     "InternationalCookieManager",
     "RotatingCookieManager",
-    "complete_cookies",
+    "parse_cookie",
 ]
 
 CookieOrHeader = typing.Union["http.cookies.BaseCookie[typing.Any]", typing.Mapping[typing.Any, typing.Any], str]
@@ -465,67 +463,6 @@ class InternationalCookieManager(BaseCookieManager):
 
         msg = "All cookies have hit their request limit of 30 accounts per day."
         raise errors.TooManyRequests({"retcode": 10101}, msg)
-
-
-async def _fetch_cookie_token_info(
-    cookies: CookieOrHeader,
-    *,
-    region: types.Region = types.Region.OVERSEAS,
-) -> typing.Mapping[str, typing.Any]:
-    """Fetch cookie token info."""
-    cookies = parse_cookie(cookies)
-
-    base_url = routes.ACCOUNT_URL.get_url(region)
-    url = base_url / "fetch_cookie_accountinfo"
-
-    async with aiohttp.ClientSession(cookies=cookies) as session:
-        r = await session.request("GET", url)
-        data = await r.json()
-
-    data = data["data"]
-
-    if data["status"] != 1:
-        raise errors.CookieException(msg=f"Error fetching cookie token info {data['status']}")
-
-    return data["cookie_info"]
-
-
-async def refresh_cookie_token(
-    cookies: CookieOrHeader,
-    *,
-    region: types.Region = types.Region.OVERSEAS,
-) -> typing.MutableMapping[str, str]:
-    """Refresh a cookie token to make it last longer."""
-    cookies = parse_cookie(cookies)
-
-    info = await _fetch_cookie_token_info(cookies, region=region)
-    cookies["account_id"] = info["account_id"]
-    cookies["cookie_token"] = info["cookie_token"]
-
-    return cookies
-
-
-async def complete_cookies(
-    cookies: CookieOrHeader,
-    *,
-    refresh: bool = True,
-    region: types.Region = types.Region.OVERSEAS,
-) -> typing.Mapping[str, str]:
-    """Add ltoken and ltuid to a cookie with only a cookie_token and an account_id.
-
-    If refresh is True, the cookie token will be refreshed to last longer.
-    """
-    manager = CookieManager(cookies)
-
-    if refresh:
-        manager.cookies = await refresh_cookie_token(manager.cookies)
-
-    base_url = routes.COMMUNITY_URL.get_url(region)
-    url = base_url / "misc/wapi/langs"
-
-    await manager.request(url)
-
-    return manager.cookies
 
 
 def no_multi(func: CallableT) -> CallableT:

@@ -3,8 +3,9 @@ import typing
 
 from genshin import types, utility
 from genshin.client import cache as client_cache
-from genshin.client import manager, routes
+from genshin.client import routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.models import hoyolab as models
 
 __all__ = ["HoyolabClient"]
@@ -47,7 +48,7 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    @manager.requires_cookie_token
+    @managers.requires_cookie_token
     async def redeem_code(
         self,
         code: str,
@@ -69,7 +70,7 @@ class HoyolabClient(base.BaseClient):
             ),
         )
 
-    @manager.no_multi
+    @managers.no_multi
     async def check_in_community(self) -> None:
         """Check in to the hoyolab community and claim your daily 5 community exp."""
         url = routes.COMMUNITY_URL.get_url(self.region) / "apihub/wapi/mission/signIn"

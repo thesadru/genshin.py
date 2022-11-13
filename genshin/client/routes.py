@@ -87,9 +87,13 @@ class GameRoute(BaseRoute):
 
 WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
 
-ACCOUNT_URL = InternationalRoute(
+WEBAPI_URL = InternationalRoute(
     "https://webapi-os.account.hoyoverse.com/Api/",
     "https://webapi.account.mihoyo.com/Api/",
+)
+ACCOUNT_URL = InternationalRoute(
+    "https://api-account-os.hoyolab.com/account/auth/api",
+    "https://api-takumi.mihoyo.com/account/auth/api/",
 )
 
 TAKUMI_URL = InternationalRoute(

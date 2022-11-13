@@ -13,7 +13,8 @@ import yarl
 
 from genshin import constants, errors, types, utility
 from genshin.client import cache as client_cache
-from genshin.client import manager, routes
+from genshin.client import routes
+from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models import model as base_model
 from genshin.utility import concurrency, deprecation, ds
@@ -30,7 +31,7 @@ class BaseClient(abc.ABC):
 
     logger: logging.Logger = logging.getLogger(__name__)
 
-    cookie_manager: manager.BaseCookieManager
+    cookie_manager: managers.BaseCookieManager
     cache: client_cache.BaseCache
     _authkey: typing.Optional[str]
     _lang: str
@@ -41,7 +42,7 @@ class BaseClient(abc.ABC):
 
     def __init__(
         self,
-        cookies: typing.Optional[manager.AnyCookieOrHeader] = None,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
         *,
         authkey: typing.Optional[str] = None,
         lang: str = "en-us",
@@ -52,7 +53,7 @@ class BaseClient(abc.ABC):
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
-        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies)
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
         self.cache = cache or client_cache.StaticCache()
 
         self.authkey = authkey
@@ -171,19 +172,19 @@ class BaseClient(abc.ABC):
         level = logging.DEBUG if debug else logging.NOTSET
         logging.getLogger("genshin").setLevel(level)
 
-    def set_cookies(self, cookies: typing.Optional[manager.AnyCookieOrHeader] = None, **kwargs: typing.Any) -> None:
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -> None:
         """Parse and set cookies."""
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
 
-        self.cookie_manager = manager.BaseCookieManager.from_cookies(cookies or kwargs)
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
 
     def set_browser_cookies(self, browser: typing.Optional[str] = None) -> None:
         """Extract cookies from your browser and set them as client cookies.
 
         Available browsers: chrome, chromium, opera, edge, firefox.
         """
-        self.cookie_manager = manager.BaseCookieManager.from_browser_cookies(browser)
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
 
     def set_authkey(self, authkey: typing.Optional[str] = None) -> None:
         """Set an authkey for wish & transaction logs.
@@ -380,7 +381,7 @@ class BaseClient(abc.ABC):
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
 
-    @manager.no_multi
+    @managers.no_multi
     async def get_game_accounts(
         self,
         *,

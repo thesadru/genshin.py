@@ -6,8 +6,9 @@ import typing
 import warnings
 
 from genshin import errors, models, types, utility
-from genshin.client import cache, manager, routes
+from genshin.client import cache, routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
@@ -105,7 +106,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         cards = await self.get_record_cards(hoyolab_uid, lang=lang)
         return cards[0]
 
-    @manager.no_multi
+    @managers.no_multi
     async def update_settings(
         self,
         setting: types.IDOr[hoyolab_models.RecordCardSetting],

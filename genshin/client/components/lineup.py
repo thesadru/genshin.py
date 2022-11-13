@@ -4,8 +4,9 @@ import typing
 
 import genshin.models.genshin as genshin_models
 from genshin import paginators, types, utility
-from genshin.client import cache, manager, routes
+from genshin.client import cache, routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.models.genshin import lineup as models
 
 __all__ = ["LineupClient"]
@@ -143,7 +144,7 @@ class LineupClient(base.BaseClient):
 
         return models.Lineup(**data["lineup"])
 
-    @manager.no_multi
+    @managers.no_multi
     async def get_user_lineups(
         self,
         *,
@@ -160,7 +161,7 @@ class LineupClient(base.BaseClient):
 
         return [models.LineupPreview(**i) for i in data["list"]]
 
-    @manager.no_multi
+    @managers.no_multi
     async def get_favorite_lineups(
         self,
         *,
@@ -177,7 +178,7 @@ class LineupClient(base.BaseClient):
 
         return [models.LineupPreview(**i) for i in data["list"]]
 
-    @manager.no_multi
+    @managers.no_multi
     async def get_lineup_character_history(
         self,
         *,

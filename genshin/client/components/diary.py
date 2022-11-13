@@ -4,8 +4,9 @@ import functools
 import typing
 
 from genshin import paginators, types, utility
-from genshin.client import cache, manager, routes
+from genshin.client import cache, routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.models.genshin import diary as models
 
 __all__ = ["DiaryClient"]
@@ -52,7 +53,7 @@ class DiaryPaginator(paginators.PagedPaginator[models.DiaryAction]):
 class DiaryClient(base.BaseClient):
     """Diary component."""
 
-    @manager.no_multi
+    @managers.no_multi
     async def request_ledger(
         self,
         uid: typing.Optional[int] = None,

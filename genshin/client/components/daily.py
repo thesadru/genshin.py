@@ -8,8 +8,9 @@ import uuid
 import aiohttp.typedefs
 
 from genshin import constants, paginators, types, utility
-from genshin.client import cache, manager, routes
+from genshin.client import cache, routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.models.genshin import daily as models
 from genshin.utility import ds as ds_utility
 
@@ -21,7 +22,7 @@ CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
 class DailyRewardClient(base.BaseClient):
     """Daily reward component."""
 
-    @manager.no_multi
+    @managers.no_multi
     async def request_daily_reward(
         self,
         endpoint: str,

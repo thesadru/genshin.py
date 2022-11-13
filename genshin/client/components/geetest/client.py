@@ -26,9 +26,12 @@ class GeetestClient(base.BaseClient):
         password: str,
         mmt_key: str,
         geetest: typing.Dict[str, str],
-        token_type: int = 4,
+        token_type: int = 0b111,
     ) -> typing.Mapping[str, str]:
-        """Login with a password and a solved geetest."""
+        """Login with a password and a solved geetest.
+
+        Token type is a bitfield of cookie_token, ltoken, stoken.
+        """
         payload = dict(
             account=account,
             password=geetest_utility.encrypt_geetest_password(password),
@@ -44,14 +47,13 @@ class GeetestClient(base.BaseClient):
         async with aiohttp.ClientSession() as session:
             async with session.post(WEB_LOGIN_URL, json=payload) as r:
                 data = await r.json()
+                cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
 
         if not data["data"]:
             errors.raise_for_retcode(data)
 
-        account_id: str = data["data"]["account_info"]["account_id"]
-
-        cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
-        cookies.update(account_id=account_id, ltuid=account_id)
+        if data["data"].get("stoken"):
+            cookies["stoken"] = data["data"]["stoken"]
 
         self.set_cookies(cookies)
 
