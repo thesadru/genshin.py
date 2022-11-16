@@ -316,6 +316,7 @@ class BaseClient(abc.ABC):
         *,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Request a static json file."""
@@ -324,7 +325,7 @@ class BaseClient(abc.ABC):
             if value is not None:
                 return value
 
-        url = routes.WEBSTATIC_URL.get_url().join(yarl.URL(url))
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT

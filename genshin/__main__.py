@@ -277,7 +277,7 @@ async def pity(client: genshin.Client) -> None:
             click.secho(f"Never pulled a 5*. At most {a} pulls left until pity")
 
 
-@cli.command()
+@cli.command(hidden=True)
 @client_command
 async def banner_ids(client: genshin.Client) -> None:
     """Get the banner ids from logs."""

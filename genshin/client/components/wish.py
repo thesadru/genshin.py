@@ -4,7 +4,7 @@ import functools
 import typing
 import urllib.parse
 
-from genshin import paginators, utility
+from genshin import paginators, types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
@@ -133,13 +133,29 @@ class WishClient(base.BaseClient):
     ) -> typing.Sequence[models.BannerDetails]:
         """Get all banner details at once in a batch."""
         if not banner_ids:
-            banner_ids = utility.get_banner_ids()
-            if not banner_ids:
-                raise ValueError("No banner IDs provided.")
+            try:
+                banner_ids = utility.get_banner_ids()
+            except FileNotFoundError:
+                banner_ids = []
+
+            if len(banner_ids) < 3:
+                banner_ids = await self.get_banner_ids()
 
         coros = (self._get_banner_details(i, lang=lang) for i in banner_ids)
         data = await asyncio.gather(*coros)
         return list(data)
+
+    async def get_banner_ids(self) -> typing.Sequence[str]:
+        """Get a list of banner ids.
+
+        Uses the current cn banners.
+        """
+        data = await self.request_webstatic(
+            "hk4e/gacha_info/cn_gf01/gacha/list.json",
+            region=types.Region.CHINESE,
+            cache=client_cache.cache_key("banner", endpoint="ids"),
+        )
+        return [i["gacha_id"] for i in data["data"]["list"]]
 
     async def get_gacha_items(
         self,

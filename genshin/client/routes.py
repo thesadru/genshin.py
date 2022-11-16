@@ -85,7 +85,10 @@ class GameRoute(BaseRoute):
         return self.urls[region][game]
 
 
-WEBSTATIC_URL = Route("https://webstatic-sea.hoyoverse.com/")
+WEBSTATIC_URL = InternationalRoute(
+    "https://webstatic-sea.hoyoverse.com/",
+    "https://webstatic.mihoyo.com/",
+)
 
 WEBAPI_URL = InternationalRoute(
     "https://webapi-os.account.hoyoverse.com/Api/",
