@@ -1,5 +1,18 @@
 # Changelog
 
+# 1.4.0 (2022-11-16)
+
+## What's new
+
+- Added geshin lineup.
+- Added cn calculator endpoints.
+- Added new icon types for genshin characters.
+
+## Fixes
+
+- Invalid cookies are no longer kept.
+- Cookie tokens are now automatically refreshed.
+
 # 1.3.0 (2022-10-15)
 
 ## What's new
