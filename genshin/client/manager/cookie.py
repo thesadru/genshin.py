@@ -107,7 +107,7 @@ async def fetch_cookie_token_info(
         data = await r.json()
 
     data = data["data"]
-    if data["status"] != 1:
+    if data["status"] != 1 or not data or not data["cookie_info"]:
         raise errors.CookieException(msg=f"Error fetching cookie token info {data['status']}")
 
     return data["cookie_info"]
