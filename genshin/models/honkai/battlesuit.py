@@ -55,10 +55,13 @@ class Battlesuit(APIModel, Unique):
             # Rozaliya and Liliya share the same identifier
             return {"TwinC1": "Liliya", "TwinC2": "Rozaliya"}[char_raw]
 
+        # fix mislocalized names
         char_name_raw = char_raw.rsplit("C", 1)[0]
-        # fix mislocalized names (currently only one)
         if char_name_raw == "Fuka":
-            char_name_raw = "Fu Hua"
+            return "Fu Hua"
+
+        elif char_name_raw == "Lisushang":
+            return "Li Sushang"
 
         return char_name_raw
 
