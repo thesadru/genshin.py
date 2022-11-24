@@ -1,15 +1,19 @@
 [flake8]
 exclude = tests, test.py
-ignore = 
-    A001, A002, A003,  # `id` variable/parameter/attribute
-    C408,  # dict() with keyword arguments
-    D105,  # Missing docstring in magic method
-    D106,  # Missing docstring Model.Config
-    S101,  # Use of assert for type checking
-    S303,  # Use of md5
-    S311,  # Use of pseudo-random generators
-    S324,  # Use of md5 without usedforsecurity=False (3.9+)
 
+# A001, A002, A003: `id` variable/parameter/attribute
+# C408: dict() with keyword arguments
+# D105: Missing docstring in magic method
+# D106: Missing docstring Model.Config
+# S101: Use of assert for type checking
+# S303: Use of md5
+# S311: Use of pseudo-random generators
+# S324: Use of md5 without usedforsecurity=False (3.9+)
+ignore = 
+    A001, A002, A003,
+    C408,
+    D105, D106,
+    S101, S303, S311, S324,
 
 # F401: unused import.
 # F403: cannot detect unused vars if we use starred import
