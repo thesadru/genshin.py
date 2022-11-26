@@ -7,7 +7,16 @@ import typing
 __all__ = ["get_browser_cookies"]
 
 DOMAINS: typing.Final[typing.Sequence[str]] = ("mihoyo", "hoyolab", "hoyoverse")
-ALLOWED_COOKIES: typing.Final[typing.Sequence[str]] = ("ltuid", "ltoken", "account_id", "cookie_token")
+ALLOWED_COOKIES: typing.Final[typing.Sequence[str]] = (
+    "ltuid",
+    "ltoken",
+    "account_id",
+    "cookie_token",
+    "ltoken_v2",
+    "ltmid_v2",
+    "cookie_token_v2",
+    "account_mid_v2",
+)
 
 
 def _get_browser_cookies(

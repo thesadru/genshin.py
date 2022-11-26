@@ -92,7 +92,7 @@ class Gender(enum.IntEnum):
 class PartialHoyolabUser(APIModel):
     """Partial hoyolab user from a search result."""
 
-    hoyolab_uid: int = Aliased("uid")
+    hoyolab_id: int = Aliased("uid")
     nickname: str
     introduction: str = Aliased("introduce")
     avatar_id: int = Aliased("avatar")

@@ -168,7 +168,7 @@ def honkai_uid():
 
 
 @pytest.fixture(scope="session")
-def hoyolab_uid():
+def hoyolab_id():
     return 8366222
 
 

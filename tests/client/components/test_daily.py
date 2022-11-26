@@ -5,6 +5,7 @@ import genshin
 
 CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
 
+
 async def test_daily_reward(lclient: genshin.Client):
     signed_in, claimed_rewards = await lclient.get_reward_info()
 

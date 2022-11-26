@@ -7,6 +7,7 @@ import logging
 import os
 import typing
 import urllib.parse
+import warnings
 
 import aiohttp.typedefs
 import yarl
@@ -39,6 +40,7 @@ class BaseClient(abc.ABC):
     _default_game: typing.Optional[types.Game]
 
     uids: typing.Dict[types.Game, int]
+    _hoyolab_id: typing.Optional[int]
 
     def __init__(
         self,
@@ -50,6 +52,7 @@ class BaseClient(abc.ABC):
         proxy: typing.Optional[str] = None,
         game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
@@ -64,13 +67,14 @@ class BaseClient(abc.ABC):
         self.proxy = proxy
         self.uids = {}
         self.uid = uid
+        self.hoyolab_id = hoyolab_id
 
     def __repr__(self) -> str:
         kwargs = dict(
             lang=self.lang,
             region=self.region.value,
             default_game=self.default_game and self.default_game.value,
-            hoyolab_uid=self.hoyolab_uid,
+            hoyolab_id=self.hoyolab_id,
             uid=self.default_game and self.uid,
             authkey=self.authkey and self.authkey[:12] + "...",
             proxy=self.proxy,
@@ -79,12 +83,22 @@ class BaseClient(abc.ABC):
         return f"<{type(self).__name__} {', '.join(f'{k}={v!r}' for k, v in kwargs.items() if v)}>"
 
     @property
-    def hoyolab_uid(self) -> typing.Optional[int]:
+    def hoyolab_id(self) -> typing.Optional[int]:
         """The logged-in user's hoyolab uid.
 
         Returns None if not found or not applicable.
         """
-        return self.cookie_manager.user_id
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -> None:
+        if self.cookie_manager.multi:
+            raise RuntimeError("Cannot specify a hoyolab uid when using multiple cookies.")
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError("The provided hoyolab uid does not match the cookie id.")
+
+        self._hoyolab_id = hoyolab_id
 
     @property
     def lang(self) -> str:
@@ -389,10 +403,13 @@ class BaseClient(abc.ABC):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
+        if self.hoyolab_id is None:
+            warnings.warn("No hoyolab id set, caching may be unreliable.")
+
         data = await self.request_hoyolab(
             "binding/api/getUserGameRolesByCookie",
             lang=lang,
-            cache=client_cache.cache_key("accounts", hoyolab_uid=self.hoyolab_uid),
+            cache=client_cache.cache_key("accounts", hoyolab_id=self.hoyolab_id),
         )
         return [hoyolab_models.GenshinAccount(**i) for i in data["list"]]
 
@@ -438,6 +455,16 @@ class BaseClient(abc.ABC):
             return uid
 
         raise errors.AccountNotFound(msg="No UID provided and account has no game account bound to it.")
+
+    def _get_hoyolab_id(self) -> int:
+        """Get a cached fallback hoyolab ID."""
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError("Hoyolab ID must be provided when using multi-cookie managers.")
+
+        raise RuntimeError("No default hoyolab ID provided.")
 
     async def _fetch_mi18n(self, key: str, lang: str, *, force: bool = False) -> None:
         """Update mi18n for a single url."""

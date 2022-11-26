@@ -19,7 +19,7 @@ __all__ = ["BaseBattleChronicleClient"]
 @dataclasses.dataclass(unsafe_hash=True)
 class HoyolabCacheKey(cache.CacheKey):
     endpoint: str
-    hoyolab_uid: int
+    hoyolab_id: int
     lang: str
 
 
@@ -73,19 +73,19 @@ class BaseBattleChronicleClient(base.BaseClient):
 
     async def get_record_cards(
         self,
-        hoyolab_uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.List[models.hoyolab.RecordCard]:
         """Get a user's record cards."""
-        hoyolab_uid = hoyolab_uid or self.cookie_manager.get_user_id()
+        hoyolab_id = hoyolab_id or self._get_hoyolab_id()
 
-        cache_key = cache.cache_key("records", hoyolab_uid=hoyolab_uid, lang=lang or self.lang)
+        cache_key = cache.cache_key("records", hoyolab_id=hoyolab_id, lang=lang or self.lang)
         if not (data := await self.cache.get(cache_key)):
             data = await self.request_game_record(
                 "card/wapi/getGameRecordCard",
                 lang=lang,
-                params=dict(uid=hoyolab_uid),
+                params=dict(uid=hoyolab_id),
             )
 
             if data["list"]:
@@ -98,12 +98,12 @@ class BaseBattleChronicleClient(base.BaseClient):
     @deprecation.deprecated("get_record_cards")
     async def get_record_card(
         self,
-        hoyolab_uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.hoyolab.RecordCard:
         """Get a user's record card."""
-        cards = await self.get_record_cards(hoyolab_uid, lang=lang)
+        cards = await self.get_record_cards(hoyolab_id, lang=lang)
         return cards[0]
 
     @managers.no_multi

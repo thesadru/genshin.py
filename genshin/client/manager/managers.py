@@ -46,6 +46,15 @@ def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, st
     return {str(k): v.value if isinstance(v, http.cookies.Morsel) else str(v) for k, v in cookie.items()}
 
 
+def get_cookie_identifier(cookie: typing.Mapping[str, str]) -> typing.Optional[str]:
+    """Get a unique identifier for a cookie."""
+    for name, value in cookie.items():
+        if name in ("ltuid", "account_id", "ltmid_v2", "account_mid_v2"):
+            return value
+
+    return None
+
+
 class BaseCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
@@ -102,19 +111,6 @@ class BaseCookieManager(abc.ABC):
 
         self._proxy = proxy
 
-    def get_user_id(self) -> int:
-        """Get the id of the user that owns cookies.
-
-        Raises an error if not found and fallback is not provided.
-        """
-        if self.user_id:
-            return self.user_id
-
-        if self.available:
-            raise ValueError(f"Hoyolab ID must be provided when using {self.__class__}")
-
-        raise ValueError("No cookies have been provided.")
-
     def create_session(self, **kwargs: typing.Any) -> aiohttp.ClientSession:
         """Create a client session."""
         return aiohttp.ClientSession(
@@ -144,7 +140,7 @@ class BaseCookieManager(abc.ABC):
                     new_keys = new_cookies.keys() - cookies.keys()
                     if new_keys:
                         cookies.update(new_cookies)
-                        _LOGGER.debug("Updating cookies for %s: %s", self.user_id, new_keys)
+                        _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
 
         if data["retcode"] == 0:
             return data["data"]
@@ -262,7 +258,7 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
     MAX_USES: int = 30
 
     # {id: ({cookie}, uses), ...}
-    _cookies: typing.Dict[int, typing.Tuple[typing.Dict[str, str], int]]
+    _cookies: typing.Dict[str, typing.Tuple[typing.Dict[str, str], int]]
 
     def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
@@ -283,14 +279,12 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
         for cookie in cookies:
             cookie = parse_cookie(cookie)
 
-            account_id = cookie.get("account_id") or cookie.get("ltuid")
+            account_id = get_cookie_identifier(cookie)
             if not account_id or not account_id.isdigit():
-                raise ValueError(f"Cookies must contain a valid account_id or ltuid: {cookie}")
-
-            account_id = int(account_id)
+                raise ValueError(f"Cookies must contain a valid identifier: {cookie}")
 
             if account_id in self._cookies:
-                raise ValueError(f"Cannot use the same account_id or ltuid for multiple cookies: {account_id}.")
+                raise ValueError(f"Cannot use the same identifier for multiple cookies: {account_id}.")
 
             self._cookies[account_id] = (cookie, 0)
 

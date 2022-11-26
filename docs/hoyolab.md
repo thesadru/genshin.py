@@ -25,12 +25,12 @@ await client.redeem_code("GENSHINGIFT")
 ```py
 # search users
 users = await client.search_users("sadru")
-print(users[0].hoyolab_uid)
+print(users[0].hoyolab_id)
 
 # get a list of random recommended users (useful for data gathering)
 users = await client.get_recommended_users()
-print(users[0].hoyolab_uid)
+print(users[0].hoyolab_id)
 
 # to actually get any useful data:
-card = await client.get_record_card(users[0].hoyolab_uid)
+card = await client.get_record_card(users[0].hoyolab_id)
 ```

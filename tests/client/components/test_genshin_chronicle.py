@@ -3,8 +3,8 @@ import pytest
 import genshin
 
 
-async def test_record_cards(client: genshin.Client, hoyolab_uid: int):
-    data = await client.get_record_cards(hoyolab_uid)
+async def test_record_cards(client: genshin.Client, hoyolab_id: int):
+    data = await client.get_record_cards(hoyolab_id)
 
     assert data
 
