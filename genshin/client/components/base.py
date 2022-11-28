@@ -358,10 +358,11 @@ class BaseClient(abc.ABC):
 
     def _get_ds_headers(
         self,
-        region:types.Region, data: typing.Any = None,
+        region:types.Region,
+        data: typing.Any = None,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         lang: typing.Optional[str] = None,
-    ) -> typing.Dict[str:str]:
+    ) -> typing.Dict[str, str]:
         if region == types.Region.OVERSEAS:
             ds_headers = {
                 "x-rpc-app_version": "1.5.0",
