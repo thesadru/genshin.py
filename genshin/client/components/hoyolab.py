@@ -1,7 +1,6 @@
 """Hoyolab component."""
 import typing
 
-import genshin.types
 from genshin import types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
@@ -30,15 +29,12 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    async def get_hoyolab_self(
-        self, *, lang: typing.Optional[str] = None
-    ) -> models.PartialHoyolabUser:
-        """Get a hoyolab user."""
-
-        if self.region == genshin.types.Region.OVERSEAS:
+    async def get_hoyolab_self(self, *, lang: typing.Optional[str] = None) -> models.PartialHoyolabUser:
+        """Get hoyolab data for me."""
+        if self.region == types.Region.OVERSEAS:
             url = "https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full"
             referer = "https://www.hoyolab.com/"
-        elif self.region == genshin.types.Region.CHINESE:
+        elif self.region == types.Region.CHINESE:
             url = "https://bbs-api.mihoyo.com/user/wapi/getUserFullInfo?gids=2"
             referer = "https://bbs.mihoyo.com/"
         else:
@@ -46,29 +42,23 @@ class HoyolabClient(base.BaseClient):
 
         data = await self.request_hoyolab(
             url=url,
-            headers={"Referer": referer},
             lang=lang,
+            headers={"Referer": referer},
             cache=client_cache.cache_key("hoyolab_self"),
         )
         return models.PartialHoyolabUser(**data["user_info"])
 
-    async def get_hoyolab_user(
-        self, hoyolab_id: int, *, lang: typing.Optional[str] = None
-    ) -> models.FullHoyolabUser:
+    async def get_hoyolab_user(self, hoyolab_id: int, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
         data = await self.request_hoyolab(
             "https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full",
             lang=lang,
             params=dict(uid=hoyolab_id),
-            cache=client_cache.cache_key(
-                "hoyolab", uid=hoyolab_id, lang=lang or self.lang
-            ),
+            cache=client_cache.cache_key("hoyolab", uid=hoyolab_id, lang=lang or self.lang),
         )
         return models.FullHoyolabUser(**data["user_info"])
 
-    async def get_recommended_users(
-        self, *, limit: int = 200
-    ) -> typing.Sequence[models.PartialHoyolabUser]:
+    async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
         data = await self.request_hoyolab(
             "community/user/wapi/recommendActive",
