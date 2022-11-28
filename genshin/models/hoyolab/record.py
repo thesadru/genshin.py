@@ -110,8 +110,8 @@ class HoyolabUserCertification(APIModel):
     For example artist's type is 2.
     """
 
-    icon_url: typing.Optional[str]
-    description: typing.Optional[str] = Aliased("desc")
+    icon_url: typing.Optional[str] = None
+    description: typing.Optional[str] = None
     type: int
 
 
@@ -132,10 +132,10 @@ class FullHoyolabUser(PartialHoyolabUser):
     """
 
     certification: typing.Optional[HoyolabUserCertification] = None
-    level: typing.Optional[HoyolabUserLevel]
+    level: typing.Optional[HoyolabUserLevel] = None
     pendant_url: str = Aliased("pendant")
-    bg_url: typing.Optional[str]
-    pc_bg_url: typing.Optional[str]
+    bg_url: typing.Optional[str] = None
+    pc_bg_url: typing.Optional[str] = None
 
 
 class RecordCard(GenshinAccount):
