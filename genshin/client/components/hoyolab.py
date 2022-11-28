@@ -30,7 +30,7 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    async def get_hoyolab_self(self, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
+    async def get_hoyolab_self(self, *, lang: typing.Optional[str] = None) -> models.PartialHoyolabUser:
         """Get a hoyolab user."""
         url = ''
         if self.region == genshin.types.Region.OVERSEAS:
@@ -40,10 +40,10 @@ class HoyolabClient(base.BaseClient):
             url = 'https://bbs-api.mihoyo.com/user/wapi/getUserFullInfo?gids=2'
             referer = 'https://bbs.mihoyo.com/'
         else:
-            raise TypeError(f"{region!r} is not a valid region.")
+            raise TypeError(f"{self.region!r} is not a valid region.")
 
         data = await self.request_hoyolab(
-            url,
+            url=url,
             headers={'Referer': referer},
             lang=lang,
             cache=client_cache.cache_key("hoyolab_self"),

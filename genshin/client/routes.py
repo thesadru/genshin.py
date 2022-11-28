@@ -65,9 +65,9 @@ class GameRoute(BaseRoute):
     urls: typing.Mapping[types.Region, typing.Mapping[types.Game, yarl.URL]]
 
     def __init__(
-            self,
-            overseas: typing.Mapping[str, str],
-            chinese: typing.Mapping[str, str],
+        self,
+        overseas: typing.Mapping[str, str],
+        chinese: typing.Mapping[str, str],
     ) -> None:
         self.urls = {
             types.Region.OVERSEAS: {types.Game(game): yarl.URL(url) for game, url in overseas.items()},
