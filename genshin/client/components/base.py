@@ -43,18 +43,18 @@ class BaseClient(abc.ABC):
     _hoyolab_id: typing.Optional[int]
 
     def __init__(
-            self,
-            cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
-            *,
-            authkey: typing.Optional[str] = None,
-            lang: str = "en-us",
-            region: types.Region = types.Region.OVERSEAS,
-            proxy: typing.Optional[str] = None,
-            game: typing.Optional[types.Game] = None,
-            uid: typing.Optional[int] = None,
-            hoyolab_id: typing.Optional[int] = None,
-            cache: typing.Optional[client_cache.Cache] = None,
-            debug: bool = False,
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: str = "en-us",
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        cache: typing.Optional[client_cache.Cache] = None,
+        debug: bool = False,
     ) -> None:
         self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
         self.cache = cache or client_cache.StaticCache()

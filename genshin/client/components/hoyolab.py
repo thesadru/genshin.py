@@ -16,10 +16,10 @@ class HoyolabClient(base.BaseClient):
     """Hoyolab component."""
 
     async def search_users(
-            self,
-            keyword: str,
-            *,
-            lang: typing.Optional[str] = None,
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.PartialHoyolabUser]:
         """Search hoyolab users."""
         data = await self.request_hoyolab(
