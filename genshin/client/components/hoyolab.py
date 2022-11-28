@@ -29,7 +29,12 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    async def get_hoyolab_user(self, hoyolab_id: typing.Optional[int] = None, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
+    async def get_hoyolab_user(
+        self, 
+        hoyolab_id: typing.Optional[int] = None, 
+        *, 
+        lang: typing.Optional[str] = None
+    ) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
         if hoyolab_id:
             params = dict(uid=hoyolab_id)

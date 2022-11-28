@@ -360,7 +360,8 @@ class BaseClient(abc.ABC):
         self,
         region:types.Region, data: typing.Any = None,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-    ) -> typing.Dict:
+        lang: typing.Optional[str] = None,
+    ) -> typing.Dict[str:str]:
         if region == types.Region.OVERSEAS:
             ds_headers = {
                 "x-rpc-app_version": "1.5.0",
@@ -400,7 +401,7 @@ class BaseClient(abc.ABC):
         url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
 
         headers = dict(headers or {})
-        headers.update(self._get_ds_headers(region, data, params))
+        headers.update(self._get_ds_headers(region, data, params, lang))
         headers["Referer"] = str(routes.BBS_REFERER_URL.get_url(self.region))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
@@ -428,7 +429,7 @@ class BaseClient(abc.ABC):
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
         headers = dict(headers or {})
-        headers.update(self._get_ds_headers(region, data, params))
+        headers.update(self._get_ds_headers(region, data, params, lang))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
