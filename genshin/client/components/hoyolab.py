@@ -30,18 +30,24 @@ class HoyolabClient(base.BaseClient):
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
     async def get_hoyolab_user(
-        self, hoyolab_id: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
     ) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
-        if hoyolab_id:
-            params = dict(uid=hoyolab_id)
+
+        if self.region == types.Region.OVERSEAS:
+            url = "/community/painter/wapi/user/full"
+        elif self.region == types.Region.CHINESE:
+            url = "/user/wapi/getUserFullInfo"
         else:
-            params = None
+            raise TypeError(f"{self.region!r} is not a valid region.")
 
         data = await self.request_bbs(
-            url=routes.BBS_GET_USER_URL.get_url(self.region),
+            url=url,
             lang=lang,
-            params=params,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
             cache=client_cache.cache_key("hoyolab", uid=hoyolab_id, lang=lang or self.lang),
         )
         return models.FullHoyolabUser(**data["user_info"])
