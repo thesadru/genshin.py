@@ -36,7 +36,6 @@ class HoyolabClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
-
         if self.region == types.Region.OVERSEAS:
             url = "/community/painter/wapi/user/full"
         elif self.region == types.Region.CHINESE:
