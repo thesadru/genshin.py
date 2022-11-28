@@ -26,7 +26,15 @@ __all__ = ["BaseClient"]
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "cache", "_authkey", "_lang", "_region", "_default_game", "uids")
+    __slots__ = (
+        "cookie_manager",
+        "cache",
+        "_authkey",
+        "_lang",
+        "_region",
+        "_default_game",
+        "uids",
+    )
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
@@ -93,9 +101,15 @@ class BaseClient(abc.ABC):
     @hoyolab_id.setter
     def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -> None:
         if self.cookie_manager.multi:
-            raise RuntimeError("Cannot specify a hoyolab uid when using multiple cookies.")
+            raise RuntimeError(
+                "Cannot specify a hoyolab uid when using multiple cookies."
+            )
 
-        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+        if (
+            self.cookie_manager.user_id
+            and hoyolab_id
+            and self.cookie_manager.user_id != hoyolab_id
+        ):
             raise ValueError("The provided hoyolab uid does not match the cookie id.")
 
         self._hoyolab_id = hoyolab_id
@@ -108,7 +122,10 @@ class BaseClient(abc.ABC):
     @lang.setter
     def lang(self, lang: str) -> None:
         if lang not in constants.LANGS:
-            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
+            raise ValueError(
+                f"{lang} is not a valid language, must be one of: "
+                + ", ".join(constants.LANGS)
+            )
 
         self._lang = lang
 
@@ -152,7 +169,9 @@ class BaseClient(abc.ABC):
             self.uids.clear()
             return
 
-        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        self._default_game = self._default_game or utility.recognize_game(
+            uid, region=self.region
+        )
         if self.default_game is None:
             raise RuntimeError("No default game set. Cannot set uid.")
 
@@ -186,7 +205,11 @@ class BaseClient(abc.ABC):
         level = logging.DEBUG if debug else logging.NOTSET
         logging.getLogger("genshin").setLevel(level)
 
-    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -> None:
+    def set_cookies(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        **kwargs: typing.Any,
+    ) -> None:
         """Parse and set cookies."""
         if not bool(cookies) ^ bool(kwargs):
             raise TypeError("Cannot use both positional and keyword arguments at once")
@@ -213,27 +236,29 @@ class BaseClient(abc.ABC):
         self.authkey = authkey
 
     def set_cache(
-            self,
-            maxsize: int = 1024,
-            *,
-            ttl: int = client_cache.HOUR,
-            static_ttl: int = client_cache.DAY,
+        self,
+        maxsize: int = 1024,
+        *,
+        ttl: int = client_cache.HOUR,
+        static_ttl: int = client_cache.DAY,
     ) -> None:
         """Create and set a new cache."""
         self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
 
     def set_redis_cache(
-            self,
-            url: str,
-            *,
-            ttl: int = client_cache.HOUR,
-            static_ttl: int = client_cache.DAY,
-            **redis_kwargs: typing.Any,
+        self,
+        url: str,
+        *,
+        ttl: int = client_cache.HOUR,
+        static_ttl: int = client_cache.DAY,
+        **redis_kwargs: typing.Any,
     ) -> None:
         """Create and set a new redis cache."""
         import aioredis
 
-        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        redis = aioredis.Redis.from_url(
+            url, **redis_kwargs
+        )  # pyright: ignore[reportUnknownMemberType]
         self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
 
     @property
@@ -249,13 +274,13 @@ class BaseClient(abc.ABC):
         self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
 
     async def _request_hook(
-            self,
-            method: str,
-            url: aiohttp.typedefs.StrOrURL,
-            *,
-            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-            data: typing.Any = None,
-            **kwargs: typing.Any,
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
     ) -> None:
         """Perform an action before a request.
 
@@ -267,21 +292,23 @@ class BaseClient(abc.ABC):
             url = url.update_query(params)
 
         if data:
-            self.logger.debug("%s %s\n%s", method, url, json.dumps(data, separators=(",", ":")))
+            self.logger.debug(
+                "%s %s\n%s", method, url, json.dumps(data, separators=(",", ":"))
+            )
         else:
             self.logger.debug("%s %s", method, url)
 
     async def request(
-            self,
-            url: aiohttp.typedefs.StrOrURL,
-            *,
-            method: typing.Optional[str] = None,
-            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-            data: typing.Any = None,
-            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-            cache: typing.Any = None,
-            static_cache: typing.Any = None,
-            **kwargs: typing.Any,
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request and return a parsed json response."""
         if cache is not None:
@@ -304,7 +331,9 @@ class BaseClient(abc.ABC):
         if "json" in kwargs:
             raise TypeError("Use data instead of json in request.")
 
-        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+        await self._request_hook(
+            method, url, params=params, data=data, headers=headers, **kwargs
+        )
 
         response = await self.cookie_manager.request(
             url,
@@ -325,13 +354,13 @@ class BaseClient(abc.ABC):
         return response
 
     async def request_webstatic(
-            self,
-            url: aiohttp.typedefs.StrOrURL,
-            *,
-            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-            cache: typing.Any = None,
-            region: types.Region = types.Region.OVERSEAS,
-            **kwargs: typing.Any,
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
     ) -> typing.Any:
         """Request a static json file."""
         if cache is not None:
@@ -347,7 +376,9 @@ class BaseClient(abc.ABC):
         await self._request_hook("GET", url, headers=headers, **kwargs)
 
         async with self.cookie_manager.create_session() as session:
-            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+            async with session.get(
+                url, headers=headers, proxy=self.proxy, **kwargs
+            ) as r:
                 r.raise_for_status()
                 data = await r.json()
 
@@ -357,20 +388,23 @@ class BaseClient(abc.ABC):
         return data
 
     async def request_hoyolab(
-            self,
-            url: aiohttp.typedefs.StrOrURL,
-            *,
-            lang: typing.Optional[str] = None,
-            region: typing.Optional[types.Region] = None,
-            method: typing.Optional[str] = None,
-            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-            data: typing.Any = None,
-            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-            **kwargs: typing.Any,
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request any hoyolab endpoint."""
         if lang is not None and lang not in constants.LANGS:
-            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
+            raise ValueError(
+                f"{lang} is not a valid language, must be one of: "
+                + ", ".join(constants.LANGS)
+            )
 
         lang = lang or self.lang
         region = region or self.region
@@ -379,29 +413,35 @@ class BaseClient(abc.ABC):
         headers = dict(headers or {})
 
         if region == types.Region.OVERSEAS:
-            headers.update({
-                "x-rpc-app_version": "1.5.0",
-                "x-rpc-client_type": "4",
-                "x-rpc-language": lang,
-                "ds": ds.generate_dynamic_secret(),
-            })
+            headers.update(
+                {
+                    "x-rpc-app_version": "1.5.0",
+                    "x-rpc-client_type": "4",
+                    "x-rpc-language": lang,
+                    "ds": ds.generate_dynamic_secret(),
+                }
+            )
         elif region == types.Region.CHINESE:
-            headers.update({
-                "x-rpc-app_version": "2.11.1",
-                "x-rpc-client_type": "5",
-                "ds": ds.generate_cn_dynamic_secret(data, params),
-            })
+            headers.update(
+                {
+                    "x-rpc-app_version": "2.11.1",
+                    "x-rpc-client_type": "5",
+                    "ds": ds.generate_cn_dynamic_secret(data, params),
+                }
+            )
         else:
             raise TypeError(f"{region!r} is not a valid region.")
 
-        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        data = await self.request(
+            url, method=method, params=params, data=data, headers=headers, **kwargs
+        )
         return data
 
     @managers.no_multi
     async def get_game_accounts(
-            self,
-            *,
-            lang: typing.Optional[str] = None,
+        self,
+        *,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
         if self.hoyolab_id is None:
@@ -416,9 +456,9 @@ class BaseClient(abc.ABC):
 
     @deprecation.deprecated("get_game_accounts")
     async def genshin_accounts(
-            self,
-            *,
-            lang: typing.Optional[str] = None,
+        self,
+        *,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the genshin accounts of the currently logged-in user."""
         accounts = await self.get_game_accounts(lang=lang)
@@ -428,14 +468,21 @@ class BaseClient(abc.ABC):
         """Update cached fallback uids."""
         mixed_accounts = await self.get_game_accounts()
 
-        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        game_accounts: typing.Dict[
+            types.Game, typing.List[hoyolab_models.GenshinAccount]
+        ] = {}
         for account in mixed_accounts:
-            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+            if not isinstance(
+                account.game, types.Game
+            ):  # pyright: ignore[reportUnnecessaryIsInstance]
                 continue
 
             game_accounts.setdefault(account.game, []).append(account)
 
-        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+        self.uids = {
+            game: max(accounts, key=lambda a: a.level).uid
+            for game, accounts in game_accounts.items()
+        }
 
         if len(self.uids) == 1 and self.default_game is None:
             (self.default_game,) = self.uids.keys()
@@ -455,7 +502,9 @@ class BaseClient(abc.ABC):
         if uid := self.uids.get(game):
             return uid
 
-        raise errors.AccountNotFound(msg="No UID provided and account has no game account bound to it.")
+        raise errors.AccountNotFound(
+            msg="No UID provided and account has no game account bound to it."
+        )
 
     def _get_hoyolab_id(self) -> int:
         """Get a cached fallback hoyolab ID."""
@@ -463,7 +512,9 @@ class BaseClient(abc.ABC):
             return self.hoyolab_id
 
         if self.cookie_manager.multi:
-            raise RuntimeError("Hoyolab ID must be provided when using multi-cookie managers.")
+            raise RuntimeError(
+                "Hoyolab ID must be provided when using multi-cookie managers."
+            )
 
         raise RuntimeError("No default hoyolab ID provided.")
 
@@ -483,7 +534,9 @@ class BaseClient(abc.ABC):
             actual_key = str.lower(key + "/" + k)
             base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v
 
-    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
+    async def update_mi18n(
+        self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False
+    ) -> None:
         """Fetch mi18n for partially localized endpoints."""
         if not force:
             if base_model.APIModel._mi18n:
