@@ -168,8 +168,3 @@ BBS_REFERER_URL = InternationalRoute(
     overseas="https://www.hoyolab.com/",
     chinese="https://bbs.mihoyo.com/",
 )
-
-BBS_GET_USER_URL = InternationalRoute(
-    overseas="/community/painter/wapi/user/full",
-    chinese="/user/wapi/getUserFullInfo",
-)
