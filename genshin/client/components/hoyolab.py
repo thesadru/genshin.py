@@ -1,6 +1,7 @@
 """Hoyolab component."""
 import typing
 
+import genshin.types
 from genshin import types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
@@ -15,10 +16,10 @@ class HoyolabClient(base.BaseClient):
     """Hoyolab component."""
 
     async def search_users(
-        self,
-        keyword: str,
-        *,
-        lang: typing.Optional[str] = None,
+            self,
+            keyword: str,
+            *,
+            lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.PartialHoyolabUser]:
         """Search hoyolab users."""
         data = await self.request_hoyolab(
@@ -28,6 +29,26 @@ class HoyolabClient(base.BaseClient):
             cache=client_cache.cache_key("search", keyword=keyword, lang=self.lang),
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
+
+    async def get_hoyolab_self(self, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
+        """Get a hoyolab user."""
+        url = ''
+        if self.region == genshin.types.Region.OVERSEAS:
+            url = 'https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full'
+            referer = 'https://www.hoyolab.com/'
+        elif self.region == genshin.types.Region.CHINESE:
+            url = 'https://bbs-api.mihoyo.com/user/wapi/getUserFullInfo?gids=2'
+            referer = 'https://bbs.mihoyo.com/'
+        else:
+            raise TypeError(f"{region!r} is not a valid region.")
+
+        data = await self.request_hoyolab(
+            url,
+            headers={'Referer': referer},
+            lang=lang,
+            cache=client_cache.cache_key("hoyolab_self"),
+        )
+        return models.PartialHoyolabUser(**data["user_info"])
 
     async def get_hoyolab_user(self, hoyolab_id: int, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
@@ -50,11 +71,11 @@ class HoyolabClient(base.BaseClient):
 
     @managers.requires_cookie_token
     async def redeem_code(
-        self,
-        code: str,
-        uid: typing.Optional[int] = None,
-        *,
-        lang: typing.Optional[str] = None,
+            self,
+            code: str,
+            uid: typing.Optional[int] = None,
+            *,
+            lang: typing.Optional[str] = None,
     ) -> None:
         """Redeems a gift code for the current genshin user."""
         uid = uid or await self._get_uid(types.Game.GENSHIN)

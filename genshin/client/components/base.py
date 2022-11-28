@@ -43,18 +43,18 @@ class BaseClient(abc.ABC):
     _hoyolab_id: typing.Optional[int]
 
     def __init__(
-        self,
-        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
-        *,
-        authkey: typing.Optional[str] = None,
-        lang: str = "en-us",
-        region: types.Region = types.Region.OVERSEAS,
-        proxy: typing.Optional[str] = None,
-        game: typing.Optional[types.Game] = None,
-        uid: typing.Optional[int] = None,
-        hoyolab_id: typing.Optional[int] = None,
-        cache: typing.Optional[client_cache.Cache] = None,
-        debug: bool = False,
+            self,
+            cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+            *,
+            authkey: typing.Optional[str] = None,
+            lang: str = "en-us",
+            region: types.Region = types.Region.OVERSEAS,
+            proxy: typing.Optional[str] = None,
+            game: typing.Optional[types.Game] = None,
+            uid: typing.Optional[int] = None,
+            hoyolab_id: typing.Optional[int] = None,
+            cache: typing.Optional[client_cache.Cache] = None,
+            debug: bool = False,
     ) -> None:
         self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
         self.cache = cache or client_cache.StaticCache()
@@ -213,22 +213,22 @@ class BaseClient(abc.ABC):
         self.authkey = authkey
 
     def set_cache(
-        self,
-        maxsize: int = 1024,
-        *,
-        ttl: int = client_cache.HOUR,
-        static_ttl: int = client_cache.DAY,
+            self,
+            maxsize: int = 1024,
+            *,
+            ttl: int = client_cache.HOUR,
+            static_ttl: int = client_cache.DAY,
     ) -> None:
         """Create and set a new cache."""
         self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
 
     def set_redis_cache(
-        self,
-        url: str,
-        *,
-        ttl: int = client_cache.HOUR,
-        static_ttl: int = client_cache.DAY,
-        **redis_kwargs: typing.Any,
+            self,
+            url: str,
+            *,
+            ttl: int = client_cache.HOUR,
+            static_ttl: int = client_cache.DAY,
+            **redis_kwargs: typing.Any,
     ) -> None:
         """Create and set a new redis cache."""
         import aioredis
@@ -249,13 +249,13 @@ class BaseClient(abc.ABC):
         self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
 
     async def _request_hook(
-        self,
-        method: str,
-        url: aiohttp.typedefs.StrOrURL,
-        *,
-        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        data: typing.Any = None,
-        **kwargs: typing.Any,
+            self,
+            method: str,
+            url: aiohttp.typedefs.StrOrURL,
+            *,
+            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+            data: typing.Any = None,
+            **kwargs: typing.Any,
     ) -> None:
         """Perform an action before a request.
 
@@ -272,16 +272,16 @@ class BaseClient(abc.ABC):
             self.logger.debug("%s %s", method, url)
 
     async def request(
-        self,
-        url: aiohttp.typedefs.StrOrURL,
-        *,
-        method: typing.Optional[str] = None,
-        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        data: typing.Any = None,
-        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-        cache: typing.Any = None,
-        static_cache: typing.Any = None,
-        **kwargs: typing.Any,
+            self,
+            url: aiohttp.typedefs.StrOrURL,
+            *,
+            method: typing.Optional[str] = None,
+            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+            data: typing.Any = None,
+            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+            cache: typing.Any = None,
+            static_cache: typing.Any = None,
+            **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request and return a parsed json response."""
         if cache is not None:
@@ -325,13 +325,13 @@ class BaseClient(abc.ABC):
         return response
 
     async def request_webstatic(
-        self,
-        url: aiohttp.typedefs.StrOrURL,
-        *,
-        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-        cache: typing.Any = None,
-        region: types.Region = types.Region.OVERSEAS,
-        **kwargs: typing.Any,
+            self,
+            url: aiohttp.typedefs.StrOrURL,
+            *,
+            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+            cache: typing.Any = None,
+            region: types.Region = types.Region.OVERSEAS,
+            **kwargs: typing.Any,
     ) -> typing.Any:
         """Request a static json file."""
         if cache is not None:
@@ -357,16 +357,16 @@ class BaseClient(abc.ABC):
         return data
 
     async def request_hoyolab(
-        self,
-        url: aiohttp.typedefs.StrOrURL,
-        *,
-        lang: typing.Optional[str] = None,
-        region: typing.Optional[types.Region] = None,
-        method: typing.Optional[str] = None,
-        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        data: typing.Any = None,
-        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-        **kwargs: typing.Any,
+            self,
+            url: aiohttp.typedefs.StrOrURL,
+            *,
+            lang: typing.Optional[str] = None,
+            region: typing.Optional[types.Region] = None,
+            method: typing.Optional[str] = None,
+            params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+            data: typing.Any = None,
+            headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+            **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request any hoyolab endpoint."""
         if lang is not None and lang not in constants.LANGS:
@@ -376,20 +376,21 @@ class BaseClient(abc.ABC):
         region = region or self.region
 
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+        headers = dict(headers or {})
 
         if region == types.Region.OVERSEAS:
-            headers = {
+            headers.update({
                 "x-rpc-app_version": "1.5.0",
                 "x-rpc-client_type": "4",
                 "x-rpc-language": lang,
                 "ds": ds.generate_dynamic_secret(),
-            }
+            })
         elif region == types.Region.CHINESE:
-            headers = {
+            headers.update({
                 "x-rpc-app_version": "2.11.1",
                 "x-rpc-client_type": "5",
                 "ds": ds.generate_cn_dynamic_secret(data, params),
-            }
+            })
         else:
             raise TypeError(f"{region!r} is not a valid region.")
 
@@ -398,9 +399,9 @@ class BaseClient(abc.ABC):
 
     @managers.no_multi
     async def get_game_accounts(
-        self,
-        *,
-        lang: typing.Optional[str] = None,
+            self,
+            *,
+            lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
         if self.hoyolab_id is None:
@@ -415,9 +416,9 @@ class BaseClient(abc.ABC):
 
     @deprecation.deprecated("get_game_accounts")
     async def genshin_accounts(
-        self,
-        *,
-        lang: typing.Optional[str] = None,
+            self,
+            *,
+            lang: typing.Optional[str] = None,
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the genshin accounts of the currently logged-in user."""
         accounts = await self.get_game_accounts(lang=lang)
