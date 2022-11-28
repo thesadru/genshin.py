@@ -378,14 +378,14 @@ class BaseClient(abc.ABC):
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
         if region == types.Region.OVERSEAS:
-            _headers = {
+            ds_headers = {
                 "x-rpc-app_version": "1.5.0",
                 "x-rpc-client_type": "4",
                 "x-rpc-language": lang,
                 "ds": ds.generate_dynamic_secret(),
             }
         elif region == types.Region.CHINESE:
-            _headers = {
+            ds_headers = {
                 "x-rpc-app_version": "2.11.1",
                 "x-rpc-client_type": "5",
                 "ds": ds.generate_cn_dynamic_secret(data, params),
@@ -394,7 +394,7 @@ class BaseClient(abc.ABC):
             raise TypeError(f"{region!r} is not a valid region.")
 
         headers = dict(headers or {})
-        headers.update(_headers)
+        headers.update(ds_headers)
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
