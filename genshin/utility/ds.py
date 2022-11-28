@@ -41,6 +41,7 @@ def get_ds_headers(
     params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     lang: typing.Optional[str] = None,
 ) -> typing.Dict[str, typing.Any]:
+    """Get ds http headers."""
     if region == types.Region.OVERSEAS:
         ds_headers = {
             "x-rpc-app_version": "1.5.0",
