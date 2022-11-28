@@ -29,31 +29,17 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
 
-    async def get_hoyolab_self(self, *, lang: typing.Optional[str] = None) -> models.PartialHoyolabUser:
-        """Get hoyolab data for me."""
-        if self.region == types.Region.OVERSEAS:
-            url = "https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full"
-            referer = "https://www.hoyolab.com/"
-        elif self.region == types.Region.CHINESE:
-            url = "https://bbs-api.mihoyo.com/user/wapi/getUserFullInfo?gids=2"
-            referer = "https://bbs.mihoyo.com/"
-        else:
-            raise TypeError(f"{self.region!r} is not a valid region.")
-
-        data = await self.request_hoyolab(
-            url=url,
-            lang=lang,
-            headers={"Referer": referer},
-            cache=client_cache.cache_key("hoyolab_self"),
-        )
-        return models.PartialHoyolabUser(**data["user_info"])
-
-    async def get_hoyolab_user(self, hoyolab_id: int, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
+    async def get_hoyolab_user(self, hoyolab_id: typing.Optional[int] = None, *, lang: typing.Optional[str] = None) -> models.FullHoyolabUser:
         """Get a hoyolab user."""
-        data = await self.request_hoyolab(
-            "https://bbs-api-os.hoyolab.com/community/painter/wapi/user/full",
+        if hoyolab_id:
+            params = dict(uid=hoyolab_id)
+        else:
+            params = None
+
+        data = await self.request_bbs(
+            url=routes.BBS_GET_USER_URL.get_url(self.region),
             lang=lang,
-            params=dict(uid=hoyolab_id),
+            params=params,
             cache=client_cache.cache_key("hoyolab", uid=hoyolab_id, lang=lang or self.lang),
         )
         return models.FullHoyolabUser(**data["user_info"])
