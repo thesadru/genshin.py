@@ -111,7 +111,7 @@ class HoyolabUserCertification(APIModel):
     """
 
     icon_url: typing.Optional[str] = None
-    description: typing.Optional[str] = Alias("desc", default=None)
+    description: typing.Optional[str] = Aliased("desc", default=None)
     type: int
 
 
