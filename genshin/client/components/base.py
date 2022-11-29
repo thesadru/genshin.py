@@ -356,6 +356,34 @@ class BaseClient(abc.ABC):
 
         return data
 
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -> typing.Mapping[str, typing.Any]:
+        """Make a request any bbs endpoint."""
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = dict(headers or {})
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers["Referer"] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
     async def request_hoyolab(
         self,
         url: aiohttp.typedefs.StrOrURL,
@@ -377,21 +405,8 @@ class BaseClient(abc.ABC):
 
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
-        if region == types.Region.OVERSEAS:
-            headers = {
-                "x-rpc-app_version": "1.5.0",
-                "x-rpc-client_type": "4",
-                "x-rpc-language": lang,
-                "ds": ds.generate_dynamic_secret(),
-            }
-        elif region == types.Region.CHINESE:
-            headers = {
-                "x-rpc-app_version": "2.11.1",
-                "x-rpc-client_type": "5",
-                "ds": ds.generate_cn_dynamic_secret(data, params),
-            }
-        else:
-            raise TypeError(f"{region!r} is not a valid region.")
+        headers = dict(headers or {})
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
