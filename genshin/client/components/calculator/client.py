@@ -293,6 +293,28 @@ class CalculatorClient(base.BaseClient):
         others = await self.get_complete_artifact_set(artifact_id)
         return [artifact_id] + [other.id for other in others]
 
+    async def get_teapot_replica_blueprint(
+        self,
+        share_code: int,
+        *,
+        region: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.CalculatorFurnishing]:
+        """Get furnishings used by a teapot replica blueprint."""
+        if not region:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+            region = utility.recognize_genshin_server(uid)
+
+        data = await self.request_calculator(
+            "furniture/blueprint",
+            method="GET",
+            lang=lang,
+            params=dict(share_code=share_code, region=region),
+            cache=client_cache.cache_key("calculator", slug="blueprint", share_code=share_code, lang=lang or self.lang),
+        )
+        return [models.CalculatorFurnishing(**i) for i in data["list"]]
+
     @deprecation.deprecated("await genshin.utility.update_characters_enka()")
     async def update_character_names(self, *, lang: typing.Optional[str] = None) -> None:
         """Update stored db characters with the names from the calculator."""

@@ -403,12 +403,16 @@ class FurnishingCalculator:
     lang: typing.Optional[str]
 
     furnishings: typing.Dict[int, int]
+    replica_code: typing.Optional[int] = None
+    replica_region: typing.Optional[str] = None
 
     def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -> None:
         self.client = client
         self.lang = lang
 
         self.furnishings = {}
+        self.replica_code = None
+        self.replica_region = None
 
     def add_furnishing(self, id: types.IDOr[models.CalculatorFurnishing], amount: int = 1) -> FurnishingCalculator:
         """Add a furnishing."""
@@ -416,9 +420,19 @@ class FurnishingCalculator:
         self.furnishings[int(id)] += amount
         return self
 
+    def with_replica(self, code: int, *, region: typing.Optional[str] = None) -> FurnishingCalculator:
+        """Set the replica code."""
+        self.replica_code = code
+        self.replica_region = region
+        return self
+
     async def build(self) -> typing.Mapping[str, typing.Any]:
         """Build the calculator object."""
         data: typing.Dict[str, typing.Any] = {}
+
+        if self.replica_code:
+            furnishings = await self.client.get_teapot_replica_blueprint(self.replica_code, region=self.replica_region)
+            self.furnishings.update({furnishing.id: furnishing.amount or 1 for furnishing in furnishings})
 
         data["list"] = [{"id": id, "cnt": amount} for id, amount in self.furnishings.items()]
 

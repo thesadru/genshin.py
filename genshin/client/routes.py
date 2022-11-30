@@ -99,6 +99,15 @@ ACCOUNT_URL = InternationalRoute(
     "https://api-takumi.mihoyo.com/account/auth/api/",
 )
 
+BBS_URL = InternationalRoute(
+    overseas="https://bbs-api-os.hoyolab.com/",
+    chinese="https://bbs-api.mihoyo.com/",
+)
+BBS_REFERER_URL = InternationalRoute(
+    overseas="https://www.hoyolab.com/",
+    chinese="https://bbs.mihoyo.com/",
+)
+
 TAKUMI_URL = InternationalRoute(
     overseas="https://api-os-takumi.mihoyo.com/",
     chinese="https://api-takumi.mihoyo.com/",
@@ -130,6 +139,11 @@ CALCULATOR_URL = InternationalRoute(
     chinese="https://api-takumi.mihoyo.com/event/e20200928calculate/v1/",
 )
 
+TEAPOT_URL = InternationalRoute(
+    overseas="https://sg-hk4e-api.hoyolab.com/event/e20221121ugcos/",
+    chinese="",
+)
+
 WIKI_URL = Route("https://sg-wiki-api.hoyolab.com/hoyowiki/wapi")
 
 REWARD_URL = GameRoute(
@@ -157,14 +171,4 @@ YSULOG_URL = InternationalRoute(
 MI18N = dict(
     bbs="https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
     inquiry="https://mi18n-os.hoyoverse.com/webstatic/admin/mi18n/hk4e_global/m02251421001311/m02251421001311-{lang}.json",
-)
-
-BBS_URL = InternationalRoute(
-    overseas="https://bbs-api-os.hoyolab.com/",
-    chinese="https://bbs-api.mihoyo.com/",
-)
-
-BBS_REFERER_URL = InternationalRoute(
-    overseas="https://www.hoyolab.com/",
-    chinese="https://bbs.mihoyo.com/",
 )
