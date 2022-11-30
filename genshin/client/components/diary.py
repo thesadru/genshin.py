@@ -81,7 +81,7 @@ class DiaryClient(base.BaseClient):
         else:
             raise TypeError(f"{self.region!r} is not a valid region.")
 
-        params["month"] = month or datetime.datetime.now(CN_TIMEZONE).month
+        params["month"] = month or datetime.datetime.now().month
         params["lang"] = lang or self.lang
 
         return await self.request(url, params=params, **kwargs)

@@ -33,6 +33,14 @@ async def test_calculator_artifacts(client: genshin.Client):
     assert artifact.level == 0
 
 
+async def test_calculator_furnishings(client: genshin.Client):
+    furnishings = await client.get_calculator_furnishings()
+    assert len(furnishings) >= 100
+
+    furnishing = min(furnishings, key=lambda furnishing: furnishing.id)
+    assert furnishing.name == "Timber Wall With Jade Eaves"
+
+
 # noqa: PT018, E277
 async def test_character_talents(client: genshin.Client):
     talents = await client.get_character_talents(10000002)
@@ -86,6 +94,13 @@ async def test_calculate(client: genshin.Client):
     assert len(cost.talents) == 9
     assert len(cost.total) == 25
     assert cost.total[0].name == "Mora" and cost.total[0].amount == 9_533_850
+
+
+async def test_furnishing_calculate(client: genshin.Client):
+    cost = await client.furnishings_calculator().add_furnishing(363106)
+
+    assert cost.total[0].name == "Iron Chunk" and cost.total[0].amount == 6
+    assert cost.total[1].name == "White Iron Chunk" and cost.total[1].amount == 6
 
 
 async def test_calculator_characters_synced(lclient: genshin.Client):

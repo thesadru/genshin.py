@@ -15,7 +15,7 @@ from genshin.models.genshin import calculator as models
 if typing.TYPE_CHECKING:
     from .client import CalculatorClient as Client
 
-__all__ = ["Calculator"]
+__all__ = ["Calculator", "FurnishingCalculator"]
 
 T = typing.TypeVar("T")
 CallableT = typing.TypeVar("CallableT", bound="typing.Callable[..., typing.Awaitable[object]]")
@@ -393,4 +393,40 @@ class Calculator:
         return await self.client._execute_calculator(await self.build(), lang=self.lang)
 
     def __await__(self) -> typing.Generator[typing.Any, None, models.CalculatorResult]:
+        return self.calculate().__await__()
+
+
+class FurnishingCalculator:
+    """Builder for the genshin impact furnishing calculator."""
+
+    client: Client
+    lang: typing.Optional[str]
+
+    furnishings: typing.Dict[int, int]
+
+    def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -> None:
+        self.client = client
+        self.lang = lang
+
+        self.furnishings = {}
+
+    def add_furnishing(self, id: types.IDOr[models.CalculatorFurnishing], amount: int = 1) -> FurnishingCalculator:
+        """Add a furnishing."""
+        self.furnishings.setdefault(int(id), 0)
+        self.furnishings[int(id)] += amount
+        return self
+
+    async def build(self) -> typing.Mapping[str, typing.Any]:
+        """Build the calculator object."""
+        data: typing.Dict[str, typing.Any] = {}
+
+        data["list"] = [{"id": id, "cnt": amount} for id, amount in self.furnishings.items()]
+
+        return data
+
+    async def calculate(self) -> models.CalculatorFurnishingResults:
+        """Execute the calculator."""
+        return await self.client._execute_furnishings_calculator(await self.build(), lang=self.lang)
+
+    def __await__(self) -> typing.Generator[typing.Any, None, models.CalculatorFurnishingResults]:
         return self.calculate().__await__()

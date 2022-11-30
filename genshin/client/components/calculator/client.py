@@ -15,7 +15,7 @@ from genshin.models.genshin import calculator as models
 from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
 
-from .calculator import Calculator
+from .calculator import Calculator, FurnishingCalculator
 
 __all__ = ["CalculatorClient"]
 
@@ -73,9 +73,23 @@ class CalculatorClient(base.BaseClient):
         data = await self.request_calculator("compute", lang=lang, data=data)
         return models.CalculatorResult(**data)
 
+    async def _execute_furnishings_calculator(
+        self,
+        data: typing.Mapping[str, typing.Any],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.CalculatorFurnishingResults:
+        """Calculate the results of a builder."""
+        data = await self.request_calculator("furniture/compute", lang=lang, data=data)
+        return models.CalculatorFurnishingResults(**data)
+
     def calculator(self, *, lang: typing.Optional[str] = None) -> Calculator:
         """Create a calculator builder object."""
         return Calculator(self, lang=lang)
+
+    def furnishings_calculator(self, *, lang: typing.Optional[str] = None) -> FurnishingCalculator:
+        """Create a calculator builder object."""
+        return FurnishingCalculator(self, lang=lang)
 
     async def _enable_calculator_sync(self, enabled: bool = True) -> None:
         """Enable data syncing in calculator."""
@@ -191,6 +205,24 @@ class CalculatorClient(base.BaseClient):
             ),
         )
         return [models.CalculatorArtifact(**i) for i in data]
+
+    async def get_calculator_furnishings(
+        self,
+        *,
+        types: typing.Optional[int] = None,
+        rarities: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.CalculatorFurnishing]:
+        """Get all furnishings provided by the Enhancement Progression Calculator."""
+        data = await self._get_calculator_items(
+            "furniture",
+            lang=lang,
+            filters=dict(
+                cat_id=types or 0,
+                weapon_levels=rarities or 0,
+            ),
+        )
+        return [models.CalculatorFurnishing(**i) for i in data]
 
     async def get_character_details(
         self,

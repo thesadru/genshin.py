@@ -19,6 +19,8 @@ __all__ = [
     "CalculatorCharacter",
     "CalculatorCharacterDetails",
     "CalculatorConsumable",
+    "CalculatorFurnishing",
+    "CalculatorFurnishingResults",
     "CalculatorResult",
     "CalculatorTalent",
     "CalculatorWeapon",
@@ -149,13 +151,13 @@ class CalculatorTalent(APIModel, Unique):
         return self.group_id
 
 
-class CalculatorConsumable(APIModel, Unique):
-    """Item consumed when upgrading."""
+class CalculatorFurnishing(APIModel, Unique):
+    """Furnishing meant to be used with calculators."""
 
     id: int
     name: str
-    icon: str
-    amount: int = Aliased("num")
+    icon: str = Aliased("icon_url")
+    rarity: int = Aliased("level")
 
 
 class CalculatorCharacterDetails(APIModel):
@@ -179,6 +181,15 @@ class CalculatorCharacterDetails(APIModel):
             talents.append(talent)
 
         return v
+
+
+class CalculatorConsumable(APIModel, Unique):
+    """Item consumed when upgrading."""
+
+    id: int
+    name: str
+    icon: str
+    amount: int = Aliased("num")
 
 
 class CalculatorArtifactResult(APIModel):
@@ -216,3 +227,13 @@ class CalculatorResult(APIModel):
         ]
 
         return total
+
+
+class CalculatorFurnishingResults(APIModel):
+    """Furnishing calculation result."""
+
+    furnishings: typing.List[CalculatorConsumable] = Aliased("list")
+
+    @property
+    def total(self) -> typing.Sequence[CalculatorConsumable]:
+        return self.furnishings
