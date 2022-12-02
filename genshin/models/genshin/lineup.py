@@ -36,6 +36,17 @@ class PartialLineupCharacter(character.BaseCharacter):
     rarity: int = Aliased("level")
     weapon_type: str = Aliased("weapon_cat_id")
     icon: str = Aliased("head_icon")
+    pc_icon: str = Aliased("standard_icon")
+
+    def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
+        # rename "icon" due to pydantic's aliasing
+        icons_amount = sum(1 for key, value in data.items() if "icon" in key if value)
+        if data.get("pc_icon") and data.get("icon"):
+            ...
+        elif icons_amount >= 2 and "static" in data.get("icon", ""):
+            data["standard_icon"] = data.pop("icon")
+
+        super().__init__(_frame=_frame + 3, **data)  # type: ignore
 
     @pydantic.validator("element", pre=True)
     def __parse_element(cls, value: typing.Any) -> str:
@@ -229,6 +240,9 @@ class LineupCharacterPreview(PartialLineupCharacter):
 
     role: str = Aliased("avatar_tag")
 
+    icon: str = Aliased("standard_icon")
+    pc_icon: str = Aliased("pc_icon")
+
     @pydantic.validator("role", pre=True)
     def __parse_role(cls, value: typing.Any) -> str:
         if isinstance(value, str):
@@ -239,6 +253,9 @@ class LineupCharacterPreview(PartialLineupCharacter):
 
 class LineupCharacter(LineupCharacterPreview):
     """Lineup character."""
+
+    icon: str = Aliased("head_icon")
+    pc_icon: str = Aliased("standard_icon")
 
     weapon: PartialLineupWeapon
     artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased("set_list")
@@ -254,7 +271,7 @@ class LineupPreview(APIModel, Unique):
     title: str
     scenario_ids: typing.Sequence[int] = Aliased("tag_ids")
 
-    characters: typing.Sequence[typing.Sequence[LineupCharacterPreview]] = Aliased("avatar_group")
+    characters: typing.Sequence[typing.Sequence[LineupCharacter]] = Aliased("avatar_group")
 
     author_id: int = Aliased("account_uid")
     author_nickname: str = Aliased("nickname")

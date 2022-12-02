@@ -48,14 +48,14 @@ class APIModel(pydantic.BaseModel, abc.ABC):
 
     lang: str = "UNKNOWN"
 
-    def __init__(self, **data: typing.Any) -> None:
+    def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
         """"""
         from genshin.client.components import base as client_base
 
         lang = data.pop("lang", None)
 
         if lang is None:
-            frame = sys._getframe(1)
+            frame = sys._getframe(_frame)
             if frame.f_code.co_name == "<listcomp>":
                 frame = typing.cast("types.FrameType", frame.f_back)
                 assert frame
