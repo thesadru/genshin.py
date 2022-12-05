@@ -22,7 +22,7 @@ Key features:
 
 - All data is in the form of Pydantic Models which means full autocompletion and linter support.
 - Requests are significantly faster thanks to proper usage of asyncio.
-- Chinese and Engrish names returned by the API are renamed to simpler English fields.
+- Chinese and English names returned by the API are renamed to simpler English fields.
 - Supports the majority of the popular endpoints.
 - Cleanly integrates with frameworks like FastAPI out of the box.
 
