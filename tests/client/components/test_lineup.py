@@ -1,5 +1,3 @@
-import pytest
-
 import genshin
 
 
@@ -16,7 +14,7 @@ async def test_lineup_scenarios(client: genshin.Client):
 
 
 async def test_lineups(client: genshin.Client):
-    data = await client.get_lineups(limit=10, characters=[10000002])
+    data = await client.get_lineups(limit=10, page_size=10, characters=[10000002])
 
     assert data
 

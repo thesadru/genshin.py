@@ -58,12 +58,14 @@ LANG_MAP = {
     "es-es": "es",
     "fr-fr": "fr",
     "id-id": "id",
+    "it-it": "it",
     "ja-jp": "jp",
     "ko-kr": "kr",
     "pt-pt": "pt",
     "ru-ru": "ru",
     "th-th": "th",
     "vi-vn": "vi",
+    "tr-tr": "tr",
 }
 ENKA_LANG_MAP = {
     "zh-CN": "zh-cn",
@@ -73,12 +75,14 @@ ENKA_LANG_MAP = {
     "es": "es-es",
     "fr": "fr-fr",
     "id": "id-id",
+    "it": "it-it",
     "ja": "ja-jp",
     "ko": "ko-kr",
     "pt": "pt-pt",
     "ru": "ru-ru",
     "th": "th-th",
     "vi": "vi-vn",
+    "tr": "tr",
 }
 
 

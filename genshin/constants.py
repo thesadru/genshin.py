@@ -12,12 +12,14 @@ LANGS = {
     "es-es": "Español",
     "fr-fr": "Français",
     "id-id": "Indonesia",
+    "it-it": "Italiano",
     "ja-jp": "日本語",
     "ko-kr": "한국어",
     "pt-pt": "Português",
     "ru-ru": "Pусский",
     "th-th": "ภาษาไทย",
     "vi-vn": "Tiếng Việt",
+    "tr-tr": "Türkçe",
 }
 """Languages supported by the API."""
 
