@@ -92,6 +92,10 @@ class BaseClient(abc.ABC):
 
     @hoyolab_id.setter
     def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -> None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
         if self.cookie_manager.multi:
             raise RuntimeError("Cannot specify a hoyolab uid when using multiple cookies.")
 
