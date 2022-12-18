@@ -24,7 +24,7 @@ LANGS = {
 """Languages supported by the API."""
 
 DS_SALT = {
-    types.Region.OVERSEAS: "6cqshh5dhw73bzxn20oexa9k516chk7s",
+    types.Region.OVERSEAS: "6s25p5ox5y14umn1p61aqyyvbvvl3lrt",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
     "cn_signin": "9nQiU3AV0rJSIBWgdynfoGMGKaklfbM7",
 }

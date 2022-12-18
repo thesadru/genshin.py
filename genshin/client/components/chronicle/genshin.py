@@ -1,9 +1,10 @@
 """Genshin battle chronicle component."""
 
 import asyncio
+import functools
 import typing
 
-from genshin import errors, types, utility
+from genshin import errors, paginators, types, utility
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 
@@ -30,7 +31,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         original_payload = payload.copy()
 
         uid = uid or await self._get_uid(types.Game.GENSHIN)
-        payload.update(role_id=uid, server=utility.recognize_genshin_server(uid))
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
 
         data, params = None, None
         if method == "POST":
@@ -132,6 +133,59 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get genshin activities."""
         data = await self._request_genshin_record("activities", uid, lang=lang)
         return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(self, uid: int, *, lang: typing.Optional[str] = None) -> models.TCGPreview:
+        """Get genshin tcg."""
+        data = await self._request_genshin_record("gcg/basicInfo", uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: int,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.TCGBaseCard]:
+        """Get genshin tcg page."""
+        params = dict(
+            need_avatar="true" if characters else "false",
+            need_action="true" if action else "false",
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats="false",
+        )
+        data = await self._request_genshin_record("gcg/cardList", uid, lang=lang, payload=params, cache=False)
+        return [
+            (models.TCGCharacterCard(**i) if i["card_type"] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data["card_list"]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: int,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -> paginators.PagedPaginator[models.TCGBaseCard]:
+        """Get genshin tcg cards."""
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
 
     async def get_full_genshin_user(
         self,
