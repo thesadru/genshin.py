@@ -143,13 +143,14 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         self,
         page: int,
         *,
-        uid: int,
+        uid: typing.Optional[int] = None,
         characters: bool = True,
         action: bool = True,
         limit: int = 32,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.TCGBaseCard]:
         """Get genshin tcg page."""
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
         params = dict(
             need_avatar="true" if characters else "false",
             need_action="true" if action else "false",
@@ -165,7 +166,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     def genshin_tcg(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         limit: typing.Optional[int] = None,
         characters: bool = True,

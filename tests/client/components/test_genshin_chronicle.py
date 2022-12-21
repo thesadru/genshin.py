@@ -44,8 +44,8 @@ async def test_genshin_activities(client: genshin.Client, genshin_uid: int):
     assert data
 
 
-async def test_genshin_tcg(client: genshin.Client, genshin_uid: int):
-    data = await client.genshin_tcg(genshin_uid, limit=64)
+async def test_genshin_tcg(lclient: genshin.Client, genshin_uid: int):
+    data = await lclient.genshin_tcg(limit=64)
 
     assert data
 

@@ -21,6 +21,8 @@ __all__ = [
 
 
 class TCGCardType(str, enum.Enum):
+    """TCG card type."""
+
     CHARACTER = "CardTypeCharacter"
     EQUIPMENT = "CardTypeModify"
     ASSIST = "CardTypeAssist"
@@ -65,7 +67,7 @@ class TCGCost(APIModel):
     value: int = Aliased("cost_value")
 
     @pydantic.validator("element")
-    def validate_element(cls, value: str) -> str:
+    def __fix_element(cls, value: str) -> str:
         return {
             "CostTypeCryo": "Cryo",
             "CostTypeDendro": "Dendro",
@@ -82,7 +84,7 @@ class TCGCost(APIModel):
 class TCGBaseCard(TCGPartialCard):
     """TCG card."""
 
-    type: TCGCardType
+    type: TCGCardType = Aliased("card_type")
 
     name: str
     proficiency: int
@@ -91,24 +93,24 @@ class TCGBaseCard(TCGPartialCard):
 
     image_tags: typing.Sequence[str] = Aliased("tags")
 
-    wiki_url: str = Aliased("wiki_url")
+    wiki_url: str = Aliased("card_wiki")
 
 
 class TCGCharacterCard(TCGBaseCard):
     """TCG character card."""
 
-    type: typing.Literal[TCGCardType.CHARACTER]
+    type: typing.Literal[TCGCardType.CHARACTER] = Aliased("card_type")
 
     name: str
     health: int = Aliased("hp")
 
-    talents: typing.Sequence[TCGCharacterTalent] = Aliased("talent_card")
+    talents: typing.Sequence[TCGCharacterTalent] = Aliased("card_skills")
 
 
 class TCGCard(TCGBaseCard):
     """TCG equipment card."""
 
-    type: typing.Literal[TCGCardType.EQUIPMENT, TCGCardType.ASSIST, TCGCardType.EVENT]
+    type: typing.Literal[TCGCardType.EQUIPMENT, TCGCardType.ASSIST, TCGCardType.EVENT] = Aliased("card_type")
 
     cost: typing.Sequence[TCGCost] = Aliased("action_cost")
     description: str = Aliased("desc")
