@@ -1,5 +1,19 @@
 # Changelog
 
+# 1.5.0 (2022-12-21)
+
+## What's new
+
+- Added genshin chronicle TCG endpoints.
+- Added teapot replica endpoints.
+- Aded an official source for banner IDs.
+- Made the hoyolab ID optional.
+
+## Fixes
+
+- Fixed false positives when using multiple cookies.
+- Added turkish and italian to the list of languages.
+
 # 1.4.0 (2022-11-16)
 
 ## What's new
