@@ -5,6 +5,7 @@ exclude = tests, test.py
 # C408: dict() with keyword arguments
 # D105: Missing docstring in magic method
 # D106: Missing docstring Model.Config
+# D419: Docstring is empty
 # S101: Use of assert for type checking
 # S303: Use of md5
 # S311: Use of pseudo-random generators
@@ -12,7 +13,7 @@ exclude = tests, test.py
 ignore = 
     A001, A002, A003,
     C408,
-    D105, D106,
+    D105, D106, D419
     S101, S303, S311, S324,
 
 # F401: unused import.

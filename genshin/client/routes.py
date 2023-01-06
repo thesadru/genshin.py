@@ -165,7 +165,7 @@ GACHA_INFO_URL = InternationalRoute(
 )
 YSULOG_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/ysulog/api/",
-    chinese="",
+    chinese="https://hk4e-api.mihoyo.com/ysulog/api/",
 )
 
 MI18N = dict(
