@@ -45,10 +45,12 @@ async def main():
     client = genshin.Client(cookies)
 
     data = await client.get_genshin_user(710785423)
-    print(f"User has a total of {len(data.characters)} characters")
+    print(f"User has a total of {len(data.stats.characters)} characters")
 
 asyncio.run(main())
 ```
+
+The API reference has been moved to [pdoc](https://thesadru.github.io/genshin.py/pdoc/genshin).
 
 ---
 

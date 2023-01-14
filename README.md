@@ -12,6 +12,8 @@ Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and p
 
 Documentation: https://thesadru.github.io/genshin.py
 
+API Reference: https://thesadru.github.io/genshin.py/pdoc/genshin
+
 Source Code: https://github.com/thesadru/genshin.py
 
 ---
