@@ -40,4 +40,4 @@ async def test_favorite_lineups(lclient: genshin.Client):
 async def test_lineup_character_history(lclient: genshin.Client):
     data = await lclient.get_lineup_character_history()
 
-    assert data
+    assert len(data) < 100
