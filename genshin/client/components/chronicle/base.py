@@ -10,7 +10,6 @@ from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
-from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
@@ -56,10 +55,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         url = base_url / endpoint
 
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
-        if not model_constants.CHARACTER_NAMES.get(lang or self.lang):
-            update_task = asyncio.create_task(utility.update_characters_enka())
-        else:
-            update_task = asyncio.create_task(asyncio.sleep(0))
+        update_task = asyncio.create_task(utility.update_characters_any(lang or self.lang, lenient=True))
 
         data = await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
 
@@ -67,7 +63,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         try:
             await update_task
         except Exception as e:
-            warnings.warn(f"Failed to update characters with enka: {e!r}")
+            warnings.warn(f"Failed to update characters: {e!r}")
 
         return data
 

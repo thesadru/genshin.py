@@ -53,7 +53,7 @@ def _get_db_char(
     """Get the appropriate DBChar object from specific fields."""
     if lang not in constants.CHARACTER_NAMES:
         raise Exception(
-            f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_enka()`."
+            f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_any()`."
         )
 
     if id and id in constants.CHARACTER_NAMES[lang]:

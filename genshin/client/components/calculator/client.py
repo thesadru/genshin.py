@@ -12,7 +12,6 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.genshin import calculator as models
-from genshin.models.genshin import constants as model_constants
 from genshin.utility import deprecation
 
 from .calculator import Calculator, FurnishingCalculator
@@ -49,17 +48,14 @@ class CalculatorClient(base.BaseClient):
             data = dict(data or {})
             data["lang"] = lang or self.lang
 
-        if not model_constants.CHARACTER_NAMES.get(lang or self.lang):
-            update_task = asyncio.create_task(utility.update_characters_enka())
-        else:
-            update_task = asyncio.create_task(asyncio.sleep(0))
+        update_task = asyncio.create_task(utility.update_characters_any(lang or self.lang, lenient=True))
 
         data = await self.request(url, method=method, params=params, data=data, **kwargs)
 
         try:
             await update_task
         except Exception as e:
-            warnings.warn(f"Failed to update characters with enka: {e!r}")
+            warnings.warn(f"Failed to update characters: {e!r}")
 
         return data
 
@@ -315,7 +311,7 @@ class CalculatorClient(base.BaseClient):
         )
         return [models.CalculatorFurnishing(**i) for i in data["list"]]
 
-    @deprecation.deprecated("await genshin.utility.update_characters_enka()")
+    @deprecation.deprecated("await genshin.utility.update_characters_any()")
     async def update_character_names(self, *, lang: typing.Optional[str] = None) -> None:
         """Update stored db characters with the names from the calculator."""
         characters = await self.get_calculator_characters(lang=lang, include_traveler=True)

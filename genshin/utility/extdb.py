@@ -5,6 +5,7 @@ import json
 import time
 import typing
 import warnings
+from base64 import b64decode as parse_token
 
 import aiohttp
 
@@ -12,7 +13,12 @@ from genshin.constants import LANGS
 from genshin.models.genshin import constants as model_constants
 from genshin.utility import fs
 
-__all__ = ("update_characters_ambr", "update_characters_enka", "update_characters_genshindata")
+__all__ = (
+    "update_characters_ambr",
+    "update_characters_any",
+    "update_characters_enka",
+    "update_characters_genshindata",
+)
 
 CACHE_FILE = fs.get_tempdir() / "characters.json"
 
@@ -27,12 +33,15 @@ if CACHE_FILE.exists() and time.time() - CACHE_FILE.stat().st_mtime < 7 * 24 * 6
         warnings.warn("Failed to load character names from cache")
         CACHE_FILE.unlink()
 
-GENSHINDATA_CHARACTERS_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarExcelConfigData.json"  # fmt: off  # noqa
-GENSHINDATA_TALENT_DEPOT_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"  # fmt: off  # noqa
-GENSHINDATA_TALENT_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/ExcelBinOutput/AvatarSkillExcelConfigData.json"  # fmt: off  # noqa
-GENSHINDATA_TEXTMAP_URL = "https://raw.githubusercontent.com/Dimbreath/GenshinData/master/TextMap/TextMap{lang}.json"
+GENSHINDATA_REPO = parse_token("aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9nYW1lZGF0YS8tL3Jhdy9tYXN0ZXIv").decode()
+GENSHINDATA_CHARACTERS_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarExcelConfigData.json"
+GENSHINDATA_TALENT_DEPOT_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"
+GENSHINDATA_TALENT_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarSkillExcelConfigData.json"
+GENSHINDATA_TEXTMAP_URL = GENSHINDATA_REPO + "TextMap/TextMap{lang}.json"
+
 ENKA_CHARACTERS_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json"
 ENKA_LOC_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json"
+
 AMBR_URL = "https://api.ambr.top/v2/{lang}/avatar"
 
 ELEMENTS_MAP = {
@@ -152,7 +161,7 @@ async def update_characters_genshindata(langs: typing.Sequence[str] = ()) -> Non
     CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))
 
 
-async def update_characters_enka() -> None:
+async def update_characters_enka(langs: typing.Sequence[str] = ()) -> None:
     """Update characters with https://github.com/EnkaNetwork/API-docs/."""
     characters, locs = await _fetch_jsons(ENKA_CHARACTERS_URL, ENKA_LOC_URL)
 
@@ -195,3 +204,32 @@ async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
             )
 
     CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))
+
+
+async def update_characters_any(langs: typing.Sequence[str] = (), *, lenient: bool = False) -> None:
+    """Update characters with the most efficient resource.
+
+    Will not re-request data if lenient is True.
+    """
+    if lenient:
+        langs = langs or list(LANGS.keys())
+        langs = [lang for lang in langs if not model_constants.CHARACTER_NAMES.get(lang)]
+        if len(langs) == 0:
+            return
+
+    if len(langs) == 1:
+        updators = [update_characters_ambr, update_characters_enka]
+    else:
+        updators = [update_characters_enka, update_characters_ambr]
+
+    updators.append(update_characters_genshindata)
+
+    for updator in updators:
+        try:
+            await updator(langs)
+        except Exception:
+            continue
+        else:
+            return
+
+    raise Exception("Failed to update characters, all functions raised an error.")
