@@ -7,10 +7,14 @@ import yarl
 from genshin import types
 
 __all__ = [
+    "ACCOUNT_URL",
+    "BBS_REFERER_URL",
+    "BBS_URL",
     "CALCULATOR_URL",
     "COMMUNITY_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_INFO_URL",
+    "HK4E_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
     "MI18N",
@@ -18,6 +22,8 @@ __all__ = [
     "REWARD_URL",
     "Route",
     "TAKUMI_URL",
+    "TEAPOT_URL",
+    "WEBAPI_URL",
     "WEBSTATIC_URL",
     "YSULOG_URL",
 ]
@@ -145,6 +151,8 @@ TEAPOT_URL = InternationalRoute(
 )
 
 WIKI_URL = Route("https://sg-wiki-api.hoyolab.com/hoyowiki/wapi")
+
+HK4E_URL = Route("https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/")
 
 REWARD_URL = GameRoute(
     overseas=dict(

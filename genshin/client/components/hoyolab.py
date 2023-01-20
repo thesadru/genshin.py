@@ -1,4 +1,5 @@
 """Hoyolab component."""
+import asyncio
 import typing
 
 from genshin import types, utility
@@ -59,6 +60,52 @@ class HoyolabClient(base.BaseClient):
             cache=client_cache.cache_key("recommended"),
         )
         return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+    ) -> typing.Sequence[models.Announcement]:
+        """Get a list of game announcements."""
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = 900000005
+
+        params = dict(
+            game="hk4e",
+            game_biz="hk4e_global",
+            bundle_id="hk4e_global",
+            platform="pc",
+            region=utility.recognize_genshin_server(uid),
+            uid=uid,
+            level=8,
+            lang=lang or self.lang,
+        )
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                routes.HK4E_URL.get_url() / "announcement/api/getAnnList",
+                lang=lang,
+                params=params,
+                static_cache=client_cache.cache_key("announcements", endpoint="info", lang=lang or self.lang),
+            ),
+            self.request_hoyolab(
+                routes.HK4E_URL.get_url() / "announcement/api/getAnnContent",
+                lang=lang,
+                params=params,
+                static_cache=client_cache.cache_key("announcements", endpoint="details", lang=lang or self.lang),
+            ),
+        )
+
+        announcements: typing.List[typing.Mapping[str, typing.Any]] = []
+        for sublist in info["list"]:
+            for info in sublist["list"]:
+                detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
+                announcements.append({**info, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
 
     @managers.requires_cookie_token
     async def redeem_code(

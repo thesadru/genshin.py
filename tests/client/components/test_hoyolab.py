@@ -33,6 +33,12 @@ async def test_recommended_users(client: genshin.Client):
     assert len(users) > 80
 
 
+async def test_announcements(client: genshin.Client):
+    announcements = await client.get_genshin_announcements()
+
+    assert len(announcements) > 10
+
+
 async def test_redeem_code(lclient: genshin.Client):
     # inconsistent
     with contextlib.suppress(genshin.RedemptionException):
