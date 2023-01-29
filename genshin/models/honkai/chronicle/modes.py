@@ -164,6 +164,9 @@ class OldAbyss(BaseAbyss):
         # while newAbyssReport returns them as 1/2/3/4(/5) respectively.
         # Having them as ints at base seems more useful than strs.
         # (in-game, they use the same names (Sinful, Agony, etc.))
+        if isinstance(rank, int):
+            return rank
+
         return 69 - ord(rank)
 
     @property
