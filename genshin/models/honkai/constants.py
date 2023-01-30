@@ -37,6 +37,7 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     313: "BronyaC7",
     314: "BronyaC8",
     315: "BronyaC10",
+    317: "BronyaC12",
 
     401: "HimekoC1",
     402: "HimekoC2",
