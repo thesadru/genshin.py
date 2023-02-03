@@ -135,7 +135,7 @@ class BannerDetails(APIModel):
         "r3_guarantee_prob",
         pre=True,
     )
-    def __parse_percentage(cls, v: str) -> typing.Optional[float]:
+    def __parse_percentage(cls, v: typing.Optional[str]) -> typing.Optional[float]:
         if v is None or isinstance(v, (int, float)):
             return v
 

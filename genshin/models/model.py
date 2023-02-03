@@ -80,7 +80,6 @@ class APIModel(pydantic.BaseModel, abc.ABC):
         for name in self.__fields__.keys():
             value = getattr(self, name)
             if isinstance(value, APIModel):
-
                 object.__setattr__(value, "lang", self.lang)
 
         if self.lang not in genshin_constants.LANGS:

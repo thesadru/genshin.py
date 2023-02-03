@@ -21,6 +21,7 @@ __all__ = [
     "TeapotRealm",
 ]
 
+
 # flake8: noqa: E222
 class Stats(APIModel):
     """Overall user stats."""

@@ -132,14 +132,7 @@ class WishClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.BannerDetails]:
         """Get all banner details at once in a batch."""
-        if not banner_ids:
-            try:
-                banner_ids = utility.get_banner_ids()
-            except FileNotFoundError:
-                banner_ids = []
-
-            if len(banner_ids) < 3:
-                banner_ids = await self.get_banner_ids()
+        banner_ids = banner_ids or await self.get_banner_ids()
 
         coros = (self._get_banner_details(i, lang=lang) for i in banner_ids)
         data = await asyncio.gather(*coros)

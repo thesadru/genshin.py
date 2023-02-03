@@ -120,7 +120,7 @@ class OldAbyssStats(APIModel):
     # fmt: on
 
     @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
-    def __normalize_rank(cls, rank: str) -> typing.Optional[int]:  # modes.OldAbyss.__normalize_rank
+    def __normalize_rank(cls, rank: typing.Optional[str]) -> typing.Optional[int]:  # modes.OldAbyss.__normalize_rank
         if isinstance(rank, int):
             return rank
 
