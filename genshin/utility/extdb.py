@@ -23,7 +23,7 @@ __all__ = (
 CACHE_FILE = fs.get_tempdir() / "characters.json"
 
 if CACHE_FILE.exists() and time.time() - CACHE_FILE.stat().st_mtime < 7 * 24 * 60 * 60:
-    names = json.loads(CACHE_FILE.read_text())
+    names: typing.Mapping[str, typing.Any] = json.loads(CACHE_FILE.read_text())
     try:
         model_constants.CHARACTER_NAMES = {
             lang: {int(char_id): model_constants.DBChar(*char) for char_id, char in chars.items()}
