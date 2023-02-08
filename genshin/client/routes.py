@@ -144,6 +144,7 @@ CALCULATOR_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/calculateos/",
     chinese="https://api-takumi.mihoyo.com/event/e20200928calculate/v1/",
 )
+CALCULATOR_REFERER_URL = Route("https://webstatic.mihoyo.com/ys/event/e20200923adopt_calculator/index.html")
 
 TEAPOT_URL = InternationalRoute(
     overseas="https://sg-hk4e-api.hoyolab.com/event/e20221121ugcos/",
