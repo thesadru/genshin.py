@@ -6,6 +6,8 @@ import logging
 import typing
 import warnings
 
+import aiohttp.typedefs
+
 import genshin.models.genshin as genshin_models
 from genshin import errors, types, utility
 from genshin.client import cache as client_cache
@@ -33,10 +35,12 @@ class CalculatorClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the calculator endpoint."""
         params = dict(params or {})
+        headers = dict(headers or {})
 
         base_url = routes.CALCULATOR_URL.get_url(self.region)
         url = base_url / endpoint
@@ -48,9 +52,11 @@ class CalculatorClient(base.BaseClient):
             data = dict(data or {})
             data["lang"] = lang or self.lang
 
+        if self.region == types.Region.CHINESE:
+            headers["referer"] = str(routes.CALCULATOR_REFERER_URL.get_url())
         update_task = asyncio.create_task(utility.update_characters_any(lang or self.lang, lenient=True))
 
-        data = await self.request(url, method=method, params=params, data=data, **kwargs)
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
 
         try:
             await update_task
