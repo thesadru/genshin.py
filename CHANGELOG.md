@@ -1,5 +1,17 @@
 # Changelog
 
+# 1.5.1 (2022-02-10)
+
+## What's new
+
+- Added event announcments.
+- Migrated to gitlab for icon data.
+
+## Fixes
+
+- Fixed some CN endpoints.
+- Fixed getting low-level honkai users.
+
 # 1.5.0 (2022-12-21)
 
 ## What's new
