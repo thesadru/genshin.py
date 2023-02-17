@@ -11,6 +11,7 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     103: "KianaC4",
     104: "KianaC3",
     105: "KianaC6",
+    106: "KianaC7",
 
     111: "KallenC1",
     112: "KallenC2",
@@ -22,6 +23,7 @@ BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
     203: "MeiC1",
     204: "MeiC4",
     205: "MeiC5",
+    206: "MeiC6",
 
     211: "SakuraC1",
     212: "SakuraC2",
