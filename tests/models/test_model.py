@@ -67,6 +67,23 @@ lang = "en-us"  # initiate local scope
                 lang="en-us",
             ),
         ),
+        # traveler element should be kept
+        (
+            {
+                "id": 10000005,
+                "name": "Traveler",
+                "element": "Light",
+                "rarity": 5,
+            },
+            LiteralCharacter(
+                id=10000005,
+                name="Traveler",
+                element="Light",
+                rarity=5,
+                icon="https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_PlayerBoy.png",
+                lang="en-us",
+            ),
+        ),
         # messed up icon should be replaced
         (
             {

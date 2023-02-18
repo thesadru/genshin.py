@@ -59,7 +59,7 @@ def _get_db_char(
     if id and id in constants.CHARACTER_NAMES[lang]:
         char = constants.CHARACTER_NAMES[lang][id]
         if name is not None:
-            char = char._replace(name=name, element=char.element or element or "")
+            char = char._replace(name=name, element=element or char.element or "")
 
         return char
 
