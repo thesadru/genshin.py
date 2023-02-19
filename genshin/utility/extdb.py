@@ -206,13 +206,20 @@ async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
     CACHE_FILE.write_text(json.dumps(model_constants.CHARACTER_NAMES))
 
 
-async def update_characters_any(langs: typing.Sequence[str] = (), *, lenient: bool = False) -> None:
+async def update_characters_any(
+    langs: typing.Union[str, typing.Sequence[str], None] = None,
+    *,
+    lenient: bool = False,
+) -> None:
     """Update characters with the most efficient resource.
 
     Will not re-request data if lenient is True.
     """
+    if not langs:
+        langs = list(LANGS.keys())
+    if isinstance(langs, str):
+        langs = [langs]
     if lenient:
-        langs = langs or list(LANGS.keys())
         langs = [lang for lang in langs if not model_constants.CHARACTER_NAMES.get(lang)]
         if len(langs) == 0:
             return
