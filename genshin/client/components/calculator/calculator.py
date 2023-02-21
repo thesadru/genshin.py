@@ -255,8 +255,13 @@ class CurrentTalentResolver(TalentResolver):
             talents = details.talents
             self.current = 0
 
-        for talent in talents:
-            if target := self.talents.get(talent.type):
+        if talents[2].type == "dash":
+            ordered = (talents[0], talents[1], talents[3])
+        else:
+            ordered = (talents[0], talents[1], talents[2])
+
+        for talent, name in zip(ordered, ("attack", "skill", "burst")):
+            if target := self.talents[name]:
                 self.add_talent(talent.group_id, talent.level or self.current, target)
 
         return self.data

@@ -114,19 +114,27 @@ class CalculatorTalent(APIModel, Unique):
     """Talent of a character meant to be used with calculators."""
 
     id: int
-    group_id: int
+    group_id: int  # proudSkillGroupId
     name: str
     icon: str
     level: int = Aliased("level_current", default=0)
     max_level: int
 
     @property
-    def type(self) -> typing.Literal["attack", "skill", "burst", "passive", "dash"]:
-        """The type of the talent, parsed from the group id"""
-        # It's Possible to parse this from the id too but group id feels more reliable
+    def type(self) -> typing.Literal["attack", "skill", "burst", "passive", "dash"] | None:
+        """The type of the talent, parsed from the group id.
+
+        Does not work for traveler!
+        """
+        # special cases
+        if self.id == self.group_id:
+            return "passive"  # maybe hoyo does this for unapgradables?
+
+        if len(str(self.id)) == 6:  # in candSkillDepotIds
+            return "attack"
 
         # 4139 -> group=41 identifier=3 order=9
-        group, relevant = divmod(self.group_id, 100)
+        _, relevant = divmod(self.group_id, 100)
         identifier, order = divmod(relevant, 10)
 
         if identifier == 2:
@@ -140,7 +148,7 @@ class CalculatorTalent(APIModel, Unique):
         elif order == 3:
             return "dash"
         else:
-            raise ValueError(f"Cannot parse type for talent {self.group_id!r} (group {group})")
+            return None
 
     @property
     def upgradeable(self) -> bool:
