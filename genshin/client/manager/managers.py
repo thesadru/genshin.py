@@ -49,7 +49,12 @@ def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, st
 def get_cookie_identifier(cookie: typing.Mapping[str, str]) -> typing.Optional[str]:
     """Get a unique identifier for a cookie."""
     for name, value in cookie.items():
-        if name in ("ltuid", "account_id", "ltmid_v2", "account_mid_v2"):
+        if name in ("ltuid", "account_id", "ltuid_v2", "account_id_v2"):
+            return value
+
+    # fallback non-digit identifier
+    for name, value in cookie.items():
+        if name in ("ltmid_v2", "account_mid_v2"):
             return value
 
     return None
@@ -238,7 +243,7 @@ class CookieManager(BaseCookieManager):
         Returns None if cookies are not set.
         """
         for name, value in self.cookies.items():
-            if name in ("ltuid", "account_id"):
+            if name in ("ltuid", "account_id", "ltuid_v2", "account_id_v2"):
                 return int(value)
 
         return None
