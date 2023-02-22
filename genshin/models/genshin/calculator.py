@@ -192,6 +192,14 @@ class CalculatorCharacterDetails(APIModel):
 
         return v
 
+    @property
+    def upgradeable_talents(self) -> typing.Sequence[CalculatorTalent]:
+        """All talents that can be leveled up."""
+        if self.talents[2].type == "dash":
+            return (self.talents[0], self.talents[1], self.talents[3])
+        else:
+            return (self.talents[0], self.talents[1], self.talents[2])
+
 
 class CalculatorConsumable(APIModel, Unique):
     """Item consumed when upgrading."""
