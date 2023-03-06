@@ -18,7 +18,7 @@ class Announcement(APIModel, Unique):
 
     type_label: str
     type: int
-    tag_label: int
+    tag_label: int = 0
     tag_icon: str
 
     login_alert: bool
