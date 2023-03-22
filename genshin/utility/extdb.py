@@ -33,7 +33,7 @@ if CACHE_FILE.exists() and time.time() - CACHE_FILE.stat().st_mtime < 7 * 24 * 6
         warnings.warn("Failed to load character names from cache")
         CACHE_FILE.unlink()
 
-GENSHINDATA_REPO = parse_token("aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9nYW1lZGF0YS8tL3Jhdy9tYXN0ZXIv").decode()
+GENSHINDATA_REPO = parse_token("aHR0cHM6Ly9naXRsYWIuY29tL0RpbWJyZWF0aC9BbmltZUdhbWVEYXRhLy0vcmF3L21hc3Rlci8=").decode()
 GENSHINDATA_CHARACTERS_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarExcelConfigData.json"
 GENSHINDATA_TALENT_DEPOT_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarSkillDepotExcelConfigData.json"
 GENSHINDATA_TALENT_URL = GENSHINDATA_REPO + "ExcelBinOutput/AvatarSkillExcelConfigData.json"

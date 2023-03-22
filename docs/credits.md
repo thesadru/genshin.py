@@ -5,6 +5,7 @@ Thanks to these amazing people genshin.py can be where it is now:
 ### Hoyo API Contributors
 
 - [Womsxd](https://github.com/Womsxd): The author of [YuanShen User Info](https://github.com/Womsxd/YuanShen_User_Info) - a predecesor to genshinstats
+- [Dimbreath](https://github.com/Dimbreath): Maintainer of [GenshinData](https://github.com/dimbreath/GenshinData), a repository of dumped client data
 - [Lightczx](https://github.com/Lightczx): The author of [Snap.Genshin](https://github.com/DGP-Studio/Snap.Genshin), helped me figure out the chinese endpoints
 - [lulu666lulu](https://github.com/lulu666lulu): Figured out how the chinese dynamic secret is generated
 - [M-307](https://github.com/mrwan200): Worked on geetest authentication.
