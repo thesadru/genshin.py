@@ -174,7 +174,7 @@ class RedisCache(BaseCache):
 
     async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
         """Get an object with a key."""
-        value: typing.Optional[bytes] = await self.redis.get(self.serialize_key(key))  # pyright: ignore
+        value = typing.cast("typing.Optional[bytes]", await self.redis.get(self.serialize_key(key)))  # pyright: ignore
         if value is None:
             return None
 
