@@ -55,24 +55,39 @@ class APIModel(pydantic.BaseModel, abc.ABC):
         lang = data.pop("lang", None)
 
         if lang is None:
-            frame = sys._getframe(_frame)
-            if frame.f_code.co_name == "<listcomp>":
-                frame = typing.cast("types.FrameType", frame.f_back)
-                assert frame
+            frames = [sys._getframe(_frame)]
+            while _frame <= 100:  # ensure we give up in a reasonable amount of time
+                _frame += 1
+                try:
+                    frame = sys._getframe(_frame)
+                except ValueError:
+                    break
 
-            if isinstance(frame.f_locals.get("lang"), str):
-                lang = frame.f_locals["lang"]
+                if frame.f_code.co_name == "__init__" and frame.f_code.co_filename == __file__:
+                    frames.append(frame)
+                    break
 
-            for name, value in frame.f_locals.items():
-                if isinstance(value, (APIModel, client_base.BaseClient)):
-                    lang = value.lang
+            for frame in frames:
+                if frame.f_code.co_name == "<listcomp>":
+                    frame = typing.cast("types.FrameType", frame.f_back)
+                    assert frame
 
-            if lang is None:
+                if isinstance(frame.f_locals.get("lang"), str):
+                    lang = frame.f_locals["lang"]
+
+                for name, value in frame.f_locals.items():
+                    if isinstance(value, (APIModel, client_base.BaseClient)):
+                        lang = value.lang
+
+                if lang:
+                    break
+
                 # validator, it's a skipper
                 if isinstance(frame.f_locals.get("cls"), type) and issubclass(frame.f_locals["cls"], APIModel):
-                    lang = None
-                else:
-                    raise Exception("lang not found", frame)
+                    continue
+
+            else:
+                raise Exception("lang not found")
 
         object.__setattr__(self, "lang", lang)
         super().__init__(**data, lang=lang)

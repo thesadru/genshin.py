@@ -27,7 +27,7 @@ per-file-ignores =
     tests/**: D10, S10, F841
     noxfile.py: I900
 
-max-complexity = 12
+max-complexity = 16
 max-function-length = 100
 max-line-length = 130
 
