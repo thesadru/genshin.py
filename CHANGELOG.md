@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.5.2 (2022-02-10)
+
+## Fixes
+
+- Allow v2 cookies.
+
 # 1.5.1 (2022-02-10)
 
 ## What's new
