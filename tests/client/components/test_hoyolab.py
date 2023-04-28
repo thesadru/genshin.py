@@ -45,6 +45,12 @@ async def test_redeem_code(lclient: genshin.Client):
         await lclient.redeem_code("genshingift")
 
 
+async def test_starrail_redeem_code(lclient: genshin.Client):
+    # inconsistent
+    with contextlib.suppress(genshin.RedemptionException):
+        await lclient.redeem_code("HSRGRANDOPEN1", game=genshin.types.Game.STARRAIL)
+
+
 async def test_check_in_community(lclient: genshin.Client):
     try:
         await lclient.check_in_community()

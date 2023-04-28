@@ -117,6 +117,9 @@ class BaseBattleChronicleClient(base.BaseClient):
             2: Show your Character Details in the Battle Chronicle.
             3: Enable your Real-Time Notes. (only for Genshin Impact)
         """
+        if game is types.Game.STARRAIL or self.default_game is types.Game.STARRAIL:
+            raise RuntimeError("Star Rail does not provide a Battle Chronicle or Real-Time Notes.")
+
         if game is None and int(setting) == 3:
             game = types.Game.GENSHIN
 

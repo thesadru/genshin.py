@@ -29,6 +29,9 @@ class Game(str, enum.Enum):
     HONKAI = "honkai3rd"
     """Honkai Impact 3rd"""
 
+    STARRAIL = "hkrpg"
+    """Honkai Star Rail"""
+
 
 IDOr = typing.Union[int, UniqueT]
 """Allows partial objects."""

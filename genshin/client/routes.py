@@ -159,6 +159,7 @@ REWARD_URL = GameRoute(
     overseas=dict(
         genshin="https://sg-hk4e-api.hoyolab.com/event/sol?act_id=e202102251931481",
         honkai3rd="https://sg-public-api.hoyolab.com/event/mani?act_id=e202110291205111",
+        hkrpg="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202303301540311",
     ),
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
@@ -166,7 +167,13 @@ REWARD_URL = GameRoute(
     ),
 )
 
-CODE_URL = Route("https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey")
+CODE_URL = GameRoute(
+    overseas=dict(
+        genshin="https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+        hkrpg="https://sg-hkrpg-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+    ),
+    chinese=dict(),
+)
 
 GACHA_INFO_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",

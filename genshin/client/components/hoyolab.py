@@ -113,18 +113,28 @@ class HoyolabClient(base.BaseClient):
         code: str,
         uid: typing.Optional[int] = None,
         *,
+        game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
     ) -> None:
-        """Redeems a gift code for the current genshin user."""
-        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        """Redeems a gift code for the current user."""
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError("No default game set.")
+
+            game = self.default_game
+
+        if not (game == types.Game.GENSHIN or game == types.Game.STARRAIL):
+            raise ValueError(f"{game} does not support code redemption.")
+
+        uid = uid or await self._get_uid(game)
 
         await self.request(
-            routes.CODE_URL.get_url(),
+            routes.CODE_URL.get_url(self.region, game),
             params=dict(
                 uid=uid,
-                region=utility.recognize_genshin_server(uid),
+                region=utility.recognize_server(uid, game),
                 cdkey=code,
-                game_biz="hk4e_global",
+                game_biz=utility.get_prod_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
         )
