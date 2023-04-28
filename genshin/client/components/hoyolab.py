@@ -134,7 +134,7 @@ class HoyolabClient(base.BaseClient):
                 uid=uid,
                 region=utility.recognize_server(uid, game),
                 cdkey=code,
-                game_biz=utility.get_game_biz(self.region, game),
+                game_biz=utility.get_prod_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
         )

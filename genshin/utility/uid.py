@@ -5,7 +5,7 @@ from genshin import types
 
 __all__ = [
     "create_short_lang_code",
-    "get_game_biz",
+    "get_prod_game_biz",
     "recognize_game",
     "recognize_genshin_server",
     "recognize_honkai_server",
@@ -54,7 +54,7 @@ def recognize_genshin_server(uid: int) -> str:
     raise ValueError(f"UID {uid} isn't associated with any server")
 
 
-def get_game_biz(region: types.Region, game: types.Game) -> str:
+def get_prod_game_biz(region: types.Region, game: types.Game) -> str:
     """Get the game_biz value corresponding to a game and region."""
     game_biz = ""
     if game == types.Game.HONKAI:
