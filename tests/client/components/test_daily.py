@@ -20,6 +20,7 @@ async def test_daily_reward(lclient: genshin.Client):
     rewards = await lclient.get_monthly_rewards()
     assert rewards[claimed_rewards].name == reward.name
 
+
 async def test_starrail_daily_reward(lclient: genshin.Client):
     signed_in, claimed_rewards = await lclient.get_reward_info(game=genshin.types.Game.STARRAIL)
 

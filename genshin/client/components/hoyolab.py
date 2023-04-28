@@ -129,7 +129,7 @@ class HoyolabClient(base.BaseClient):
             game_biz = "hkrpg_global"
         else:
             raise ValueError(f"{game} does not support code redemption.")
-            
+
         uid = uid or await self._get_uid(game)
 
         await self.request(

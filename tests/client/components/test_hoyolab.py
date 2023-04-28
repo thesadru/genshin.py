@@ -44,6 +44,7 @@ async def test_redeem_code(lclient: genshin.Client):
     with contextlib.suppress(genshin.RedemptionException):
         await lclient.redeem_code("genshingift")
 
+
 async def test_starrail_redeem_code(lclient: genshin.Client):
     # inconsistent
     with contextlib.suppress(genshin.RedemptionException):
