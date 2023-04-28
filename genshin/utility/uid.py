@@ -8,6 +8,7 @@ __all__ = [
     "recognize_game",
     "recognize_genshin_server",
     "recognize_honkai_server",
+    "recognize_starrail_server",
     "recognize_region",
 ]
 
@@ -62,6 +63,23 @@ def recognize_honkai_server(uid: int) -> str:
     # It could be that e.g. global range is 2e8 ~ 2.5e8
     raise ValueError(f"UID {uid} isn't associated with any server")
 
+def recognize_starrail_server(uid: int) -> str:
+    """Recognize which server a Star Rail UID is from."""
+    server = {
+        "1": "prod_gf_cn",
+        "2": "prod_gf_cn",
+      # "5": unknown if this exists at the moment. pattern would imply "prod_qd_cn"
+        "6": "prod_official_usa",
+        "7": "prod_official_eur",
+        "8": "prod_official_asia",
+        "9": "prod_official_cht",
+    }.get(str(uid)[0])
+
+    if server:
+        return server
+    
+    raise ValueError(f"UID {uid} isn't associated with any server")
+
 
 def recognize_server(uid: int, game: types.Game) -> str:
     """Recognizes which server a UID is from."""
@@ -69,6 +87,8 @@ def recognize_server(uid: int, game: types.Game) -> str:
         return recognize_honkai_server(uid)
     elif game == types.Game.GENSHIN:
         return recognize_genshin_server(uid)
+    elif game == types.Game.STARRAIL:
+        return recognize_starrail_server(uid)
     else:
         raise ValueError(f"{game} is not a valid game")
 
