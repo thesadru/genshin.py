@@ -19,6 +19,10 @@ UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequen
         types.Region.OVERSEAS: (6, 7, 8, 9),
         types.Region.CHINESE: (1, 2, 5),
     },
+    types.Game.STARRAIL: {
+        types.Region.OVERSEAS: (6, 7, 8, 9),
+        types.Region.CHINESE: (1, 2),
+    },
     types.Game.HONKAI: {
         types.Region.OVERSEAS: (1, 2),
         types.Region.CHINESE: (3, 4),
