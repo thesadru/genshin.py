@@ -167,7 +167,13 @@ REWARD_URL = GameRoute(
     ),
 )
 
-CODE_URL = Route("https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey")
+CODE_URL = GameRoute(
+    overseas=dict(
+        genshin="https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+        hkrpg="https://sg-hkrpg-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+    ),
+    chinese=dict(),
+)
 
 GACHA_INFO_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",

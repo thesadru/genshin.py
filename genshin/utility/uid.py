@@ -9,6 +9,7 @@ __all__ = [
     "recognize_genshin_server",
     "recognize_honkai_server",
     "recognize_starrail_server",
+    "recognize_server",
     "recognize_region",
 ]
 
