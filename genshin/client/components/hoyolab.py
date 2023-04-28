@@ -123,11 +123,7 @@ class HoyolabClient(base.BaseClient):
 
             game = self.default_game
 
-        if game == types.Game.GENSHIN:
-            game_biz = "hk4e_global"
-        elif game == types.Game.STARRAIL:
-            game_biz = "hkrpg_global"
-        else:
+        if not (game == types.Game.GENSHIN or game == types.Game.STARRAIL):
             raise ValueError(f"{game} does not support code redemption.")
 
         uid = uid or await self._get_uid(game)
@@ -138,7 +134,7 @@ class HoyolabClient(base.BaseClient):
                 uid=uid,
                 region=utility.recognize_server(uid, game),
                 cdkey=code,
-                game_biz=game_biz,
+                game_biz=utility.get_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
         )
