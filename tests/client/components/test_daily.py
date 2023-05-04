@@ -1,6 +1,8 @@
 import calendar
 import datetime
 
+import pytest
+
 import genshin
 
 CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
@@ -14,6 +16,11 @@ async def test_daily_reward(lclient: genshin.Client):
     except genshin.AlreadyClaimed:
         assert signed_in
         return
+    except genshin.GenshinException as e:
+        if e.retcode == -10002:
+            pytest.skip("No genshin account.")
+
+        raise
     else:
         assert not signed_in
 
@@ -29,6 +36,11 @@ async def test_starrail_daily_reward(lclient: genshin.Client):
     except genshin.AlreadyClaimed:
         assert signed_in
         return
+    except genshin.GenshinException as e:
+        if e.retcode == -10002:
+            pytest.skip("No star rail account.")
+
+        raise
     else:
         assert not signed_in
 

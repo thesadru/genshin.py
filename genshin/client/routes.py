@@ -85,7 +85,7 @@ class GameRoute(BaseRoute):
         if not self.urls[region]:
             raise RuntimeError(f"URL does not support {region.name} region.")
 
-        if not self.urls[region][game]:
+        if not self.urls[region].get(game):
             raise RuntimeError(f"URL does not support {game.name} game for {region.name} region.")
 
         return self.urls[region][game]
@@ -164,6 +164,7 @@ REWARD_URL = GameRoute(
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
+        hkrpg="",
     ),
 )
 

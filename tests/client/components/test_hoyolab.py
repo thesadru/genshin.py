@@ -1,4 +1,4 @@
-import contextlib
+import pytest
 
 import genshin
 
@@ -40,15 +40,21 @@ async def test_announcements(client: genshin.Client):
 
 
 async def test_redeem_code(lclient: genshin.Client):
-    # inconsistent
-    with contextlib.suppress(genshin.RedemptionException):
-        await lclient.redeem_code("genshingift")
+    try:
+        await lclient.redeem_code("GENSHINGIFT")
+    except genshin.RedemptionException as e:
+        pytest.skip(f"Redemption code is inconsistent: {e}")
+    except genshin.AccountNotFound:
+        pytest.skip("No genshin account.")
 
 
 async def test_starrail_redeem_code(lclient: genshin.Client):
-    # inconsistent
-    with contextlib.suppress(genshin.RedemptionException):
+    try:
         await lclient.redeem_code("HSRGRANDOPEN1", game=genshin.types.Game.STARRAIL)
+    except genshin.RedemptionException:
+        pytest.skip("Redemption code is inconsistent again.")
+    except genshin.AccountNotFound:
+        pytest.skip("No star rail account.")
 
 
 async def test_check_in_community(lclient: genshin.Client):

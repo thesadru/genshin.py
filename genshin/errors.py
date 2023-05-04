@@ -155,7 +155,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     # game record
     10001: InvalidCookies,
     -10001: "Malformed request.",
-    -10002: "No genshin account associated with cookies.",
+    -10002: "No game account associated with cookies.",
     # database game record
     10101: TooManyRequests,
     10102: DataNotPublic,
