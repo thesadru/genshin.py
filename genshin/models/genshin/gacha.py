@@ -12,13 +12,14 @@ __all__ = [
     "BannerDetailItem",
     "BannerDetails",
     "BannerDetailsUpItem",
-    "BannerType",
     "GachaItem",
+    "GenshinBannerType",
+    "Warp",
     "Wish",
 ]
 
 
-class BannerType(enum.IntEnum):
+class GenshinBannerType(enum.IntEnum):
     """Banner types in wish histories."""
 
     NOVICE = 100
@@ -43,6 +44,14 @@ class BannerType(enum.IntEnum):
     """Character banner #2."""
 
 
+class StarRailBannerType(enum.IntEnum):
+    """Banner types in wish histories."""
+
+    CHARACTER = 1
+    WEAPON = 2
+    STANDARD = PERMANENT = 3
+
+
 class Wish(APIModel, Unique):
     """Wish made on any banner."""
 
@@ -54,8 +63,26 @@ class Wish(APIModel, Unique):
     rarity: int = Aliased("rank_type")
     time: datetime.datetime
 
-    banner_type: BannerType = Aliased("gacha_type")
+    banner_type: GenshinBannerType = Aliased("gacha_type")
     banner_name: str
+
+    @pydantic.validator("banner_type", pre=True)
+    def __cast_banner_type(cls, v: typing.Any) -> int:
+        return int(v)
+
+
+class Warp(APIModel, Unique):
+    """Warp made on any banner."""
+
+    uid: int
+
+    id: int = Aliased("item_id")
+    type: str = Aliased("item_type")
+    name: str
+    rarity: int = Aliased("rank_type")
+    time: datetime.datetime
+
+    banner_type: StarRailBannerType
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:

@@ -492,8 +492,8 @@ def requires_cookie_token(func: AsyncCallableT) -> AsyncCallableT:
         if self.cookie_manager.multi:
             raise RuntimeError(f"Cannot use {func.__name__} with multi-cookie managers - data is private.")
         if isinstance(self.cookie_manager, CookieManager):
-            expected = {"cookie_token", "cookie_token_v2"}
-            if expected <= self.cookie_manager.cookies.keys():  # check if subset
+            contained = set(self.cookie_manager.cookies.keys())
+            if "cookie_token" not in contained and "cookie_token_v2" not in contained:
                 raise errors.InvalidCookies(msg="Missing cookie_token cookie.")
 
         return await func(self, *args, **kwargs)

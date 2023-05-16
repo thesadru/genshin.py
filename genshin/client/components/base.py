@@ -26,7 +26,7 @@ __all__ = ["BaseClient"]
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "cache", "_authkey", "_lang", "_region", "_default_game", "uids")
+    __slots__ = ("cookie_manager", "cache", "_lang", "_region", "_default_game", "uids", "authkeys")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 
@@ -34,12 +34,12 @@ class BaseClient(abc.ABC):
 
     cookie_manager: managers.BaseCookieManager
     cache: client_cache.BaseCache
-    _authkey: typing.Optional[str]
     _lang: str
     _region: types.Region
     _default_game: typing.Optional[types.Game]
 
     uids: typing.Dict[types.Game, int]
+    authkeys: typing.Dict[types.Game, str]
     _hoyolab_id: typing.Optional[int]
 
     def __init__(
@@ -59,13 +59,15 @@ class BaseClient(abc.ABC):
         self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
         self.cache = cache or client_cache.StaticCache()
 
-        self.authkey = authkey
+        self.uids = {}
+        self.authkeys = {}
+
+        self.default_game = game
         self.lang = lang
         self.region = region
-        self.default_game = game
+        self.authkey = authkey
         self.debug = debug
         self.proxy = proxy
-        self.uids = {}
         self.uid = uid
         self.hoyolab_id = hoyolab_id
 
@@ -165,19 +167,31 @@ class BaseClient(abc.ABC):
     @property
     def authkey(self) -> typing.Optional[str]:
         """The default genshin authkey used for paginators."""
-        return self._authkey
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn("Tried to get an authkey without a default game set.")
+
+            return None
+
+        return self.authkeys.get(self.default_game)
 
     @authkey.setter
     def authkey(self, authkey: typing.Optional[str]) -> None:
-        if authkey is not None:
-            authkey = urllib.parse.unquote(authkey)
+        if authkey is None:
+            self.authkeys.clear()
+            return
 
-            try:
-                base64.b64decode(authkey, validate=True)
-            except Exception as e:
-                raise ValueError("authkey is not a valid base64 encoded string") from e
+        authkey = urllib.parse.unquote(authkey)
 
-        self._authkey = authkey
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError("authkey is not a valid base64 encoded string") from e
+
+        if not self.default_game:
+            raise RuntimeError("No default game set. Cannot set authkey with property.")
+
+        self.authkeys[self.default_game] = authkey
 
     @property
     def debug(self) -> bool:
@@ -204,7 +218,7 @@ class BaseClient(abc.ABC):
         """
         self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
 
-    def set_authkey(self, authkey: typing.Optional[str] = None) -> None:
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -> None:
         """Set an authkey for wish & transaction logs.
 
         Accepts an authkey, a url containing an authkey or a path towards a logfile.
@@ -214,7 +228,11 @@ class BaseClient(abc.ABC):
         else:
             authkey = utility.extract_authkey(authkey) or authkey
 
-        self.authkey = authkey
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError("No default game set.")
+
+        self.authkeys[game] = authkey
 
     def set_cache(
         self,

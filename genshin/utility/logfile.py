@@ -4,66 +4,118 @@ import re
 import typing
 import urllib.parse
 
+from genshin import types
 from genshin.utility import fs
 
-__all__ = ["extract_authkey", "get_authkey", "get_banner_ids"]
+__all__ = ["extract_authkey", "get_authkey", "get_genshin_banner_ids"]
 
 PathLike = typing.Union[str, pathlib.Path]
 
 AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 
 
-def get_datafile(game_location: typing.Optional[PathLike] = None) -> typing.Optional[pathlib.Path]:
-    """Find a Genshin Impact datafile."""
-    # C:\Program Files\Genshin Impact\Genshin Impact game\GenshinImpact_Data
-    # C:\Program Files\Genshin Impact\Genshin Impact game\YuanShen_Data
+# output_log
+# ~/AppData/LocalLow/miHoYo/Genshin Impact/output_log.txt
+# ~/AppData/LocalLow/miHoYo/原神/output_log.txt
+# ~/AppData/LocalLow/Cognosphere/Star Rail/Player.log
+# ~/AppData/LocalLow/miHoYo/崩坏：星穹铁道/output_log.txt
+# data_2
+# C:/Program Files/Genshin Impact/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2
+# C:/Program Files/Genshin Impact/Genshin Impact game/YuanShen_Data/webCaches/Cache/Cache_Data/data_2
+# C:/Program Files/Star Rail/StarRail_Data/webCaches/Cache/Cache_Data/data_2
+# C:/Program Files/Star Rail/StarRail_Data/webCaches/Cache/Cache_Data/data_2
+
+
+def _search_output_log(content: str) -> pathlib.Path:
+    """Search output log for data_2."""
+    match = re.search(r"(?<=\s)(\S+?_Data)(?:/data.unity3d)?", content, re.MULTILINE)
+    if match is None:
+        raise FileNotFoundError("No genshin installation location in logfile")
+
+    data_location = pathlib.Path(match[1]) / "webCaches/Cache/Cache_Data/data_2"
+    if data_location.is_file():
+        return data_location
+
+    raise FileNotFoundError("Genshin installation location is improper")
+
+
+def get_output_log(*, game: typing.Optional[types.Game] = None) -> pathlib.Path:
+    """Get output_log.txt for a game."""
+    locallow = pathlib.Path("~/AppData/LocalLow").expanduser()
+
+    game_name: typing.List[str] = []
+    if game is None or game == types.Game.GENSHIN:
+        game_name += ["Genshin Impact", "原神"]
+    if game is None or game == types.Game.STARRAIL:
+        game_name += ["Star Rail", "崩坏：星穹铁道"]
+
+    if not game_name:
+        raise ValueError(f"Invalid game {game!r}.")
+
+    for company_name in ("miHoYo", "HoYoverse", "Cognosphere"):
+        for name in game_name:
+            for file_name in ("Player.log", "output_log.txt"):
+                output_log = locallow / company_name / name / file_name
+                if output_log.is_file():
+                    return output_log
+
+    raise FileNotFoundError("No output log found.")
+
+
+def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[types.Game] = None) -> pathlib.Path:
+    """Expand a game location folder to data_2."""
+    data_location: typing.List[pathlib.Path] = []
+    if "Data" in str(game_location):
+        while "Data" not in game_location.name:
+            game_location = game_location.parent
+
+        data_location = [game_location]
+    else:
+        if game is None or game == types.Game.GENSHIN:
+            locations = ["Genshin Impact/Genshin Impact game", "Genshin Impact game"]
+            data_names = ["GenshinImpact_Data", "YuanShen_Data"]
+            data_location += [
+                game_location / location / data_name for location in locations for data_name in data_names
+            ]
+        if game is None or game == types.Game.STARRAIL:
+            locations = ["Star Rail", "崩坏：星穹铁道"]
+            data_names = ["StarRail_Data"]
+            data_location += [
+                game_location / location / data_name for location in locations for data_name in data_names
+            ]
+        if not data_location:
+            raise ValueError(f"Invalid game {game!r}.")
+
+    for directory in data_location:
+        if not directory.is_dir():
+            continue
+
+        datafile = directory / "webCaches/Cache/Cache_Data/data_2"
+        if datafile.is_file():
+            return datafile
+
+    raise FileNotFoundError("No data file found in the provided game location.")
+
+
+def get_datafile(
+    game_location: typing.Optional[PathLike] = None, *, game: typing.Optional[types.Game] = None
+) -> pathlib.Path:
+    """Get data_2 for a game."""
     if game_location:
-        game_location = pathlib.Path(game_location)
-        if game_location.is_file():
-            return game_location
+        return _expand_game_location(pathlib.Path(game_location), game=game)
 
-        for name in ("Genshin Impact game/GenshinImpact_Data", "Genshin Impact game/YuanShen_Data"):
-            data_location = game_location / name / "webCaches/Cache/Cache_Data/data_2"
-            if data_location.is_file():
-                return data_location
-
-        raise FileNotFoundError("No data file found in the provided game location.")
-
-    mihoyo_dir = pathlib.Path("~/AppData/LocalLow/miHoYo/").expanduser()
-
-    for name in ("Genshin Impact", "原神"):
-        output_log = mihoyo_dir / name / "output_log.txt"
-        if not output_log.is_file():
-            continue  # wrong language
-
-        logfile = output_log.read_text()
-        match = re.search(r"Warmup file (.+?_Data)", logfile, re.MULTILINE)
-        if match is None:
-            return None  # no genshin installation location in logfile
-
-        data_location = pathlib.Path(f"{match[1]}/webCaches/Cache/Cache_Data/data_2")
-        if data_location.is_file():
-            return data_location
-
-        return None  # data location is improper
-
-    return None  # no genshin datafile
+    output_log = get_output_log(game=game)
+    return _search_output_log(output_log.read_text())
 
 
-def _read_datafile(game_location: typing.Optional[PathLike] = None) -> str:
+def _read_datafile(game_location: typing.Optional[PathLike] = None, *, game: typing.Optional[types.Game] = None) -> str:
     """Return the contents of a datafile."""
-    datafile = get_datafile(game_location)
-    if datafile is None:
-        raise FileNotFoundError(
-            "No Genshin Installation was found, could not get gacha data. "
-            "Please check if you set correct game location."
-        )
+    datafile = get_datafile(game_location, game=game)
 
     try:
-        # won't work if genshin is running or script using this function isn't run as administrator
         return datafile.read_text(errors="replace")
     except PermissionError as ex:
-        raise PermissionError("Pleas turn off genshin impact or try running script as administrator!") from ex
+        raise PermissionError("Pleas turn off genshin impact or try running script as administrator") from ex
 
 
 def extract_authkey(string: str) -> typing.Optional[str]:
@@ -75,9 +127,9 @@ def extract_authkey(string: str) -> typing.Optional[str]:
     return None
 
 
-def get_authkey(game_location: typing.Optional[PathLike] = None) -> str:
+def get_authkey(game_location: typing.Optional[PathLike] = None, *, game: typing.Optional[types.Game] = None) -> str:
     """Get an authkey contained in a datafile."""
-    authkey = extract_authkey(_read_datafile(game_location))
+    authkey = extract_authkey(_read_datafile(game_location, game=game))
     if authkey is not None:
         AUTHKEY_FILE.write_text(authkey)
         return authkey
@@ -92,7 +144,7 @@ def get_authkey(game_location: typing.Optional[PathLike] = None) -> str:
     )
 
 
-def get_banner_ids(logfile: typing.Optional[PathLike] = None) -> typing.Sequence[str]:
+def get_genshin_banner_ids(logfile: typing.Optional[PathLike] = None) -> typing.Sequence[str]:
     """Get all banner ids from a log file."""
     log = _read_datafile(logfile)
     ids = re.findall(r"https://.+?gacha_id=([^&#]+)", log, re.MULTILINE)

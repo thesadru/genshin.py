@@ -51,7 +51,7 @@ def chinese_cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("CHINESE_GENSHIN_COOKIES"):
         return {}
 
-    cookies = genshin.client.manager.parse_cookie(os.environ["GENSHIN_COOKIES"])
+    cookies = genshin.client.manager.parse_cookie(os.environ["CHINESE_GENSHIN_COOKIES"])
 
     return cookies
 
@@ -61,7 +61,7 @@ def local_chinese_cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("LOCAL_CHINESE_GENSHIN_COOKIES"):
         return {}
 
-    cookies = genshin.client.manager.parse_cookie(os.environ["LOCAL_GENSHIN_COOKIES"])
+    cookies = genshin.client.manager.parse_cookie(os.environ["LOCAL_CHINESE_GENSHIN_COOKIES"])
 
     return cookies
 

@@ -13,7 +13,7 @@ __all__ = [
     "CALCULATOR_URL",
     "COMMUNITY_URL",
     "DETAIL_LEDGER_URL",
-    "GACHA_INFO_URL",
+    "GACHA_URL",
     "HK4E_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
@@ -176,9 +176,15 @@ CODE_URL = GameRoute(
     chinese=dict(),
 )
 
-GACHA_INFO_URL = InternationalRoute(
-    overseas="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
-    chinese="https://hk4e-api.mihoyo.com/event/gacha_info/api",
+GACHA_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
+        hkrpg="https://api-os-takumi.mihoyo.com/common/gacha_record/api/",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-api.mihoyo.com/event/gacha_info/api/",
+        hkrpg="https://api-takumi.mihoyo.com/common/gacha_record/api/",
+    ),
 )
 YSULOG_URL = InternationalRoute(
     overseas="https://hk4e-api-os.hoyoverse.com/ysulog/api/",

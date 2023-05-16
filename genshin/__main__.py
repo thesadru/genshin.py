@@ -60,7 +60,8 @@ async def accounts(client: genshin.Client) -> None:
 
     for account in data:
         click.echo(
-            f"{click.style(str(account.uid), bold=True)} - {account.nickname} AR {account.level} ({account.server_name})"
+            f"[{account.game_biz}] {click.style(str(account.uid), bold=True)} - "
+            f"{account.nickname} lvl {account.level} ({account.server_name})"
         )
 
 
@@ -281,7 +282,7 @@ async def pity(client: genshin.Client) -> None:
 @client_command
 async def banner_ids(client: genshin.Client) -> None:
     """Get the banner ids from logs."""
-    ids = genshin.utility.get_banner_ids()
+    ids = genshin.utility.get_genshin_banner_ids()
 
     click.echo("\n".join(ids) + "\n")
 

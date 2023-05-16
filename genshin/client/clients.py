@@ -4,13 +4,13 @@ from .components import (
     chronicle,
     daily,
     diary,
+    gacha,
     geetest,
     hoyolab,
     lineup,
     teapot,
     transaction,
     wiki,
-    wish,
 )
 
 __all__ = ["Client"]
@@ -25,7 +25,7 @@ class Client(
     lineup.LineupClient,
     teapot.TeapotClient,
     wiki.WikiClient,
-    wish.WishClient,
+    gacha.WishClient,
     transaction.TransactionClient,
     geetest.GeetestClient,
 ):
