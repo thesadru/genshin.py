@@ -72,7 +72,7 @@ async def fetch_cookie_with_cookie(
         body["action_type"] = "login"
 
     async with aiohttp.ClientSession() as session:
-        r = await session.request("GET", url, json=body)
+        r = await session.request("POST", url, json=body)
         data = await r.json(content_type=None)
 
     if data["retcode"] != 0:
