@@ -51,8 +51,8 @@ async def test_redeem_code(lclient: genshin.Client):
 async def test_starrail_redeem_code(lclient: genshin.Client):
     try:
         await lclient.redeem_code("HSRGRANDOPEN1", game=genshin.types.Game.STARRAIL)
-    except genshin.RedemptionException:
-        pytest.skip("Redemption code is inconsistent again.")
+    except genshin.RedemptionException as e:
+        pytest.skip(f"Redemption code is inconsistent: {e}")
     except genshin.AccountNotFound:
         pytest.skip("No star rail account.")
 

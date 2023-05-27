@@ -196,6 +196,7 @@ class WishClient(base.BaseClient):
         data = await self.request_gacha_info(
             "getConfigList",
             lang=lang,
+            game=types.Game.GENSHIN,
             authkey=authkey,
             static_cache=client_cache.cache_key("banner", endpoint="names", lang=lang or self.lang),
         )

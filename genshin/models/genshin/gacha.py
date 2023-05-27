@@ -47,9 +47,12 @@ class GenshinBannerType(enum.IntEnum):
 class StarRailBannerType(enum.IntEnum):
     """Banner types in wish histories."""
 
-    CHARACTER = 1
-    WEAPON = 2
-    STANDARD = PERMANENT = 3
+    STANDARD = PERMANENT = 1
+    """Permanent standard banner."""
+    CHARACTER = 11
+    """Rotating character banner."""
+    WEAPON = 12
+    """Rotating weapon banner."""
 
 
 class Wish(APIModel, Unique):
