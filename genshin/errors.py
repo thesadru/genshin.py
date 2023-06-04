@@ -105,6 +105,12 @@ class AlreadyClaimed(GenshinException):
     retcode = -5003
     msg = "Already claimed the daily reward today."
 
+class GeetestTriggered(GenshinException):
+    """Geetest triggered."""
+
+    retcode = 0
+    msg = "Geetest triggered during daily reward claim."
+
 
 class AuthkeyException(GenshinException):
     """Base error for authkeys."""
