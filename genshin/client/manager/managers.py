@@ -150,8 +150,6 @@ class BaseCookieManager(abc.ABC):
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
 
-        if "gt_result" in data["data"]:
-            raise errors.GeetestTriggered(data)
         if data["retcode"] == 0:
             return data["data"]
 
