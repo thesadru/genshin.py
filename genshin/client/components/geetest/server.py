@@ -8,6 +8,7 @@ import webbrowser
 import aiohttp
 from aiohttp import web
 
+from genshin.errors import raise_for_retcode
 from genshin.utility import geetest
 
 from . import client
@@ -85,6 +86,9 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
         nonlocal mmt_key
 
         mmt = await geetest.create_mmt(account, password)
+        if mmt["data"] is None:
+            raise_for_retcode(mmt)  # type: ignore
+
         mmt_key = mmt["data"]
         return web.json_response(mmt)
 

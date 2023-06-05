@@ -23,12 +23,7 @@ from genshin import errors, types
 from genshin.client import routes
 from genshin.client.manager import managers
 
-__all__ = [
-    "complete_cookies",
-    "fetch_cookie_token_info",
-    "fetch_cookie_with_cookie",
-    "refresh_cookie_token"
-]
+__all__ = ["complete_cookies", "fetch_cookie_token_info", "fetch_cookie_with_cookie", "refresh_cookie_token"]
 
 
 async def fetch_cookie_with_cookie(

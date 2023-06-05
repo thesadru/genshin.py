@@ -1,11 +1,11 @@
 """Geetest client component."""
-import typing
+import base64
 import json
+import typing
 
 import aiohttp
 import aiohttp.web
 import yarl
-import base64
 
 from genshin import errors
 from genshin.client.components import base
@@ -23,30 +23,29 @@ class GeetestClient(base.BaseClient):
     """Geetest client component."""
 
     async def login_with_geetest(
-        self,
-        account: str,
-        password: str,
-        session_id: str,
-        geetest: typing.Dict[str, str]
+        self, account: str, password: str, session_id: str, geetest: typing.Dict[str, str]
     ) -> typing.Mapping[str, str]:
         """Login with a password and a solved geetest.
 
         Token type is a bitfield of cookie_token, ltoken, stoken.
         """
-
         payload = {
             "account": geetest_utility.encrypt_geetest_password(account),
             "password": geetest_utility.encrypt_geetest_password(password),
-            "token_type": 6
+            "token_type": 6,
         }
 
         # we do not want to use the previous cookie manager sessions
 
         async with aiohttp.ClientSession() as session:
-            async with session.post(WEB_LOGIN_URL, json=payload, headers={
-                **geetest_utility.HEADERS,
-                "x-rpc-aigis": f"{session_id};{base64.b64encode(json.dumps(geetest).encode()).decode()}",
-            }) as r:
+            async with session.post(
+                WEB_LOGIN_URL,
+                json=payload,
+                headers={
+                    **geetest_utility.HEADERS,
+                    "x-rpc-aigis": f"{session_id};{base64.b64encode(json.dumps(geetest).encode()).decode()}",
+                },
+            ) as r:
                 data = await r.json()
                 cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
 
