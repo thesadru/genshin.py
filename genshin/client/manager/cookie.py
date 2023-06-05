@@ -2,8 +2,6 @@
 
 Available convertions:
 
-- update_hoyolab_cookies
-    - cookie_token -> ltoken
 - fetch_cookie_with_cookie
     - cookie_token -> cookie_token
     - cookie_token -> ltoken
@@ -25,31 +23,7 @@ from genshin import errors, types
 from genshin.client import routes
 from genshin.client.manager import managers
 
-__all__ = [
-    "complete_cookies",
-    "fetch_cookie_token_info",
-    "fetch_cookie_with_cookie",
-    "refresh_cookie_token",
-    "update_hoyolab_cookies",
-]
-
-
-async def update_hoyolab_cookies(
-    cookies: managers.CookieOrHeader,
-    *,
-    region: types.Region,
-) -> typing.Mapping[str, str]:
-    """Complete cookies by fetching an arbitrary endpoint."""
-    cookies = managers.parse_cookie(cookies)
-
-    base_url = routes.COMMUNITY_URL.get_url(region)
-    url = base_url / "misc/wapi/langs"
-
-    async with aiohttp.ClientSession() as session:
-        r = await session.request("GET", url, cookies=cookies)
-        cookies = {k: v.value for k, v in r.cookies.items()}
-
-    return cookies
+__all__ = ["complete_cookies", "fetch_cookie_token_info", "fetch_cookie_with_cookie", "refresh_cookie_token"]
 
 
 async def fetch_cookie_with_cookie(
@@ -143,7 +117,5 @@ async def complete_cookies(
 
     if refresh:
         cookies = await refresh_cookie_token(cookies, region=region)  # type: ignore[assignment]
-
-    cookies = await update_hoyolab_cookies(cookies, region=region)
 
     return cookies
