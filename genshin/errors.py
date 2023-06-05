@@ -145,6 +145,13 @@ class RedemptionClaimed(RedemptionException):
 
     msg = "Redemption code has been claimed already."
 
+class AccountLoginFail(GenshinException):
+    """Account if not exists in hoyoverse (Or password incorrect)"""
+    msg = "Account login failed."
+
+class AccountHasLocked(GenshinException):
+    """Account has logged incorrect over than 3 - 5 time(s). It's will be locked and wait 20 minute"""
+    msg = "Account has been locked because exceeded password limit. Please wait 20 minute and try again"
 
 _TGE = typing.Type[GenshinException]
 _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Optional[str]]]] = {
@@ -186,6 +193,9 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     # chinese
     1008: AccountNotFound,
     -1104: "This action must be done in the app.",
+    # account
+    -3208: AccountLoginFail,
+    -3202: AccountHasLocked
 }
 
 ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {

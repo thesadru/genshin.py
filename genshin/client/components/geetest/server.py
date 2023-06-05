@@ -27,9 +27,9 @@ INDEX = """
       .then((mmt) =>
         window.initGeetest(
           {
-            gt: mmt.gt,
-            challenge: mmt.challenge,
-            new_captcha: mmt.new_captcha,
+            gt: mmt.data.gt,
+            challenge: mmt.data.challenge,
+            new_captcha: mmt.data.new_captcha,
             api_server: "api-na.geetest.com",
             lang: "en",
             product: "bind",
@@ -41,7 +41,10 @@ INDEX = """
             captcha.onSuccess(() => {
               fetch("/login", {
                 method: "POST",
-                body: JSON.stringify(captcha.getValidate()),
+                body: JSON.stringify({
+                  sid: mmt.session_id,
+                  gt: captcha.getValidate()
+                }),
               });
               document.body.innerHTML = "you may now close this window";
             });
@@ -81,8 +84,8 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
     async def mmt_endpoint(request: web.Request) -> web.Response:
         nonlocal mmt_key
 
-        mmt = await geetest.create_mmt()
-        mmt_key = mmt["mmt_key"]
+        mmt = await geetest.create_mmt(account, password)
+        mmt_key = mmt["data"]
         return web.json_response(mmt)
 
     @routes.post("/login")
@@ -93,8 +96,8 @@ async def login_with_app(client: client.GeetestClient, account: str, password: s
             data = await client.login_with_geetest(
                 account=account,
                 password=password,
-                mmt_key=mmt_key,
-                geetest=body,
+                session_id=body["sid"],
+                geetest=body["gt"],
             )
         except Exception as e:
             future.set_exception(e)

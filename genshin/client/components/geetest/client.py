@@ -1,9 +1,11 @@
 """Geetest client component."""
 import typing
+import json
 
 import aiohttp
 import aiohttp.web
 import yarl
+import base64
 
 from genshin import errors
 from genshin.client.components import base
@@ -14,7 +16,7 @@ from . import server
 __all__ = ["GeetestClient"]
 
 
-WEB_LOGIN_URL = yarl.URL("https://api-account-os.hoyolab.com/account/auth/api/webLoginByPassword")
+WEB_LOGIN_URL = yarl.URL("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
 
 
 class GeetestClient(base.BaseClient):
@@ -24,28 +26,27 @@ class GeetestClient(base.BaseClient):
         self,
         account: str,
         password: str,
-        mmt_key: str,
-        geetest: typing.Dict[str, str],
-        token_type: int = 0b111,
+        session_id: str,
+        geetest: typing.Dict[str, str]
     ) -> typing.Mapping[str, str]:
         """Login with a password and a solved geetest.
 
         Token type is a bitfield of cookie_token, ltoken, stoken.
         """
-        payload = dict(
-            account=account,
-            password=geetest_utility.encrypt_geetest_password(password),
-            is_crypto="true",
-            source="account.mihoyo.com",
-            mmt_key=mmt_key,
-            token_type=token_type,
-        )
-        payload.update(geetest)
+
+        payload = {
+            "account": geetest_utility.encrypt_geetest_password(account),
+            "password": geetest_utility.encrypt_geetest_password(password),
+            "token_type": 6
+        }
 
         # we do not want to use the previous cookie manager sessions
 
         async with aiohttp.ClientSession() as session:
-            async with session.post(WEB_LOGIN_URL, json=payload) as r:
+            async with session.post(WEB_LOGIN_URL, json=payload, headers={
+                **geetest_utility.HEADERS,
+                "x-rpc-aigis": f"{session_id};{base64.b64encode(json.dumps(geetest).encode()).decode()}",
+            }) as r:
                 data = await r.json()
                 cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
 
