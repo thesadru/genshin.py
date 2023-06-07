@@ -128,12 +128,18 @@ RECORD_URL = InternationalRoute(
 )
 LINEUP_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
-    chinese="",
+    chinese="https://api-takumi.mihoyo.com/event/platsimulator/",
 )
 
-INFO_LEDGER_URL = InternationalRoute(
-    overseas="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info",
-    chinese="https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
+INFO_LEDGER_URL = GameRoute(
+    overseas=dict(
+        genshin="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info",
+        hkrpg="",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
+        hkrpg="https://api-takumi.mihoyo.com/event/srledger/month_info",
+    ),
 )
 DETAIL_LEDGER_URL = InternationalRoute(
     overseas="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_detail",
@@ -164,7 +170,7 @@ REWARD_URL = GameRoute(
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
-        hkrpg="",
+        hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
     ),
 )
 

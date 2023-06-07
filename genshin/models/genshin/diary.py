@@ -32,7 +32,7 @@ class BaseDiary(APIModel):
 
     uid: int
     server: str = Aliased("region")
-    nickname: str
+    nickname: str = ""
     month: int = Aliased("data_month")
 
 
@@ -88,3 +88,44 @@ class DiaryPage(BaseDiary):
     """Page of a diary."""
 
     actions: typing.Sequence[DiaryAction] = Aliased("list")
+
+
+class StarRailDiaryActionCategory(APIModel):
+    """Diary category for rails_pass ."""
+
+    id: str = Aliased("action")
+    name: str = Aliased("action_name")
+    amount: int = Aliased("num")
+    percentage: int = Aliased("percent")
+
+
+class StarRailMonthDiaryData(APIModel):
+    """Diary data for a month."""
+
+    current_hcoin: int
+    current_rails_pass: int
+    last_hcoin: int
+    last_rails_pass: int
+    hcoin_rate: int
+    rails_rate: int
+    categories: typing.Sequence[StarRailDiaryActionCategory] = Aliased("group_by")
+
+
+class StarRailDayDiaryData(APIModel):
+    """Diary data for a day."""
+
+    current_hcoin: int
+    current_rails_pass: int
+    last_hcoin: int
+    last_rails_pass: int
+
+
+class StarRailDiary(BaseDiary):
+    """Traveler's diary."""
+
+    data: StarRailMonthDiaryData = Aliased("month_data")
+    day_data: StarRailDayDiaryData
+
+    @property
+    def month_data(self) -> StarRailMonthDiaryData:
+        return self.data

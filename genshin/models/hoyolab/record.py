@@ -150,6 +150,8 @@ class RecordCard(GenshinAccount):
             cls = HonkaiRecordCard
         elif game_id == 2:
             cls = GenshinRecordCard
+        elif game_id == 6:
+            cls = StarRailRecodeCard
 
         return super().__new__(cls)
 
@@ -215,4 +217,28 @@ class HonkaiRecordCard(RecordCard):
 
     @property
     def outfits(self) -> int:
+        return int(self.data[3].value)
+
+
+class StarRailRecodeCard(RecordCard):
+    """Star rail record card."""
+
+    @property
+    def game(self) -> types.Game:
+        return types.Game.STARRAIL
+
+    @property
+    def days_active(self) -> int:
+        return int(self.data[0].value)
+
+    @property
+    def characters(self) -> int:
+        return int(self.data[1].value)
+
+    @property
+    def achievements(self) -> int:
+        return int(self.data[2].value)
+
+    @property
+    def chests(self) -> int:
         return int(self.data[3].value)

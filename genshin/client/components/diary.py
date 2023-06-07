@@ -58,6 +58,7 @@ class DiaryClient(base.BaseClient):
         self,
         uid: typing.Optional[int] = None,
         *,
+        game: typing.Optional[types.Game] = None,
         detail: bool = False,
         month: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
@@ -68,20 +69,30 @@ class DiaryClient(base.BaseClient):
         # TODO: Do not separate urls?
         params = dict(params or {})
 
-        url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(self.region)
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError("No default game set.")
 
-        uid = uid or await self._get_uid(types.Game.GENSHIN)
+            game = self.default_game
 
-        if self.region == types.Region.OVERSEAS:
+        url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(
+            self.region,
+            game,
+        )
+
+        uid = uid or await self._get_uid(game)
+
+        if self.region == types.Region.OVERSEAS or game == types.Game.STARRAIL:
             params["uid"] = uid
-            params["region"] = utility.recognize_genshin_server(uid)
+            params["region"] = utility.recognize_server(uid, game)
         elif self.region == types.Region.CHINESE:
             params["bind_uid"] = uid
-            params["bind_region"] = utility.recognize_genshin_server(uid)
+            params["bind_region"] = utility.recognize_server(uid, game)
         else:
             raise TypeError(f"{self.region!r} is not a valid region.")
-
-        params["month"] = month or datetime.datetime.now().month
+        params["month"] = month or (
+            datetime.datetime.now().strftime("%Y%m") if game == types.Game.STARRAIL else datetime.datetime.now().month
+        )
         params["lang"] = lang or self.lang
 
         return await self.request(url, params=params, **kwargs)
@@ -90,21 +101,30 @@ class DiaryClient(base.BaseClient):
         self,
         uid: typing.Optional[int] = None,
         *,
+        game: typing.Optional[types.Game] = None,
         month: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
-    ) -> models.Diary:
+    ) -> typing.Union[models.Diary, models.StarRailDiary]:
         """Get a traveler's diary with earning details for the month."""
-        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError("No default game set.")
+
+            game = self.default_game
+
+        uid = uid or await self._get_uid(game)
         cache_key = cache.cache_key(
             "diary", uid=uid, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
         )
-        data = await self.request_ledger(uid, month=month, lang=lang, cache=cache_key)
-        return models.Diary(**data)
+        data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
+        models_m = {types.Game.GENSHIN: models.Diary, types.Game.STARRAIL: models.StarRailDiary}[game]
+        return models_m(**data)
 
     async def _get_diary_page(
         self,
         page: int,
         *,
+        game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         type: int = models.DiaryType.PRIMOGEMS,
         month: typing.Optional[int] = None,
@@ -112,6 +132,7 @@ class DiaryClient(base.BaseClient):
     ) -> models.DiaryPage:
         data = await self.request_ledger(
             uid,
+            game=game,
             detail=True,
             month=month,
             lang=lang,
