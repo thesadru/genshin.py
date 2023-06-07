@@ -49,6 +49,8 @@ class StarRailBannerType(enum.IntEnum):
 
     STANDARD = PERMANENT = 1
     """Permanent standard banner."""
+    NOVICE = 2
+    """Temporary novice banner."""
     CHARACTER = 11
     """Rotating character banner."""
     WEAPON = 12
@@ -79,13 +81,15 @@ class Warp(APIModel, Unique):
 
     uid: int
 
-    id: int = Aliased("item_id")
+    id: int
+    item_id: int
     type: str = Aliased("item_type")
     name: str
     rarity: int = Aliased("rank_type")
     time: datetime.datetime
 
     banner_type: StarRailBannerType
+    banner_id: int = Aliased("gacha_id")
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:

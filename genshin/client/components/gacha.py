@@ -151,7 +151,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.Warp]:
         """Get the warp history of a user."""
-        banner_types = banner_type or [1, 2, 3]
+        banner_types = banner_type or [1, 2, 11, 12]
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]

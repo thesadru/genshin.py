@@ -129,7 +129,7 @@ class BaseBattleChronicleClient(base.BaseClient):
 
             game = self.default_game
 
-        game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2}[game]
+        game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2, types.Game.STARRAIL: 6}[game]
 
         await self.request_game_record(
             "card/wapi/changeDataSwitch",
