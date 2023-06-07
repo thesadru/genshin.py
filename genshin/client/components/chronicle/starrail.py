@@ -96,11 +96,11 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.StarShipDetailCharacters:
+    ) -> models.StarRailDetailCharacters:
         """Get starrail characters."""
         payload = {"need_wiki": "true"}
         data = await self._request_starrail_record("avatar/info", uid, lang=lang, payload=payload)
-        return models.StarShipDetailCharacters(**data)
+        return models.StarRailDetailCharacters(**data)
 
     async def get_starrail_challenge(
         self,
@@ -108,8 +108,20 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.Challenge:
+    ) -> models.StarRailChallenge:
         """Get starrail challenge runs."""
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge", uid, lang=lang, payload=payload)
-        return models.Challenge(**data)
+        return models.StarRailChallenge(**data)
+
+    async def get_starrail_rogue(
+        self,
+        uid: int = None,
+        *,
+        schedule_type: int = 3,
+        lang: typing.Optional[str] = None,
+    ) -> models.StarRailRogue:
+        """Get starrail rogue runs."""
+        payload = dict(schedule_type=schedule_type, need_detail="true")
+        data = await self._request_starrail_record("rogue", uid, lang=lang, payload=payload)
+        return models.StarRailRogue(**data)

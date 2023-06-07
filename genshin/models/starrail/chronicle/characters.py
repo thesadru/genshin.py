@@ -9,7 +9,7 @@ __all__ = [
     "Relic",
     "Rank",
     "StarRailDetailCharacter",
-    "StarShipDetailCharacters",
+    "StarRailDetailCharacters",
 ]
 
 
@@ -57,7 +57,7 @@ class StarRailDetailCharacter(character.PartialCharacter):
     ranks: List[Rank]
 
 
-class StarShipDetailCharacters(APIModel):
+class StarRailDetailCharacters(APIModel):
     """StarRail characters."""
 
     avatar_list: List[StarRailDetailCharacter]

@@ -1,40 +1,18 @@
 """Starrail chronicle challenge."""
-import datetime
 from typing import List
 
 from genshin.models.model import APIModel, Aliased
+from genshin.models.starrail.character import FloorCharacter
 
-__all__ = ["ChallengeTime", "FloorCharacter", "FloorNode", "Floor", "Challenge"]
+from .base import PartialTime
 
-
-class ChallengeTime(APIModel):
-    """Time of a challenge."""
-
-    year: int
-    month: int
-    day: int
-    hour: int
-    minute: int
-
-    @property
-    def datetime(self):
-        return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute)
-
-
-class FloorCharacter(APIModel):
-    """Character in a floor."""
-
-    id: int
-    level: int
-    icon: str
-    rarity: int
-    element: str
+__all__ = ["FloorNode", "Floor", "StarRailChallenge"]
 
 
 class FloorNode(APIModel):
     """Node for a floor."""
 
-    challenge_time: ChallengeTime
+    challenge_time: PartialTime
     avatars: List[FloorCharacter]
 
 
@@ -49,12 +27,12 @@ class Floor(APIModel):
     is_chaos: bool
 
 
-class Challenge(APIModel):
+class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
     season: int = Aliased("schedule_id")
-    begin_time: ChallengeTime
-    end_time: ChallengeTime
+    begin_time: PartialTime
+    end_time: PartialTime
 
     total_stars: int = Aliased("star_num")
     max_floor: str
