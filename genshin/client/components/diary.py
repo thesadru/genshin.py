@@ -8,6 +8,7 @@ from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
 from genshin.models.genshin import diary as models
+from genshin.utility import deprecation
 
 __all__ = ["DiaryClient"]
 
@@ -101,28 +102,48 @@ class DiaryClient(base.BaseClient):
 
         return await self.request(url, params=params, **kwargs)
 
+    @deprecation.deprecated("get_genshin_diary")
     async def get_diary(
         self,
         uid: typing.Optional[int] = None,
         *,
-        game: typing.Optional[types.Game] = None,
         month: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
-    ) -> typing.Union[models.Diary, models.StarRailDiary]:
+    ) -> models.Diary:
         """Get a traveler's diary with earning details for the month."""
-        if game is None:
-            if self.default_game is None:
-                raise RuntimeError("No default game set.")
+        return await self.get_genshin_diary(uid, month=month, lang=lang)
 
-            game = self.default_game
-
+    async def get_genshin_diary(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        month: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.Diary:
+        """Get a traveler's diary with earning details for the month."""
+        game = types.Game.GENSHIN
         uid = uid or await self._get_uid(game)
         cache_key = cache.cache_key(
-            "diary", uid=uid, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
         )
         data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
-        models_m = {types.Game.GENSHIN: models.Diary, types.Game.STARRAIL: models.StarRailDiary}[game]
-        return models_m(**data)
+        return models.Diary(**data)
+
+    async def get_starrail_diary(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        month: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.StarRailDiary:
+        """Get a blazer's diary with earning details for the month."""
+        game = types.Game.STARRAIL
+        uid = uid or await self._get_uid(game)
+        cache_key = cache.cache_key(
+            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+        )
+        data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
+        return models.StarRailDiary(**data)
 
     async def _get_diary_page(
         self,
