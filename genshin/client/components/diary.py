@@ -75,9 +75,13 @@ class DiaryClient(base.BaseClient):
 
             game = self.default_game
 
-        url = routes.DETAIL_LEDGER_URL.get_url(self.region) if detail else routes.INFO_LEDGER_URL.get_url(
-            self.region,
-            game,
+        url = (
+            routes.DETAIL_LEDGER_URL.get_url(self.region)
+            if detail
+            else routes.INFO_LEDGER_URL.get_url(
+                self.region,
+                game,
+            )
         )
 
         uid = uid or await self._get_uid(game)

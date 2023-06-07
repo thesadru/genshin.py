@@ -2,18 +2,19 @@
 from typing import List, Optional
 
 from genshin.models.model import APIModel
+
 from .. import character
 
 __all__ = [
-    "Equipment",
-    "Relic",
+    "StarRailEquipment",
     "Rank",
+    "Relic",
     "StarRailDetailCharacter",
     "StarRailDetailCharacters",
 ]
 
 
-class Equipment(APIModel):
+class StarRailEquipment(APIModel):
     """Character equipment."""
 
     id: int
@@ -47,11 +48,11 @@ class Rank(APIModel):
     is_unlocked: bool
 
 
-class StarRailDetailCharacter(character.PartialCharacter):
+class StarRailDetailCharacter(character.StarRailPartialCharacter):
     """StarRail character with equipment and relics."""
 
     image: str
-    equip: Optional[Equipment]
+    equip: Optional[StarRailEquipment]
     relics: List[Relic]
     ornaments: List[Relic]
     ranks: List[Rank]

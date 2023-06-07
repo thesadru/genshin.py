@@ -1,12 +1,12 @@
 """Starrail chronicle challenge."""
 from typing import List
 
-from genshin.models.model import APIModel, Aliased
+from genshin.models.model import Aliased, APIModel
 from genshin.models.starrail.character import FloorCharacter
 
 from .base import PartialTime
 
-__all__ = ["FloorNode", "Floor", "StarRailChallenge"]
+__all__ = ["StarRailFloor", "FloorNode", "StarRailChallenge"]
 
 
 class FloorNode(APIModel):
@@ -16,7 +16,7 @@ class FloorNode(APIModel):
     avatars: List[FloorCharacter]
 
 
-class Floor(APIModel):
+class StarRailFloor(APIModel):
     """Floor in a challenge."""
 
     name: str
@@ -39,4 +39,4 @@ class StarRailChallenge(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: List[Floor] = Aliased("all_floor_detail")
+    floors: List[StarRailFloor] = Aliased("all_floor_detail")

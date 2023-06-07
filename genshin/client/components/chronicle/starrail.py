@@ -4,6 +4,7 @@ import typing
 
 from genshin import errors, types, utility
 from genshin.models.starrail import chronicle as models
+
 from . import base
 
 __all__ = ["StarRailBattleChronicleClient"]
@@ -88,8 +89,8 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
             self._request_starrail_record("index", uid, lang=lang),
             self._request_starrail_record("role/basicInfo", uid, lang=lang),
         )
-        index_data["info"] = basic_info
-        return models.StarRailUserStats(**index_data)
+        basic_data = models.StarRailUserInfo(**basic_info)
+        return models.StarRailUserStats(**index_data, info=basic_data)
 
     async def get_starrail_characters(
         self,
@@ -104,7 +105,7 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_starrail_challenge(
         self,
-        uid: int = None,
+        uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
@@ -116,7 +117,7 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_starrail_rogue(
         self,
-        uid: int = None,
+        uid: typing.Optional[int] = None,
         *,
         schedule_type: int = 3,
         lang: typing.Optional[str] = None,

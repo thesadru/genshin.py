@@ -1,7 +1,8 @@
+"""Starrail base character model."""
 from genshin.models.model import APIModel, Unique
 
 
-class BaseCharacter(APIModel, Unique):
+class StarRailBaseCharacter(APIModel, Unique):
     """Base character model."""
 
     id: int
@@ -10,7 +11,7 @@ class BaseCharacter(APIModel, Unique):
     icon: str
 
 
-class PartialCharacter(BaseCharacter):
+class StarRailPartialCharacter(StarRailBaseCharacter):
     """Character without any equipment."""
 
     name: str
@@ -18,13 +19,13 @@ class PartialCharacter(BaseCharacter):
     rank: int
 
 
-class FloorCharacter(BaseCharacter):
+class FloorCharacter(StarRailBaseCharacter):
     """Character in a floor."""
 
     level: int
 
 
-class RogueCharacter(BaseCharacter):
+class RogueCharacter(StarRailBaseCharacter):
     """Rogue character model."""
 
     level: int

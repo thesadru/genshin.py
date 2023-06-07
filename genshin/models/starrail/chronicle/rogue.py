@@ -1,8 +1,10 @@
+"""Starrail Rogue models."""
 from typing import List
 
 from genshin.models.model import APIModel
-from .base import PartialTime
+
 from ..character import RogueCharacter
+from .base import PartialTime
 
 
 class RogueUserRole(APIModel):
@@ -14,7 +16,7 @@ class RogueUserRole(APIModel):
 
 
 class RogueBasicInfo(APIModel):
-    """ generalized rogue basic info """
+    """generalized rogue basic info."""
 
     unlocked_buff_num: int
     unlocked_miracle_num: int
@@ -22,7 +24,7 @@ class RogueBasicInfo(APIModel):
 
 
 class RogueRecordBasic(APIModel):
-    """ Basic record info """
+    """Basic record info."""
 
     id: int
     finish_cnt: int
@@ -31,7 +33,7 @@ class RogueRecordBasic(APIModel):
 
 
 class RogueBuffType(APIModel):
-    """ Rogue buff type """
+    """Rogue buff type."""
 
     id: int
     name: str
@@ -39,7 +41,7 @@ class RogueBuffType(APIModel):
 
 
 class RogueBuffItem(APIModel):
-    """ Rogue buff item """
+    """Rogue buff item."""
 
     id: int
     name: str
@@ -48,14 +50,14 @@ class RogueBuffItem(APIModel):
 
 
 class RogueBuff(APIModel):
-    """ Rogue buff info """
+    """Rogue buff info."""
 
     base_type: RogueBuffType
     items: List[RogueBuffItem]
 
 
 class RogueMiracle(APIModel):
-    """ Rogue miracle info """
+    """Rogue miracle info."""
 
     id: int
     name: str
@@ -63,7 +65,7 @@ class RogueMiracle(APIModel):
 
 
 class RogueRecordDetail(APIModel):
-    """ Detailed record info """
+    """Detailed record info."""
 
     name: str
     finish_time: PartialTime
@@ -78,7 +80,7 @@ class RogueRecordDetail(APIModel):
 
 
 class RogueRecord(APIModel):
-    """ generic record data """
+    """generic record data."""
 
     basic: RogueRecordBasic
     records: List[RogueRecordDetail]
@@ -86,7 +88,7 @@ class RogueRecord(APIModel):
 
 
 class StarRailRogue(APIModel):
-    """ generic rogue data """
+    """generic rogue data."""
 
     role: RogueUserRole
     basic_info: RogueBasicInfo

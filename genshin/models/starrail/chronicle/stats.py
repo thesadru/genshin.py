@@ -2,17 +2,18 @@
 import typing
 
 from genshin.models.model import Aliased, APIModel
+
 from .. import character
 
 __all__ = [
-    "StarRailUserStats",
     "PartialStarRailUserStats",
     "StarRailUserInfo",
-    "Stats",
+    "StarRailUserStats",
+    "StarRailStats",
 ]
 
 
-class Stats(APIModel):
+class StarRailStats(APIModel):
     """Overall user stats."""
 
     active_days: int
@@ -25,8 +26,8 @@ class Stats(APIModel):
 class PartialStarRailUserStats(APIModel):
     """User stats with characters without equipment."""
 
-    stats: Stats
-    characters: typing.Sequence[character.PartialCharacter] = Aliased("avatar_list")
+    stats: StarRailStats
+    characters: typing.Sequence[character.StarRailPartialCharacter] = Aliased("avatar_list")
 
 
 class StarRailUserInfo(APIModel):
@@ -39,6 +40,6 @@ class StarRailUserInfo(APIModel):
 
 
 class StarRailUserStats(PartialStarRailUserStats):
-    """User stats"""
+    """User stats."""
 
     info: StarRailUserInfo
