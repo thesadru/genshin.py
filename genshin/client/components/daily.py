@@ -52,10 +52,10 @@ class DailyRewardClient(base.BaseClient):
 
         elif self.region == types.Region.CHINESE:
             # TODO: Support cn honkai
-            uid = await self._get_uid(types.Game.GENSHIN)
+            uid = await self._get_uid(game)
 
             params["uid"] = uid
-            params["region"] = utility.recognize_genshin_server(uid)
+            params["region"] = utility.recognize_server(uid, game)
 
             headers["x-rpc-app_version"] = "2.34.1"
             headers["x-rpc-client_type"] = "5"

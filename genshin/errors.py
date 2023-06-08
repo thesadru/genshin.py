@@ -9,6 +9,7 @@ __all__ = [
     "CookieException",
     "DataNotPublic",
     "ERRORS",
+    "GeetestTriggered",
     "GenshinException",
     "GeetestTriggered",
     "InvalidAuthkey",
