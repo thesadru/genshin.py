@@ -150,34 +150,12 @@ class BaseCookieManager(abc.ABC):
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
 
-        gt_check = self._gt_check(data)
-        if gt_check:
-            raise errors.GeetestTriggered(data)
+        errors.check_for_geetest(data)
+
         if data["retcode"] == 0:
             return data["data"]
 
         errors.raise_for_retcode(data)
-
-    def _gt_check(self, data: typing.Any) -> bool:
-        """Check for geetest challenge."""
-        try:
-            # gt_result is always in data["data"]
-            if data["data"] is None:
-                return False
-            gt_result = data["data"]["gt_result"]
-
-            # check if all the conditions are met
-            gt_check = bool(
-                gt_result["risk_code"] != 0
-                and gt_result["gt"]
-                and gt_result["challenge"]
-                and gt_result["success"] != 0  # not an empty string  # not an empty string
-                and gt_result["is_risk"]  # is True
-            )
-        except KeyError:
-            # if any of the keys are missing, it's not a geetest
-            return False
-        return gt_check
 
     @abc.abstractmethod
     async def request(
