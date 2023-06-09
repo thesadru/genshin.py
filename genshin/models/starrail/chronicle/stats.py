@@ -7,9 +7,9 @@ from .. import character
 
 __all__ = [
     "PartialStarRailUserStats",
+    "StarRailStats",
     "StarRailUserInfo",
     "StarRailUserStats",
-    "StarRailStats",
 ]
 
 

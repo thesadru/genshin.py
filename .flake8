@@ -10,11 +10,13 @@ exclude = tests, test.py
 # S303: Use of md5
 # S311: Use of pseudo-random generators
 # S324: Use of md5 without usedforsecurity=False (3.9+)
+# W503: line break before binary operator
 ignore = 
     A001, A002, A003,
     C408,
     D105, D106, D419
     S101, S303, S311, S324,
+    W503,
 
 # F401: unused import.
 # F403: cannot detect unused vars if we use starred import

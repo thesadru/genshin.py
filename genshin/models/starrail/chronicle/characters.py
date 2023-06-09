@@ -6,11 +6,11 @@ from genshin.models.model import APIModel
 from .. import character
 
 __all__ = [
-    "StarRailEquipment",
     "Rank",
     "Relic",
     "StarRailDetailCharacter",
     "StarRailDetailCharacters",
+    "StarRailEquipment",
 ]
 
 

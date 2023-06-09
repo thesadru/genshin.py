@@ -18,6 +18,7 @@ __all__ = [
     "RedemptionException",
     "RedemptionInvalid",
     "TooManyRequests",
+    "check_for_geetest",
     "raise_for_retcode",
 ]
 
@@ -250,3 +251,20 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
         raise RedemptionException(data)
 
     raise GenshinException(data)
+
+
+def check_for_geetest(data: typing.Dict[str, typing.Any]) -> None:
+    """Check if geetest was triggered and raise an error."""
+    if not data.get("data") or data["data"].get("gt_result"):
+        return
+
+    gt_result = data["data"]["gt_result"]
+
+    if (
+        gt_result.get("risk_code") != 0
+        and gt_result.get("gt")
+        and gt_result.get("challenge")
+        and gt_result.get("success") != 0
+        and gt_result.get("is_risk")
+    ):
+        raise GeetestTriggered(data)
