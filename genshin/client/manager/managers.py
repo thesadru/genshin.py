@@ -168,11 +168,11 @@ class BaseCookieManager(abc.ABC):
 
             # check if all the conditions are met
             gt_check = bool(
-                gt_result["risk_code"] != 0
-                and gt_result["gt"] # not an empty string
-                and gt_result["challenge"] # not an empty string
-                and gt_result["success"] != 0
-                and gt_result["is_risk"] # is True
+                gt_result["risk_code"] != 0 and
+                gt_result["gt"] and
+                gt_result["challenge"] and  # not an empty string  # not an empty string
+                gt_result["success"] != 0 and
+                gt_result["is_risk"]  # is True
             )
         except KeyError:
             # if any of the keys are missing, it's not a geetest
