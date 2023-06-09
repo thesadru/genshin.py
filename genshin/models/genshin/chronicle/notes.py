@@ -104,17 +104,17 @@ class Notes(APIModel):
 
     @property
     def resin_recovery_time(self) -> datetime.datetime:
-        """The remaining time until resin recovery in seconds."""
+        """The time when resin will be recovered."""
         return datetime.datetime.now().astimezone() + self.remaining_resin_recovery_time
 
     @property
     def realm_currency_recovery_time(self) -> datetime.datetime:
-        """The remaining time until realm currency recovery in seconds."""
+        """The time when realm currency will be recovered."""
         return datetime.datetime.now().astimezone() + self.remaining_realm_currency_recovery_time
 
     @property
     def transformer_recovery_time(self) -> typing.Optional[datetime.datetime]:
-        """The remaining time until realm currency recovery in seconds."""
+        """The time the transformer will be recovered."""
         if self.remaining_transformer_recovery_time is None:
             return None
 

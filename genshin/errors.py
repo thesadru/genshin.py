@@ -255,7 +255,7 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
 
 def check_for_geetest(data: typing.Dict[str, typing.Any]) -> None:
     """Check if geetest was triggered and raise an error."""
-    if not data.get("data") or data["data"].get("gt_result"):
+    if not data.get("data") or not data["data"].get("gt_result"):
         return
 
     gt_result = data["data"]["gt_result"]

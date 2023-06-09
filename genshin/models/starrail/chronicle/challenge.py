@@ -6,7 +6,7 @@ from genshin.models.starrail.character import FloorCharacter
 
 from .base import PartialTime
 
-__all__ = ["StarRailFloor", "FloorNode", "StarRailChallenge"]
+__all__ = ["FloorNode", "StarRailChallenge", "StarRailFloor"]
 
 
 class FloorNode(APIModel):

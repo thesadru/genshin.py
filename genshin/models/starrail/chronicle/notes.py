@@ -34,3 +34,8 @@ class StarRailNote(APIModel):
     accepted_epedition_num: int
     total_expedition_num: int
     expeditions: typing.Sequence[StarRailExpedition]
+
+    @property
+    def stamina_recovery_time(self) -> datetime.datetime:
+        """The time when stamina will be recovered."""
+        return datetime.datetime.now().astimezone() + self.stamina_recover_time
