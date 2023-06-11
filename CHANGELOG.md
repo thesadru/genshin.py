@@ -1,12 +1,23 @@
 # Changelog
 
-# 1.5.2 (2022-02-10)
+# 1.6.0 (2023-06-11)
+
+## What's new
+
+- Star rail daily rewards, battle chronicle and wish history.
+
+## Fixes
+
+- Raise errors on geetest instead of silently failing.
+- Fix v2 cookie compatibility.
+
+# 1.5.2 (2023-03-31)
 
 ## Fixes
 
 - Allow v2 cookies.
 
-# 1.5.1 (2022-02-10)
+# 1.5.1 (2023-02-10)
 
 ## What's new
 
