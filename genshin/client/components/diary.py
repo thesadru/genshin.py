@@ -51,6 +51,42 @@ class DiaryPaginator(paginators.PagedPaginator[models.DiaryAction]):
         return self._data
 
 
+class StarRailDiaryCallback(typing.Protocol):
+    """Callback which requires a diary page."""
+
+    async def __call__(self, page: int, /) -> models.StarRailDiaryPage:
+        """Return a diary page."""
+        ...
+
+
+class StarRailDiaryPaginator(paginators.PagedPaginator[models.StarRailDiaryAction]):
+    """Paginator for diary."""
+
+    _data: typing.Optional[models.StarRailDiaryPage]
+    """Metadata of the paginator"""
+
+    def __init__(self, getter: StarRailDiaryCallback, *, limit: typing.Optional[int] = None) -> None:
+        self._get_page = getter
+        self._data = None
+
+        super().__init__(self._getter, limit=limit, page_size=100)
+
+    async def _getter(self, page: int) -> typing.Sequence[models.StarRailDiaryAction]:
+        self._data = await self._get_page(page)
+        return self._data.actions
+
+    @property
+    def data(self) -> models.BaseDiary:
+        """Get data bound to the diary.
+
+        This requires at least one page to have been fetched.
+        """
+        if self._data is None:
+            raise RuntimeError("At least one item must be fetched before data can be gotten.")
+
+        return self._data
+
+
 class DiaryClient(base.BaseClient):
     """Diary component."""
 
@@ -61,7 +97,7 @@ class DiaryClient(base.BaseClient):
         *,
         game: typing.Optional[types.Game] = None,
         detail: bool = False,
-        month: typing.Optional[int] = None,
+        month: typing.Union[int, str, None] = None,
         lang: typing.Optional[str] = None,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         **kwargs: typing.Any,
@@ -76,14 +112,8 @@ class DiaryClient(base.BaseClient):
 
             game = self.default_game
 
-        url = (
-            routes.DETAIL_LEDGER_URL.get_url(self.region)
-            if detail
-            else routes.INFO_LEDGER_URL.get_url(
-                self.region,
-                game,
-            )
-        )
+        base_url = routes.DETAIL_LEDGER_URL if detail else routes.INFO_LEDGER_URL
+        url = base_url.get_url(self.region, game)
 
         uid = uid or await self._get_uid(game)
 
@@ -145,11 +175,10 @@ class DiaryClient(base.BaseClient):
         data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
         return models.StarRailDiary(**data)
 
-    async def _get_diary_page(
+    async def _get_genshin_diary_page(
         self,
         page: int,
         *,
-        game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         type: int = models.DiaryType.PRIMOGEMS,
         month: typing.Optional[int] = None,
@@ -157,7 +186,7 @@ class DiaryClient(base.BaseClient):
     ) -> models.DiaryPage:
         data = await self.request_ledger(
             uid,
-            game=game,
+            game=types.Game.GENSHIN,
             detail=True,
             month=month,
             lang=lang,
@@ -165,7 +194,26 @@ class DiaryClient(base.BaseClient):
         )
         return models.DiaryPage(**data)
 
+    @deprecation.deprecated("genshin_diary_log")
     def diary_log(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        type: int = models.DiaryType.PRIMOGEMS,
+        month: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> DiaryPaginator:
+        """Create a new daily reward paginator."""
+        return self.genshin_diary_log(
+            uid=uid,
+            limit=limit,
+            type=type,
+            month=month,
+            lang=lang,
+        )
+
+    def genshin_diary_log(
         self,
         uid: typing.Optional[int] = None,
         *,
@@ -177,7 +225,47 @@ class DiaryClient(base.BaseClient):
         """Create a new daily reward paginator."""
         return DiaryPaginator(
             functools.partial(
-                self._get_diary_page,
+                self._get_genshin_diary_page,
+                uid=uid,
+                type=type,
+                month=month,
+                lang=lang,
+            ),
+            limit=limit,
+        )
+
+    async def _get_starrail_diary_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        type: int = models.StarRailDiaryType.STELLARJADE,
+        month: typing.Optional[str] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.StarRailDiaryPage:
+        data = await self.request_ledger(
+            uid,
+            game=types.Game.STARRAIL,
+            detail=True,
+            month=month,
+            lang=lang,
+            params=dict(type=type, current_page=page, page_size=100),
+        )
+        return models.StarRailDiaryPage(**data)
+
+    def starrail_diary_log(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        type: int = models.StarRailDiaryType.STELLARJADE,
+        month: typing.Optional[str] = None,
+        lang: typing.Optional[str] = None,
+    ) -> StarRailDiaryPaginator:
+        """Create a new daily reward paginator."""
+        return StarRailDiaryPaginator(
+            functools.partial(
+                self._get_starrail_diary_page,
                 uid=uid,
                 type=type,
                 month=month,

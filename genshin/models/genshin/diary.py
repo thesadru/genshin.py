@@ -129,3 +129,28 @@ class StarRailDiary(BaseDiary):
     @property
     def month_data(self) -> StarRailMonthDiaryData:
         return self.data
+
+
+class StarRailDiaryType(enum.IntEnum):
+    """Type of diary pages."""
+
+    STELLARJADE = 1
+    """STELLARJADE."""
+
+    STARRAILPASS = 2
+    """STARRAILPASS."""
+
+
+class StarRailDiaryAction(APIModel):
+    """Action which earned currency."""
+
+    action: str
+    action_name: str
+    time: datetime.datetime = Aliased(timezone=8)
+    amount: int = Aliased("num")
+
+
+class StarRailDiaryPage(BaseDiary):
+    """Page of a diary."""
+
+    actions: typing.Sequence[StarRailDiaryAction] = Aliased("list")

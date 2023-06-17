@@ -134,16 +134,22 @@ LINEUP_URL = InternationalRoute(
 INFO_LEDGER_URL = GameRoute(
     overseas=dict(
         genshin="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info",
-        hkrpg="",
+        hkrpg="https://sg-public-api.hoyolab.com/event/srledger/month_info",
     ),
     chinese=dict(
         genshin="https://hk4e-api.mihoyo.com/event/ys_ledger/monthInfo",
         hkrpg="https://api-takumi.mihoyo.com/event/srledger/month_info",
     ),
 )
-DETAIL_LEDGER_URL = InternationalRoute(
-    overseas="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_detail",
-    chinese="https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
+DETAIL_LEDGER_URL = GameRoute(
+    overseas=dict(
+        genshin="https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_detail",
+        hkrpg="https://sg-public-api.hoyolab.com/event/srledger/month_detail",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-api.mihoyo.com/event/ys_ledger/monthDetail",
+        hkrpg="https://api-takumi.mihoyo.com/event/srledger/month_detail",
+    ),
 )
 
 CALCULATOR_URL = InternationalRoute(
