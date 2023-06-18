@@ -32,6 +32,7 @@ class DailyRewardClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        challenge: typing.Optional[typing.Mapping[str, str]] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the daily reward endpoint."""
@@ -49,22 +50,36 @@ class DailyRewardClient(base.BaseClient):
 
         if self.region == types.Region.OVERSEAS:
             params["lang"] = lang or self.lang
+            headers["referer"] = "https://act.hoyolab.com/"
 
         elif self.region == types.Region.CHINESE:
-            # TODO: Support cn honkai
             uid = await self._get_uid(game)
 
             params["uid"] = uid
             params["region"] = utility.recognize_server(uid, game)
 
+            # most of the extra headers are likely just placebo
             headers["x-rpc-app_version"] = "2.34.1"
             headers["x-rpc-client_type"] = "5"
             headers["x-rpc-device_id"] = str(uuid.uuid4())
+            headers["x-rpc-sys_version"] = "12"
+            headers["x-rpc-platform"] = "android"
+            headers["x-rpc-channel"] = "miyousheluodi"
+            headers["x-rpc-device_model"] = str(self.hoyolab_id) or ""
+            headers["referer"] = (
+                "https://webstatic.mihoyo.com/bbs/event/signin-ys/index.html?"
+                "bbs_auth_required=true&act_id=e202009291139501&utm_source=bbs&utm_medium=mys&utm_campaign=icon"
+            )
 
             headers["ds"] = ds_utility.generate_dynamic_secret(constants.DS_SALT["cn_signin"])
 
         else:
             raise TypeError(f"{self.region!r} is not a valid region.")
+
+        if challenge:
+            headers["x-rpc-challenge"] = challenge["challenge"]
+            headers["x-rpc-seccode"] = challenge["seccode"]
+            headers["x-rpc-validate"] = challenge["validate"]
 
         return await self.request(url, method=method, params=params, headers=headers, **kwargs)
 
@@ -134,6 +149,7 @@ class DailyRewardClient(base.BaseClient):
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
         reward: typing.Literal[True] = ...,
+        challenge: typing.Optional[typing.Mapping[str, str]] = None,
     ) -> models.DailyReward:
         ...
 
@@ -144,6 +160,7 @@ class DailyRewardClient(base.BaseClient):
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
         reward: typing.Literal[False],
+        challenge: typing.Optional[typing.Mapping[str, str]] = None,
     ) -> None:
         ...
 
@@ -153,9 +170,10 @@ class DailyRewardClient(base.BaseClient):
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
         reward: bool = True,
+        challenge: typing.Optional[typing.Mapping[str, str]] = None,
     ) -> typing.Optional[models.DailyReward]:
         """Signs into hoyolab and claims the daily reward."""
-        await self.request_daily_reward("sign", method="POST", game=game, lang=lang)
+        await self.request_daily_reward("sign", method="POST", game=game, lang=lang, challenge=challenge)
 
         if not reward:
             return None

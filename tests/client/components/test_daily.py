@@ -13,6 +13,8 @@ async def test_daily_reward(lclient: genshin.Client):
 
     try:
         reward = await lclient.claim_daily_reward()
+    except genshin.GeetestTriggered:
+        pytest.skip("Geetest triggered on daily reward.")
     except genshin.AlreadyClaimed:
         assert signed_in
         return
@@ -33,6 +35,8 @@ async def test_starrail_daily_reward(lclient: genshin.Client):
 
     try:
         reward = await lclient.claim_daily_reward(game=genshin.types.Game.STARRAIL)
+    except genshin.GeetestTriggered:
+        pytest.skip("Geetest triggered on daily reward.")
     except genshin.AlreadyClaimed:
         assert signed_in
         return

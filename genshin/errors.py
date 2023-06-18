@@ -111,8 +111,16 @@ class AlreadyClaimed(GenshinException):
 class GeetestTriggered(GenshinException):
     """Geetest triggered."""
 
-    retcode = 0
     msg = "Geetest triggered during daily reward claim."
+
+    gt: str
+    challenge: str
+
+    def __init__(self, response: typing.Mapping[str, typing.Any], *, gt: str, challenge: str) -> None:
+        self.gt = gt
+        self.challenge = challenge
+
+        super().__init__(response)
 
 
 class AuthkeyException(GenshinException):
@@ -253,18 +261,17 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
     raise GenshinException(data)
 
 
-def check_for_geetest(data: typing.Dict[str, typing.Any]) -> None:
+def check_for_geetest(response: typing.Dict[str, typing.Any]) -> None:
     """Check if geetest was triggered and raise an error."""
-    if not data.get("data") or not data["data"].get("gt_result"):
+    if not response.get("data"):  # if is an error
         return
 
-    gt_result = data["data"]["gt_result"]
+    gt_result = response["data"].get("gt_result", response["data"])
 
     if (
         gt_result.get("risk_code") != 0
         and gt_result.get("gt")
         and gt_result.get("challenge")
         and gt_result.get("success") != 0
-        and gt_result.get("is_risk")
     ):
-        raise GeetestTriggered(data)
+        raise GeetestTriggered(response, gt=gt_result.get("gt"), challenge=gt_result.get("challenge"))
