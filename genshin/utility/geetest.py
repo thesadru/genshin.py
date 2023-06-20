@@ -52,7 +52,7 @@ async def create_mmt(account: str, password: str) -> typing.Mapping[str, typing.
 
         if data["retcode"] == -3101:
             aigis = json.loads(r.headers["x-rpc-aigis"])
-            aigis["data"] = json.loads(data["data"])
+            aigis["data"] = json.loads(aigis["data"])
             return aigis
 
     return {}
