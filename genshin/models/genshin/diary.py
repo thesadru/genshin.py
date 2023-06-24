@@ -14,6 +14,13 @@ __all__ = [
     "DiaryPage",
     "DiaryType",
     "MonthDiaryData",
+    "StarRailDayDiaryData",
+    "StarRailDiary",
+    "StarRailDiaryAction",
+    "StarRailDiaryActionCategory",
+    "StarRailDiaryPage",
+    "StarRailDiaryType",
+    "StarRailMonthDiaryData",
 ]
 
 
