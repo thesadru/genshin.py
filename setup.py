@@ -15,7 +15,7 @@ setup(
     },
     packages=find_packages(exclude=["tests.*"]),
     python_requires=">=3.8",
-    install_requires=["aiohttp", "pydantic==2.*"],
+    install_requires=["aiohttp", "pydantic"],
     extras_require={
         "all": ["browser-cookie3", "rsa", "click"],
         "cookies": ["browser-cookie3"],

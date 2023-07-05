@@ -5,7 +5,13 @@ import datetime
 import re
 import typing
 
-import pydantic.v1 as pydantic
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 from genshin.models.honkai import battlesuit
 from genshin.models.model import Aliased, APIModel, Unique

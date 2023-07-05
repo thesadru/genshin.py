@@ -3,8 +3,17 @@ import datetime
 import re
 import typing
 
-import pydantic.v1 as pydantic
-import pydantic.v1.generics as pydantic_generics
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+    import pydantic.v1.generics as pydantic_generics
+else:
+    try:
+        import pydantic.v1 as pydantic
+        import pydantic.v1.generics as pydantic_generics
+    except ImportError:
+        import pydantic
+        import pydantic.generics as pydantic_generics
+
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel

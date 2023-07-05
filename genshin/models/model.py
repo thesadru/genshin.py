@@ -7,7 +7,13 @@ import sys
 import types
 import typing
 
-import pydantic.v1 as pydantic
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 import genshin.constants as genshin_constants
 

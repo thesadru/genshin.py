@@ -3,7 +3,13 @@ from __future__ import annotations
 import re
 import typing
 
-import pydantic.v1 as pydantic
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
