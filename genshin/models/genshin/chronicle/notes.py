@@ -2,12 +2,11 @@
 import datetime
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
-from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
-__all__ = ["Expedition", "ExpeditionCharacter", "Notes"]
+__all__ = ["Expedition", "Notes"]
 
 
 def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.datetime]) -> datetime.datetime:
@@ -26,14 +25,10 @@ def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.date
     return time
 
 
-class ExpeditionCharacter(character.BaseCharacter):
-    """Expedition character."""
-
-
 class Expedition(APIModel):
     """Real-Time note expedition."""
 
-    character: ExpeditionCharacter = Aliased("avatar_side_icon")
+    character_icon: str = Aliased("avatar_side_icon")
     status: typing.Literal["Ongoing", "Finished"]
     remaining_time: datetime.timedelta = Aliased("remained_time")
 
@@ -45,13 +40,6 @@ class Expedition(APIModel):
     @property
     def completion_time(self) -> datetime.datetime:
         return datetime.datetime.now().astimezone() + self.remaining_time
-
-    @pydantic.validator("character", pre=True)
-    def __complete_character(cls, v: typing.Any) -> typing.Any:
-        if isinstance(v, str):
-            return dict(icon=v)  # type: ignore
-
-        return v
 
 
 class TransformerTimedelta(datetime.timedelta):

@@ -1,5 +1,5 @@
 aiohttp
-pydantic
+pydantic==2.*
 
 # subdependencies
 yarl

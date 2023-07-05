@@ -3,8 +3,8 @@ import datetime
 import re
 import typing
 
-import pydantic
-import pydantic.generics
+import pydantic.v1 as pydantic
+import pydantic.v1.generics as pydantic_generics
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
@@ -23,7 +23,7 @@ __all__ = [
 ModelT = typing.TypeVar("ModelT", bound=APIModel)
 
 
-class OldActivity(APIModel, pydantic.generics.GenericModel, typing.Generic[ModelT]):
+class OldActivity(APIModel, pydantic_generics.GenericModel, typing.Generic[ModelT]):
     """Arbitrary activity for chinese events."""
 
     # sometimes __parameters__ may not be provided in older versions

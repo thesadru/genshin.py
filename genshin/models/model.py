@@ -7,7 +7,7 @@ import sys
 import types
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
 import genshin.constants as genshin_constants
 

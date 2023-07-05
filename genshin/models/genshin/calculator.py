@@ -4,7 +4,7 @@ from __future__ import annotations
 import collections
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 

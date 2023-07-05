@@ -1,7 +1,7 @@
 """Honkai stats models."""
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel

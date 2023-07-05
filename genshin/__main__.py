@@ -193,9 +193,9 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
     for expedition in data.expeditions:
         if expedition.remaining_time > datetime.timedelta(0):
             remaining = f"{expedition.remaining_time} remaining"
-            click.echo(f" - {expedition.status} | {remaining} - {expedition.character.name}")
+            click.echo(f" - {expedition.status} | {remaining}")
         else:
-            click.echo(f" - {expedition.status} | {expedition.character.name}")
+            click.echo(f" - {expedition.status}")
 
 
 @cli.command()

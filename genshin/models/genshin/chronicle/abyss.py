@@ -1,7 +1,7 @@
 import datetime
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel

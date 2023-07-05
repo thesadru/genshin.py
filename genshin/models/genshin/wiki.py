@@ -4,7 +4,7 @@ import json
 import typing
 import unicodedata
 
-import pydantic
+import pydantic.v1 as pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 

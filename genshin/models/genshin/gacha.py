@@ -4,7 +4,7 @@ import enum
 import re
 import typing
 
-import pydantic
+import pydantic.v1 as pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
