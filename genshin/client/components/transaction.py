@@ -1,5 +1,4 @@
 """Transaction client."""
-import asyncio
 import functools
 import typing
 import urllib.parse
@@ -52,9 +51,7 @@ class TransactionClient(base.BaseClient):
     ) -> typing.Sequence[models.BaseTransaction]:
         """Get a single page of transactions."""
         kind = models.TransactionKind(kind)
-        endpoint = "get" + kind.value.capitalize() + "Log"
-
-        mi18n_task = asyncio.create_task(self._fetch_mi18n("inquiry", lang=lang or self.lang))
+        endpoint = "Get" + kind.value.capitalize() + "Log"
 
         data = await self.request_transaction(
             endpoint,
@@ -62,7 +59,6 @@ class TransactionClient(base.BaseClient):
             authkey=authkey,
             params=dict(end_id=end_id, size=20),
         )
-        await mi18n_task  # we need the mi18n before making the object
 
         transactions: typing.List[models.BaseTransaction] = []
         for trans in data["list"]:
