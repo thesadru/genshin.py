@@ -2,7 +2,7 @@
 import datetime
 import typing
 
-from genshin.models.model import APIModel
+from genshin.models.model import Aliased, APIModel
 
 __all__ = ["StarRailExpedition", "StarRailNote"]
 
@@ -34,6 +34,21 @@ class StarRailNote(APIModel):
     accepted_epedition_num: int
     total_expedition_num: int
     expeditions: typing.Sequence[StarRailExpedition]
+
+    current_train_score: int
+    """Current daily training activity"""
+    max_train_score: int
+    """Max daily training activity"""
+
+    current_rogue_score: int
+    """Current simulated universe weekly points"""
+    max_rogue_score: int
+    """Max simulated universe weekly points"""
+
+    remaining_weekly_discounts: int = Aliased("weekly_cocoon_cnt")
+    """Remaining echo of war rewards"""
+    max_weekly_discounts: int = Aliased("weekly_cocoon_limit")
+    """Echo of war attempt limit"""
 
     @property
     def stamina_recovery_time(self) -> datetime.datetime:
