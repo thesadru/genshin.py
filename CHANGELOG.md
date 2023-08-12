@@ -1,5 +1,12 @@
 # Changelog
 
+# 1.6.1 (2023-08-12)
+
+## Fixes
+
+- Support providing geetest headers.
+- Use the newest version of pydantic.
+
 # 1.6.0 (2023-06-11)
 
 ## What's new
