@@ -42,6 +42,7 @@ class Stats(APIModel):
     geoculi: int =            Aliased("geoculus_number",        mi18n="bbs/rock_god")
     dendroculi: int =         Aliased("dendroculus_number",     mi18n="bbs/dendro_culus")
     electroculi: int =        Aliased("electroculus_number",    mi18n="bbs/electroculus_god")
+    hydroculi: int =          Aliased("hydroculus_number",      mi18n="bbs/hydro_god")
     common_chests: int =      Aliased("common_chest_number",    mi18n="bbs/general_treasure_box_count")
     exquisite_chests: int =   Aliased("exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")
     precious_chests: int =    Aliased("precious_chest_number",  mi18n="bbs/rarity_treasure_box_count")
@@ -99,7 +100,9 @@ class Exploration(APIModel):
         offerings: typing.Sequence[typing.Any],
         values: typing.Dict[str, typing.Any],
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
+        if values["type"] == "Reputation" and not any(
+            values["type"] == o["name"] for o in offerings
+        ):
             offerings = [*offerings, dict(name=values["type"], level=values["level"])]
 
         return offerings
