@@ -50,6 +50,9 @@ class StarRailNote(APIModel):
     max_weekly_discounts: int = Aliased("weekly_cocoon_limit")
     """Echo of war attempt limit"""
 
+    current_reserve_stamina: int
+    is_reserve_stamina_full: bool
+
     @property
     def stamina_recovery_time(self) -> datetime.datetime:
         """The time when stamina will be recovered."""
