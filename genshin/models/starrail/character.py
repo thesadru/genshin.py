@@ -23,9 +23,11 @@ class FloorCharacter(StarRailBaseCharacter):
     """Character in a floor."""
 
     level: int
+    rank: int
 
 
 class RogueCharacter(StarRailBaseCharacter):
     """Rogue character model."""
 
     level: int
+    rank: int
