@@ -42,10 +42,10 @@ def _search_output_log(content: str) -> pathlib.Path:
     elif match3 is not None:
         match = match3
 
-    data_location = pathlib.Path(match[1]) / "webCaches/2.16.0.0/Cache/Cache_Data/data_2"  # Genshin
-    if data_location.is_file():
-        return data_location
-    data_location = pathlib.Path(match[1]) / "webCaches/2.15.0.0/Cache/Cache_Data/data_2"  # Star Rail
+    base_dir = pathlib.Path(match[1]) / "webCaches"
+    webCaches = [entry for entry in base_dir.iterdir() if entry.is_dir() and entry.name.startswith("2.")]
+    
+    data_location = max(webCaches, key=lambda x: x.name) / "Cache/Cache_Data/data_2"
     if data_location.is_file():
         return data_location
 
@@ -103,10 +103,10 @@ def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[
         if not directory.is_dir():
             continue
 
-        datafile = directory / "webCaches/2.16.0.0/Cache/Cache_Data/data_2"  # Genshin
-        if datafile.is_file():
-            return datafile
-        datafile = directory / "webCaches/2.15.0.0/Cache/Cache_Data/data_2"  # Star Rail
+        base_dir = directory / "webCaches"
+        webCaches = [entry for entry in base_dir.iterdir() if entry.is_dir() and entry.name.startswith("2.")]
+
+        datafile = max(webCaches, key=lambda x: x.name) / "Cache/Cache_Data/data_2"
         if datafile.is_file():
             return datafile
 
@@ -131,7 +131,7 @@ def _read_datafile(game_location: typing.Optional[PathLike] = None, *, game: typ
     try:
         return datafile.read_text(errors="replace")
     except PermissionError as ex:
-        raise PermissionError("Pleas turn off Genshin Impact/Star Rail or try running script as administrator") from ex
+        raise PermissionError("Please turn off Genshin Impact/Star Rail or try running script as administrator") from ex
 
 
 def extract_authkey(string: str) -> typing.Optional[str]:
