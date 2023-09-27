@@ -20,23 +20,36 @@ AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 # ~/AppData/LocalLow/Cognosphere/Star Rail/Player.log
 # ~/AppData/LocalLow/miHoYo/崩坏：星穹铁道/output_log.txt
 # data_2
-# C:/Program Files/Genshin Impact/Genshin Impact game/GenshinImpact_Data/webCaches/Cache/Cache_Data/data_2
-# C:/Program Files/Genshin Impact/Genshin Impact game/YuanShen_Data/webCaches/Cache/Cache_Data/data_2
-# C:/Program Files/Star Rail/StarRail_Data/webCaches/Cache/Cache_Data/data_2
-# C:/Program Files/Star Rail/StarRail_Data/webCaches/Cache/Cache_Data/data_2
+# C:/Program Files/Genshin Impact/Genshin Impact game/GenshinImpact_Data/webCaches/2.16.0.0/Cache/Cache_Data/data_2
+# C:/Program Files/Genshin Impact/Genshin Impact game/YuanShen_Data/webCaches/2.16.0.0/Cache/Cache_Data/data_2
+# C:/Program Files/Star Rail/StarRail_Data/webCaches/2.15.0.0/Cache/Cache_Data/data_2
+# C:/Program Files/Star Rail/StarRail_Data/webCaches/2.15.0.0/Cache/Cache_Data/data_2
 
 
 def _search_output_log(content: str) -> pathlib.Path:
     """Search output log for data_2."""
-    match = re.search(r"(?<=\s)(\S+?_Data)(?:/data.unity3d)?", content, re.MULTILINE)
-    if match is None:
+    match1 = re.search(r'([A-Z]:/.*?/GenshinImpact_Data)', content, re.MULTILINE)
+    match2 = re.search(r'([A-Z]:/.*?/YuanShen_Data)', content, re.MULTILINE)
+    match3 = re.search(r'([A-Z]:/.*?/StarRail_Data)', content, re.MULTILINE)
+    if match1 is None and match2 is None and match3 is None:
         raise FileNotFoundError("No genshin installation location in logfile")
-
-    data_location = pathlib.Path(match[1]) / "webCaches/Cache/Cache_Data/data_2"
+    
+    match = None
+    if match1 is not None:
+        match = match1
+    elif match2 is not None:
+        match = match2
+    elif match3 is not None:
+        match = match3
+    
+    data_location = pathlib.Path(match[1]) / "webCaches/2.16.0.0/Cache/Cache_Data/data_2" # Genshin
+    if data_location.is_file():
+        return data_location
+    data_location = pathlib.Path(match[1]) / "webCaches/2.15.0.0/Cache/Cache_Data/data_2" # Star Rail
     if data_location.is_file():
         return data_location
 
-    raise FileNotFoundError("Genshin installation location is improper")
+    raise FileNotFoundError("Genshin/Star Rail installation location is improper")
 
 
 def get_output_log(*, game: typing.Optional[types.Game] = None) -> pathlib.Path:
@@ -78,7 +91,7 @@ def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[
                 game_location / location / data_name for location in locations for data_name in data_names
             ]
         if game is None or game == types.Game.STARRAIL:
-            locations = ["Star Rail", "崩坏：星穹铁道"]
+            locations = ["Star Rail", "Star Rail/Games", "Games", "崩坏：星穹铁道"]
             data_names = ["StarRail_Data"]
             data_location += [
                 game_location / location / data_name for location in locations for data_name in data_names
@@ -89,8 +102,11 @@ def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[
     for directory in data_location:
         if not directory.is_dir():
             continue
-
-        datafile = directory / "webCaches/Cache/Cache_Data/data_2"
+        
+        datafile = directory / "webCaches/2.16.0.0/Cache/Cache_Data/data_2" # Genshin
+        if datafile.is_file():
+            return datafile
+        datafile = directory / "webCaches/2.15.0.0/Cache/Cache_Data/data_2" # Star Rail
         if datafile.is_file():
             return datafile
 
@@ -115,7 +131,7 @@ def _read_datafile(game_location: typing.Optional[PathLike] = None, *, game: typ
     try:
         return datafile.read_text(errors="replace")
     except PermissionError as ex:
-        raise PermissionError("Pleas turn off genshin impact or try running script as administrator") from ex
+        raise PermissionError("Pleas turn off Genshin Impact/Star Rail or try running script as administrator") from ex
 
 
 def extract_authkey(string: str) -> typing.Optional[str]:
