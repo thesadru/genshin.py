@@ -32,7 +32,7 @@ def _search_output_log(content: str) -> pathlib.Path:
     match2 = re.search(r'([A-Z]:/.*?/YuanShen_Data)', content, re.MULTILINE)
     match3 = re.search(r'([A-Z]:/.*?/StarRail_Data)', content, re.MULTILINE)
     if match1 is None and match2 is None and match3 is None:
-        raise FileNotFoundError("No genshin installation location in logfile")
+        raise FileNotFoundError("No Genshin/Star Rail installation location in logfile")
     
     match = None
     if match1 is not None:
