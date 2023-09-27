@@ -44,7 +44,7 @@ def _search_output_log(content: str) -> pathlib.Path:
 
     base_dir = pathlib.Path(match[1]) / "webCaches"
     webCaches = [entry for entry in base_dir.iterdir() if entry.is_dir() and entry.name.startswith("2.")]
-    
+
     data_location = max(webCaches, key=lambda x: x.name) / "Cache/Cache_Data/data_2"
     if data_location.is_file():
         return data_location
