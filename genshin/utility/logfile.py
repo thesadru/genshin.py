@@ -33,7 +33,7 @@ def _search_output_log(content: str) -> pathlib.Path:
     match3 = re.search(r'([A-Z]:/.*?/StarRail_Data)', content, re.MULTILINE)
     if match1 is None and match2 is None and match3 is None:
         raise FileNotFoundError("No Genshin/Star Rail installation location in logfile")
-    
+
     match = None
     if match1 is not None:
         match = match1
@@ -41,11 +41,11 @@ def _search_output_log(content: str) -> pathlib.Path:
         match = match2
     elif match3 is not None:
         match = match3
-    
-    data_location = pathlib.Path(match[1]) / "webCaches/2.16.0.0/Cache/Cache_Data/data_2" # Genshin
+
+    data_location = pathlib.Path(match[1]) / "webCaches/2.16.0.0/Cache/Cache_Data/data_2"  # Genshin
     if data_location.is_file():
         return data_location
-    data_location = pathlib.Path(match[1]) / "webCaches/2.15.0.0/Cache/Cache_Data/data_2" # Star Rail
+    data_location = pathlib.Path(match[1]) / "webCaches/2.15.0.0/Cache/Cache_Data/data_2"  # Star Rail
     if data_location.is_file():
         return data_location
 
@@ -102,11 +102,11 @@ def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[
     for directory in data_location:
         if not directory.is_dir():
             continue
-        
-        datafile = directory / "webCaches/2.16.0.0/Cache/Cache_Data/data_2" # Genshin
+
+        datafile = directory / "webCaches/2.16.0.0/Cache/Cache_Data/data_2"  # Genshin
         if datafile.is_file():
             return datafile
-        datafile = directory / "webCaches/2.15.0.0/Cache/Cache_Data/data_2" # Star Rail
+        datafile = directory / "webCaches/2.15.0.0/Cache/Cache_Data/data_2"  # Star Rail
         if datafile.is_file():
             return datafile
 
