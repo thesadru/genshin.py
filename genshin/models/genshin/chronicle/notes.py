@@ -73,6 +73,46 @@ class TransformerTimedelta(datetime.timedelta):
         return self.timedata[3]
 
 
+class TaskReward(APIModel):
+    """Status of the Commission/Task
+
+    status:
+        TaskRewardStatusTakenAward
+        TaskRewardStatusUnfinished
+    """
+    status:str
+
+
+class AttendanceReward(APIModel):
+    """Status of the Encounter Point.
+
+    status:
+        AttendanceRewardStatusForbid
+        AttendanceRewardStatusTakenAward
+        AttendanceRewardStatusWaitTaken
+        AttendanceRewardStatusUnfinished
+
+    progress:
+        2000 == 100%
+        1000 == 50%
+    """
+    status:str
+    progress:int
+
+
+class DailyTasks(APIModel):
+    """Daily tasks section."""
+    max_tasks: int = Aliased("total_num")
+    completed_tasks: int = Aliased("finished_num")
+    claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
+
+    task_rewards: typing.Sequence[TaskReward]
+
+    attendance_rewards: typing.Sequence[AttendanceReward]
+
+    attendance_visible: bool
+
+
 class Notes(APIModel):
     """Real-Time notes."""
 
@@ -128,3 +168,5 @@ class Notes(APIModel):
             values["remaining_transformer_recovery_time"] = None
 
         return values
+
+    daily_task:DailyTasks
