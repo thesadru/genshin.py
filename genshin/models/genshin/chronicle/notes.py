@@ -74,13 +74,14 @@ class TransformerTimedelta(datetime.timedelta):
 
 
 class TaskReward(APIModel):
-    """Status of the Commission/Task
+    """Status of the Commission/Task.
 
     status:
         TaskRewardStatusTakenAward
         TaskRewardStatusUnfinished
     """
-    status:str
+
+    status: str
 
 
 class AttendanceReward(APIModel):
@@ -96,12 +97,14 @@ class AttendanceReward(APIModel):
         2000 == 100%
         1000 == 50%
     """
-    status:str
-    progress:int
+
+    status: str
+    progress: int
 
 
 class DailyTasks(APIModel):
     """Daily tasks section."""
+
     max_tasks: int = Aliased("total_num")
     completed_tasks: int = Aliased("finished_num")
     claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
@@ -169,4 +172,4 @@ class Notes(APIModel):
 
         return values
 
-    daily_task:DailyTasks
+    daily_task: DailyTasks
