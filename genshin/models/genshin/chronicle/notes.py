@@ -1,5 +1,6 @@
 """Genshin chronicle notes."""
 import datetime
+import enum
 import typing
 
 if typing.TYPE_CHECKING:
@@ -12,7 +13,15 @@ else:
 
 from genshin.models.model import Aliased, APIModel
 
-__all__ = ["Expedition", "Notes"]
+__all__ = [
+    "Expedition",
+    "TaskRewardStatus",
+    "TaskReward",
+    "AttendanceRewardStatus",
+    "AttendanceReward",
+    "DailyTasks",
+    "Notes"
+]
 
 
 def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.datetime]) -> datetime.datetime:
@@ -73,6 +82,47 @@ class TransformerTimedelta(datetime.timedelta):
         return self.timedata[3]
 
 
+class TaskRewardStatus(str, enum.Enum):
+    """Task Reward Statuses."""
+
+    UNFINISHED = "TaskRewardStatusUnfinished"
+    FINISHED = "TaskRewardStatusFinished"
+
+
+class TaskReward(APIModel):
+    """Status of the Commission/Task."""
+
+    status: TaskRewardStatus
+
+
+class AttendanceRewardStatus(str, enum.Enum):
+    """Attendance Reward Statuses."""
+
+    AVAILABLE = "AttendanceRewardStatusWaitTaken"
+    COLLECTED = "AttendanceRewardStatusTakenAward"
+    FORBIDDEN = "AttendanceRewardStatusForbid"
+    UNAVAILABLE = "AttendanceRewardStatusUnfinished"
+
+
+class AttendanceReward(APIModel):
+    """Status of the Encounter Point."""
+
+    status: AttendanceRewardStatus
+    progress: int
+
+
+class DailyTasks(APIModel):
+    """Daily tasks section."""
+
+    max_tasks: int = Aliased("total_num")
+    completed_tasks: int = Aliased("finished_num")
+    claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
+
+    task_rewards: typing.Sequence[TaskReward]
+    attendance_rewards: typing.Sequence[AttendanceReward]
+    attendance_visible: bool
+
+
 class Notes(APIModel):
     """Real-Time notes."""
 
@@ -128,3 +178,5 @@ class Notes(APIModel):
             values["remaining_transformer_recovery_time"] = None
 
         return values
+
+    daily_task: DailyTasks
