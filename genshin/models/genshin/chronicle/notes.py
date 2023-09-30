@@ -1,5 +1,6 @@
 """Genshin chronicle notes."""
 import datetime
+import enum
 import typing
 
 if typing.TYPE_CHECKING:
@@ -73,24 +74,32 @@ class TransformerTimedelta(datetime.timedelta):
         return self.timedata[3]
 
 
+class TaskRewardStatus(str, enum.Enum):
+    """Task Reward Statuses."""
+
+    UNFINISHED = "TaskRewardStatusUnfinished"
+    FINISHED = "TaskRewardStatusFinished"
+
+
 class TaskReward(APIModel):
     """Status of the Commission/Task."""
 
-    status: typing.Literal[
-        "TaskRewardStatusTakenAward",
-        "TaskRewardStatusUnfinished"
-    ]
+    status: TaskRewardStatus
+
+
+class AttendanceRewardStatus(str, enum.Enum):
+    """Attendance Reward Statuses."""
+
+    AVAILABLE = "AttendanceRewardStatusWaitTaken"
+    COLLECTED = "AttendanceRewardStatusTakenAward"
+    FORBIDDEN = "AttendanceRewardStatusForbid"
+    UNAVAILABLE = "AttendanceRewardStatusUnfinished"
 
 
 class AttendanceReward(APIModel):
     """Status of the Encounter Point."""
 
-    status: typing.Literal[
-        "TaskRewardStatusTakenAward",
-        "AttendanceRewardStatusTakenAward",
-        "AttendanceRewardStatusWaitTaken",
-        "AttendanceRewardStatusUnfinished"
-    ]
+    status: AttendanceRewardStatus
     progress: int
 
 
@@ -102,9 +111,7 @@ class DailyTasks(APIModel):
     claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
 
     task_rewards: typing.Sequence[TaskReward]
-
     attendance_rewards: typing.Sequence[AttendanceReward]
-
     attendance_visible: bool
 
 
