@@ -74,31 +74,23 @@ class TransformerTimedelta(datetime.timedelta):
 
 
 class TaskReward(APIModel):
-    """Status of the Commission/Task.
+    """Status of the Commission/Task."""
 
-    status:
-        TaskRewardStatusTakenAward
-        TaskRewardStatusUnfinished
-    """
-
-    status: str
+    status: typing.Literal[
+        "TaskRewardStatusTakenAward",
+        "TaskRewardStatusUnfinished"
+    ]
 
 
 class AttendanceReward(APIModel):
-    """Status of the Encounter Point.
+    """Status of the Encounter Point."""
 
-    status:
-        AttendanceRewardStatusForbid
-        AttendanceRewardStatusTakenAward
-        AttendanceRewardStatusWaitTaken
-        AttendanceRewardStatusUnfinished
-
-    progress:
-        2000 == 100%
-        1000 == 50%
-    """
-
-    status: str
+    status: typing.Literal[
+        "TaskRewardStatusTakenAward",
+        "AttendanceRewardStatusTakenAward",
+        "AttendanceRewardStatusWaitTaken",
+        "AttendanceRewardStatusUnfinished"
+    ]
     progress: int
 
 
