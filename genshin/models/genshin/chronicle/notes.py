@@ -13,7 +13,15 @@ else:
 
 from genshin.models.model import Aliased, APIModel
 
-__all__ = ["Expedition", "Notes"]
+__all__ = [
+    "Expedition",
+    "TaskRewardStatus",
+    "TaskReward",
+    "AttendanceRewardStatus",
+    "AttendanceReward",
+    "DailyTasks",
+    "Notes"
+]
 
 
 def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.datetime]) -> datetime.datetime:
