@@ -87,6 +87,7 @@ class TaskRewardStatus(str, enum.Enum):
 
     UNFINISHED = "TaskRewardStatusUnfinished"
     FINISHED = "TaskRewardStatusFinished"
+    COLLECTED = "TaskRewardStatusTakenAward"
 
 
 class TaskReward(APIModel):
