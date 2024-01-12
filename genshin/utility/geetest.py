@@ -1,13 +1,12 @@
 """Geetest utilities."""
 import base64
-import json
 import typing
+import json
 
-import aiohttp
-
-__all__ = ["create_mmt", "encrypt_geetest_password"]
+__all__ = ["encrypt_geetest_credentials"]
 
 
+# RSA key is the same for app and web login
 LOGIN_KEY_CERT = b"""
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4PMS2JVMwBsOIrYWRluY
@@ -20,7 +19,7 @@ KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
 -----END PUBLIC KEY-----
 """
 
-HEADERS = {
+WEB_LOGIN_HEADERS = {
     "x-rpc-app_id": "c9oqaq3s3gu8",
     "x-rpc-client_type": "4",
     "x-rpc-sdk_version": "2.14.1",
@@ -32,36 +31,33 @@ HEADERS = {
     "Referer": "https://account.hoyolab.com/",
 }
 
+APP_LOGIN_HEADERS = {
+    "x-rpc-app_id": "c9oqaq3s3gu8",
+    "x-rpc-app_version": "2.47.0",
+    "x-rpc-client_type": "2",
+    "x-rpc-sdk_version": "2.22.0",
+    "x-rpc-game_biz": "bbs_oversea",
+    "Origin": "https://account.hoyoverse.com",
+    "Referer": "https://account.hoyoverse.com/",
+}
 
-async def create_mmt(account: str, password: str) -> typing.Mapping[str, typing.Any]:
-    """Create a new hoyolab mmt."""
-    async with aiohttp.ClientSession() as session:
-        _payload = {
-            "account": encrypt_geetest_password(account),
-            "password": encrypt_geetest_password(password),
-            "token_type": 6,
-        }
+EMAIL_SEND_HEADERS = {
+    "x-rpc-app_id": "c9oqaq3s3gu8",
+}
 
-        r = await session.post(
-            "https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword",
-            json=_payload,
-            headers=HEADERS,
-        )
-
-        data = await r.json()
-
-        if data["retcode"] == -3101:
-            aigis = json.loads(r.headers["x-rpc-aigis"])
-            aigis["data"] = json.loads(aigis["data"])
-            return aigis
-
-    return {}
+EMAIL_VERIFY_HEADERS = {
+    "x-rpc-app_id": "c9oqaq3s3gu8",
+}
 
 
-def encrypt_geetest_password(text: str) -> str:
+def encrypt_geetest_credentials(text: str) -> str:
     """Encrypt text for geetest."""
     import rsa
 
     public_key = rsa.PublicKey.load_pkcs1_openssl_pem(LOGIN_KEY_CERT)
     crypto = rsa.encrypt(text.encode("utf-8"), public_key)
     return base64.b64encode(crypto).decode("utf-8")
+
+def get_aigis_header(session_id: str, mmt_data: typing.Dict[str, typing.Any]) -> str:
+    """Get aigis header."""
+    return f"{session_id};{base64.b64encode(json.dumps(mmt_data).encode()).decode()}"
