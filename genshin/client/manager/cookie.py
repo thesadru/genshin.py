@@ -22,17 +22,17 @@ import typing
 import aiohttp
 import aiohttp.typedefs
 
-from genshin import errors, types, constants
+from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.utility import ds as ds_utility
 
 __all__ = [
-    "complete_cookies", 
-    "refresh_cookie_token", 
-    "fetch_cookie_token_info", 
-    "fetch_cookie_with_cookie", 
+    "complete_cookies",
+    "fetch_cookie_token_info",
+    "fetch_cookie_with_cookie",
     "fetch_cookie_with_stoken_v2",
+    "refresh_cookie_token",
 ]
 
 
@@ -79,30 +79,28 @@ async def fetch_cookie_with_stoken_v2(
     if "ltmid_v2" in cookies:
         # The endpoint requires ltmid_v2 to be named mid
         cookies["mid"] = cookies["ltmid_v2"]
-    
+
     url = routes.COOKIE_V2_REFRESH_URL.get_url()
-    
+
     headers = {
         "ds": ds_utility.generate_dynamic_secret(constants.DS_SALT["app_login"]),
         "x-rpc-app_id": "c9oqaq3s3gu8",
     }
-    body = { "dst_token_types": token_types }
-    
+    body = {"dst_token_types": token_types}
+
     async with aiohttp.ClientSession() as session:
         r = await session.request("POST", url, json=body, headers=headers, cookies=cookies)
         data = await r.json(content_type=None)
-        
+
     if data["retcode"] != 0:
         errors.raise_for_retcode(data)
-        
+
     cookies = dict()
     for token in data["data"]["tokens"]:
         if token["token_type"] == 2:
             cookies["ltoken_v2"] = token["token"]
         elif token["token_type"] == 4:
             cookies["cookie_token_v2"] = token["token"]
-        else:
-            raise ValueError(f"Unknown token type: {token["token_type"]}")
 
     return cookies
 

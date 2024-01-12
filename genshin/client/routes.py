@@ -8,10 +8,12 @@ from genshin import types
 
 __all__ = [
     "ACCOUNT_URL",
+    "APP_LOGIN_URL",
     "BBS_REFERER_URL",
     "BBS_URL",
     "CALCULATOR_URL",
     "COMMUNITY_URL",
+    "COOKIE_V2_REFRESH_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_URL",
     "HK4E_URL",
@@ -23,13 +25,11 @@ __all__ = [
     "Route",
     "TAKUMI_URL",
     "TEAPOT_URL",
+    "VERIFY_EMAIL_URL",
     "WEBAPI_URL",
     "WEBSTATIC_URL",
-    "YSULOG_URL",
-    "COOKIE_V2_REFRESH_URL",
     "WEB_LOGIN_URL",
-    "APP_LOGIN_URL",
-    "VERIFY_EMAIL_URL",
+    "YSULOG_URL",
 ]
 
 
@@ -217,5 +217,7 @@ COOKIE_V2_REFRESH_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-pa
 WEB_LOGIN_URL = Route("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
 APP_LOGIN_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/api/appLoginByPassword")
 
-SEND_VERIFICATION_CODE_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-verifier/api/createEmailCaptchaByActionTicket")
+SEND_VERIFICATION_CODE_URL = Route(
+    "https://sg-public-api.hoyoverse.com/account/ma-verifier/api/createEmailCaptchaByActionTicket"
+)
 VERIFY_EMAIL_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-verifier/api/verifyActionTicketPartly")

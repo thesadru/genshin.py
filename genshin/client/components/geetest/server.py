@@ -12,65 +12,71 @@ from . import client
 
 __all__ = ["get_page", "launch_webapp", "solve_geetest", "verify_email"]
 
+
 def get_page(page: typing.Literal["captcha", "verify-email"]) -> str:
-    return """
-	<!DOCTYPE html>
-	<html>
-	  <body></body>
-	  <script src="./gt.js"></script>
-	  <script>
-		fetch("/mmt")
-		  .then((response) => response.json())
-		  .then((mmt) =>
-			window.initGeetest(
-			  {
-				gt: mmt.data.gt,
-				challenge: mmt.data.challenge,
-				new_captcha: mmt.data.new_captcha,
-				api_server: "api-na.geetest.com",
-				product: "bind",
-				https: false,
-				lang: "en",
-			  },
-			  (captcha) => {
-				captcha.onReady(() => {
-				  captcha.verify();
-				});
-				captcha.onSuccess(() => {
-				  fetch("/send-data", {
-				    method: "POST",
-				    body: JSON.stringify({
-				    session_id: mmt.session_id,
-				    data: captcha.getValidate()
-				  }),
-				});
-				document.body.innerHTML = "You may now close this window.";
-			  });
-			}
-		  )
-	    );
-	  </script>
-	</html>
-	""" if page == "captcha" else """
-	<!DOCTYPE html>
-	<html>
-	  <body>
+    """Get the HTML page."""
+    return (
+        """
+    <!DOCTYPE html>
+    <html>
+      <body></body>
+      <script src="./gt.js"></script>
+      <script>
+        fetch("/mmt")
+          .then((response) => response.json())
+          .then((mmt) =>
+            window.initGeetest(
+              {
+                gt: mmt.data.gt,
+                challenge: mmt.data.challenge,
+                new_captcha: mmt.data.new_captcha,
+                api_server: "api-na.geetest.com",
+                product: "bind",
+                https: false,
+                lang: "en",
+              },
+              (captcha) => {
+                captcha.onReady(() => {
+                  captcha.verify();
+                });
+                captcha.onSuccess(() => {
+                  fetch("/send-data", {
+                    method: "POST",
+                    body: JSON.stringify({
+                    session_id: mmt.session_id,
+                    data: captcha.getValidate()
+                  }),
+                });
+                document.body.innerHTML = "You may now close this window.";
+              });
+            }
+          )
+        );
+      </script>
+    </html>
+    """
+        if page == "captcha"
+        else """
+    <!DOCTYPE html>
+    <html>
+      <body>
         <input id="code" type="number">
         <button id="verify">Send</button>
-   	  </body>
-	  <script>
-		document.getElementById("verify").onClick = () => {
-		  fetch("/send-data", {
-		    method: "POST",
-		    body: JSON.stringify({
-		      code: document.getElementById("code").value
-		    }),
-		  });
-    	  document.body.innerHTML = "You may now close this window.";	
-		};
-	  </script>
-	</html>
- 	"""
+      </body>
+      <script>
+        document.getElementById("verify").onClick = () => {
+          fetch("/send-data", {
+            method: "POST",
+            body: JSON.stringify({
+              code: document.getElementById("code").value
+            }),
+          });
+          document.body.innerHTML = "You may now close this window.";
+        };
+      </script>
+    </html>
+    """
+    )
 
 
 GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/static/libs/gt.js"
@@ -78,7 +84,7 @@ GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/sta
 
 async def launch_webapp(
     page: typing.Literal["captcha", "verify-email"],
-    *, 
+    *,
     port: int = 5000,
     mmt: typing.Optional[typing.Dict[str, typing.Any]] = None,
 ) -> typing.Any:
@@ -89,7 +95,7 @@ async def launch_webapp(
     @routes.get("/captcha")
     async def captcha(request: web.Request) -> web.StreamResponse:
         return web.Response(body=get_page("captcha"), content_type="text/html")
-    
+
     @routes.get("/verify-email")
     async def verify_email(request: web.Request) -> web.StreamResponse:
         return web.Response(body=get_page("verify-email"), content_type="text/html")
@@ -135,22 +141,22 @@ async def launch_webapp(
 
 
 async def solve_geetest(
-	mmt: typing.Dict[str, typing.Any],
- 	*,
-	port: int = 5000,
+    mmt: typing.Dict[str, typing.Any],
+    *,
+    port: int = 5000,
 ) -> typing.Dict[str, typing.Any]:
-	"""Solve a geetest captcha manually."""
-	return await launch_webapp("captcha", port=port, mmt=mmt)
+    """Solve a geetest captcha manually."""
+    return await launch_webapp("captcha", port=port, mmt=mmt)
 
 
 async def verify_email(
     client: client.GeetestClient,
     ticket: typing.Dict[str, typing.Any],
     *,
-	port: int = 5000,
+    port: int = 5000,
 ) -> None:
-	"""Verify email to login via HoYoLab app endpoint."""
-	data = await launch_webapp("verify-email", port=port)
-	code = data["code"]
- 
-	return await client.verify_email(code, ticket)
+    """Verify email to login via HoYoLab app endpoint."""
+    data = await launch_webapp("verify-email", port=port)
+    code = data["code"]
+
+    return await client.verify_email(code, ticket)

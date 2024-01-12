@@ -1,7 +1,7 @@
 """Geetest utilities."""
 import base64
-import typing
 import json
+import typing
 
 __all__ = ["encrypt_geetest_credentials"]
 
@@ -57,6 +57,7 @@ def encrypt_geetest_credentials(text: str) -> str:
     public_key = rsa.PublicKey.load_pkcs1_openssl_pem(LOGIN_KEY_CERT)
     crypto = rsa.encrypt(text.encode("utf-8"), public_key)
     return base64.b64encode(crypto).decode("utf-8")
+
 
 def get_aigis_header(session_id: str, mmt_data: typing.Dict[str, typing.Any]) -> str:
     """Get aigis header."""
