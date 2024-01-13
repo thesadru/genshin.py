@@ -100,9 +100,7 @@ class Exploration(APIModel):
         offerings: typing.Sequence[typing.Any],
         values: typing.Dict[str, typing.Any],
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(
-            values["type"] == o["name"] for o in offerings
-        ):
+        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
             offerings = [*offerings, dict(name=values["type"], level=values["level"])]
 
         return offerings

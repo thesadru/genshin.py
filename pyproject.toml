@@ -24,14 +24,14 @@ reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword
 reportUnusedFunction = "none"  # Makes usage of validators impossible
 reportPrivateUsage = "none"
 reportUnknownMemberType = "none"
+reportUntypedFunctionDecorator = "none"
+reportIncompatibleVariableOverride = "none"
 
 [tool.mypy]
 warn_unreachable = false
 
 disallow_untyped_defs = true
 ignore_missing_imports = true
-install_types = true
-non_interactive = true
 
 # pyright
 warn_unused_ignores = false

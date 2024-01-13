@@ -28,19 +28,11 @@ AUTHKEY_FILE = fs.get_tempdir() / "genshin_authkey.txt"
 
 def _search_output_log(content: str) -> pathlib.Path:
     """Search output log for data_2."""
-    match1 = re.search(r'([A-Z]:/.*?/GenshinImpact_Data)', content, re.MULTILINE)
-    match2 = re.search(r'([A-Z]:/.*?/YuanShen_Data)', content, re.MULTILINE)
-    match3 = re.search(r'([A-Z]:/.*?/StarRail_Data)', content, re.MULTILINE)
-    if match1 is None and match2 is None and match3 is None:
+    match = re.search(r"([A-Z]:/.*?/GenshinImpact_Data)", content, re.MULTILINE)
+    match = match or re.search(r"([A-Z]:/.*?/YuanShen_Data)", content, re.MULTILINE)
+    match = match or re.search(r"([A-Z]:/.*?/StarRail_Data)", content, re.MULTILINE)
+    if match is None:
         raise FileNotFoundError("No Genshin/Star Rail installation location in logfile")
-
-    match = None
-    if match1 is not None:
-        match = match1
-    elif match2 is not None:
-        match = match2
-    elif match3 is not None:
-        match = match3
 
     base_dir = pathlib.Path(match[1]) / "webCaches"
     webCaches = [entry for entry in base_dir.iterdir() if entry.is_dir() and entry.name.startswith("2.")]

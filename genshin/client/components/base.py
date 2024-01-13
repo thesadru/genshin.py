@@ -26,7 +26,7 @@ __all__ = ["BaseClient"]
 class BaseClient(abc.ABC):
     """Base ABC Client."""
 
-    __slots__ = ("cookie_manager", "cache", "_lang", "_region", "_default_game", "uids", "authkeys")
+    __slots__ = ("cookie_manager", "cache", "_lang", "_region", "_default_game", "uids", "authkeys", "_hoyolab_id")
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
 

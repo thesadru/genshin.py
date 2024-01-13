@@ -14,13 +14,13 @@ else:
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
-    "Expedition",
-    "TaskRewardStatus",
-    "TaskReward",
-    "AttendanceRewardStatus",
     "AttendanceReward",
+    "AttendanceRewardStatus",
     "DailyTasks",
-    "Notes"
+    "Expedition",
+    "Notes",
+    "TaskReward",
+    "TaskRewardStatus",
 ]
 
 

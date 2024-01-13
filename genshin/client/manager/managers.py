@@ -209,7 +209,7 @@ class CookieManager(BaseCookieManager):
         return False
 
     @property
-    def jar(self) -> http.cookies.SimpleCookie[str]:
+    def jar(self) -> http.cookies.SimpleCookie:
         """SimpleCookie containing the cookies."""
         return http.cookies.SimpleCookie(self.cookies)
 

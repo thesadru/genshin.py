@@ -159,7 +159,7 @@ class RecordCard(GenshinAccount):
         elif game_id == 6:
             cls = StarRailRecodeCard
 
-        return super().__new__(cls)
+        return super().__new__(cls)  # type: ignore
 
     game_id: int
     game_biz: str = ""
