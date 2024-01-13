@@ -228,7 +228,7 @@ async def lineups(client: genshin.Client, scenario: typing.Optional[str]) -> Non
         click.echo(f"{click.style('Characters:', bold=True)}")
         for group, characters in enumerate(lineup.characters, 1):
             if len(lineup.characters) > 1:
-                click.echo(f"- Group {group }:")
+                click.echo(f"- Group {group}:")
             for character in characters:
                 click.echo(f" - {character.name} ({character.role})")
 

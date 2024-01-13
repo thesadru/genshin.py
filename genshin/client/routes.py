@@ -8,10 +8,12 @@ from genshin import types
 
 __all__ = [
     "ACCOUNT_URL",
+    "APP_LOGIN_URL",
     "BBS_REFERER_URL",
     "BBS_URL",
     "CALCULATOR_URL",
     "COMMUNITY_URL",
+    "COOKIE_V2_REFRESH_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_URL",
     "HK4E_URL",
@@ -23,8 +25,10 @@ __all__ = [
     "Route",
     "TAKUMI_URL",
     "TEAPOT_URL",
+    "VERIFY_EMAIL_URL",
     "WEBAPI_URL",
     "WEBSTATIC_URL",
+    "WEB_LOGIN_URL",
     "YSULOG_URL",
 ]
 
@@ -207,3 +211,13 @@ MI18N = dict(
     bbs="https://webstatic-sea.mihoyo.com/admin/mi18n/bbs_cn/m11241040191111/m11241040191111-{lang}.json",
     inquiry="https://mi18n-os.hoyoverse.com/webstatic/admin/mi18n/hk4e_global/m02251421001311/m02251421001311-{lang}.json",
 )
+
+COOKIE_V2_REFRESH_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken")
+
+WEB_LOGIN_URL = Route("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
+APP_LOGIN_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/api/appLoginByPassword")
+
+SEND_VERIFICATION_CODE_URL = Route(
+    "https://sg-public-api.hoyoverse.com/account/ma-verifier/api/createEmailCaptchaByActionTicket"
+)
+VERIFY_EMAIL_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-verifier/api/verifyActionTicketPartly")
