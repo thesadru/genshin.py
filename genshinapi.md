@@ -1,5 +1,4 @@
 
-
 # Udpated 1/2024
 il finish it with hsr endpoints within next few days
 ---
@@ -21,6 +20,7 @@ for more accurate informaiton i suggest checking out the enka api
 7. [Genshin Activities(Battle Chronical)](#genbacttlechronicalactivities)
 8. [Genshin Spiral Abyss(Battle Chronical)](#genbacttlechronicalspiralabyss)
 9. [Genshin Banners](#genbanners)
+10. [How to find endpoints yourself](#findyourself)
 ---
 
 
@@ -2318,4 +2318,19 @@ for now though the list is updated, another way to get abnner info and i recomme
 }
 ```
 
+
+
+
+
+
+
+
+
+
+### How to find endpoints yourself <a  name = "findyourself"></a>
+literally just go to a place where you can see the data you want and f12
+then go to tet box called filter, that searches all network traffic that you have selected(default all)
+it i honestly cant say more
+search for headings in hte data you want or specific values eg if it says
+data = 124 search 124
 
