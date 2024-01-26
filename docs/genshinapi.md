@@ -13,20 +13,41 @@ for more accurate informaiton i suggest checking out the enka api or dims github
 Anything labled with Battle Chronical comes form battle chonical, these ones are labeled since they a large amount of data.
 Rest is mostly self explanitory
 
+Code endpoints and sometimes login ones may return `-3101` this indicates a captcha and
+data to solve the captcha will be in the header `x-rpc-aigis` if youre going this deep then
+go thorugh most of the source of genshinpy that will give you a much better understanding on how to handle 
+resopnses
+
+The primary cookies are `ltoken_v2`, `ltuid_v2`, `stoken`, `cookie_token_v2`. ltoken has
+effectively infinite time before they expire, however this depends on account and for some people will expire
+within a month and others it still works. A pattern is that when you dont request from the token for a while
+it will expire. ltuid is a static value, linked to account. stoken should be a 1 year timeout, but cookietoken will expire
+within a few days some say 24h but its worked longer for me. stoken is used to refresh ltoken and cookietoken
+
+|Tokens|Beginning Characters|Type Number|
+|--|--|--|
+|ltoken_v2|v2_CAI|2|
+|cookie_token_v2|v2_CAQ|4|
+|stoken|v2_CAE|1|
+
 
 
 ---
 ### Table Of Contents
-1. [Genshin Live Notes](#genshinlivenotes)
-2. [Genshin Daily Rewards](#gendailyrewards)
-3. [Genshin Monthly Primogems](#genmonthlyprimos)
-4. [Genshin Events](#genevents)
-5. [Genshin Character(Battle Chronical)](#gencharacter)
-6. [Genshin Index(Battle Chronical)](#genbacttlechronicalindex)
-7. [Genshin Activities(Battle Chronical)](#genbacttlechronicalactivities)
-8. [Genshin Spiral Abyss(Battle Chronical)](#genbacttlechronicalspiralabyss)
-9. [Genshin Banners](#genbanners)
-10. [How to find endpoints yourself](#findyourself)
+1. [DS](#DS)
+2. [App Login](#applogin)
+3. [Refresh Tokens](#refreshtoken)
+4. [Web Login](#weblogin)
+5. [Genshin Live Notes](#genshinlivenotes)
+6. [Genshin Daily Rewards](#gendailyrewards)
+7. [Genshin Monthly Primogems](#genmonthlyprimos)
+7. [Genshin Events](#genevents)
+9. [Genshin Character(Battle Chronical)](#gencharacter)
+10. [Genshin Index(Battle Chronical)](#genbacttlechronicalindex)
+11. [Genshin Activities(Battle Chronical)](#genbacttlechronicalactivities)
+12. [Genshin Spiral Abyss(Battle Chronical)](#genbacttlechronicalspiralabyss)
+13. [Genshin Banners](#genbanners)
+14. [How to find endpoints yourself](#findyourself)
 ---
 
 
@@ -35,9 +56,9 @@ Rest is mostly self explanitory
     "+ any user agent"
     "+ host, just point to base url"
 
-### DS
-Genshins dynamic salt for headers there is a web version and one for the app
-the dynamic salt, the web version is used for endpoints that are on the web and app ...
+### DS <a name="DS"></a>
+Genshins dynamic secret for headers there is a web version and one for the app
+the dynamic secret, the web version is used for endpoints that are on the web and app ...
 
 |Salt Type| Salt Value|
 |--|--|
@@ -64,7 +85,7 @@ use md5;
 fn generate_ds(ds_salt: String) -> String {
     let time: u64 = SystemTime::now()
         .duration_since(UNIX_EPOCH)
-        .expect("system time set to pre 1970")
+.expect("system time set to pre 1970")
         .as_secs();
     let random_string: String = rand::thread_rng()
         .sample_iter(&Alphanumeric)
@@ -75,6 +96,329 @@ fn generate_ds(ds_salt: String) -> String {
     format!("{},{},{:x}", time, random_string, hash)
 }
 ```
+
+### App Login <a name="applogin"></a>
+I can actually explain how to get this since i found the method, granted its not complicated or protect
+like the games communication🙏
+
+The main purpose of this is to retrieve an `stoken` which can then be used to refresh `cookie_token_v2`
+and `ltoken_v2` can return a captcha but in my experience aftr 20min it will go away and you dont need 
+to deal with the captcha again
+
+Youre mainly looking at the token list for login itl return a token look at teh table from the beginning
+
+    Method: Post
+    base_url: "https://sg-public-api.hoyolab.com/account/ma-passport/api/appLoginByPassword"
+
+|Headers|Value|
+|--|--|
+|Host|sg-public-api.hoyoverse.com|
+|DS|app ds|
+|x-rpc-game_biz|bbs_oversea|
+|x-rpc-sdk_version|1.4.0|
+|x-rpc-client_type|1|
+|x-rpc-app_id|c9oqaq3s3gu8|
+
+
+**Payload**
+```json
+{
+    "account": (encrypted pass),
+    "password": (encrypted pass)
+}
+```
+
+**APP RSA Key**
+
+2 different formats, one with pyton another, a raw string
+```py
+HOYO_APP_RSA_PUBLIC = b"""
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4PMS2JVMwBsOIrYWRluY
+wEiFZL7Aphtm9z5Eu/anzJ09nB00uhW+ScrDWFECPwpQto/GlOJYCUwVM/raQpAj
+/xvcjK5tNVzzK94mhk+j9RiQ+aWHaTXmOgurhxSp3YbwlRDvOgcq5yPiTz0+kSeK
+ZJcGeJ95bvJ+hJ/UMP0Zx2qB5PElZmiKvfiNqVUk8A8oxLJdBB5eCpqWV6CUqDKQ
+KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
+6jozFIF4HCX5aW8bp8C8vq2tFvFbleQ/Q3CU56EWWKMrOcpmFtRmC18s9biZBVR/
+8QIDAQAB
+-----END PUBLIC KEY-----
+"""
+
+```
+```rust
+pub const HOYO_APP_RSA_PUBLIC: &[u8; 450] = b"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArXCPrbEFo75elvyABdMX\nyRFC/FZAklYdvCPOV0YdOMWabNd7td4k08DeaZUji01u7vp/wX6EV8ainfZ/AVR5\nBD642Ab/bmrvVAJhKvXJEruGagm7jmGAeKnRI0hAjopDbj9PCzfDACkUbQOWVDpN\nFHYYN+pA0WEY7m491Chwo/JBjEfYi9VJdkjnr7VWVqokgwVe1LDkaGOW9Sso4dJO\nm5UaBZRGzXYDHe5u12J+v2PDGN1VkRT6VtytlL7n1JdG9m1uxM2KXjHreHaqYYay\n+XW3erdbpNQkZJEkgrcRR6MMNAIqzzO7EHqtOs+vxQyOW8rstK0nILAqgeVuF0x1\n1QIDAQAB\n-----END PUBLIC KEY-----";
+```
+
+
+**Encryption Function**
+
+```py
+def encrypt_geetest_password(text: str) -> str:
+    """Encrypt text for geetest."""
+    import rsa
+
+    public_key = rsa.PublicKey.load_pkcs1_openssl_pem(HOYO_APP_RSA_PUBLIC)
+    crypto = rsa.encrypt(text.encode("utf-8"), public_key)
+    return base64.b64encode(crypto).decode("utf-8")
+
+```
+```rust
+use base64::prelude::BASE64_STANDARD;
+use openssl::pkey::Public;
+use openssl::rsa::{Padding, Rsa};
+
+fn hoyo_encrypt(data: String) -> String {
+    let public_key = net_constants::HOYO_APP_RSA_PUBLIC;
+
+    let pem_public_key = Rsa::public_key_from_pem(public_key).unwrap();
+    let mut buf: Vec<u8> = vec![0; pem_public_key.size() as usize];
+    pem_public_key
+        .public_encrypt(data.as_bytes(), &mut buf, Padding::PKCS1)
+        .unwrap();
+
+    BASE64_STANDARD.encode(&buf) 
+}
+```
+
+**Full Example**
+```py
+import time
+import random
+import string
+import hashlib
+import base64
+import requests
+
+HOYO_APP_RSA_PUBLIC = b"""
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4PMS2JVMwBsOIrYWRluY
+wEiFZL7Aphtm9z5Eu/anzJ09nB00uhW+ScrDWFECPwpQto/GlOJYCUwVM/raQpAj
+/xvcjK5tNVzzK94mhk+j9RiQ+aWHaTXmOgurhxSp3YbwlRDvOgcq5yPiTz0+kSeK
+ZJcGeJ95bvJ+hJ/UMP0Zx2qB5PElZmiKvfiNqVUk8A8oxLJdBB5eCpqWV6CUqDKQ
+KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
+6jozFIF4HCX5aW8bp8C8vq2tFvFbleQ/Q3CU56EWWKMrOcpmFtRmC18s9biZBVR/
+8QIDAQAB
+-----END PUBLIC KEY-----
+"""
+
+
+def generate_dynamic_secret(salt) -> str:
+    """Create a new overseas dynamic secret."""
+    t = int(time.time())
+    r = "".join(random.choices(string.ascii_letters, k=6))
+    h = hashlib.md5(f"salt={salt}&t={t}&r={r}".encode()).hexdigest()
+    return f"{t},{r},{h}"
+
+def encrypt_geetest_password(text: str) -> str:
+    """Encrypt text for geetest."""
+    import rsa
+
+    public_key = rsa.PublicKey.load_pkcs1_openssl_pem(HOYO_APP_RSA_PUBLIC)
+    crypto = rsa.encrypt(text.encode("utf-8"), public_key)
+    return base64.b64encode(crypto).decode("utf-8")
+
+HEADERS = {
+    'User-Agent':'HoYoLAB/10 CFNetwork/1474 Darwin/23.0.0',
+    'Host':'sg-public-api.hoyoverse.com',
+    'x-rpc-sdk_version':'1.4.0',
+    'DS':generate_dynamic_secret(salt),
+    'x-rpc-game_biz':'bbs_oversea',
+    'x-rpc-client_type':'1',
+    'x-rpc-app_id':'c9oqaq3s3gu8',
+}
+
+payload = {
+    "account": encrypt_geetest_password(account),
+    "password": encrypt_geetest_password(password),
+}
+
+r = requests.post(
+    "https://sg-public-api.hoyolab.com/account/ma-passport/api/appLoginByPassword",
+    json=payload,
+    headers=HEADERS,
+)
+print(r.json())
+```
+
+
+
+**Returns**
+
+see bellow, same a refreshing tokens
+
+### Refreshing Tokens <a name="refreshtoken"></a>
+This endpoint gives you another `ltoken_v2` and `cookie_token_v2`, types 2 and 4 respectively
+all you need to do is provide `stoken` and `mid`, which is `ltmid_v2` renamed
+
+You can only send 4 and 2, any othe rnumber will return an error
+
+    Method: Post
+    base_url: https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken
+
+
+|Cookie name|Cookie Value|
+|--|--|
+|mid|static tied to account|
+|stoken|DYNAMIC|
+
+|Extra Header Name|Value|
+|--|--|
+|host isnt required||
+|ds|app ds|
+|x-rpc-app_id|c9oqaq3s3gu8|
+
+**Payload**
+```json
+{
+    "dst_token_types": [
+        4,
+        2
+    ]
+}
+```
+**Returns**
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "token_type": {
+            "type": "number"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_type",
+          "token"
+        ]
+      }
+    },
+    "user_info": {
+      "type": "object",
+      "properties": {
+        "aid": {
+          "type": "string"
+        },
+        "mid": {
+          "type": "string"
+        },
+        "account_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "is_email_verify": {
+          "type": "number"
+        },
+        "area_code": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "safe_area_code": {
+          "type": "string"
+        },
+        "safe_mobile": {
+          "type": "string"
+        },
+        "realname": {
+          "type": "string"
+        },
+        "identity_code": {
+          "type": "string"
+        },
+        "rebind_area_code": {
+          "type": "string"
+        },
+        "rebind_mobile": {
+          "type": "string"
+        },
+        "rebind_mobile_time": {
+          "type": "string"
+        },
+        "links": {
+          "type": "array",
+          "items": {}
+        },
+        "country": {
+          "type": "string"
+        },
+        "unmasked_email": {
+          "type": "string"
+        },
+        "unmasked_email_type": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "aid",
+        "mid",
+        "account_name",
+        "email",
+        "is_email_verify",
+        "area_code",
+        "mobile",
+        "safe_area_code",
+        "safe_mobile",
+        "realname",
+        "identity_code",
+        "rebind_area_code",
+        "rebind_mobile",
+        "rebind_mobile_time",
+        "links",
+        "country",
+        "unmasked_email",
+        "unmasked_email_type"
+      ]
+    },
+    "ext_user_info": {
+      "type": "object",
+      "properties": {
+        "guardian_email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "guardian_email"
+      ]
+    },
+    "reactivate_action_ticket": {
+      "type": "string"
+    },
+    "bind_email_action_ticket": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "token",
+    "user_info",
+    "ext_user_info",
+    "reactivate_action_ticket",
+    "bind_email_action_ticket"
+  ]
+}
+```
+
+
+
+
+
+
+
+
+### Web Login <a name="weblogin"></a>
+
+
 
 
 ### Genshin Live Notes <a name="genshinlivenotes"></a>
@@ -90,7 +434,7 @@ provides live information on account, schema isnt long so look at it
 |Cookie name|Cookie Value|
 |--|--|
 |ltoken_v2|DYNAMIC|
-|ltuid_v2|DYNAMIC
+|ltuid_v2|DYNAMIC|
 
 |Extra Header Name|Value|
 |--|--|
@@ -742,10 +1086,13 @@ exact same character data as in index, but now there is which artifact(no substa
     base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
     requires json payload
 
-|Payload json Name|Value|
-|---|---|
-|server|region(os_asia)|
-|role_id|(player uid)|
+**Payload**
+```json
+{
+    "server": region(os_asia),
+    "role_id": (player uid)
+}
+```
 
 |Cookie name|Cookie Value|
 |--|--|
@@ -2723,8 +3070,33 @@ for now though the list is updated, another way to get banner info which i recom
 ```
 
 
+## HSR
+Mostly the smae as genshin, except for notes, that one is more complicated
+
+### HSR month prmios <a name="hsrmonthprmos"></a>
+this is the only endpoint other than codes that requires cookie_token_v2
+
+    Method: Get
+    base_url: https://sg-public-api.hoyolab.com/event/srledger/month_info?uid={uid}&region=prod_official_asia&month=202312&lang=en-us
 
 
+|Parameter Name|Value|
+|---|---|
+|server|region(os_asia)|
+|role_id|(player uid)|
+|schedule_type|1 or 2 read above|
+
+|Cookie name|Cookie Value|
+|--|--|
+|ltoken_v2|DYNAMIC|
+|ltuid_v2|DYNAMIC
+
+|Extra Header Name|Value|
+|--|--|
+|ds|web ds|
+|x-rpc-app-version|1.5.0|
+|x-rpc-client_type|5|
+|x-rpc-language|en-us|
 
 
 

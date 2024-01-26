@@ -36,6 +36,7 @@ markdown_extensions:
 nav:
   - index.md
   - credits.md
+  - genshinapi.md
   - Usage:
       - authentication.md
       - battle_chronicle.md

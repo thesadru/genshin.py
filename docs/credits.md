@@ -9,6 +9,7 @@ Thanks to these amazing people genshin.py can be where it is now:
 - [Lightczx](https://github.com/Lightczx): The author of [Snap.Genshin](https://github.com/DGP-Studio/Snap.Genshin), helped me figure out the chinese endpoints
 - [lulu666lulu](https://github.com/lulu666lulu): Figured out how the chinese dynamic secret is generated
 - [M-307](https://github.com/mrwan200): Worked on geetest authentication.
+- [TeeHee](https://github.com/teehee567): Found stoken and cookies refresh method
 
 ### Genshin.py Contributors
 
@@ -16,6 +17,7 @@ Thanks to these amazing people genshin.py can be where it is now:
 - [Pokurt](https://github.com/pokurt): Helped with capturing the requests coming from the hoyolab android app.
 - [GrassSand](https://github.com/grasssand) & [molehzy](https://github.com/molehzy): Provided me with working chinese cookies to test chinese endpoints.
 - [Ashlen](https://github.com/thesadru): me :^)
+- [JokelBaf](https://github.com/JokelBaf): implemented stoken and cookie refesh method fixed geetest
 
 ### Feedback
 
