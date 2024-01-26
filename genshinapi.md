@@ -1,4 +1,5 @@
 
+
 # Udpated 1/2024
 il finish it with hsr endpoints within next few days
 ---
@@ -6,8 +7,13 @@ I dont have a cn account but these should work for other regions with their loca
 if you just replace en-us with a language that hoyo supports and os_asia should be replacable with os_euro, os_usa
 china has its own extra headers for some of the endpoints so go to the bottom if you want to find how these were found
 
-the larger schemas for battle chronical will probably be wrong as they get changed a lot,
-for more accurate informaiton i suggest checking out the enka api
+The larger schemas for battle chronical will probably be wrong as they get changed a lot,
+for more accurate informaiton i suggest checking out the enka api or dims github
+
+Anything labled with Battle Chronical comes form battle chonical, these ones are labeled since they a large amount of data.
+Rest is mostly self explanitory
+
+
 
 ---
 ### Table Of Contents
@@ -72,7 +78,7 @@ fn generate_ds(ds_salt: String) -> String {
 
 
 ### Genshin Live Notes <a name="genshinlivenotes"></a>
-not long schema look at it for what data it provides
+provides live information on account, schema isnt long so look at it
 
     Method: Get
     base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
@@ -324,6 +330,7 @@ not long schema look at it for what data it provides
 }
 ```
 ### Genshin Daily Rewards <a name="gendailyrewards"></a>
+
     2 separate urls, this one is for actual sign in
     Method: Post, no payload required
     base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
@@ -394,7 +401,8 @@ not long schema look at it for what data it provides
 ```
 
 ### Genshin monthly primogems <a name="genmonthlyprimos"></a>
-just look at schema, not a long one
+Just look at schema, not a long one, last is either last day for the day things or last month
+for the month data
 
     Method: Get
     base_url: https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info
@@ -526,12 +534,10 @@ just look at schema, not a long one
 ```
 
 ### Genshin events <a name="genevents"></a>
-contains currently ongoing event data
-
+contains currently ongoing event data, actual data from [this site](https://webstatic-sea.mihoyo.com/hk4e/announcement/index.html?auth_appid=announcement&bundle_id=hk4e_global&game=hk4e&game_biz=hk4e_global&lang=en&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999#/)
 
     Method: Get
     base_url: https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/announcement/api/getAnnList?game=hk4e&game_biz=hk4e_global&lang=en&auth_appid=announcement&bundle_id=hk4e_global&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999
-
 **Returns**
 ```json
 {
@@ -727,7 +733,7 @@ contains currently ongoing event data
   ]
 }
 ```
-### Genshin Characer <a name="gencharacter"></a>
+### Genshin Battle Chronical Characer <a name="gencharacter"></a>
 exact same character data as in index, but now there is which artifact(no substat)
 , weapon and constellation names
 
@@ -1964,7 +1970,7 @@ Has event participation data
 
 
 ### Genshin Battle Chronical Spiral Abyss <a name="genbacttlechronicalspiralabyss"></a>
-**at time of writing i havent completed spiral abyss so i can tbe confident that the schema is right so no schema**
+data from spiral abyss
 
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/spiralAbyss
@@ -1990,13 +1996,411 @@ schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
 
+**Returns**
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "object",
+  "properties": {
+    "schedule_id": {
+      "type": "number"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "end_time": {
+      "type": "string"
+    },
+    "total_battle_times": {
+      "type": "number"
+    },
+    "total_win_times": {
+      "type": "number"
+    },
+    "max_floor": {
+      "type": "string"
+    },
+    "reveal_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "defeat_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "damage_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "take_damage_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "normal_skill_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "energy_skill_rank": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avatar_id": {
+            "type": "number"
+          },
+          "avatar_icon": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "rarity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avatar_id",
+          "avatar_icon",
+          "value",
+          "rarity"
+        ]
+      }
+    },
+    "floors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "number"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "is_unlock": {
+            "type": "boolean"
+          },
+          "settle_time": {
+            "type": "string"
+          },
+          "star": {
+            "type": "number"
+          },
+          "max_star": {
+            "type": "number"
+          },
+          "levels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "number"
+                },
+                "star": {
+                  "type": "number"
+                },
+                "max_star": {
+                  "type": "number"
+                },
+                "battles": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "number"
+                      },
+                      "timestamp": {
+                        "type": "string"
+                      },
+                      "avatars": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "icon": {
+                              "type": "string"
+                            },
+                            "level": {
+                              "type": "number"
+                            },
+                            "rarity": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "icon",
+                            "level",
+                            "rarity"
+                          ]
+                        }
+                      },
+                      "settle_date_time": {
+                        "type": "object",
+                        "properties": {
+                          "year": {
+                            "type": "number"
+                          },
+                          "month": {
+                            "type": "number"
+                          },
+                          "day": {
+                            "type": "number"
+                          },
+                          "hour": {
+                            "type": "number"
+                          },
+                          "minute": {
+                            "type": "number"
+                          },
+                          "second": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "year",
+                          "month",
+                          "day",
+                          "hour",
+                          "minute",
+                          "second"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "index",
+                      "timestamp",
+                      "avatars",
+                      "settle_date_time"
+                    ]
+                  }
+                },
+                "top_half_floor_monster": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "level": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "icon",
+                      "level"
+                    ]
+                  }
+                },
+                "bottom_half_floor_monster": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "level": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "icon",
+                      "level"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "index",
+                "star",
+                "max_star",
+                "battles",
+                "top_half_floor_monster",
+                "bottom_half_floor_monster"
+              ]
+            }
+          },
+          "settle_date_time": {},
+          "ley_line_disorder": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "index",
+          "icon",
+          "is_unlock",
+          "settle_time",
+          "star",
+          "max_star",
+          "levels",
+          "settle_date_time",
+          "ley_line_disorder"
+        ]
+      }
+    },
+    "total_star": {
+      "type": "number"
+    },
+    "is_unlock": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schedule_id",
+    "start_time",
+    "end_time",
+    "total_battle_times",
+    "total_win_times",
+    "max_floor",
+    "reveal_rank",
+    "defeat_rank",
+    "damage_rank",
+    "take_damage_rank",
+    "normal_skill_rank",
+    "energy_skill_rank",
+    "floors",
+    "total_star",
+    "is_unlock"
+  ]
+}
+```
+
 
 ### Genshin banners <a  name = "genbanners"></a>
 
 This endpoint has 2 urls, 1 to get list, and another to get teh actual banner info, i recommend not using this
 as this endpoint was changed at the beginning of 4.0 where the list url no longer got updated
 this broke the actual gacha information until someone randomly found it again by guessing
-for now though the list is updated, another way to get abnner info and i recommended using 
+for now though the list is updated, another way to get banner info which i recommended using 
 [genshin events api](#genevents)
 
     neither have and special headers
@@ -2064,7 +2468,7 @@ for now though the list is updated, another way to get abnner info and i recomme
 }
 ```
 
-    where {} put id you got from the list above should 
+    where {gacha_id} put id you got from the list above 
     looks like: "gacha_id":"7cd22d479503bd9c47816a6c9a73aaac3613f61c"
 
     Method: Get
