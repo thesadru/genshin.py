@@ -120,7 +120,7 @@ Youre mainly looking at the token list for login itl return a token look at teh 
 |x-rpc-app_id|c9oqaq3s3gu8|
 
 
-**Payload**
+#### Payload
 ```json
 {
     "account": (encrypted pass),
@@ -128,7 +128,7 @@ Youre mainly looking at the token list for login itl return a token look at teh 
 }
 ```
 
-**APP RSA Key**
+#### App RSA Key
 
 2 different formats, one with pyton another, a raw string
 ```py
@@ -150,7 +150,7 @@ pub const HOYO_APP_RSA_PUBLIC: &[u8; 450] = b"-----BEGIN PUBLIC KEY-----\nMIIBIj
 ```
 
 
-**Encryption Function**
+#### Encryption Function
 
 ```py
 def encrypt_geetest_password(text: str) -> str:
@@ -180,7 +180,8 @@ fn hoyo_encrypt(data: String) -> String {
 }
 ```
 
-**Full Example**
+#### Full Example
+
 ```py
 import time
 import random
@@ -242,7 +243,7 @@ print(r.json())
 
 
 
-**Returns**
+#### Returns
 
 see bellow, same a refreshing tokens
 
@@ -267,7 +268,7 @@ You can only send 4 and 2, any othe rnumber will return an error
 |ds|app ds|
 |x-rpc-app_id|c9oqaq3s3gu8|
 
-**Payload**
+#### Payload
 ```json
 {
     "dst_token_types": [
@@ -276,7 +277,7 @@ You can only send 4 and 2, any othe rnumber will return an error
     ]
 }
 ```
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -443,7 +444,7 @@ provides live information on account, schema isnt long so look at it
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -703,7 +704,7 @@ provides live information on account, schema isnt long so look at it
 |ltoken_v2|DYNAMIC|
 |ltuid_v2|DYNAMIC|
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -762,7 +763,7 @@ for the month data
 |ltoken_v2|DYNAMIC|
 |ltuid_v2|DYNAMIC|
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -882,7 +883,8 @@ contains currently ongoing event data, actual data from [this site](https://webs
 
     Method: Get
     base_url: https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/announcement/api/getAnnList?game=hk4e&game_biz=hk4e_global&lang=en&auth_appid=announcement&bundle_id=hk4e_global&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999
-**Returns**
+
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -1086,7 +1088,7 @@ exact same character data as in index, but now there is which artifact(no substa
     base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
     requires json payload
 
-**Payload**
+#### Returns
 ```json
 {
     "server": region(os_asia),
@@ -2343,7 +2345,7 @@ schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2755,7 +2757,7 @@ for now though the list is updated, another way to get banner info which i recom
     Method: Get
     base_url: https://operation-webstatic.mihoyo.com/gacha_info/hk4e/cn_gf01/gacha/list.json
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2821,7 +2823,7 @@ for now though the list is updated, another way to get banner info which i recom
     Method: Get
     base_url: https://operation-webstatic.hoyoverse.com/gacha_info/hk4e/os_asia/{gacha_id}/en-us.json
 
-**Returns**
+#### Returns
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
