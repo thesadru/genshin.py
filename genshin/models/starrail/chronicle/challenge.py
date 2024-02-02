@@ -1,4 +1,5 @@
 """Starrail chronicle challenge."""
+
 from typing import TYPE_CHECKING, Any, Dict, List
 
 if TYPE_CHECKING:

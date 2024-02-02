@@ -1,4 +1,5 @@
 """Hoyolab component."""
+
 import asyncio
 import typing
 

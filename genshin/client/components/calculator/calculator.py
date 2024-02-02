@@ -2,6 +2,7 @@
 
 Over-engineered for the sake of extendability and maintainability.
 """
+
 from __future__ import annotations
 
 import abc

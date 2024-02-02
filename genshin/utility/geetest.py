@@ -1,4 +1,5 @@
 """Geetest utilities."""
+
 import base64
 import json
 import typing

@@ -1,4 +1,5 @@
 """Aiohttp webserver used for captcha solving and email verification."""
+
 from __future__ import annotations
 
 import asyncio

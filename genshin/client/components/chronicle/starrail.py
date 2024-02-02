@@ -1,4 +1,5 @@
 """StarRail battle chronicle component."""
+
 import asyncio
 import typing
 

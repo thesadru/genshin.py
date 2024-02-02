@@ -1,4 +1,5 @@
 """Lineup component."""
+
 import functools
 import typing
 

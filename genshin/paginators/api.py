@@ -1,4 +1,5 @@
 """Base paginators made specifically for interaction with the api."""
+
 from __future__ import annotations
 
 import abc

@@ -1,4 +1,5 @@
 """Genshin wish models."""
+
 import datetime
 import enum
 import re

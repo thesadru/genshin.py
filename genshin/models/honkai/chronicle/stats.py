@@ -1,4 +1,5 @@
 """Honkai stats models."""
+
 import typing
 
 if typing.TYPE_CHECKING:

@@ -1,4 +1,5 @@
 """Starrail base character model."""
+
 from genshin.models.model import APIModel, Unique
 
 

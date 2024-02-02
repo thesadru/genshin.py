@@ -1,4 +1,5 @@
 """Starrail Rogue models."""
+
 from typing import List
 
 from genshin.models.model import APIModel

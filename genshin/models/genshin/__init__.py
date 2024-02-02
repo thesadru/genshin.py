@@ -1,4 +1,5 @@
 """Genshin models."""
+
 from .calculator import *
 from .character import *
 from .chronicle import *

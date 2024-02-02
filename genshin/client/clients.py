@@ -1,4 +1,5 @@
 """A simple HTTP client for API endpoints."""
+
 from .components import (
     calculator,
     chronicle,

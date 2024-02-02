@@ -1,4 +1,5 @@
 """Starrail Chronicle Base Model."""
+
 import datetime
 
 from genshin.models.model import APIModel

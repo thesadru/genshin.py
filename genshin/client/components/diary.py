@@ -1,4 +1,5 @@
 """Diary component."""
+
 import datetime
 import functools
 import typing

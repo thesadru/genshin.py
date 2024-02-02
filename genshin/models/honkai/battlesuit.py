@@ -1,4 +1,5 @@
 """Honkai battlesuit model."""
+
 import logging
 import re
 import typing

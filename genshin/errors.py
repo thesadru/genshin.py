@@ -1,4 +1,5 @@
 """Errors received from the API."""
+
 import typing
 
 __all__ = [

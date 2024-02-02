@@ -1,4 +1,5 @@
 """Daily reward component."""
+
 import asyncio
 import datetime
 import functools
@@ -150,8 +151,7 @@ class DailyRewardClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         reward: typing.Literal[True] = ...,
         challenge: typing.Optional[typing.Mapping[str, str]] = None,
-    ) -> models.DailyReward:
-        ...
+    ) -> models.DailyReward: ...
 
     @typing.overload
     async def claim_daily_reward(  # noqa: D102 missing docstring in overload?
@@ -161,8 +161,7 @@ class DailyRewardClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         reward: typing.Literal[False],
         challenge: typing.Optional[typing.Mapping[str, str]] = None,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     async def claim_daily_reward(
         self,

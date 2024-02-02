@@ -1,4 +1,5 @@
 """Chronicle activities models."""
+
 import datetime
 import re
 import typing

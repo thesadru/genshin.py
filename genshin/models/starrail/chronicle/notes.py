@@ -1,4 +1,5 @@
 """Starrail chronicle notes."""
+
 import datetime
 import typing
 

@@ -1,4 +1,5 @@
 """Daily reward models."""
+
 import calendar
 import datetime
 import typing

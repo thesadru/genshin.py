@@ -15,6 +15,7 @@ Available convertions:
     - stoken (v2) + mid -> ltoken_v2 (token_type=2)
     - stoken (v2) + mid -> cookie_token_v2 (token_type=4)
 """
+
 from __future__ import annotations
 
 import typing

@@ -1,4 +1,5 @@
 """Reverse-compatibility layer for previous versions."""
+
 from __future__ import annotations
 
 import typing

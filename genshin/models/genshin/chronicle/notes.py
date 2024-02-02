@@ -1,4 +1,5 @@
 """Genshin chronicle notes."""
+
 import datetime
 import enum
 import typing
