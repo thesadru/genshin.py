@@ -91,8 +91,7 @@ class Paginator(typing.Generic[T], abc.ABC):
         return self.flatten().__await__()
 
     @abc.abstractmethod
-    async def __anext__(self) -> T:
-        ...
+    async def __anext__(self) -> T: ...
 
 
 class BasicPaginator(typing.Generic[T], Paginator[T], abc.ABC):

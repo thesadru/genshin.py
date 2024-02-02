@@ -1,4 +1,5 @@
 """Battle chronicle component."""
+
 from . import genshin, honkai, starrail
 
 __all__ = ["BattleChronicleClient"]

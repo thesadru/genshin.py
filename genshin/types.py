@@ -1,4 +1,5 @@
 """Types used in the library."""
+
 import enum
 import typing
 

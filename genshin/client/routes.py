@@ -1,4 +1,5 @@
 """API routes."""
+
 import abc
 import typing
 

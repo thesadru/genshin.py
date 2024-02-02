@@ -1,4 +1,5 @@
 """Teapot component."""
+
 import functools
 import typing
 

@@ -1,4 +1,5 @@
 """Constants hardcoded for optimizations."""
+
 from . import types
 
 __all__ = ["LANGS"]

@@ -1,4 +1,5 @@
 """Honkai model constants."""
+
 import typing
 
 __all__ = ["BATTLESUIT_IDENTIFIERS"]

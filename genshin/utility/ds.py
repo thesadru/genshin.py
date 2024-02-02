@@ -1,4 +1,5 @@
 """Dynamic secret generation."""
+
 import hashlib
 import json
 import random

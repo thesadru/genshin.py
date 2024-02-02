@@ -1,4 +1,5 @@
 """Geetest client component."""
+
 import json
 import typing
 

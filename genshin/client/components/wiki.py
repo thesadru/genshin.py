@@ -1,4 +1,5 @@
 """Wiki component."""
+
 import typing
 
 from genshin import types
@@ -34,8 +35,7 @@ class WikiClient(base.BaseClient):
         menu: typing.Literal[models.WikiPageType.CHARACTER],
         *,
         lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.CharacterPreview]:
-        ...
+    ) -> typing.Sequence[models.CharacterPreview]: ...
 
     @typing.overload
     async def get_wiki_previews(  # noqa: D102 missing docstring in overload?
@@ -43,8 +43,7 @@ class WikiClient(base.BaseClient):
         menu: typing.Literal[models.WikiPageType.WEAPON],
         *,
         lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.WeaponPreview]:
-        ...
+    ) -> typing.Sequence[models.WeaponPreview]: ...
 
     @typing.overload
     async def get_wiki_previews(  # noqa: D102 missing docstring in overload?
@@ -52,8 +51,7 @@ class WikiClient(base.BaseClient):
         menu: typing.Literal[models.WikiPageType.ARTIFACT],
         *,
         lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.ArtifactPreview]:
-        ...
+    ) -> typing.Sequence[models.ArtifactPreview]: ...
 
     @typing.overload
     async def get_wiki_previews(  # noqa: D102 missing docstring in overload?
@@ -61,8 +59,7 @@ class WikiClient(base.BaseClient):
         menu: typing.Literal[models.WikiPageType.ENEMY],
         *,
         lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.EnemyPreview]:
-        ...
+    ) -> typing.Sequence[models.EnemyPreview]: ...
 
     @typing.overload
     async def get_wiki_previews(  # noqa: D102 missing docstring in overload?
@@ -70,8 +67,7 @@ class WikiClient(base.BaseClient):
         menu: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> typing.Sequence[models.BaseWikiPreview]:
-        ...
+    ) -> typing.Sequence[models.BaseWikiPreview]: ...
 
     async def get_wiki_previews(
         self,

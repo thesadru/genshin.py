@@ -1,4 +1,5 @@
 """Deprecation decorator."""
+
 import functools
 import inspect
 import typing

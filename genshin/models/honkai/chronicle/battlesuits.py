@@ -1,4 +1,5 @@
 """Honkai chronicle battlesuits."""
+
 import re
 import typing
 

@@ -1,4 +1,5 @@
 """Base hoyolab APIModels."""
+
 from __future__ import annotations
 
 import enum

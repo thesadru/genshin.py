@@ -1,4 +1,5 @@
 """Genshin wish models."""
+
 import enum
 import json
 import typing

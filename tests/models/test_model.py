@@ -6,8 +6,7 @@ import pytest
 import genshin
 
 
-class LiteralCharacter(genshin.models.BaseCharacter):
-    ...
+class LiteralCharacter(genshin.models.BaseCharacter): ...
 
 
 LiteralCharacter.__pre_root_validators__ = LiteralCharacter.__pre_root_validators__[:-1]

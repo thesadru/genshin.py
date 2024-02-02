@@ -1,4 +1,5 @@
 """Utility functions related to genshin."""
+
 import typing
 
 from genshin import types

@@ -1,4 +1,5 @@
 """Starrail chronicle character."""
+
 from typing import List, Optional
 
 from genshin.models.model import APIModel

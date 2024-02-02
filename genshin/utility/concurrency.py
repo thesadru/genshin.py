@@ -1,4 +1,5 @@
 """Utilities for concurrency optimizations."""
+
 from __future__ import annotations
 
 import asyncio

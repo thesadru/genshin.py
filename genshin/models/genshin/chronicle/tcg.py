@@ -1,4 +1,5 @@
 """Genshin serenitea pot replica display models."""
+
 from __future__ import annotations
 
 import enum

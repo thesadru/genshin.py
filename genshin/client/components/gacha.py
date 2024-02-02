@@ -1,4 +1,5 @@
 """Wish component."""
+
 import asyncio
 import functools
 import typing

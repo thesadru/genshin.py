@@ -1,4 +1,5 @@
 """Genshin diary models."""
+
 import datetime
 import enum
 import typing

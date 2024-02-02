@@ -1,4 +1,5 @@
 """Cookie managers for making authenticated requests."""
+
 from __future__ import annotations
 
 import abc

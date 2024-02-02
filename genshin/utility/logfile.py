@@ -1,4 +1,5 @@
 """Search logfile for authkeys."""
+
 import pathlib
 import re
 import typing
