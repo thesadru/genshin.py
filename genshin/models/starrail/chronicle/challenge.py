@@ -1,6 +1,6 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 if TYPE_CHECKING:
     import pydantic.v1 as pydantic
@@ -71,7 +71,7 @@ class FictionBuff(APIModel):
 class FictionFloorNode(FloorNode):
     """Node for a Pure Fiction floor."""
 
-    buff: FictionBuff
+    buff: Optional[FictionBuff]
     score: int
 
 
