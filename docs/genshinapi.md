@@ -35,30 +35,31 @@ within a few days some say 24h but its worked longer for me. stoken is used to r
 ## Table Of Contents
 
 1. [Table Of Contents](#table-of-contents)
-2. [Genshin](#genshin)
+2. [General](#general)
    1. [Default headers for web endpoints](#default-headers-for-web-endpoints)
    2. [DS](#ds)
    3. [App Login](#app-login)
    4. [Refreshing Tokens](#refreshing-tokens)
    5. [Web Login](#web-login)
-   6. [Genshin Live Notes](#genshin-live-notes)
-   7. [Genshin Daily Rewards](#genshin-daily-rewards)
-   8. [Genshin monthly primogems](#genshin-monthly-primogems)
-   9. [Genshin events](#genshin-events)
-   10. [Genshin Battle Chronical Characer](#genshin-battle-chronical-characer)
-   11. [Genshin Battle Chronicals Index](#genshin-battle-chronicals-index)
-   12. [Genshin Battle Chronical Activities](#genshin-battle-chronical-activities)
-   13. [Genshin Battle Chronical Spiral Abyss](#genshin-battle-chronical-spiral-abyss)
-   14. [Genshin banners](#genshin-banners)
-   15. [Genshin Artifact Substats](#genshin-artifact-substats)
-3. [HSR](#hsr)
+3. [Genshin](#genshin)
+   1. [Genshin Live Notes](#genshin-live-notes)
+   2. [Genshin Daily Rewards](#genshin-daily-rewards)
+   3. [Genshin monthly primogems](#genshin-monthly-primogems)
+   4. [Genshin events](#genshin-events)
+   5. [Genshin Battle Chronical Characer](#genshin-battle-chronical-characer)
+   6. [Genshin Battle Chronicals Index](#genshin-battle-chronicals-index)
+   7. [Genshin Battle Chronical Activities](#genshin-battle-chronical-activities)
+   8. [Genshin Battle Chronical Spiral Abyss](#genshin-battle-chronical-spiral-abyss)
+   9. [Genshin banners](#genshin-banners)
+   10. [Genshin Artifact Substats](#genshin-artifact-substats)
+4. [HSR](#hsr)
    1. [HSR Live Notes](#hsr-live-notes)
    2. [HSR month prmios](#hsr-month-prmios)
    3. [How to find endpoints yourself](#how-to-find-endpoints-yourself)
 
 ---
 
-## Genshin
+## General
 
 ### Default headers for web endpoints
 
@@ -437,6 +438,8 @@ You can only send 4 and 2, any othe rnumber will return an error
 </details>
 
 ### Web Login
+
+## Genshin
 
 ### Genshin Live Notes
 
