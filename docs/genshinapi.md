@@ -62,7 +62,7 @@ within a few days some say 24h but its worked longer for me. stoken is used to r
 
 ### Default headers for web endpoints
 
-```json
+```
   "+ any user agent"
   "+ host, just point to base url"
 ```
@@ -121,7 +121,7 @@ to deal with the captcha again
 
 Youre mainly looking at the token list for login itl return a token look at teh table from the beginning
 
-```json
+```
   Method: Post
   base_url: "https://sg-public-api.hoyolab.com/account/ma-passport/api/appLoginByPassword"
 ```
@@ -269,7 +269,7 @@ all you need to do is provide `stoken` and `mid`, which is `ltmid_v2` renamed
 
 You can only send 4 and 2, any othe rnumber will return an error
 
-```json
+```
   Method: Post
   base_url: https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken
 ```
@@ -442,7 +442,7 @@ You can only send 4 and 2, any othe rnumber will return an error
 
 provides live information on account, schema isnt long so look at it
 
-```json
+```
   Method: Get
   base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
 ```
@@ -702,7 +702,7 @@ provides live information on account, schema isnt long so look at it
 
 ### Genshin Daily Rewards
 
-```json
+```
   2 separate urls, this one is for actual sign in
   Method: Post, no payload required
   base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
@@ -720,7 +720,7 @@ provides live information on account, schema isnt long so look at it
 |ltoken_v2|DYNAMIC|
 |ltuid_v2|DYNAMIC|
 
-```json
+```
   second url gets data about sign in
   Method: Get
   base_url: https://sg-hk4e-api.hoyolab.com/event/sol/info
@@ -787,7 +787,7 @@ provides live information on account, schema isnt long so look at it
 Just look at schema, not a long one, last is either last day for the day things or last month
 for the month data
 
-```json
+```
   Method: Get
   base_url: https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info
 ```
@@ -928,7 +928,7 @@ for the month data
 
 contains currently ongoing event data, actual data from [this site](https://webstatic-sea.mihoyo.com/hk4e/announcement/index.html?auth_appid=announcement&bundle_id=hk4e_global&game=hk4e&game_biz=hk4e_global&lang=en&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999#/)
 
-```json
+```
     Method: Get
     base_url: https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/announcement/api/getAnnList?game=hk4e&game_biz=hk4e_global&lang=en&auth_appid=announcement&bundle_id=hk4e_global&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999
 ```
@@ -1139,7 +1139,7 @@ contains currently ongoing event data, actual data from [this site](https://webs
 exact same character data as in index, but now there is which artifact(no substat)
 , weapon and constellation names
 
-```json
+```
     Method: Post
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/character
     requires json payload
@@ -1751,7 +1751,7 @@ Contains data like character avatar and basic information on the characters,
 serenitea pot data, world exploration, misc stats like days played
 **THIS SCHEMA PROBABLY ISNT COMPLETE**
 
-```json
+```
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/index
 ```
@@ -2373,7 +2373,7 @@ serenitea pot data, world exploration, misc stats like days played
 Has event participation data
 **THIS SCHEMA IS 2000 lines long and is probably updated per event so no point providing**
 
-```json
+```
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/activities
 ```
@@ -2399,7 +2399,7 @@ Has event participation data
 
 data from spiral abyss
 
-```json
+```
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/spiralAbyss
 ```
@@ -2835,7 +2835,7 @@ this broke the actual gacha information until someone randomly found it again by
 for now though the list is updated, another way to get banner info which i recommended using
 [genshin events api](#genevents)
 
-```json
+```
     neither have and special headers
     id list endpoint
     Method: Get
@@ -2907,7 +2907,7 @@ for now though the list is updated, another way to get banner info which i recom
 
 </details>
 
-```json
+```
     where {gacha_id} put id you got from the list above
     looks like: "gacha_id":"7cd22d479503bd9c47816a6c9a73aaac3613f61c"
 
@@ -3180,7 +3180,7 @@ Mostly the smae as genshin, except for notes, that one is more complicated and a
 
 provides live information on account, schema isnt long so look at it
 
-```json
+```
     Method: Get
     base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
 ```
@@ -3206,7 +3206,7 @@ provides live information on account, schema isnt long so look at it
 
 this is the only endpoint other than codes that requires cookie_token_v2
 
-```json
+```
     Method: Get
     base_url: https://sg-public-api.hoyolab.com/event/srledger/month_info?uid={uid}&region=prod_official_asia&month=202312&lang=en-us
 ```
