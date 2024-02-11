@@ -1,7 +1,7 @@
-
-
 # Udpated 1/2024
+
 il finish it with hsr endpoints within next few days
+
 ---
 I dont have a cn account but these should work for other regions with their localisations
 if you just replace en-us with a language that hoyo supports and os_asia should be replacable with os_euro, os_usa
@@ -15,7 +15,7 @@ Rest is mostly self explanitory
 
 Code endpoints and sometimes login ones may return `-3101` this indicates a captcha and
 data to solve the captcha will be in the header `x-rpc-aigis` if youre going this deep then
-go thorugh most of the source of genshinpy that will give you a much better understanding on how to handle 
+go thorugh most of the source of genshinpy that will give you a much better understanding on how to handle
 resopnses
 
 The primary cookies are `ltoken_v2`, `ltuid_v2`, `stoken`, `cookie_token_v2`. ltoken has
@@ -30,33 +30,45 @@ within a few days some say 24h but its worked longer for me. stoken is used to r
 |cookie_token_v2|v2_CAQ|4|
 |stoken|v2_CAE|1|
 
-
-
----
-### Table Of Contents
-1. [DS](#DS)
-2. [App Login](#applogin)
-3. [Refresh Tokens](#refreshtoken)
-4. [Web Login](#weblogin)
-5. [Genshin Live Notes](#genshinlivenotes)
-6. [Genshin Daily Rewards](#gendailyrewards)
-7. [Genshin Monthly Primogems](#genmonthlyprimos)
-7. [Genshin Events](#genevents)
-9. [Genshin Character(Battle Chronical)](#gencharacter)
-10. [Genshin Index(Battle Chronical)](#genbacttlechronicalindex)
-11. [Genshin Activities(Battle Chronical)](#genbacttlechronicalactivities)
-12. [Genshin Spiral Abyss(Battle Chronical)](#genbacttlechronicalspiralabyss)
-13. [Genshin Banners](#genbanners)
-14. [How to find endpoints yourself](#findyourself)
 ---
 
+## Table Of Contents
 
-### Default headers for web endpoints:
+1. [Table Of Contents](#table-of-contents)
+2. [Genshin](#genshin)
+   1. [Default headers for web endpoints](#default-headers-for-web-endpoints)
+   2. [DS](#ds)
+   3. [App Login](#app-login)
+   4. [Refreshing Tokens](#refreshing-tokens)
+   5. [Web Login](#web-login)
+   6. [Genshin Live Notes](#genshin-live-notes)
+   7. [Genshin Daily Rewards](#genshin-daily-rewards)
+   8. [Genshin monthly primogems](#genshin-monthly-primogems)
+   9. [Genshin events](#genshin-events)
+   10. [Genshin Battle Chronical Characer](#genshin-battle-chronical-characer)
+   11. [Genshin Battle Chronicals Index](#genshin-battle-chronicals-index)
+   12. [Genshin Battle Chronical Activities](#genshin-battle-chronical-activities)
+   13. [Genshin Battle Chronical Spiral Abyss](#genshin-battle-chronical-spiral-abyss)
+   14. [Genshin banners](#genshin-banners)
+   15. [Genshin Artifact Substats](#genshin-artifact-substats)
+3. [HSR](#hsr)
+   1. [HSR Live Notes](#hsr-live-notes)
+   2. [HSR month prmios](#hsr-month-prmios)
+   3. [How to find endpoints yourself](#how-to-find-endpoints-yourself)
 
-    "+ any user agent"
-    "+ host, just point to base url"
+---
 
-### DS <a name="DS"></a>
+## Genshin
+
+### Default headers for web endpoints
+
+```json
+  "+ any user agent"
+  "+ host, just point to base url"
+```
+
+### DS
+
 Genshins dynamic secret for headers there is a web version and one for the app
 the dynamic secret, the web version is used for endpoints that are on the web and app ...
 
@@ -64,7 +76,7 @@ the dynamic secret, the web version is used for endpoints that are on the web an
 |--|--|
 |Web OS|6s25p5ox5y14umn1p61aqyyvbvvl3lrt|
 |App OS|IZPgfb0dRPtBeLuFkdDznSZ6f4wWt6y2|
-|Web CN|xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs|
+
 |App CN|not sure, how to potentially find will be at bottom|
 
 ```py
@@ -77,15 +89,16 @@ def generate_dynamic_secret(salt: str) -> str:
     r = "".join(random.choices(string.ascii_letters, k=6))
     h = hashlib.md5(f"salt={salt}&t={t}&r={r}".encode()).hexdigest()
     return f"{t},{r},{h}"
+
 ```
+
 ```rust
 use std::time::{SystemTime, UNIX_EPOCH}
 use rand;
 use md5;
 fn generate_ds(ds_salt: String) -> String {
     let time: u64 = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-.expect("system time set to pre 1970")
+        .duration_since(UNIX_EPOCH).expect("system time set to pre 1970")
         .as_secs();
     let random_string: String = rand::thread_rng()
         .sample_iter(&Alphanumeric)
@@ -97,18 +110,21 @@ fn generate_ds(ds_salt: String) -> String {
 }
 ```
 
-### App Login <a name="applogin"></a>
+### App Login
+
 I can actually explain how to get this since i found the method, granted its not complicated or protect
 like the games communication🙏
 
 The main purpose of this is to retrieve an `stoken` which can then be used to refresh `cookie_token_v2`
-and `ltoken_v2` can return a captcha but in my experience aftr 20min it will go away and you dont need 
+and `ltoken_v2` can return a captcha but in my experience aftr 20min it will go away and you dont need
 to deal with the captcha again
 
 Youre mainly looking at the token list for login itl return a token look at teh table from the beginning
 
-    Method: Post
-    base_url: "https://sg-public-api.hoyolab.com/account/ma-passport/api/appLoginByPassword"
+```json
+  Method: Post
+  base_url: "https://sg-public-api.hoyolab.com/account/ma-passport/api/appLoginByPassword"
+```
 
 |Headers|Value|
 |--|--|
@@ -119,18 +135,19 @@ Youre mainly looking at the token list for login itl return a token look at teh 
 |x-rpc-client_type|1|
 |x-rpc-app_id|c9oqaq3s3gu8|
 
-
 #### Payload
+
 ```json
 {
-    "account": (encrypted pass),
-    "password": (encrypted pass)
+  "account": (encrypted pass),
+  "password": (encrypted pass)
 }
 ```
 
 #### App RSA Key
 
 2 different formats, one with pyton another, a raw string
+
 ```py
 HOYO_APP_RSA_PUBLIC = b"""
 -----BEGIN PUBLIC KEY-----
@@ -145,10 +162,10 @@ KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
 """
 
 ```
+
 ```rust
 pub const HOYO_APP_RSA_PUBLIC: &[u8; 450] = b"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArXCPrbEFo75elvyABdMX\nyRFC/FZAklYdvCPOV0YdOMWabNd7td4k08DeaZUji01u7vp/wX6EV8ainfZ/AVR5\nBD642Ab/bmrvVAJhKvXJEruGagm7jmGAeKnRI0hAjopDbj9PCzfDACkUbQOWVDpN\nFHYYN+pA0WEY7m491Chwo/JBjEfYi9VJdkjnr7VWVqokgwVe1LDkaGOW9Sso4dJO\nm5UaBZRGzXYDHe5u12J+v2PDGN1VkRT6VtytlL7n1JdG9m1uxM2KXjHreHaqYYay\n+XW3erdbpNQkZJEkgrcRR6MMNAIqzzO7EHqtOs+vxQyOW8rstK0nILAqgeVuF0x1\n1QIDAQAB\n-----END PUBLIC KEY-----";
 ```
-
 
 #### Encryption Function
 
@@ -160,8 +177,8 @@ def encrypt_geetest_password(text: str) -> str:
     public_key = rsa.PublicKey.load_pkcs1_openssl_pem(HOYO_APP_RSA_PUBLIC)
     crypto = rsa.encrypt(text.encode("utf-8"), public_key)
     return base64.b64encode(crypto).decode("utf-8")
-
 ```
+
 ```rust
 use base64::prelude::BASE64_STANDARD;
 use openssl::pkey::Public;
@@ -241,21 +258,21 @@ r = requests.post(
 print(r.json())
 ```
 
-
-
 #### Returns
 
 see bellow, same a refreshing tokens
 
-### Refreshing Tokens <a name="refreshtoken"></a>
+### Refreshing Tokens
+
 This endpoint gives you another `ltoken_v2` and `cookie_token_v2`, types 2 and 4 respectively
 all you need to do is provide `stoken` and `mid`, which is `ltmid_v2` renamed
 
 You can only send 4 and 2, any othe rnumber will return an error
 
-    Method: Post
-    base_url: https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken
-
+```json
+  Method: Post
+  base_url: https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken
+```
 
 |Cookie name|Cookie Value|
 |--|--|
@@ -269,6 +286,7 @@ You can only send 4 and 2, any othe rnumber will return an error
 |x-rpc-app_id|c9oqaq3s3gu8|
 
 #### Payload
+
 ```json
 {
     "dst_token_types": [
@@ -276,8 +294,14 @@ You can only send 4 and 2, any othe rnumber will return an error
         2
     ]
 }
+
+
 ```
+
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -410,23 +434,19 @@ You can only send 4 and 2, any othe rnumber will return an error
 }
 ```
 
+</details>
 
+### Web Login
 
+### Genshin Live Notes
 
-
-
-
-
-### Web Login <a name="weblogin"></a>
-
-
-
-
-### Genshin Live Notes <a name="genshinlivenotes"></a>
 provides live information on account, schema isnt long so look at it
 
-    Method: Get
-    base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
+```json
+  Method: Get
+  base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
+```
+
 |Parameter Name|Value|
 |---|---|
 |server|os_asia|
@@ -445,6 +465,9 @@ provides live information on account, schema isnt long so look at it
 |x-rpc-language|en-us|
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -674,13 +697,19 @@ provides live information on account, schema isnt long so look at it
   ]
 }
 ```
-### Genshin Daily Rewards <a name="gendailyrewards"></a>
 
-    2 separate urls, this one is for actual sign in
-    Method: Post, no payload required
-    base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
-    known to sometimes have captcha, return with have a cookie called x-rpc-aigis, contains shit on the captcha
-    i forgot what it returns
+</details>
+
+### Genshin Daily Rewards
+
+```json
+  2 separate urls, this one is for actual sign in
+  Method: Post, no payload required
+  base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
+  known to sometimes have captcha, return with have a cookie called x-rpc-aigis, contains shit on the captcha
+  i forgot what it returns
+```
+
 |Parameter Name|Value|
 |---|---|
 |act_id|e202102251931481|
@@ -691,9 +720,12 @@ provides live information on account, schema isnt long so look at it
 |ltoken_v2|DYNAMIC|
 |ltuid_v2|DYNAMIC|
 
-    second url gets data about sign in
-    Method: Get
-    base_url: https://sg-hk4e-api.hoyolab.com/event/sol/info
+```json
+  second url gets data about sign in
+  Method: Get
+  base_url: https://sg-hk4e-api.hoyolab.com/event/sol/info
+```
+
 |Parameter Name|Value|
 |---|---|
 |act_id|e202102251931481|
@@ -705,6 +737,9 @@ provides live information on account, schema isnt long so look at it
 |ltuid_v2|DYNAMIC|
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -745,12 +780,18 @@ provides live information on account, schema isnt long so look at it
 }
 ```
 
-### Genshin monthly primogems <a name="genmonthlyprimos"></a>
+</details>
+
+### Genshin monthly primogems
+
 Just look at schema, not a long one, last is either last day for the day things or last month
 for the month data
 
-    Method: Get
-    base_url: https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info
+```json
+  Method: Get
+  base_url: https://sg-hk4e-api.hoyolab.com/event/ysledgeros/month_info
+```
+
 |Parameter Name|Value|
 |---|---|
 |uid|DYNAMIC|
@@ -764,6 +805,9 @@ for the month data
 |ltuid_v2|DYNAMIC|
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -878,13 +922,21 @@ for the month data
 }
 ```
 
-### Genshin events <a name="genevents"></a>
+</details>
+
+### Genshin events
+
 contains currently ongoing event data, actual data from [this site](https://webstatic-sea.mihoyo.com/hk4e/announcement/index.html?auth_appid=announcement&bundle_id=hk4e_global&game=hk4e&game_biz=hk4e_global&lang=en&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999#/)
 
+```json
     Method: Get
     base_url: https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/announcement/api/getAnnList?game=hk4e&game_biz=hk4e_global&lang=en&auth_appid=announcement&bundle_id=hk4e_global&level=60&platform=pc&region=os_euro&sdk_presentation_style=fullscreen&sdk_screen_transparent=true&uid=99999999
+```
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -1079,16 +1131,22 @@ contains currently ongoing event data, actual data from [this site](https://webs
   ]
 }
 ```
-### Genshin Battle Chronical Characer <a name="gencharacter"></a>
+
+</details>
+
+### Genshin Battle Chronical Characer
+
 exact same character data as in index, but now there is which artifact(no substat)
 , weapon and constellation names
 
-
+```json
     Method: Post
-    base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
+    base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/character
     requires json payload
+```
 
 #### Returns
+
 ```json
 {
     "server": region(os_asia),
@@ -1099,7 +1157,7 @@ exact same character data as in index, but now there is which artifact(no substa
 |Cookie name|Cookie Value|
 |--|--|
 |ltoken_v2|DYNAMIC|
-|ltuid_v2|DYNAMIC
+|ltuid_v2|DYNAMIC|
 
 |Extra Header Name|Value|
 |--|--|
@@ -1107,6 +1165,8 @@ exact same character data as in index, but now there is which artifact(no substa
 |x-rpc-app-version|1.5.0|
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
+
+<details>
 
 ```json
 {
@@ -1682,13 +1742,20 @@ exact same character data as in index, but now there is which artifact(no substa
   ]
 }
 ```
-### Genshin Battle Chronicals Index <a name="genbacttlechronicalindex"></a>
+
+</details>
+
+### Genshin Battle Chronicals Index
+
 Contains data like character avatar and basic information on the characters,
 serenitea pot data, world exploration, misc stats like days played
 **THIS SCHEMA PROBABLY ISNT COMPLETE**
 
+```json
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/index
+```
+
 |Parameter Name|Value|
 |---|---|
 |server|region(os_asia)|
@@ -1697,7 +1764,7 @@ serenitea pot data, world exploration, misc stats like days played
 |Cookie name|Cookie Value|
 |--|--|
 |ltoken_v2|DYNAMIC|
-|ltuid_v2|DYNAMIC
+|ltuid_v2|DYNAMIC|
 
 |Extra Header Name|Value|
 |--|--|
@@ -1705,6 +1772,11 @@ serenitea pot data, world exploration, misc stats like days played
 |x-rpc-app-version|1.5.0|
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
+
+#### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/schema#",
@@ -2294,12 +2366,18 @@ serenitea pot data, world exploration, misc stats like days played
 }
 ```
 
-### Genshin Battle Chronical Activities <a name="genbacttlechronicalactivities"></a>
+</details>
+
+### Genshin Battle Chronical Activities
+
 Has event participation data
 **THIS SCHEMA IS 2000 lines long and is probably updated per event so no point providing**
 
+```json
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/activities
+```
+
 |Parameter Name|Value|
 |---|---|
 |server|region(os_asia)|
@@ -2317,15 +2395,16 @@ Has event participation data
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
 
+### Genshin Battle Chronical Spiral Abyss
 
-### Genshin Battle Chronical Spiral Abyss <a name="genbacttlechronicalspiralabyss"></a>
 data from spiral abyss
 
+```json
     Method: Get
     base_url: https://bbs-api-os.hoyolab.com/game_record/genshin/api/spiralAbyss
+```
 
 schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
-
 
 |Parameter Name|Value|
 |---|---|
@@ -2336,7 +2415,7 @@ schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
 |Cookie name|Cookie Value|
 |--|--|
 |ltoken_v2|DYNAMIC|
-|ltuid_v2|DYNAMIC
+|ltuid_v2|DYNAMIC|
 
 |Extra Header Name|Value|
 |--|--|
@@ -2346,6 +2425,9 @@ schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
 |x-rpc-language|en-us|
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2743,21 +2825,27 @@ schedule_type can be either 1 or 2, 1 refers to current abyss, 2 is previous
 }
 ```
 
+</details>
 
-### Genshin banners <a  name = "genbanners"></a>
+### Genshin banners
 
 This endpoint has 2 urls, 1 to get list, and another to get teh actual banner info, i recommend not using this
 as this endpoint was changed at the beginning of 4.0 where the list url no longer got updated
 this broke the actual gacha information until someone randomly found it again by guessing
-for now though the list is updated, another way to get banner info which i recommended using 
+for now though the list is updated, another way to get banner info which i recommended using
 [genshin events api](#genevents)
 
+```json
     neither have and special headers
     id list endpoint
     Method: Get
     base_url: https://operation-webstatic.mihoyo.com/gacha_info/hk4e/cn_gf01/gacha/list.json
+```
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2817,13 +2905,20 @@ for now though the list is updated, another way to get banner info which i recom
 }
 ```
 
-    where {gacha_id} put id you got from the list above 
+</details>
+
+```json
+    where {gacha_id} put id you got from the list above
     looks like: "gacha_id":"7cd22d479503bd9c47816a6c9a73aaac3613f61c"
 
     Method: Get
     base_url: https://operation-webstatic.hoyoverse.com/gacha_info/hk4e/os_asia/{gacha_id}/en-us.json
+```
 
 #### Returns
+
+<details>
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -3071,16 +3166,50 @@ for now though the list is updated, another way to get banner info which i recom
 }
 ```
 
+</details>
+
+### Genshin Artifact Substats
+
+Currently not in hoyoapi however, as of 06/02/2024 HSR has implemented a way to get substats throughh the battle chornical equivalent in Hoyolab. For now the only alternative is either the enka api or mihomo
 
 ## HSR
-Mostly the smae as genshin, except for notes, that one is more complicated
 
-### HSR month prmios <a name="hsrmonthprmos"></a>
+Mostly the smae as genshin, except for notes, that one is more complicated and as of 06/02/2024 they have artifact substats for everyone 🎉
+
+### HSR Live Notes
+
+provides live information on account, schema isnt long so look at it
+
+```json
+    Method: Get
+    base_url: https://sg-hk4e-api.hoyolab.com/event/sol/sign
+```
+
+|Parameter Name|Value|
+|---|---|
+|server|os_asia|
+|role_id|(player uid)|
+
+|Cookie name|Cookie Value|
+|--|--|
+|ltoken_v2|DYNAMIC|
+|ltuid_v2|DYNAMIC|
+
+|Extra Header Name|Value|
+|--|--|
+|ds|web ds|
+|x-rpc-app-version|1.5.0|
+|x-rpc-client_type|5|
+|x-rpc-language|en-us|
+
+### HSR month prmios
+
 this is the only endpoint other than codes that requires cookie_token_v2
 
+```json
     Method: Get
     base_url: https://sg-public-api.hoyolab.com/event/srledger/month_info?uid={uid}&region=prod_official_asia&month=202312&lang=en-us
-
+```
 
 |Parameter Name|Value|
 |---|---|
@@ -3091,7 +3220,7 @@ this is the only endpoint other than codes that requires cookie_token_v2
 |Cookie name|Cookie Value|
 |--|--|
 |ltoken_v2|DYNAMIC|
-|ltuid_v2|DYNAMIC
+|ltuid_v2|DYNAMIC|
 
 |Extra Header Name|Value|
 |--|--|
@@ -3100,15 +3229,10 @@ this is the only endpoint other than codes that requires cookie_token_v2
 |x-rpc-client_type|5|
 |x-rpc-language|en-us|
 
+### How to find endpoints yourself
 
-
-
-
-
-### How to find endpoints yourself <a  name = "findyourself"></a>
 literally just go to a place where you can see the data you want and f12
 then go to tet box called filter, that searches all network traffic that you have selected(default all)
 it i honestly cant say more
 search for headings in hte data you want or specific values eg if it says
 data = 124 search 124
-
