@@ -23,10 +23,6 @@ KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
 WEB_LOGIN_HEADERS = {
     "x-rpc-app_id": "c9oqaq3s3gu8",
     "x-rpc-client_type": "4",
-    "x-rpc-sdk_version": "2.14.1",
-    "x-rpc-game_biz": "bbs_oversea",
-    "x-rpc-source": "v2.webLogin",
-    "x-rpc-referrer": "https://www.hoyolab.com",
     # If not equal account.hoyolab.com It's will return retcode 1200 [Unauthorized]
     "Origin": "https://account.hoyolab.com",
     "Referer": "https://account.hoyolab.com/",
@@ -34,20 +30,22 @@ WEB_LOGIN_HEADERS = {
 
 APP_LOGIN_HEADERS = {
     "x-rpc-app_id": "c9oqaq3s3gu8",
-    "x-rpc-app_version": "2.47.0",
     "x-rpc-client_type": "2",
-    "x-rpc-sdk_version": "2.22.0",
-    "x-rpc-game_biz": "bbs_oversea",
-    "Origin": "https://account.hoyoverse.com",
-    "Referer": "https://account.hoyoverse.com/",
+    # Passing "x-rpc-device_id" header will trigger email verification
+    # (unless the device_id is already verified).
+    #
+    # For some reason, without this header, email verification is not triggered.
+    # "x-rpc-device_id": "1c33337bd45c1bfs",
 }
 
 EMAIL_SEND_HEADERS = {
     "x-rpc-app_id": "c9oqaq3s3gu8",
+    "x-rpc-client_type": "2",
 }
 
 EMAIL_VERIFY_HEADERS = {
     "x-rpc-app_id": "c9oqaq3s3gu8",
+    "x-rpc-client_type": "2",
 }
 
 

@@ -65,7 +65,7 @@ def get_page(page: typing.Literal["captcha", "verify-email"]) -> str:
         <button id="verify">Send</button>
       </body>
       <script>
-        document.getElementById("verify").onClick = () => {
+        document.getElementById("verify").onclick = () => {
           fetch("/send-data", {
             method: "POST",
             body: JSON.stringify({
@@ -137,6 +137,7 @@ async def launch_webapp(
     finally:
         await asyncio.sleep(0.3)
         await runner.shutdown()
+        await runner.cleanup()
 
     return data
 
@@ -160,4 +161,4 @@ async def verify_email(
     data = await launch_webapp("verify-email", port=port)
     code = data["code"]
 
-    return await client.verify_email(code, ticket)
+    return await client._verify_email(code, ticket)
