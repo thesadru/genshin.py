@@ -15,6 +15,7 @@ class StarRailExpedition(APIModel):
     status: typing.Literal["Ongoing", "Finished"]
     remaining_time: datetime.timedelta
     name: str
+    item_url: str
 
     @property
     def finished(self) -> bool:
