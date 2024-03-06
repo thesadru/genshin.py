@@ -1,7 +1,7 @@
 """Starrail chronicle character."""
 
 import typing
-from typing import Any, Mapping, Sequence, Optional
+from typing import Any, Mapping, Optional, Sequence
 
 if typing.TYPE_CHECKING:
     import pydantic.v1 as pydantic
