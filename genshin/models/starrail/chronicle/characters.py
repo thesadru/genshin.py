@@ -1,7 +1,7 @@
 """Starrail chronicle character."""
 
 import typing
-from typing import Any, Dict, List, Optional
+from typing import Any, Mapping, Sequence, Optional
 
 if typing.TYPE_CHECKING:
     import pydantic.v1 as pydantic
@@ -77,7 +77,7 @@ class Relic(APIModel):
     rarity: int
     wiki: str
     main_property: RelicProperty
-    properties: List[RelicProperty]
+    properties: Sequence[RelicProperty]
 
 
 class Rank(APIModel):
@@ -127,14 +127,14 @@ class Skill(APIModel):
     pre_point: str
     anchor: str
     remake: str
-    skill_stages: List[SkillStage]
+    skill_stages: Sequence[SkillStage]
 
 
 class RecommendProperty(APIModel):
     """Character recommended and preferred properties."""
 
-    recommend_relic_properties: List[int]
-    custom_relic_properties: List[int]
+    recommend_relic_properties: Sequence[int]
+    custom_relic_properties: Sequence[int]
     is_custom_property_valid: bool
 
 
@@ -143,10 +143,10 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
 
     image: str
     equip: Optional[StarRailEquipment]
-    relics: List[Relic]
-    ornaments: List[Relic]
-    ranks: List[Rank]
-    properties: List[CharacterProperty]
+    relics: Sequence[Relic]
+    ornaments: Sequence[Relic]
+    ranks: Sequence[Rank]
+    properties: Sequence[CharacterProperty]
     base_type: int
     figure_path: str
 
@@ -161,15 +161,15 @@ class ModifyRelicProperty(APIModel):
 class StarRailDetailCharacters(APIModel):
     """StarRail characters."""
 
-    avatar_list: List[StarRailDetailCharacter]
-    equip_wiki: Dict[str, str]
-    relic_wiki: Dict[str, str]
-    property_info: Dict[str, PropertyInfo]
-    recommend_property: Dict[str, RecommendProperty]
-    relic_properties: List[ModifyRelicProperty]
+    avatar_list: Sequence[StarRailDetailCharacter]
+    equip_wiki: Mapping[str, str]
+    relic_wiki: Mapping[str, str]
+    property_info: Mapping[str, PropertyInfo]
+    recommend_property: Mapping[str, RecommendProperty]
+    relic_properties: Sequence[ModifyRelicProperty]
 
     @pydantic.root_validator(pre=True)
-    def __fill_additional_fields(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def __fill_additional_fields(cls, values: Mapping[str, Any]) -> Mapping[str, Any]:
         """Fill additional fields for convenience."""
         characters = values.get("avatar_list", [])
         props_info = values.get("property_info", {})
