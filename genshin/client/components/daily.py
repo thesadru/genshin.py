@@ -72,7 +72,9 @@ class DailyRewardClient(base.BaseClient):
                 "bbs_auth_required=true&act_id=e202009291139501&utm_source=bbs&utm_medium=mys&utm_campaign=icon"
             )
 
-            headers["ds"] = ds_utility.generate_dynamic_secret(constants.DS_SALT["cn_signin"])
+            headers["ds"] = ds_utility.generate_dynamic_secret(
+                constants.DS_SALT["cn_signin"]
+            )
 
         else:
             raise TypeError(f"{self.region!r} is not a valid region.")
@@ -82,7 +84,9 @@ class DailyRewardClient(base.BaseClient):
             headers["x-rpc-seccode"] = challenge["seccode"]
             headers["x-rpc-validate"] = challenge["validate"]
 
-        return await self.request(url, method=method, params=params, headers=headers, **kwargs)
+        return await self.request(
+            url, method=method, params=params, headers=headers, **kwargs
+        )
 
     async def get_reward_info(
         self,
@@ -92,7 +96,9 @@ class DailyRewardClient(base.BaseClient):
     ) -> models.DailyRewardInfo:
         """Get the daily reward info for the current user."""
         data = await self.request_daily_reward("info", game=game, lang=lang)
-        return models.DailyRewardInfo(data["is_sign"], data["total_sign_day"])
+        return models.DailyRewardInfo(
+            data["is_sign"], data["total_sign_day"], data["sign_cnt_missed"]
+        )
 
     async def get_monthly_rewards(
         self,
@@ -108,7 +114,9 @@ class DailyRewardClient(base.BaseClient):
                 "rewards",
                 month=datetime.datetime.now(CN_TIMEZONE).month,
                 region=self.region,
-                game=typing.cast("types.Game", game or self.default_game),  # (resolved later)
+                game=typing.cast(
+                    "types.Game", game or self.default_game
+                ),  # (resolved later)
                 lang=lang or self.lang,
             ),
         )
@@ -122,7 +130,9 @@ class DailyRewardClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.ClaimedDailyReward]:
         """Get a single page of claimed rewards for the current user."""
-        data = await self.request_daily_reward("award", params=dict(current_page=page), game=game, lang=lang)
+        data = await self.request_daily_reward(
+            "award", params=dict(current_page=page), game=game, lang=lang
+        )
         return [models.ClaimedDailyReward(**i) for i in data["list"]]
 
     def claimed_rewards(
@@ -172,7 +182,9 @@ class DailyRewardClient(base.BaseClient):
         challenge: typing.Optional[typing.Mapping[str, str]] = None,
     ) -> typing.Optional[models.DailyReward]:
         """Signs into hoyolab and claims the daily reward."""
-        await self.request_daily_reward("sign", method="POST", game=game, lang=lang, challenge=challenge)
+        await self.request_daily_reward(
+            "sign", method="POST", game=game, lang=lang, challenge=challenge
+        )
 
         if not reward:
             return None
