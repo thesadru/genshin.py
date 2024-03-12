@@ -1,6 +1,5 @@
 """Daily reward models."""
 
-import calendar
 import datetime
 import typing
 
@@ -19,8 +18,7 @@ class DailyRewardInfo(typing.NamedTuple):
     def missed_rewards(self) -> int:
         cn_timezone = datetime.timezone(datetime.timedelta(hours=8))
         now = datetime.datetime.now(cn_timezone)
-        month_days = calendar.monthrange(now.year, now.month)[1]
-        return month_days - self.claimed_rewards
+        return now.day - self.claimed_rewards
 
 
 class DailyReward(APIModel):
