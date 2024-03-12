@@ -97,7 +97,7 @@ class DailyRewardClient(base.BaseClient):
         """Get the daily reward info for the current user."""
         data = await self.request_daily_reward("info", game=game, lang=lang)
         return models.DailyRewardInfo(
-            data["is_sign"], data["total_sign_day"], data["sign_cnt_missed"]
+            data["is_sign"], data["total_sign_day"], data.get("sign_cnt_missed", 0)
         )
 
     async def get_monthly_rewards(
