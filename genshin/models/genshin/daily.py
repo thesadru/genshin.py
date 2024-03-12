@@ -13,7 +13,12 @@ class DailyRewardInfo(typing.NamedTuple):
 
     signed_in: bool
     claimed_rewards: int
-    missed_rewards: int
+
+    @property
+    def missed_rewards(self) -> int:
+        cn_timezone = datetime.timezone(datetime.timedelta(hours=8))
+        now = datetime.datetime.now(cn_timezone)
+        return now.day - self.claimed_rewards
 
 
 class DailyReward(APIModel):
