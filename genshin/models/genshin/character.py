@@ -100,9 +100,7 @@ def _get_db_char(
             if char.name == name:
                 return char
 
-        return constants.DBChar(
-            id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True
-        )
+        return constants.DBChar(id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True)
 
     raise ValueError("Character data incomplete")
 
@@ -119,13 +117,9 @@ class BaseCharacter(APIModel, Unique):
     collab: bool = False
 
     @pydantic.root_validator(pre=True)
-    def __autocomplete(
-        cls, values: typing.Dict[str, typing.Any]
-    ) -> typing.Dict[str, typing.Any]:
+    def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
-        id, name, icon, element, rarity = (
-            values.get(x) for x in ("id", "name", "icon", "element", "rarity")
-        )
+        id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
         char = _get_db_char(id, name, icon, element, rarity, lang=values["lang"])
         icon = _create_icon(char.icon_name, "UI_AvatarIcon_{}")
