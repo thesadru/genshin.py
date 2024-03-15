@@ -149,6 +149,7 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
     properties: Sequence[CharacterProperty]
     base_type: int
     figure_path: str
+    skills: Sequence[Skill]
 
 
 class ModifyRelicProperty(APIModel):
