@@ -20,7 +20,7 @@ __all__ = ["BaseCharacter"]
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/genshin/"
+ICON_BASE = "https://enka.network/ui/"
 
 
 def _parse_icon(icon: typing.Union[str, int]) -> str:
@@ -86,14 +86,23 @@ def _get_db_char(
             constants.CHARACTER_NAMES[lang][char.id] = char
             return char
 
-        return constants.DBChar(id or 0, icon_name, name or icon_name, element or "Anemo", rarity or 5, guessed=True)
+        return constants.DBChar(
+            id or 0,
+            icon_name,
+            name or icon_name,
+            element or "Anemo",
+            rarity or 5,
+            guessed=True,
+        )
 
     if name:
         for char in constants.CHARACTER_NAMES[lang].values():
             if char.name == name:
                 return char
 
-        return constants.DBChar(id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True)
+        return constants.DBChar(
+            id or 0, icon or name, name, element or "Anemo", rarity or 5, guessed=True
+        )
 
     raise ValueError("Character data incomplete")
 
@@ -110,12 +119,16 @@ class BaseCharacter(APIModel, Unique):
     collab: bool = False
 
     @pydantic.root_validator(pre=True)
-    def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __autocomplete(
+        cls, values: typing.Dict[str, typing.Any]
+    ) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
-        id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
+        id, name, icon, element, rarity = (
+            values.get(x) for x in ("id", "name", "icon", "element", "rarity")
+        )
 
         char = _get_db_char(id, name, icon, element, rarity, lang=values["lang"])
-        icon = _create_icon(char.icon_name, "character_icon/UI_AvatarIcon_{}")
+        icon = _create_icon(char.icon_name, "UI_AvatarIcon_{}")
 
         values["id"] = char.id
         values["name"] = char.name
@@ -144,15 +157,16 @@ class BaseCharacter(APIModel, Unique):
 
     @property
     def image(self) -> str:
+        # I don't know what this is, so this hasn't been changed to enka's endpoint
         return _create_icon(self.icon, "character_image/UI_AvatarIcon_{}@2x")
 
     @property
     def side_icon(self) -> str:
-        return _create_icon(self.icon, "character_side_icon/UI_AvatarIcon_Side_{}")
+        return _create_icon(self.icon, "UI_AvatarIcon_Side_{}")
 
     @property
     def card_icon(self) -> str:
-        return _create_icon(self.icon, "character_card_icon/UI_AvatarIcon_{}_Card")
+        return _create_icon(self.icon, "UI_AvatarIcon_{}_Card")
 
     @property
     def traveler_name(self) -> str:
