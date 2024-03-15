@@ -4,6 +4,8 @@ import logging
 import re
 import typing
 
+from genshin.utility import deprecation
+
 if typing.TYPE_CHECKING:
     import pydantic.v1 as pydantic
 else:
@@ -150,9 +152,13 @@ class BaseCharacter(APIModel, Unique):
         return values
 
     @property
+    @deprecation.deprecated("gacha_art")
     def image(self) -> str:
-        # I don't know what this is, so this hasn't been changed to enka's endpoint
-        return _create_icon(self.icon, "character_image/UI_AvatarIcon_{}@2x")
+        return _create_icon(self.icon, "UI_Gacha_AvatarImg_{}")
+
+    @property
+    def gacha_art(self) -> str:
+        return _create_icon(self.icon, "UI_Gacha_AvatarImg_{}")
 
     @property
     def side_icon(self) -> str:
