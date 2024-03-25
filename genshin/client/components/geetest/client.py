@@ -2,7 +2,6 @@
 
 import json
 import typing
-from http.cookies import SimpleCookie
 
 import aiohttp
 import aiohttp.web
@@ -37,11 +36,17 @@ class GeetestClient(base.BaseClient):
         if geetest:
             mmt_data = geetest["data"]
             session_id = geetest["session_id"]
-            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(session_id, mmt_data)
+            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(
+                session_id, mmt_data
+            )
 
         payload = {
-            "account": geetest_utility.encrypt_geetest_credentials(account, self._region),
-            "password": geetest_utility.encrypt_geetest_credentials(password, self._region),
+            "account": geetest_utility.encrypt_geetest_credentials(
+                account, self._region
+            ),
+            "password": geetest_utility.encrypt_geetest_credentials(
+                password, self._region
+            ),
             "token_type": tokenType,
         }
 
@@ -89,11 +94,17 @@ class GeetestClient(base.BaseClient):
         if geetest:
             mmt_data = geetest["data"]
             session_id = geetest["session_id"]
-            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(session_id, mmt_data)
+            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(
+                session_id, mmt_data
+            )
 
         payload = {
-            "account": geetest_utility.encrypt_geetest_credentials(account, self._region),
-            "password": geetest_utility.encrypt_geetest_credentials(password, self._region),
+            "account": geetest_utility.encrypt_geetest_credentials(
+                account, self._region
+            ),
+            "password": geetest_utility.encrypt_geetest_credentials(
+                password, self._region
+            ),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -113,13 +124,7 @@ class GeetestClient(base.BaseClient):
         if not data["data"]:
             errors.raise_for_retcode(data)
 
-        # Parse cookies from headers
-        cookies: dict[str, str] = {}
-        for data in r.headers.items():
-            if data[0] == "Set-Cookie":
-                cookie_parser = SimpleCookie()
-                cookie_parser.load(data[1])
-                cookies.update({key: morsel.value for key, morsel in cookie_parser.items()})
+        cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
 
         self.set_cookies(cookies)
         return cookies
@@ -143,15 +148,21 @@ class GeetestClient(base.BaseClient):
         if geetest:
             mmt_data = geetest["data"]
             session_id = geetest["session_id"]
-            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(session_id, mmt_data)
+            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(
+                session_id, mmt_data
+            )
 
         if ticket:
             ticket["verify_str"] = json.dumps(ticket["verify_str"])
             headers["x-rpc-verify"] = json.dumps(ticket)
 
         payload = {
-            "account": geetest_utility.encrypt_geetest_credentials(account, self._region),
-            "password": geetest_utility.encrypt_geetest_credentials(password, self._region),
+            "account": geetest_utility.encrypt_geetest_credentials(
+                account, self._region
+            ),
+            "password": geetest_utility.encrypt_geetest_credentials(
+                password, self._region
+            ),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -202,7 +213,9 @@ class GeetestClient(base.BaseClient):
         if geetest:
             mmt_data = geetest["data"]
             session_id = geetest["session_id"]
-            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(session_id, mmt_data)
+            headers["x-rpc-aigis"] = geetest_utility.get_aigis_header(
+                session_id, mmt_data
+            )
 
         async with aiohttp.ClientSession() as session:
             async with session.post(
@@ -226,7 +239,9 @@ class GeetestClient(base.BaseClient):
 
         return None
 
-    async def _verify_email(self, code: str, ticket: typing.Dict[str, typing.Any]) -> None:
+    async def _verify_email(
+        self, code: str, ticket: typing.Dict[str, typing.Any]
+    ) -> None:
         """Verify email."""
         async with aiohttp.ClientSession() as session:
             async with session.post(
@@ -276,7 +291,9 @@ class GeetestClient(base.BaseClient):
         else:
             geetest = await server.solve_geetest(result, port=port)
 
-        return await self._web_login(account, password, tokenType=tokenType, geetest=geetest)
+        return await self._web_login(
+            account, password, tokenType=tokenType, geetest=geetest
+        )
 
     async def cn_login_by_password(
         self,
