@@ -13,6 +13,7 @@ __all__ = [
     "BBS_REFERER_URL",
     "BBS_URL",
     "CALCULATOR_URL",
+    "CN_LOGIN_URL",
     "COMMUNITY_URL",
     "COOKIE_V2_REFRESH_URL",
     "DETAIL_LEDGER_URL",
@@ -217,6 +218,7 @@ COOKIE_V2_REFRESH_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-pa
 
 WEB_LOGIN_URL = Route("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
 APP_LOGIN_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/api/appLoginByPassword")
+CN_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/loginByPassword")
 
 SEND_VERIFICATION_CODE_URL = Route(
     "https://sg-public-api.hoyoverse.com/account/ma-verifier/api/createEmailCaptchaByActionTicket"
