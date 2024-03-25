@@ -97,7 +97,7 @@ class GeetestClient(base.BaseClient):
 
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                routes.CN_LOGIN_URL.get_url(),
+                routes.CN_WEB_LOGIN_URL.get_url(),
                 json=payload,
                 headers=headers,
             ) as r:
