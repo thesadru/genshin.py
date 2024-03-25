@@ -70,7 +70,7 @@ EMAIL_VERIFY_HEADERS = {
 }
 
 
-def encrypt_geetest_credentials(text: str, region: Region) -> str:
+def encrypt_geetest_credentials(text: str, region: Region = Region.OVERSEAS) -> str:
     """Encrypt text for geetest."""
     import rsa
 

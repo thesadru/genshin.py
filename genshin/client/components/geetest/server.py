@@ -11,13 +11,10 @@ from aiohttp import web
 
 from . import client
 
-__all__ = ["get_page", "launch_webapp", "solve_geetest", "verify_email"]
+__all__ = ["PAGES", "launch_webapp", "solve_geetest", "verify_email"]
 
-
-def get_page(page: typing.Literal["captcha", "verify-email", "enter-otp"]) -> str:
-    """Get the HTML page."""
-    return (
-        """
+PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "verify-email", "enter-otp"], str]] = {
+    "captcha": """
     <!DOCTYPE html>
     <html>
       <body></body>
@@ -55,9 +52,8 @@ def get_page(page: typing.Literal["captcha", "verify-email", "enter-otp"]) -> st
         );
       </script>
     </html>
-    """
-        if page == "captcha"
-        else """
+    """,
+    "verify-email": """
     <!DOCTYPE html>
     <html>
       <body>
@@ -76,8 +72,28 @@ def get_page(page: typing.Literal["captcha", "verify-email", "enter-otp"]) -> st
         };
       </script>
     </html>
-    """
-    )
+    """,
+    "enter-otp": """
+    <!DOCTYPE html>
+    <html>
+      <body>
+        <input id="code" type="number">
+        <button id="verify">Send</button>
+      </body>
+      <script>
+        document.getElementById("verify").onclick = () => {
+          fetch("/send-data", {
+            method: "POST",
+            body: JSON.stringify({
+              code: document.getElementById("code").value
+            }),
+          });
+          document.body.innerHTML = "You may now close this window.";
+        };
+      </script>
+    </html>
+    """,
+}
 
 
 GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/static/libs/gt.js"
@@ -95,15 +111,15 @@ async def launch_webapp(
 
     @routes.get("/captcha")
     async def captcha(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=get_page("captcha"), content_type="text/html")
+        return web.Response(body=PAGES["captcha"], content_type="text/html")
 
     @routes.get("/verify-email")
     async def verify_email(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=get_page("verify-email"), content_type="text/html")
+        return web.Response(body=PAGES["verify-email"], content_type="text/html")
 
     @routes.get("/enter-otp")
     async def enter_otp(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=get_page("enter-otp"), content_type="text/html")
+        return web.Response(body=PAGES["enter-otp"], content_type="text/html")
 
     @routes.get("/gt.js")
     async def gt(request: web.Request) -> web.StreamResponse:
