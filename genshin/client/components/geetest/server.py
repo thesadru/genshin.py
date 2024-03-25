@@ -14,7 +14,7 @@ from . import client
 __all__ = ["get_page", "launch_webapp", "solve_geetest", "verify_email"]
 
 
-def get_page(page: typing.Literal["captcha", "verify-email"]) -> str:
+def get_page(page: typing.Literal["captcha", "verify-email", "enter-otp"]) -> str:
     """Get the HTML page."""
     return (
         """
@@ -84,7 +84,7 @@ GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/sta
 
 
 async def launch_webapp(
-    page: typing.Literal["captcha", "verify-email"],
+    page: typing.Literal["captcha", "verify-email", "enter-otp"],
     *,
     port: int = 5000,
     mmt: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -100,6 +100,10 @@ async def launch_webapp(
     @routes.get("/verify-email")
     async def verify_email(request: web.Request) -> web.StreamResponse:
         return web.Response(body=get_page("verify-email"), content_type="text/html")
+
+    @routes.get("/enter-otp")
+    async def enter_otp(request: web.Request) -> web.StreamResponse:
+        return web.Response(body=get_page("enter-otp"), content_type="text/html")
 
     @routes.get("/gt.js")
     async def gt(request: web.Request) -> web.StreamResponse:
@@ -162,3 +166,11 @@ async def verify_email(
     code = data["code"]
 
     return await client._verify_email(code, ticket)
+
+
+async def enter_otp(port: int = 5000) -> str:
+    """Lets user enter the OTP."""
+    # The enter-otp page is the same as verify-email page.
+    data = await launch_webapp("enter-otp", port=port)
+    code = data["code"]
+    return code
