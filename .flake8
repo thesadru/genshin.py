@@ -14,9 +14,11 @@ exclude = tests, test.py
 # W503: line break before binary operator
 ignore = 
     A001, A002, A003,
+    BLK,
     C408,
     D105, D106, D419,
     E704,
+    I,
     S101, S303, S311, S324,
     W503,
 
