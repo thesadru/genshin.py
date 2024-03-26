@@ -1,3 +1,2 @@
-black
-isort
+ruff
 sort-all
