@@ -24,7 +24,7 @@ __all__ = [
 
 
 def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-    """Helper function which turns fields into properly named ones"""
+    """Turn fields into properly named ones."""
     ret: typing.Dict[str, typing.Any] = {}
     for field in model.__fields__.values():
         if not field.field_info.extra.get("mi18n"):

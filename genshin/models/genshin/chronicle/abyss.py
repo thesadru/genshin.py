@@ -53,7 +53,7 @@ class CharacterRanks(APIModel):
     # fmt: on
 
     def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
-        """Helper function which turns fields into properly named ones"""
+        """Turn fields into properly named ones."""
         return {
             self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
             for field in self.__fields__.values()
