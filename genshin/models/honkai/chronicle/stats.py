@@ -123,7 +123,7 @@ class OldAbyssStats(APIModel):
     raw_tier: int =                               Aliased("latest_area",      mi18n="bbs/settled_level")
     raw_latest_rank: typing.Optional[int] =       Aliased("latest_level",     mi18n="bbs/rank")
     # TODO: Add proper key
-    latest_type: str =                            Aliased(                    mi18n="bbs/latest_type")  
+    latest_type: str =                            Aliased(                    mi18n="bbs/latest_type")
     # fmt: on
 
     @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
