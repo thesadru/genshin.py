@@ -52,7 +52,7 @@ def docs(session: nox.Session) -> None:
 def lint(session: nox.Session) -> None:
     """Run this project's modules against the pre-defined flake8 linters."""
     install_requirements(session, "lint")
-    session.run("flake8", "--version")
+    session.run("ruff", "check", *GENERAL_TARGETS, *verbose_args())
     session.run("flake8", *GENERAL_TARGETS, *verbose_args())
 
 
@@ -60,8 +60,8 @@ def lint(session: nox.Session) -> None:
 def reformat(session: nox.Session) -> None:
     """Reformat this project's modules to fit the standard style."""
     install_requirements(session, "reformat")
-    session.run("black", *GENERAL_TARGETS, *verbose_args())
-    session.run("isort", *GENERAL_TARGETS, *verbose_args())
+    session.run("ruff", "check", "--select", "I", "--fix", *GENERAL_TARGETS, *verbose_args())
+    session.run("ruff", "format", *GENERAL_TARGETS, *verbose_args())
 
     session.log("sort-all")
     LOGGER.disabled = True
