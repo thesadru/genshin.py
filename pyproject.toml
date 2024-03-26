@@ -2,12 +2,65 @@
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.black]
+[tool.ruff]
 line-length = 120
-target-version = ["py39"]
+target-version = "py39"
 
-[tool.isort]
-profile = "black"
+[tool.ruff.lint]
+select = [
+    "A",
+    "C4",
+    "C9",
+    "D",
+    "E",
+    "F",
+    "S",
+    "W",
+    "T20",
+    "PT",
+    "RSE"
+]
+exclude = ["tests", "test.py"]
+
+# A001, A002, A003: `id` variable/parameter/attribute
+# C408: dict() with keyword arguments
+# D101: Missing docstring in public module
+# D105: Missing docstring in magic method
+# D106: Missing docstring Model.Config
+# D400: First line should end with a period
+# D419: Docstring is empty
+# PT007: Wrong values type in `@pytest.mark.parametrize` expected `list` of `tuple`
+# PT018: Assertion should be broken down into multiple parts
+# S101: Use of assert for type checking
+# S303: Use of md5
+# S311: Use of pseudo-random generators
+# S324: Use of md5 without usedforsecurity=False (3.9+)
+ignore = [
+    "A001", "A002", "A003",
+    "C408",
+    "D100", "D105", "D106", "D400", "D419",
+    "PT007", "PT018",
+    "S101", "S303", "S311", "S324",
+]
+
+# F401: unused import.
+# F403: cannot detect unused vars if we use starred import
+# D10*: docstrings
+# S10*: hardcoded passwords
+# F841: unused variable
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["F401", "F403"]
+"tests/**" = ["D10", "S10", "F841"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 16
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 130
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+ignore-decorators = ["property"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
