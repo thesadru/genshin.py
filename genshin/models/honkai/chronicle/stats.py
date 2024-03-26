@@ -240,6 +240,7 @@ class HonkaiStats(APIModel):
         return values
 
     def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        """Turn fields into properly named ones."""
         return _model_to_dict(self, lang)
 
 
