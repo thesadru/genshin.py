@@ -210,7 +210,8 @@ async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> N
 
     data = await client.get_starrail_notes(uid)
 
-    click.echo(f"{click.style('TB power:', bold=True)} {data.current_stamina}/{data.max_stamina}")
+    click.echo(f"{click.style('TB power:', bold=True)} {data.current_stamina}/{data.max_stamina}", nl=False)
+    click.echo(f" (Full in {data.stamina_recover_time})" if data.stamina_recover_time > datetime.timedelta(0) else "")
     click.echo(f"{click.style('Reserved TB power:', bold=True)} {data.current_reserve_stamina}/2400")
     click.echo(f"{click.style('Daily training:', bold=True)} {data.current_train_score}/{data.max_train_score}")
     click.echo(f"{click.style('Simulated Universe:', bold=True)} {data.current_rogue_score}/{data.max_rogue_score}")
