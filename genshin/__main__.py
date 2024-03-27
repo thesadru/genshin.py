@@ -68,8 +68,10 @@ async def accounts(client: genshin.Client) -> None:
 
 genshin_group: click.Group = click.Group("genshin", help="Genshin-related commands.")
 honkai_group: click.Group = click.Group("honkai", help="Honkai-related commands.")
+starrail_group: click.Group = click.Group("starrail", help="StarRail-related commands.")
 cli.add_command(genshin_group)
 cli.add_command(honkai_group)
+cli.add_command(starrail_group)
 
 
 @honkai_group.command("stats")
@@ -197,6 +199,32 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
             click.echo(f" - {expedition.status} | {remaining}")
         else:
             click.echo(f" - {expedition.status}")
+
+
+@starrail_group.command("notes")
+@click.argument("uid", type=int, default=None, required=False)
+@client_command
+async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> None:
+    """Show real-Time starrail notes."""
+    click.echo("Real-Time notes.")
+
+    data = await client.get_starrail_notes(uid)
+
+    click.echo(f"{click.style('TB power:', bold=True)} {data.current_stamina}/{data.max_stamina}")
+    click.echo(f"{click.style('Reserve TB power:', bold=True)} {data.current_reserve_stamina}/2400")
+    click.echo(f"{click.style('Daily missions:', bold=True)} {data.current_train_score}/{data.max_train_score}")
+    click.echo(f"{click.style('Simulated Universe:', bold=True)} {data.current_rogue_score}/{data.max_rogue_score}")
+    click.echo(
+        f"{click.style('Echoes of War:', bold=True)} {data.remaining_weekly_discounts}/{data.max_weekly_discounts}"
+    )
+
+    click.echo(f"\n{click.style('Expeditions:', bold=True)} {data.accepted_epedition_num}/{data.total_expedition_num}")
+    for expedition in data.expeditions:
+        if expedition.remaining_time > datetime.timedelta(0):
+            remaining = f"{expedition.remaining_time} remaining"
+            click.echo(f" - {expedition.name} | {remaining}")
+        else:
+            click.echo(f" - {expedition.name} | Finished")
 
 
 @cli.command()
