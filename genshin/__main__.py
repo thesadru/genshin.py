@@ -211,14 +211,14 @@ async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> N
     data = await client.get_starrail_notes(uid)
 
     click.echo(f"{click.style('TB power:', bold=True)} {data.current_stamina}/{data.max_stamina}")
-    click.echo(f"{click.style('Reserve TB power:', bold=True)} {data.current_reserve_stamina}/2400")
-    click.echo(f"{click.style('Daily missions:', bold=True)} {data.current_train_score}/{data.max_train_score}")
+    click.echo(f"{click.style('Reserved TB power:', bold=True)} {data.current_reserve_stamina}/2400")
+    click.echo(f"{click.style('Daily training:', bold=True)} {data.current_train_score}/{data.max_train_score}")
     click.echo(f"{click.style('Simulated Universe:', bold=True)} {data.current_rogue_score}/{data.max_rogue_score}")
     click.echo(
-        f"{click.style('Echoes of War:', bold=True)} {data.remaining_weekly_discounts}/{data.max_weekly_discounts}"
+        f"{click.style('Echo of War:', bold=True)} {data.remaining_weekly_discounts}/{data.max_weekly_discounts}"
     )
 
-    click.echo(f"\n{click.style('Expeditions:', bold=True)} {data.accepted_epedition_num}/{data.total_expedition_num}")
+    click.echo(f"\n{click.style('Assignments:', bold=True)} {data.accepted_epedition_num}/{data.total_expedition_num}")
     for expedition in data.expeditions:
         if expedition.remaining_time > datetime.timedelta(0):
             remaining = f"{expedition.remaining_time} remaining"
