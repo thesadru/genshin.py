@@ -15,21 +15,33 @@ __all__ = [
     "recognize_starrail_server",
 ]
 
-UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequence[int]]] = {
+UID_RANGE: typing.Mapping[
+    types.Game, typing.Mapping[types.Region, typing.Sequence[str]]
+] = {
     types.Game.GENSHIN: {
-        types.Region.OVERSEAS: (6, 7, 8, 9),
-        types.Region.CHINESE: (1, 2, 5),
+        types.Region.OVERSEAS: ("6", "7", "8", "18", "9"),
+        types.Region.CHINESE: ("1", "2", "3", "5"),
     },
     types.Game.STARRAIL: {
-        types.Region.OVERSEAS: (6, 7, 8, 9),
-        types.Region.CHINESE: (1, 2, 5),
+        types.Region.OVERSEAS: ("6", "7", "8", "9"),
+        types.Region.CHINESE: ("1", "2", "5"),
     },
     types.Game.HONKAI: {
-        types.Region.OVERSEAS: (1, 2),
-        types.Region.CHINESE: (3, 4),
+        types.Region.OVERSEAS: ("1", "2"),
+        types.Region.CHINESE: ("3", "4"),
     },
 }
 """Mapping of games and regions to their respective UID ranges."""
+
+GENSHIN_SERVER_RANGE: typing.Mapping[str, typing.Sequence[str]] = {
+    "os_asia": ("8", "18"),
+    "cn_gf01": ("1", "2", "3"),
+    "cn_qd01": ("5",),
+    "os_usa": ("6",),
+    "os_euro": ("7",),
+    "os_cht": ("9",),
+}
+"""Mapping of Genshin servers to their respective UID ranges."""
 
 
 def create_short_lang_code(lang: str) -> str:
@@ -39,18 +51,9 @@ def create_short_lang_code(lang: str) -> str:
 
 def recognize_genshin_server(uid: int) -> str:
     """Recognize which server a Genshin UID is from."""
-    server = {
-        "1": "cn_gf01",
-        "2": "cn_gf01",
-        "5": "cn_qd01",
-        "6": "os_usa",
-        "7": "os_euro",
-        "8": "os_asia",
-        "9": "os_cht",
-    }.get(str(uid)[0])
-
-    if server:
-        return server
+    for server_name, digits in GENSHIN_SERVER_RANGE.items():
+        if str(uid).startswith(digits):
+            return server_name
 
     raise ValueError(f"UID {uid} isn't associated with any server")
 
@@ -124,10 +127,8 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
     if len(str(uid)) == 8:
         return types.Game.HONKAI
 
-    first = int(str(uid)[0])
-
     for game, digits in UID_RANGE.items():
-        if first in digits[region]:
+        if str(uid).startswith(digits[region]):
             return game
 
     return None
@@ -135,10 +136,8 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
 
 def recognize_region(uid: int, game: types.Game) -> typing.Optional[types.Region]:
     """Recognize the region of a uid."""
-    first = int(str(uid)[0])
-
     for region, digits in UID_RANGE[game].items():
-        if first in digits:
+        if str(uid).startswith(digits):
             return region
 
     return None
