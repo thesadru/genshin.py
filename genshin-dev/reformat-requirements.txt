@@ -1,2 +1,3 @@
+black
 ruff
 sort-all

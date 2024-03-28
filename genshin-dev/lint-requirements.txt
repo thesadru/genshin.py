@@ -1,7 +1,1 @@
 ruff
-flake8
-
-flake8-annotations-complexity # complex annotation
-flake8-mutable      # mutable default argument detection
-flake8-pep3101      # new-style format strings only
-flake8-requirements # requirements.txt check
