@@ -24,7 +24,7 @@ __all__ = [
 
 
 def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-    """Helper function which turns fields into properly named ones"""
+    """Turn fields into properly named ones."""
     ret: typing.Dict[str, typing.Any] = {}
     for field in model.__fields__.values():
         if not field.field_info.extra.get("mi18n"):
@@ -123,7 +123,7 @@ class OldAbyssStats(APIModel):
     raw_tier: int =                               Aliased("latest_area",      mi18n="bbs/settled_level")
     raw_latest_rank: typing.Optional[int] =       Aliased("latest_level",     mi18n="bbs/rank")
     # TODO: Add proper key
-    latest_type: str =                            Aliased(                    mi18n="bbs/latest_type")  
+    latest_type: str =                            Aliased(                    mi18n="bbs/latest_type")
     # fmt: on
 
     @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
@@ -240,6 +240,7 @@ class HonkaiStats(APIModel):
         return values
 
     def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        """Turn fields into properly named ones."""
         return _model_to_dict(self, lang)
 
 

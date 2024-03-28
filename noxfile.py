@@ -31,7 +31,7 @@ def install_requirements(session: nox.Session, *requirements: str, literal: bool
     """Install requirements."""
     if not literal and all(requirement.isalpha() for requirement in requirements):
         files = ["requirements.txt"] + [f"./genshin-dev/{requirement}-requirements.txt" for requirement in requirements]
-        requirements = ("pip",) + tuple(arg for file in files for arg in ("-r", file))
+        requirements = ("pip", *tuple(arg for file in files for arg in ("-r", file)))
 
     session.install("--upgrade", *requirements, silent=not isverbose())
 
@@ -52,16 +52,15 @@ def docs(session: nox.Session) -> None:
 def lint(session: nox.Session) -> None:
     """Run this project's modules against the pre-defined flake8 linters."""
     install_requirements(session, "lint")
-    session.run("flake8", "--version")
-    session.run("flake8", *GENERAL_TARGETS, *verbose_args())
+    session.run("ruff", "check", *GENERAL_TARGETS, *verbose_args())
 
 
 @nox.session()
 def reformat(session: nox.Session) -> None:
     """Reformat this project's modules to fit the standard style."""
     install_requirements(session, "reformat")
-    session.run("black", *GENERAL_TARGETS, *verbose_args())
-    session.run("isort", *GENERAL_TARGETS, *verbose_args())
+    session.run("python", "-m", "black", *GENERAL_TARGETS, *verbose_args())
+    session.run("python", "-m", "ruff", "check", "--fix-only", "--fixable", "ALL", *GENERAL_TARGETS, *verbose_args())
 
     session.log("sort-all")
     LOGGER.disabled = True

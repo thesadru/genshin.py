@@ -1,13 +1,1 @@
-flake8 
-
-flake8-annotations-complexity # complex annotation
-flake8-black        # runs black
-flake8-builtins     # builtin shadowing
-flake8-docstrings   # proper formatting and grammar in docstrings
-flake8-isort        # runs isort
-flake8-mutable      # mutable default argument detection
-flake8-pep3101      # new-style format strings only
-flake8-print        # complain about print statements in code
-flake8-pytest-style # pytest checks
-flake8-raise        # exception raising
-flake8-requirements # requirements.txt check
+ruff

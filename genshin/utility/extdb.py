@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import logging
 import time
 import typing
 import warnings
@@ -19,6 +20,8 @@ __all__ = (
     "update_characters_enka",
     "update_characters_genshindata",
 )
+
+LOGGER_ = logging.getLogger(__name__)
 
 CACHE_FILE = fs.get_tempdir() / "characters.json"
 
@@ -235,7 +238,7 @@ async def update_characters_any(
         try:
             await updator(langs)
         except Exception:
-            continue
+            LOGGER_.exception("Failed to update characters with %s", updator.__name__)
         else:
             return
 
