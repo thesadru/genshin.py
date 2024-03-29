@@ -15,9 +15,7 @@ __all__ = [
     "recognize_starrail_server",
 ]
 
-UID_RANGE: typing.Mapping[
-    types.Game, typing.Mapping[types.Region, typing.Sequence[str]]
-] = {
+UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequence[str]]] = {
     types.Game.GENSHIN: {
         types.Region.OVERSEAS: ("6", "7", "8", "18", "9"),
         types.Region.CHINESE: ("1", "2", "3", "5"),
@@ -34,14 +32,24 @@ UID_RANGE: typing.Mapping[
 """Mapping of games and regions to their respective UID ranges."""
 
 GENSHIN_SERVER_RANGE: typing.Mapping[str, typing.Sequence[str]] = {
-    "os_asia": ("8", "18"),
     "cn_gf01": ("1", "2", "3"),
     "cn_qd01": ("5",),
     "os_usa": ("6",),
     "os_euro": ("7",),
+    "os_asia": ("8", "18"),
     "os_cht": ("9",),
 }
 """Mapping of Genshin servers to their respective UID ranges."""
+
+STARRAIL_SERVER_RANGE: typing.Mapping[str, typing.Sequence[str]] = {
+    "prod_gf_cn": ("1", "2"),
+    "prod_qd_cn": ("5",),
+    "prod_official_usa": ("6",),
+    "prod_official_eur": ("7",),
+    "prod_official_asia": ("8",),
+    "prod_official_cht": ("9",),
+}
+"""Mapping of Star Rail servers to their respective UID ranges."""
 
 
 def create_short_lang_code(lang: str) -> str:
@@ -52,8 +60,11 @@ def create_short_lang_code(lang: str) -> str:
 def recognize_genshin_server(uid: int) -> str:
     """Recognize which server a Genshin UID is from."""
     for server_name, digits in GENSHIN_SERVER_RANGE.items():
-        if str(uid).startswith(digits):
-            return server_name
+        for digit in digits:
+            if len(digit) == 2 and len(str(uid)) == 10 and str(uid).startswith(digit):
+                return server_name
+            if len(digit) == 1 and len(str(uid)) == 9 and str(uid).startswith(digit):
+                return server_name
 
     raise ValueError(f"UID {uid} isn't associated with any server")
 
@@ -94,18 +105,11 @@ def recognize_honkai_server(uid: int) -> str:
 
 def recognize_starrail_server(uid: int) -> str:
     """Recognize which server a Star Rail UID is from."""
-    server = {
-        "1": "prod_gf_cn",
-        "2": "prod_gf_cn",
-        "5": "prod_qd_cn",
-        "6": "prod_official_usa",
-        "7": "prod_official_eur",
-        "8": "prod_official_asia",
-        "9": "prod_official_cht",
-    }.get(str(uid)[0])
-
-    if server:
-        return server
+    for server, digits in STARRAIL_SERVER_RANGE.items():
+        for digit in digits:
+            # this logic needs to be changed if one day HSR begins to use 10-digit UIDs
+            if str(uid).startswith(digit):
+                return server
 
     raise ValueError(f"UID {uid} isn't associated with any server")
 
@@ -128,8 +132,11 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
         return types.Game.HONKAI
 
     for game, digits in UID_RANGE.items():
-        if str(uid).startswith(digits[region]):
-            return game
+        for digit in digits[region]:
+            if len(digit) == 2 and len(str(uid)) == 10 and str(uid).startswith(digit):
+                return game
+            if len(digit) == 1 and len(str(uid)) == 9 and str(uid).startswith(digit):
+                return game
 
     return None
 
@@ -137,7 +144,10 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
 def recognize_region(uid: int, game: types.Game) -> typing.Optional[types.Region]:
     """Recognize the region of a uid."""
     for region, digits in UID_RANGE[game].items():
-        if str(uid).startswith(digits):
-            return region
+        for digit in digits:
+            if len(digit) == 2 and len(str(uid)) == 10 and str(uid).startswith(digit):
+                return region
+            if len(digit) == 1 and len(str(uid)) == 9 and str(uid).startswith(digit):
+                return region
 
     return None
