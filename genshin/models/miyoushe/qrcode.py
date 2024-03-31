@@ -5,7 +5,7 @@ from enum import Enum
 
 from pydantic import BaseModel, Field, field_validator
 
-__all__ = ("QRCodeStatus", "QRCodePayload", "QRCodeCheckResult", "QRCodeCreationResult", "QRCodeRawData")
+__all__ = ("QRCodeCheckResult", "QRCodeCreationResult", "QRCodePayload", "QRCodeRawData", "QRCodeStatus")
 
 
 class QRCodeStatus(Enum):
