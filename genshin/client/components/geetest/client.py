@@ -1,7 +1,9 @@
 """Geetest client component."""
 
 import json
+import random
 import typing
+from string import ascii_letters, digits
 
 import aiohttp
 import aiohttp.web
@@ -12,6 +14,7 @@ from genshin.client.components import base
 from genshin.utility import ds as ds_utility
 from genshin.utility import geetest as geetest_utility
 
+from ....models.miyoushe.qrcode import QRCodeCheckResult, QRCodeCreationResult
 from . import server
 
 __all__ = ["GeetestClient"]
@@ -313,6 +316,51 @@ class GeetestClient(base.BaseClient):
         self.set_cookies(cookies)
 
         return cookies
+
+    async def _create_qrcode(self) -> QRCodeCreationResult:
+        device_id = "".join(random.choices(ascii_letters + digits, k=64))
+        app_id = "8"
+        payload = {
+            "app_id": app_id,
+            "device": device_id,
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                routes.CREATE_QRCODE_URL.get_url(),
+                json=payload,
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
+
+        url: str = data["data"]["url"]
+        return QRCodeCreationResult(
+            app_id=app_id,
+            ticket=url.split("ticket=")[1],
+            device_id=device_id,
+            url=url,
+        )
+
+    async def _check_qrcode(self, app_id: str, device_id: str, ticket: str) -> QRCodeCheckResult:
+        payload = {
+            "app_id": app_id,
+            "device": device_id,
+            "ticket": ticket,
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                routes.CHECK_QRCODE_URL.get_url(),
+                json=payload,
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
+
+        return QRCodeCheckResult(**data["data"])
 
     async def login_with_password(
         self,
