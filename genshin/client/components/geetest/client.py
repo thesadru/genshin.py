@@ -326,6 +326,7 @@ class GeetestClient(base.BaseClient):
         return cookies
 
     async def _create_qrcode(self) -> QRCodeCreationResult:
+        """Create a QR code for login."""
         device_id = "".join(random.choices(ascii_letters + digits, k=64))
         app_id = "8"
         payload = {
@@ -352,6 +353,7 @@ class GeetestClient(base.BaseClient):
         )
 
     async def _check_qrcode(self, app_id: str, device_id: str, ticket: str) -> QRCodeCheckResult:
+        """Check the status of a QR code login."""
         payload = {
             "app_id": app_id,
             "device": device_id,
