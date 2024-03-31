@@ -98,8 +98,8 @@ class GameRoute(BaseRoute):
 
 
 WEBSTATIC_URL = InternationalRoute(
-    "https://webstatic-sea.hoyoverse.com/",
-    "https://webstatic.mihoyo.com/",
+    "https://operation-webstatic.hoyoverse.com/",
+    "https://operation-webstatic.mihoyo.com/",
 )
 
 WEBAPI_URL = InternationalRoute(
