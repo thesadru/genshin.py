@@ -69,7 +69,7 @@ class GeetestClient(base.BaseClient):
 
         return cookies
 
-    async def _cn_login_by_password(
+    async def _cn_login_with_password(
         self,
         account: str,
         password: str,
@@ -346,7 +346,7 @@ class GeetestClient(base.BaseClient):
 
         return await self._web_login(account, password, tokenType=tokenType, geetest=geetest)
 
-    async def cn_login_by_password(
+    async def cn_login_with_password(
         self,
         account: str,
         password: str,
@@ -361,9 +361,10 @@ class GeetestClient(base.BaseClient):
     ) -> typing.Dict[str, str]:
         """Login with a password via Miyoushe loginByPassword endpoint.
 
-        Note that this will start a webserver if captcha is triggered and `geetest_solver` is not passed.
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
         """
-        result = await self._cn_login_by_password(account, password)
+        result = await self._cn_login_with_password(account, password)
 
         if "session_id" not in result:
             # Captcha not triggered
@@ -374,7 +375,7 @@ class GeetestClient(base.BaseClient):
         else:
             geetest = await server.solve_geetest(result, port=port)
 
-        return await self._cn_login_by_password(account, password, geetest=geetest)
+        return await self._cn_login_with_password(account, password, geetest=geetest)
 
     async def check_mobile_number_validity(self, mobile: str) -> bool:
         """Check if a mobile number is valid (it's registered on Miyoushe).
@@ -393,25 +394,29 @@ class GeetestClient(base.BaseClient):
     async def login_with_mobile_number(
         self,
         mobile: str,
+        *,
+        port: int = 5000,
     ) -> typing.Dict[str, str]:
         """Login with mobile number, returns cookies.
 
-        Only works for Chinese region (Miyoushe) users, do not include area code (+86) in the mobile number.
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
         Steps:
         1. Sends OTP to the provided mobile number.
-        1-1. If captcha is triggered, prompts the user to solve it.
-        2. Lets user enter the OTP.
-        3. Logs in with the OTP.
-        4. Returns cookies.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
         """
         result = await self._send_mobile_otp(mobile)
 
         if result is not None and "session_id" in result:
             # Captcha triggered
-            geetest = await server.solve_geetest(result)
+            geetest = await server.solve_geetest(result, port=port)
             await self._send_mobile_otp(mobile, geetest=geetest)
 
-        otp = await server.enter_otp()
+        otp = await server.enter_code(port=port)
         cookies = await self._login_with_mobile_otp(mobile, otp)
         return cookies
 
@@ -459,7 +464,9 @@ class GeetestClient(base.BaseClient):
 
                 await self._send_verification_email(result, geetest=geetest)
 
-            await server.verify_email(self, result, port=port)
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
             result = await self._app_login(account, password, ticket=result)
 
         return result

@@ -9,16 +9,14 @@ import webbrowser
 import aiohttp
 from aiohttp import web
 
-from . import client
+__all__ = ["PAGES", "enter_code", "launch_webapp", "solve_geetest"]
 
-__all__ = ["PAGES", "launch_webapp", "solve_geetest", "verify_email"]
-
-PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "verify-email", "enter-otp"], str]] = {
+PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-code"], str]] = {
     "captcha": """
     <!DOCTYPE html>
     <html>
       <body></body>
-      <script src="./gt.js"></script>
+      <script src="./gt/v3.js"></script>
       <script>
         fetch("/mmt")
           .then((response) => response.json())
@@ -29,8 +27,8 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "verify-email", "enter
                 challenge: mmt.data.challenge,
                 new_captcha: mmt.data.new_captcha,
                 api_server: "api-na.geetest.com",
+                https: /^https/i.test(window.location.protocol),
                 product: "bind",
-                https: false,
                 lang: "en",
               },
               (captcha) => {
@@ -41,39 +39,58 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "verify-email", "enter
                   fetch("/send-data", {
                     method: "POST",
                     body: JSON.stringify({
-                    session_id: mmt.session_id,
-                    data: captcha.getValidate()
-                  }),
+                      session_id: mmt.session_id,
+                      data: captcha.getValidate()
+                    }),
+                  }).then(() => window.close());
+                  document.body.innerHTML = "You may now close this window.";
                 });
-                document.body.innerHTML = "You may now close this window.";
-              });
-            }
-          )
-        );
+              }
+            )
+          );
       </script>
     </html>
     """,
-    "verify-email": """
+    "captcha-v4": """
     <!DOCTYPE html>
     <html>
-      <body>
-        <input id="code" type="number">
-        <button id="verify">Send</button>
-      </body>
+      <body></body>
+      <script src="./gt/v4.js"></script>
       <script>
-        document.getElementById("verify").onclick = () => {
-          fetch("/send-data", {
-            method: "POST",
-            body: JSON.stringify({
-              code: document.getElementById("code").value
-            }),
-          });
-          document.body.innerHTML = "You may now close this window.";
-        };
+        fetch("/mmt")
+          .then((response) => response.json())
+          .then((mmt) =>
+            window.initGeetest4(
+              {
+                captchaId: mmt.data.gt,
+                riskType: mmt.data.risk_type,
+                userInfo: JSON.stringify({
+                  mmt_key: mmt.session_id
+                }),
+                product: "bind",
+                language: "en",
+              },
+              (captcha) => {
+                captcha.onReady(() => {
+                  captcha.showCaptcha();
+                });
+                captcha.onSuccess(() => {
+                  fetch("/send-data", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      session_id: mmt.session_id,
+                      data: captcha.getValidate()
+                    }),
+                  }).then(() => window.close());
+                  document.body.innerHTML = "You may now close this window.";
+                });
+              }
+            )
+          );
       </script>
     </html>
     """,
-    "enter-otp": """
+    "enter-code": """
     <!DOCTYPE html>
     <html>
       <body>
@@ -96,11 +113,12 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "verify-email", "enter
 }
 
 
-GT_URL = "https://raw.githubusercontent.com/GeeTeam/gt3-node-sdk/master/demo/static/libs/gt.js"
+GT_V3_URL = "https://static.geetest.com/static/js/gt.0.5.0.js"
+GT_V4_URL = "https://static.geetest.com/v4/gt4.js"
 
 
 async def launch_webapp(
-    page: typing.Literal["captcha", "verify-email", "enter-otp"],
+    page: typing.Literal["captcha", "captcha-v4", "enter-code"],
     *,
     port: int = 5000,
     mmt: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -109,22 +127,17 @@ async def launch_webapp(
     routes = web.RouteTableDef()
     future: asyncio.Future[typing.Any] = asyncio.Future()
 
-    @routes.get("/captcha")
-    async def captcha(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=PAGES["captcha"], content_type="text/html")
+    @routes.get("/")
+    async def index(request: web.Request) -> web.StreamResponse:
+        return web.Response(body=PAGES[page], content_type="text/html")
 
-    @routes.get("/verify-email")
-    async def verify_email(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=PAGES["verify-email"], content_type="text/html")
-
-    @routes.get("/enter-otp")
-    async def enter_otp(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=PAGES["enter-otp"], content_type="text/html")
-
-    @routes.get("/gt.js")
+    @routes.get("/gt/{version}.js")
     async def gt(request: web.Request) -> web.StreamResponse:
+        version = request.match_info.get("version", "v3")
+        gt_url = GT_V4_URL if version == "v4" else GT_V3_URL
+
         async with aiohttp.ClientSession() as session:
-            r = await session.get(GT_URL)
+            r = await session.get(gt_url)
             content = await r.read()
 
         return web.Response(body=content, content_type="text/javascript")
@@ -147,8 +160,8 @@ async def launch_webapp(
     await runner.setup()
 
     site = web.TCPSite(runner, host="localhost", port=port)
-    print(f"Opening http://localhost:{port}/{page} in browser...")  # noqa
-    webbrowser.open_new_tab(f"http://localhost:{port}/{page}")
+    print(f"Opening http://localhost:{port} in browser...")  # noqa
+    webbrowser.open_new_tab(f"http://localhost:{port}")
 
     await site.start()
 
@@ -167,26 +180,16 @@ async def solve_geetest(
     *,
     port: int = 5000,
 ) -> typing.Dict[str, typing.Any]:
-    """Solve a geetest captcha manually."""
-    return await launch_webapp("captcha", port=port, mmt=mmt)
+    """Solve a geetest captcha manually.
+
+    The function will automatically detect geetest version
+    using the `use_v4` key in the `mmt` dictionary.
+    """
+    use_v4 = mmt["data"].get("use_v4", False)
+    return await launch_webapp("captcha-v4" if use_v4 else "captcha", port=port, mmt=mmt)
 
 
-async def verify_email(
-    client: client.GeetestClient,
-    ticket: typing.Dict[str, typing.Any],
-    *,
-    port: int = 5000,
-) -> None:
-    """Verify email to login via HoYoLab app endpoint."""
-    data = await launch_webapp("verify-email", port=port)
-    code = data["code"]
-
-    return await client._verify_email(code, ticket)
-
-
-async def enter_otp(port: int = 5000) -> str:
-    """Lets user enter the OTP."""
-    # The enter-otp page is the same as verify-email page.
-    data = await launch_webapp("enter-otp", port=port)
-    code = data["code"]
-    return code
+async def enter_code(*, port: int = 5000) -> str:
+    """Get email or phone number verification code from user."""
+    data = await launch_webapp("enter-code", port=port)
+    return data["code"]
