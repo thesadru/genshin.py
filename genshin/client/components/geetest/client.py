@@ -557,4 +557,5 @@ class GeetestClient(base.BaseClient):
             "mid": stoken.mid,
             "cookie_token": cookie_token,
         }
+        self.set_cookies(cookies)
         return cookies
