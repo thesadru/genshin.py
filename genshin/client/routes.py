@@ -32,6 +32,10 @@ __all__ = [
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
     "YSULOG_URL",
+    "CREATE_QRCODE_URL",
+    "CHECK_QRCODE_URL",
+    "GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL",
+    "GET_STOKEN_BY_GAME_TOKEN_URL",
 ]
 
 
@@ -215,6 +219,8 @@ MI18N = dict(
 )
 
 COOKIE_V2_REFRESH_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/token/getBySToken")
+GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL = Route("https://api-takumi.mihoyo.com/auth/api/getCookieAccountInfoByGameToken")
+GET_STOKEN_BY_GAME_TOKEN_URL = Route("https://passport-api.mihoyo.com/account/ma-cn-session/app/getTokenByGameToken")
 
 WEB_LOGIN_URL = Route("https://sg-public-api.hoyolab.com/account/ma-passport/api/webLoginByPassword")
 APP_LOGIN_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-passport/api/appLoginByPassword")
@@ -228,3 +234,6 @@ VERIFY_EMAIL_URL = Route("https://sg-public-api.hoyoverse.com/account/ma-verifie
 CHECK_MOBILE_VALIDITY_URL = Route("https://webapi.account.mihoyo.com/Api/is_mobile_registrable")
 MOBILE_OTP_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-verifier/verifier/createLoginCaptcha")
 MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/loginByMobileCaptcha")
+
+CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
+CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
