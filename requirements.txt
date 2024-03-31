@@ -9,3 +9,4 @@ browser-cookie3
 rsa
 aioredis
 click
+qrcode[pil]

@@ -1,20 +1,31 @@
 """Geetest client component."""
 
+import asyncio
 import json
+import logging
+import random
 import typing
+from string import ascii_letters, digits
 
 import aiohttp
 import aiohttp.web
+import qrcode
+import qrcode.image.pil
+from qrcode.constants import ERROR_CORRECT_L
 
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
+from genshin.client.manager.cookie import fetch_cookie_token_by_game_token, fetch_stoken_by_game_token
+from genshin.models.miyoushe.qrcode import QRCodeCheckResult, QRCodeCreationResult, QRCodeStatus
 from genshin.utility import ds as ds_utility
 from genshin.utility import geetest as geetest_utility
 
 from . import server
 
 __all__ = ["GeetestClient"]
+
+LOGGER_ = logging.getLogger(__name__)
 
 
 class GeetestClient(base.BaseClient):
@@ -314,6 +325,53 @@ class GeetestClient(base.BaseClient):
 
         return cookies
 
+    async def _create_qrcode(self) -> QRCodeCreationResult:
+        """Create a QR code for login."""
+        device_id = "".join(random.choices(ascii_letters + digits, k=64))
+        app_id = "8"
+        payload = {
+            "app_id": app_id,
+            "device": device_id,
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                routes.CREATE_QRCODE_URL.get_url(),
+                json=payload,
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
+
+        url: str = data["data"]["url"]
+        return QRCodeCreationResult(
+            app_id=app_id,
+            ticket=url.split("ticket=")[1],
+            device_id=device_id,
+            url=url,
+        )
+
+    async def _check_qrcode(self, app_id: str, device_id: str, ticket: str) -> QRCodeCheckResult:
+        """Check the status of a QR code login."""
+        payload = {
+            "app_id": app_id,
+            "device": device_id,
+            "ticket": ticket,
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                routes.CHECK_QRCODE_URL.get_url(),
+                json=payload,
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
+
+        return QRCodeCheckResult(**data["data"])
+
     async def login_with_password(
         self,
         account: str,
@@ -463,3 +521,43 @@ class GeetestClient(base.BaseClient):
             result = await self._app_login(account, password, ticket=result)
 
         return result
+
+    async def login_with_qrcode(self) -> typing.Dict[str, str]:
+        """Login with QR code, only available for Miyoushe users.
+
+        Returns cookies.
+        """
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            check_result = await self._check_qrcode(
+                creation_result.app_id, creation_result.device_id, creation_result.ticket
+            )
+            if check_result.status == QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info("QR code scanned")
+                scanned = True
+            elif check_result.status == QRCodeStatus.CONFIRMED:
+                LOGGER_.info("QR code login confirmed")
+                break
+
+            await asyncio.sleep(2)
+
+        raw_data = check_result.payload.raw
+        assert raw_data is not None
+
+        cookie_token = await fetch_cookie_token_by_game_token(
+            game_token=raw_data.game_token, account_id=raw_data.account_id
+        )
+        stoken = await fetch_stoken_by_game_token(game_token=raw_data.game_token, account_id=int(raw_data.account_id))
+
+        cookies = {
+            "stoken_v2": stoken.token,
+            "stuid": stoken.aid,
+            "mid": stoken.mid,
+            "cookie_token": cookie_token,
+        }
+        self.set_cookies(cookies)
+        return cookies

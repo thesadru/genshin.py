@@ -18,7 +18,10 @@ Available convertions:
 
 from __future__ import annotations
 
+import random
 import typing
+import uuid
+from string import ascii_letters, digits
 
 import aiohttp
 import aiohttp.typedefs
@@ -26,15 +29,32 @@ import aiohttp.typedefs
 from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.manager import managers
+from genshin.models.miyoushe.cookie import StokenResult
 from genshin.utility import ds as ds_utility
 
 __all__ = [
     "complete_cookies",
+    "fetch_cookie_token_by_game_token",
     "fetch_cookie_token_info",
     "fetch_cookie_with_cookie",
     "fetch_cookie_with_stoken_v2",
+    "fetch_stoken_by_game_token",
     "refresh_cookie_token",
 ]
+
+STOKEN_BY_GAME_TOKEN_HEADERS = {
+    "x-rpc-app_version": "2.41.0",
+    "x-rpc-aigis": "",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "x-rpc-game_biz": "bbs_cn",
+    "x-rpc-sys_version": "11",
+    "x-rpc-device_name": "GenshinUid_login_device_lulu",
+    "x-rpc-device_model": "GenshinUid_login_device_lulu",
+    "x-rpc-app_id": "bll8iq97cem8",
+    "x-rpc-client_type": "2",
+    "User-Agent": "okhttp/4.8.0",
+}
 
 
 async def fetch_cookie_with_cookie(
@@ -166,3 +186,45 @@ async def complete_cookies(
         cookies = await refresh_cookie_token(cookies, region=region)  # type: ignore[assignment]
 
     return cookies
+
+
+async def fetch_cookie_token_by_game_token(*, game_token: str, account_id: str) -> str:
+    """Fetch cookie token by game token, which is obtained by scanning a QR code."""
+    url = routes.GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL.get_url()
+    params = {
+        "game_token": game_token,
+        "account_id": account_id,
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params) as r:
+            data = await r.json()
+
+    if not data["data"]:
+        errors.raise_for_retcode(data)
+
+    return data["data"]["cookie_token"]
+
+
+async def fetch_stoken_by_game_token(*, game_token: str, account_id: int) -> StokenResult:
+    """Fetch cookie token by game token, which is obtained by scanning a QR code."""
+    url = routes.GET_STOKEN_BY_GAME_TOKEN_URL.get_url()
+    payload = {
+        "account_id": account_id,
+        "game_token": game_token,
+    }
+    headers = {
+        "DS": ds_utility.generate_passport_ds(body=payload),
+        "x-rpc-device_id": uuid.uuid4().hex,
+        "x-rpc-device_fp": "".join(random.choices(ascii_letters + digits, k=13)),
+        **STOKEN_BY_GAME_TOKEN_HEADERS,
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload, headers=headers) as r:
+            data = await r.json()
+
+    if not data["data"]:
+        errors.raise_for_retcode(data)
+
+    return StokenResult(**data["data"])

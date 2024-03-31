@@ -9,7 +9,7 @@ import typing
 
 from genshin import constants, types
 
-__all__ = ["generate_cn_dynamic_secret", "generate_dynamic_secret", "get_ds_headers"]
+__all__ = ["generate_cn_dynamic_secret", "generate_dynamic_secret", "generate_passport_ds", "get_ds_headers"]
 
 
 def generate_dynamic_secret(salt: str = constants.DS_SALT[types.Region.OVERSEAS]) -> str:
@@ -59,3 +59,14 @@ def get_ds_headers(
     else:
         raise TypeError(f"{region!r} is not a valid region.")
     return ds_headers
+
+
+def generate_passport_ds(body: typing.Mapping[str, typing.Any]) -> str:
+    """Create a dynamic secret for Miyoushe passport API."""
+    salt = constants.DS_SALT["cn_passport"]
+    t = int(time.time())
+    r = "".join(random.sample(string.ascii_letters, 6))
+    b = json.dumps(body)
+    h = hashlib.md5(f"salt={salt}&t={t}&r={r}&b={b}&q=".encode()).hexdigest()
+    result = f"{t},{r},{h}"
+    return result
