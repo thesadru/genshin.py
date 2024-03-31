@@ -1,4 +1,5 @@
 """Run setuptools."""
+
 from setuptools import find_packages, setup
 
 setup(
@@ -17,9 +18,9 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
-        "all": ["browser-cookie3", "rsa", "click"],
+        "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]"],
         "cookies": ["browser-cookie3"],
-        "geetest": ["rsa"],
+        "geetest": ["rsa", "qrcode[pil]"],
         "cli": ["click"],
     },
     include_package_data=True,
