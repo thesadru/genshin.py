@@ -244,7 +244,7 @@ class GeetestClient(base.BaseClient):
         mobile: str,
         *,
         geetest: typing.Optional[typing.Dict[str, typing.Any]] = None,
-    ) -> typing.Dict[str, typing.Any] | None:
+    ) -> typing.Union[typing.Dict[str, typing.Any], None]:
         """Attempt to send OTP to the provided mobile number.
 
         May return aigis headers if captcha is triggered, None otherwise.
