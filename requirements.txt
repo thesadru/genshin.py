@@ -9,3 +9,5 @@ browser-cookie3
 rsa
 aioredis
 click
+Pillow
+qrcode
