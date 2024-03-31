@@ -15,9 +15,7 @@ __all__ = [
     "recognize_starrail_server",
 ]
 
-UID_RANGE: typing.Mapping[
-    types.Game, typing.Mapping[types.Region, typing.Sequence[str]]
-] = {
+UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequence[str]]] = {
     types.Game.GENSHIN: {
         types.Region.OVERSEAS: ("6", "7", "8", "18", "9"),
         types.Region.CHINESE: ("1", "2", "3", "5"),
@@ -129,9 +127,8 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
         return types.Game.HONKAI
 
     for game, digits in UID_RANGE.items():
-        for digit in digits[region]:
-            if str(uid)[:-8] == digit:
-                return game
+        if str(uid)[:-8] in digits[region]:
+            return game
 
     return None
 
