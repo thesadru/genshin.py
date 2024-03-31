@@ -34,12 +34,12 @@ from genshin.utility import ds as ds_utility
 
 __all__ = [
     "complete_cookies",
+    "fetch_cookie_token_by_game_token",
     "fetch_cookie_token_info",
     "fetch_cookie_with_cookie",
     "fetch_cookie_with_stoken_v2",
-    "refresh_cookie_token",
-    "fetch_cookie_token_by_game_token",
     "fetch_stoken_by_game_token",
+    "refresh_cookie_token",
 ]
 
 STOKEN_BY_GAME_TOKEN_HEADERS = {
@@ -214,7 +214,7 @@ async def fetch_stoken_by_game_token(*, game_token: str, account_id: str) -> Sto
         "game_token": game_token,
     }
     headers = {
-        "DS": ds_utility.generate_passport_ds(b=payload),
+        "DS": ds_utility.generate_passport_ds(body=payload),
         "x-rpc-device_id": uuid.uuid4().hex,
         "x-rpc-device_fp": "".join(random.choices(ascii_letters + digits, k=13)),
         **STOKEN_BY_GAME_TOKEN_HEADERS,
