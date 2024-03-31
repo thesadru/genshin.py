@@ -206,7 +206,7 @@ async def fetch_cookie_token_by_game_token(*, game_token: str, account_id: str) 
     return data["data"]["cookie_token"]
 
 
-async def fetch_stoken_by_game_token(*, game_token: str, account_id: str) -> StokenResult:
+async def fetch_stoken_by_game_token(*, game_token: str, account_id: int) -> StokenResult:
     """Fetch cookie token by game token, which is obtained by scanning a QR code."""
     url = routes.GET_STOKEN_BY_GAME_TOKEN_URL.get_url()
     payload = {
