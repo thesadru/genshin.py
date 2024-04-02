@@ -16,6 +16,7 @@ from qrcode.constants import ERROR_CORRECT_L
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.client.manager.cookie import fetch_cookie_token_by_game_token, fetch_stoken_by_game_token
 from genshin.models.miyoushe.geetest import MiyousheGeetest
 from genshin.models.miyoushe.qrcode import QRCodeCheckResult, QRCodeCreationResult, QRCodeStatus
@@ -571,7 +572,8 @@ class GeetestClient(base.BaseClient):
         self.set_cookies(cookies)
         return cookies
 
-    async def create_geetest(self, cookies: typing.Mapping[str, str]) -> MiyousheGeetest:
+    @managers.no_multi
+    async def create_geetest(self) -> MiyousheGeetest:
         """Create a geetest challenge."""
         is_genshin = self.game is Game.GENSHIN
         headers = {
@@ -582,8 +584,11 @@ class GeetestClient(base.BaseClient):
             **geetest_utility.CREATE_GEETEST_HEADERS,
         }
 
-        async with aiohttp.ClientSession() as session:
-            async with session.get(routes.CREATE_GEETEST_URL.get_url(), headers=headers, cookies=cookies) as r:
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CREATE_GEETEST_URL.get_url(), headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
                 data = await r.json()
 
         return MiyousheGeetest(**data["data"])
