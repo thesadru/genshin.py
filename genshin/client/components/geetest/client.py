@@ -17,7 +17,9 @@ from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.client.manager.cookie import fetch_cookie_token_by_game_token, fetch_stoken_by_game_token
+from genshin.models.miyoushe.geetest import MiyousheGeetest
 from genshin.models.miyoushe.qrcode import QRCodeCheckResult, QRCodeCreationResult, QRCodeStatus
+from genshin.types import Game
 from genshin.utility import ds as ds_utility
 from genshin.utility import geetest as geetest_utility
 
@@ -568,3 +570,20 @@ class GeetestClient(base.BaseClient):
         }
         self.set_cookies(cookies)
         return cookies
+
+    async def create_geetest(self, cookies: typing.Mapping[str, str]) -> MiyousheGeetest:
+        """Create a geetest challenge."""
+        is_genshin = self.game is Game.GENSHIN
+        headers = {
+            "DS": ds_utility.generate_create_geetest_ds(),
+            "x-rpc-challenge_game": "2" if is_genshin else "6",
+            "x-rpc-page": "v4.1.5-ys_#ys" if is_genshin else "v1.4.1-rpg_#/rpg",
+            "x-rpc-tool-verison": "v4.1.5-ys" if is_genshin else "v1.4.1-rpg",
+            **geetest_utility.CREATE_GEETEST_HEADERS,
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(routes.CREATE_GEETEST_URL.get_url(), headers=headers, cookies=cookies) as r:
+                data = await r.json()
+
+        return MiyousheGeetest(**data["data"])

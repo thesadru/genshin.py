@@ -32,3 +32,6 @@ DS_SALT = {
     "cn_passport": "JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS",
 }
 """Dynamic Secret Salts."""
+
+MIYOUSHE_GEETEST_RETCODES = {10035, 5003, 10041, 1034}
+"""API error codes that indicate a Geetest was triggered during this Miyoushe API request."""

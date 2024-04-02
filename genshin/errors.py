@@ -14,6 +14,7 @@ __all__ = [
     "GenshinException",
     "InvalidAuthkey",
     "InvalidCookies",
+    "MiyousheGeetestError",
     "RedemptionClaimed",
     "RedemptionCooldown",
     "RedemptionException",
@@ -184,6 +185,20 @@ class WrongOTP(GenshinException):
     """Wrong OTP code."""
 
     msg = "The provided OTP code is wrong."
+
+
+class MiyousheGeetestError(GenshinException):
+    """Geetest triggered during Miyoushe API request."""
+
+    def __init__(
+        self,
+        response: typing.Dict[str, typing.Any],
+        cookies: typing.Mapping[str, str],
+    ) -> None:
+        self.cookies = cookies
+        super().__init__(response)
+
+    msg = "Geetest triggered during Miyoushe API request."
 
 
 _TGE = typing.Type[GenshinException]

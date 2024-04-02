@@ -69,6 +69,13 @@ EMAIL_VERIFY_HEADERS = {
     "x-rpc-client_type": "2",
 }
 
+CREATE_GEETEST_HEADERS = {
+    "x-rpc-app_version": "2.60.1",
+    "x-rpc-client_type": "5",
+    "Referer": "https://webstatic.mihoyo.com/",
+    "Origin": "https://webstatic.mihoyo.com/",
+}
+
 
 def encrypt_geetest_credentials(text: str, region: Region = Region.OVERSEAS) -> str:
     """Encrypt text for geetest."""
