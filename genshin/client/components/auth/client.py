@@ -6,22 +6,27 @@ import typing
 
 import aiohttp
 import qrcode
-from qrcode.image.pil import PilImage
 from qrcode import constants as qrcode_constants
+from qrcode.image.pil import PilImage
 
 from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.client.manager.cookie import fetch_cookie_token_with_game_token, fetch_stoken_with_game_token
-from genshin.models.auth.geetest import MMT, SessionMMTResult, SessionMMT
-from genshin.models.auth.cookie import AppLoginResult, QRLoginResult, WebLoginResult
-from genshin.models.auth.verification import ActionTicket
+from genshin.models.auth.cookie import (
+    AppLoginResult,
+    CNWebLoginResult,
+    MobileLoginResult,
+    QRLoginResult,
+    WebLoginResult,
+)
+from genshin.models.auth.geetest import MMT, SessionMMT, SessionMMTResult
 from genshin.models.auth.qrcode import QRCodeStatus
+from genshin.models.auth.verification import ActionTicket
 from genshin.types import Game
-from genshin.utility import ds as ds_utility
 from genshin.utility import auth as auth_utility
+from genshin.utility import ds as ds_utility
 
-from . import server
-from . import subclients
+from . import server, subclients
 
 __all__ = ["AuthClient"]
 
@@ -65,7 +70,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         *,
         port: int = 5000,
         geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
-    ) -> typing.Dict[str, typing.Any]:
+    ) -> CNWebLoginResult:
         """Login with a password via Miyoushe loginByPassword endpoint.
 
         Note that this will start a webserver if captcha is
@@ -103,7 +108,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         mobile: str,
         *,
         port: int = 5000,
-    ) -> typing.Dict[str, str]:
+    ) -> MobileLoginResult:
         """Login with mobile number, returns cookies.
 
         Only works for Chinese region (Miyoushe) users, do not include

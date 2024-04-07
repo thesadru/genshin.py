@@ -11,10 +11,10 @@ import aiohttp
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
-from genshin.models.auth.geetest import SessionMMTResult, SessionMMT
-from genshin.models.auth.cookie import WebLoginResult
-from genshin.utility import ds as ds_utility
+from genshin.models.auth.cookie import CNWebLoginResult, MobileLoginResult, WebLoginResult
+from genshin.models.auth.geetest import SessionMMT, SessionMMTResult
 from genshin.utility import auth as auth_utility
+from genshin.utility import ds as ds_utility
 
 __all__ = ["WebAuthClient"]
 
@@ -94,7 +94,7 @@ class WebAuthClient(base.BaseClient):
         password: str,
         *,
         mmt_result: SessionMMTResult,
-    ) -> typing.Dict[str, str]: ...
+    ) -> CNWebLoginResult: ...
 
     @typing.overload
     async def _cn_login_with_password(  # noqa: D102 missing docstring in overload?
@@ -103,7 +103,7 @@ class WebAuthClient(base.BaseClient):
         password: str,
         *,
         mmt_result: None = None,
-    ) -> typing.Union[SessionMMT, typing.Dict[str, typing.Any]]: ...
+    ) -> typing.Union[SessionMMT, CNWebLoginResult]: ...
 
     async def _cn_login_with_password(
         self,
@@ -111,7 +111,7 @@ class WebAuthClient(base.BaseClient):
         password: str,
         *,
         mmt_result: typing.Optional[SessionMMTResult] = None,
-    ) -> typing.Union[SessionMMT, typing.Dict[str, typing.Any]]:
+    ) -> typing.Union[SessionMMT, CNWebLoginResult]:
         """
         Login with account and password using Miyoushe loginByPassword endpoint.
 
@@ -148,7 +148,7 @@ class WebAuthClient(base.BaseClient):
         cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
         self.set_cookies(cookies)
 
-        return cookies
+        return CNWebLoginResult(**cookies)
 
     async def _send_mobile_otp(
         self,
@@ -190,7 +190,7 @@ class WebAuthClient(base.BaseClient):
 
         return None
 
-    async def _login_with_mobile_otp(self, mobile: str, otp: str) -> typing.Dict[str, typing.Any]:
+    async def _login_with_mobile_otp(self, mobile: str, otp: str) -> MobileLoginResult:
         """Login with OTP and mobile number.
 
         Returns cookies if OTP matches the one sent, raises an error otherwise.
@@ -220,4 +220,4 @@ class WebAuthClient(base.BaseClient):
         cookies = {cookie.key: cookie.value for cookie in r.cookies.values()}
         self.set_cookies(cookies)
 
-        return cookies
+        return MobileLoginResult(**cookies)
