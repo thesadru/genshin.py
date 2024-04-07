@@ -1,6 +1,7 @@
 """Miyoushe QR Code Models"""
 
 import json
+import typing
 from enum import Enum
 
 from pydantic import BaseModel, Field, field_validator
@@ -28,11 +29,11 @@ class QRCodePayload(BaseModel):
     """QR code check result payload."""
 
     proto: str
-    raw: QRCodeRawData | None
+    raw: typing.Union[QRCodeRawData, None]
     ext: str
 
     @field_validator("raw", mode="before")
-    def _convert_raw_data(cls, value: str | None) -> QRCodeRawData | None:
+    def _convert_raw_data(cls, value: typing.Union[str, None]) -> typing.Union[QRCodeRawData, None]:
         if value:
             return QRCodeRawData(**json.loads(value))
         return None
