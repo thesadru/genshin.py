@@ -23,7 +23,7 @@ class WebAuthClient(base.BaseClient):
     """Web sub client for AuthClient."""
 
     @typing.overload
-    async def _web_login(  # noqa: D102 missing docstring in overload?
+    async def _os_web_login(  # noqa: D102 missing docstring in overload?
         self,
         account: str,
         password: str,
@@ -33,7 +33,7 @@ class WebAuthClient(base.BaseClient):
     ) -> WebLoginResult: ...
 
     @typing.overload
-    async def _web_login(  # noqa: D102 missing docstring in overload?
+    async def _os_web_login(  # noqa: D102 missing docstring in overload?
         self,
         account: str,
         password: str,
@@ -42,7 +42,7 @@ class WebAuthClient(base.BaseClient):
         mmt_result: None = None,
     ) -> typing.Union[SessionMMT, WebLoginResult]: ...
 
-    async def _web_login(
+    async def _os_web_login(
         self,
         account: str,
         password: str,
@@ -88,7 +88,7 @@ class WebAuthClient(base.BaseClient):
         return WebLoginResult(**cookies)
 
     @typing.overload
-    async def _cn_login_with_password(  # noqa: D102 missing docstring in overload?
+    async def _cn_web_login(  # noqa: D102 missing docstring in overload?
         self,
         account: str,
         password: str,
@@ -97,7 +97,7 @@ class WebAuthClient(base.BaseClient):
     ) -> CNWebLoginResult: ...
 
     @typing.overload
-    async def _cn_login_with_password(  # noqa: D102 missing docstring in overload?
+    async def _cn_web_login(  # noqa: D102 missing docstring in overload?
         self,
         account: str,
         password: str,
@@ -105,7 +105,7 @@ class WebAuthClient(base.BaseClient):
         mmt_result: None = None,
     ) -> typing.Union[SessionMMT, CNWebLoginResult]: ...
 
-    async def _cn_login_with_password(
+    async def _cn_web_login(
         self,
         account: str,
         password: str,

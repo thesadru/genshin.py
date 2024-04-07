@@ -36,7 +36,7 @@ LOGGER_ = logging.getLogger(__name__)
 class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
     """Auth client component."""
 
-    async def login_with_password(
+    async def os_login_with_password(
         self,
         account: str,
         password: str,
@@ -50,7 +50,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
         """
-        result = await self._web_login(account, password, token_type=token_type)
+        result = await self._os_web_login(account, password, token_type=token_type)
 
         if not isinstance(result, SessionMMT):
             # Captcha not triggered
@@ -61,7 +61,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         else:
             mmt_result = await server.solve_geetest(result, port=port)
 
-        return await self._web_login(account, password, token_type=token_type, mmt_result=mmt_result)
+        return await self._os_web_login(account, password, token_type=token_type, mmt_result=mmt_result)
 
     async def cn_login_with_password(
         self,
@@ -76,7 +76,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
         """
-        result = await self._cn_login_with_password(account, password)
+        result = await self._cn_web_login(account, password)
 
         if not isinstance(result, SessionMMT):
             # Captcha not triggered
@@ -87,7 +87,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         else:
             mmt_result = await server.solve_geetest(result, port=port)
 
-        return await self._cn_login_with_password(account, password, mmt_result=mmt_result)
+        return await self._cn_web_login(account, password, mmt_result=mmt_result)
 
     async def check_mobile_number_validity(self, mobile: str) -> bool:
         """Check if a mobile number is valid (it's registered on Miyoushe).
