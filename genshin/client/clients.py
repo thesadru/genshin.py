@@ -6,7 +6,7 @@ from .components import (
     daily,
     diary,
     gacha,
-    geetest,
+    auth,
     hoyolab,
     lineup,
     teapot,
@@ -28,6 +28,6 @@ class Client(
     wiki.WikiClient,
     gacha.WishClient,
     transaction.TransactionClient,
-    geetest.GeetestClient,
+    auth.AuthClient,
 ):
     """A simple HTTP client for API endpoints."""

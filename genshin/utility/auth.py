@@ -1,8 +1,10 @@
-"""Geetest utilities."""
+"""Auth utilities."""
 
 import base64
 import json
 import typing
+
+from genshin import constants
 
 from ..types import Region
 
@@ -69,12 +71,35 @@ EMAIL_VERIFY_HEADERS = {
     "x-rpc-client_type": "2",
 }
 
-CREATE_GEETEST_HEADERS = {
+CREATE_MMT_HEADERS = {
     "x-rpc-app_version": "2.60.1",
     "x-rpc-client_type": "5",
     "Referer": "https://webstatic.mihoyo.com/",
     "Origin": "https://webstatic.mihoyo.com/",
 }
+
+GEETEST_LANGS = {
+    "简体中文": "zh-cn",
+    "繁體中文": "zh-tw",
+    "Deutsch": "de",
+    "English": "en",
+    "Español": "es",
+    "Français": "fr",
+    "Indonesia": "id",
+    "Italiano": "it",
+    "日本語": "ja",
+    "한국어": "ko",
+    "Português": "pt-pt",
+    "Pусский": "ru",
+    "ภาษาไทย": "th",
+    "Tiếng Việt": "vi",
+    "Türkçe": "tr",
+}
+
+
+def lang_to_geetest_lang(lang: str) -> str:
+    """Convert `client.lang` to geetest lang."""
+    return GEETEST_LANGS.get(constants.LANGS.get(lang, "en-us"), "en")
 
 
 def encrypt_geetest_credentials(text: str, region: Region = Region.OVERSEAS) -> str:

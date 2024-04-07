@@ -17,7 +17,7 @@ __all__ = [
     "CN_WEB_LOGIN_URL",
     "COMMUNITY_URL",
     "COOKIE_V2_REFRESH_URL",
-    "CREATE_GEETEST_URL",
+    "CREATE_MMT_URL",
     "CREATE_QRCODE_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_URL",
@@ -239,6 +239,6 @@ MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passpo
 CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
 CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
 
-CREATE_GEETEST_URL = Route(
+CREATE_MMT_URL = Route(
     "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false"
 )

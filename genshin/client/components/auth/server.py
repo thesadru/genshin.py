@@ -1,4 +1,4 @@
-"""Aiohttp webserver used for captcha solving and email verification."""
+"""Aiohttp webserver used for captcha solving and verification."""
 
 from __future__ import annotations
 
@@ -8,6 +8,18 @@ import webbrowser
 
 import aiohttp
 from aiohttp import web
+
+from genshin.models.auth.geetest import (
+    MMT,
+    MMTv4,
+    MMTResult,
+    MMTv4Result,
+    SessionMMT,
+    SessionMMTv4,
+    SessionMMTResult,
+    SessionMMTv4Result,
+)
+from genshin.utility import auth as auth_utility
 
 __all__ = ["PAGES", "enter_code", "launch_webapp", "solve_geetest"]
 
@@ -23,13 +35,13 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
           .then((mmt) =>
             window.initGeetest(
               {
-                gt: mmt.data.gt,
-                challenge: mmt.data.challenge,
-                new_captcha: mmt.data.new_captcha,
-                api_server: "api-na.geetest.com",
+                gt: mmt.gt,
+                challenge: mmt.challenge,
+                new_captcha: mmt.new_captcha,
+                api_server: '{api_server}',
                 https: /^https/i.test(window.location.protocol),
                 product: "bind",
-                lang: "en",
+                lang: '{lang}',
               },
               (captcha) => {
                 captcha.onReady(() => {
@@ -40,7 +52,7 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
                     method: "POST",
                     body: JSON.stringify({
                       session_id: mmt.session_id,
-                      data: captcha.getValidate()
+                      ...captcha.getValidate()
                     }),
                   }).then(() => window.close());
                   document.body.innerHTML = "You may now close this window.";
@@ -62,13 +74,14 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
           .then((mmt) =>
             window.initGeetest4(
               {
-                captchaId: mmt.data.gt,
-                riskType: mmt.data.risk_type,
-                userInfo: JSON.stringify({
+                captchaId: mmt.gt,
+                riskType: mmt.risk_type,
+                userInfo: mmt.session_id ? JSON.stringify({
                   mmt_key: mmt.session_id
-                }),
+                }) : undefined,
+                api_server: '{api_server}',
                 product: "bind",
-                language: "en",
+                language: '{lang}',
               },
               (captcha) => {
                 captcha.onReady(() => {
@@ -79,7 +92,7 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
                     method: "POST",
                     body: JSON.stringify({
                       session_id: mmt.session_id,
-                      data: captcha.getValidate()
+                      ...captcha.getValidate()
                     }),
                   }).then(() => window.close());
                   document.body.innerHTML = "You may now close this window.";
@@ -117,19 +130,42 @@ GT_V3_URL = "https://static.geetest.com/static/js/gt.0.5.0.js"
 GT_V4_URL = "https://static.geetest.com/v4/gt4.js"
 
 
+@typing.overload
+async def launch_webapp(
+    page: typing.Literal["captcha", "captcha-v4"],
+    *,
+    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4],
+    lang: str = "en",
+    api_server: str = "api-na.geetest.com",
+    port: int = 5000,
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result]: ...
+@typing.overload
+async def launch_webapp(
+    page: typing.Literal["enter-code"],
+    *,
+    mmt: None = None,
+    lang: None = None,
+    api_server: None = None,
+    port: int = 5000,
+) -> str: ...
 async def launch_webapp(
     page: typing.Literal["captcha", "captcha-v4", "enter-code"],
     *,
+    mmt: typing.Optional[typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4]] = None,
+    lang: typing.Optional[str] = None,
+    api_server: typing.Optional[str] = None,
     port: int = 5000,
-    mmt: typing.Optional[typing.Dict[str, typing.Any]] = None,
-) -> typing.Any:
-    """Create and run a webapp to solve captcha or send verification code."""
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, str]:
+    """Create and run a webapp to solve captcha or enter a verification code."""
     routes = web.RouteTableDef()
     future: asyncio.Future[typing.Any] = asyncio.Future()
 
     @routes.get("/")
     async def index(request: web.Request) -> web.StreamResponse:
-        return web.Response(body=PAGES[page], content_type="text/html")
+        body = PAGES[page]
+        body = body.replace("{api_server}", api_server or "api-na.geetest.com")
+        body = body.replace("{lang}", lang or "en")
+        return web.Response(body=body, content_type="text/html")
 
     @routes.get("/gt/{version}.js")
     async def gt(request: web.Request) -> web.StreamResponse:
@@ -144,13 +180,24 @@ async def launch_webapp(
 
     @routes.get("/mmt")
     async def mmt_endpoint(request: web.Request) -> web.Response:
-        return web.json_response(mmt)
+        return web.json_response(mmt.model_dump() if mmt else {})
 
     @routes.post("/send-data")
     async def send_data_endpoint(request: web.Request) -> web.Response:
-        body = await request.json()
-        future.set_result(body)
+        result = await request.json()
+        if "code" in result:
+            result = result["code"]
+        else:
+            if isinstance(mmt, SessionMMT):
+                result = SessionMMTResult(**result)
+            elif isinstance(mmt, SessionMMTv4):
+                result = SessionMMTv4Result(**result)
+            elif isinstance(mmt, MMT):
+                result = MMTResult(**result)
+            elif isinstance(mmt, MMTv4):
+                result = MMTv4Result(**result)
 
+        future.set_result(result)
         return web.Response(status=204)
 
     app = web.Application()
@@ -175,21 +222,57 @@ async def launch_webapp(
     return data
 
 
+@typing.overload
 async def solve_geetest(
-    mmt: typing.Dict[str, typing.Any],
+    mmt: SessionMMT,
     *,
+    lang: str = "en-us",
+    api_server: str = "api-na.geetest.com",
     port: int = 5000,
-) -> typing.Dict[str, typing.Any]:
-    """Solve a geetest captcha manually.
-
-    The function will automatically detect geetest version
-    using the `use_v4` key in the `mmt` dictionary.
-    """
-    use_v4 = mmt["data"].get("use_v4", False)
-    return await launch_webapp("captcha-v4" if use_v4 else "captcha", port=port, mmt=mmt)
+) -> SessionMMTResult: ...
+@typing.overload
+async def solve_geetest(
+    mmt: MMT,
+    *,
+    lang: str = "en-us",
+    api_server: str = "api-na.geetest.com",
+    port: int = 5000,
+) -> MMTResult: ...
+@typing.overload
+async def solve_geetest(
+    mmt: SessionMMTv4,
+    *,
+    lang: str = "en-us",
+    api_server: str = "api.geetest.com",
+    port: int = 5000,
+) -> SessionMMTv4Result: ...
+@typing.overload
+async def solve_geetest(
+    mmt: MMTv4,
+    *,
+    lang: str = "en-us",
+    api_server: str = "api.geetest.com",
+    port: int = 5000,
+) -> MMTv4Result: ...
+async def solve_geetest(
+    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4],
+    *,
+    lang: str = "en-us",
+    api_server: str = "api-na.geetest.com",
+    port: int = 5000,
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result]:
+    """Start a web server and manually solve geetest captcha."""
+    use_v4 = isinstance(mmt, MMTv4)
+    lang = auth_utility.lang_to_geetest_lang(lang)
+    return await launch_webapp(
+        "captcha-v4" if use_v4 else "captcha",
+        mmt=mmt,
+        lang=lang,
+        api_server=api_server,
+        port=port,
+    )
 
 
 async def enter_code(*, port: int = 5000) -> str:
     """Get email or phone number verification code from user."""
-    data = await launch_webapp("enter-code", port=port)
-    return data["code"]
+    return await launch_webapp("enter-code", port=port)
