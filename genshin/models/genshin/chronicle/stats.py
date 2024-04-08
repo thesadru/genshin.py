@@ -21,6 +21,7 @@ __all__ = [
     "FullGenshinUserStats",
     "GenshinUserStats",
     "Offering",
+    "AreaExploration",
     "PartialGenshinUserStats",
     "Stats",
     "Teapot",
@@ -53,7 +54,7 @@ class Stats(APIModel):
     # fmt: on
 
     def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
-        """Turn fields into properly named ones."""
+        """Helper function which turns fields into properly named ones"""
         return {
             self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
             for field in self.__fields__.values()
@@ -68,6 +69,11 @@ class Offering(APIModel):
     level: int
     icon: str = ""
 
+class AreaExploration(APIModel):
+    """Exploration area data."""
+
+    name: str
+    exploration_percentage: int
 
 class Exploration(APIModel):
     """Exploration data."""
@@ -88,6 +94,8 @@ class Exploration(APIModel):
     map_url: str
 
     offerings: typing.Sequence[Offering]
+
+    area_exploration_list: typing.List[AreaExploration] = []
 
     @property
     def explored(self) -> float:
