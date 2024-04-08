@@ -73,7 +73,12 @@ class AreaExploration(APIModel):
     """Exploration area data."""
 
     name: str
-    exploration_percentage: int
+    exploration_percentage: float
+
+    @pydantic.validator("exploration_percentage", pre=True)
+    def __exploration_percentage_foramt(cls, value: int):
+        return round(value * 0.1, 1) if value <= 1000 else 100.0
+
 
 class Exploration(APIModel):
     """Exploration data."""
