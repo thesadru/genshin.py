@@ -173,8 +173,10 @@ async def update_characters_enka(langs: typing.Sequence[str] = ()) -> None:
             continue  # traveler element
 
         for short_lang, loc in locs.items():
+            if (lang := ENKA_LANG_MAP.get(short_lang)) is None:
+                continue
             update_character_name(
-                lang=ENKA_LANG_MAP[short_lang],
+                lang=lang,
                 id=int(strid),
                 icon_name=char["SideIconName"][len("UI_AvatarIcon_Side_") :],  # noqa: E203
                 name=loc[str(char["NameTextMapHash"])],

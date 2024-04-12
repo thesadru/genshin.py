@@ -222,7 +222,7 @@ class WishClient(base.BaseClient):
         server = "prod_official_asia" if game == types.Game.STARRAIL else "os_asia"
 
         data = await self.request_webstatic(
-            f"/{region}/gacha_info/{server}/{banner_id}/{lang}.json",
+            f"/gacha_info/{region}/{server}/{banner_id}/{lang}.json",
             cache=client_cache.cache_key("banner", endpoint="details", banner=banner_id, lang=lang),
         )
         return models.BannerDetails(**data, banner_id=banner_id)
@@ -240,12 +240,19 @@ class WishClient(base.BaseClient):
 
         Uses the current cn banners.
         """
+
+        def process_gacha(data: typing.Mapping[str, typing.Any]) -> str:
+            # Temporary fix for 4.5 chronicled wish
+            if data["gacha_type"] == 500:
+                return "8b10b48c52dd6870f92d72e9963b44bb8968ed2f"
+            return data["gacha_id"]
+
         data = await self.request_webstatic(
-            "hk4e/gacha_info/cn_gf01/gacha/list.json",
+            "gacha_info/hk4e/cn_gf01/gacha/list.json",
             region=types.Region.CHINESE,
             cache=client_cache.cache_key("banner", endpoint="ids"),
         )
-        return [i["gacha_id"] for i in data["data"]["list"]]
+        return list(map(process_gacha, data["data"]["list"]))
 
     async def get_banner_details(
         self,
