@@ -1,14 +1,16 @@
 """Auth utilities."""
 
 import base64
+import hmac
 import json
 import typing
 
+from hashlib import sha256
 from genshin import constants
 
 from ..types import Region
 
-__all__ = ["encrypt_geetest_credentials"]
+__all__ = ["encrypt_geetest_credentials", "generate_sign"]
 
 
 # RSA key is the same for app and web login
@@ -116,3 +118,11 @@ def encrypt_geetest_credentials(text: str, region: Region = Region.OVERSEAS) -> 
 def get_aigis_header(session_id: str, mmt_data: typing.Dict[str, typing.Any]) -> str:
     """Get aigis header."""
     return f"{session_id};{base64.b64encode(json.dumps(mmt_data).encode()).decode()}"
+
+
+def generate_sign(data: typing.Dict[str, typing.Any], key: str) -> str:
+    """Generate a sign for the given `data` and `app_key`."""
+    string = ""
+    for k in sorted(data.keys()):
+        string += k + "=" + str(data[k]) + "&"
+    return hmac.new(key.encode(), string[:-1].encode(), sha256).hexdigest()
