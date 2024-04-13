@@ -8,7 +8,7 @@ import typing
 
 import aiohttp
 
-from genshin import constants, errors
+from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.auth.cookie import CNWebLoginResult, MobileLoginResult, WebLoginResult
@@ -42,6 +42,7 @@ class WebAuthClient(base.BaseClient):
         mmt_result: None = None,
     ) -> typing.Union[SessionMMT, WebLoginResult]: ...
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def _os_web_login(
         self,
         account: str,
@@ -105,6 +106,7 @@ class WebAuthClient(base.BaseClient):
         mmt_result: None = None,
     ) -> typing.Union[SessionMMT, CNWebLoginResult]: ...
 
+    @base.region_specific(types.Region.CHINESE)
     async def _cn_web_login(
         self,
         account: str,

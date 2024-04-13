@@ -8,7 +8,7 @@ import typing
 
 import aiohttp
 
-from genshin import constants, errors
+from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.auth.geetest import RiskyCheckMMT, RiskyCheckResult, RiskyCheckMMTResult
@@ -158,6 +158,7 @@ class GameAuthClient(base.BaseClient):
 
         return DeviceGrantResult(**data["data"])
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def _os_game_login(self, uid: str, game_token: str) -> GameLoginResult:
         """Log in to the game."""
         if self.default_game is None:

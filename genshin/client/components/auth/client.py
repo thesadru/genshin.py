@@ -9,8 +9,10 @@ import qrcode
 from qrcode import constants as qrcode_constants
 from qrcode.image.pil import PilImage
 
+from genshin import types
 from genshin.client import routes
 from genshin.client.manager import managers
+from genshin.client.components import base
 from genshin.client.manager.cookie import fetch_cookie_token_with_game_token, fetch_stoken_with_game_token
 from genshin.models.auth.cookie import (
     AppLoginResult,
@@ -37,6 +39,7 @@ LOGGER_ = logging.getLogger(__name__)
 class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
     """Auth client component."""
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def os_login_with_password(
         self,
         account: str,
@@ -64,6 +67,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         return await self._os_web_login(account, password, token_type=token_type, mmt_result=mmt_result)
 
+    @base.region_specific(types.Region.CHINESE)
     async def cn_login_with_password(
         self,
         account: str,
@@ -90,6 +94,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         return await self._cn_web_login(account, password, mmt_result=mmt_result)
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def check_mobile_number_validity(self, mobile: str) -> bool:
         """Check if a mobile number is valid (it's registered on Miyoushe).
 
@@ -104,6 +109,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         return data["data"]["status"] != data["data"]["is_registable"]
 
+    @base.region_specific(types.Region.CHINESE)
     async def login_with_mobile_number(
         self,
         mobile: str,
@@ -132,6 +138,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         otp = await server.enter_code(port=port)
         return await self._login_with_mobile_otp(mobile, otp)
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def login_with_app_password(
         self,
         account: str,
@@ -179,6 +186,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         return result
 
+    @base.region_specific(types.Region.CHINESE)
     async def login_with_qrcode(self) -> QRLoginResult:
         """Login with QR code, only available for Miyoushe users."""
         creation_result = await self._create_qrcode()
@@ -218,6 +226,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         self.set_cookies(cookies)
         return QRLoginResult(**cookies)
 
+    @base.region_specific(types.Region.CHINESE)
     @managers.no_multi
     async def create_mmt(self) -> MMT:
         """Create a geetest challenge."""
@@ -239,6 +248,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         return MMT(**data["data"])
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def os_game_login(
         self,
         account: str,
