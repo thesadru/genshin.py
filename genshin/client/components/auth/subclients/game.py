@@ -165,9 +165,9 @@ class GameAuthClient(base.BaseClient):
             raise ValueError("No default game set.")
 
         payload = {
-            "app_id": 11,
             "channel_id": 1,
             "device": auth_utility.DEVICE_ID,
+            "app_id": constants.APP_IDS[self.default_game][self.region],
         }
         payload["data"] = json.dumps({"uid": uid, "token": game_token, "guest": False})
         payload["sign"] = auth_utility.generate_sign(payload, constants.APP_KEYS[self.default_game][self.region])
