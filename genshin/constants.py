@@ -45,4 +45,8 @@ APP_KEYS = {
         types.Region.OVERSEAS: "d74818dabd4182d4fbac7f8df1622648",
         types.Region.CHINESE: "4650f3a396d34d576c3d65df26415394",
     },
+    types.Game.HONKAI: {
+        types.Region.OVERSEAS: "243187699ab762b682a2a2e50ba02285",
+        types.Region.CHINESE: "0ebc517adb1b62c6b408df153331f9aa",
+    }
 }

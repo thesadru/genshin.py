@@ -1,5 +1,7 @@
 """Auth endpoints responses models."""
 
+import typing
+
 import pydantic
 
 __all__ = ["Account", "ShieldLoginResponse"]
@@ -31,7 +33,7 @@ class Account(pydantic.BaseModel):
     steam_name: str
     unmasked_email: str
     unmasked_email_type: int
-    cx_name: str
+    cx_name: typing.Optional[str] = None
 
 
 class ShieldLoginResponse(pydantic.BaseModel):
