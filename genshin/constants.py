@@ -35,3 +35,14 @@ DS_SALT = {
 
 MIYOUSHE_GEETEST_RETCODES = {10035, 5003, 10041, 1034}
 """API error codes that indicate a Geetest was triggered during this Miyoushe API request."""
+
+APP_KEYS = {
+    types.Game.GENSHIN: {
+        types.Region.OVERSEAS: "6a4c78fe0356ba4673b8071127b28123",
+        types.Region.CHINESE: "d0d3a7342df2026a70f650b907800111",
+    },
+    types.Game.STARRAIL: {
+        types.Region.OVERSEAS: "d74818dabd4182d4fbac7f8df1622648",
+        types.Region.CHINESE: "4650f3a396d34d576c3d65df26415394",
+    },
+}

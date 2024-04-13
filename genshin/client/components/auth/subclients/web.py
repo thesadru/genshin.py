@@ -59,8 +59,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, self._region),
-            "password": auth_utility.encrypt_geetest_credentials(password, self._region),
+            "account": auth_utility.encrypt_geetest_credentials(account, 1),
+            "password": auth_utility.encrypt_geetest_credentials(password, 1),
             "token_type": token_type,
         }
 
@@ -125,8 +125,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, self._region),
-            "password": auth_utility.encrypt_geetest_credentials(password, self._region),
+            "account": auth_utility.encrypt_geetest_credentials(account, 2),
+            "password": auth_utility.encrypt_geetest_credentials(password, 2),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -168,8 +168,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, self._region),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", self._region),
+            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 1),
+            "area_code": auth_utility.encrypt_geetest_credentials("+86", 1),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -201,8 +201,8 @@ class WebAuthClient(base.BaseClient):
         }
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, self._region),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", self._region),
+            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 1),
+            "area_code": auth_utility.encrypt_geetest_credentials("+86", 1),
             "captcha": otp,
         }
 

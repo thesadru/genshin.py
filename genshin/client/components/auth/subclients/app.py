@@ -83,8 +83,8 @@ class AppAuthClient(base.BaseClient):
             headers["x-rpc-verify"] = ticket.to_rpc_verify_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, self._region),
-            "password": auth_utility.encrypt_geetest_credentials(password, self._region),
+            "account": auth_utility.encrypt_geetest_credentials(account, 1),
+            "password": auth_utility.encrypt_geetest_credentials(password, 1),
         }
 
         async with aiohttp.ClientSession() as session:

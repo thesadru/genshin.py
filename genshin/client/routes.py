@@ -242,3 +242,40 @@ CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode
 CREATE_MMT_URL = Route(
     "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false"
 )
+
+GAME_RISKY_CHECK_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",
+    chinese="https://gameapi-account.mihoyo.com/account/risky/api/check",
+)
+
+SHIELD_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/mdk/shield/api/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/mdk/shield/api/login",
+    ),
+)
+
+PRE_GRANT_TICKET_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/preGrantByTicket",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/preGrantByTicket",
+)
+
+DEVICE_GRANT_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/grant",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/grant",
+)
+
+GAME_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/combo/granter/login/v2/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
+    ),
+)

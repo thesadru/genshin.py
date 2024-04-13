@@ -6,6 +6,8 @@ import pydantic
 
 __all__ = [
     "AppLoginResult",
+    "DeviceGrantResult",
+    "GameLoginResult",
     "QRLoginResult",
     "StokenResult",
     "WebLoginResult",
@@ -104,3 +106,28 @@ class MobileLoginResult(CookieLoginResult):
     account_id_v2: str
     ltoken_v2: str
     ltmid_v2: str
+
+
+class DeviceGrantResult(pydantic.BaseModel):
+    """Cookies returned by the device grant endpoint."""
+
+    game_token: str
+    login_ticket: typing.Optional[str] = None
+
+    @pydantic.model_validator(mode="before")
+    def _str_to_none(cls, data: typing.Dict[str, typing.Union[str, None]]) -> typing.Dict[str, typing.Union[str, None]]:
+        """Convert empty strings to `None`."""
+        for key in data:
+            if data[key] == "" or data[key] == "None":
+                data[key] = None
+        return data
+
+
+class GameLoginResult(pydantic.BaseModel):
+    """Game login result."""
+
+    combo_id: str
+    open_id: str
+    combo_token: str
+    heartbeat: bool
+    account_type: int

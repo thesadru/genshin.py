@@ -12,12 +12,14 @@ from aiohttp import web
 from genshin.models.auth.geetest import (
     MMT,
     MMTv4,
+    RiskyCheckMMT,
     MMTResult,
     MMTv4Result,
     SessionMMT,
     SessionMMTv4,
     SessionMMTResult,
     SessionMMTv4Result,
+    RiskyCheckMMTResult,
 )
 from genshin.utility import auth as auth_utility
 
@@ -51,7 +53,8 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
                   fetch("/send-data", {
                     method: "POST",
                     body: JSON.stringify({
-                      session_id: mmt.session_id,
+                      ...(mmt.session_id && {session_id: mmt.session_id}),
+                      ...(mmt.check_id && {check_id: mmt.check_id}),
                       ...captcha.getValidate()
                     }),
                   }).then(() => window.close());
@@ -114,7 +117,8 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
                   fetch("/send-data", {
                     method: "POST",
                     body: JSON.stringify({
-                      session_id: mmt.session_id,
+                      ...(mmt.session_id && {session_id: mmt.session_id}),
+                      ...(mmt.check_id && {check_id: mmt.check_id}),
                       ...captcha.getValidate()
                     }),
                   }).then(() => window.close());
@@ -180,12 +184,12 @@ GT_V4_URL = "https://static.geetest.com/v4/gt4.js"
 async def launch_webapp(
     page: typing.Literal["captcha", "captcha-v4"],
     *,
-    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4],
+    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
     lang: str = "en",
     api_server: str = "api-na.geetest.com",
     proxy_geetest: bool = False,
     port: int = 5000,
-) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result]: ...
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]: ...
 @typing.overload
 async def launch_webapp(
     page: typing.Literal["enter-code"],
@@ -199,12 +203,12 @@ async def launch_webapp(
 async def launch_webapp(
     page: typing.Literal["captcha", "captcha-v4", "enter-code"],
     *,
-    mmt: typing.Optional[typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4]] = None,
+    mmt: typing.Optional[typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT]] = None,
     lang: typing.Optional[str] = None,
     api_server: typing.Optional[str] = None,
     proxy_geetest: typing.Optional[bool] = None,
     port: int = 5000,
-) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, str]:
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult, str]:
     """Create and run a webapp to solve captcha or enter a verification code."""
     routes = web.RouteTableDef()
     future: asyncio.Future[typing.Any] = asyncio.Future()
@@ -238,7 +242,9 @@ async def launch_webapp(
         if "code" in result:
             result = result["code"]
         else:
-            if isinstance(mmt, SessionMMT):
+            if isinstance(mmt, RiskyCheckMMT):
+                result = RiskyCheckMMTResult(**result)
+            elif isinstance(mmt, SessionMMT):
                 result = SessionMMTResult(**result)
             elif isinstance(mmt, SessionMMTv4):
                 result = SessionMMTv4Result(**result)
@@ -287,6 +293,15 @@ async def launch_webapp(
 
 @typing.overload
 async def solve_geetest(
+    mmt: RiskyCheckMMT,
+    *,
+    lang: str = "en-us",
+    api_server: str = "api-na.geetest.com",
+    proxy_geetest: bool = False,
+    port: int = 5000,
+) -> RiskyCheckMMTResult: ...
+@typing.overload
+async def solve_geetest(
     mmt: SessionMMT,
     *,
     lang: str = "en-us",
@@ -322,13 +337,13 @@ async def solve_geetest(
     port: int = 5000,
 ) -> MMTv4Result: ...
 async def solve_geetest(
-    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4],
+    mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
     *,
     lang: str = "en-us",
     api_server: str = "api-na.geetest.com",
     proxy_geetest: bool = False,
     port: int = 5000,
-) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result]:
+) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]:
     """Start a web server and manually solve geetest captcha."""
     use_v4 = isinstance(mmt, MMTv4)
     lang = auth_utility.lang_to_geetest_lang(lang)

@@ -1,5 +1,6 @@
 """Geetest-related models"""
 
+import enum
 import json
 import typing
 
@@ -15,6 +16,8 @@ __all__ = [
     "MMTResult",
     "MMTv4",
     "MMTv4Result",
+    "RiskyCheckMMT",
+    "RiskyCheckMMTResult",
     "SessionMMT",
     "SessionMMTResult",
     "SessionMMTv4",
@@ -77,6 +80,12 @@ class SessionMMTv4(MMTv4):
         return MMTv4(**self.model_dump(exclude={"session_id"}))
 
 
+class RiskyCheckMMT(MMT):
+    """MMT returned by the risky check endpoint."""
+
+    check_id: str
+
+
 class BaseMMTResult(pydantic.BaseModel):
     """Base Geetest verification result model."""
 
@@ -122,3 +131,37 @@ class MMTv4Result(BaseMMTResult):
 
 class SessionMMTv4Result(MMTv4Result, BaseSessionMMTResult):
     """Session-based geetest verification result (V4)."""
+
+
+class RiskyCheckMMTResult(MMTResult):
+    """Risky check MMT result."""
+
+    check_id: str
+
+    def to_rpc_risky(self) -> str:
+        """Convert the MMT result to a RPC risky header."""
+        return auth_utility.generate_risky_header(self.check_id, self.geetest_challenge, self.geetest_validate)
+
+
+class RiskyCheckAction(str, enum.Enum):
+    """Risky check action returned by the API."""
+
+    ACTION_NONE = "ACTION_NONE"
+    """No action required."""
+    ACTION_GEETEST = "ACTION_GEETEST"
+    """Geetest verification required."""
+
+
+class RiskyCheckResult(pydantic.BaseModel):
+    """Model for the risky check result."""
+
+    id: str
+    action: RiskyCheckAction
+    mmt: typing.Optional[MMT] = pydantic.Field(alias="geetest")
+
+    def to_mmt(self) -> RiskyCheckMMT:
+        """Convert the check result to a `RiskyCheckMMT` object."""
+        if self.mmt is None:
+            raise ValueError("The check result does not contain a MMT object.")
+
+        return RiskyCheckMMT(**self.mmt.model_dump(), check_id=self.id)

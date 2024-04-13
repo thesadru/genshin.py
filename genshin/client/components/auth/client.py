@@ -18,8 +18,9 @@ from genshin.models.auth.cookie import (
     MobileLoginResult,
     QRLoginResult,
     WebLoginResult,
+    GameLoginResult,
 )
-from genshin.models.auth.geetest import MMT, SessionMMT, SessionMMTResult
+from genshin.models.auth.geetest import MMT, SessionMMT, SessionMMTResult, RiskyCheckMMT, RiskyCheckMMTResult
 from genshin.models.auth.qrcode import QRCodeStatus
 from genshin.models.auth.verification import ActionTicket
 from genshin.types import Game
@@ -237,3 +238,40 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
                 data = await r.json()
 
         return MMT(**data["data"])
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -> GameLoginResult:
+        """Perform a login to the game."""
+        password = auth_utility.encrypt_geetest_credentials(password, 2)
+        result = await self._shield_login(account, password)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._shield_login(account, password, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)

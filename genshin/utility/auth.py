@@ -8,13 +8,11 @@ import typing
 from hashlib import sha256
 from genshin import constants
 
-from ..types import Region
-
 __all__ = ["encrypt_geetest_credentials", "generate_sign"]
 
 
-# RSA key is the same for app and web login
-OS_LOGIN_KEY_CERT = b"""
+# RSA key used for OS app/web login
+LOGIN_KEY_TYPE_1 = b"""
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4PMS2JVMwBsOIrYWRluY
 wEiFZL7Aphtm9z5Eu/anzJ09nB00uhW+ScrDWFECPwpQto/GlOJYCUwVM/raQpAj
@@ -26,7 +24,8 @@ KSQP4sM0mZvQ1Sr4UcACVcYgYnCbTZMWhJTWkrNXqI8TMomekgny3y+d6NX/cFa6
 -----END PUBLIC KEY-----
 """
 
-CN_LOGIN_KEY_CERT = b"""
+# RSA key used for CN app/game and game login
+LOGIN_KEY_TYPE_2 = b"""
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDvekdPMHN3AYhm/vktJT+YJr7
 cI5DcsNKqdsx5DZX0gDuWFuIjzdwButrIYPNmRJ1G8ybDIF7oDW2eEpm5sMbL9zs
@@ -76,8 +75,36 @@ EMAIL_VERIFY_HEADERS = {
 CREATE_MMT_HEADERS = {
     "x-rpc-app_version": "2.60.1",
     "x-rpc-client_type": "5",
-    "Referer": "https://webstatic.mihoyo.com/",
-    "Origin": "https://webstatic.mihoyo.com/",
+}
+
+DEVICE_ID = "D6AF5103-D297-4A01-B86A-87F87DS5723E"
+
+RISKY_CHECK_HEADERS = {
+    "x-rpc-client_type": "1",
+    "x-rpc-channel_id": "1",
+    "x-rpc-game_biz": "hkrpg_global",
+}
+
+SHIELD_LOGIN_HEADERS = {
+    "x-rpc-client_type": "1",
+    "x-rpc-channel_id": "1",
+    "x-rpc-game_biz": "hkrpg_global",
+    "x-rpc-device_id": DEVICE_ID,
+}
+
+GRANT_TICKET_HEADERS = {
+    "x-rpc-client_type": "1",
+    "x-rpc-channel_id": "1",
+    "x-rpc-game_biz": "hkrpg_global",
+    "x-rpc-device_id": DEVICE_ID,
+    "x-rpc-language": "ru",
+}
+
+GAME_LOGIN_HEADERS = {
+    "x-rpc-client_type": "1",
+    "x-rpc-channel_id": "1",
+    "x-rpc-game_biz": "hkrpg_global",
+    "x-rpc-device_id": DEVICE_ID,
 }
 
 GEETEST_LANGS = {
@@ -104,13 +131,11 @@ def lang_to_geetest_lang(lang: str) -> str:
     return GEETEST_LANGS.get(constants.LANGS.get(lang, "en-us"), "en")
 
 
-def encrypt_geetest_credentials(text: str, region: Region = Region.OVERSEAS) -> str:
+def encrypt_geetest_credentials(text: str, key_type: typing.Literal[1, 2]) -> str:
     """Encrypt text for geetest."""
     import rsa
 
-    public_key = rsa.PublicKey.load_pkcs1_openssl_pem(
-        OS_LOGIN_KEY_CERT if region is Region.OVERSEAS else CN_LOGIN_KEY_CERT
-    )
+    public_key = rsa.PublicKey.load_pkcs1_openssl_pem(LOGIN_KEY_TYPE_1 if key_type == 1 else LOGIN_KEY_TYPE_2)
     crypto = rsa.encrypt(text.encode("utf-8"), public_key)
     return base64.b64encode(crypto).decode("utf-8")
 
@@ -126,3 +151,12 @@ def generate_sign(data: typing.Dict[str, typing.Any], key: str) -> str:
     for k in sorted(data.keys()):
         string += k + "=" + str(data[k]) + "&"
     return hmac.new(key.encode(), string[:-1].encode(), sha256).hexdigest()
+
+
+def generate_risky_header(
+    check_id: str,
+    challenge: str = "",
+    validate: str = "",
+) -> str:
+    """Generate risky header for geetest verification."""
+    return f"id={check_id};c={challenge};s={validate}|jordan;v={validate}"
