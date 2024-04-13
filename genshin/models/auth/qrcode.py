@@ -1,15 +1,15 @@
 """Miyoushe QR Code Models"""
 
+import enum
 import json
 import typing
-from enum import Enum
 
-from pydantic import BaseModel, Field, field_validator
+import pydantic
 
 __all__ = ["QRCodeCheckResult", "QRCodeCreationResult", "QRCodePayload", "QRCodeRawData", "QRCodeStatus"]
 
 
-class QRCodeStatus(Enum):
+class QRCodeStatus(enum.Enum):
     """QR code check status."""
 
     INIT = "Init"
@@ -17,36 +17,36 @@ class QRCodeStatus(Enum):
     CONFIRMED = "Confirmed"
 
 
-class QRCodeRawData(BaseModel):
+class QRCodeRawData(pydantic.BaseModel):
     """QR code raw data."""
 
-    account_id: str = Field(alias="uid")
+    account_id: str = pydantic.Field(alias="uid")
     """Miyoushe account id."""
-    game_token: str = Field(alias="token")
+    game_token: str = pydantic.Field(alias="token")
 
 
-class QRCodePayload(BaseModel):
+class QRCodePayload(pydantic.BaseModel):
     """QR code check result payload."""
 
     proto: str
-    raw: typing.Union[QRCodeRawData, None]
     ext: str
+    raw: typing.Optional[QRCodeRawData] = None
 
-    @field_validator("raw", mode="before")
-    def _convert_raw_data(cls, value: typing.Union[str, None]) -> typing.Union[QRCodeRawData, None]:
+    @pydantic.field_validator("raw", mode="before")
+    def _convert_raw_data(cls, value: typing.Optional[str] = None) -> typing.Union[QRCodeRawData, None]:
         if value:
             return QRCodeRawData(**json.loads(value))
         return None
 
 
-class QRCodeCheckResult(BaseModel):
+class QRCodeCheckResult(pydantic.BaseModel):
     """QR code check result."""
 
-    status: QRCodeStatus = Field(alias="stat")
+    status: QRCodeStatus = pydantic.Field(alias="stat")
     payload: QRCodePayload
 
 
-class QRCodeCreationResult(BaseModel):
+class QRCodeCreationResult(pydantic.BaseModel):
     """QR code creation result."""
 
     app_id: str
