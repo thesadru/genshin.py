@@ -28,7 +28,6 @@ __all__ = [
     "MI18N",
     "RECORD_URL",
     "REWARD_URL",
-    "Route",
     "TAKUMI_URL",
     "TEAPOT_URL",
     "VERIFY_EMAIL_URL",
@@ -36,6 +35,7 @@ __all__ = [
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
     "YSULOG_URL",
+    "Route",
 ]
 
 

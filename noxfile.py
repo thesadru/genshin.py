@@ -60,12 +60,21 @@ def reformat(session: nox.Session) -> None:
     """Reformat this project's modules to fit the standard style."""
     install_requirements(session, "reformat")
     session.run("python", "-m", "black", *GENERAL_TARGETS, *verbose_args())
-    session.run("python", "-m", "ruff", "check", "--fix-only", "--fixable", "ALL", *GENERAL_TARGETS, *verbose_args())
-
-    session.log("sort-all")
-    LOGGER.disabled = True
-    session.run("sort-all", *map(str, pathlib.Path(PACKAGE).glob("**/*.py")), success_codes=[0, 1])
-    LOGGER.disabled = False
+    # sort __all__ and format imports
+    session.run(
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "--preview",
+        "--select",
+        "RUF022,I",
+        "--fix",
+        *GENERAL_TARGETS,
+        *verbose_args(),
+    )
+    # fix all fixable linting errors
+    session.run("ruff", "check", "--fix", *GENERAL_TARGETS, *verbose_args())
 
 
 @nox.session(name="test")
