@@ -9,8 +9,6 @@ from string import ascii_letters, digits
 
 import aiohttp
 import aiohttp.web
-import qrcode
-import qrcode.image.pil
 from qrcode.constants import ERROR_CORRECT_L
 
 from genshin import constants, errors
@@ -527,6 +525,9 @@ class GeetestClient(base.BaseClient):
 
         Returns cookies.
         """
+        import qrcode
+        import qrcode.image.pil
+
         creation_result = await self._create_qrcode()
         qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
         qrcode_.show()
