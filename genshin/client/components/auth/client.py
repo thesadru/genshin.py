@@ -9,7 +9,7 @@ import qrcode
 from qrcode import constants as qrcode_constants
 from qrcode.image.pil import PilImage
 
-from genshin import types
+from genshin import errors, types
 from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.client.components import base
@@ -245,6 +245,9 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
                 routes.CREATE_MMT_URL.get_url(), headers=headers, cookies=self.cookie_manager.cookies
             ) as r:
                 data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
 
         return MMT(**data["data"])
 
