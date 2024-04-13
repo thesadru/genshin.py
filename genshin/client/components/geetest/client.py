@@ -9,7 +9,6 @@ from string import ascii_letters, digits
 
 import aiohttp
 import aiohttp.web
-from qrcode.constants import ERROR_CORRECT_L
 
 from genshin import constants, errors
 from genshin.client import routes
@@ -527,6 +526,7 @@ class GeetestClient(base.BaseClient):
         """
         import qrcode
         import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
 
         creation_result = await self._create_qrcode()
         qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
