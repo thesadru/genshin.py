@@ -13,12 +13,12 @@ import aiohttp
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
-from genshin.models.auth.geetest import SessionMMTResult, SessionMMT
 from genshin.models.auth.cookie import AppLoginResult
-from genshin.models.auth.verification import ActionTicket
+from genshin.models.auth.geetest import SessionMMT, SessionMMTResult
 from genshin.models.auth.qrcode import QRCodeCheckResult, QRCodeCreationResult
-from genshin.utility import ds as ds_utility
+from genshin.models.auth.verification import ActionTicket
 from genshin.utility import auth as auth_utility
+from genshin.utility import ds as ds_utility
 
 __all__ = ["AppAuthClient"]
 
@@ -176,16 +176,16 @@ class AppAuthClient(base.BaseClient):
 
     async def _create_qrcode(self) -> QRCodeCreationResult:
         """Create a QR code for login."""
+        if self.default_game is None:
+            raise RuntimeError("No default game set.")
+
+        app_id = constants.APP_IDS[self.default_game][self.region]
         device_id = "".join(random.choices(ascii_letters + digits, k=64))
-        app_id = "8"
 
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 routes.CREATE_QRCODE_URL.get_url(),
-                json={
-                    "app_id": app_id,
-                    "device": device_id,
-                },
+                json={"app_id": app_id, "device": device_id},
             ) as r:
                 data = await r.json()
 
