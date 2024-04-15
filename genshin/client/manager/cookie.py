@@ -46,21 +46,6 @@ __all__ = [
     "refresh_cookie_token",
 ]
 
-# TODO: Remove unnecessary headers
-STOKEN_BY_GAME_TOKEN_HEADERS = {
-    "x-rpc-app_version": "2.41.0",
-    "x-rpc-aigis": "",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "x-rpc-game_biz": "bbs_cn",
-    "x-rpc-sys_version": "11",
-    "x-rpc-device_name": "GenshinUid_login_device_lulu",
-    "x-rpc-device_model": "GenshinUid_login_device_lulu",
-    "x-rpc-app_id": "bll8iq97cem8",
-    "x-rpc-client_type": "2",
-    "User-Agent": "okhttp/4.8.0",
-}
-
 
 async def fetch_cookie_with_cookie(
     cookies: managers.CookieOrHeader,
@@ -222,7 +207,7 @@ async def fetch_stoken_with_game_token(*, game_token: str, account_id: int) -> S
         "DS": ds_utility.generate_passport_ds(body=payload),
         "x-rpc-device_id": uuid.uuid4().hex,
         "x-rpc-device_fp": "".join(random.choices(ascii_letters + digits, k=13)),
-        **STOKEN_BY_GAME_TOKEN_HEADERS,
+        "x-rpc-app_id": "bll8iq97cem8",
     }
 
     async with aiohttp.ClientSession() as session:
