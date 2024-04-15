@@ -11,18 +11,18 @@ from qrcode.image.pil import PilImage
 
 from genshin import errors, types
 from genshin.client import routes
-from genshin.client.manager import managers
 from genshin.client.components import base
+from genshin.client.manager import managers
 from genshin.client.manager.cookie import fetch_cookie_token_with_game_token, fetch_stoken_with_game_token
 from genshin.models.auth.cookie import (
     AppLoginResult,
     CNWebLoginResult,
+    GameLoginResult,
     MobileLoginResult,
     QRLoginResult,
     WebLoginResult,
-    GameLoginResult,
 )
-from genshin.models.auth.geetest import MMT, SessionMMT, SessionMMTResult, RiskyCheckMMT, RiskyCheckMMTResult
+from genshin.models.auth.geetest import MMT, RiskyCheckMMT, RiskyCheckMMTResult, SessionMMT, SessionMMTResult
 from genshin.models.auth.qrcode import QRCodeStatus
 from genshin.models.auth.verification import ActionTicket
 from genshin.types import Game
