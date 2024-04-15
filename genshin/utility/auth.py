@@ -4,8 +4,8 @@ import base64
 import hmac
 import json
 import typing
-
 from hashlib import sha256
+
 from genshin import constants
 
 __all__ = ["encrypt_geetest_credentials", "generate_sign"]
@@ -55,10 +55,7 @@ APP_LOGIN_HEADERS = {
 CN_LOGIN_HEADERS = {
     "x-rpc-app_id": "bll8iq97cem8",
     "x-rpc-client_type": "4",
-    "Origin": "https://user.miyoushe.com",
-    "Referer": "https://user.miyoushe.com/",
     "x-rpc-source": "v2.webLogin",
-    "x-rpc-mi_referrer": "https://user.miyoushe.com/login-platform/index.html?app_id=bll8iq97cem8&theme=&token_type=4&game_biz=bbs_cn&message_origin=https%253A%252F%252Fwww.miyoushe.com&succ_back_type=message%253Alogin-platform%253Alogin-success&fail_back_type=message%253Alogin-platform%253Alogin-fail&ux_mode=popup&iframe_level=1#/login/password",  # noqa: E501
     "x-rpc-device_id": "586f2440-856a-4243-8076-2b0a12314197",
 }
 
