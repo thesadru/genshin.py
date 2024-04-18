@@ -56,7 +56,7 @@ class GameAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        mmt_result: None = None,
+        mmt_result: None = ...,
     ) -> typing.Union[ShieldLoginResponse, RiskyCheckMMT]: ...
 
     async def _shield_login(
@@ -105,7 +105,7 @@ class GameAuthClient(base.BaseClient):
         self,
         action_ticket: str,
         *,
-        mmt_result: None = None,
+        mmt_result: None = ...,
     ) -> typing.Union[None, RiskyCheckMMT]: ...
 
     async def _send_game_verification_email(

@@ -185,20 +185,20 @@ async def launch_webapp(
     page: typing.Literal["captcha", "captcha-v4"],
     *,
     mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
-    lang: str = "en",
-    api_server: str = "api-na.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]: ...
 @typing.overload
 async def launch_webapp(
     page: typing.Literal["enter-code"],
     *,
-    mmt: None = None,
-    lang: None = None,
-    api_server: None = None,
-    proxy_geetest: None = None,
-    port: int = 5000,
+    mmt: None = ...,
+    lang: None = ...,
+    api_server: None = ...,
+    proxy_geetest: None = ...,
+    port: int = ...,
 ) -> str: ...
 async def launch_webapp(
     page: typing.Literal["captcha", "captcha-v4", "enter-code"],
@@ -295,46 +295,46 @@ async def launch_webapp(
 async def solve_geetest(
     mmt: RiskyCheckMMT,
     *,
-    lang: str = "en-us",
-    api_server: str = "api-na.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> RiskyCheckMMTResult: ...
 @typing.overload
 async def solve_geetest(
     mmt: SessionMMT,
     *,
-    lang: str = "en-us",
-    api_server: str = "api-na.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> SessionMMTResult: ...
 @typing.overload
 async def solve_geetest(
     mmt: MMT,
     *,
-    lang: str = "en-us",
-    api_server: str = "api-na.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> MMTResult: ...
 @typing.overload
 async def solve_geetest(
     mmt: SessionMMTv4,
     *,
-    lang: str = "en-us",
-    api_server: str = "api.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> SessionMMTv4Result: ...
 @typing.overload
 async def solve_geetest(
     mmt: MMTv4,
     *,
-    lang: str = "en-us",
-    api_server: str = "api.geetest.com",
-    proxy_geetest: bool = False,
-    port: int = 5000,
+    lang: str = ...,
+    api_server: str = ...,
+    proxy_geetest: bool = ...,
+    port: int = ...,
 ) -> MMTv4Result: ...
 async def solve_geetest(
     mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],

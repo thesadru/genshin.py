@@ -28,7 +28,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        token_type: typing.Optional[int] = 6,
+        token_type: typing.Optional[int] = ...,
         mmt_result: SessionMMTResult,
     ) -> WebLoginResult: ...
 
@@ -38,8 +38,8 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        token_type: typing.Optional[int] = 6,
-        mmt_result: None = None,
+        token_type: typing.Optional[int] = ...,
+        mmt_result: None = ...,
     ) -> typing.Union[SessionMMT, WebLoginResult]: ...
 
     @base.region_specific(types.Region.OVERSEAS)
@@ -103,7 +103,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        mmt_result: None = None,
+        mmt_result: None = ...,
     ) -> typing.Union[SessionMMT, CNWebLoginResult]: ...
 
     @base.region_specific(types.Region.CHINESE)

@@ -33,7 +33,7 @@ class AppAuthClient(base.BaseClient):
         password: str,
         *,
         mmt_result: SessionMMTResult,
-        ticket: None = None,
+        ticket: None = ...,
     ) -> typing.Union[AppLoginResult, ActionTicket]: ...
 
     @typing.overload
@@ -42,7 +42,7 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        mmt_result: None = None,
+        mmt_result: None = ...,
         ticket: ActionTicket,
     ) -> AppLoginResult: ...
 
@@ -52,8 +52,8 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
-        mmt_result: None = None,
-        ticket: None = None,
+        mmt_result: None = ...,
+        ticket: None = ...,
     ) -> typing.Union[AppLoginResult, SessionMMT, ActionTicket]: ...
 
     async def _app_login(
