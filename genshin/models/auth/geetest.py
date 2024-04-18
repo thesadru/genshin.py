@@ -9,10 +9,10 @@ import pydantic
 from genshin.utility import auth as auth_utility
 
 __all__ = [
+    "MMT",
     "BaseMMT",
     "BaseMMTResult",
     "BaseSessionMMTResult",
-    "MMT",
     "MMTResult",
     "MMTv4",
     "MMTv4Result",

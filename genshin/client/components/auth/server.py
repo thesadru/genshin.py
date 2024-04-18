@@ -11,15 +11,15 @@ from aiohttp import web
 
 from genshin.models.auth.geetest import (
     MMT,
-    MMTv4,
-    RiskyCheckMMT,
     MMTResult,
+    MMTv4,
     MMTv4Result,
-    SessionMMT,
-    SessionMMTv4,
-    SessionMMTResult,
-    SessionMMTv4Result,
+    RiskyCheckMMT,
     RiskyCheckMMTResult,
+    SessionMMT,
+    SessionMMTResult,
+    SessionMMTv4,
+    SessionMMTv4Result,
 )
 from genshin.utility import auth as auth_utility
 

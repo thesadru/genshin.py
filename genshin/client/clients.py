@@ -1,12 +1,12 @@
 """A simple HTTP client for API endpoints."""
 
 from .components import (
+    auth,
     calculator,
     chronicle,
     daily,
     diary,
     gacha,
-    auth,
     hoyolab,
     lineup,
     teapot,

@@ -11,9 +11,9 @@ import aiohttp
 from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
-from genshin.models.auth.geetest import RiskyCheckMMT, RiskyCheckResult, RiskyCheckMMTResult
-from genshin.models.auth.responses import ShieldLoginResponse
 from genshin.models.auth.cookie import DeviceGrantResult, GameLoginResult
+from genshin.models.auth.geetest import RiskyCheckMMT, RiskyCheckMMTResult, RiskyCheckResult
+from genshin.models.auth.responses import ShieldLoginResponse
 from genshin.utility import auth as auth_utility
 
 __all__ = ["GameAuthClient"]
