@@ -17,6 +17,7 @@ __all__ = [
     "CN_WEB_LOGIN_URL",
     "COMMUNITY_URL",
     "COOKIE_V2_REFRESH_URL",
+    "CREATE_MMT_URL",
     "CREATE_QRCODE_URL",
     "DETAIL_LEDGER_URL",
     "GACHA_URL",
@@ -237,3 +238,48 @@ MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passpo
 
 CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
 CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
+
+CREATE_MMT_URL = Route(
+    "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false"
+)
+
+GAME_RISKY_CHECK_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",
+    chinese="https://gameapi-account.mihoyo.com/account/risky/api/check",
+)
+
+SHIELD_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/mdk/shield/api/login",
+        honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/mdk/shield/api/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shield/api/login",
+        honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/mdk/shield/api/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/mdk/shield/api/login",
+    ),
+)
+
+PRE_GRANT_TICKET_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/preGrantByTicket",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/preGrantByTicket",
+)
+
+DEVICE_GRANT_URL = InternationalRoute(
+    overseas="https://api-account-os.hoyoverse.com/account/device/api/grant",
+    chinese="https://gameapi-account.mihoyo.com/account/device/api/grant",
+)
+
+GAME_LOGIN_URL = GameRoute(
+    overseas=dict(
+        genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/combo/granter/login/v2/login",
+        honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/combo/granter/login/v2/login",
+    ),
+    chinese=dict(
+        genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/granter/login/v2/login",
+        honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/combo/granter/login/v2/login",
+        hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
+    ),
+)

@@ -20,7 +20,7 @@ setup(
     extras_require={
         "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]"],
         "cookies": ["browser-cookie3"],
-        "geetest": ["rsa", "qrcode[pil]"],
+        "auth": ["rsa", "qrcode[pil]"],
         "cli": ["click"],
     },
     include_package_data=True,
