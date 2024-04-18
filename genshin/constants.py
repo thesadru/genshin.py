@@ -49,6 +49,10 @@ APP_KEYS = {
         types.Region.OVERSEAS: "243187699ab762b682a2a2e50ba02285",
         types.Region.CHINESE: "0ebc517adb1b62c6b408df153331f9aa",
     },
+    types.Game.ZZZ: {
+        types.Region.OVERSEAS: "ff0f2776bf515d79d1f8ff1fb98b2a06",
+        types.Region.CHINESE: "4650f3a396d34d576c3d65df26415394",
+    },
 }
 """App keys used for game login."""
 
@@ -64,6 +68,10 @@ APP_IDS = {
     types.Game.HONKAI: {
         types.Region.OVERSEAS: "8",
         types.Region.CHINESE: "1",
+    },
+    types.Game.ZZZ: {
+        types.Region.OVERSEAS: "15",
+        types.Region.CHINESE: "12",
     },
 }
 """App IDs used for game login."""

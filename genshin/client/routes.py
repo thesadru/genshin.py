@@ -253,11 +253,13 @@ SHIELD_LOGIN_URL = GameRoute(
         genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/mdk/shield/api/login",
         honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/mdk/shield/api/login",
         hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/mdk/shield/api/login",
+        nap="https://nap-sdk-os.hoyoverse.com/nap_global/mdk/shield/api/login",
     ),
     chinese=dict(
         genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/mdk/shield/api/login",
         honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/mdk/shield/api/login",
         hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/mdk/shield/api/login",
+        nap="https://nap-sdk.mihoyo.com/nap_cn/mdk/shield/api/login",
     ),
 )
 
@@ -276,10 +278,12 @@ GAME_LOGIN_URL = GameRoute(
         genshin="https://hk4e-sdk-os.hoyoverse.com/hk4e_global/combo/granter/login/v2/login",
         honkai3rd="https://bh3-sdk-os.hoyoverse.com/bh3_os/combo/granter/login/v2/login",
         hkrpg="https://hkrpg-sdk-os.hoyoverse.com/hkrpg_global/combo/granter/login/v2/login",
+        nap="https://nap-sdk-os.hoyoverse.com/nap_global/combo/granter/login/v2/login",
     ),
     chinese=dict(
         genshin="https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/granter/login/v2/login",
         honkai3rd="https://api-sdk.mihoyo.com/bh3_cn/combo/granter/login/v2/login",
         hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
+        nap="https://nap-sdk.mihoyo.com/nap_cn/combo/granter/login/v2/login",
     ),
 )
