@@ -5,9 +5,6 @@ import logging
 import typing
 
 import aiohttp
-import qrcode
-from qrcode import constants as qrcode_constants
-from qrcode.image.pil import PilImage
 
 from genshin import errors, types
 from genshin.client import routes
@@ -189,11 +186,13 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
     @base.region_specific(types.Region.CHINESE)
     async def login_with_qrcode(self) -> QRLoginResult:
         """Login with QR code, only available for Miyoushe users."""
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
         creation_result = await self._create_qrcode()
-        qrc: PilImage = qrcode.make(  # type: ignore
-            creation_result.url, error_correction=qrcode_constants.ERROR_CORRECT_L
-        )
-        qrc.show()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
 
         scanned = False
         while True:
