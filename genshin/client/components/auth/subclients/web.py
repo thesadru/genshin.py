@@ -170,8 +170,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 1),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", 1),
+            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 2),
+            "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -203,8 +203,8 @@ class WebAuthClient(base.BaseClient):
         }
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 1),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", 1),
+            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 2),
+            "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
             "captcha": otp,
         }
 
