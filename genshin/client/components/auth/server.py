@@ -30,21 +30,33 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
     <!DOCTYPE html>
     <html>
       <body></body>
-      <script src="./gt/v3.js"></script>
+      <script src="./gt/v{gt_version}.js"></script>
       <script>
+        const geetestVersion = {gt_version};
+        const initGeetest = geetestVersion === 3 ? window.initGeetest : window.initGeetest4;
         fetch("/mmt")
           .then((response) => response.json())
-          .then((mmt) =>
-            window.initGeetest(
-              {
-                gt: mmt.gt,
-                challenge: mmt.challenge,
-                new_captcha: mmt.new_captcha,
-                api_server: '{api_server}',
-                https: /^https/i.test(window.location.protocol),
-                product: "bind",
-                lang: '{lang}',
-              },
+          .then((mmt) => {
+            const initParams = geetestVersion === 3 ? {
+              gt: mmt.gt,
+              challenge: mmt.challenge,
+              new_captcha: mmt.new_captcha,
+              api_server: '{api_server}',
+              https: /^https/i.test(window.location.protocol),
+              product: "bind",
+              lang: '{lang}',
+            } : {
+              captchaId: mmt.gt,
+              riskType: mmt.risk_type,
+              userInfo: mmt.session_id ? JSON.stringify({
+                mmt_key: mmt.session_id
+              }) : undefined,
+              api_server: '{api_server}',
+              product: "bind",
+              language: '{lang}',
+            };
+            initGeetest(
+              initParams,
               (captcha) => {
                 captcha.onReady(() => {
                   captcha.verify();
@@ -62,71 +74,7 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
                 });
               }
             )
-          );
-        if ({proxy_geetest}) {
-          Object.defineProperty(HTMLScriptElement.prototype, 'src', {
-            get: function() {
-              return this.getAttribute('src')
-            },
-            set: function(url) {
-              const proxyPrefixes = [
-                /^http:\\/\\/.*\\.geevisit\\.com/,
-                /^{api_server}/
-              ];
-              const prefix = proxyPrefixes.find((prefix) => url.match(prefix));
-              if (prefix) {
-                console.debug('[Proxy] Request URL override:');
-                console.debug('From: ' + url);
-                newUrl = new URL(url);
-                newUrl.searchParams.set('url', newUrl.origin + newUrl.pathname);
-                url = window.location.origin + '/proxy' + newUrl.search;
-                console.debug('To: ' + url);
-              }
-              this.setAttribute('src', url);
-            }
           });
-        }
-      </script>
-    </html>
-    """,
-    "captcha-v4": """
-    <!DOCTYPE html>
-    <html>
-      <body></body>
-      <script src="./gt/v4.js"></script>
-      <script>
-        fetch("/mmt")
-          .then((response) => response.json())
-          .then((mmt) =>
-            window.initGeetest4(
-              {
-                captchaId: mmt.gt,
-                riskType: mmt.risk_type,
-                userInfo: mmt.session_id ? JSON.stringify({
-                  mmt_key: mmt.session_id
-                }) : undefined,
-                api_server: '{api_server}',
-                product: "bind",
-                language: '{lang}',
-              },
-              (captcha) => {
-                captcha.onReady(() => {
-                  captcha.showCaptcha();
-                });
-                captcha.onSuccess(() => {
-                  fetch("/send-data", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      ...(mmt.session_id && {session_id: mmt.session_id}),
-                      ...(mmt.check_id && {check_id: mmt.check_id}),
-                      ...captcha.getValidate()
-                    }),
-                  }).then(() => window.close());
-                  document.body.innerHTML = "You may now close this window.";
-                });
-              }
-            )
-          );
         if ({proxy_geetest}) {
           Object.defineProperty(HTMLScriptElement.prototype, 'src', {
             get: function() {
@@ -182,7 +130,7 @@ GT_V4_URL = "https://static.geetest.com/v4/gt4.js"
 
 @typing.overload
 async def launch_webapp(
-    page: typing.Literal["captcha", "captcha-v4"],
+    page: typing.Literal["captcha"],
     *,
     mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
     lang: str = ...,
@@ -201,7 +149,7 @@ async def launch_webapp(
     port: int = ...,
 ) -> str: ...
 async def launch_webapp(
-    page: typing.Literal["captcha", "captcha-v4", "enter-code"],
+    page: typing.Literal["captcha", "enter-code"],
     *,
     mmt: typing.Optional[typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT]] = None,
     lang: typing.Optional[str] = None,
@@ -216,6 +164,7 @@ async def launch_webapp(
     @routes.get("/")
     async def index(request: web.Request) -> web.StreamResponse:
         body = PAGES[page]
+        body = body.replace("{gt_version}", "4" if isinstance(mmt, MMTv4) else "3")
         body = body.replace("{api_server}", api_server or "api-na.geetest.com")
         body = body.replace("{proxy_geetest}", str(proxy_geetest or False).lower())
         body = body.replace("{lang}", lang or "en")
@@ -345,10 +294,9 @@ async def solve_geetest(
     port: int = 5000,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]:
     """Start a web server and manually solve geetest captcha."""
-    use_v4 = isinstance(mmt, MMTv4)
     lang = auth_utility.lang_to_geetest_lang(lang)
     return await launch_webapp(
-        "captcha-v4" if use_v4 else "captcha",
+        "captcha",
         mmt=mmt,
         lang=lang,
         api_server=api_server,
