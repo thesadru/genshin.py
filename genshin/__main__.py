@@ -88,7 +88,7 @@ async def honkai_stats(client: genshin.Client, uid: int) -> None:
     for k, v in data.stats.as_dict(lang=client.lang).items():
         if isinstance(v, dict):
             click.echo(f"{k}:")
-            for nested_k, nested_v in typing.cast("dict[str, object]", v).items():
+            for nested_k, nested_v in typing.cast("typing.Dict[str, object]", v).items():
                 click.echo(f"  {nested_k}: {click.style(str(nested_v), bold=True)}")
         else:
             click.echo(f"{k}: {click.style(str(v), bold=True)}")
