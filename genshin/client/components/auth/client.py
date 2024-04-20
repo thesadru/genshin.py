@@ -19,7 +19,7 @@ from genshin.models.auth.cookie import (
     QRLoginResult,
     WebLoginResult,
 )
-from genshin.models.auth.geetest import MMT, RiskyCheckMMT, RiskyCheckMMTResult, SessionMMT, SessionMMTResult
+from genshin.models.auth.geetest import MMT, MMTResult, RiskyCheckMMT, RiskyCheckMMTResult, SessionMMT, SessionMMTResult
 from genshin.models.auth.qrcode import QRCodeStatus
 from genshin.models.auth.verification import ActionTicket
 from genshin.types import Game
@@ -250,6 +250,32 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             errors.raise_for_retcode(data)
 
         return MMT(**data["data"])
+
+    @base.region_specific(types.Region.CHINESE)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -> None:
+        """Verify a geetest challenge."""
+        is_genshin = self.game is Game.GENSHIN
+        ds_headers = ds_utility.get_ds_headers(self.region, data=mmt_result.get_data())
+        headers = {
+            "x-rpc-challenge_game": "2" if is_genshin else "6",
+            "x-rpc-page": "v4.1.5-ys_#ys" if is_genshin else "v1.4.1-rpg_#/rpg",
+            "x-rpc-tool-verison": "v4.1.5-ys" if is_genshin else "v1.4.1-rpg",
+            **ds_headers,
+        }
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(),
+                headers=headers,
+                json=mmt_result.get_data(),
+                cookies=self.cookie_manager.cookies,
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
 
     @base.region_specific(types.Region.OVERSEAS)
     async def os_game_login(

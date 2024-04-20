@@ -242,6 +242,7 @@ CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode
 CREATE_MMT_URL = Route(
     "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false"
 )
+VERIFY_MMT_URL = Route("https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/verifyVerification")
 
 GAME_RISKY_CHECK_URL = InternationalRoute(
     overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",
