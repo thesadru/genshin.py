@@ -26,6 +26,7 @@ BATTLESUIT_TYPES = {
     "YiNeng": "PSY",
     "LiangZi": "QUA",
     "XuShu": "IMG",
+    "Xingchen": "SD",
 }
 ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/honkai3rd/global/SpriteOutput/"
 
