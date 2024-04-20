@@ -217,9 +217,10 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         stoken = await fetch_stoken_with_game_token(game_token=raw_data.game_token, account_id=int(raw_data.account_id))
 
         cookies = {
-            "stoken": stoken.token,
-            "stuid": stoken.aid,
-            "mid": stoken.mid,
+            "stoken_v2": stoken.token,
+            "ltuid": stoken.aid,
+            "account_id": stoken.aid,
+            "ltmid": stoken.mid,
             "cookie_token": cookie_token,
         }
         self.set_cookies(cookies)
