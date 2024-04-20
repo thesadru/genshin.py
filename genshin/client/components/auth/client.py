@@ -231,12 +231,12 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
     async def create_mmt(self) -> MMT:
         """Create a geetest challenge."""
         is_genshin = self.game is Game.GENSHIN
+        ds_headers = ds_utility.get_ds_headers(self.region, params={"is_high": "false"})
         headers = {
-            "DS": ds_utility.generate_create_geetest_ds(),
             "x-rpc-challenge_game": "2" if is_genshin else "6",
             "x-rpc-page": "v4.1.5-ys_#ys" if is_genshin else "v1.4.1-rpg_#/rpg",
             "x-rpc-tool-verison": "v4.1.5-ys" if is_genshin else "v1.4.1-rpg",
-            **auth_utility.CREATE_MMT_HEADERS,
+            **ds_headers,
         }
 
         assert isinstance(self.cookie_manager, managers.CookieManager)
