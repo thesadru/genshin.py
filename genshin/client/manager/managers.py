@@ -156,7 +156,7 @@ class BaseCookieManager(abc.ABC):
         errors.check_for_geetest(data)
 
         if data["retcode"] in MIYOUSHE_GEETEST_RETCODES:
-            raise errors.MiyousheGeetestError(data, {k: morsel.value for k, morsel in response.cookies.items()})
+            raise errors.MiyousheGeetestError(data)
 
         if data["retcode"] == 0:
             return data["data"]

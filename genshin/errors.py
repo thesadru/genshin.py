@@ -193,9 +193,7 @@ class MiyousheGeetestError(GenshinException):
     def __init__(
         self,
         response: typing.Dict[str, typing.Any],
-        cookies: typing.Mapping[str, str],
     ) -> None:
-        self.cookies = cookies
         super().__init__(response)
 
     msg = "Geetest triggered during Miyoushe API request."
