@@ -5,6 +5,7 @@ import functools
 import typing
 
 from genshin import errors, paginators, types, utility
+from genshin.models.auth.geetest import MMTResult
 from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 
@@ -25,6 +26,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         cache: bool = True,
+        mmt_result: typing.Optional[MMTResult] = None,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
         payload = dict(payload or {})
@@ -57,6 +59,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             params=params,
             data=data,
             cache=cache_key,
+            mmt_result=mmt_result,
         )
 
     async def get_partial_genshin_user(
@@ -113,10 +116,11 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
         autoauth: bool = True,
+        mmt_result: typing.Optional[MMTResult] = None,
     ) -> models.Notes:
         """Get genshin real-time notes."""
         try:
-            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False, mmt_result=mmt_result)
         except errors.DataNotPublic as e:
             # error raised only when real-time notes are not enabled
             if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
@@ -125,7 +129,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
                 raise errors.GenshinException(e.response, "Real-time notes are not enabled.") from e
 
             await self.update_settings(3, True, game=types.Game.GENSHIN)
-            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False, mmt_result=mmt_result)
 
         return models.Notes(**data)
 

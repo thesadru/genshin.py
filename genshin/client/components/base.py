@@ -20,6 +20,7 @@ from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
 from genshin.models import model as base_model
+from genshin.models.auth.geetest import MMTResult
 from genshin.utility import concurrency, deprecation, ds
 
 __all__ = ["BaseClient"]
@@ -423,6 +424,7 @@ class BaseClient(abc.ABC):
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Any = None,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        mmt_result: typing.Optional[MMTResult] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request any hoyolab endpoint."""
@@ -435,6 +437,8 @@ class BaseClient(abc.ABC):
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
         headers = dict(headers or {})
+        if mmt_result is not None:
+            headers["x-rpc-challenge"] = mmt_result.geetest_challenge
         headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)

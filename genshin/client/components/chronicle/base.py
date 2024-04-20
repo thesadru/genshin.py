@@ -10,6 +10,7 @@ from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
+from genshin.models.auth.geetest import MMTResult
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
@@ -44,6 +45,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         region: typing.Optional[types.Region] = None,
         game: typing.Optional[types.Game] = None,
+        mmt_result: typing.Optional[MMTResult] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
@@ -57,7 +59,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
         update_task = asyncio.create_task(utility.update_characters_any(lang or self.lang, lenient=True))
 
-        data = await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
+        data = await self.request_hoyolab(url, lang=lang, region=region, mmt_result=mmt_result, **kwargs)
 
         await mi18n_task
         try:
