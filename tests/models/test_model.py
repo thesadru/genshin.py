@@ -54,7 +54,7 @@ lang = "en-us"  # initiate local scope
         (
             {
                 "id": 10000001,
-                "icon": "https://enka.network/ui/UI_AvatarIcon_Signora.png",
+                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Signora.png",
                 "rarity": 6,
             },
             LiteralCharacter(
