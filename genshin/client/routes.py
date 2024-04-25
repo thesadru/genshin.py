@@ -244,6 +244,8 @@ CREATE_MMT_URL = Route(
 )
 VERIFY_MMT_URL = Route("https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/verifyVerification")
 
+GET_FP_URL = Route("https://public-data-api.mihoyo.com/device-fp/api/getFp")
+
 GAME_RISKY_CHECK_URL = InternationalRoute(
     overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",
     chinese="https://gameapi-account.mihoyo.com/account/risky/api/check",

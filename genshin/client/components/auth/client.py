@@ -277,6 +277,30 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         if not data["data"]:
             errors.raise_for_retcode(data)
 
+    @staticmethod
+    async def generate_device_fp() -> str:
+        """Generate a device fingerprint through the API."""
+        payload = {
+            "device_id": auth_utility.generate_device_fp(length=16),
+            "device_fp": auth_utility.generate_device_fp(),
+            "seed_id": auth_utility.generate_device_id(),
+            "seed_time": str(int(time.time() * 1000)),
+            "app_name": "bbs_cn",
+            "bbs_device_id": auth_utility.generate_device_id(),
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                routes.GET_FP_URL.get_url(),
+                json=payload,
+            ) as resp:
+                data = await resp.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
+
+        return data["data"]["device_fp"]
+
     @base.region_specific(types.Region.OVERSEAS)
     async def os_game_login(
         self,

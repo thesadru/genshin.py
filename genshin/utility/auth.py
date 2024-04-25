@@ -3,7 +3,9 @@
 import base64
 import hmac
 import json
+import random
 import typing
+import uuid
 from hashlib import sha256
 
 from genshin import constants
@@ -152,3 +154,14 @@ def generate_risky_header(
 ) -> str:
     """Generate risky header for geetest verification."""
     return f"id={check_id};c={challenge};s={validate}|jordan;v={validate}"
+
+
+def generate_device_id() -> str:
+    """Generate a random device ID."""
+    return str(uuid.uuid4()).lower()
+
+
+def generate_device_fp(length: int = 13) -> str:
+    """Generate a random device fingerprint."""
+    characters = "abcdef0123456789"
+    return "".join(random.choices(characters, k=length))
