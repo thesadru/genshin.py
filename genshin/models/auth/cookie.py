@@ -6,8 +6,12 @@ import pydantic
 
 __all__ = [
     "AppLoginResult",
+    "CNWebLoginResult",
+    "CookieLoginResult",
+    "DeviceGrantResult",
     "DeviceGrantResult",
     "GameLoginResult",
+    "MobileLoginResult",
     "QRLoginResult",
     "StokenResult",
     "WebLoginResult",
