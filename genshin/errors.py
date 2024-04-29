@@ -3,13 +3,13 @@
 import typing
 
 __all__ = [
+    "ERRORS",
     "AccountNotFound",
     "AlreadyClaimed",
     "AuthkeyException",
     "AuthkeyTimeout",
     "CookieException",
     "DataNotPublic",
-    "ERRORS",
     "GeetestTriggered",
     "GenshinException",
     "InvalidAuthkey",
