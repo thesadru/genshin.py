@@ -132,6 +132,7 @@ class ArchonQuestStatus(str, enum.Enum):
     """Archon quest status."""
 
     ONGOING = "StatusOngoing"
+    NOT_OPEN = "StatusNotOpen"
 
 
 class ArchonQuest(APIModel):
