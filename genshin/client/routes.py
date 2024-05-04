@@ -185,7 +185,7 @@ REWARD_URL = GameRoute(
         hkrpg="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202303301540311",
     ),
     chinese=dict(
-        genshin="https://api-takumi.mihoyo.com/event/bbs_sign_reward/?act_id=e202009291139501",
+        genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
     ),
