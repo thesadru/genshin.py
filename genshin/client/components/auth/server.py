@@ -28,6 +28,9 @@ __all__ = ["PAGES", "enter_code", "launch_webapp", "solve_geetest"]
 PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-code"], str]] = {
     "captcha": """
     <!DOCTYPE html>
+    <head>
+      <meta name="referrer" content="no-referrer"/>
+    </head>
     <html>
       <body></body>
       <script src="./gt/v{gt_version}.js"></script>
@@ -75,29 +78,6 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
               }
             )
           });
-        if ({proxy_geetest}) {
-          Object.defineProperty(HTMLScriptElement.prototype, 'src', {
-            get: function() {
-              return this.getAttribute('src')
-            },
-            set: function(url) {
-              const proxyPrefixes = [
-                /^http:\\/\\/.*\\.geevisit\\.com/,
-                /^{api_server}/
-              ];
-              const prefix = proxyPrefixes.find((prefix) => url.match(prefix));
-              if (prefix) {
-                console.debug('[Proxy] Request URL override:');
-                console.debug('From: ' + url);
-                newUrl = new URL(url);
-                newUrl.searchParams.set('url', newUrl.origin + newUrl.pathname);
-                url = window.location.origin + '/proxy' + newUrl.search;
-                console.debug('To: ' + url);
-              }
-              this.setAttribute('src', url);
-            }
-          });
-        }
       </script>
     </html>
     """,
@@ -135,7 +115,6 @@ async def launch_webapp(
     mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]: ...
 @typing.overload
@@ -145,7 +124,6 @@ async def launch_webapp(
     mmt: None = ...,
     lang: None = ...,
     api_server: None = ...,
-    proxy_geetest: None = ...,
     port: int = ...,
 ) -> str: ...
 async def launch_webapp(
@@ -154,7 +132,6 @@ async def launch_webapp(
     mmt: typing.Optional[typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT]] = None,
     lang: typing.Optional[str] = None,
     api_server: typing.Optional[str] = None,
-    proxy_geetest: typing.Optional[bool] = None,
     port: int = 5000,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult, str]:
     """Create and run a webapp to solve captcha or enter a verification code."""
@@ -166,7 +143,6 @@ async def launch_webapp(
         body = PAGES[page]
         body = body.replace("{gt_version}", "4" if isinstance(mmt, MMTv4) else "3")
         body = body.replace("{api_server}", api_server or "api-na.geetest.com")
-        body = body.replace("{proxy_geetest}", str(proxy_geetest or False).lower())
         body = body.replace("{lang}", lang or "en")
         return web.Response(body=body, content_type="text/html")
 
@@ -205,19 +181,6 @@ async def launch_webapp(
         future.set_result(result)
         return web.Response(status=204)
 
-    @routes.get("/proxy")
-    async def proxy(request: web.Request) -> web.Response:
-        params = dict(request.query)
-        url = params.pop("url", None)
-        if not url:
-            return web.Response(status=400)
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, params=params) as r:
-                content = await r.read()
-
-        return web.Response(body=content, status=r.status, content_type="text/javascript")
-
     app = web.Application()
     app.add_routes(routes)
 
@@ -246,7 +209,6 @@ async def solve_geetest(
     *,
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> RiskyCheckMMTResult: ...
 @typing.overload
@@ -255,7 +217,6 @@ async def solve_geetest(
     *,
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> SessionMMTResult: ...
 @typing.overload
@@ -264,7 +225,6 @@ async def solve_geetest(
     *,
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> MMTResult: ...
 @typing.overload
@@ -273,7 +233,6 @@ async def solve_geetest(
     *,
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> SessionMMTv4Result: ...
 @typing.overload
@@ -282,7 +241,6 @@ async def solve_geetest(
     *,
     lang: str = ...,
     api_server: str = ...,
-    proxy_geetest: bool = ...,
     port: int = ...,
 ) -> MMTv4Result: ...
 async def solve_geetest(
@@ -290,7 +248,6 @@ async def solve_geetest(
     *,
     lang: str = "en-us",
     api_server: str = "api-na.geetest.com",
-    proxy_geetest: bool = False,
     port: int = 5000,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]:
     """Start a web server and manually solve geetest captcha."""
@@ -300,7 +257,6 @@ async def solve_geetest(
         mmt=mmt,
         lang=lang,
         api_server=api_server,
-        proxy_geetest=proxy_geetest,
         port=port,
     )
 
