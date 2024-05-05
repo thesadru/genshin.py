@@ -75,3 +75,6 @@ APP_IDS = {
     },
 }
 """App IDs used for game login."""
+
+DEVICE_HEADERS = {"x-rpc-device_id": "441058ee-2c18-4a4b-94f0-1081d12eda92", "x-rpc-device_fp": "38d7f191c78a0"}
+"""Headers used for device information."""
