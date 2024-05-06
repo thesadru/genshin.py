@@ -43,6 +43,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         password: str,
         *,
         port: int = 5000,
+        encrypted: bool = False,
         token_type: typing.Optional[int] = 6,
         geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
     ) -> WebLoginResult:
@@ -51,7 +52,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
         """
-        result = await self._os_web_login(account, password, token_type=token_type)
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
 
         if not isinstance(result, SessionMMT):
             # Captcha not triggered
@@ -62,7 +63,9 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         else:
             mmt_result = await server.solve_geetest(result, port=port)
 
-        return await self._os_web_login(account, password, token_type=token_type, mmt_result=mmt_result)
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
 
     @base.region_specific(types.Region.CHINESE)
     async def cn_login_with_password(
@@ -70,6 +73,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         port: int = 5000,
         geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
     ) -> CNWebLoginResult:
@@ -78,7 +82,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
         """
-        result = await self._cn_web_login(account, password)
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
 
         if not isinstance(result, SessionMMT):
             # Captcha not triggered
@@ -89,7 +93,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         else:
             mmt_result = await server.solve_geetest(result, port=port)
 
-        return await self._cn_web_login(account, password, mmt_result=mmt_result)
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
 
     @base.region_specific(types.Region.OVERSEAS)
     async def check_mobile_number_validity(self, mobile: str) -> bool:
@@ -111,6 +115,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         self,
         mobile: str,
         *,
+        encrypted: bool = False,
         port: int = 5000,
     ) -> MobileLoginResult:
         """Login with mobile number, returns cookies.
@@ -141,6 +146,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         port: int = 5000,
         geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
     ) -> AppLoginResult:
@@ -153,7 +159,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         2. Email verification is triggered (can happen if you
         first login with a new device).
         """
-        result = await self._app_login(account, password)
+        result = await self._app_login(account, password, encrypted=encrypted)
 
         if isinstance(result, SessionMMT):
             # Captcha triggered
@@ -162,7 +168,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             else:
                 mmt_result = await server.solve_geetest(result, port=port)
 
-            result = await self._app_login(account, password, mmt_result=mmt_result)
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
 
         if isinstance(result, ActionTicket):
             # Email verification required
@@ -179,7 +185,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             code = await server.enter_code(port=port)
             await self._verify_email(code, result)
 
-            result = await self._app_login(account, password, ticket=result)
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
 
         return result
 
@@ -257,12 +263,12 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         port: int = 5000,
         geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
     ) -> GameLoginResult:
         """Perform a login to the game."""
-        password = auth_utility.encrypt_geetest_credentials(password, 2)
-        result = await self._shield_login(account, password)
+        result = await self._shield_login(account, password, encrypted=encrypted)
 
         if isinstance(result, RiskyCheckMMT):
             if geetest_solver:
@@ -270,7 +276,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             else:
                 mmt_result = await server.solve_geetest(result, port=port)
 
-            result = await self._shield_login(account, password, mmt_result=mmt_result)
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
 
         if not result.device_grant_required:
             return await self._os_game_login(result.account.uid, result.account.token)

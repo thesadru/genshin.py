@@ -47,6 +47,7 @@ class GameAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: RiskyCheckMMTResult,
     ) -> ShieldLoginResponse: ...
 
@@ -56,11 +57,17 @@ class GameAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: None = ...,
     ) -> typing.Union[ShieldLoginResponse, RiskyCheckMMT]: ...
 
     async def _shield_login(
-        self, account: str, password: str, *, mmt_result: typing.Optional[RiskyCheckMMTResult] = None
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        mmt_result: typing.Optional[RiskyCheckMMTResult] = None,
     ) -> typing.Union[ShieldLoginResponse, RiskyCheckMMT]:
         """Log in with the given account and password.
 
@@ -80,7 +87,11 @@ class GameAuthClient(base.BaseClient):
             else:
                 headers["x-rpc-risky"] = auth_utility.generate_risky_header(check_result.id)
 
-        payload = {"account": account, "password": password, "is_crypto": True}
+        payload = {
+            "account": account,
+            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 2),
+            "is_crypto": True,
+        }
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 routes.SHIELD_LOGIN_URL.get_url(self.region, self.default_game), json=payload, headers=headers

@@ -28,6 +28,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         token_type: typing.Optional[int] = ...,
         mmt_result: SessionMMTResult,
     ) -> WebLoginResult: ...
@@ -38,6 +39,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         token_type: typing.Optional[int] = ...,
         mmt_result: None = ...,
     ) -> typing.Union[SessionMMT, WebLoginResult]: ...
@@ -48,6 +50,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         token_type: typing.Optional[int] = 6,
         mmt_result: typing.Optional[SessionMMTResult] = None,
     ) -> typing.Union[SessionMMT, WebLoginResult]:
@@ -60,8 +63,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, 1),
-            "password": auth_utility.encrypt_geetest_credentials(password, 1),
+            "account": account if encrypted else auth_utility.encrypt_geetest_credentials(account, 1),
+            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 1),
             "token_type": token_type,
         }
 
@@ -94,6 +97,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: SessionMMTResult,
     ) -> CNWebLoginResult: ...
 
@@ -103,6 +107,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: None = ...,
     ) -> typing.Union[SessionMMT, CNWebLoginResult]: ...
 
@@ -112,6 +117,7 @@ class WebAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         mmt_result: typing.Optional[SessionMMTResult] = None,
     ) -> typing.Union[SessionMMT, CNWebLoginResult]:
         """
@@ -127,8 +133,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, 2),
-            "password": auth_utility.encrypt_geetest_credentials(password, 2),
+            "account": account if encrypted else auth_utility.encrypt_geetest_credentials(account, 2),
+            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 2),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -156,6 +162,7 @@ class WebAuthClient(base.BaseClient):
         self,
         mobile: str,
         *,
+        encrypted: bool = False,
         mmt_result: typing.Optional[SessionMMTResult] = None,
     ) -> typing.Union[None, SessionMMT]:
         """Attempt to send OTP to the provided mobile number.
@@ -170,7 +177,7 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 2),
+            "mobile": mobile if encrypted else auth_utility.encrypt_geetest_credentials(mobile, 2),
             "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
         }
 
@@ -192,7 +199,7 @@ class WebAuthClient(base.BaseClient):
 
         return None
 
-    async def _login_with_mobile_otp(self, mobile: str, otp: str) -> MobileLoginResult:
+    async def _login_with_mobile_otp(self, mobile: str, otp: str, *, encrypted: bool = False) -> MobileLoginResult:
         """Login with OTP and mobile number.
 
         Returns cookies if OTP matches the one sent, raises an error otherwise.
@@ -203,7 +210,7 @@ class WebAuthClient(base.BaseClient):
         }
 
         payload = {
-            "mobile": auth_utility.encrypt_geetest_credentials(mobile, 2),
+            "mobile": mobile if encrypted else auth_utility.encrypt_geetest_credentials(mobile, 2),
             "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
             "captcha": otp,
         }

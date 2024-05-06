@@ -32,6 +32,7 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: SessionMMTResult,
         ticket: None = ...,
     ) -> typing.Union[AppLoginResult, ActionTicket]: ...
@@ -42,6 +43,7 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: None = ...,
         ticket: ActionTicket,
     ) -> AppLoginResult: ...
@@ -52,6 +54,7 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = ...,
         mmt_result: None = ...,
         ticket: None = ...,
     ) -> typing.Union[AppLoginResult, SessionMMT, ActionTicket]: ...
@@ -61,6 +64,7 @@ class AppAuthClient(base.BaseClient):
         account: str,
         password: str,
         *,
+        encrypted: bool = False,
         mmt_result: typing.Optional[SessionMMTResult] = None,
         ticket: typing.Optional[ActionTicket] = None,
     ) -> typing.Union[AppLoginResult, SessionMMT, ActionTicket]:
@@ -83,8 +87,8 @@ class AppAuthClient(base.BaseClient):
             headers["x-rpc-verify"] = ticket.to_rpc_verify_header()
 
         payload = {
-            "account": auth_utility.encrypt_geetest_credentials(account, 1),
-            "password": auth_utility.encrypt_geetest_credentials(password, 1),
+            "account": account if encrypted else auth_utility.encrypt_geetest_credentials(account, 1),
+            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 1),
         }
 
         async with aiohttp.ClientSession() as session:
