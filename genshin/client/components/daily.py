@@ -4,6 +4,7 @@ import asyncio
 import datetime
 import functools
 import typing
+import uuid
 
 import aiohttp.typedefs
 
@@ -58,12 +59,17 @@ class DailyRewardClient(base.BaseClient):
             params["uid"] = uid
             params["region"] = utility.recognize_server(uid, game)
 
-            # most of the extra headers are likely just placebo
-            headers["x-rpc-app_version"] = "2.60.1"
+            # These headers are optional but left here because they might affect geetest trigger rate
+            headers["x-rpc-app_version"] = "2.70.1"
             headers["x-rpc-client_type"] = "5"
-            headers["x-rpc-signgame"] = "hk4e"
-            headers["referer"] = "https://webstatic.mihoyo.com/"
-            headers["origin"] = "https://webstatic.mihoyo.com/"
+            headers["x-rpc-device_id"] = str(uuid.uuid4())
+            headers["x-rpc-sys_version"] = "12"
+            headers["x-rpc-platform"] = "android"
+            headers["x-rpc-channel"] = "miyousheluodi"
+            headers["x-rpc-device_model"] = str(self.hoyolab_id) or ""
+
+            if game == types.Game.GENSHIN:
+                headers["x-rpc-signgame"] = "hk4e"
 
             headers["ds"] = ds_utility.generate_dynamic_secret(constants.DS_SALT["cn_signin"])
 

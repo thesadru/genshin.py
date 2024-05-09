@@ -28,7 +28,7 @@ DS_SALT = {
     types.Region.OVERSEAS: "6s25p5ox5y14umn1p61aqyyvbvvl3lrt",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
     "app_login": "IZPgfb0dRPtBeLuFkdDznSZ6f4wWt6y2",
-    "cn_signin": "9nQiU3AV0rJSIBWgdynfoGMGKaklfbM7",
+    "cn_signin": "LyD1rXqMv2GJhnwdvCBjFOKGiKuLY3aO",
     "cn_passport": "JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS",
 }
 """Dynamic Secret Salts."""

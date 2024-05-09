@@ -186,7 +186,7 @@ REWARD_URL = GameRoute(
     ),
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
-        honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202207181446311",
+        honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
     ),
 )
