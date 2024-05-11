@@ -8,7 +8,7 @@ import uuid
 
 import aiohttp.typedefs
 
-from genshin import constants, paginators, types, utility
+from genshin import constants, paginators, types
 from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
@@ -54,10 +54,10 @@ class DailyRewardClient(base.BaseClient):
             headers["referer"] = "https://act.hoyolab.com/"
 
         elif self.region == types.Region.CHINESE:
-            uid = await self._get_uid(game)
+            account = await self._get_account(game)
 
-            params["uid"] = uid
-            params["region"] = utility.recognize_server(uid, game)
+            params["uid"] = account.uid
+            params["region"] = account.server
 
             # These headers are optional but left here because they might affect geetest trigger rate
             headers["x-rpc-app_version"] = "2.70.1"
