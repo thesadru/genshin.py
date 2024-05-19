@@ -36,6 +36,31 @@ LOGGER_ = logging.getLogger(__name__)
 class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
     """Auth client component."""
 
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -> typing.Union[WebLoginResult, CNWebLoginResult]:
+        """Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        """
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
     @base.region_specific(types.Region.OVERSEAS)
     async def os_login_with_password(
         self,
