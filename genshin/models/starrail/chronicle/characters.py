@@ -1,5 +1,6 @@
 """Starrail chronicle character."""
 
+import enum
 import typing
 from typing import Any, Mapping, Optional, Sequence
 
@@ -11,7 +12,7 @@ else:
     except ImportError:
         import pydantic
 
-from genshin.models.model import APIModel
+from genshin.models.model import Aliased, APIModel
 
 from .. import character
 
@@ -28,7 +29,20 @@ __all__ = [
     "StarRailDetailCharacter",
     "StarRailDetailCharacters",
     "StarRailEquipment",
+    "StarRailPath",
 ]
+
+
+class StarRailPath(enum.IntEnum):
+    """StarRail character path."""
+
+    DESTRUCTION = 1
+    THE_HUNT = 2
+    ERUDITION = 3
+    HARMONY = 4
+    NIHILITY = 5
+    PRESERVATION = 6
+    ABUNDANCE = 7
 
 
 class StarRailEquipment(APIModel):
@@ -147,7 +161,7 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
     ornaments: Sequence[Relic]
     ranks: Sequence[Rank]
     properties: Sequence[CharacterProperty]
-    base_type: int
+    path: StarRailPath = Aliased("base_type")
     figure_path: str
     skills: Sequence[Skill]
 
