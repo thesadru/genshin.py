@@ -155,15 +155,15 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         4. Logs in with the OTP.
         5. Returns cookies.
         """
-        result = await self._send_mobile_otp(mobile)
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
 
         if isinstance(result, SessionMMT):
             # Captcha triggered
             mmt_result = await server.solve_geetest(result, port=port)
-            await self._send_mobile_otp(mobile, mmt_result=mmt_result)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
 
         otp = await server.enter_code(port=port)
-        return await self._login_with_mobile_otp(mobile, otp)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
 
     @base.region_specific(types.Region.OVERSEAS)
     async def login_with_app_password(
