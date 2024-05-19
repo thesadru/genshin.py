@@ -63,8 +63,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": account if encrypted else auth_utility.encrypt_geetest_credentials(account, 1),
-            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 1),
+            "account": account if encrypted else auth_utility.encrypt_credentials(account, 1),
+            "password": password if encrypted else auth_utility.encrypt_credentials(password, 1),
             "token_type": token_type,
         }
 
@@ -133,8 +133,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "account": account if encrypted else auth_utility.encrypt_geetest_credentials(account, 2),
-            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 2),
+            "account": account if encrypted else auth_utility.encrypt_credentials(account, 2),
+            "password": password if encrypted else auth_utility.encrypt_credentials(password, 2),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -177,8 +177,8 @@ class WebAuthClient(base.BaseClient):
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
         payload = {
-            "mobile": mobile if encrypted else auth_utility.encrypt_geetest_credentials(mobile, 2),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
+            "mobile": mobile if encrypted else auth_utility.encrypt_credentials(mobile, 2),
+            "area_code": auth_utility.encrypt_credentials("+86", 2),
         }
 
         async with aiohttp.ClientSession() as session:
@@ -210,8 +210,8 @@ class WebAuthClient(base.BaseClient):
         }
 
         payload = {
-            "mobile": mobile if encrypted else auth_utility.encrypt_geetest_credentials(mobile, 2),
-            "area_code": auth_utility.encrypt_geetest_credentials("+86", 2),
+            "mobile": mobile if encrypted else auth_utility.encrypt_credentials(mobile, 2),
+            "area_code": auth_utility.encrypt_credentials("+86", 2),
             "captcha": otp,
         }
 

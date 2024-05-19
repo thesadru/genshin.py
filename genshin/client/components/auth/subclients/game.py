@@ -89,7 +89,7 @@ class GameAuthClient(base.BaseClient):
 
         payload = {
             "account": account,
-            "password": password if encrypted else auth_utility.encrypt_geetest_credentials(password, 2),
+            "password": password if encrypted else auth_utility.encrypt_credentials(password, 2),
             "is_crypto": True,
         }
         async with aiohttp.ClientSession() as session:

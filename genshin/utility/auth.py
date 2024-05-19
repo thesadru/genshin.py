@@ -8,7 +8,7 @@ from hashlib import sha256
 
 from genshin import constants
 
-__all__ = ["encrypt_geetest_credentials", "generate_sign"]
+__all__ = ["encrypt_credentials", "generate_sign"]
 
 
 # RSA key used for OS app/web login
@@ -128,7 +128,7 @@ def lang_to_geetest_lang(lang: str) -> str:
     return GEETEST_LANGS.get(constants.LANGS.get(lang, "en-us"), "en")
 
 
-def encrypt_geetest_credentials(text: str, key_type: typing.Literal[1, 2]) -> str:
+def encrypt_credentials(text: str, key_type: typing.Literal[1, 2]) -> str:
     """Encrypt text for geetest."""
     import rsa
 
