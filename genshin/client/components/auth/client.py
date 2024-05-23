@@ -51,6 +51,11 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
         """
         if self.region is types.Region.CHINESE:
             return await self.cn_login_with_password(
@@ -76,6 +81,11 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         Note that this will start a webserver if captcha is
         triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
         """
         result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
 
@@ -183,6 +193,12 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         1. Captcha is triggered and `geetest_solver` is not passed.
         2. Email verification is triggered (can happen if you
         first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
         """
         result = await self._app_login(account, password, encrypted=encrypted)
 
@@ -292,7 +308,13 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         port: int = 5000,
         geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
     ) -> GameLoginResult:
-        """Perform a login to the game."""
+        """Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        """
         result = await self._shield_login(account, password, encrypted=encrypted)
 
         if isinstance(result, RiskyCheckMMT):
