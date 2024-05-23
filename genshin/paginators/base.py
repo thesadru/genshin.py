@@ -16,7 +16,7 @@ T = typing.TypeVar("T")
 async def flatten(iterable: typing.AsyncIterable[T]) -> typing.Sequence[T]:
     """Flatten an async iterable."""
     if isinstance(iterable, Paginator):
-        return await iterable.flatten()
+        return await iterable.flatten()  # type: ignore
 
     return [x async for x in iterable]
 
