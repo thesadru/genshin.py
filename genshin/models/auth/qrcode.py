@@ -32,7 +32,7 @@ class QRCodePayload(pydantic.BaseModel):
     ext: str
     raw: typing.Optional[QRCodeRawData] = None
 
-    @pydantic.field_validator("raw", mode="before")
+    @pydantic.validator("raw", pre=True)
     def _convert_raw_data(cls, value: typing.Optional[str] = None) -> typing.Union[QRCodeRawData, None]:
         if value:
             return QRCodeRawData(**json.loads(value))
