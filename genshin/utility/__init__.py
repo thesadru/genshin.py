@@ -1,6 +1,6 @@
 """Utilities for genshin.py."""
 
-from . import geetest
+from .auth import *
 from .concurrency import *
 from .ds import *
 from .extdb import *

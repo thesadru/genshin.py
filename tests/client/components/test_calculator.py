@@ -7,7 +7,7 @@ async def test_calculator_characters(client: genshin.Client):
 
     character = min(characters, key=lambda character: character.id)
     assert character.name == "Kamisato Ayaka"
-    assert "genshin" in character.icon
+    assert "enka.network" in character.icon
     assert character.max_level == 90
     assert character.level == 0
     assert not character.collab

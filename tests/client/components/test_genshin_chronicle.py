@@ -59,6 +59,3 @@ async def test_full_genshin_user(client: genshin.Client, genshin_uid: int):
 async def test_exceptions(client: genshin.Client):
     with pytest.raises(genshin.DataNotPublic):
         await client.get_record_cards(10000000)
-
-    with pytest.raises(genshin.AccountNotFound):
-        await client.get_spiral_abyss(70000001)

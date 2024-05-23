@@ -1,12 +1,12 @@
 """A simple HTTP client for API endpoints."""
 
 from .components import (
+    auth,
     calculator,
     chronicle,
     daily,
     diary,
     gacha,
-    geetest,
     hoyolab,
     lineup,
     teapot,
@@ -28,6 +28,6 @@ class Client(
     wiki.WikiClient,
     gacha.WishClient,
     transaction.TransactionClient,
-    geetest.GeetestClient,
+    auth.AuthClient,
 ):
     """A simple HTTP client for API endpoints."""

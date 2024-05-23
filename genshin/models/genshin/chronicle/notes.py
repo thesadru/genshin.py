@@ -15,6 +15,9 @@ else:
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
+    "ArchonQuest",
+    "ArchonQuestProgress",
+    "ArchonQuestStatus",
     "AttendanceReward",
     "AttendanceRewardStatus",
     "DailyTasks",
@@ -125,6 +128,31 @@ class DailyTasks(APIModel):
     attendance_visible: bool
 
 
+class ArchonQuestStatus(str, enum.Enum):
+    """Archon quest status."""
+
+    ONGOING = "StatusOngoing"
+    NOT_OPEN = "StatusNotOpen"
+
+
+class ArchonQuest(APIModel):
+    """Archon Quest."""
+
+    id: int
+    status: ArchonQuestStatus
+    chapter_num: str
+    chapter_title: str
+
+
+class ArchonQuestProgress(APIModel):
+    """Archon Quest Progress."""
+
+    list: typing.Sequence[ArchonQuest]
+    mainlines_finished: bool = Aliased("is_finish_all_mainline")
+    archon_quest_unlocked: bool = Aliased("is_open_archon_quest")
+    interchapters_finished: bool = Aliased("is_finish_all_interchapter")
+
+
 class Notes(APIModel):
     """Real-Time notes."""
 
@@ -147,6 +175,8 @@ class Notes(APIModel):
 
     expeditions: typing.Sequence[Expedition]
     max_expeditions: int = Aliased("max_expedition_num")
+
+    archon_quest_progress: ArchonQuestProgress
 
     @property
     def resin_recovery_time(self) -> datetime.datetime:

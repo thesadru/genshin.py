@@ -14,6 +14,7 @@ __all__ = [
     "GenshinException",
     "InvalidAuthkey",
     "InvalidCookies",
+    "MiyousheGeetestError",
     "RedemptionClaimed",
     "RedemptionCooldown",
     "RedemptionException",
@@ -186,6 +187,58 @@ class WrongOTP(GenshinException):
     msg = "The provided OTP code is wrong."
 
 
+class MiyousheGeetestError(GenshinException):
+    """Geetest triggered during Miyoushe API request."""
+
+    def __init__(
+        self,
+        response: typing.Dict[str, typing.Any],
+        cookies: typing.Mapping[str, str],
+    ) -> None:
+        self.cookies = cookies
+        super().__init__(response)
+
+    msg = "Geetest triggered during Miyoushe API request."
+
+
+class OTPRateLimited(GenshinException):
+    """Too many OTP messages sent for the number.
+
+    The limit is 40 messages/day/number.
+    """
+
+    retcode = -119
+    msg = "Too many OTP messages sent for the number."
+
+
+class IncorrectGameAccount(GenshinException):
+    """Game account is incorrect."""
+
+    retcode = -216
+    msg = "Game account is incorrect."
+
+
+class IncorrectGamePassword(GenshinException):
+    """Game password is incorrect."""
+
+    retcode = -202
+    msg = "Game password is incorrect."
+
+
+class AccountDoesNotExist(GenshinException):
+    """Account does not exist."""
+
+    retcode = -3203
+    msg = "Account does not exist."
+
+
+class VerificationCodeRateLimited(GenshinException):
+    """Too many verification code requests for the account."""
+
+    retcode = -3206
+    msg = "Too many verification code requests for the account."
+
+
 _TGE = typing.Type[GenshinException]
 _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Optional[str]]]] = {
     # misc hoyolab
@@ -235,7 +288,15 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     # account
     -3208: AccountLoginFail,
     -3202: AccountHasLocked,
+    -3203: AccountDoesNotExist,
     -3205: WrongOTP,
+    -3206: VerificationCodeRateLimited,
+    # Miyoushe
+    -119: OTPRateLimited,
+    -3006: "Request too frequent.",  # OTP endpoint
+    # Game login
+    -216: IncorrectGameAccount,
+    -202: IncorrectGamePassword,
 }
 
 ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {

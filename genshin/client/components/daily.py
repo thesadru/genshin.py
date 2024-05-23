@@ -8,7 +8,7 @@ import uuid
 
 import aiohttp.typedefs
 
-from genshin import constants, paginators, types, utility
+from genshin import constants, paginators, types
 from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
@@ -54,23 +54,22 @@ class DailyRewardClient(base.BaseClient):
             headers["referer"] = "https://act.hoyolab.com/"
 
         elif self.region == types.Region.CHINESE:
-            uid = await self._get_uid(game)
+            account = await self._get_account(game)
 
-            params["uid"] = uid
-            params["region"] = utility.recognize_server(uid, game)
+            params["uid"] = account.uid
+            params["region"] = account.server
 
-            # most of the extra headers are likely just placebo
-            headers["x-rpc-app_version"] = "2.34.1"
+            # These headers are optional but left here because they might affect geetest trigger rate
+            headers["x-rpc-app_version"] = "2.70.1"
             headers["x-rpc-client_type"] = "5"
             headers["x-rpc-device_id"] = str(uuid.uuid4())
             headers["x-rpc-sys_version"] = "12"
             headers["x-rpc-platform"] = "android"
             headers["x-rpc-channel"] = "miyousheluodi"
             headers["x-rpc-device_model"] = str(self.hoyolab_id) or ""
-            headers["referer"] = (
-                "https://webstatic.mihoyo.com/bbs/event/signin-ys/index.html?"
-                "bbs_auth_required=true&act_id=e202009291139501&utm_source=bbs&utm_medium=mys&utm_campaign=icon"
-            )
+
+            if game == types.Game.GENSHIN:
+                headers["x-rpc-signgame"] = "hk4e"
 
             headers["ds"] = ds_utility.generate_dynamic_secret(constants.DS_SALT["cn_signin"])
 
