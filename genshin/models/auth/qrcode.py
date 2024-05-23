@@ -4,7 +4,13 @@ import enum
 import json
 import typing
 
-import pydantic
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 __all__ = ["QRCodeCheckResult", "QRCodeCreationResult", "QRCodePayload", "QRCodeRawData", "QRCodeStatus"]
 

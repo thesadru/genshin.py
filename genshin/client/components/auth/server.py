@@ -159,7 +159,7 @@ async def launch_webapp(
 
     @routes.get("/mmt")
     async def mmt_endpoint(request: web.Request) -> web.Response:
-        return web.json_response(mmt.model_dump() if mmt else {})
+        return web.json_response(mmt.dict() if mmt else {})
 
     @routes.post("/send-data")
     async def send_data_endpoint(request: web.Request) -> web.Response:
