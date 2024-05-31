@@ -25,7 +25,7 @@ from genshin.utility import auth as auth_utility
 
 __all__ = ["PAGES", "enter_code", "launch_webapp", "solve_geetest"]
 
-PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-code"], str]] = {
+PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "enter-code"], str]] = {
     "captcha": """
     <!DOCTYPE html>
     <head>
@@ -44,25 +44,25 @@ PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "captcha-v4", "enter-c
               gt: mmt.gt,
               challenge: mmt.challenge,
               new_captcha: mmt.new_captcha,
-              api_server: '{api_server}',
+              api_server: "{api_server}",
               https: /^https/i.test(window.location.protocol),
               product: "bind",
-              lang: '{lang}',
+              lang: "{lang}",
             } : {
               captchaId: mmt.gt,
               riskType: mmt.risk_type,
               userInfo: mmt.session_id ? JSON.stringify({
                 mmt_key: mmt.session_id
               }) : undefined,
-              api_server: '{api_server}',
+              api_server: "{api_server}",
               product: "bind",
-              language: '{lang}',
+              language: "{lang}",
             };
             initGeetest(
               initParams,
               (captcha) => {
                 captcha.onReady(() => {
-                  captcha.verify();
+                  geetestVersion == 3 ? captcha.verify() : captcha.showCaptcha();
                 });
                 captcha.onSuccess(() => {
                   fetch("/send-data", {

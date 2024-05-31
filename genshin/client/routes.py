@@ -32,6 +32,7 @@ __all__ = [
     "TAKUMI_URL",
     "TEAPOT_URL",
     "VERIFY_EMAIL_URL",
+    "VERIFY_MMT_URL",
     "WEBAPI_URL",
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
@@ -239,9 +240,12 @@ MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passpo
 CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
 CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
 
-CREATE_MMT_URL = Route(
-    "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false"
+CREATE_MMT_URL = InternationalRoute(
+    overseas="https://sg-public-api.hoyolab.com/event/toolcomsrv/risk/createGeetest?is_high=true",
+    chinese="https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/createVerification?is_high=false",
 )
+
+VERIFY_MMT_URL = Route("https://sg-public-api.hoyolab.com/event/toolcomsrv/risk/verifyGeetest")
 
 GAME_RISKY_CHECK_URL = InternationalRoute(
     overseas="https://api-account-os.hoyoverse.com/account/risky/api/check",

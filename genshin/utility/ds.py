@@ -11,8 +11,8 @@ from genshin import constants, types
 
 __all__ = [
     "generate_cn_dynamic_secret",
-    "generate_create_geetest_ds",
     "generate_dynamic_secret",
+    "generate_geetest_ds",
     "generate_passport_ds",
     "get_ds_headers",
 ]
@@ -78,10 +78,9 @@ def generate_passport_ds(body: typing.Mapping[str, typing.Any]) -> str:
     return result
 
 
-def generate_create_geetest_ds() -> str:
-    """Create a dynamic secret for Miyoushe createVerification API endpoint."""
-    salt = constants.DS_SALT[types.Region.CHINESE]
+def generate_geetest_ds(region: types.Region) -> str:
+    """Create a dynamic secret for geetest API endpoint."""
     t = int(time.time())
     r = random.randint(100000, 200000)
-    h = hashlib.md5(f"salt={salt}&t={t}&r={r}&b=&q=is_high=false".encode()).hexdigest()
+    h = hashlib.md5(f"salt={constants.DS_SALT[region]}&t={t}&r={r}&b=&q=is_high=false".encode()).hexdigest()
     return f"{t},{r},{h}"

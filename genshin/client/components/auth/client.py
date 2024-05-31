@@ -6,7 +6,7 @@ import typing
 
 import aiohttp
 
-from genshin import errors, types
+from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.client.manager import managers
@@ -19,10 +19,9 @@ from genshin.models.auth.cookie import (
     QRLoginResult,
     WebLoginResult,
 )
-from genshin.models.auth.geetest import MMT, RiskyCheckMMT, RiskyCheckMMTResult, SessionMMT, SessionMMTResult
+from genshin.models.auth.geetest import MMT, MMTResult, RiskyCheckMMT, RiskyCheckMMTResult, SessionMMT, SessionMMTResult
 from genshin.models.auth.qrcode import QRCodeStatus
 from genshin.models.auth.verification import ActionTicket
-from genshin.types import Game
 from genshin.utility import auth as auth_utility
 from genshin.utility import ds as ds_utility
 
@@ -273,30 +272,55 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         self.set_cookies(cookies)
         return QRLoginResult(**cookies)
 
-    @base.region_specific(types.Region.CHINESE)
     @managers.no_multi
     async def create_mmt(self) -> MMT:
         """Create a geetest challenge."""
-        is_genshin = self.game is Game.GENSHIN
+        if self.default_game is None:
+            raise ValueError("No default game set.")
+
         headers = {
-            "DS": ds_utility.generate_create_geetest_ds(),
-            "x-rpc-challenge_game": "2" if is_genshin else "6",
-            "x-rpc-page": "v4.1.5-ys_#ys" if is_genshin else "v1.4.1-rpg_#/rpg",
-            "x-rpc-tool-verison": "v4.1.5-ys" if is_genshin else "v1.4.1-rpg",
-            **auth_utility.CREATE_MMT_HEADERS,
+            "DS": ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
         }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
 
         assert isinstance(self.cookie_manager, managers.CookieManager)
         async with self.cookie_manager.create_session() as session:
-            async with session.get(
-                routes.CREATE_MMT_URL.get_url(), headers=headers, cookies=self.cookie_manager.cookies
-            ) as r:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
                 data = await r.json()
 
         if not data["data"]:
             errors.raise_for_retcode(data)
 
         return MMT(**data["data"])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -> None:
+        """Verify a geetest challenge."""
+        if self.default_game is None:
+            raise ValueError("No default game set.")
+
+        headers = {
+            "DS": ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.dict()
+        body["app_key"] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data["data"]:
+            errors.raise_for_retcode(data)
 
     @base.region_specific(types.Region.OVERSEAS)
     async def os_game_login(
