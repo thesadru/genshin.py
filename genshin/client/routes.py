@@ -202,7 +202,7 @@ CODE_URL = GameRoute(
 
 GACHA_URL = GameRoute(
     overseas=dict(
-        genshin="https://hk4e-api-os.hoyoverse.com/event/gacha_info/api/",
+        genshin="https://hk4e-api-os.hoyoverse.com/gacha_info/api/",
         hkrpg="https://api-os-takumi.mihoyo.com/common/gacha_record/api/",
     ),
     chinese=dict(
