@@ -17,6 +17,8 @@ from genshin import errors, types
 from genshin.client import ratelimit
 from genshin.utility import fs as fs_utility
 
+from ...constants import MIYOUSHE_GEETEST_RETCODES
+
 _LOGGER = logging.getLogger(__name__)
 
 __all__ = [
@@ -152,6 +154,9 @@ class BaseCookieManager(abc.ABC):
                         _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
 
         errors.check_for_geetest(data, {k: morsel.value for k, morsel in response.cookies.items()})
+
+        if data["retcode"] in MIYOUSHE_GEETEST_RETCODES:
+            raise errors.MiyousheGeetestError(data, {k: morsel.value for k, morsel in response.cookies.items()})
 
         if data["retcode"] == 0:
             return data["data"]
