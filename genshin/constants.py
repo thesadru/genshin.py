@@ -2,7 +2,7 @@
 
 from . import types
 
-__all__ = ["LANGS"]
+__all__ = ["APP_IDS", "APP_KEYS", "DS_SALT", "GEETEST_RETCODES", "LANGS"]
 
 
 LANGS = {
@@ -33,8 +33,8 @@ DS_SALT = {
 }
 """Dynamic Secret Salts."""
 
-MIYOUSHE_GEETEST_RETCODES = {10035, 5003, 10041, 1034}
-"""API error codes that indicate a Geetest was triggered during this Miyoushe API request."""
+GEETEST_RETCODES = {10035, 5003, 10041, 1034}
+"""API error codes that indicate a Geetest was triggered during the API request."""
 
 APP_KEYS = {
     types.Game.GENSHIN: {
@@ -75,3 +75,11 @@ APP_IDS = {
     },
 }
 """App IDs used for game login."""
+
+GEETEST_RECORD_KEYS = {
+    types.Game.GENSHIN: "hk4e_game_record",
+    types.Game.STARRAIL: "hkrpg_game_record",
+    types.Game.HONKAI: "bh3_game_record",
+    types.Game.ZZZ: "nap_game_record",
+}
+"""Keys used to submit geetest result."""

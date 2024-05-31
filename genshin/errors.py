@@ -2,6 +2,8 @@
 
 import typing
 
+from genshin.constants import GEETEST_RETCODES
+
 __all__ = [
     "ERRORS",
     "AccountNotFound",
@@ -9,12 +11,12 @@ __all__ = [
     "AuthkeyException",
     "AuthkeyTimeout",
     "CookieException",
+    "DailyGeetestTriggered",
     "DataNotPublic",
-    "GeetestTriggered",
+    "GeetestError",
     "GenshinException",
     "InvalidAuthkey",
     "InvalidCookies",
-    "MiyousheGeetestError",
     "RedemptionClaimed",
     "RedemptionCooldown",
     "RedemptionException",
@@ -114,8 +116,8 @@ class AlreadyClaimed(GenshinException):
     msg = "Already claimed the daily reward today."
 
 
-class GeetestTriggered(GenshinException):
-    """Geetest triggered."""
+class DailyGeetestTriggered(GenshinException):
+    """Geetest triggered during daily reward claim."""
 
     msg = "Geetest triggered during daily reward claim."
 
@@ -187,8 +189,8 @@ class WrongOTP(GenshinException):
     msg = "The provided OTP code is wrong."
 
 
-class MiyousheGeetestError(GenshinException):
-    """Geetest triggered during Miyoushe API request."""
+class GeetestError(GenshinException):
+    """Geetest triggered during the battle chronicle API request."""
 
     def __init__(
         self,
@@ -198,7 +200,7 @@ class MiyousheGeetestError(GenshinException):
         self.cookies = cookies
         super().__init__(response)
 
-    msg = "Geetest triggered during Miyoushe API request."
+    msg = "Geetest triggered during the battle chronicle API request."
 
 
 class OTPRateLimited(GenshinException):
@@ -340,12 +342,15 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
     raise GenshinException(data)
 
 
-def check_for_geetest(response: typing.Dict[str, typing.Any]) -> None:
-    """Check if geetest was triggered and raise an error."""
-    if not response.get("data"):  # if is an error
+def check_for_geetest(data: typing.Dict[str, typing.Any], cookies: typing.Mapping[str, typing.Any]) -> None:
+    """Check if geetest was triggered during the request and raise an error if so."""
+    if data["retcode"] in GEETEST_RETCODES:
+        raise GeetestError(data, cookies)
+
+    if not data.get("data"):  # if is an error
         return
 
-    gt_result = response["data"].get("gt_result", response["data"])
+    gt_result = data["data"].get("gt_result", data["data"])
 
     if (
         gt_result.get("risk_code") != 0
@@ -353,4 +358,4 @@ def check_for_geetest(response: typing.Dict[str, typing.Any]) -> None:
         and gt_result.get("challenge")
         and gt_result.get("success") != 0
     ):
-        raise GeetestTriggered(response, gt=gt_result.get("gt"), challenge=gt_result.get("challenge"))
+        raise DailyGeetestTriggered(data, gt=gt_result.get("gt"), challenge=gt_result.get("challenge"))

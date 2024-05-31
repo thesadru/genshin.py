@@ -6,7 +6,7 @@ import json
 import typing
 from hashlib import sha256
 
-from genshin import constants
+from genshin import constants, types
 
 __all__ = ["encrypt_credentials", "generate_sign"]
 
@@ -70,8 +70,19 @@ EMAIL_VERIFY_HEADERS = {
 }
 
 CREATE_MMT_HEADERS = {
-    "x-rpc-app_version": "2.60.1",
-    "x-rpc-client_type": "5",
+    types.Region.OVERSEAS: {
+        "x-rpc-challenge_path": "https://bbs-api-os.hoyolab.com/game_record/app/hkrpg/api/challenge",
+        "x-rpc-app_version": "2.55.0",
+        "x-rpc-challenge_game": "6",
+        "x-rpc-client_type": "5",
+    },
+    types.Region.CHINESE: {
+        "x-rpc-app_version": "2.60.1",
+        "x-rpc-client_type": "5",
+        "x-rpc-challenge_game": "6",
+        "x-rpc-page": "v1.4.1-rpg_#/rpg",
+        "x-rpc-tool-version": "v1.4.1-rpg",
+    },
 }
 
 DEVICE_ID = "D6AF5103-D297-4A01-B86A-87F87DS5723E"
