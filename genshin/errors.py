@@ -192,12 +192,7 @@ class WrongOTP(GenshinException):
 class GeetestError(GenshinException):
     """Geetest triggered during the battle chronicle API request."""
 
-    def __init__(
-        self,
-        response: typing.Dict[str, typing.Any],
-        cookies: typing.Mapping[str, str],
-    ) -> None:
-        self.cookies = cookies
+    def __init__(self, response: typing.Dict[str, typing.Any]) -> None:
         super().__init__(response)
 
     msg = "Geetest triggered during the battle chronicle API request."
@@ -342,10 +337,10 @@ def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
     raise GenshinException(data)
 
 
-def check_for_geetest(data: typing.Dict[str, typing.Any], cookies: typing.Mapping[str, typing.Any]) -> None:
+def check_for_geetest(data: typing.Dict[str, typing.Any]) -> None:
     """Check if geetest was triggered during the request and raise an error if so."""
     if data["retcode"] in GEETEST_RETCODES:
-        raise GeetestError(data, cookies)
+        raise GeetestError(data)
 
     if not data.get("data"):  # if is an error
         return

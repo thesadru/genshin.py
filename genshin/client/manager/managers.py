@@ -151,7 +151,7 @@ class BaseCookieManager(abc.ABC):
                         cookies.update(new_cookies)
                         _LOGGER.debug("Updating cookies for %s: %s", get_cookie_identifier(cookies), new_keys)
 
-        errors.check_for_geetest(data, {k: morsel.value for k, morsel in response.cookies.items()})
+        errors.check_for_geetest(data)
 
         if data["retcode"] == 0:
             return data["data"]
