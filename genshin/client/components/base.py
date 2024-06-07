@@ -388,6 +388,7 @@ class BaseClient(abc.ABC):
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
+        headers.update(self.custom_headers)
 
         await self._request_hook("GET", url, headers=headers, **kwargs)
 
