@@ -72,6 +72,8 @@ class BaseClient(abc.ABC):
         game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
@@ -91,7 +93,10 @@ class BaseClient(abc.ABC):
         self.proxy = proxy
         self.uid = uid
         self.hoyolab_id = hoyolab_id
-        self.custom_headers = headers or {}
+
+        self.custom_headers = dict(headers or {})
+        self.custom_headers.update({"x-rpc-device_id": device_id} if device_id else {})
+        self.custom_headers.update({"x-rpc-device_fp": device_fp} if device_fp else {})
 
     def __repr__(self) -> str:
         kwargs = dict(
