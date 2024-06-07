@@ -316,12 +316,9 @@ class BaseClient(abc.ABC):
             params = {k: v for k, v in params.items() if k != "authkey"}
             url = url.update_query(params)
 
-        headers_ = dict(headers or {})
-        if self.device_id:
-            headers_["x-rpc-device_id"] = self.device_id
-        if self.device_fp:
-            headers_["x-rpc-device_fp"] = self.device_fp
-        headers.update(headers_)
+        headers.update(
+            {k: v for k, v in {"x-rpc-device_id": self.device_id, "x-rpc-device_fp": self.device_fp}.items() if v}
+        )
 
         if data:
             self.logger.debug("%s %s\n%s", method, url, json.dumps(data, separators=(",", ":")))
