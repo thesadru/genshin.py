@@ -43,6 +43,7 @@ class BaseClient(abc.ABC):
         "authkeys",
         "_hoyolab_id",
         "_accounts",
+        "custom_headers",
     )
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
@@ -71,6 +72,9 @@ class BaseClient(abc.ABC):
         game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
@@ -89,6 +93,10 @@ class BaseClient(abc.ABC):
         self.proxy = proxy
         self.uid = uid
         self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = dict(headers or {})
+        self.custom_headers.update({"x-rpc-device_id": device_id} if device_id else {})
+        self.custom_headers.update({"x-rpc-device_fp": device_fp} if device_fp else {})
 
     def __repr__(self) -> str:
         kwargs = dict(
@@ -338,6 +346,7 @@ class BaseClient(abc.ABC):
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
+        headers.update(self.custom_headers)
 
         if method is None:
             method = "POST" if data else "GET"
@@ -384,6 +393,7 @@ class BaseClient(abc.ABC):
 
         headers = dict(headers or {})
         headers["User-Agent"] = self.USER_AGENT
+        headers.update(self.custom_headers)
 
         await self._request_hook("GET", url, headers=headers, **kwargs)
 
@@ -593,7 +603,6 @@ def region_specific(region: types.Region) -> typing.Callable[[AsyncCallableT], A
     def decorator(func: AsyncCallableT) -> AsyncCallableT:
         @functools.wraps(func)
         async def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-
             if not hasattr(self, "region"):
                 raise TypeError("Cannot use @region_specific on a plain function.")
             if region != self.region:
