@@ -43,6 +43,8 @@ class BaseClient(abc.ABC):
         "authkeys",
         "_hoyolab_id",
         "_accounts",
+        "device_id",
+        "device_fp",
     )
 
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"  # noqa: E501
@@ -71,6 +73,8 @@ class BaseClient(abc.ABC):
         game: typing.Optional[types.Game] = None,
         uid: typing.Optional[int] = None,
         hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
         cache: typing.Optional[client_cache.Cache] = None,
         debug: bool = False,
     ) -> None:
@@ -89,6 +93,8 @@ class BaseClient(abc.ABC):
         self.proxy = proxy
         self.uid = uid
         self.hoyolab_id = hoyolab_id
+        self.device_id = device_id
+        self.device_fp = device_fp
 
     def __repr__(self) -> str:
         kwargs = dict(
@@ -96,6 +102,8 @@ class BaseClient(abc.ABC):
             region=self.region.value,
             default_game=self.default_game and self.default_game.value,
             hoyolab_id=self.hoyolab_id,
+            device_id=self.device_id,
+            device_fp=self.device_fp,
             uid=self.default_game and self.uid,
             authkey=self.authkey and self.authkey[:12] + "...",
             proxy=self.proxy,
@@ -296,6 +304,7 @@ class BaseClient(abc.ABC):
         *,
         params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Any = None,
+        headers: typing.Dict[str, typing.Any],
         **kwargs: typing.Any,
     ) -> None:
         """Perform an action before a request.
@@ -306,6 +315,13 @@ class BaseClient(abc.ABC):
         if params:
             params = {k: v for k, v in params.items() if k != "authkey"}
             url = url.update_query(params)
+
+        headers_ = dict(headers or {})
+        if self.device_id:
+            headers_["x-rpc-device_id"] = self.device_id
+        if self.device_fp:
+            headers_["x-rpc-device_fp"] = self.device_fp
+        headers.update(headers_)
 
         if data:
             self.logger.debug("%s %s\n%s", method, url, json.dumps(data, separators=(",", ":")))
@@ -593,7 +609,6 @@ def region_specific(region: types.Region) -> typing.Callable[[AsyncCallableT], A
     def decorator(func: AsyncCallableT) -> AsyncCallableT:
         @functools.wraps(func)
         async def wrapper(self: typing.Any, *args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-
             if not hasattr(self, "region"):
                 raise TypeError("Cannot use @region_specific on a plain function.")
             if region != self.region:
