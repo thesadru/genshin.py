@@ -47,6 +47,7 @@ class StarRailFloor(APIModel):
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
+    name: str
     season: int = Aliased("schedule_id")
     begin_time: PartialTime
     end_time: PartialTime
@@ -57,6 +58,15 @@ class StarRailChallenge(APIModel):
     has_data: bool
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
+
+    @pydantic.root_validator(pre=True)
+    def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], List):
+            groups: List[Dict[str, Any]] = values["groups"]
+            if len(groups) > 0:
+                values["name"] = groups[0]["name_mi18n"]
+
+        return values
 
 
 class FictionBuff(APIModel):
