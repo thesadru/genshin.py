@@ -1,6 +1,6 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List, Literal, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 if TYPE_CHECKING:
     import pydantic.v1 as pydantic
@@ -16,7 +16,6 @@ from genshin.models.starrail.character import FloorCharacter
 from .base import PartialTime
 
 __all__ = [
-    "ChallengeSeason",
     "FictionBuff",
     "FictionFloor",
     "FictionFloorNode",
@@ -45,19 +44,10 @@ class StarRailFloor(APIModel):
     is_chaos: bool
 
 
-class ChallengeSeason(APIModel):
-    """A Memory of Chaos season."""
-
-    id: int = Aliased("schedule_id")
-    begin_time: PartialTime
-    end_time: PartialTime
-    status: Literal["Running", "End"]
-    name: str = Aliased("name_mi18n")
-
-
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
+    name: str
     season: int = Aliased("schedule_id")
     begin_time: PartialTime
     end_time: PartialTime
@@ -68,7 +58,15 @@ class StarRailChallenge(APIModel):
     has_data: bool
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
-    seasons: List[ChallengeSeason] = Aliased("groups")
+
+    @pydantic.root_validator(pre=True)
+    def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], List):
+            groups: List[Dict[str, Any]] = values["groups"]
+            if len(groups) > 0:
+                values["name"] = groups[0]["name_mi18n"]
+
+        return values
 
 
 class FictionBuff(APIModel):
