@@ -16,6 +16,7 @@ from genshin.models.starrail.character import FloorCharacter
 from .base import PartialTime
 
 __all__ = [
+    "ChallengeSeason",
     "FictionBuff",
     "FictionFloor",
     "FictionFloorNode",
