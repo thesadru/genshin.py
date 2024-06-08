@@ -1,6 +1,6 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Literal, Optional
 
 if TYPE_CHECKING:
     import pydantic.v1 as pydantic
@@ -44,6 +44,16 @@ class StarRailFloor(APIModel):
     is_chaos: bool
 
 
+class ChallengeSeason(APIModel):
+    """A Memory of Chaos season."""
+
+    id: int = Aliased("schedule_id")
+    begin_time: PartialTime
+    end_time: PartialTime
+    status: Literal["Running", "End"]
+    name: str = Aliased("name_mi18n")
+
+
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
@@ -57,6 +67,7 @@ class StarRailChallenge(APIModel):
     has_data: bool
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: List[ChallengeSeason] = Aliased("groups")
 
 
 class FictionBuff(APIModel):
