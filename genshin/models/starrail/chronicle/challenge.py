@@ -44,6 +44,16 @@ class StarRailFloor(APIModel):
     is_chaos: bool
 
 
+class StarRailChallengeSeason(APIModel):
+    """A season of a challenge."""
+
+    id: int = Aliased("schedule_id")
+    name: str = Aliased("name_mi18n")
+    status: str
+    begin_time: PartialTime
+    end_time: PartialTime
+
+
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
@@ -58,6 +68,7 @@ class StarRailChallenge(APIModel):
     has_data: bool
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
 
     @pydantic.root_validator(pre=True)
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
@@ -116,6 +127,7 @@ class StarRailPureFiction(APIModel):
     has_data: bool
 
     floors: List[FictionFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
 
     @pydantic.root_validator(pre=True)
