@@ -21,6 +21,7 @@ __all__ = [
     "FictionFloorNode",
     "FloorNode",
     "StarRailChallenge",
+    "StarRailChallengeSeason",
     "StarRailFloor",
     "StarRailPureFiction",
 ]
