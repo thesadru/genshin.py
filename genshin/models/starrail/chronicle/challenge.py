@@ -1,6 +1,14 @@
 """Starrail chronicle challenge."""
 
-from typing import List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
+
+if TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
 
 from genshin.models.model import Aliased, APIModel
 from genshin.models.starrail.character import FloorCharacter
@@ -50,6 +58,7 @@ class StarRailChallengeSeason(APIModel):
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
+    name: str
     season: int = Aliased("schedule_id")
     begin_time: PartialTime
     end_time: PartialTime
@@ -61,6 +70,15 @@ class StarRailChallenge(APIModel):
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
     seasons: List[StarRailChallengeSeason] = Aliased("groups")
+
+    @pydantic.root_validator(pre=True)
+    def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "seasons" in values and isinstance(values["seasons"], List):
+            seasons: List[Dict[str, Any]] = values["seasons"]
+            if len(seasons) > 0:
+                values["name"] = seasons[0]["name_mi18n"]
+
+        return values
 
 
 class FictionBuff(APIModel):
@@ -99,6 +117,11 @@ class FictionFloor(APIModel):
 class StarRailPureFiction(APIModel):
     """Pure Fiction challenge in a season."""
 
+    name: str = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    season_id: int = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    begin_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    end_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+
     total_stars: int = Aliased("star_num")
     max_floor: str
     total_battles: int = Aliased("battle_num")
@@ -107,3 +130,15 @@ class StarRailPureFiction(APIModel):
     floors: List[FictionFloor] = Aliased("all_floor_detail")
     seasons: List[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
+
+    @pydantic.root_validator(pre=True)
+    def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "seasons" in values and isinstance(values["seasons"], List):
+            seasons: List[Dict[str, Any]] = values["seasons"]
+            if len(seasons) > 0:
+                values["name"] = seasons[0]["name_mi18n"]
+                values["season_id"] = seasons[0]["schedule_id"]
+                values["begin_time"] = seasons[0]["begin_time"]
+                values["end_time"] = seasons[0]["end_time"]
+
+        return values
