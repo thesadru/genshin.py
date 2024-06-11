@@ -33,7 +33,7 @@ class StarRailNote(APIModel):
     current_stamina: int
     max_stamina: int
     stamina_recover_time: datetime.timedelta
-    accepted_expedition_num: int
+    accepted_expedition_num: int = Aliased("accepted_epedition_num")
     total_expedition_num: int
     expeditions: typing.Sequence[StarRailExpedition]
 
