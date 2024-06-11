@@ -21,6 +21,7 @@ __all__ = [
     "FictionFloorNode",
     "FloorNode",
     "StarRailChallenge",
+    "StarRailChallengeSeason",
     "StarRailFloor",
     "StarRailPureFiction",
 ]
@@ -44,6 +45,16 @@ class StarRailFloor(APIModel):
     is_chaos: bool
 
 
+class StarRailChallengeSeason(APIModel):
+    """A season of a challenge."""
+
+    id: int = Aliased("schedule_id")
+    name: str = Aliased("name_mi18n")
+    status: str
+    begin_time: PartialTime
+    end_time: PartialTime
+
+
 class StarRailChallenge(APIModel):
     """Challenge in a season."""
 
@@ -58,13 +69,14 @@ class StarRailChallenge(APIModel):
     has_data: bool
 
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
 
     @pydantic.root_validator(pre=True)
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], List):
-            groups: List[Dict[str, Any]] = values["groups"]
-            if len(groups) > 0:
-                values["name"] = groups[0]["name_mi18n"]
+        if "seasons" in values and isinstance(values["seasons"], List):
+            seasons: List[Dict[str, Any]] = values["seasons"]
+            if len(seasons) > 0:
+                values["name"] = seasons[0]["name_mi18n"]
 
         return values
 
@@ -105,10 +117,10 @@ class FictionFloor(APIModel):
 class StarRailPureFiction(APIModel):
     """Pure Fiction challenge in a season."""
 
-    name: str
-    season_id: int
-    begin_time: PartialTime
-    end_time: PartialTime
+    name: str = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    season_id: int = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    begin_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
+    end_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
 
     total_stars: int = Aliased("star_num")
     max_floor: str
@@ -116,16 +128,17 @@ class StarRailPureFiction(APIModel):
     has_data: bool
 
     floors: List[FictionFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
 
     @pydantic.root_validator(pre=True)
     def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], List):
-            groups: List[Dict[str, Any]] = values["groups"]
-            if len(groups) > 0:
-                values["name"] = groups[0]["name_mi18n"]
-                values["season_id"] = groups[0]["schedule_id"]
-                values["begin_time"] = groups[0]["begin_time"]
-                values["end_time"] = groups[0]["end_time"]
+        if "seasons" in values and isinstance(values["seasons"], List):
+            seasons: List[Dict[str, Any]] = values["seasons"]
+            if len(seasons) > 0:
+                values["name"] = seasons[0]["name_mi18n"]
+                values["season_id"] = seasons[0]["schedule_id"]
+                values["begin_time"] = seasons[0]["begin_time"]
+                values["end_time"] = seasons[0]["end_time"]
 
         return values
