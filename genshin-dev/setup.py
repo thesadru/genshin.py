@@ -1,4 +1,5 @@
 """Mock package to install the dev requirements."""
+
 import pathlib
 import typing
 

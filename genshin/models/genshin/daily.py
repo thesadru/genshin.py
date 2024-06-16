@@ -3,6 +3,7 @@
 import datetime
 import typing
 
+from genshin.constants import CN_TIMEZONE
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = ["ClaimedDailyReward", "DailyReward", "DailyRewardInfo"]
@@ -16,8 +17,7 @@ class DailyRewardInfo(typing.NamedTuple):
 
     @property
     def missed_rewards(self) -> int:
-        cn_timezone = datetime.timezone(datetime.timedelta(hours=8))
-        now = datetime.datetime.now(cn_timezone)
+        now = datetime.datetime.now(CN_TIMEZONE)
         return now.day - self.claimed_rewards
 
 
