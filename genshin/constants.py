@@ -1,5 +1,7 @@
 """Constants hardcoded for optimizations."""
 
+import datetime
+
 from . import types
 
 __all__ = ["APP_IDS", "APP_KEYS", "DS_SALT", "GEETEST_RETCODES", "LANGS"]
@@ -83,3 +85,5 @@ GEETEST_RECORD_KEYS = {
     types.Game.ZZZ: "nap_game_record",
 }
 """Keys used to submit geetest result."""
+
+CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))

@@ -8,12 +8,11 @@ from genshin import paginators, types, utility
 from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
+from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import diary as models
 from genshin.utility import deprecation
 
 __all__ = ["DiaryClient"]
-
-CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
 
 
 class DiaryCallback(typing.Protocol):

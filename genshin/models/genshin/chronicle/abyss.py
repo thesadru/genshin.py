@@ -9,6 +9,7 @@ else:
     except ImportError:
         import pydantic
 
+from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
 
@@ -112,6 +113,10 @@ class SpiralAbyss(APIModel):
         """By default ranks are for some reason on the same level as the rest of the abyss."""
         values.setdefault("ranks", {}).update(values)
         return values
+
+    @pydantic.validator("start_time", "end_time", pre=True)
+    def __parse_timezones(cls, value: str) -> datetime.datetime:
+        return datetime.datetime.fromtimestamp(int(value), tz=CN_TIMEZONE)
 
 
 class SpiralAbyssPair(APIModel):

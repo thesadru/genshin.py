@@ -2,8 +2,6 @@ import datetime
 
 import genshin
 
-CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
-
 
 async def test_diary(lclient: genshin.Client, genshin_uid: int):
     diary = await lclient.get_diary()
