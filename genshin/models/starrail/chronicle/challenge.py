@@ -16,10 +16,13 @@ from genshin.models.starrail.character import FloorCharacter
 from .base import PartialTime
 
 __all__ = [
-    "FictionBuff",
+    "APCShadowFloor",
+    "APCShadowFloorNode",
+    "ChallengeBuff",
     "FictionFloor",
     "FictionFloorNode",
     "FloorNode",
+    "StarRailAPCShadow",
     "StarRailChallenge",
     "StarRailChallengeSeason",
     "StarRailFloor",
@@ -28,21 +31,27 @@ __all__ = [
 
 
 class FloorNode(APIModel):
-    """Node for a floor."""
+    """Node for a memory of chaos floor."""
 
     challenge_time: PartialTime
     avatars: List[FloorCharacter]
 
 
-class StarRailFloor(APIModel):
-    """Floor in a challenge."""
+class StarRailChallengeFloor(APIModel):
+    """Base model for star rail challenge floors."""
 
+    id: int = Aliased("maze_id")
     name: str
-    round_num: int
     star_num: int
+
+
+class StarRailFloor(StarRailChallengeFloor):
+    """Floor in a memory of chaos challenge."""
+
+    round_num: int
+    is_chaos: bool
     node_1: FloorNode
     node_2: FloorNode
-    is_chaos: bool
 
 
 class StarRailChallengeSeason(APIModel):
@@ -56,7 +65,7 @@ class StarRailChallengeSeason(APIModel):
 
 
 class StarRailChallenge(APIModel):
-    """Challenge in a season."""
+    """Memory of chaos challenge in a season."""
 
     name: str
     season: int = Aliased("schedule_id")
@@ -81,8 +90,8 @@ class StarRailChallenge(APIModel):
         return values
 
 
-class FictionBuff(APIModel):
-    """Buff for a Pure Fiction floor."""
+class ChallengeBuff(APIModel):
+    """Buff used in a pure fiction or apocalyptic shadow node."""
 
     id: int
     name: str = Aliased("name_mi18n")
@@ -93,20 +102,18 @@ class FictionBuff(APIModel):
 class FictionFloorNode(FloorNode):
     """Node for a Pure Fiction floor."""
 
-    buff: Optional[FictionBuff]
+    buff: Optional[ChallengeBuff]
     score: int
 
 
-class FictionFloor(APIModel):
+class FictionFloor(StarRailChallengeFloor):
     """Floor in a Pure Fiction challenge."""
 
-    id: int = Aliased("maze_id")
-    name: str
     round_num: int
-    star_num: int
     node_1: FictionFloorNode
     node_2: FictionFloorNode
     is_fast: bool
+    """Whether the floor is a quick clear."""
 
     @property
     def score(self) -> int:
@@ -142,3 +149,37 @@ class StarRailPureFiction(APIModel):
                 values["end_time"] = seasons[0]["end_time"]
 
         return values
+
+
+class APCShadowFloorNode(FloorNode):
+    """Node for a apocalyptic shadow floor."""
+
+    buff: Optional[ChallengeBuff]
+    score: int
+    boss_defeated: bool
+
+
+class APCShadowFloor(StarRailChallengeFloor):
+    """Floor in an apocalyptic shadow challenge."""
+
+    node_1: APCShadowFloorNode
+    node_2: APCShadowFloorNode
+    is_quick_clear: bool = Aliased("is_fast")
+
+    @property
+    def score(self) -> int:
+        """Total score of the floor."""
+        return self.node_1.score + self.node_2.score
+
+
+class StarRailAPCShadow(APIModel):
+    """Apocalyptic shadow challenge in a season."""
+
+    total_stars: int = Aliased("star_num")
+    max_floor: str
+    total_battles: int = Aliased("battle_num")
+    has_data: bool
+
+    floors: List[APCShadowFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    max_floor_id: int
