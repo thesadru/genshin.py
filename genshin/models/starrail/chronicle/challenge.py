@@ -16,8 +16,10 @@ from genshin.models.starrail.character import FloorCharacter
 from .base import PartialTime
 
 __all__ = [
+    "APCShadowBoss",
     "APCShadowFloor",
     "APCShadowFloorNode",
+    "APCShadowSeason",
     "ChallengeBuff",
     "FictionFloor",
     "FictionFloorNode",
@@ -165,11 +167,27 @@ class APCShadowFloor(StarRailChallengeFloor):
     node_1: APCShadowFloorNode
     node_2: APCShadowFloorNode
     is_quick_clear: bool = Aliased("is_fast")
+    last_update_time: PartialTime
 
     @property
     def score(self) -> int:
         """Total score of the floor."""
         return self.node_1.score + self.node_2.score
+
+
+class APCShadowBoss(APIModel):
+    """Boss in an apocalyptic shadow challenge."""
+
+    id: int
+    name_mi18n: str
+    icon: str
+
+
+class APCShadowSeason(StarRailChallengeSeason):
+    """Season of an apocalyptic shadow challenge."""
+
+    upper_boss: APCShadowBoss
+    lower_boss: APCShadowBoss
 
 
 class StarRailAPCShadow(APIModel):
