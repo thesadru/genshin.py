@@ -45,6 +45,7 @@ class StarRailChallengeFloor(APIModel):
     id: int = Aliased("maze_id")
     name: str
     star_num: int
+    is_quick_clear: bool = Aliased("is_fast")
 
 
 class StarRailFloor(StarRailChallengeFloor):
@@ -114,8 +115,6 @@ class FictionFloor(StarRailChallengeFloor):
     round_num: int
     node_1: FictionFloorNode
     node_2: FictionFloorNode
-    is_fast: bool
-    """Whether the floor is a quick clear."""
 
     @property
     def score(self) -> int:
@@ -166,7 +165,6 @@ class APCShadowFloor(StarRailChallengeFloor):
 
     node_1: APCShadowFloorNode
     node_2: APCShadowFloorNode
-    is_quick_clear: bool = Aliased("is_fast")
     last_update_time: PartialTime
 
     @property
