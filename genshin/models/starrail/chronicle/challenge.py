@@ -197,5 +197,5 @@ class StarRailAPCShadow(APIModel):
     has_data: bool
 
     floors: List[APCShadowFloor] = Aliased("all_floor_detail")
-    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    seasons: List[APCShadowSeason] = Aliased("groups")
     max_floor_id: int
