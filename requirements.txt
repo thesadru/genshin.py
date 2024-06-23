@@ -10,3 +10,4 @@ rsa
 aioredis
 click
 qrcode[pil]
+aiohttp-socks
