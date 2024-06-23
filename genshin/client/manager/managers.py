@@ -115,15 +115,27 @@ class BaseCookieManager(abc.ABC):
             return
 
         proxy = yarl.URL(proxy)
-        if str(proxy.scheme) not in ("https", "http", "ws", "wss"):
+        if proxy.scheme not in {"https", "http", "ws", "wss", "socks4", "socks5"}:
             raise ValueError("Proxy URL must have a valid scheme.")
 
         self._proxy = proxy
 
+    @property
+    def _proxy_is_socks(self) -> bool:
+        return self.proxy is not None and self.proxy.scheme in {"socks4", "socks5"}
+
     def create_session(self, **kwargs: typing.Any) -> aiohttp.ClientSession:
         """Create a client session."""
+        if self._proxy_is_socks:
+            import aiohttp_socks
+
+            connector = aiohttp_socks.ProxyConnector.from_url(str(self.proxy))
+        else:
+            connector = None
+
         return aiohttp.ClientSession(
             cookie_jar=aiohttp.DummyCookieJar(),
+            connector=connector,
             **kwargs,
         )
 
@@ -137,7 +149,9 @@ class BaseCookieManager(abc.ABC):
     ) -> typing.Any:
         """Make a request towards any json resource."""
         async with self.create_session() as session:
-            async with session.request(method, str_or_url, proxy=self.proxy, cookies=cookies, **kwargs) as response:
+            async with session.request(
+                method, str_or_url, proxy=self.proxy if not self._proxy_is_socks else None, cookies=cookies, **kwargs
+            ) as response:
                 if response.content_type != "application/json":
                     content = await response.text()
                     raise errors.GenshinException(msg="Recieved a response with an invalid content type:\n" + content)
