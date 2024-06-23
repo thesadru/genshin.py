@@ -18,10 +18,11 @@ setup(
     python_requires=">=3.8",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
-        "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]"],
+        "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]", "aiohttp-socks"],
         "cookies": ["browser-cookie3"],
         "auth": ["rsa", "qrcode[pil]"],
         "cli": ["click"],
+        "socks-proxy": ["aiohttp-socks"],
     },
     include_package_data=True,
     package_data={"genshin": ["py.typed"]},
