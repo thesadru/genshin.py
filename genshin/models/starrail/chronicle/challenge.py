@@ -155,9 +155,15 @@ class StarRailPureFiction(APIModel):
 class APCShadowFloorNode(FloorNode):
     """Node for a apocalyptic shadow floor."""
 
+    challenge_time: Optional[PartialTime]
     buff: Optional[ChallengeBuff]
     score: int
     boss_defeated: bool
+
+    @property
+    def has_data(self) -> bool:
+        """Check if the node has data."""
+        return bool(self.avatars)
 
 
 class APCShadowFloor(StarRailChallengeFloor):
