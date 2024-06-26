@@ -105,7 +105,7 @@ GRANT_TICKET_HEADERS = {
     "x-rpc-channel_id": "1",
     "x-rpc-game_biz": "hkrpg_global",
     "x-rpc-device_id": DEVICE_ID,
-    "x-rpc-language": "ru",
+    "x-rpc-language": "en",
 }
 
 GAME_LOGIN_HEADERS = {
