@@ -114,6 +114,7 @@ class GameAuthClient(base.BaseClient):
         action_ticket: str,
         *,
         mmt_result: RiskyCheckMMTResult,
+        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> None: ...
 
     @typing.overload
@@ -122,10 +123,15 @@ class GameAuthClient(base.BaseClient):
         action_ticket: str,
         *,
         mmt_result: None = ...,
+        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> typing.Union[None, RiskyCheckMMT]: ...
 
     async def _send_game_verification_email(
-        self, action_ticket: str, *, mmt_result: typing.Optional[RiskyCheckMMTResult] = None
+        self,
+        action_ticket: str,
+        *,
+        mmt_result: typing.Optional[RiskyCheckMMTResult] = None,
+        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> typing.Union[None, RiskyCheckMMT]:
         """Send email verification code.
 
@@ -144,7 +150,7 @@ class GameAuthClient(base.BaseClient):
             else:
                 headers["x-rpc-risky"] = auth_utility.generate_risky_header(check_result.id)
 
-        payload = {
+        payload = custom_payload or {
             "way": "Way_Email",
             "action_ticket": action_ticket,
             "device": {
