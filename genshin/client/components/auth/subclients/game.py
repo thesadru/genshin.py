@@ -114,7 +114,6 @@ class GameAuthClient(base.BaseClient):
         action_ticket: str,
         *,
         mmt_result: RiskyCheckMMTResult,
-        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> None: ...
 
     @typing.overload
@@ -123,7 +122,6 @@ class GameAuthClient(base.BaseClient):
         action_ticket: str,
         *,
         mmt_result: None = ...,
-        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> typing.Union[None, RiskyCheckMMT]: ...
 
     async def _send_game_verification_email(
@@ -131,7 +129,6 @@ class GameAuthClient(base.BaseClient):
         action_ticket: str,
         *,
         mmt_result: typing.Optional[RiskyCheckMMTResult] = None,
-        custom_payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     ) -> typing.Union[None, RiskyCheckMMT]:
         """Send email verification code.
 
@@ -150,14 +147,14 @@ class GameAuthClient(base.BaseClient):
             else:
                 headers["x-rpc-risky"] = auth_utility.generate_risky_header(check_result.id)
 
-        payload = custom_payload or {
+        payload = {
             "way": "Way_Email",
             "action_ticket": action_ticket,
             "device": {
-                "device_model": "iPhone15,4",
-                "device_id": auth_utility.DEVICE_ID,
-                "client": 1,
-                "device_name": "iPhone",
+                "device_model": self.device_model or "iPhone15,4",
+                "device_id": self.device_id or auth_utility.DEVICE_ID,
+                "client": self.client_type or 1,
+                "device_name": self.device_name or "iPhone",
             },
         }
         async with aiohttp.ClientSession() as session:
@@ -191,7 +188,7 @@ class GameAuthClient(base.BaseClient):
 
         payload = {
             "channel_id": 1,
-            "device": auth_utility.DEVICE_ID,
+            "device": self.device_id or auth_utility.DEVICE_ID,
             "app_id": constants.APP_IDS[self.default_game][self.region],
         }
         payload["data"] = json.dumps({"uid": uid, "token": game_token, "guest": False})

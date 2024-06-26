@@ -130,6 +130,34 @@ class BaseClient(abc.ABC):
         self.custom_headers["x-rpc-device_fp"] = device_fp
 
     @property
+    def device_model(self) -> typing.Optional[str]:
+        """The device model used in headers."""
+        return self.custom_headers.get("x-rpc-device_model")
+
+    @device_model.setter
+    def device_model(self, device_model: str) -> None:
+        self.custom_headers["x-rpc-device_model"] = device_model
+
+    @property
+    def device_name(self) -> typing.Optional[str]:
+        """The device name used in headers."""
+        return self.custom_headers.get("x-rpc-device_name")
+
+    @device_name.setter
+    def device_name(self, device_name: str) -> None:
+        self.custom_headers["x-rpc-device_name"] = device_name
+
+    @property
+    def client_type(self) -> typing.Optional[int]:
+        """The client type used in headers."""
+        client_type = self.custom_headers.get("x-rpc-client_type")
+        return int(client_type) if client_type is not None else None
+
+    @client_type.setter
+    def client_type(self, client_type: str) -> None:
+        self.custom_headers["x-rpc-client_type"] = client_type
+
+    @property
     def hoyolab_id(self) -> typing.Optional[int]:
         """The logged-in user's hoyolab uid.
 
