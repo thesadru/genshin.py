@@ -219,7 +219,7 @@ async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> N
         f"{click.style('Echo of War:', bold=True)} {data.remaining_weekly_discounts}/{data.max_weekly_discounts}"
     )
 
-    click.echo(f"\n{click.style('Assignments:', bold=True)} {data.accepted_epedition_num}/{data.total_expedition_num}")
+    click.echo(f"\n{click.style('Assignments:', bold=True)} {data.accepted_expedition_num}/{data.total_expedition_num}")
     for expedition in data.expeditions:
         if expedition.remaining_time > datetime.timedelta(0):
             remaining = f"{expedition.remaining_time} remaining"
