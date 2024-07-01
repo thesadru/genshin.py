@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.1">
+<title>genshin.models.model API documentation</title>
+<meta name="description" content="Modified pydantic model.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.model</code></h1>
+</header>
+<section id="section-intro">
+<p>Modified pydantic model.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="genshin.models.model.Aliased"><code class="name flex">
+<span>def <span class="ident">Aliased</span></span>(<span>galias: typing.Optional[str] = None, default: typing.Any = PydanticUndefined, *, timezone: typing.Optional[typing.Union[int, datetime.datetime]] = None, mi18n: typing.Optional[str] = None, **kwargs: typing.Any) ‑> Any</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create an aliased field.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.model.APIModel"><code class="flex name class">
+<span>class <span class="ident">APIModel</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Modified pydantic model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APIModel(pydantic.BaseModel, abc.ABC):
+    &#34;&#34;&#34;Modified pydantic model.&#34;&#34;&#34;
+
+    __api_init_fields__: typing.ClassVar[typing.Set[str]]
+    __model_init_fields__: typing.ClassVar[typing.Set[str]]
+
+    # nasty pydantic bug fixed only on the master branch - waiting for pypi release
+    if typing.TYPE_CHECKING:
+        _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]]
+    else:
+        _mi18n = {}
+
+    lang: str = &#34;UNKNOWN&#34;
+
+    def __init__(self, _frame: int = 1, **data: typing.Any) -&gt; None:
+        &#34;&#34;&#34;&#34;&#34;&#34;
+        from genshin.client.components import base as client_base
+
+        lang = data.pop(&#34;lang&#34;, None)
+
+        if lang is None:
+            frames = [sys._getframe(_frame)]
+            while _frame &lt;= 100:  # ensure we give up in a reasonable amount of time
+                _frame += 1
+                try:
+                    frame = sys._getframe(_frame)
+                except ValueError:
+                    break
+
+                if frame.f_code.co_name == &#34;__init__&#34; and frame.f_code.co_filename == __file__:
+                    frames.append(frame)
+                    break
+
+            for frame in frames:
+                if frame.f_code.co_name == &#34;&lt;listcomp&gt;&#34;:
+                    frame = typing.cast(&#34;types.FrameType&#34;, frame.f_back)
+                    assert frame
+
+                if isinstance(frame.f_locals.get(&#34;lang&#34;), str):
+                    lang = frame.f_locals[&#34;lang&#34;]
+
+                for name, value in frame.f_locals.items():
+                    if isinstance(value, (APIModel, client_base.BaseClient)):
+                        lang = value.lang
+
+                if lang:
+                    break
+
+                # validator, it&#39;s a skipper
+                if isinstance(frame.f_locals.get(&#34;cls&#34;), type) and issubclass(frame.f_locals[&#34;cls&#34;], APIModel):
+                    continue
+
+            else:
+                raise Exception(&#34;lang not found&#34;)
+
+        object.__setattr__(self, &#34;lang&#34;, lang)
+        super().__init__(**data, lang=lang)
+
+        for name in self.__fields__.keys():
+            value = getattr(self, name)
+            if isinstance(value, APIModel):
+                object.__setattr__(value, &#34;lang&#34;, self.lang)
+
+        if self.lang not in genshin_constants.LANGS:
+            raise Exception(f&#34;Invalid model lang: {self.lang}&#34;)
+
+    def __init_subclass__(cls) -&gt; None:
+        cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
+
+    @pydantic.root_validator(pre=True)
+    def __parse_galias(cls, values: typing.Dict[str, typing.Any]) -&gt; typing.Dict[str, typing.Any]:
+        &#34;&#34;&#34;Due to alias being reserved for actual aliases we use a custom alias.&#34;&#34;&#34;
+        if cls.__model_init_fields__:
+            # has all model init fields
+            if cls.__model_init_fields__.issubset(set(values)):
+                return values
+
+            # has some model init fields but no api init fields
+            if set(values) &amp; cls.__model_init_fields__ and not set(values) &amp; cls.__api_init_fields__:
+                return values
+
+        aliases: typing.Dict[str, str] = {}
+        for name, field in cls.__fields__.items():
+            alias = field.field_info.extra.get(&#34;galias&#34;)
+            if alias is not None:
+                aliases[alias] = name
+
+        return {aliases.get(name, name): value for name, value in values.items()}
+
+    @pydantic.root_validator()
+    def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -&gt; typing.Dict[str, typing.Any]:
+        &#34;&#34;&#34;Timezones are a pain to deal with so we at least allow a plain hour offset.&#34;&#34;&#34;
+        for name, field in cls.__fields__.items():
+            if isinstance(values.get(name), datetime.datetime) and values[name].tzinfo is None:
+                timezone = field.field_info.extra.get(&#34;timezone&#34;, 0)
+                if not isinstance(timezone, datetime.timezone):
+                    timezone = datetime.timezone(datetime.timedelta(hours=timezone))
+
+                values[name] = values[name].replace(tzinfo=timezone)
+
+        return values
+
+    def dict(self, **kwargs: typing.Any) -&gt; typing.Dict[str, typing.Any]:
+        &#34;&#34;&#34;Generate a dictionary representation of the model.
+
+        Takes the liberty of also giving properties as fields.
+        &#34;&#34;&#34;
+        for name in dir(type(self)):
+            obj = getattr(type(self), name)
+            if isinstance(obj, property):
+                value = getattr(self, name, _SENTINEL)
+
+                if name[0] == &#34;_&#34; or value is _SENTINEL or value == &#34;&#34;:
+                    continue
+
+                self.__dict__[name] = value
+
+        return super().dict(**kwargs)
+
+    def _get_mi18n(
+        self,
+        field: typing.Union[pydantic.fields.ModelField, str],
+        lang: str,
+        *,
+        default: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Get localized name of a field.&#34;&#34;&#34;
+        if isinstance(field, str):
+            key = field.lower()
+            default = default or key
+        else:
+            if not field.field_info.extra.get(&#34;mi18n&#34;):
+                raise TypeError(f&#34;{field!r} does not have mi18n.&#34;)
+
+            key = field.field_info.extra[&#34;mi18n&#34;]
+            default = default or field.name
+
+        if key not in self._mi18n:
+            return default
+
+        if lang not in self._mi18n[key]:
+            raise TypeError(f&#34;mi18n not loaded for {lang}&#34;)
+
+        return self._mi18n[key][lang]
+
+    if not typing.TYPE_CHECKING:
+
+        class Config:
+            allow_mutation = False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.v1.main.BaseModel</li>
+<li>pydantic.v1.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.calculator.CalculatorArtifact" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorArtifact">CalculatorArtifact</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorArtifactResult" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorArtifactResult">CalculatorArtifactResult</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorCharacterDetails">CalculatorCharacterDetails</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorConsumable" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorFurnishing" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorFurnishing">CalculatorFurnishing</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorFurnishingResults" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorFurnishingResults">CalculatorFurnishingResults</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorResult" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorResult">CalculatorResult</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorTalent" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorTalent">CalculatorTalent</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorWeapon" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorWeapon">CalculatorWeapon</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="genshin/character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.Battle" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.Battle">Battle</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.Chamber" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.Chamber">Chamber</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.CharacterRanks">CharacterRanks</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.Floor" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.Floor">Floor</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a></li>
+<li><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair" href="genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.SpiralAbyssPair">SpiralAbyssPair</a></li>
+<li><a title="genshin.models.genshin.chronicle.activities.Activities" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.Activities">Activities</a></li>
+<li><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.EnergyAmplifier">EnergyAmplifier</a></li>
+<li>genshin.models.genshin.chronicle.activities.EnergyAmplifierBuff</li>
+<li>genshin.models.genshin.chronicle.activities.EnergyAmplifierCriteria</li>
+<li><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.HyakuninIkki">HyakuninIkki</a></li>
+<li>genshin.models.genshin.chronicle.activities.HyakuninIkkiBattle</li>
+<li>genshin.models.genshin.chronicle.activities.HyakuninIkkiSkill</li>
+<li><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.LabyrinthWarriors">LabyrinthWarriors</a></li>
+<li>genshin.models.genshin.chronicle.activities.LabyrinthWarriorsRune</li>
+<li><a title="genshin.models.genshin.chronicle.activities.OldActivity" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a></li>
+<li><a title="genshin.models.genshin.chronicle.activities.Potion" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.Potion">Potion</a></li>
+<li>genshin.models.genshin.chronicle.activities.PotionBuff</li>
+<li>genshin.models.genshin.chronicle.activities.PotionCharacter</li>
+<li>genshin.models.genshin.chronicle.activities.PotionStage</li>
+<li><a title="genshin.models.genshin.chronicle.activities.Summer" href="genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.Summer">Summer</a></li>
+<li>genshin.models.genshin.chronicle.activities.SummerMemories</li>
+<li>genshin.models.genshin.chronicle.activities.SummerRealmExploration</li>
+<li>genshin.models.genshin.chronicle.activities.SummerSurfpiercer</li>
+<li><a title="genshin.models.genshin.chronicle.characters.Artifact" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Artifact">Artifact</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.ArtifactSet" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.ArtifactSet">ArtifactSet</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.ArtifactSetEffect">ArtifactSetEffect</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.CharacterWeapon">CharacterWeapon</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.Constellation" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Constellation">Constellation</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.Outfit" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Outfit">Outfit</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.ArchonQuest" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.ArchonQuest">ArchonQuest</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.ArchonQuestProgress">ArchonQuestProgress</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.AttendanceReward" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.AttendanceReward">AttendanceReward</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.DailyTasks" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.DailyTasks">DailyTasks</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.Expedition" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.Expedition">Expedition</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.Notes" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.Notes">Notes</a></li>
+<li><a title="genshin.models.genshin.chronicle.notes.TaskReward" href="genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.TaskReward">TaskReward</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.Exploration" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.Exploration">Exploration</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.Offering" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.Offering">Offering</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.PartialGenshinUserStats" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.PartialGenshinUserStats">PartialGenshinUserStats</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.Stats" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.Stats">Stats</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.Teapot" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.Teapot">Teapot</a></li>
+<li><a title="genshin.models.genshin.chronicle.stats.TeapotRealm" href="genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.TeapotRealm">TeapotRealm</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent" href="genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent">TCGCharacterTalent</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGCost" href="genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGCost">TCGCost</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPreview" href="genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGPreview">TCGPreview</a></li>
+<li><a title="genshin.models.genshin.daily.ClaimedDailyReward" href="genshin/daily.html#genshin.models.genshin.daily.ClaimedDailyReward">ClaimedDailyReward</a></li>
+<li><a title="genshin.models.genshin.daily.DailyReward" href="genshin/daily.html#genshin.models.genshin.daily.DailyReward">DailyReward</a></li>
+<li><a title="genshin.models.genshin.diary.BaseDiary" href="genshin/diary.html#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></li>
+<li><a title="genshin.models.genshin.diary.DayDiaryData" href="genshin/diary.html#genshin.models.genshin.diary.DayDiaryData">DayDiaryData</a></li>
+<li><a title="genshin.models.genshin.diary.DiaryAction" href="genshin/diary.html#genshin.models.genshin.diary.DiaryAction">DiaryAction</a></li>
+<li><a title="genshin.models.genshin.diary.DiaryActionCategory" href="genshin/diary.html#genshin.models.genshin.diary.DiaryActionCategory">DiaryActionCategory</a></li>
+<li><a title="genshin.models.genshin.diary.MonthDiaryData" href="genshin/diary.html#genshin.models.genshin.diary.MonthDiaryData">MonthDiaryData</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailDayDiaryData" href="genshin/diary.html#genshin.models.genshin.diary.StarRailDayDiaryData">StarRailDayDiaryData</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailDiaryAction" href="genshin/diary.html#genshin.models.genshin.diary.StarRailDiaryAction">StarRailDiaryAction</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory" href="genshin/diary.html#genshin.models.genshin.diary.StarRailDiaryActionCategory">StarRailDiaryActionCategory</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailMonthDiaryData" href="genshin/diary.html#genshin.models.genshin.diary.StarRailMonthDiaryData">StarRailMonthDiaryData</a></li>
+<li><a title="genshin.models.genshin.gacha.BannerDetailItem" href="genshin/gacha.html#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a></li>
+<li><a title="genshin.models.genshin.gacha.BannerDetails" href="genshin/gacha.html#genshin.models.genshin.gacha.BannerDetails">BannerDetails</a></li>
+<li><a title="genshin.models.genshin.gacha.BannerDetailsUpItem" href="genshin/gacha.html#genshin.models.genshin.gacha.BannerDetailsUpItem">BannerDetailsUpItem</a></li>
+<li><a title="genshin.models.genshin.gacha.GachaItem" href="genshin/gacha.html#genshin.models.genshin.gacha.GachaItem">GachaItem</a></li>
+<li><a title="genshin.models.genshin.gacha.Warp" href="genshin/gacha.html#genshin.models.genshin.gacha.Warp">Warp</a></li>
+<li><a title="genshin.models.genshin.gacha.Wish" href="genshin/gacha.html#genshin.models.genshin.gacha.Wish">Wish</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupArtifactStat" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupArtifactStat">LineupArtifactStat</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupArtifactStatFields" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupArtifactStatFields">LineupArtifactStatFields</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupFields" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupFields">LineupFields</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupPreview" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupScenario" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></li>
+<li><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet" href="genshin/lineup.html#genshin.models.genshin.lineup.PartialLineupArtifactSet">PartialLineupArtifactSet</a></li>
+<li><a title="genshin.models.genshin.lineup.PartialLineupWeapon" href="genshin/lineup.html#genshin.models.genshin.lineup.PartialLineupWeapon">PartialLineupWeapon</a></li>
+<li><a title="genshin.models.genshin.teapot.TeapotReplica" href="genshin/teapot.html#genshin.models.genshin.teapot.TeapotReplica">TeapotReplica</a></li>
+<li><a title="genshin.models.genshin.teapot.TeapotReplicaAuthor" href="genshin/teapot.html#genshin.models.genshin.teapot.TeapotReplicaAuthor">TeapotReplicaAuthor</a></li>
+<li><a title="genshin.models.genshin.teapot.TeapotReplicaBlueprint" href="genshin/teapot.html#genshin.models.genshin.teapot.TeapotReplicaBlueprint">TeapotReplicaBlueprint</a></li>
+<li><a title="genshin.models.genshin.teapot.TeapotReplicaStats" href="genshin/teapot.html#genshin.models.genshin.teapot.TeapotReplicaStats">TeapotReplicaStats</a></li>
+<li><a title="genshin.models.genshin.transaction.BaseTransaction" href="genshin/transaction.html#genshin.models.genshin.transaction.BaseTransaction">BaseTransaction</a></li>
+<li>genshin.models.genshin.wiki.BaseWikiPreview</li>
+<li><a title="genshin.models.genshin.wiki.WikiPage" href="genshin/wiki.html#genshin.models.genshin.wiki.WikiPage">WikiPage</a></li>
+<li><a title="genshin.models.honkai.battlesuit.Battlesuit" href="honkai/battlesuit.html#genshin.models.honkai.battlesuit.Battlesuit">Battlesuit</a></li>
+<li><a title="genshin.models.honkai.chronicle.battlesuits.Equipment" href="honkai/chronicle/battlesuits.html#genshin.models.honkai.chronicle.battlesuits.Equipment">Equipment</a></li>
+<li>genshin.models.honkai.chronicle.modes.BaseAbyss</li>
+<li><a title="genshin.models.honkai.chronicle.modes.Boss" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.Boss">Boss</a></li>
+<li>genshin.models.honkai.chronicle.modes.Condition</li>
+<li><a title="genshin.models.honkai.chronicle.modes.ELF" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.ELF">ELF</a></li>
+<li><a title="genshin.models.honkai.chronicle.modes.ElysianRealm" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.ElysianRealm">ElysianRealm</a></li>
+<li><a title="genshin.models.honkai.chronicle.modes.MemorialArena" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.MemorialArena">MemorialArena</a></li>
+<li><a title="genshin.models.honkai.chronicle.modes.MemorialBattle" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.MemorialBattle">MemorialBattle</a></li>
+<li>genshin.models.honkai.chronicle.modes.RemembranceSigil</li>
+<li>genshin.models.honkai.chronicle.modes.Signet</li>
+<li>genshin.models.honkai.chronicle.stats.ElysianRealmStats</li>
+<li><a title="genshin.models.honkai.chronicle.stats.HonkaiStats" href="honkai/chronicle/stats.html#genshin.models.honkai.chronicle.stats.HonkaiStats">HonkaiStats</a></li>
+<li><a title="genshin.models.honkai.chronicle.stats.HonkaiUserStats" href="honkai/chronicle/stats.html#genshin.models.honkai.chronicle.stats.HonkaiUserStats">HonkaiUserStats</a></li>
+<li>genshin.models.honkai.chronicle.stats.MemorialArenaStats</li>
+<li>genshin.models.honkai.chronicle.stats.OldAbyssStats</li>
+<li>genshin.models.honkai.chronicle.stats.SuperstringAbyssStats</li>
+<li><a title="genshin.models.hoyolab.announcements.Announcement" href="hoyolab/announcements.html#genshin.models.hoyolab.announcements.Announcement">Announcement</a></li>
+<li><a title="genshin.models.hoyolab.private.AccountInfo" href="hoyolab/private.html#genshin.models.hoyolab.private.AccountInfo">AccountInfo</a></li>
+<li><a title="genshin.models.hoyolab.record.GenshinAccount" href="hoyolab/record.html#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a></li>
+<li><a title="genshin.models.hoyolab.record.HoyolabUserCertification" href="hoyolab/record.html#genshin.models.hoyolab.record.HoyolabUserCertification">HoyolabUserCertification</a></li>
+<li><a title="genshin.models.hoyolab.record.HoyolabUserLevel" href="hoyolab/record.html#genshin.models.hoyolab.record.HoyolabUserLevel">HoyolabUserLevel</a></li>
+<li><a title="genshin.models.hoyolab.record.PartialHoyolabUser" href="hoyolab/record.html#genshin.models.hoyolab.record.PartialHoyolabUser">PartialHoyolabUser</a></li>
+<li><a title="genshin.models.hoyolab.record.RecordCardData" href="hoyolab/record.html#genshin.models.hoyolab.record.RecordCardData">RecordCardData</a></li>
+<li><a title="genshin.models.hoyolab.record.RecordCardSetting" href="hoyolab/record.html#genshin.models.hoyolab.record.RecordCardSetting">RecordCardSetting</a></li>
+<li><a title="genshin.models.hoyolab.record.UserInfo" href="hoyolab/record.html#genshin.models.hoyolab.record.UserInfo">UserInfo</a></li>
+<li><a title="genshin.models.starrail.character.StarRailBaseCharacter" href="starrail/character.html#genshin.models.starrail.character.StarRailBaseCharacter">StarRailBaseCharacter</a></li>
+<li><a title="genshin.models.starrail.chronicle.base.PartialTime" href="starrail/chronicle/base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.APCShadowBoss">APCShadowBoss</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.ChallengeBuff">ChallengeBuff</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow">StarRailAPCShadow</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.StarRailChallenge">StarRailChallenge</a></li>
+<li>genshin.models.starrail.chronicle.challenge.StarRailChallengeFloor</li>
+<li><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason">StarRailChallengeSeason</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction" href="starrail/chronicle/challenge.html#genshin.models.starrail.chronicle.challenge.StarRailPureFiction">StarRailPureFiction</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.CharacterProperty" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.CharacterProperty">CharacterProperty</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.ModifyRelicProperty">ModifyRelicProperty</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.PropertyInfo" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.PropertyInfo">PropertyInfo</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.Rank" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.Rank">Rank</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.RecommendProperty" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.RecommendProperty">RecommendProperty</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.Relic" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.Relic">Relic</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.RelicProperty" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.RelicProperty">RelicProperty</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.Skill" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.Skill">Skill</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.SkillStage" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.SkillStage">SkillStage</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters">StarRailDetailCharacters</a></li>
+<li><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment" href="starrail/chronicle/characters.html#genshin.models.starrail.chronicle.characters.StarRailEquipment">StarRailEquipment</a></li>
+<li><a title="genshin.models.starrail.chronicle.notes.StarRailExpedition" href="starrail/chronicle/notes.html#genshin.models.starrail.chronicle.notes.StarRailExpedition">StarRailExpedition</a></li>
+<li><a title="genshin.models.starrail.chronicle.notes.StarRailNote" href="starrail/chronicle/notes.html#genshin.models.starrail.chronicle.notes.StarRailNote">StarRailNote</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueBasicInfo" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueBasicInfo">RogueBasicInfo</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueBuff" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueBuff">RogueBuff</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueBuffItem" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueBuffItem">RogueBuffItem</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueBuffType" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueBuffType">RogueBuffType</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueMiracle" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueMiracle">RogueMiracle</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueRecord" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueRecord">RogueRecord</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueRecordBasic" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueRecordBasic">RogueRecordBasic</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueRecordDetail" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueRecordDetail">RogueRecordDetail</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.RogueUserRole" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.RogueUserRole">RogueUserRole</a></li>
+<li><a title="genshin.models.starrail.chronicle.rogue.StarRailRogue" href="starrail/chronicle/rogue.html#genshin.models.starrail.chronicle.rogue.StarRailRogue">StarRailRogue</a></li>
+<li><a title="genshin.models.starrail.chronicle.stats.PartialStarRailUserStats" href="starrail/chronicle/stats.html#genshin.models.starrail.chronicle.stats.PartialStarRailUserStats">PartialStarRailUserStats</a></li>
+<li><a title="genshin.models.starrail.chronicle.stats.StarRailStats" href="starrail/chronicle/stats.html#genshin.models.starrail.chronicle.stats.StarRailStats">StarRailStats</a></li>
+<li><a title="genshin.models.starrail.chronicle.stats.StarRailUserInfo" href="starrail/chronicle/stats.html#genshin.models.starrail.chronicle.stats.StarRailUserInfo">StarRailUserInfo</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.model.APIModel.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.model.APIModel.lang"><code class="name">var <span class="ident">lang</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.models.model.APIModel.dict"><code class="name flex">
+<span>def <span class="ident">dict</span></span>(<span>self, **kwargs: typing.Any) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a dictionary representation of the model.</p>
+<p>Takes the liberty of also giving properties as fields.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.model.Unique"><code class="flex name class">
+<span>class <span class="ident">Unique</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A hashable model with an id.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Unique(abc.ABC):
+    &#34;&#34;&#34;A hashable model with an id.&#34;&#34;&#34;
+
+    id: int
+
+    def __int__(self) -&gt; int:
+        return hash(self.id)
+
+    def __hash__(self) -&gt; int:
+        return hash(self.id)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.calculator.CalculatorArtifact" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorArtifact">CalculatorArtifact</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorConsumable" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorFurnishing" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorFurnishing">CalculatorFurnishing</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorTalent" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorTalent">CalculatorTalent</a></li>
+<li><a title="genshin.models.genshin.calculator.CalculatorWeapon" href="genshin/calculator.html#genshin.models.genshin.calculator.CalculatorWeapon">CalculatorWeapon</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="genshin/character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.Artifact" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Artifact">Artifact</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.ArtifactSet" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.ArtifactSet">ArtifactSet</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.CharacterWeapon">CharacterWeapon</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.Constellation" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Constellation">Constellation</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.Outfit" href="genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Outfit">Outfit</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></li>
+<li><a title="genshin.models.genshin.daily.ClaimedDailyReward" href="genshin/daily.html#genshin.models.genshin.daily.ClaimedDailyReward">ClaimedDailyReward</a></li>
+<li><a title="genshin.models.genshin.gacha.GachaItem" href="genshin/gacha.html#genshin.models.genshin.gacha.GachaItem">GachaItem</a></li>
+<li><a title="genshin.models.genshin.gacha.Warp" href="genshin/gacha.html#genshin.models.genshin.gacha.Warp">Warp</a></li>
+<li><a title="genshin.models.genshin.gacha.Wish" href="genshin/gacha.html#genshin.models.genshin.gacha.Wish">Wish</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupArtifactStat" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupArtifactStat">LineupArtifactStat</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupPreview" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a></li>
+<li><a title="genshin.models.genshin.lineup.LineupScenario" href="genshin/lineup.html#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></li>
+<li><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet" href="genshin/lineup.html#genshin.models.genshin.lineup.PartialLineupArtifactSet">PartialLineupArtifactSet</a></li>
+<li><a title="genshin.models.genshin.lineup.PartialLineupWeapon" href="genshin/lineup.html#genshin.models.genshin.lineup.PartialLineupWeapon">PartialLineupWeapon</a></li>
+<li><a title="genshin.models.genshin.teapot.TeapotReplica" href="genshin/teapot.html#genshin.models.genshin.teapot.TeapotReplica">TeapotReplica</a></li>
+<li><a title="genshin.models.genshin.transaction.BaseTransaction" href="genshin/transaction.html#genshin.models.genshin.transaction.BaseTransaction">BaseTransaction</a></li>
+<li>genshin.models.genshin.wiki.BaseWikiPreview</li>
+<li><a title="genshin.models.honkai.battlesuit.Battlesuit" href="honkai/battlesuit.html#genshin.models.honkai.battlesuit.Battlesuit">Battlesuit</a></li>
+<li><a title="genshin.models.honkai.chronicle.battlesuits.Equipment" href="honkai/chronicle/battlesuits.html#genshin.models.honkai.chronicle.battlesuits.Equipment">Equipment</a></li>
+<li><a title="genshin.models.honkai.chronicle.modes.Boss" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.Boss">Boss</a></li>
+<li><a title="genshin.models.honkai.chronicle.modes.ELF" href="honkai/chronicle/modes.html#genshin.models.honkai.chronicle.modes.ELF">ELF</a></li>
+<li><a title="genshin.models.hoyolab.announcements.Announcement" href="hoyolab/announcements.html#genshin.models.hoyolab.announcements.Announcement">Announcement</a></li>
+<li><a title="genshin.models.hoyolab.record.RecordCardSetting" href="hoyolab/record.html#genshin.models.hoyolab.record.RecordCardSetting">RecordCardSetting</a></li>
+<li><a title="genshin.models.starrail.character.StarRailBaseCharacter" href="starrail/character.html#genshin.models.starrail.character.StarRailBaseCharacter">StarRailBaseCharacter</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.model.Unique.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models" href="index.html">genshin.models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="genshin.models.model.Aliased" href="#genshin.models.model.Aliased">Aliased</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.model.APIModel" href="#genshin.models.model.APIModel">APIModel</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.model.APIModel.Config" href="#genshin.models.model.APIModel.Config">Config</a></code></li>
+<li><code><a title="genshin.models.model.APIModel.dict" href="#genshin.models.model.APIModel.dict">dict</a></code></li>
+<li><code><a title="genshin.models.model.APIModel.lang" href="#genshin.models.model.APIModel.lang">lang</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.model.Unique" href="#genshin.models.model.Unique">Unique</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.model.Unique.id" href="#genshin.models.model.Unique.id">id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.1</a>.</p>
+</footer>
+</body>
+</html>
