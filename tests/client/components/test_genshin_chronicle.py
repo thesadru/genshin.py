@@ -29,6 +29,12 @@ async def test_spiral_abyss(client: genshin.Client, genshin_uid: int):
     assert data
 
 
+async def test_imaginarium_theater(client: genshin.Client, genshin_uid: int):
+    data = await client.get_imaginarium_theater(genshin_uid)
+
+    assert data
+
+
 async def test_notes(lclient: genshin.Client, genshin_uid: int):
     data = await lclient.get_notes(genshin_uid)
 
