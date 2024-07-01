@@ -130,9 +130,9 @@ class ImgTheaterData(APIModel):
 class ImgTheater(APIModel):
     """Imaginarium theater."""
 
-    acts: typing.Sequence[Act] = pydantic.Field(alias="rounds_data")
-    backup_characters: typing.Sequence[ActCharacter] = pydantic.Field(alias="backup_avatars")  # Not sure what this is
-    stats: TheaterStats = pydantic.Field(alias="stat")
+    acts: typing.Sequence[Act] = Aliased(alias="rounds_data")
+    backup_characters: typing.Sequence[ActCharacter] = Aliased(alias="backup_avatars")  # Not sure what this is
+    stats: TheaterStats = Aliased(alias="stat")
     schedule: TheaterSchedule
     has_data: bool
     has_detail_data: bool
