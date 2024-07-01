@@ -55,7 +55,8 @@ class TheaterBuff(APIModel):
     icon: str
     name: str
     description: str = Aliased("desc")
-    is_enhanced: bool  # Not sure what this is
+    received_audience_support: bool = Aliased("is_enhanced")
+    """Whether external audience support is received."""
     id: int
 
 
