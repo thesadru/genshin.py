@@ -112,12 +112,13 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: int,
         *,
         previous: bool = False,
+        need_detail: bool = True,
         lang: typing.Optional[str] = None,
     ) -> models.ImgTheater:
         """Get Genshin Impact imaginarium theater runs."""
         payload = {
             "schedule_type": 2 if previous else 1,  # There's 1 season for now but I assume it works like this
-            "need_detail": "true",
+            "need_detail": str(need_detail).lower(),
         }
         data = await self._request_genshin_record("role_combat", uid, lang=lang, payload=payload)
 
