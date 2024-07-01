@@ -113,6 +113,7 @@ class BaseCookieManager(abc.ABC):
     def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -> None:
         if proxy is None:
             self._proxy = None
+            self._socks_proxy = None
             return
 
         proxy = yarl.URL(proxy)
