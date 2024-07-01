@@ -98,6 +98,8 @@ class TheaterStats(APIModel):
     """The number of external audience support triggers."""
     player_assists: int = Aliased("rent_cnt")
     """The number of supporting cast characters assisting other players."""
+    medal_num: int
+    """The number of medals the player has obtained."""
 
 
 class TheaterSchedule(APIModel):
