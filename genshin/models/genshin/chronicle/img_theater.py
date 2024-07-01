@@ -129,20 +129,24 @@ class TheaterSchedule(APIModel):
 class ImgTheaterData(APIModel):
     """Imaginarium theater data."""
 
-
-class ImgTheater(APIModel):
-    """Imaginarium theater."""
-
     acts: typing.Sequence[Act] = Aliased(alias="rounds_data")
     backup_characters: typing.Sequence[ActCharacter] = Aliased(alias="backup_avatars")  # Not sure what this is
     stats: TheaterStats = Aliased(alias="stat")
     schedule: TheaterSchedule
     has_data: bool
     has_detail_data: bool
-    unlocked: bool = Aliased("is_unlock")
 
     @pydantic.root_validator(pre=True)
-    def __unnest_values(cls, data: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        first_data = data.pop("data")[0]  # stat, schedule, has_data, has_detail_data
-        detail = first_data.pop("detail")  # rounds_data, backup_avatars
-        return {**data, **first_data, **detail}
+    def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
+        has_detail = detail is not None
+        values["rounds_data"] = detail.get("rounds_data", []) if has_detail else []
+        values["backup_avatars"] = detail.get("backup_avatars", []) if has_detail else []
+        return values
+
+
+class ImgTheater(APIModel):
+    """Imaginarium theater."""
+
+    datas: typing.Sequence[ImgTheaterData] = Aliased("data")
+    unlocked: bool = Aliased("is_unlock")
