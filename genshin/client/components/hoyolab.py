@@ -124,7 +124,7 @@ class HoyolabClient(base.BaseClient):
 
             game = self.default_game
 
-        if not (game == types.Game.GENSHIN or game == types.Game.STARRAIL):
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL}:
             raise ValueError(f"{game} does not support code redemption.")
 
         uid = uid or await self._get_uid(game)
