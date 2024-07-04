@@ -47,10 +47,12 @@ class BaseBattleChronicleClient(base.BaseClient):
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
-        base_url = routes.RECORD_URL.get_url(region or self.region)
-
-        if game:
-            base_url = base_url / game.value / "api"
+        if game is types.Game.ZZZ:
+            base_url = routes.ZZZ_RECORD_URL.get_url(region or self.region)
+        else:
+            base_url = routes.RECORD_URL.get_url(region or self.region)
+            if game is not None:
+                base_url = base_url / game.value / "api"
 
         url = base_url / endpoint
 

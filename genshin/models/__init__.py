@@ -6,3 +6,4 @@ from .honkai import *
 from .hoyolab import *
 from .model import *
 from .starrail import *
+from .zzz import *

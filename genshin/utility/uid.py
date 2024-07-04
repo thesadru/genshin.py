@@ -13,6 +13,7 @@ __all__ = [
     "recognize_region",
     "recognize_server",
     "recognize_starrail_server",
+    "recognize_zzz_server",
 ]
 
 UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequence[str]]] = {
@@ -157,6 +158,11 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
 
 def recognize_region(uid: int, game: types.Game) -> typing.Optional[types.Region]:
     """Recognize the region of a uid."""
+    if game is types.Game.ZZZ:
+        if len(str(uid)) == 8:
+            return types.Region.CHINESE
+        return types.Region.OVERSEAS
+
     for region, digits in UID_RANGE[game].items():
         if str(uid)[:-8] in digits:
             return region

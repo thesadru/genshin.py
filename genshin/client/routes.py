@@ -38,6 +38,7 @@ __all__ = [
     "WEB_LOGIN_URL",
     "YSULOG_URL",
     "Route",
+    "ZZZ_RECORD_URL",
 ]
 
 
@@ -137,6 +138,10 @@ COMMUNITY_URL = InternationalRoute(
 RECORD_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/game_record/",
     chinese="https://api-takumi-record.mihoyo.com/game_record/app/",
+)
+ZZZ_RECORD_URL = InternationalRoute(
+    overseas="https://sg-act-nap-api.hoyolab.com/event/game_record_zzz/api/zzz/",
+    chinese="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz/",
 )
 LINEUP_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
