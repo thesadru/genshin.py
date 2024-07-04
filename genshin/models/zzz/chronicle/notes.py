@@ -14,7 +14,7 @@ else:
     except ImportError:
         import pydantic
 
-__all__ = ("ZZZNotes", "VideoStoreState")
+__all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZNotes")
 
 
 class VideoStoreState(enum.Enum):

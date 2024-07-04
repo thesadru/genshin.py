@@ -37,8 +37,8 @@ __all__ = [
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
     "YSULOG_URL",
-    "Route",
     "ZZZ_RECORD_URL",
+    "Route",
 ]
 
 
