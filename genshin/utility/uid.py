@@ -141,8 +141,6 @@ def recognize_server(uid: int, game: types.Game) -> str:
         return recognize_starrail_server(uid)
     if game is types.Game.ZZZ:
         return recognize_zzz_server(uid)
-    else:
-        raise ValueError(f"{game} is not a valid game")
 
 
 def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game]:
