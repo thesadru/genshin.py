@@ -113,6 +113,9 @@ class GameAuthClient(base.BaseClient):
         self,
         action_ticket: str,
         *,
+        device_model: typing.Optional[str] = None,
+        device_name: typing.Optional[str] = None,
+        client_type: typing.Optional[int] = None,
         mmt_result: RiskyCheckMMTResult,
     ) -> None: ...
 
@@ -121,6 +124,9 @@ class GameAuthClient(base.BaseClient):
         self,
         action_ticket: str,
         *,
+        device_model: typing.Optional[str] = None,
+        device_name: typing.Optional[str] = None,
+        client_type: typing.Optional[int] = None,
         mmt_result: None = ...,
     ) -> typing.Union[None, RiskyCheckMMT]: ...
 
