@@ -77,3 +77,13 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             data = await self._request_zzz_record("note", uid, lang=lang, cache=False)
 
         return models.ZZZNotes(**data)
+
+    async def get_zzz_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.ZZZUserStats:
+        """Get starrail user."""
+        data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
+        return models.ZZZUserStats(**data)
