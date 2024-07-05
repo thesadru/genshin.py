@@ -128,6 +128,9 @@ class GameAuthClient(base.BaseClient):
         self,
         action_ticket: str,
         *,
+        device_model: typing.Optional[str] = None,
+        device_name: typing.Optional[str] = None,
+        client_type: typing.Optional[int] = None,
         mmt_result: typing.Optional[RiskyCheckMMTResult] = None,
     ) -> typing.Union[None, RiskyCheckMMT]:
         """Send email verification code.
@@ -151,10 +154,10 @@ class GameAuthClient(base.BaseClient):
             "way": "Way_Email",
             "action_ticket": action_ticket,
             "device": {
-                "device_model": self.device_model or "iPhone15,4",
+                "device_model": device_model or "iPhone15,4",
                 "device_id": self.device_id or auth_utility.DEVICE_ID,
-                "client": self.client_type or 1,
-                "device_name": self.device_name or "iPhone",
+                "client": client_type or 1,
+                "device_name": device_name or "iPhone",
             },
         }
         async with aiohttp.ClientSession() as session:
