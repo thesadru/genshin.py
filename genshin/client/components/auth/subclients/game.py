@@ -30,9 +30,12 @@ class GameAuthClient(base.BaseClient):
         if username:
             payload["username"] = username
 
+        headers = auth_utility.RISKY_CHECK_HEADERS.copy()
+        headers.update(self.custom_headers)
+
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                routes.GAME_RISKY_CHECK_URL.get_url(self.region), json=payload, headers=auth_utility.RISKY_CHECK_HEADERS
+                routes.GAME_RISKY_CHECK_URL.get_url(self.region), json=payload, headers=headers
             ) as r:
                 data = await r.json()
 
@@ -77,6 +80,8 @@ class GameAuthClient(base.BaseClient):
             raise ValueError("No default game set.")
 
         headers = auth_utility.SHIELD_LOGIN_HEADERS.copy()
+        headers.update(self.custom_headers)
+
         if mmt_result:
             headers["x-rpc-risky"] = mmt_result.to_rpc_risky()
         else:
@@ -120,13 +125,21 @@ class GameAuthClient(base.BaseClient):
     ) -> typing.Union[None, RiskyCheckMMT]: ...
 
     async def _send_game_verification_email(
-        self, action_ticket: str, *, mmt_result: typing.Optional[RiskyCheckMMTResult] = None
+        self,
+        action_ticket: str,
+        *,
+        device_model: typing.Optional[str] = None,
+        device_name: typing.Optional[str] = None,
+        client_type: typing.Optional[int] = None,
+        mmt_result: typing.Optional[RiskyCheckMMTResult] = None,
     ) -> typing.Union[None, RiskyCheckMMT]:
         """Send email verification code.
 
         Returns `None` if success, `RiskyCheckMMT` if geetest verification is required.
         """
         headers = auth_utility.GRANT_TICKET_HEADERS.copy()
+        headers.update(self.custom_headers)
+
         if mmt_result:
             headers["x-rpc-risky"] = mmt_result.to_rpc_risky()
         else:
@@ -141,10 +154,10 @@ class GameAuthClient(base.BaseClient):
             "way": "Way_Email",
             "action_ticket": action_ticket,
             "device": {
-                "device_model": "iPhone15,4",
-                "device_id": auth_utility.DEVICE_ID,
-                "client": 1,
-                "device_name": "iPhone",
+                "device_model": device_model or "iPhone15,4",
+                "device_id": self.device_id or auth_utility.DEVICE_ID,
+                "client": client_type or 1,
+                "device_name": device_name or "iPhone",
             },
         }
         async with aiohttp.ClientSession() as session:
@@ -161,10 +174,11 @@ class GameAuthClient(base.BaseClient):
     async def _verify_game_email(self, code: str, action_ticket: str) -> DeviceGrantResult:
         """Verify the email code."""
         payload = {"code": code, "ticket": action_ticket}
+        headers = auth_utility.GRANT_TICKET_HEADERS.copy()
+        headers.update(self.custom_headers)
+
         async with aiohttp.ClientSession() as session:
-            async with session.post(
-                routes.DEVICE_GRANT_URL.get_url(self.region), json=payload, headers=auth_utility.GRANT_TICKET_HEADERS
-            ) as r:
+            async with session.post(routes.DEVICE_GRANT_URL.get_url(self.region), json=payload, headers=headers) as r:
                 data = await r.json()
 
         return DeviceGrantResult(**data["data"])
@@ -177,17 +191,20 @@ class GameAuthClient(base.BaseClient):
 
         payload = {
             "channel_id": 1,
-            "device": auth_utility.DEVICE_ID,
+            "device": self.device_id or auth_utility.DEVICE_ID,
             "app_id": constants.APP_IDS[self.default_game][self.region],
         }
         payload["data"] = json.dumps({"uid": uid, "token": game_token, "guest": False})
         payload["sign"] = auth_utility.generate_sign(payload, constants.APP_KEYS[self.default_game][self.region])
 
+        headers = auth_utility.GAME_LOGIN_HEADERS.copy()
+        headers.update(self.custom_headers)
+
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 routes.GAME_LOGIN_URL.get_url(self.region, self.default_game),
                 json=payload,
-                headers=auth_utility.GAME_LOGIN_HEADERS,
+                headers=headers,
             ) as r:
                 data = await r.json()
 
