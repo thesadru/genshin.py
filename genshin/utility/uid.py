@@ -78,16 +78,18 @@ def recognize_genshin_server(uid: int) -> str:
 def get_prod_game_biz(region: types.Region, game: types.Game) -> str:
     """Get the game_biz value corresponding to a game and region."""
     game_biz = ""
-    if game == types.Game.HONKAI:
+    if game is types.Game.HONKAI:
         game_biz = "bh3_"
-    elif game == types.Game.GENSHIN:
+    elif game is types.Game.GENSHIN:
         game_biz = "hk4e_"
-    elif game == types.Game.STARRAIL:
+    elif game is types.Game.STARRAIL:
         game_biz = "hkrpg_"
+    elif game is types.Game.ZZZ:
+        game_biz = "nap_"
 
-    if region == types.Region.OVERSEAS:
+    if region is types.Region.OVERSEAS:
         game_biz += "global"
-    elif region == types.Region.CHINESE:
+    elif region is types.Region.CHINESE:
         game_biz += "cn"
 
     return game_biz
