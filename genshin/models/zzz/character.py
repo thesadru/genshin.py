@@ -4,10 +4,10 @@ import typing
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = (
-    "ZZZElementType",
-    "ZZZSpeciality",
     "ZZZBaseAgent",
+    "ZZZElementType",
     "ZZZPartialAgent",
+    "ZZZSpeciality",
 )
 
 
