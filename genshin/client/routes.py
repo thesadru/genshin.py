@@ -37,7 +37,6 @@ __all__ = [
     "WEBSTATIC_URL",
     "WEB_LOGIN_URL",
     "YSULOG_URL",
-    "ZZZ_RECORD_URL",
     "Route",
 ]
 
@@ -135,13 +134,19 @@ COMMUNITY_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/community/",
     chinese="https://api-takumi-record.mihoyo.com/community/",
 )
-RECORD_URL = InternationalRoute(
-    overseas="https://bbs-api-os.hoyolab.com/game_record/",
-    chinese="https://api-takumi-record.mihoyo.com/game_record/app/",
-)
-ZZZ_RECORD_URL = InternationalRoute(
-    overseas="https://sg-act-nap-api.hoyolab.com/event/game_record_zzz/api/zzz/",
-    chinese="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz/",
+RECORD_URL = GameRoute(
+    overseas=dict(
+        genshin="https://bbs-api-os.hoyolab.com/game_record/genshin/api",
+        hkrpg="https://bbs-api-os.hoyolab.com/game_record/hkrpg/api",
+        honkai="https://bbs-api-os.hoyolab.com/game_record/honkai3rd/api",
+        nap="https://sg-act-nap-api.hoyolab.com/event/game_record_zzz/api/zzz",
+    ),
+    chinese=dict(
+        genshin="https://api-takumi-record.mihoyo.com/game_record/app/genshin/api",
+        hkrpg="https://api-takumi-record.mihoyo.com/game_record/app/hkrpg/api",
+        honkai="https://api-takumi-record.mihoyo.com/game_record/app/honkai3rd/api",
+        nap="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz",
+    ),
 )
 LINEUP_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
