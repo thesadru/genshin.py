@@ -18,6 +18,7 @@ __all__ = (
     "Act",
     "ActCharacter",
     "ImgTheater",
+    "ImgTheaterData",
     "TheaterBuff",
     "TheaterCharaType",
     "TheaterDifficulty",
