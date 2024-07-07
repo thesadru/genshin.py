@@ -43,7 +43,6 @@ class BaseBattleChronicleClient(base.BaseClient):
         *,
         lang: typing.Optional[str] = None,
         region: typing.Optional[types.Region] = None,
-        game: typing.Optional[types.Game] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
@@ -117,9 +116,6 @@ class BaseBattleChronicleClient(base.BaseClient):
             2: Show your Character Details in the Battle Chronicle.
             3: Enable your Real-Time Notes. (only for Genshin Impact)
         """
-        if game is types.Game.STARRAIL or self.default_game is types.Game.STARRAIL:
-            raise RuntimeError("Star Rail does not provide a Battle Chronicle or Real-Time Notes.")
-
         if game is None and int(setting) == 3:
             game = types.Game.GENSHIN
 
@@ -129,7 +125,7 @@ class BaseBattleChronicleClient(base.BaseClient):
 
             game = self.default_game
 
-        game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2, types.Game.STARRAIL: 6}[game]
+        game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2, types.Game.STARRAIL: 6, types.Game.ZZZ: 8}[game]
 
         await self.request_game_record(
             "card/wapi/changeDataSwitch",
