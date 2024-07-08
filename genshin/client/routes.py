@@ -13,6 +13,7 @@ __all__ = [
     "BBS_REFERER_URL",
     "BBS_URL",
     "CALCULATOR_URL",
+    "CARD_WAPI_URL",
     "CHECK_QRCODE_URL",
     "CN_WEB_LOGIN_URL",
     "COMMUNITY_URL",
@@ -147,6 +148,10 @@ RECORD_URL = GameRoute(
         honkai3rd="https://api-takumi-record.mihoyo.com/game_record/app/honkai3rd/api",
         nap="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz",
     ),
+)
+CARD_WAPI_URL = InternationalRoute(
+    overseas="https://bbs-api-os.hoyolab.com/game_record/card/wapi",
+    chinese="https://api-takumi-record.mihoyo.com/game_record/app/card/wapi",
 )
 LINEUP_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyoverse.com/event/simulatoros/",
