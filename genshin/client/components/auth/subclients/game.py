@@ -8,7 +8,7 @@ import typing
 
 import aiohttp
 
-from genshin import constants, errors, types
+from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.auth.cookie import DeviceGrantResult, GameLoginResult
@@ -26,11 +26,15 @@ class GameAuthClient(base.BaseClient):
         self, action_type: str, api_name: str, *, username: typing.Optional[str] = None
     ) -> RiskyCheckResult:
         """Check if the given action (endpoint) is risky (whether captcha verification is required)."""
+        if self.default_game is None:
+            raise ValueError("No default game set.")
+
         payload = {"action_type": action_type, "api_name": api_name}
         if username:
             payload["username"] = username
 
         headers = auth_utility.RISKY_CHECK_HEADERS.copy()
+        headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
         async with aiohttp.ClientSession() as session:
@@ -80,6 +84,7 @@ class GameAuthClient(base.BaseClient):
             raise ValueError("No default game set.")
 
         headers = auth_utility.SHIELD_LOGIN_HEADERS.copy()
+        headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
         if mmt_result:
@@ -143,7 +148,11 @@ class GameAuthClient(base.BaseClient):
 
         Returns `None` if success, `RiskyCheckMMT` if geetest verification is required.
         """
+        if self.default_game is None:
+            raise ValueError("No default game set.")
+
         headers = auth_utility.GRANT_TICKET_HEADERS.copy()
+        headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
         if mmt_result:
@@ -179,8 +188,12 @@ class GameAuthClient(base.BaseClient):
 
     async def _verify_game_email(self, code: str, action_ticket: str) -> DeviceGrantResult:
         """Verify the email code."""
+        if self.default_game is None:
+            raise ValueError("No default game set.")
+
         payload = {"code": code, "ticket": action_ticket}
         headers = auth_utility.GRANT_TICKET_HEADERS.copy()
+        headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
         async with aiohttp.ClientSession() as session:
@@ -189,7 +202,6 @@ class GameAuthClient(base.BaseClient):
 
         return DeviceGrantResult(**data["data"])
 
-    @base.region_specific(types.Region.OVERSEAS)
     async def _os_game_login(self, uid: str, game_token: str) -> GameLoginResult:
         """Log in to the game."""
         if self.default_game is None:
@@ -204,6 +216,7 @@ class GameAuthClient(base.BaseClient):
         payload["sign"] = auth_utility.generate_sign(payload, constants.APP_KEYS[self.default_game][self.region])
 
         headers = auth_utility.GAME_LOGIN_HEADERS.copy()
+        headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
         async with aiohttp.ClientSession() as session:
