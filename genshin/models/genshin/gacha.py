@@ -96,7 +96,7 @@ class Wish(APIModel, Unique):
     rarity: int = Aliased("rank_type")
     time: datetime.datetime
 
-    banner_type: GenshinBannerType = Aliased("gacha_type")
+    banner_type: GenshinBannerType
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:
@@ -135,7 +135,7 @@ class SignalSearch(APIModel, Unique):
     rarity: int = Aliased("rank_type")
     time: datetime.datetime
 
-    banner_type: ZZZBannerType = Aliased("gacha_type")
+    banner_type: ZZZBannerType
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:
