@@ -85,8 +85,7 @@ class WishClient(base.BaseClient):
             game=types.Game.GENSHIN,
         )
 
-        banner_names = await self.get_banner_names(lang=lang, authkey=authkey)
-        return [models.Wish(**i, banner_name=banner_names[banner_type]) for i in data]
+        return [models.Wish(**i, banner_type=banner_type) for i in data]
 
     async def _get_warp_page(
         self,
@@ -136,7 +135,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.Wish]:
         """Get the wish history of a user."""
-        banner_types = banner_type or [100, 200, 301, 302]
+        banner_types = banner_type or [100, 200, 301, 302, 500]
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]

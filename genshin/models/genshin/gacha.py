@@ -43,6 +43,9 @@ class GenshinBannerType(enum.IntEnum):
     WEAPON = 302
     """Rotating weapon banner."""
 
+    CHRONICLED = 500
+    """Chronicled banner."""
+
     # these are special cases
     # they exist inside the history but should be counted as the same
 
@@ -94,7 +97,6 @@ class Wish(APIModel, Unique):
     time: datetime.datetime
 
     banner_type: GenshinBannerType = Aliased("gacha_type")
-    banner_name: str
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:
