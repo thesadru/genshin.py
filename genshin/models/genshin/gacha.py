@@ -21,10 +21,10 @@ __all__ = [
     "BannerDetailsUpItem",
     "GachaItem",
     "GenshinBannerType",
-    "ZZZBannerType",
+    "SignalSearch",
     "Warp",
     "Wish",
-    "SignalSearch",
+    "ZZZBannerType",
 ]
 
 
