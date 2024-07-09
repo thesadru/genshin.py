@@ -222,10 +222,12 @@ GACHA_URL = GameRoute(
     overseas=dict(
         genshin="https://hk4e-api-os.hoyoverse.com/gacha_info/api/",
         hkrpg="https://api-os-takumi.mihoyo.com/common/gacha_record/api/",
+        nap="https://public-operation-nap-sg.hoyoverse.com/common/gacha_record/api/"
     ),
     chinese=dict(
         genshin="https://hk4e-api.mihoyo.com/event/gacha_info/api/",
         hkrpg="https://api-takumi.mihoyo.com/common/gacha_record/api/",
+        nap="https://public-operation-nap-sg.hoyoverse.com/common/gacha_record/api/"
     ),
 )
 YSULOG_URL = InternationalRoute(
