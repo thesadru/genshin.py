@@ -43,10 +43,21 @@ class ZZZBaseAgent(APIModel, Unique):
     flat_icon: str = Aliased("hollow_icon_path")
 
     @property
-    def icon(self) -> str:
+    def square_icon(self) -> str:
+        """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png"""
         return (
             f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_{self.id}.png"
         )
+
+    @property
+    def rectangle_icon(self) -> str:
+        """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png"""
+        return f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_{self.id}.png"
+
+    @property
+    def banner_icon(self) -> str:
+        """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png"""
+        return f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_{self.id}.png"
 
 
 class ZZZPartialAgent(ZZZBaseAgent):
