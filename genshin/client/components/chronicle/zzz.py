@@ -88,7 +88,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
         return models.ZZZUserStats(**data)
 
-    async def get_zzz_characters(
+    async def get_zzz_agents(
         self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
     ) -> typing.Sequence[models.ZZZPartialAgent]:
         """Get all owned ZZZ characters (only brief info)."""
@@ -103,7 +103,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         return [models.ZZZBaseBangboo(**item) for item in data["list"]]
 
     @typing.overload
-    async def get_zzz_character(
+    async def get_zzz_agent_info(
         self,
         character_id: int,
         *,
@@ -111,14 +111,14 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.ZZZFullAgent: ...
     @typing.overload
-    async def get_zzz_character(
+    async def get_zzz_agent_info(
         self,
         character_id: typing.Sequence[int],
         *,
         uid: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.ZZZFullAgent]: ...
-    async def get_zzz_character(
+    async def get_zzz_agent_info(
         self,
         character_id: typing.Union[int, typing.Sequence[int]],
         *,
