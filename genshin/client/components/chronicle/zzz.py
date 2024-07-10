@@ -84,6 +84,6 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
     ) -> models.ZZZUserStats:
-        """Get starrail user."""
+        """Get ZZZ user stats."""
         data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
         return models.ZZZUserStats(**data)
