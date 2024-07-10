@@ -9,6 +9,7 @@ from ..character import ZZZPartialAgent
 __all__ = (
     "ZZZStats",
     "ZZZUserStats",
+    "ZZZBaseBangboo",
 )
 
 

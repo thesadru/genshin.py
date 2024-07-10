@@ -94,3 +94,10 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get all owned ZZZ characters."""
         data = await self._request_zzz_record("avatar/basic", uid, lang=lang, cache=False)
         return [models.ZZZPartialAgent(**item) for item in data["avatar_list"]]
+
+    async def get_bangboos(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.ZZZBaseBangboo]:
+        """Get all owned ZZZ bangboos."""
+        data = await self._request_zzz_record("buddy/info", uid, lang=lang, cache=False)
+        return [models.ZZZBaseBangboo(**item) for item in data["list"]]
