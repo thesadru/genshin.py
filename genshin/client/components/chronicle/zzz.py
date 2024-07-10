@@ -129,7 +129,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         if isinstance(character_id, list):
             character_id = tuple(character_id)
 
-        data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"is_list[]": character_id})
+        data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"id_list[]": character_id})
         if isinstance(character_id, int):
             return models.ZZZFullAgent(**data["avatar_list"][0])
         return [models.ZZZFullAgent(**item) for item in data["avatar_list"]]
