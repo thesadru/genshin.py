@@ -110,8 +110,7 @@ class WEngine(APIModel):
     level: int
     name: str
     icon: str
-    star: typing.Literal[1, 2, 3, 4, 5]
-    """AKA refinement."""
+    refinement: typing.Literal[1, 2, 3, 4, 5] = Aliased("star")
     rarity: typing.Literal["B", "A", "S"]
     properties: typing.Sequence[ZZZProperty]
     main_properties: typing.Sequence[ZZZProperty]
