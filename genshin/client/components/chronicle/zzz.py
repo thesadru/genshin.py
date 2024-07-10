@@ -3,7 +3,7 @@
 import typing
 
 from genshin import errors, types, utility
-from genshin.models.zzz import chronicle as models
+from genshin.models import zzz as models
 
 from . import base
 
@@ -87,3 +87,10 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get ZZZ user stats."""
         data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
         return models.ZZZUserStats(**data)
+
+    async def get_zzz_characters(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.ZZZPartialAgent]:
+        """Get all owned ZZZ characters."""
+        data = await self._request_zzz_record("avatar/basic", uid, lang=lang, cache=False)
+        return [models.ZZZPartialAgent(**item) for item in data["avatar_list"]]
