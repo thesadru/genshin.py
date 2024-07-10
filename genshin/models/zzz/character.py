@@ -109,6 +109,7 @@ class WEngine(APIModel):
     id: int
     level: int
     name: str
+    icon: str
     star: typing.Literal[1, 2, 3, 4, 5]
     """AKA refinement."""
     rarity: typing.Literal["B", "A", "S"]
