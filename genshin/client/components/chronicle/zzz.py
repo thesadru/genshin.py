@@ -101,3 +101,32 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get all owned ZZZ bangboos."""
         data = await self._request_zzz_record("buddy/info", uid, lang=lang, cache=False)
         return [models.ZZZBaseBangboo(**item) for item in data["list"]]
+
+    @typing.overload
+    async def get_zzz_character(
+        self,
+        character_id: int,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.ZZZFullAgent: ...
+    @typing.overload
+    async def get_zzz_character(
+        self,
+        character_id: typing.Sequence[int],
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.ZZZFullAgent]: ...
+    async def get_zzz_character(
+        self,
+        character_id: typing.Union[int, typing.Sequence[int]],
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Union[models.ZZZFullAgent, typing.Sequence[models.ZZZFullAgent]]:
+        """Get a ZZZ character."""
+        data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"is_list[]": character_id})
+        if isinstance(character_id, int):
+            return models.ZZZFullAgent(**data["avatar_list"][0])
+        return [models.ZZZFullAgent(**item) for item in data["avatar_list"]]
