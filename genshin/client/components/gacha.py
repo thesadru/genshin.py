@@ -64,7 +64,7 @@ class WishClient(base.BaseClient):
             lang=lang,
             game=game,
             authkey=authkey,
-            params=dict(gacha_type=banner_type, size=20, end_id=end_id),
+            params=dict(gacha_type=banner_type, real_gacha_type=banner_type, size=20, end_id=end_id),
         )
         return data["list"]
 
@@ -85,8 +85,7 @@ class WishClient(base.BaseClient):
             game=types.Game.GENSHIN,
         )
 
-        banner_names = await self.get_banner_names(lang=lang, authkey=authkey)
-        return [models.Wish(**i, banner_name=banner_names[banner_type]) for i in data]
+        return [models.Wish(**i, banner_type=banner_type) for i in data]
 
     async def _get_warp_page(
         self,
@@ -107,6 +106,25 @@ class WishClient(base.BaseClient):
 
         return [models.Warp(**i, banner_type=banner_type) for i in data]
 
+    async def _get_signal_page(
+        self,
+        end_id: int,
+        banner_type: models.ZZZBannerType,
+        *,
+        lang: typing.Optional[str] = None,
+        authkey: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.SignalSearch]:
+        """Get a single page of warps."""
+        data = await self._get_gacha_page(
+            end_id=end_id,
+            banner_type=banner_type,
+            lang=lang,
+            authkey=authkey,
+            game=types.Game.ZZZ,
+        )
+
+        return [models.SignalSearch(**i, banner_type=banner_type) for i in data]
+
     def wish_history(
         self,
         banner_type: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
@@ -117,7 +135,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.Wish]:
         """Get the wish history of a user."""
-        banner_types = banner_type or [100, 200, 301, 302]
+        banner_types = banner_type or [100, 200, 301, 302, 500]
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
@@ -164,6 +182,41 @@ class WishClient(base.BaseClient):
                     functools.partial(
                         self._get_warp_page,
                         banner_type=typing.cast(models.StarRailBannerType, banner),
+                        lang=lang,
+                        authkey=authkey,
+                    ),
+                    limit=limit,
+                    end_id=end_id,
+                )
+            )
+
+        if len(iterators) == 1:
+            return iterators[0]
+
+        return paginators.MergedPaginator(iterators, key=lambda wish: wish.time.timestamp())
+
+    def signal_history(
+        self,
+        banner_type: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+        authkey: typing.Optional[str] = None,
+        end_id: int = 0,
+    ) -> paginators.Paginator[models.SignalSearch]:
+        """Get the signal search history of a user."""
+        banner_types = banner_type or [1, 2, 3, 5]
+
+        if not isinstance(banner_types, typing.Sequence):
+            banner_types = [banner_types]
+
+        iterators: typing.List[paginators.Paginator[models.SignalSearch]] = []
+        for banner in banner_types:
+            iterators.append(
+                paginators.CursorPaginator(
+                    functools.partial(
+                        self._get_signal_page,
+                        banner_type=typing.cast(models.ZZZBannerType, banner),
                         lang=lang,
                         authkey=authkey,
                     ),
