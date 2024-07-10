@@ -7,9 +7,9 @@ from genshin.models.model import Aliased, APIModel
 from ..character import ZZZPartialAgent
 
 __all__ = (
+    "ZZZBaseBangboo",
     "ZZZStats",
     "ZZZUserStats",
-    "ZZZBaseBangboo",
 )
 
 
