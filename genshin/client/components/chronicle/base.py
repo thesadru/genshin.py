@@ -43,10 +43,20 @@ class BaseBattleChronicleClient(base.BaseClient):
         *,
         lang: typing.Optional[str] = None,
         region: typing.Optional[types.Region] = None,
+        game: typing.Optional[types.Game] = None,
+        is_card_wapi: bool = False,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
-        base_url = routes.RECORD_URL.get_url(region or self.region)
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError("No default game set.")
+
+        base_url = (
+            routes.RECORD_URL.get_url(region or self.region, game)
+            if not is_card_wapi
+            else routes.CARD_WAPI_URL.get_url(region or self.region)
+        )
         url = base_url / endpoint
 
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
@@ -74,9 +84,10 @@ class BaseBattleChronicleClient(base.BaseClient):
         cache_key = cache.cache_key("records", hoyolab_id=hoyolab_id, lang=lang or self.lang)
         if not (data := await self.cache.get(cache_key)):
             data = await self.request_game_record(
-                "card/wapi/getGameRecordCard",
+                "getGameRecordCard",
                 lang=lang,
                 params=dict(uid=hoyolab_id),
+                is_card_wapi=True,
             )
 
             if data["list"]:
@@ -124,9 +135,10 @@ class BaseBattleChronicleClient(base.BaseClient):
         game_id = {types.Game.HONKAI: 1, types.Game.GENSHIN: 2, types.Game.STARRAIL: 6, types.Game.ZZZ: 8}[game]
 
         await self.request_game_record(
-            "card/wapi/changeDataSwitch",
+            "changeDataSwitch",
             method="POST",
             data=dict(switch_id=int(setting), is_public=on, game_id=game_id),
+            is_card_wapi=True,
         )
 
     @deprecation.deprecated("update_settings")
