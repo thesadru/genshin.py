@@ -3,7 +3,7 @@
 import typing
 
 from genshin import errors, types, utility
-from genshin.models.zzz import chronicle as models
+from genshin.models import zzz as models
 
 from . import base
 
@@ -84,6 +84,52 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = None,
     ) -> models.ZZZUserStats:
-        """Get starrail user."""
+        """Get ZZZ user stats."""
         data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
         return models.ZZZUserStats(**data)
+
+    async def get_zzz_agents(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.ZZZPartialAgent]:
+        """Get all owned ZZZ characters (only brief info)."""
+        data = await self._request_zzz_record("avatar/basic", uid, lang=lang, cache=False)
+        return [models.ZZZPartialAgent(**item) for item in data["avatar_list"]]
+
+    async def get_bangboos(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.ZZZBaseBangboo]:
+        """Get all owned ZZZ bangboos."""
+        data = await self._request_zzz_record("buddy/info", uid, lang=lang, cache=False)
+        return [models.ZZZBaseBangboo(**item) for item in data["list"]]
+
+    @typing.overload
+    async def get_zzz_agent_info(
+        self,
+        character_id: int,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.ZZZFullAgent: ...
+    @typing.overload
+    async def get_zzz_agent_info(
+        self,
+        character_id: typing.Sequence[int],
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.ZZZFullAgent]: ...
+    async def get_zzz_agent_info(
+        self,
+        character_id: typing.Union[int, typing.Sequence[int]],
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Union[models.ZZZFullAgent, typing.Sequence[models.ZZZFullAgent]]:
+        """Get a ZZZ character's detailed info."""
+        if isinstance(character_id, list):
+            character_id = tuple(character_id)
+
+        data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"id_list[]": character_id})
+        if isinstance(character_id, int):
+            return models.ZZZFullAgent(**data["avatar_list"][0])
+        return [models.ZZZFullAgent(**item) for item in data["avatar_list"]]
