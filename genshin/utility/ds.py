@@ -54,6 +54,7 @@ def get_ds_headers(
             "x-rpc-app_version": "1.5.0",
             "x-rpc-client_type": "5",
             "x-rpc-language": lang,
+            "x-rpc-lang": lang,
             "ds": generate_dynamic_secret(),
         }
     elif region == types.Region.CHINESE:
