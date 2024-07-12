@@ -3,6 +3,14 @@ import typing
 
 from genshin.models.model import Aliased, APIModel, Unique
 
+if typing.TYPE_CHECKING:
+    import pydantic.v1 as pydantic
+else:
+    try:
+        import pydantic.v1 as pydantic
+    except ImportError:
+        import pydantic
+
 __all__ = (
     "AgentSkill",
     "AgentSkillItem",
@@ -18,6 +26,7 @@ __all__ = (
     "ZZZProperty",
     "ZZZSkillType",
     "ZZZSpeciality",
+    "ZZZPropertyType",
 )
 
 
@@ -78,12 +87,57 @@ class ZZZPartialAgent(ZZZBaseAgent):
     """Also known as Mindscape Cinema in-game."""
 
 
+class ZZZPropertyType(enum.IntEnum):
+    """ZZZ property type."""
+
+    # Agent prop
+    AGENT_HP = 1
+    AGENT_ATK = 2
+    AGENT_DEF = 3
+    AGENT_IMPACT = 4
+    AGENT_CRIT_RATE = 5
+    AGENT_CRIT_DMG = 6
+    AGENT_ANOMALY_MASTERY = 7
+    AGENT_ANOMALY_PROFICIENCY = 8
+    AGENT_PEN_RATIO = 9
+    AGENT_ENERGY_GEN = 10
+
+    # Disc drive
+    DISC_HP = 11103
+    DISC_ATK = 12103
+    DISC_DEF = 13103
+    DISC_PEN = 23203
+    DISC_ANOMALY_PROFICIENCY = 31203
+
+    # W-engine
+    ENGINE_HP = 11102
+    ENGINE_BASE_ATK = 12101
+    ENGINE_ATK = 12102
+    ENGINE_DEF = 13102
+    ENGINE_IMPACT = 12202
+    ENGINE_PEN_RATIO = 23103
+    ENGINE_ENERGY_REGEN = 30502
+
+    # Disc drive and w-engine shared
+    CRIT_RATE = 20103
+    CRIT_DMG = 21103
+    ANOMALY_PROFICIENCY = 31203
+
+
 class ZZZProperty(APIModel):
     """A property (stat) for disc or w-engine."""
 
     name: str = Aliased("property_name")
-    id: int = Aliased("property_id")
+    type: typing.Union[int, ZZZPropertyType] = Aliased("property_id")
     value: str = Aliased("base")
+
+    @pydantic.validator("type", pre=True)
+    def __cast_id(cls, v: int) -> typing.Union[int, ZZZPropertyType]:
+        # Prevent enum crash
+        try:
+            return ZZZPropertyType(v)
+        except ValueError:
+            return v
 
 
 class ZZZAgentProperty(ZZZProperty):
