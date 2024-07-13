@@ -112,14 +112,12 @@ class ZZZPropertyType(enum.IntEnum):
     DISC_BONUS_ICE_DMG = 31703
     DISC_BONUS_ELECTRIC_DMG = 31803
     DISC_BONUS_ETHER_DMG = 31903
-    DISC_IMPACT = 12202
 
     # W-engine
     ENGINE_HP = 11102
     ENGINE_BASE_ATK = 12101
     ENGINE_ATK = 12102
     ENGINE_DEF = 13102
-    ENGINE_IMPACT = 12202
     ENGINE_ENERGY_REGEN = 30502
 
     # Disc drive and w-engine shared
@@ -127,6 +125,7 @@ class ZZZPropertyType(enum.IntEnum):
     CRIT_DMG = 21103
     ANOMALY_PROFICIENCY = 31203
     PEN_RATIO = 23103
+    IMPACT = 12202
 
 
 class ZZZProperty(APIModel):
