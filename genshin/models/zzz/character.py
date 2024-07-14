@@ -57,6 +57,7 @@ class ZZZBaseAgent(APIModel, Unique):
     element: ZZZElementType = Aliased("element_type")
     rarity: typing.Literal["S", "A"]
     name: str = Aliased("name_mi18n")
+    full_name: str = Aliased("full_name_mi18n")
     speciality: ZZZSpeciality = Aliased("avatar_profession")
     faction_icon: str = Aliased("group_icon_path")
     flat_icon: str = Aliased("hollow_icon_path")
