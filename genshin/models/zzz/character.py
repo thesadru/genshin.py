@@ -25,7 +25,7 @@ __all__ = (
     "ZZZPartialAgent",
     "ZZZProperty",
     "ZZZSkillType",
-    "ZZZSpeciality",
+    "ZZZSpecialty",
     "ZZZPropertyType",
 )
 
@@ -40,8 +40,8 @@ class ZZZElementType(enum.IntEnum):
     ETHER = 205
 
 
-class ZZZSpeciality(enum.IntEnum):
-    """ZZZ agent compatible speciality."""
+class ZZZSpecialty(enum.IntEnum):
+    """ZZZ agent compatible specialty."""
 
     ATTACK = 1
     STUN = 2
@@ -58,7 +58,7 @@ class ZZZBaseAgent(APIModel, Unique):
     rarity: typing.Literal["S", "A"]
     name: str = Aliased("name_mi18n")
     full_name: str = Aliased("full_name_mi18n")
-    speciality: ZZZSpeciality = Aliased("avatar_profession")
+    specialty: ZZZSpecialty = Aliased("avatar_profession")
     faction_icon: str = Aliased("group_icon_path")
     flat_icon: str = Aliased("hollow_icon_path")
 
@@ -175,7 +175,7 @@ class WEngine(APIModel):
     main_properties: typing.Sequence[ZZZProperty]
     effect_title: str = Aliased("talent_title")
     effect_description: str = Aliased("talent_content")
-    profession: ZZZSpeciality
+    profession: ZZZSpecialty
 
 
 class ZZZDisc(APIModel):
