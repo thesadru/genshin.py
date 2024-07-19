@@ -196,10 +196,10 @@ class ZZZSkillType(enum.IntEnum):
     """ZZZ agent skill type."""
 
     BASIC_ATTACK = 0
-    DODGE = 1
-    ASSIST = 2
-    SPECIAL_ATTACK = 3
-    CHAIN_ATTACK = 4
+    DODGE = 2
+    ASSIST = 6
+    SPECIAL_ATTACK = 1
+    CHAIN_ATTACK = 3
     CORE_SKILL = 5
 
 
@@ -214,7 +214,7 @@ class AgentSkill(APIModel):
     """ZZZ agent skill model."""
 
     level: int
-    skill_type: int
+    type: ZZZSkillType = Aliased("skill_type")
     items: typing.Sequence[AgentSkillItem]
     """One skill can have different forms (?), so there are multiple 'items'."""
 
