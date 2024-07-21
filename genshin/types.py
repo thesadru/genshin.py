@@ -36,7 +36,7 @@ class Game(str, enum.Enum):
     ZZZ = "nap"
     """Zenless Zone Zero"""
 
-    TOT = "tot"
+    TOT = "nxx"
     """Tears of Themis"""
 
 

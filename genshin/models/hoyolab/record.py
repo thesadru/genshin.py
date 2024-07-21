@@ -52,6 +52,8 @@ class GenshinAccount(APIModel):
             return types.Game.STARRAIL
         if "nap" in self.game_biz:
             return types.Game.ZZZ
+        if "nxx" in self.game_biz:
+            return types.Game.TOT
 
         try:
             return types.Game(self.game_biz)
