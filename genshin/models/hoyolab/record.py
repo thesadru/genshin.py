@@ -161,6 +161,8 @@ class RecordCard(GenshinAccount):
             cls = GenshinRecordCard
         elif game_id == 6:
             cls = StarRailRecodeCard
+        elif game_id == 8:
+            cls = ZZZRecordCard
 
         return super().__new__(cls)  # type: ignore
 
@@ -252,4 +254,28 @@ class StarRailRecodeCard(RecordCard):
 
     @property
     def chests(self) -> int:
+        return int(self.data[3].value)
+
+
+class ZZZRecordCard(RecordCard):
+    """ZZZ record card."""
+
+    @property
+    def game(self) -> types.Game:
+        return types.Game.ZZZ
+
+    @property
+    def days_active(self) -> int:
+        return int(self.data[0].value)
+
+    @property
+    def inter_knot_reputation(self) -> str:
+        return self.data[1].value
+
+    @property
+    def agents_recruited(self) -> int:
+        return int(self.data[2].value)
+
+    @property
+    def bangboo_obtained(self) -> int:
         return int(self.data[3].value)
