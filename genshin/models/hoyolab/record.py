@@ -166,6 +166,8 @@ class RecordCard(GenshinAccount):
 
     game_id: int
     game_biz: str = ""
+    game_name: str
+    game_logo: str = Aliased("logo")
     uid: int = Aliased("game_role_id")
 
     data: typing.Sequence[RecordCardData]
