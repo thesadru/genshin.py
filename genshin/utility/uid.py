@@ -145,6 +145,8 @@ def recognize_server(uid: int, game: types.Game) -> str:
     if game is types.Game.ZZZ:
         return recognize_zzz_server(uid)
 
+    raise ValueError(f"recognize_server is not implemented for game {game}")
+
 
 def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game]:
     """Recognize the game of a uid."""
@@ -160,10 +162,13 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
 
 def recognize_region(uid: int, game: types.Game) -> typing.Optional[types.Region]:
     """Recognize the region of a uid."""
-    if game is types.Game.ZZZ:
+    if game in {types.Game.ZZZ, types.Game.TOT}:
         if len(str(uid)) == 8:
             return types.Region.CHINESE
         return types.Region.OVERSEAS
+
+    if game not in UID_RANGE:
+        return None
 
     for region, digits in UID_RANGE[game].items():
         if str(uid)[:-8] in digits:
