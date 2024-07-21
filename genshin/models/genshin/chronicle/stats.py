@@ -21,6 +21,8 @@ __all__ = [
     "FullGenshinUserStats",
     "GenshinUserStats",
     "Offering",
+    "BossKill",
+    "AreaExploration",
     "PartialGenshinUserStats",
     "Stats",
     "Teapot",
@@ -69,6 +71,20 @@ class Offering(APIModel):
     icon: str = ""
 
 
+class BossKill(APIModel):
+    """Boss kills in exploration"""
+
+    name: str
+    kills: int = Aliased('kill_num')
+
+
+class AreaExploration(APIModel):
+    """Area exploration data."""
+
+    name: str
+    raw_explored: int = Aliased("exploration_percentage")
+
+
 class Exploration(APIModel):
     """Exploration data."""
 
@@ -88,7 +104,9 @@ class Exploration(APIModel):
     map_url: str
 
     offerings: typing.Sequence[Offering]
-
+    boss_list: typing.Optional[typing.Sequence[BossKill]]
+    area_exploration_list: typing.Optional[typing.Sequence[AreaExploration]]
+    
     @property
     def explored(self) -> float:
         """The percentage explored."""
@@ -104,6 +122,24 @@ class Exploration(APIModel):
             offerings = [*offerings, dict(name=values["type"], level=values["level"])]
 
         return offerings
+
+    @pydantic.validator("boss_list", pre=True)
+    def _add_base_boss_list(
+            cls,
+            boss_list: typing.Sequence[typing.Any],
+    ):
+        if not boss_list:
+            return None
+        return [BossKill(**boss) for boss in boss_list]
+
+    @pydantic.validator("area_exploration_list", pre=True)
+    def _add_base_area_exploration_list(
+            cls,
+            area_exploration_list: typing.Sequence[typing.Any],
+    ):
+        if not area_exploration_list:
+            return None
+        return [AreaExploration(**area) for area in area_exploration_list]
 
 
 class TeapotRealm(APIModel):
