@@ -123,24 +123,6 @@ class Exploration(APIModel):
 
         return offerings
 
-    @pydantic.validator("boss_list", pre=True)
-    def _add_base_boss_list(
-        cls,
-        boss_list: typing.Sequence[typing.Any],
-    ):
-        if not boss_list:
-            return []
-        return [BossKill(**boss) for boss in boss_list]
-
-    @pydantic.validator("area_exploration_list", pre=True)
-    def _add_base_area_exploration_list(
-        cls,
-        area_exploration_list: typing.Sequence[typing.Any],
-    ):
-        if not area_exploration_list:
-            return []
-        return [AreaExploration(**area) for area in area_exploration_list]
-
 
 class TeapotRealm(APIModel):
     """A specific teapot realm."""
