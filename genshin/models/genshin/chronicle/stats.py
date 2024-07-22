@@ -104,8 +104,8 @@ class Exploration(APIModel):
     map_url: str
 
     offerings: typing.Sequence[Offering]
-    boss_list: typing.Optional[typing.Sequence[BossKill]]
-    area_exploration_list: typing.Optional[typing.Sequence[AreaExploration]]
+    boss_list: typing.Sequence[BossKill]
+    area_exploration_list: typing.Sequence[AreaExploration]
 
     @property
     def explored(self) -> float:
@@ -129,7 +129,7 @@ class Exploration(APIModel):
         boss_list: typing.Sequence[typing.Any],
     ):
         if not boss_list:
-            return None
+            return []
         return [BossKill(**boss) for boss in boss_list]
 
     @pydantic.validator("area_exploration_list", pre=True)
@@ -138,7 +138,7 @@ class Exploration(APIModel):
         area_exploration_list: typing.Sequence[typing.Any],
     ):
         if not area_exploration_list:
-            return None
+            return []
         return [AreaExploration(**area) for area in area_exploration_list]
 
 
