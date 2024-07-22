@@ -84,6 +84,11 @@ class AreaExploration(APIModel):
     name: str
     raw_explored: int = Aliased("exploration_percentage")
 
+    @property
+    def explored(self) -> float:
+        """The percentage explored. (Note: This can go above 100%)"""
+        return self.raw_explored / 10
+
 
 class Exploration(APIModel):
     """Exploration data."""
