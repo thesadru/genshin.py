@@ -17,12 +17,12 @@ from genshin.models.model import Aliased, APIModel
 from . import abyss, activities, characters
 
 __all__ = [
+    "AreaExploration",
+    "BossKill",
     "Exploration",
     "FullGenshinUserStats",
     "GenshinUserStats",
     "Offering",
-    "BossKill",
-    "AreaExploration",
     "PartialGenshinUserStats",
     "Stats",
     "Teapot",
@@ -75,7 +75,7 @@ class BossKill(APIModel):
     """Boss kills in exploration"""
 
     name: str
-    kills: int = Aliased('kill_num')
+    kills: int = Aliased("kill_num")
 
 
 class AreaExploration(APIModel):
@@ -106,7 +106,7 @@ class Exploration(APIModel):
     offerings: typing.Sequence[Offering]
     boss_list: typing.Optional[typing.Sequence[BossKill]]
     area_exploration_list: typing.Optional[typing.Sequence[AreaExploration]]
-    
+
     @property
     def explored(self) -> float:
         """The percentage explored."""
@@ -125,8 +125,8 @@ class Exploration(APIModel):
 
     @pydantic.validator("boss_list", pre=True)
     def _add_base_boss_list(
-            cls,
-            boss_list: typing.Sequence[typing.Any],
+        cls,
+        boss_list: typing.Sequence[typing.Any],
     ):
         if not boss_list:
             return None
@@ -134,8 +134,8 @@ class Exploration(APIModel):
 
     @pydantic.validator("area_exploration_list", pre=True)
     def _add_base_area_exploration_list(
-            cls,
-            area_exploration_list: typing.Sequence[typing.Any],
+        cls,
+        area_exploration_list: typing.Sequence[typing.Any],
     ):
         if not area_exploration_list:
             return None
