@@ -22,6 +22,7 @@ class HoyolabClient(base.BaseClient):
         data = await self.request(
             routes.GET_USER_REGION_URL.get_url(),
             params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key("server_region", game=game, uid=uid, region=self.region),
         )
         for account in data["list"]:
             if account["game_uid"] == str(uid):
