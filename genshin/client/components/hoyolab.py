@@ -2,6 +2,7 @@
 
 import asyncio
 import typing
+import warnings
 
 from genshin import types, utility
 from genshin.client import cache as client_cache
@@ -15,6 +16,19 @@ __all__ = ["HoyolabClient"]
 
 class HoyolabClient(base.BaseClient):
     """Hoyolab component."""
+
+    async def _get_server_region(self, uid: int, game: types.Game) -> str:
+        """Fetch the server region of an account from the API."""
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key("server_region", game=game, uid=uid, region=self.region),
+        )
+        for account in data["list"]:
+            if account["game_uid"] == str(uid):
+                return account["region"]
+
+        raise ValueError(f"Failed to recognize server for game {game!r} and uid {uid!r}")
 
     async def search_users(
         self,
@@ -116,6 +130,7 @@ class HoyolabClient(base.BaseClient):
         *,
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
     ) -> None:
         """Redeems a gift code for the current user."""
         if game is None:
@@ -124,16 +139,22 @@ class HoyolabClient(base.BaseClient):
 
             game = self.default_game
 
-        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL}:
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
             raise ValueError(f"{game} does not support code redemption.")
 
         uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f"Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.")
+            region = await self._get_server_region(uid, game)
 
         await self.request(
             routes.CODE_URL.get_url(self.region, game),
             params=dict(
                 uid=uid,
-                region=utility.recognize_server(uid, game),
+                region=region,
                 cdkey=code,
                 game_biz=utility.get_prod_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),

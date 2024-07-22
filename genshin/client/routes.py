@@ -24,6 +24,7 @@ __all__ = [
     "GACHA_URL",
     "GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL",
     "GET_STOKEN_BY_GAME_TOKEN_URL",
+    "GET_USER_REGION_URL",
     "HK4E_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
@@ -207,7 +208,7 @@ REWARD_URL = GameRoute(
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
         nap="https://act-nap-api.mihoyo.com/event/luna/zzz/?act_id=e202406242138391",
-        tot="https://api-takumi.mihoyo.com/event/luna?act_id=e202202251749321"
+        tot="https://api-takumi.mihoyo.com/event/luna?act_id=e202202251749321",
     ),
 )
 
@@ -216,6 +217,7 @@ CODE_URL = GameRoute(
         genshin="https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
         hkrpg="https://sg-hkrpg-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
         nap="https://public-operation-nap.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+        tot="https://sg-public-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
     ),
     chinese=dict(),
 )
@@ -312,4 +314,8 @@ GAME_LOGIN_URL = GameRoute(
         hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
         nap="https://nap-sdk.mihoyo.com/nap_cn/combo/granter/login/v2/login",
     ),
+)
+
+GET_USER_REGION_URL = Route(
+    "https://api-account-os.hoyoverse.com/account/binding/api/getUserGameRolesOfRegionByCookieToken"
 )
