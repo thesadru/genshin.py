@@ -130,6 +130,7 @@ class HoyolabClient(base.BaseClient):
         *,
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
     ) -> None:
         """Redeems a gift code for the current user."""
         if game is None:
@@ -144,7 +145,7 @@ class HoyolabClient(base.BaseClient):
         uid = uid or await self._get_uid(game)
 
         try:
-            region = utility.recognize_server(uid, game)
+            region = region or utility.recognize_server(uid, game)
         except Exception:
             warnings.warn(f"Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.")
             region = await self._get_server_region(uid, game)
