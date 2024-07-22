@@ -39,6 +39,7 @@ class Battlesuit(APIModel, Unique):
     rarity: int = Aliased("star")
     closeup_icon_background: str = Aliased("avatar_background_path")
     tall_icon: str = Aliased("figure_path")
+    banner_art: str = Aliased("image_path")
 
     @pydantic.validator("tall_icon")
     def __autocomplete_figpath(cls, tall_icon: str, values: typing.Dict[str, typing.Any]) -> str:
