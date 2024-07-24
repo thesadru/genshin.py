@@ -141,6 +141,9 @@ class DailyTasks(APIModel):
     attendance_rewards: typing.Sequence[AttendanceReward]
     attendance_visible: bool
 
+    stored_attendance: float
+    stored_attendance_refresh_countdown: datetime.timedelta = Aliased("attendance_refresh_time")
+
 
 class ArchonQuestStatus(str, enum.Enum):
     """Archon quest status."""
