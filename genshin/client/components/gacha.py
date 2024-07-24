@@ -342,6 +342,7 @@ class WishClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.GachaItem]:
         """Get the list of characters and weapons that can be gotten from the gacha."""
+        raise RuntimeError("This method is currently broken, if you know how to fix it, please open an issue.")
         lang = lang or self.lang
         data = await self.request_webstatic(
             f"/hk4e/gacha_info/{server}/items/{lang}.json",
