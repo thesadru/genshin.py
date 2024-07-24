@@ -42,6 +42,8 @@ async def test_announcements(client: genshin.Client):
 async def test_redeem_code(lclient: genshin.Client):
     try:
         await lclient.redeem_code("GENSHINGIFT")
+    except genshin.InvalidCookies:
+        pytest.skip("Cookie token expired.")
     except genshin.RedemptionException as e:
         pytest.skip(f"Redemption code is inconsistent: {e}")
     except genshin.AccountNotFound:
@@ -51,6 +53,8 @@ async def test_redeem_code(lclient: genshin.Client):
 async def test_starrail_redeem_code(lclient: genshin.Client):
     try:
         await lclient.redeem_code("HSRGRANDOPEN1", game=genshin.types.Game.STARRAIL)
+    except genshin.InvalidCookies:
+        pytest.skip("Cookie token expired.")
     except genshin.RedemptionException as e:
         pytest.skip(f"Redemption code is inconsistent: {e}")
     except genshin.AccountNotFound:
