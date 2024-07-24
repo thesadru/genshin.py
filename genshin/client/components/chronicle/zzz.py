@@ -133,3 +133,11 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         if isinstance(character_id, int):
             return models.ZZZFullAgent(**data["avatar_list"][0])
         return [models.ZZZFullAgent(**item) for item in data["avatar_list"]]
+
+    async def get_shiyu_defense(
+        self, uid: typing.Optional[int] = None, *, previous: bool = False, lang: typing.Optional[str] = None
+    ) -> models.ShiyuDefense:
+        """Get ZZZ Shiyu defense stats."""
+        payload = {"schedule_type": 2 if previous else 1, "need_all": "true"}
+        data = await self._request_zzz_record("challenge", uid, lang=lang, payload=payload)
+        return models.ShiyuDefense(**data)
