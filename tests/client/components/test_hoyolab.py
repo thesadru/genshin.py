@@ -10,7 +10,7 @@ async def test_game_accounts(lclient: genshin.Client):
 
 
 async def test_search(client: genshin.Client, hoyolab_id: int):
-    users = await client.search_users("sadru")
+    users = await client.search_users("seria_ati")
 
     for user in users:
         if user.hoyolab_id == hoyolab_id:
@@ -18,13 +18,13 @@ async def test_search(client: genshin.Client, hoyolab_id: int):
     else:
         raise AssertionError("Search did not return the correct users")
 
-    assert user.nickname == "sadru"
+    assert user.nickname == "seria_ati"
 
 
 async def test_hoyolab_user(client: genshin.Client, hoyolab_id: int):
     user = await client.get_hoyolab_user(hoyolab_id)
 
-    assert user.nickname == "sadru"
+    assert user.nickname == "seria_ati"
 
 
 async def test_recommended_users(client: genshin.Client):

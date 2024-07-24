@@ -322,7 +322,6 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         if not data["data"]:
             errors.raise_for_retcode(data)
 
-    @base.region_specific(types.Region.OVERSEAS)
     async def os_game_login(
         self,
         account: str,
@@ -339,13 +338,15 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         - IncorrectGameAccount: Invalid account provided.
         - IncorrectGamePassword: Invalid password provided.
         """
+        api_server = "api.geetest.com" if self.region is types.Region.CHINESE else "api-na.geetest.com"
+
         result = await self._shield_login(account, password, encrypted=encrypted)
 
         if isinstance(result, RiskyCheckMMT):
             if geetest_solver:
                 mmt_result = await geetest_solver(result)
             else:
-                mmt_result = await server.solve_geetest(result, port=port)
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
 
             result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
 
@@ -357,7 +358,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             if geetest_solver:
                 mmt_result = await geetest_solver(mmt)
             else:
-                mmt_result = await server.solve_geetest(mmt, port=port)
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
 
             await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
 

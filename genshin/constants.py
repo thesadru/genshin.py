@@ -4,7 +4,16 @@ import datetime
 
 from . import types
 
-__all__ = ["APP_IDS", "APP_KEYS", "DS_SALT", "GEETEST_RETCODES", "LANGS"]
+__all__ = [
+    "APP_IDS",
+    "APP_KEYS",
+    "CN_TIMEZONE",
+    "DS_SALT",
+    "GAME_BIZS",
+    "GEETEST_RECORD_KEYS",
+    "GEETEST_RETCODES",
+    "LANGS",
+]
 
 
 LANGS = {
@@ -87,3 +96,18 @@ GEETEST_RECORD_KEYS = {
 """Keys used to submit geetest result."""
 
 CN_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
+
+GAME_BIZS = {
+    types.Region.OVERSEAS: {
+        types.Game.GENSHIN: "hk4e_global",
+        types.Game.STARRAIL: "hkrpg_global",
+        types.Game.HONKAI: "bh3_os",
+        types.Game.ZZZ: "nap_global",
+    },
+    types.Region.CHINESE: {
+        types.Game.GENSHIN: "hk4e_cn",
+        types.Game.STARRAIL: "hkrpg_cn",
+        types.Game.HONKAI: "bh3_cn",
+        types.Game.ZZZ: "nap_cn",
+    },
+}

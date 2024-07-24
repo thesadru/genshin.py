@@ -2,22 +2,20 @@ import asyncio
 import json
 import os
 import typing
-import warnings
 
 import pytest
 
 import genshin
 
+# @pytest.fixture(scope="session")
+# def event_loop():
+#     with warnings.catch_warnings():
+#         warnings.simplefilter("ignore")
 
-@pytest.fixture(scope="session")
-def event_loop():
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
+#         loop = asyncio.get_event_loop()
 
-        loop = asyncio.get_event_loop()
-
-    yield loop
-    loop.close()
+#     yield loop
+#     loop.close()
 
 
 @pytest.fixture(scope="session")
@@ -159,7 +157,7 @@ async def lcnclient(local_chinese_cookies: typing.Mapping[str, str]):
 
 @pytest.fixture(scope="session")
 def genshin_uid():
-    return 710785423
+    return 901211014
 
 
 @pytest.fixture(scope="session")
@@ -169,7 +167,7 @@ def honkai_uid():
 
 @pytest.fixture(scope="session")
 def hoyolab_id():
-    return 8366222
+    return 7368957
 
 
 @pytest.fixture(scope="session")

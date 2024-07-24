@@ -90,20 +90,17 @@ DEVICE_ID = "D6AF5103-D297-4A01-B86A-87F87DS5723E"
 RISKY_CHECK_HEADERS = {
     "x-rpc-client_type": "1",
     "x-rpc-channel_id": "1",
-    "x-rpc-game_biz": "hkrpg_global",
 }
 
 SHIELD_LOGIN_HEADERS = {
     "x-rpc-client_type": "1",
     "x-rpc-channel_id": "1",
-    "x-rpc-game_biz": "hkrpg_global",
     "x-rpc-device_id": DEVICE_ID,
 }
 
 GRANT_TICKET_HEADERS = {
     "x-rpc-client_type": "1",
     "x-rpc-channel_id": "1",
-    "x-rpc-game_biz": "hkrpg_global",
     "x-rpc-device_id": DEVICE_ID,
     "x-rpc-language": "en",
 }
@@ -111,7 +108,6 @@ GRANT_TICKET_HEADERS = {
 GAME_LOGIN_HEADERS = {
     "x-rpc-client_type": "1",
     "x-rpc-channel_id": "1",
-    "x-rpc-game_biz": "hkrpg_global",
     "x-rpc-device_id": DEVICE_ID,
 }
 

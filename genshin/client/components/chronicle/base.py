@@ -48,15 +48,14 @@ class BaseBattleChronicleClient(base.BaseClient):
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
-        game = game or self.default_game
-        if game is None:
-            raise RuntimeError("No default game set.")
+        if is_card_wapi:
+            base_url = routes.CARD_WAPI_URL.get_url(region or self.region)
+        else:
+            game = game or self.default_game
+            if game is None:
+                raise RuntimeError("No default game set.")
+            base_url = routes.RECORD_URL.get_url(region or self.region, game)
 
-        base_url = (
-            routes.RECORD_URL.get_url(region or self.region, game)
-            if not is_card_wapi
-            else routes.CARD_WAPI_URL.get_url(region or self.region)
-        )
         url = base_url / endpoint
 
         mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))

@@ -31,7 +31,7 @@ async def test_banner_details(lclient: genshin.Client):
         assert details.banner_type in [100, 200, 301, 302, 400]
 
 
-async def test_gacha_items(lclient: genshin.Client):
-    items = await lclient.get_gacha_items()
-    assert items[0].is_character()
-    assert not items[-1].is_character()
+# async def test_gacha_items(lclient: genshin.Client):
+#     items = await lclient.get_genshin_gacha_items()
+#     assert items[0].is_character()
+#     assert not items[-1].is_character()

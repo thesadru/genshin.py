@@ -21,8 +21,10 @@ __all__ = [
     "BannerDetailsUpItem",
     "GachaItem",
     "GenshinBannerType",
+    "SignalSearch",
     "Warp",
     "Wish",
+    "ZZZBannerType",
 ]
 
 
@@ -40,6 +42,9 @@ class GenshinBannerType(enum.IntEnum):
 
     WEAPON = 302
     """Rotating weapon banner."""
+
+    CHRONICLED = 500
+    """Chronicled banner."""
 
     # these are special cases
     # they exist inside the history but should be counted as the same
@@ -64,6 +69,22 @@ class StarRailBannerType(enum.IntEnum):
     """Rotating weapon banner."""
 
 
+class ZZZBannerType(enum.IntEnum):
+    """Banner types in wish histories."""
+
+    STANDARD = PERMANENT = 1
+    """Permanent standard banner."""
+
+    CHARACTER = 2
+    """Rotating character banner."""
+
+    WEAPON = 3
+    """Rotating weapon banner."""
+
+    BANGBOO = 5
+    """Bangboo banner."""
+
+
 class Wish(APIModel, Unique):
     """Wish made on any banner."""
 
@@ -75,8 +96,7 @@ class Wish(APIModel, Unique):
     rarity: int = Aliased("rank_type")
     time: datetime.datetime
 
-    banner_type: GenshinBannerType = Aliased("gacha_type")
-    banner_name: str
+    banner_type: GenshinBannerType
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:
@@ -97,6 +117,25 @@ class Warp(APIModel, Unique):
 
     banner_type: StarRailBannerType
     banner_id: int = Aliased("gacha_id")
+
+    @pydantic.validator("banner_type", pre=True)
+    def __cast_banner_type(cls, v: typing.Any) -> int:
+        return int(v)
+
+
+class SignalSearch(APIModel, Unique):
+    """Signal Search made on any banner."""
+
+    uid: int
+
+    id: int
+    item_id: int
+    type: str = Aliased("item_type")
+    name: str
+    rarity: int = Aliased("rank_type")
+    time: datetime.datetime
+
+    banner_type: ZZZBannerType
 
     @pydantic.validator("banner_type", pre=True)
     def __cast_banner_type(cls, v: typing.Any) -> int:

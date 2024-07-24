@@ -17,6 +17,8 @@ from genshin.models.model import Aliased, APIModel
 from . import abyss, activities, characters
 
 __all__ = [
+    "AreaExploration",
+    "BossKill",
     "Exploration",
     "FullGenshinUserStats",
     "GenshinUserStats",
@@ -69,6 +71,25 @@ class Offering(APIModel):
     icon: str = ""
 
 
+class BossKill(APIModel):
+    """Boss kills in exploration"""
+
+    name: str
+    kills: int = Aliased("kill_num")
+
+
+class AreaExploration(APIModel):
+    """Area exploration data."""
+
+    name: str
+    raw_explored: int = Aliased("exploration_percentage")
+
+    @property
+    def explored(self) -> float:
+        """The percentage explored. (Note: This can go above 100%)"""
+        return self.raw_explored / 10
+
+
 class Exploration(APIModel):
     """Exploration data."""
 
@@ -88,6 +109,8 @@ class Exploration(APIModel):
     map_url: str
 
     offerings: typing.Sequence[Offering]
+    boss_list: typing.Sequence[BossKill]
+    area_exploration_list: typing.Sequence[AreaExploration]
 
     @property
     def explored(self) -> float:

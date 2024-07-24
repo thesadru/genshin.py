@@ -276,7 +276,7 @@ async def wishes(client: genshin.Client, limit: typing.Optional[int] = None) -> 
     longest = max(len(v) for v in banner_names.values())
 
     async for wish in client.wish_history(limit=limit):
-        banner = click.style(wish.banner_name.ljust(longest), bold=True)
+        banner = click.style(wish.name.ljust(longest), bold=True)
         click.echo(f"{banner} | {wish.time.astimezone()} - {wish.name} ({'★' * wish.rarity} {wish.type})")
 
 

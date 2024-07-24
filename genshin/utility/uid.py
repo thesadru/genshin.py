@@ -13,6 +13,7 @@ __all__ = [
     "recognize_region",
     "recognize_server",
     "recognize_starrail_server",
+    "recognize_zzz_server",
 ]
 
 UID_RANGE: typing.Mapping[types.Game, typing.Mapping[types.Region, typing.Sequence[str]]] = {
@@ -51,6 +52,14 @@ STARRAIL_SERVER_RANGE: typing.Mapping[str, typing.Sequence[str]] = {
 }
 """Mapping of Star Rail servers to their respective UID ranges."""
 
+ZZZ_SERVER_RANGE: typing.Mapping[str, typing.Sequence[str]] = {
+    "prod_gf_us": ("10",),
+    "prod_gf_eu": ("15",),
+    "prod_gf_jp": ("13",),
+    "prod_gf_sg": ("17",),
+}
+"""Mapping of global Zenless Zone Zero servers to their respective UID ranges."""
+
 
 def create_short_lang_code(lang: str) -> str:
     """Create an alternative short lang code."""
@@ -69,16 +78,20 @@ def recognize_genshin_server(uid: int) -> str:
 def get_prod_game_biz(region: types.Region, game: types.Game) -> str:
     """Get the game_biz value corresponding to a game and region."""
     game_biz = ""
-    if game == types.Game.HONKAI:
+    if game is types.Game.HONKAI:
         game_biz = "bh3_"
-    elif game == types.Game.GENSHIN:
+    elif game is types.Game.GENSHIN:
         game_biz = "hk4e_"
-    elif game == types.Game.STARRAIL:
+    elif game is types.Game.STARRAIL:
         game_biz = "hkrpg_"
+    elif game is types.Game.ZZZ:
+        game_biz = "nap_"
+    elif game is types.Game.TOT:
+        game_biz = "nxx_"
 
-    if region == types.Region.OVERSEAS:
+    if region is types.Region.OVERSEAS:
         game_biz += "global"
-    elif region == types.Region.CHINESE:
+    elif region is types.Region.CHINESE:
         game_biz += "cn"
 
     return game_biz
@@ -109,16 +122,32 @@ def recognize_starrail_server(uid: int) -> str:
     raise ValueError(f"UID {uid} isn't associated with any server")
 
 
+def recognize_zzz_server(uid: int) -> str:
+    """Recognize which server a Zenless Zone Zero UID is from."""
+    # CN region UIDs only has 8 digits, global has 10, so we use this method to recognize the server
+    # This might change in the future when UIDs run out but... let's keep it like this for now
+    if len(str(uid)) == 8:
+        return "prod_gf_cn"
+
+    for server, digits in ZZZ_SERVER_RANGE.items():
+        if str(uid)[:-8] in digits:
+            return server
+
+    raise ValueError(f"UID {uid} isn't associated with any server")
+
+
 def recognize_server(uid: int, game: types.Game) -> str:
     """Recognizes which server a UID is from."""
-    if game == types.Game.HONKAI:
+    if game is types.Game.HONKAI:
         return recognize_honkai_server(uid)
-    elif game == types.Game.GENSHIN:
+    if game is types.Game.GENSHIN:
         return recognize_genshin_server(uid)
-    elif game == types.Game.STARRAIL:
+    if game is types.Game.STARRAIL:
         return recognize_starrail_server(uid)
-    else:
-        raise ValueError(f"{game} is not a valid game")
+    if game is types.Game.ZZZ:
+        return recognize_zzz_server(uid)
+
+    raise ValueError(f"recognize_server is not implemented for game {game}")
 
 
 def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game]:
@@ -135,6 +164,14 @@ def recognize_game(uid: int, region: types.Region) -> typing.Optional[types.Game
 
 def recognize_region(uid: int, game: types.Game) -> typing.Optional[types.Region]:
     """Recognize the region of a uid."""
+    if game in {types.Game.ZZZ, types.Game.TOT}:
+        if len(str(uid)) == 8:
+            return types.Region.CHINESE
+        return types.Region.OVERSEAS
+
+    if game not in UID_RANGE:
+        return None
+
     for region, digits in UID_RANGE[game].items():
         if str(uid)[:-8] in digits:
             return region

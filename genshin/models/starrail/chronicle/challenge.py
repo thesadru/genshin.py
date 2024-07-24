@@ -155,7 +155,7 @@ class StarRailPureFiction(APIModel):
 class APCShadowFloorNode(FloorNode):
     """Node for a apocalyptic shadow floor."""
 
-    challenge_time: Optional[PartialTime]
+    challenge_time: Optional[PartialTime]  # type: ignore[assignment]
     buff: Optional[ChallengeBuff]
     score: int
     boss_defeated: bool

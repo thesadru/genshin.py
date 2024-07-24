@@ -10,6 +10,7 @@ import typing
 
 if typing.TYPE_CHECKING:
     import pydantic.v1 as pydantic
+    from pydantic.v1.fields import ModelField
 else:
     try:
         import pydantic.v1 as pydantic
@@ -162,7 +163,7 @@ class APIModel(pydantic.BaseModel, abc.ABC):
 
     def _get_mi18n(
         self,
-        field: typing.Union[pydantic.fields.ModelField, str],
+        field: typing.Union[ModelField, str],
         lang: str,
         *,
         default: typing.Optional[str] = None,

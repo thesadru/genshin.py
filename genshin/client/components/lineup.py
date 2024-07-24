@@ -106,8 +106,7 @@ class LineupClient(base.BaseClient):
         if scenario is not None:
             scenario = int(scenario)
 
-        if characters is not None:
-            characters = [int(i) for i in characters]
+        character_ids = [int(i) for i in characters] if characters is not None else None
 
         if match_characters:
             order = "Match"
@@ -118,7 +117,7 @@ class LineupClient(base.BaseClient):
             functools.partial(
                 self._get_lineup_page,
                 tag_id=scenario,
-                roles=characters,
+                roles=character_ids,
                 order=order,
                 uid=uid,
                 lang=lang,

@@ -46,10 +46,14 @@ class GenshinAccount(APIModel):
     def game(self) -> types.Game:
         if "hk4e" in self.game_biz:
             return types.Game.GENSHIN
-        elif "bh3" in self.game_biz:
+        if "bh3" in self.game_biz:
             return types.Game.HONKAI
-        elif "hkrpg" in self.game_biz:
+        if "hkrpg" in self.game_biz:
             return types.Game.STARRAIL
+        if "nap" in self.game_biz:
+            return types.Game.ZZZ
+        if "nxx" in self.game_biz:
+            return types.Game.TOT
 
         try:
             return types.Game(self.game_biz)
@@ -159,11 +163,15 @@ class RecordCard(GenshinAccount):
             cls = GenshinRecordCard
         elif game_id == 6:
             cls = StarRailRecodeCard
+        elif game_id == 8:
+            cls = ZZZRecordCard
 
         return super().__new__(cls)  # type: ignore
 
     game_id: int
     game_biz: str = ""
+    game_name: str
+    game_logo: str = Aliased("logo")
     uid: int = Aliased("game_role_id")
 
     data: typing.Sequence[RecordCardData]
@@ -248,4 +256,28 @@ class StarRailRecodeCard(RecordCard):
 
     @property
     def chests(self) -> int:
+        return int(self.data[3].value)
+
+
+class ZZZRecordCard(RecordCard):
+    """ZZZ record card."""
+
+    @property
+    def game(self) -> types.Game:
+        return types.Game.ZZZ
+
+    @property
+    def days_active(self) -> int:
+        return int(self.data[0].value)
+
+    @property
+    def inter_knot_reputation(self) -> str:
+        return self.data[1].value
+
+    @property
+    def agents_recruited(self) -> int:
+        return int(self.data[2].value)
+
+    @property
+    def bangboo_obtained(self) -> int:
         return int(self.data[3].value)

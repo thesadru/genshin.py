@@ -24,6 +24,7 @@ __all__ = [
     "GACHA_URL",
     "GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL",
     "GET_STOKEN_BY_GAME_TOKEN_URL",
+    "GET_USER_REGION_URL",
     "HK4E_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
@@ -200,12 +201,14 @@ REWARD_URL = GameRoute(
         honkai3rd="https://sg-public-api.hoyolab.com/event/mani?act_id=e202110291205111",
         hkrpg="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202303301540311",
         nap="https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os?act_id=e202406031448091",
+        tot="https://sg-public-api.hoyolab.com/event/luna/os?act_id=e202202281857121",
     ),
     chinese=dict(
         genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
         nap="https://act-nap-api.mihoyo.com/event/luna/zzz/?act_id=e202406242138391",
+        tot="https://api-takumi.mihoyo.com/event/luna?act_id=e202202251749321",
     ),
 )
 
@@ -214,6 +217,7 @@ CODE_URL = GameRoute(
         genshin="https://sg-hk4e-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
         hkrpg="https://sg-hkrpg-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
         nap="https://public-operation-nap.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
+        tot="https://sg-public-api.hoyoverse.com/common/apicdkey/api/webExchangeCdkey",
     ),
     chinese=dict(),
 )
@@ -222,10 +226,12 @@ GACHA_URL = GameRoute(
     overseas=dict(
         genshin="https://hk4e-api-os.hoyoverse.com/gacha_info/api/",
         hkrpg="https://api-os-takumi.mihoyo.com/common/gacha_record/api/",
+        nap="https://public-operation-nap-sg.hoyoverse.com/common/gacha_record/api/",
     ),
     chinese=dict(
         genshin="https://hk4e-api.mihoyo.com/event/gacha_info/api/",
         hkrpg="https://api-takumi.mihoyo.com/common/gacha_record/api/",
+        nap="https://public-operation-nap.mihoyo.com/common/gacha_record/api/",
     ),
 )
 YSULOG_URL = InternationalRoute(
@@ -308,4 +314,8 @@ GAME_LOGIN_URL = GameRoute(
         hkrpg="https://hkrpg-sdk.mihoyo.com/hkrpg_cn/combo/granter/login/v2/login",
         nap="https://nap-sdk.mihoyo.com/nap_cn/combo/granter/login/v2/login",
     ),
+)
+
+GET_USER_REGION_URL = Route(
+    "https://api-account-os.hoyoverse.com/account/binding/api/getUserGameRolesOfRegionByCookieToken"
 )

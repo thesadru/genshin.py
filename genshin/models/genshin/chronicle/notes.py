@@ -97,7 +97,14 @@ class TaskRewardStatus(str, enum.Enum):
 class TaskReward(APIModel):
     """Status of the Commission/Task."""
 
-    status: TaskRewardStatus
+    status: typing.Union[TaskRewardStatus, str]
+
+    @pydantic.validator("status", pre=True)
+    def __prevent_enum_crash(cls, v: str) -> typing.Union[TaskRewardStatus, str]:
+        try:
+            return TaskRewardStatus(v)
+        except ValueError:
+            return v
 
 
 class AttendanceRewardStatus(str, enum.Enum):
@@ -112,8 +119,15 @@ class AttendanceRewardStatus(str, enum.Enum):
 class AttendanceReward(APIModel):
     """Status of the Encounter Point."""
 
-    status: AttendanceRewardStatus
+    status: typing.Union[AttendanceRewardStatus, str]
     progress: int
+
+    @pydantic.validator("status", pre=True)
+    def __prevent_enum_crash(cls, v: str) -> typing.Union[AttendanceRewardStatus, str]:
+        try:
+            return AttendanceRewardStatus(v)
+        except ValueError:
+            return v
 
 
 class DailyTasks(APIModel):
@@ -126,6 +140,9 @@ class DailyTasks(APIModel):
     task_rewards: typing.Sequence[TaskReward]
     attendance_rewards: typing.Sequence[AttendanceReward]
     attendance_visible: bool
+
+    stored_attendance: float
+    stored_attendance_refresh_countdown: datetime.timedelta = Aliased("attendance_refresh_time")
 
 
 class ArchonQuestStatus(str, enum.Enum):

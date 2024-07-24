@@ -94,7 +94,7 @@ class BaseClient(abc.ABC):
         self.uid = uid
         self.hoyolab_id = hoyolab_id
 
-        self.custom_headers = dict(headers or {})
+        self.custom_headers: typing.Dict[str, str] = dict(headers or {})
         self.custom_headers.update({"x-rpc-device_id": device_id} if device_id else {})
         self.custom_headers.update({"x-rpc-device_fp": device_fp} if device_fp else {})
 
@@ -110,6 +110,24 @@ class BaseClient(abc.ABC):
             debug=self.debug,
         )
         return f"<{type(self).__name__} {', '.join(f'{k}={v!r}' for k, v in kwargs.items() if v)}>"
+
+    @property
+    def device_id(self) -> typing.Optional[str]:
+        """The device id used in headers."""
+        return self.custom_headers.get("x-rpc-device_id")
+
+    @device_id.setter
+    def device_id(self, device_id: str) -> None:
+        self.custom_headers["x-rpc-device_id"] = device_id
+
+    @property
+    def device_fp(self) -> typing.Optional[str]:
+        """The device fingerprint used in headers."""
+        return self.custom_headers.get("x-rpc-device_fp")
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -> None:
+        self.custom_headers["x-rpc-device_fp"] = device_fp
 
     @property
     def hoyolab_id(self) -> typing.Optional[int]:
