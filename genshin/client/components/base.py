@@ -94,7 +94,7 @@ class BaseClient(abc.ABC):
         self.uid = uid
         self.hoyolab_id = hoyolab_id
 
-        self.custom_headers = dict(headers or {})
+        self.custom_headers: typing.Dict[str, str] = dict(headers or {})
         self.custom_headers.update({"x-rpc-device_id": device_id} if device_id else {})
         self.custom_headers.update({"x-rpc-device_fp": device_fp} if device_fp else {})
 
