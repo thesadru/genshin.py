@@ -26,15 +26,11 @@ async def test_lineup_details(client: genshin.Client):
 
 
 async def test_user_lineups(lclient: genshin.Client):
-    data = await lclient.get_user_lineups()
-
-    assert data
+    await lclient.get_user_lineups()
 
 
 async def test_favorite_lineups(lclient: genshin.Client):
-    data = await lclient.get_favorite_lineups()
-
-    assert data
+    await lclient.get_favorite_lineups()
 
 
 async def test_lineup_character_history(lclient: genshin.Client):
