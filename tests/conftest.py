@@ -2,22 +2,20 @@ import asyncio
 import json
 import os
 import typing
-import warnings
 
 import pytest
 
 import genshin
 
+# @pytest.fixture(scope="session")
+# def event_loop():
+#     with warnings.catch_warnings():
+#         warnings.simplefilter("ignore")
 
-@pytest.fixture(scope="session")
-def event_loop():
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
+#         loop = asyncio.get_event_loop()
 
-        loop = asyncio.get_event_loop()
-
-    yield loop
-    loop.close()
+#     yield loop
+#     loop.close()
 
 
 @pytest.fixture(scope="session")
