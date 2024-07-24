@@ -159,7 +159,7 @@ async def lcnclient(local_chinese_cookies: typing.Mapping[str, str]):
 
 @pytest.fixture(scope="session")
 def genshin_uid():
-    return 710785423
+    return 901211014
 
 
 @pytest.fixture(scope="session")
@@ -169,7 +169,7 @@ def honkai_uid():
 
 @pytest.fixture(scope="session")
 def hoyolab_id():
-    return 8366222
+    return 7368957
 
 
 @pytest.fixture(scope="session")
