@@ -109,6 +109,6 @@ async def test_calculator_characters_synced(lclient: genshin.Client):
 
 
 async def test_character_details(lclient: genshin.Client):
-    # Hu Tao
-    details = await lclient.get_character_details(10000046)
+    # Yelan
+    details = await lclient.get_character_details(10000060)
     assert details.weapon.level >= 80
