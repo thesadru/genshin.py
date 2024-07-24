@@ -141,9 +141,8 @@ class ImgTheaterData(APIModel):
     @pydantic.root_validator(pre=True)
     def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
-        has_detail = detail is not None
-        values["rounds_data"] = detail.get("rounds_data", []) if has_detail else []
-        values["backup_avatars"] = detail.get("backup_avatars", []) if has_detail else []
+        values["rounds_data"] = detail.get("rounds_data", []) if detail is not None else []
+        values["backup_avatars"] = detail.get("backup_avatars", []) if detail is not None else []
         return values
 
 
