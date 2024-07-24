@@ -24,9 +24,9 @@ __all__ = (
     "ZZZFullAgent",
     "ZZZPartialAgent",
     "ZZZProperty",
+    "ZZZPropertyType",
     "ZZZSkillType",
     "ZZZSpecialty",
-    "ZZZPropertyType",
 )
 
 
