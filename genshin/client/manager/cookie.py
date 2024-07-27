@@ -119,7 +119,9 @@ async def fetch_cookie_with_stoken_v2(
     return cookies
 
 
-async def cn_fetch_cookie_token_with_stoken_v2(cookies: managers.CookieOrHeader) -> str:
+async def cn_fetch_cookie_token_with_stoken_v2(
+    cookies: managers.CookieOrHeader,
+) -> typing.Mapping[typing.Literal["uid", "cookie_token"], str]:
     """Fetch cookie_token with an stoken (v2) and mid."""
     cookies = managers.parse_cookie(cookies)
     url = routes.CN_GET_COOKIE_TOKEN_BY_STOKEN_URL.get_url()
@@ -135,7 +137,7 @@ async def cn_fetch_cookie_token_with_stoken_v2(cookies: managers.CookieOrHeader)
     if data["retcode"] != 0:
         errors.raise_for_retcode(data)
 
-    return data["data"]["cookie_token"]
+    return data["data"]
 
 
 async def fetch_cookie_token_info(
