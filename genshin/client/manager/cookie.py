@@ -14,6 +14,8 @@ Available conversions:
 - fetch_cookie_with_stoken_v2
     - stoken (v2) + mid -> ltoken_v2 (token_type=2)
     - stoken (v2) + mid -> cookie_token_v2 (token_type=4)
+- cn_fetch_cookie_token_with_stoken_v2
+    - stoken (v2) + mid -> cookie_token
 - fetch_cookie_token_with_game_token
     - game_token -> cookie_token
 - fetch_stoken_with_game_token
@@ -37,6 +39,7 @@ from genshin.models.auth.cookie import StokenResult
 from genshin.utility import ds as ds_utility
 
 __all__ = [
+    "cn_fetch_cookie_token_with_stoken_v2",
     "complete_cookies",
     "fetch_cookie_token_info",
     "fetch_cookie_token_with_game_token",
@@ -114,6 +117,25 @@ async def fetch_cookie_with_stoken_v2(
             cookies["cookie_token_v2"] = token["token"]
 
     return cookies
+
+
+async def cn_fetch_cookie_token_with_stoken_v2(cookies: managers.CookieOrHeader) -> str:
+    """Fetch cookie_token with an stoken (v2) and mid."""
+    cookies = managers.parse_cookie(cookies)
+    url = routes.CN_GET_COOKIE_TOKEN_BY_STOKEN_URL.get_url()
+
+    headers = {
+        "ds": ds_utility.generate_dynamic_secret(constants.DS_SALT["app_login"]),
+        "x-rpc-app_id": "bll8iq97cem8",
+    }
+    async with aiohttp.ClientSession() as session:
+        r = await session.request("GET", url, headers=headers, cookies=cookies)
+        data = await r.json()
+
+    if data["retcode"] != 0:
+        errors.raise_for_retcode(data)
+
+    return data["data"]["cookie_token"]
 
 
 async def fetch_cookie_token_info(
