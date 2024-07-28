@@ -1,6 +1,7 @@
 """Utility functions related to genshin."""
 
 import typing
+import warnings
 
 from genshin import types
 
@@ -99,6 +100,7 @@ def get_prod_game_biz(region: types.Region, game: types.Game) -> str:
 
 def recognize_honkai_server(uid: int) -> str:
     """Recognizes which server a Honkai UID is from."""
+    warnings.warn("recognize_honkai_server is unreliable, avoid using it.")
     if 10000000 < uid < 100000000:
         return "overseas01"
     elif 100000000 < uid < 200000000:
@@ -138,8 +140,6 @@ def recognize_zzz_server(uid: int) -> str:
 
 def recognize_server(uid: int, game: types.Game) -> str:
     """Recognizes which server a UID is from."""
-    if game is types.Game.HONKAI:
-        return recognize_honkai_server(uid)
     if game is types.Game.GENSHIN:
         return recognize_genshin_server(uid)
     if game is types.Game.STARRAIL:
