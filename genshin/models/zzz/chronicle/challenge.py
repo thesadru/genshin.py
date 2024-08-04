@@ -114,8 +114,8 @@ class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: datetime.datetime = Aliased("hadal_begin_time")
-    end_time: datetime.datetime = Aliased("hadal_end_time")
+    begin_time: typing.Optional[datetime.datetime] = Aliased("hadal_begin_time")
+    end_time: typing.Optional[datetime.datetime] = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
     floors: typing.List[ShiyuDefenseFloor] = Aliased("all_floor_detail")
@@ -133,8 +133,10 @@ class ShiyuDefense(APIModel):
     @pydantic.validator("begin_time", "end_time", pre=True)
     @classmethod
     def __add_timezone(
-        cls, v: typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]
-    ) -> datetime.datetime:
-        return datetime.datetime(
-            v["year"], v["month"], v["day"], v["hour"], v["minute"], v["second"], tzinfo=CN_TIMEZONE
-        )
+        cls, v: typing.Optional[typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]]
+    ) -> typing.Optional[datetime.datetime]:
+        if v is not None:
+            return datetime.datetime(
+                v["year"], v["month"], v["day"], v["hour"], v["minute"], v["second"], tzinfo=CN_TIMEZONE
+            )
+        return None
