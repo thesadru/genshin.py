@@ -30,6 +30,78 @@ class HoyolabClient(base.BaseClient):
 
         raise ValueError(f"Failed to recognize server for game {game!r} and uid {uid!r}")
 
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.Announcement]:
+        """Get a list of game announcements."""
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game="hk4e",
+                game_biz="hk4e_global",
+                bundle_id="hk4e_global",
+                platform="pc",
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game="nap",
+                game_biz="nap_global",
+                bundle_id="nap_global",
+                platform="pc",
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game="hkrpg",
+                game_biz="hkrpg_global",
+                bundle_id="hkrpg_global",
+                platform="pc",
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f"{game!r} is not supported yet."
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / "announcement/api/getAnnList",
+                lang=lang,
+                params=params,
+                static_cache=client_cache.cache_key("announcements", endpoint="info", lang=lang or self.lang),
+            ),
+            self.request_hoyolab(
+                url / "announcement/api/getAnnContent",
+                lang=lang,
+                params=params,
+                static_cache=client_cache.cache_key("announcements", endpoint="details", lang=lang or self.lang),
+            ),
+        )
+
+        announcements: typing.List[typing.Mapping[str, typing.Any]] = []
+        for sublist in info["list"]:
+            for info in sublist["list"]:
+                detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
+                announcements.append({**info, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
     async def search_users(
         self,
         keyword: str,
@@ -79,48 +151,41 @@ class HoyolabClient(base.BaseClient):
     async def get_genshin_announcements(
         self,
         *,
-        lang: typing.Optional[str] = None,
         uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Announcement]:
-        """Get a list of game announcements."""
+        """Get a list of Genshin Impact announcements."""
         if self.cookie_manager.multi:
             uid = uid or await self._get_uid(types.Game.GENSHIN)
         else:
             uid = 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
 
-        params = dict(
-            game="hk4e",
-            game_biz="hk4e_global",
-            bundle_id="hk4e_global",
-            platform="pc",
-            region=utility.recognize_genshin_server(uid),
-            uid=uid,
-            level=8,
-            lang=lang or self.lang,
-        )
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.Announcement]:
+        """Get a list of Zenless Zone Zero announcements."""
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
 
-        info, details = await asyncio.gather(
-            self.request_hoyolab(
-                routes.HK4E_URL.get_url() / "announcement/api/getAnnList",
-                lang=lang,
-                params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="info", lang=lang or self.lang),
-            ),
-            self.request_hoyolab(
-                routes.HK4E_URL.get_url() / "announcement/api/getAnnContent",
-                lang=lang,
-                params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="details", lang=lang or self.lang),
-            ),
-        )
-
-        announcements: typing.List[typing.Mapping[str, typing.Any]] = []
-        for sublist in info["list"]:
-            for info in sublist["list"]:
-                detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
-                announcements.append({**info, **(detail or {})})
-
-        return [models.Announcement(**i) for i in announcements]
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.Announcement]:
+        """Get a list of Star Rail announcements."""
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
 
     @managers.requires_cookie_token
     async def redeem_code(

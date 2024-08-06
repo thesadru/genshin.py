@@ -33,8 +33,20 @@ async def test_recommended_users(client: genshin.Client):
     assert len(users) > 80
 
 
-async def test_announcements(client: genshin.Client):
+async def test_genshin_announcements(client: genshin.Client):
     announcements = await client.get_genshin_announcements()
+
+    assert len(announcements) > 10
+
+
+async def test_starrail_announcements(client: genshin.Client):
+    announcements = await client.get_starrail_announcements()
+
+    assert len(announcements) > 10
+
+
+async def test_zzz_announcements(client: genshin.Client):
+    announcements = await client.get_zzz_announcements()
 
     assert len(announcements) > 10
 

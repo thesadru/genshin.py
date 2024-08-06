@@ -26,9 +26,11 @@ __all__ = [
     "GET_STOKEN_BY_GAME_TOKEN_URL",
     "GET_USER_REGION_URL",
     "HK4E_URL",
+    "HKRPG_URL",
     "INFO_LEDGER_URL",
     "LINEUP_URL",
     "MI18N",
+    "NAP_URL",
     "RECORD_URL",
     "REWARD_URL",
     "TAKUMI_URL",
@@ -194,6 +196,8 @@ TEAPOT_URL = InternationalRoute(
 WIKI_URL = Route("https://sg-wiki-api.hoyolab.com/hoyowiki/wapi")
 
 HK4E_URL = Route("https://sg-hk4e-api.hoyoverse.com/common/hk4e_global/")
+NAP_URL = Route("https://sg-announcement-static.hoyoverse.com/common/nap_global/")
+HKRPG_URL = Route("https://sg-hkrpg-api.hoyoverse.com/common/hkrpg_global/")
 
 REWARD_URL = GameRoute(
     overseas=dict(
