@@ -42,6 +42,7 @@ jobs:
       - name: Run tests
         env:
           GENSHIN_COOKIES: ${{ secrets.GENSHIN_COOKIES }}
+          HONKAI_COOKIES: ${{ secrets.HONKAI_COOKIES }}
           LOCAL_GENSHIN_COOKIES: ${{ matrix.python-version == '3.10' && secrets.LOCAL_GENSHIN_COOKIES || '' }}
 
         run: |
