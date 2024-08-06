@@ -19,6 +19,16 @@ import genshin
 
 
 @pytest.fixture(scope="session")
+def honkai_cookies() -> typing.Mapping[str, str]:
+    if not os.environ.get("HONKAI_COOKIES"):
+        pytest.exit("No cookies set", 1)
+
+    cookies = genshin.client.manager.parse_cookie(os.environ["HONKAI_COOKIES"])
+
+    return cookies
+
+
+@pytest.fixture(scope="session")
 def cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("GENSHIN_COOKIES"):
         pytest.exit("No cookies set", 1)
@@ -80,6 +90,17 @@ async def cache():
     os.makedirs(".pytest_cache", exist_ok=True)
     with open(".pytest_cache/hoyo_cache.json", "w", encoding="utf-8") as file:
         json.dump(cache, file, indent=4, ensure_ascii=False)
+
+
+@pytest.fixture(scope="session")
+async def honkai_client(honkai_cookies: typing.Mapping[str, str], cache: genshin.Cache):
+    """Return a client with environment cookies."""
+    client = genshin.Client()
+    client.debug = True
+    client.set_cookies(honkai_cookies)
+    client.cache = cache
+
+    return client
 
 
 @pytest.fixture(scope="session")
