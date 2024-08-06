@@ -21,7 +21,7 @@ import genshin
 @pytest.fixture(scope="session")
 def honkai_cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("HONKAI_COOKIES"):
-        pytest.exit("No cookies set", 1)
+        pytest.exit("No honkai cookies set", 1)
 
     cookies = genshin.client.manager.parse_cookie(os.environ["HONKAI_COOKIES"])
 
