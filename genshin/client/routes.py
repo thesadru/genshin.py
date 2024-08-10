@@ -131,7 +131,7 @@ BBS_REFERER_URL = InternationalRoute(
 )
 
 TAKUMI_URL = InternationalRoute(
-    overseas="https://bbs-api-os.hoyolab.com/",
+    overseas="https://api-os-takumi.mihoyo.com/",
     chinese="https://api-takumi.mihoyo.com/",
 )
 COMMUNITY_URL = InternationalRoute(
