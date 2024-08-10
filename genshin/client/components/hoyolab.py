@@ -109,7 +109,7 @@ class HoyolabClient(base.BaseClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.PartialHoyolabUser]:
         """Search hoyolab users."""
-        data = await self.request_hoyolab(
+        data = await self.request_bbs(
             "community/search/wapi/search/user",
             lang=lang,
             params=dict(keyword=keyword, page_size=20),
@@ -141,7 +141,7 @@ class HoyolabClient(base.BaseClient):
 
     async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
-        data = await self.request_hoyolab(
+        data = await self.request_bbs(
             "community/user/wapi/recommendActive",
             params=dict(page_size=limit),
             cache=client_cache.cache_key("recommended"),
