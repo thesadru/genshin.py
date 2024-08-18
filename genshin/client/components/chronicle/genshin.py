@@ -80,18 +80,22 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         return [models.Character(**i) for i in data["avatars"]]
 
     async def get_genshin_detailed_characters(
-            self,
-            uid: int,
-            *,
-            characters: typing.Sequence[int] = None,
-            lang: typing.Optional[str] = None,
+        self,
+        uid: int,
+        *,
+        characters: typing.Sequence[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> models.GenshinDetailCharacters:
-        """Returns a list of genshin characters with full details."""
-        if characters is None:  # If characters aren't provided, fetch the list of owned ID's first as they're required in the payload.
+        """Return a list of genshin characters with full details."""
+        if (
+            characters is None
+        ):  # If characters aren't provided, fetch the list of owned ID's first as they're required in the payload.
             character_data = await self._request_genshin_record("character/list", uid, lang=lang, method="POST")
             characters = [char["id"] for char in character_data["list"]]
 
-        data = await self._request_genshin_record("character/detail", uid, lang=lang, method="POST", payload={"character_ids": (*characters, )})
+        data = await self._request_genshin_record(
+            "character/detail", uid, lang=lang, method="POST", payload={"character_ids": (*characters,)}
+        )
         return models.GenshinDetailCharacters(**data)
 
     async def get_genshin_user(

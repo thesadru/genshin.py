@@ -1,4 +1,5 @@
 """Genshin chronicle character."""
+
 import enum
 import typing
 
@@ -15,23 +16,23 @@ from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = [
     "Artifact",
+    "ArtifactProperty",
     "ArtifactSet",
     "ArtifactSetEffect",
     "Character",
+    "CharacterSkill",
     "CharacterWeapon",
     "Constellation",
+    "DetailArtifact",
+    "DetailCharacterWeapon",
+    "GenshinDetailCharacter",
+    "GenshinDetailCharacters",
+    "GenshinWeaponType",
     "Outfit",
     "PartialCharacter",
     "PropertyType",
     "PropertyValue",
-    "DetailCharacterWeapon",
-    "ArtifactProperty",
-    "DetailArtifact",
     "SkillAffix",
-    "CharacterSkill",
-    "GenshinDetailCharacter",
-    "GenshinDetailCharacters",
-    "GenshinWeaponType"
 ]
 
 
@@ -156,15 +157,16 @@ class PropertyType(APIModel):
 
     @pydantic.root_validator(pre=True)
     def __fix_names(cls, values: typing.Mapping[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
-        """Fix "\xa0" in Crit Damage + Crit Rate names."""
+        r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
         name = values.get("name")
         filter_name = values.get("filter_name")
 
-        return {**values, "name": name.replace(u"\xa0", " "), "filter_name": filter_name.replace(u"\xa0", " ")}
+        return {**values, "name": name.replace("\xa0", " "), "filter_name": filter_name.replace("\xa0", " ")}
 
 
 class PropertyValue(APIModel):
     """A property with a value."""
+
     base: str
     add: str
     final: str
@@ -173,27 +175,36 @@ class PropertyValue(APIModel):
 
 class DetailCharacterWeapon(CharacterWeapon):
     """Detailed Genshin Weapon with main/sub stats."""
+
     main_property: PropertyValue
     sub_property: typing.Optional[PropertyValue]
 
 
 class ArtifactProperty(APIModel):
+    """Artifact's Property value & roll count."""
+
     value: str
     times: int
     info: PropertyType
 
 
 class DetailArtifact(Artifact):
+    """Detailed artifact with main/sub stats."""
+
     main_property: ArtifactProperty
     sub_properties: typing.Sequence[ArtifactProperty] = Aliased("sub_property_list")
 
 
 class SkillAffix(APIModel):
+    """Skill affix texts."""
+
     name: str
     value: str
 
 
 class CharacterSkill(APIModel):
+    """Character's skill."""
+
     id: int = Aliased("skill_id")
     skill_type: int
     name: str
@@ -207,6 +218,7 @@ class CharacterSkill(APIModel):
 
 class GenshinDetailCharacter(PartialCharacter):
     """Full Detailed Genshin Character"""
+
     is_chosen: bool
 
     # display_image is a different image that is returned by the full character endpoint, but it is not the full gacha art.
@@ -276,7 +288,12 @@ class GenshinDetailCharacters(APIModel):
                     sub_property["info"] = property_map.get(str(sub_property["property_type"]), {})
 
             # Map character properties
-            for prop in char['base_properties'] + char['selected_properties'] + char['extra_properties'] + char['element_properties']:
-                prop['info'] = property_map.get(str(prop['property_type']), {})
+            for prop in (
+                char["base_properties"]
+                + char["selected_properties"]
+                + char["extra_properties"]
+                + char["element_properties"]
+            ):
+                prop["info"] = property_map.get(str(prop["property_type"]), {})
 
         return values
