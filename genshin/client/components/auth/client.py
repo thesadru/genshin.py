@@ -1,8 +1,13 @@
 """Main auth client."""
 
 import asyncio
+import json
 import logging
+import random
+import time
 import typing
+import uuid
+from string import digits
 
 import aiohttp
 
@@ -366,3 +371,43 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
         verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
 
         return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -> str:
+        """Generate a random device fingerprint used for generating authentic device fingerprint."""
+        char = digits + "abcdef"
+        return "".join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -> str:
+        oaid_key = "oaid" if self.region is types.Region.CHINESE else "adid"
+        ext_fields = {oaid_key: oaid, "board": board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -> str:
+        """Generate an authentic device fingerprint."""
+        device_id_key = "bbs_device_id" if self.region is types.Region.CHINESE else "hoyolab_device_id"
+        payload = {
+            "device_id": device_id,
+            "device_fp": self._gen_random_fp(),
+            "seed_id": str(uuid.uuid4()).lower(),
+            "seed_time": str(int(time.time() * 1000)),
+            "platform": "2",
+            "app_name": "bbs_cn" if self.region is types.Region.CHINESE else "bbs_oversea",
+            "ext_fields": self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with aiohttp.ClientSession() as session, session.post(
+            routes.GET_FP_URL.get_url(self.region), json=payload
+        ) as r:
+            data = await r.json()
+
+        if data["data"]["code"] != 200:
+            raise errors.GenshinException(data, data["data"]["msg"])
+
+        return data["data"]["device_fp"]
