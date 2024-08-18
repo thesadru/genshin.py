@@ -212,7 +212,7 @@ REWARD_URL = GameRoute(
         genshin="https://api-takumi.mihoyo.com/event/luna/?act_id=e202311201442471",
         honkai3rd="https://api-takumi.mihoyo.com/event/luna/?act_id=e202306201626331",
         hkrpg="https://api-takumi.mihoyo.com/event/luna/?act_id=e202304121516551",
-        nap="https://act-nap-api.mihoyo.com/event/luna/zzz/?act_id=e202406242138391",
+        nap="https://api-takumi.mihoyo.com/event/luna/zzz?act_id=e202406242138391",
         tot="https://api-takumi.mihoyo.com/event/luna?act_id=e202202251749321",
     ),
 )
