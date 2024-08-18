@@ -158,10 +158,10 @@ class PropertyType(APIModel):
     @pydantic.root_validator(pre=True)
     def __fix_names(cls, values: typing.Mapping[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
-        name = values.get("name")
-        filter_name = values.get("filter_name")
+        name = values.get("name", "")
+        filter_name = values.get("filter_name", "")
 
-        return {**values, "name": name.replace("\xa0", " "), "filter_name": filter_name.replace("\xa0", " ")}
+        return {**values, "name": str(name).replace("\xa0", " "), "filter_name": str(filter_name).replace("\xa0", " ")}
 
 
 class PropertyValue(APIModel):

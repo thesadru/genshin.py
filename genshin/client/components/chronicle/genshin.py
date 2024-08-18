@@ -83,7 +83,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         self,
         uid: int,
         *,
-        characters: typing.Sequence[int] = None,
+        characters: typing.Optional[typing.Sequence[int]] = None,
         lang: typing.Optional[str] = None,
     ) -> models.GenshinDetailCharacters:
         """Return a list of genshin characters with full details."""
