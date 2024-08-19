@@ -41,7 +41,7 @@ class CalculatorClient(base.BaseClient):
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the calculator endpoint."""
         params = dict(params or {})
-        headers = dict(headers or {})
+        headers = base.parse_loose_headers(headers)
 
         base_url = routes.CALCULATOR_URL.get_url(self.region)
         url = base_url / endpoint

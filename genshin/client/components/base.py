@@ -12,6 +12,7 @@ import urllib.parse
 import warnings
 
 import aiohttp.typedefs
+import multidict
 import yarl
 
 from genshin import constants, errors, types, utility
@@ -28,6 +29,13 @@ __all__ = ["BaseClient"]
 T = typing.TypeVar("T")
 CallableT = typing.TypeVar("CallableT", bound="typing.Callable[..., object]")
 AsyncCallableT = typing.TypeVar("AsyncCallableT", bound="typing.Callable[..., typing.Awaitable[object]]")
+
+
+def parse_loose_headers(
+    loose_headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+) -> multidict.CIMultiDict[str]:
+    """Parse loose aiohttp headers."""
+    return multidict.CIMultiDict((str(k), str(v)) for k, v in dict(loose_headers or ()).items())
 
 
 class BaseClient(abc.ABC):
@@ -60,6 +68,7 @@ class BaseClient(abc.ABC):
     authkeys: typing.Dict[types.Game, str]
     _hoyolab_id: typing.Optional[int]
     _accounts: typing.Dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
 
     def __init__(
         self,
@@ -94,7 +103,7 @@ class BaseClient(abc.ABC):
         self.uid = uid
         self.hoyolab_id = hoyolab_id
 
-        self.custom_headers: typing.Dict[str, str] = dict(headers or {})
+        self.custom_headers = parse_loose_headers(headers)
         self.custom_headers.update({"x-rpc-device_id": device_id} if device_id else {})
         self.custom_headers.update({"x-rpc-device_fp": device_fp} if device_fp else {})
 
@@ -362,7 +371,7 @@ class BaseClient(abc.ABC):
 
         # actual request
 
-        headers = dict(headers or {})
+        headers = parse_loose_headers(headers)
         headers["User-Agent"] = self.USER_AGENT
         headers.update(self.custom_headers)
 
@@ -409,7 +418,7 @@ class BaseClient(abc.ABC):
 
         url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
 
-        headers = dict(headers or {})
+        headers = parse_loose_headers(headers)
         headers["User-Agent"] = self.USER_AGENT
         headers.update(self.custom_headers)
 
@@ -446,7 +455,7 @@ class BaseClient(abc.ABC):
 
         url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
 
-        headers = dict(headers or {})
+        headers = parse_loose_headers(headers)
         headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
         headers["Referer"] = str(routes.BBS_REFERER_URL.get_url(self.region))
 
@@ -474,7 +483,7 @@ class BaseClient(abc.ABC):
 
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
-        headers = dict(headers or {})
+        headers = parse_loose_headers(headers)
         headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
