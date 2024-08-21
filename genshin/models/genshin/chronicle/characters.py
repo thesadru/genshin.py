@@ -140,7 +140,8 @@ class Character(PartialCharacter):
         for artifact in artifacts:
             for effect in artifact.set.effects:
                 if effect.required_piece_num <= set_nums[artifact.set.id]:
-                    effect.active = True
+                    # To bypass model's immutability
+                    effect = effect.copy(update={"active": True})
 
         return artifacts
 
