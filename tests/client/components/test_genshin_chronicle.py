@@ -17,6 +17,12 @@ async def test_genshin_user(client: genshin.Client, genshin_uid: int):
     assert data
 
 
+async def test_genshin_detailed_characters(client: genshin.Client, genshin_uid: int):
+    data = await client.get_genshin_detailed_characters(genshin_uid)
+
+    assert data
+
+
 async def test_partial_genshin_user(client: genshin.Client, genshin_uid: int):
     data = await client.get_partial_genshin_user(genshin_uid)
 
