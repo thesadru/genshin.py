@@ -2,6 +2,7 @@
 
 import enum
 import typing
+from collections import defaultdict
 
 if typing.TYPE_CHECKING:
     import pydantic.v1 as pydantic
@@ -130,15 +131,16 @@ class Character(PartialCharacter):
     outfits: typing.Sequence[Outfit] = Aliased("costumes")
 
     @pydantic.validator("artifacts")
-    def __add_artifact_effect_enabled(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
-        sets: typing.Dict[int, typing.List[Artifact]] = {}
+    @classmethod
+    def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
+        set_nums: typing.DefaultDict[int, int] = defaultdict(int)
         for arti in artifacts:
-            sets.setdefault(arti.set.id, []).append(arti)
+            set_nums[arti.set.id] += 1
 
         for artifact in artifacts:
             for effect in artifact.set.effects:
-                if effect.pieces <= len(sets[artifact.set.id]):
-                    effect.enabled = True
+                if effect.required_piece_num <= set_nums[artifact.set.id]:
+                    effect.active = True
 
         return artifacts
 
