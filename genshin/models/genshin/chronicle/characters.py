@@ -251,19 +251,22 @@ class GenshinDetailCharacters(APIModel):
     avatar_wiki: typing.Mapping[str, str]
 
     @pydantic.root_validator(pre=True)
-    def __fill_additional_fields(cls, values: typing.Mapping[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
-        """Fill additional fields for convenience."""
-        relic_property_options = values.get("artifact_property_options", {})
-        property_map = values.get("property_map", {})
-        characters = values.get("avatars", [])
+    def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
+        """Fill property info from properety_map."""
+        relic_property_options: typing.Dict[str, list[int]] = values.get("artifact_property_options", {})
+        prop_map: typing.Dict[str, typing.Dict[str, typing.Any]] = values.get("property_map", {})
+        characters: list[typing.Dict[str, typing.Any]] = values.get("avatars", [])
 
         # Map properties to artifacts
+        new_relic_prop_options: typing.Dict[str, list[typing.Dict[str, typing.Any]]] = {}
         for relic_type, properties in relic_property_options.items():
-            formatted_properties = []
-            for prop in properties:
-                prop = property_map.get(str(prop), {})
-                formatted_properties.append(prop)
-            relic_property_options[relic_type] = formatted_properties
+            formatted_properties: list[typing.Dict[str, typing.Any]] = [
+                prop_map[str(prop)] for prop in properties if str(prop) in prop_map
+            ]
+            new_relic_prop_options[relic_type] = formatted_properties
+
+        # Override artifact_property_options
+        values["artifact_property_options"] = new_relic_prop_options
 
         for char in characters:
             # Extract character info from .base
@@ -274,16 +277,16 @@ class GenshinDetailCharacters(APIModel):
 
             # Map properties to main/sub stat for weapon.
             main_property = char["weapon"]["main_property"]
-            char["weapon"]["main_property"]["info"] = property_map.get(str(main_property["property_type"]), {})
+            char["weapon"]["main_property"]["info"] = prop_map[str(main_property["property_type"])]
             if sub_property := char["weapon"]["sub_property"]:
-                char["weapon"]["sub_property"]["info"] = property_map.get(str(sub_property["property_type"]), {})
+                char["weapon"]["sub_property"]["info"] = prop_map[str(sub_property["property_type"])]
 
             # Map properties to artifacts
             for artifact in char["relics"]:
                 main_property = artifact["main_property"]
-                artifact["main_property"]["info"] = property_map.get(str(main_property["property_type"]), {})
+                artifact["main_property"]["info"] = prop_map[str(main_property["property_type"])]
                 for sub_property in artifact["sub_property_list"]:
-                    sub_property["info"] = property_map.get(str(sub_property["property_type"]), {})
+                    sub_property["info"] = prop_map[str(sub_property["property_type"])]
 
             # Map character properties
             for prop in (
@@ -292,6 +295,6 @@ class GenshinDetailCharacters(APIModel):
                 + char["extra_properties"]
                 + char["element_properties"]
             ):
-                prop["info"] = property_map.get(str(prop["property_type"]), {})
+                prop["info"] = prop_map[str(prop["property_type"])]
 
         return values
