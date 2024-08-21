@@ -30,7 +30,7 @@ __all__ = [
     "GenshinWeaponType",
     "Outfit",
     "PartialCharacter",
-    "PropertyType",
+    "PropInfo",
     "PropertyValue",
     "SkillAffix",
 ]
@@ -71,13 +71,9 @@ class CharacterWeapon(APIModel, Unique):
 class ArtifactSetEffect(APIModel):
     """Effect of an artifact set."""
 
-    pieces: int = Aliased("activation_number")
+    required_piece_num: int = Aliased("activation_number")
     effect: str
-    enabled: bool = False
-
-    class Config:
-        # this is for the "enabled" field, hopefully nobody abuses this
-        allow_mutation = True
+    active: bool = Aliased("enabled", default=False)
 
 
 class ArtifactSet(APIModel, Unique):
@@ -147,15 +143,15 @@ class Character(PartialCharacter):
         return artifacts
 
 
-class PropertyType(APIModel):
+class PropInfo(APIModel):
     """A property such as Crit Rate, HP, HP%."""
 
-    property_type: int
+    type: int = Aliased("property_type")
     name: str
     icon: typing.Optional[str]
     filter_name: str
 
-    @pydantic.validator("name", "filter_name", pre=True)
+    @pydantic.validator("name", "filter_name")
     @classmethod
     def __fix_names(cls, value: str) -> str:
         r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
@@ -168,14 +164,14 @@ class PropertyValue(APIModel):
     base: str
     add: str
     final: str
-    info: PropertyType
+    info: PropInfo
 
 
 class DetailCharacterWeapon(CharacterWeapon):
     """Detailed Genshin Weapon with main/sub stats."""
 
-    main_property: PropertyValue
-    sub_property: typing.Optional[PropertyValue]
+    main_stat: PropertyValue = Aliased("main_property")
+    sub_stat: typing.Optional[PropertyValue] = Aliased("sub_property")
 
 
 class ArtifactProperty(APIModel):
@@ -183,14 +179,14 @@ class ArtifactProperty(APIModel):
 
     value: str
     times: int
-    info: PropertyType
+    info: PropInfo
 
 
 class DetailArtifact(Artifact):
     """Detailed artifact with main/sub stats."""
 
-    main_property: ArtifactProperty
-    sub_properties: typing.Sequence[ArtifactProperty] = Aliased("sub_property_list")
+    main_stat: ArtifactProperty = Aliased("main_property")
+    sub_stats: typing.Sequence[ArtifactProperty] = Aliased("sub_property_list")
 
 
 class SkillAffix(APIModel):
@@ -241,10 +237,10 @@ class GenshinDetailCharacter(PartialCharacter):
 class GenshinDetailCharacters(APIModel):
     """Genshin character list."""
 
-    avatars: typing.Sequence[GenshinDetailCharacter] = Aliased("list")
+    characters: typing.Sequence[GenshinDetailCharacter] = Aliased("list")
 
-    property_map: typing.Mapping[str, PropertyType]
-    artifact_property_options: typing.Mapping[str, typing.Sequence[PropertyType]] = Aliased("relic_property_options")
+    property_map: typing.Mapping[str, PropInfo]
+    possible_artifact_stats: typing.Mapping[str, typing.Sequence[PropInfo]] = Aliased("relic_property_options")
 
     artifact_wiki: typing.Mapping[str, str] = Aliased("relic_wiki")
     weapon_wiki: typing.Mapping[str, str]
@@ -253,9 +249,9 @@ class GenshinDetailCharacters(APIModel):
     @pydantic.root_validator(pre=True)
     def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
-        relic_property_options: typing.Dict[str, list[int]] = values.get("artifact_property_options", {})
+        relic_property_options: typing.Dict[str, list[int]] = values.get("possible_artifact_stats", {})
         prop_map: typing.Dict[str, typing.Dict[str, typing.Any]] = values.get("property_map", {})
-        characters: list[typing.Dict[str, typing.Any]] = values.get("avatars", [])
+        characters: list[typing.Dict[str, typing.Any]] = values.get("characters", [])
 
         # Map properties to artifacts
         new_relic_prop_options: typing.Dict[str, list[typing.Dict[str, typing.Any]]] = {}
@@ -265,8 +261,8 @@ class GenshinDetailCharacters(APIModel):
             ]
             new_relic_prop_options[relic_type] = formatted_properties
 
-        # Override artifact_property_options
-        values["artifact_property_options"] = new_relic_prop_options
+        # Override possible_artifact_stats
+        values["possible_artifact_stats"] = new_relic_prop_options
 
         for char in characters:
             # Extract character info from .base
