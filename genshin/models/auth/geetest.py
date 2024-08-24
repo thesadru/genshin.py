@@ -4,13 +4,7 @@ import enum
 import json
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.utility import auth as auth_utility
 
