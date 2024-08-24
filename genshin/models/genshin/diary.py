@@ -1,10 +1,11 @@
 """Genshin diary models."""
 
-import datetime
 import enum
 import typing
 
-from genshin.models.model import Aliased, APIModel
+import pydantic
+
+from genshin.models.model import APIModel, UTC8Timestamp
 
 __all__ = [
     "BaseDiary",
@@ -39,18 +40,18 @@ class BaseDiary(APIModel):
     """Base model for diary and diary page."""
 
     uid: int
-    server: str = Aliased("region")
+    server: str = pydantic.Field(alias="region")
     nickname: str = ""
-    month: int = Aliased("data_month")
+    month: int = pydantic.Field(alias="data_month")
 
 
 class DiaryActionCategory(APIModel):
     """Diary category for primogems."""
 
-    id: int = Aliased("action_id")
-    name: str = Aliased("action")
-    amount: int = Aliased("num")
-    percentage: int = Aliased("percent")
+    id: int = pydantic.Field(alias="action_id")
+    name: str = pydantic.Field(alias="action")
+    amount: int = pydantic.Field(alias="num")
+    percentage: int = pydantic.Field(alias="percent")
 
 
 class MonthDiaryData(APIModel):
@@ -60,9 +61,9 @@ class MonthDiaryData(APIModel):
     current_mora: int
     last_primogems: int
     last_mora: int
-    primogems_rate: int = Aliased("primogem_rate")
+    primogems_rate: int = pydantic.Field(alias="primogem_rate")
     mora_rate: int
-    categories: typing.Sequence[DiaryActionCategory] = Aliased("group_by")
+    categories: typing.Sequence[DiaryActionCategory] = pydantic.Field(alias="group_by")
 
 
 class DayDiaryData(APIModel):
@@ -75,7 +76,7 @@ class DayDiaryData(APIModel):
 class Diary(BaseDiary):
     """Traveler's diary."""
 
-    data: MonthDiaryData = Aliased("month_data")
+    data: MonthDiaryData = pydantic.Field(alias="month_data")
     day_data: DayDiaryData
 
     @property
@@ -88,23 +89,23 @@ class DiaryAction(APIModel):
 
     action_id: int
     action: str
-    time: datetime.datetime = Aliased(timezone=8)
-    amount: int = Aliased("num")
+    time: UTC8Timestamp
+    amount: int = pydantic.Field(alias="num")
 
 
 class DiaryPage(BaseDiary):
     """Page of a diary."""
 
-    actions: typing.Sequence[DiaryAction] = Aliased("list")
+    actions: typing.Sequence[DiaryAction] = pydantic.Field(alias="list")
 
 
 class StarRailDiaryActionCategory(APIModel):
     """Diary category for rails_pass ."""
 
-    id: str = Aliased("action")
-    name: str = Aliased("action_name")
-    amount: int = Aliased("num")
-    percentage: int = Aliased("percent")
+    id: str = pydantic.Field(alias="action")
+    name: str = pydantic.Field(alias="action_name")
+    amount: int = pydantic.Field(alias="num")
+    percentage: int = pydantic.Field(alias="percent")
 
 
 class StarRailMonthDiaryData(APIModel):
@@ -116,7 +117,7 @@ class StarRailMonthDiaryData(APIModel):
     last_rails_pass: int
     hcoin_rate: int
     rails_rate: int
-    categories: typing.Sequence[StarRailDiaryActionCategory] = Aliased("group_by")
+    categories: typing.Sequence[StarRailDiaryActionCategory] = pydantic.Field(alias="group_by")
 
 
 class StarRailDayDiaryData(APIModel):
@@ -131,7 +132,7 @@ class StarRailDayDiaryData(APIModel):
 class StarRailDiary(BaseDiary):
     """Traveler's diary."""
 
-    data: StarRailMonthDiaryData = Aliased("month_data")
+    data: StarRailMonthDiaryData = pydantic.Field(alias="month_data")
     day_data: StarRailDayDiaryData
 
     @property
@@ -154,11 +155,11 @@ class StarRailDiaryAction(APIModel):
 
     action: str
     action_name: str
-    time: datetime.datetime = Aliased(timezone=8)
-    amount: int = Aliased("num")
+    time: UTC8Timestamp
+    amount: int = pydantic.Field(alias="num")
 
 
 class StarRailDiaryPage(BaseDiary):
     """Page of a diary."""
 
-    actions: typing.Sequence[StarRailDiaryAction] = Aliased("list")
+    actions: typing.Sequence[StarRailDiaryAction] = pydantic.Field(alias="list")

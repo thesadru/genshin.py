@@ -5,15 +5,9 @@ import json
 import typing
 import unicodedata
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 __all__ = [
     "ArtifactPreview",
@@ -35,14 +29,15 @@ class WikiPageType(enum.IntEnum):
     ENEMY = 7
 
 
-class BaseWikiPreview(APIModel, Unique):
+class BaseWikiPreview(APIModel):
     """Base wiki preview."""
 
-    id: int = Aliased("entry_page_id")
-    icon: str = Aliased("icon_url")
+    id: int = pydantic.Field(alias="entry_page_id")
+    icon: str = pydantic.Field(alias="icon_url")
     name: str
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __unpack_filter_values(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         filter_values = {
             key.split("_", 1)[1]: value["values"][0]
@@ -52,26 +47,24 @@ class BaseWikiPreview(APIModel, Unique):
         values.update(filter_values)
         return values
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __flatten_display_field(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         values.update(values.get("display_field", {}))
         return values
 
 
-# shuffle validators around because of nesting
-BaseWikiPreview.__pre_root_validators__.reverse()
-
-
 class CharacterPreview(BaseWikiPreview):
     """Character wiki preview."""
 
-    bonus_attribute: str = Aliased("", "property")
+    bonus_attribute: str = pydantic.Field(default="property")
     rarity: int
     region: str = ""
-    element: str = Aliased("vision", "")
+    element: str = pydantic.Field(default="")
     weapon: str
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
+    @classmethod
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
         if not isinstance(value, str):
             return value
@@ -85,11 +78,12 @@ class CharacterPreview(BaseWikiPreview):
 class WeaponPreview(BaseWikiPreview):
     """Weapon wiki preview."""
 
-    bonus_attribute: str = Aliased("property")
+    bonus_attribute: str = pydantic.Field(alias="property")
     rarity: int
     type: str
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
+    @classmethod
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
         if not isinstance(value, str):
             return value
@@ -105,15 +99,16 @@ class ArtifactPreview(BaseWikiPreview):
 
     effect: str
 
-    circlet_icon: str = Aliased("circlet_of_logos_icon_url")
-    flower_icon: str = Aliased("flower_of_life_icon_url")
-    goblet_icon: str = Aliased("goblet_of_eonothem_icon_url")
-    plume_icon: str = Aliased("plume_of_death_icon_url")
-    sands_icon: str = Aliased("sands_of_eon_icon_url")
+    circlet_icon: str = pydantic.Field(alias="circlet_of_logos_icon_url")
+    flower_icon: str = pydantic.Field(alias="flower_of_life_icon_url")
+    goblet_icon: str = pydantic.Field(alias="goblet_of_eonothem_icon_url")
+    plume_icon: str = pydantic.Field(alias="plume_of_death_icon_url")
+    sands_icon: str = pydantic.Field(alias="sands_of_eon_icon_url")
 
     effects: typing.Mapping[int, str]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __group_effects(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         effects = {
             1: values["single_set_effect"],
@@ -129,7 +124,8 @@ class EnemyPreview(BaseWikiPreview):
 
     drop_materials: typing.Sequence[str]
 
-    @pydantic.validator("drop_materials", pre=True)
+    @pydantic.field_validator("drop_materials", mode="before")
+    @classmethod
     def __parse_drop_materials(cls, value: typing.Union[str, typing.Sequence[str]]) -> typing.Sequence[str]:
         return json.loads(value) if isinstance(value, str) else value
 
@@ -146,15 +142,16 @@ class WikiPage(APIModel):
     """Wiki page."""
 
     id: int
-    page_type: WikiPageType = Aliased("menu_id")
+    page_type: WikiPageType = pydantic.Field(alias="menu_id")
 
-    description: str = Aliased("desc")
-    header: str = Aliased("header_img_url")
-    icon: str = Aliased("icon_url")
+    description: str = pydantic.Field(alias="desc")
+    header: str = pydantic.Field(alias="header_img_url")
+    icon: str = pydantic.Field(alias="icon_url")
 
     modules: typing.Mapping[str, typing.Mapping[str, typing.Any]]
 
-    @pydantic.validator("modules", pre=True)
+    @pydantic.field_validator("modules", mode="before")
+    @classmethod
     def __format_modules(
         cls,
         value: typing.Union[typing.List[typing.Dict[str, typing.Any]], typing.Dict[str, typing.Any]],

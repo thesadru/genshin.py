@@ -154,7 +154,7 @@ class DiaryClient(base.BaseClient):
         game = types.Game.GENSHIN
         uid = uid or await self._get_uid(game)
         cache_key = cache.cache_key(
-            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month
         )
         data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
         return models.Diary(**data)
@@ -170,7 +170,7 @@ class DiaryClient(base.BaseClient):
         game = types.Game.STARRAIL
         uid = uid or await self._get_uid(game)
         cache_key = cache.cache_key(
-            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month, lang=lang or self.lang
+            "diary", uid=uid, game=game, month=month or datetime.datetime.now(CN_TIMEZONE).month
         )
         data = await self.request_ledger(uid, game=game, month=month, lang=lang, cache=cache_key)
         return models.StarRailDiary(**data)

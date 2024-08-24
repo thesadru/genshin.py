@@ -128,7 +128,7 @@ class CalculatorClient(base.BaseClient):
 
         cache: typing.Optional[client_cache.CacheKey] = None
         if not any(filters.values()) and not sync:
-            cache = client_cache.cache_key("calculator", slug=slug, lang=lang or self.lang)
+            cache = client_cache.cache_key("calculator", slug=slug)
 
         try:
             data = await self.request_calculator(endpoint, lang=lang, data=payload, cache=cache)
@@ -229,7 +229,7 @@ class CalculatorClient(base.BaseClient):
 
     async def get_character_details(
         self,
-        character: types.IDOr[genshin_models.BaseCharacter],
+        character: types.ID,
         *,
         uid: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
@@ -255,7 +255,7 @@ class CalculatorClient(base.BaseClient):
 
     async def get_character_talents(
         self,
-        character: types.IDOr[genshin_models.BaseCharacter],
+        character: types.ID,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorTalent]:
@@ -274,7 +274,7 @@ class CalculatorClient(base.BaseClient):
 
     async def get_complete_artifact_set(
         self,
-        artifact: types.IDOr[typing.Union[genshin_models.Artifact, genshin_models.CalculatorArtifact]],
+        artifact: types.ID,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorArtifact]:
@@ -287,7 +287,7 @@ class CalculatorClient(base.BaseClient):
             method="GET",
             lang=lang,
             params=dict(reliquary_id=int(artifact)),
-            cache=client_cache.cache_key("calculator", slug="set", artifact=int(artifact), lang=lang or self.lang),
+            cache=client_cache.cache_key("calculator", slug="set", artifact=int(artifact)),
         )
         return [models.CalculatorArtifact(**i) for i in data["reliquary_list"]]
 
@@ -314,7 +314,7 @@ class CalculatorClient(base.BaseClient):
             method="GET",
             lang=lang,
             params=dict(share_code=share_code, region=region),
-            cache=client_cache.cache_key("calculator", slug="blueprint", share_code=share_code, lang=lang or self.lang),
+            cache=client_cache.cache_key("calculator", slug="blueprint", share_code=share_code),
         )
         return [models.CalculatorFurnishing(**i) for i in data["list"]]
 

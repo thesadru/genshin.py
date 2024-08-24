@@ -84,13 +84,13 @@ class HoyolabClient(base.BaseClient):
                 url / "announcement/api/getAnnList",
                 lang=lang,
                 params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="info", lang=lang or self.lang),
+                static_cache=client_cache.cache_key("announcements", endpoint="info"),
             ),
             self.request_hoyolab(
                 url / "announcement/api/getAnnContent",
                 lang=lang,
                 params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="details", lang=lang or self.lang),
+                static_cache=client_cache.cache_key("announcements", endpoint="details"),
             ),
         )
 
@@ -135,7 +135,7 @@ class HoyolabClient(base.BaseClient):
             url=url,
             lang=lang,
             params=dict(uid=hoyolab_id) if hoyolab_id else None,
-            cache=client_cache.cache_key("hoyolab", uid=hoyolab_id, lang=lang or self.lang),
+            cache=client_cache.cache_key("hoyolab", uid=hoyolab_id),
         )
         return models.FullHoyolabUser(**data["user_info"])
 

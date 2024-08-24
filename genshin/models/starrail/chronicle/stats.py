@@ -2,7 +2,9 @@
 
 import typing
 
-from genshin.models.model import Aliased, APIModel
+import pydantic
+
+from genshin.models.model import APIModel
 
 from .. import character
 
@@ -28,14 +30,14 @@ class PartialStarRailUserStats(APIModel):
     """User stats with characters without equipment."""
 
     stats: StarRailStats
-    characters: typing.Sequence[character.StarRailPartialCharacter] = Aliased("avatar_list")
+    characters: typing.Sequence[character.StarRailPartialCharacter] = pydantic.Field(alias="avatar_list")
 
 
 class StarRailUserInfo(APIModel):
     """User info."""
 
     nickname: str
-    server: str = Aliased("region")
+    server: str = pydantic.Field(alias="region")
     level: int
     avatar: str
 

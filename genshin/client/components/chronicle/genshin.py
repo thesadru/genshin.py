@@ -5,7 +5,6 @@ import functools
 import typing
 
 from genshin import errors, paginators, types, utility
-from genshin.models.genshin import character as character_models
 from genshin.models.genshin import chronicle as models
 
 from . import base
@@ -165,10 +164,10 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.Notes(**data)
 
-    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
+    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> typing.Any:
         """Get genshin activities."""
         data = await self._request_genshin_record("activities", uid, lang=lang)
-        return models.Activities(**data)
+        return data
 
     async def get_genshin_tcg_preview(self, uid: int, *, lang: typing.Optional[str] = None) -> models.TCGPreview:
         """Get genshin tcg."""
@@ -239,11 +238,11 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
-        return models.FullGenshinUserStats(**user.dict(), abyss=abyss, activities=activities)
+        return models.FullGenshinUserStats(**user.model_dump(), abyss=abyss, activities=activities)
 
     async def set_top_genshin_characters(
         self,
-        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        characters: typing.Sequence[types.ID],
         *,
         uid: typing.Optional[int] = None,
     ) -> None:

@@ -2,17 +2,11 @@ import datetime
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import APIModel
 
 __all__ = (
     "Act",
@@ -47,7 +41,7 @@ class TheaterDifficulty(enum.IntEnum):
 class ActCharacter(character.BaseCharacter):
     """A character in an act."""
 
-    type: TheaterCharaType = Aliased("avatar_type")
+    type: TheaterCharaType = pydantic.Field(alias="avatar_type")
     level: int
 
 
@@ -56,8 +50,8 @@ class TheaterBuff(APIModel):
 
     icon: str
     name: str
-    description: str = Aliased("desc")
-    received_audience_support: bool = Aliased("is_enhanced")
+    description: str = pydantic.Field(alias="desc")
+    received_audience_support: bool = pydantic.Field(alias="is_enhanced")
     """Whether external audience support is received."""
     id: int
 
@@ -65,15 +59,16 @@ class TheaterBuff(APIModel):
 class Act(APIModel):
     """One act in the theater."""
 
-    characters: typing.Sequence[ActCharacter] = Aliased("avatars")
-    mystery_caches: typing.Sequence[TheaterBuff] = Aliased("choice_cards")
-    wondroud_booms: typing.Sequence[TheaterBuff] = Aliased("buffs")
-    medal_obtained: bool = Aliased("is_get_medal")
+    characters: typing.Sequence[ActCharacter] = pydantic.Field(alias="avatars")
+    mystery_caches: typing.Sequence[TheaterBuff] = pydantic.Field(alias="choice_cards")
+    wondroud_booms: typing.Sequence[TheaterBuff] = pydantic.Field(alias="buffs")
+    medal_obtained: bool = pydantic.Field(alias="is_get_medal")
     round_id: int
     finish_time: int  # As timestamp
-    finish_datetime: datetime.datetime = Aliased("finish_date_time")
+    finish_datetime: datetime.datetime = pydantic.Field(alias="finish_date_time")
 
-    @pydantic.validator("finish_datetime", pre=True)
+    @pydantic.field_validator("finish_datetime", mode="before")
+    @classmethod
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
         return datetime.datetime(
             year=value["year"],
@@ -89,17 +84,17 @@ class Act(APIModel):
 class TheaterStats(APIModel):
     """Imaginarium theater stats."""
 
-    difficulty: TheaterDifficulty = Aliased("difficulty_id")
-    best_record: int = Aliased("max_round_id")
+    difficulty: TheaterDifficulty = pydantic.Field(alias="difficulty_id")
+    best_record: int = pydantic.Field(alias="max_round_id")
     """The maximum act the player has reached."""
     heraldry: int  # Not sure what this is
-    star_challenge_stellas: typing.Sequence[bool] = Aliased("get_medal_round_list")
+    star_challenge_stellas: typing.Sequence[bool] = pydantic.Field(alias="get_medal_round_list")
     """Whether the player has obtained the medal for each act."""
-    fantasia_flowers_used: int = Aliased("coin_num")
+    fantasia_flowers_used: int = pydantic.Field(alias="coin_num")
     """The number of Fantasia Flowers used."""
-    audience_support_trigger_num: int = Aliased("avatar_bonus_num")
+    audience_support_trigger_num: int = pydantic.Field(alias="avatar_bonus_num")
     """The number of external audience support triggers."""
-    player_assists: int = Aliased("rent_cnt")
+    player_assists: int = pydantic.Field(alias="rent_cnt")
     """The number of supporting cast characters assisting other players."""
     medal_num: int
     """The number of medals the player has obtained."""
@@ -111,11 +106,12 @@ class TheaterSchedule(APIModel):
     start_time: int  # As timestamp
     end_time: int  # As timestamp
     schedule_type: int  # Not sure what this is
-    id: int = Aliased("schedule_id")
-    start_datetime: datetime.datetime = Aliased("start_date_time")
-    end_datetime: datetime.datetime = Aliased("end_date_time")
+    id: int = pydantic.Field(alias="schedule_id")
+    start_datetime: datetime.datetime = pydantic.Field(alias="start_date_time")
+    end_datetime: datetime.datetime = pydantic.Field(alias="end_date_time")
 
-    @pydantic.validator("start_datetime", "end_datetime", pre=True)
+    @pydantic.field_validator("start_datetime", "end_datetime", mode="before")
+    @classmethod
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
         return datetime.datetime(
             year=value["year"],
@@ -131,14 +127,15 @@ class TheaterSchedule(APIModel):
 class ImgTheaterData(APIModel):
     """Imaginarium theater data."""
 
-    acts: typing.Sequence[Act] = Aliased(alias="rounds_data")
-    backup_characters: typing.Sequence[ActCharacter] = Aliased(alias="backup_avatars")  # Not sure what this is
-    stats: TheaterStats = Aliased(alias="stat")
+    acts: typing.Sequence[Act] = pydantic.Field(alias="rounds_data")
+    backup_characters: typing.Sequence[ActCharacter] = pydantic.Field(alias="backup_avatars")  # Not sure what this is
+    stats: TheaterStats = pydantic.Field(alias="stat")
     schedule: TheaterSchedule
     has_data: bool
     has_detail_data: bool
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
         values["rounds_data"] = detail.get("rounds_data", []) if detail is not None else []
@@ -149,5 +146,5 @@ class ImgTheaterData(APIModel):
 class ImgTheater(APIModel):
     """Imaginarium theater."""
 
-    datas: typing.Sequence[ImgTheaterData] = Aliased("data")
-    unlocked: bool = Aliased("is_unlock")
+    datas: typing.Sequence[ImgTheaterData] = pydantic.Field(alias="data")
+    unlocked: bool = pydantic.Field(alias="is_unlock")

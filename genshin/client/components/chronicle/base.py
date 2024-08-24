@@ -9,7 +9,6 @@ from genshin import errors, models, types, utility
 from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
-from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import deprecation
 
 __all__ = ["BaseBattleChronicleClient"]
@@ -58,12 +57,10 @@ class BaseBattleChronicleClient(base.BaseClient):
 
         url = base_url / endpoint
 
-        mi18n_task = asyncio.create_task(self._fetch_mi18n("bbs", lang=lang or self.lang))
         update_task = asyncio.create_task(utility.update_characters_any(lang or self.lang, lenient=True))
 
         data = await self.request_hoyolab(url, lang=lang, region=region, **kwargs)
 
-        await mi18n_task
         try:
             await update_task
         except Exception as e:
@@ -80,7 +77,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         """Get a user's record cards."""
         hoyolab_id = hoyolab_id or self._get_hoyolab_id()
 
-        cache_key = cache.cache_key("records", hoyolab_id=hoyolab_id, lang=lang or self.lang)
+        cache_key = cache.cache_key("records", hoyolab_id=hoyolab_id)
         if not (data := await self.cache.get(cache_key)):
             data = await self.request_game_record(
                 "getGameRecordCard",
@@ -110,7 +107,7 @@ class BaseBattleChronicleClient(base.BaseClient):
     @managers.no_multi
     async def update_settings(
         self,
-        setting: types.IDOr[hoyolab_models.RecordCardSetting],
+        setting: types.ID,
         on: bool,
         *,
         game: typing.Optional[types.Game] = None,

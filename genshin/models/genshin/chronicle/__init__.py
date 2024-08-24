@@ -1,7 +1,6 @@
 """Battle chronicle models."""
 
 from .abyss import *
-from .activities import *
 from .characters import *
 from .img_theater import *
 from .notes import *

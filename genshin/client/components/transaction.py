@@ -65,7 +65,7 @@ class TransactionClient(base.BaseClient):
         for trans in data["list"]:
             model = models.ItemTransaction if "name" in trans else models.Transaction
             model = typing.cast("typing.Type[models.BaseTransaction]", model)
-            transactions.append(model(**trans, kind=kind, lang=lang or self.lang))
+            transactions.append(model(**trans, kind=kind))
 
         return transactions
 

@@ -4,17 +4,10 @@ import logging
 import re
 import typing
 
+import pydantic
+
+from genshin.models.model import APIModel
 from genshin.utility import deprecation
-
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
-
-from genshin.models.model import APIModel, Unique
 
 from . import constants
 
@@ -60,6 +53,9 @@ def _get_db_char(
 ) -> constants.DBChar:
     """Get the appropriate DBChar object from specific fields."""
     if lang not in constants.CHARACTER_NAMES:
+        if id and name and icon and element and rarity:
+            return constants.DBChar(id, icon, name, element, rarity, guessed=True)
+
         raise Exception(
             f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_any()`."
         )
@@ -107,7 +103,7 @@ def _get_db_char(
     raise ValueError("Character data incomplete")
 
 
-class BaseCharacter(APIModel, Unique):
+class BaseCharacter(APIModel):
     """Base character model."""
 
     id: int
@@ -116,9 +112,11 @@ class BaseCharacter(APIModel, Unique):
     rarity: int
     icon: str
 
+    lang: str = "en-us"
     collab: bool = False
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))

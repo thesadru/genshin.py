@@ -4,15 +4,9 @@ import datetime
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import APIModel
 
 __all__ = [
     "ArchonQuest",
@@ -47,9 +41,9 @@ def _process_timedelta(time: typing.Union[int, datetime.timedelta, datetime.date
 class Expedition(APIModel):
     """Real-Time note expedition."""
 
-    character_icon: str = Aliased("avatar_side_icon")
+    character_icon: str = pydantic.Field(alias="avatar_side_icon")
     status: typing.Literal["Ongoing", "Finished"]
-    remaining_time: datetime.timedelta = Aliased("remained_time")
+    remaining_time: datetime.timedelta = pydantic.Field(alias="remained_time")
 
     @property
     def finished(self) -> bool:
@@ -99,7 +93,8 @@ class TaskReward(APIModel):
 
     status: typing.Union[TaskRewardStatus, str]
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
+    @classmethod
     def __prevent_enum_crash(cls, v: str) -> typing.Union[TaskRewardStatus, str]:
         try:
             return TaskRewardStatus(v)
@@ -122,7 +117,8 @@ class AttendanceReward(APIModel):
     status: typing.Union[AttendanceRewardStatus, str]
     progress: int
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
+    @classmethod
     def __prevent_enum_crash(cls, v: str) -> typing.Union[AttendanceRewardStatus, str]:
         try:
             return AttendanceRewardStatus(v)
@@ -133,16 +129,16 @@ class AttendanceReward(APIModel):
 class DailyTasks(APIModel):
     """Daily tasks section."""
 
-    max_tasks: int = Aliased("total_num")
-    completed_tasks: int = Aliased("finished_num")
-    claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
+    max_tasks: int = pydantic.Field(alias="total_num")
+    completed_tasks: int = pydantic.Field(alias="finished_num")
+    claimed_commission_reward: bool = pydantic.Field(alias="is_extra_task_reward_received")
 
     task_rewards: typing.Sequence[TaskReward]
     attendance_rewards: typing.Sequence[AttendanceReward]
     attendance_visible: bool
 
     stored_attendance: float
-    stored_attendance_refresh_countdown: datetime.timedelta = Aliased("attendance_refresh_time")
+    stored_attendance_refresh_countdown: datetime.timedelta = pydantic.Field(alias="attendance_refresh_time")
 
 
 class ArchonQuestStatus(str, enum.Enum):
@@ -165,9 +161,9 @@ class ArchonQuestProgress(APIModel):
     """Archon Quest Progress."""
 
     list: typing.Sequence[ArchonQuest]
-    mainlines_finished: bool = Aliased("is_finish_all_mainline")
-    archon_quest_unlocked: bool = Aliased("is_open_archon_quest")
-    interchapters_finished: bool = Aliased("is_finish_all_interchapter")
+    mainlines_finished: bool = pydantic.Field(alias="is_finish_all_mainline")
+    archon_quest_unlocked: bool = pydantic.Field(alias="is_open_archon_quest")
+    interchapters_finished: bool = pydantic.Field(alias="is_finish_all_interchapter")
 
 
 class Notes(APIModel):
@@ -175,23 +171,23 @@ class Notes(APIModel):
 
     current_resin: int
     max_resin: int
-    remaining_resin_recovery_time: datetime.timedelta = Aliased("resin_recovery_time")
+    remaining_resin_recovery_time: datetime.timedelta = pydantic.Field(alias="resin_recovery_time")
 
-    current_realm_currency: int = Aliased("current_home_coin")
-    max_realm_currency: int = Aliased("max_home_coin")
-    remaining_realm_currency_recovery_time: datetime.timedelta = Aliased("home_coin_recovery_time")
+    current_realm_currency: int = pydantic.Field(alias="current_home_coin")
+    max_realm_currency: int = pydantic.Field(alias="max_home_coin")
+    remaining_realm_currency_recovery_time: datetime.timedelta = pydantic.Field(alias="home_coin_recovery_time")
 
-    completed_commissions: int = Aliased("finished_task_num")
-    max_commissions: int = Aliased("total_task_num")
-    claimed_commission_reward: bool = Aliased("is_extra_task_reward_received")
+    completed_commissions: int = pydantic.Field(alias="finished_task_num")
+    max_commissions: int = pydantic.Field(alias="total_task_num")
+    claimed_commission_reward: bool = pydantic.Field(alias="is_extra_task_reward_received")
 
-    remaining_resin_discounts: int = Aliased("remain_resin_discount_num")
-    max_resin_discounts: int = Aliased("resin_discount_num_limit")
+    remaining_resin_discounts: int = pydantic.Field(alias="remain_resin_discount_num")
+    max_resin_discounts: int = pydantic.Field(alias="resin_discount_num_limit")
 
     remaining_transformer_recovery_time: typing.Optional[TransformerTimedelta]
 
     expeditions: typing.Sequence[Expedition]
-    max_expeditions: int = Aliased("max_expedition_num")
+    max_expeditions: int = pydantic.Field(alias="max_expedition_num")
 
     archon_quest_progress: ArchonQuestProgress
 
@@ -214,7 +210,8 @@ class Notes(APIModel):
         remaining = datetime.datetime.now().astimezone() + self.remaining_transformer_recovery_time
         return remaining
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __flatten_transformer(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if "transformer_recovery_time" in values:
             return values

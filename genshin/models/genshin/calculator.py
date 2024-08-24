@@ -5,15 +5,9 @@ from __future__ import annotations
 import collections
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 from . import character
 
@@ -61,20 +55,22 @@ CALCULATOR_ARTIFACTS: typing.Mapping[int, str] = {
 class CalculatorCharacter(character.BaseCharacter):
     """Character meant to be used with calculators."""
 
-    rarity: int = Aliased("avatar_level")
-    element: str = Aliased("element_attr_id")
-    weapon_type: str = Aliased("weapon_cat_id")
-    level: int = Aliased("level_current", default=0)
+    rarity: int = pydantic.Field(alias="avatar_level")
+    element: str = pydantic.Field(alias="element_attr_id")
+    weapon_type: str = pydantic.Field(alias="weapon_cat_id")
+    level: int = pydantic.Field(alias="level_current", default=0)
     max_level: int
 
-    @pydantic.validator("element", pre=True)
+    @pydantic.field_validator("element", mode="before")
+    @classmethod
     def __parse_element(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
 
         return CALCULATOR_ELEMENTS[int(v)]
 
-    @pydantic.validator("weapon_type", pre=True)
+    @pydantic.field_validator("weapon_type", mode="before")
+    @classmethod
     def __parse_weapon_type(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
@@ -82,18 +78,19 @@ class CalculatorCharacter(character.BaseCharacter):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorWeapon(APIModel, Unique):
+class CalculatorWeapon(APIModel):
     """Weapon meant to be used with calculators."""
 
     id: int
     name: str
     icon: str
-    rarity: int = Aliased("weapon_level")
-    type: str = Aliased("weapon_cat_id")
-    level: int = Aliased("level_current", default=0)
+    rarity: int = pydantic.Field(alias="weapon_level")
+    type: str = pydantic.Field(alias="weapon_cat_id")
+    level: int = pydantic.Field(alias="level_current", default=0)
     max_level: int
 
-    @pydantic.validator("type", pre=True)
+    @pydantic.field_validator("type", mode="before")
+    @classmethod
     def __parse_weapon_type(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
@@ -101,15 +98,15 @@ class CalculatorWeapon(APIModel, Unique):
         return CALCULATOR_WEAPON_TYPES[int(v)]
 
 
-class CalculatorArtifact(APIModel, Unique):
+class CalculatorArtifact(APIModel):
     """Artifact meant to be used with calculators."""
 
     id: int
     name: str
     icon: str
-    rarity: int = Aliased("reliquary_level")
-    pos: int = Aliased("reliquary_cat_id")
-    level: int = Aliased("level_current", default=0)
+    rarity: int = pydantic.Field(alias="reliquary_level")
+    pos: int = pydantic.Field(alias="reliquary_cat_id")
+    level: int = pydantic.Field(alias="level_current", default=0)
     max_level: int
 
     @property
@@ -117,14 +114,14 @@ class CalculatorArtifact(APIModel, Unique):
         return CALCULATOR_ARTIFACTS[self.pos]
 
 
-class CalculatorTalent(APIModel, Unique):
+class CalculatorTalent(APIModel):
     """Talent of a character meant to be used with calculators."""
 
     id: int
     group_id: int  # proudSkillGroupId
     name: str
     icon: str
-    level: int = Aliased("level_current", default=0)
+    level: int = pydantic.Field(alias="level_current", default=0)
     max_level: int
 
     @property
@@ -166,32 +163,33 @@ class CalculatorTalent(APIModel, Unique):
         return self.group_id
 
 
-class CalculatorFurnishing(APIModel, Unique):
+class CalculatorFurnishing(APIModel):
     """Furnishing meant to be used with calculators."""
 
     id: int
     name: str
-    icon: str = Aliased("icon_url")
-    rarity: int = Aliased("level")
+    icon: str = pydantic.Field(alias="icon_url")
+    rarity: int = pydantic.Field(alias="level")
 
-    amount: typing.Optional[int] = Aliased("num")
+    amount: typing.Optional[int] = pydantic.Field(alias="num")
 
 
 class CalculatorCharacterDetails(APIModel):
     """Details of a synced calculator character."""
 
-    weapon: CalculatorWeapon = Aliased("weapon")
-    talents: typing.Sequence[CalculatorTalent] = Aliased("skill_list")
-    artifacts: typing.Sequence[CalculatorArtifact] = Aliased("reliquary_list")
+    weapon: CalculatorWeapon = pydantic.Field(alias="weapon")
+    talents: typing.Sequence[CalculatorTalent] = pydantic.Field(alias="skill_list")
+    artifacts: typing.Sequence[CalculatorArtifact] = pydantic.Field(alias="reliquary_list")
 
-    @pydantic.validator("talents")
+    @pydantic.field_validator("talents")
+    @classmethod
     def __correct_talent_current_level(cls, v: typing.Sequence[CalculatorTalent]) -> typing.Sequence[CalculatorTalent]:
         # passive talent have current levels at 0 for some reason
         talents: typing.List[CalculatorTalent] = []
 
         for talent in v:
             if talent.max_level == 1 and talent.level == 0:
-                raw = talent.dict()
+                raw = talent.model_dump()
                 raw["level"] = 1
                 talent = CalculatorTalent(**raw)
 
@@ -208,29 +206,29 @@ class CalculatorCharacterDetails(APIModel):
             return (self.talents[0], self.talents[1], self.talents[2])
 
 
-class CalculatorConsumable(APIModel, Unique):
+class CalculatorConsumable(APIModel):
     """Item consumed when upgrading."""
 
     id: int
     name: str
     icon: str
-    amount: int = Aliased("num")
+    amount: int = pydantic.Field(alias="num")
 
 
 class CalculatorArtifactResult(APIModel):
     """Calculation result for a specific artifact."""
 
-    artifact_id: int = Aliased("reliquary_id")
-    list: typing.Sequence[CalculatorConsumable] = Aliased("id_consume_list")
+    artifact_id: int = pydantic.Field(alias="reliquary_id")
+    list: typing.Sequence[CalculatorConsumable] = pydantic.Field(alias="id_consume_list")
 
 
 class CalculatorResult(APIModel):
     """Calculation result."""
 
-    character: typing.List[CalculatorConsumable] = Aliased("avatar_consume")
-    weapon: typing.List[CalculatorConsumable] = Aliased("weapon_consume")
-    talents: typing.List[CalculatorConsumable] = Aliased("avatar_skill_consume")
-    artifacts: typing.List[CalculatorArtifactResult] = Aliased("reliquary_consume")
+    character: typing.List[CalculatorConsumable] = pydantic.Field(alias="avatar_consume")
+    weapon: typing.List[CalculatorConsumable] = pydantic.Field(alias="weapon_consume")
+    talents: typing.List[CalculatorConsumable] = pydantic.Field(alias="avatar_skill_consume")
+    artifacts: typing.List[CalculatorArtifactResult] = pydantic.Field(alias="reliquary_consume")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:
@@ -246,7 +244,7 @@ class CalculatorResult(APIModel):
                 id=x[0].id,
                 name=x[0].name,
                 icon=x[0].icon,
-                amount=sum(i.amount for i in x),
+                num=sum(i.amount for i in x),
             )
             for x in grouped.values()
         ]
@@ -257,7 +255,7 @@ class CalculatorResult(APIModel):
 class CalculatorFurnishingResults(APIModel):
     """Furnishing calculation result."""
 
-    furnishings: typing.List[CalculatorConsumable] = Aliased("list")
+    furnishings: typing.List[CalculatorConsumable] = pydantic.Field(alias="list")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:

@@ -86,7 +86,7 @@ class CalculatorResolver(abc.ABC, typing.Generic[T]):
 class CharacterResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
     def __init__(
         self,
-        character: types.IDOr[genshin_models.BaseCharacter],
+        character: types.ID,
         current: typing.Optional[int] = None,
         target: typing.Optional[int] = None,
         *,
@@ -294,7 +294,7 @@ class Calculator:
 
     def set_character(
         self,
-        character: types.IDOr[genshin_models.BaseCharacter],
+        character: types.ID,
         current: typing.Optional[int] = None,
         target: typing.Optional[int] = None,
         *,
@@ -420,7 +420,7 @@ class FurnishingCalculator:
         self.replica_code = None
         self.replica_region = None
 
-    def add_furnishing(self, id: types.IDOr[models.CalculatorFurnishing], amount: int = 1) -> FurnishingCalculator:
+    def add_furnishing(self, id: types.ID, amount: int = 1) -> FurnishingCalculator:
         """Add a furnishing."""
         self.furnishings.setdefault(int(id), 0)
         self.furnishings[int(id)] += amount

@@ -1,9 +1,9 @@
 """Starrail base character model."""
 
-from genshin.models.model import APIModel, Unique
+from genshin.models.model import APIModel
 
 
-class StarRailBaseCharacter(APIModel, Unique):
+class StarRailBaseCharacter(APIModel):
     """Base character model."""
 
     id: int

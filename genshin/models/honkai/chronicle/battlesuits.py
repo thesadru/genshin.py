@@ -3,19 +3,13 @@
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.honkai import battlesuit
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 
-class Equipment(APIModel, Unique):
+class Equipment(APIModel):
     """Battlesuit equipment."""
 
     id: int
@@ -49,9 +43,10 @@ class FullBattlesuit(battlesuit.Battlesuit):
 
     level: int
     weapon: BattlesuitWeapon
-    stigmata: typing.Sequence[Stigma] = Aliased("stigmatas")
+    stigmata: typing.Sequence[Stigma] = pydantic.Field(alias="stigmatas")
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __unnest_char_data(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if isinstance(values.get("character"), typing.Mapping):
             values.update(values["character"])
@@ -60,10 +55,7 @@ class FullBattlesuit(battlesuit.Battlesuit):
 
         return values
 
-    @pydantic.validator("stigmata")
+    @pydantic.field_validator("stigmata")
+    @classmethod
     def __remove_unequipped_stigmata(cls, value: typing.Sequence[Stigma]) -> typing.Sequence[Stigma]:
         return [stigma for stigma in value if stigma.id != 0]
-
-
-# shuffle validators around because of nesting
-FullBattlesuit.__pre_root_validators__.reverse()

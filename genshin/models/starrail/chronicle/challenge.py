@@ -1,16 +1,10 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
-if TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import APIModel
 from genshin.models.starrail.character import FloorCharacter
 
 from .base import PartialTime
@@ -42,10 +36,10 @@ class FloorNode(APIModel):
 class StarRailChallengeFloor(APIModel):
     """Base model for star rail challenge floors."""
 
-    id: int = Aliased("maze_id")
+    id: int = pydantic.Field(alias="maze_id")
     name: str
     star_num: int
-    is_quick_clear: bool = Aliased("is_fast")
+    is_quick_clear: bool = pydantic.Field(alias="is_fast")
 
 
 class StarRailFloor(StarRailChallengeFloor):
@@ -60,8 +54,8 @@ class StarRailFloor(StarRailChallengeFloor):
 class StarRailChallengeSeason(APIModel):
     """A season of a challenge."""
 
-    id: int = Aliased("schedule_id")
-    name: str = Aliased("name_mi18n")
+    id: int = pydantic.Field(alias="schedule_id")
+    name: str = pydantic.Field(alias="name_mi18n")
     status: str
     begin_time: PartialTime
     end_time: PartialTime
@@ -71,19 +65,20 @@ class StarRailChallenge(APIModel):
     """Memory of chaos challenge in a season."""
 
     name: str
-    season: int = Aliased("schedule_id")
+    season: int = pydantic.Field(alias="schedule_id")
     begin_time: PartialTime
     end_time: PartialTime
 
-    total_stars: int = Aliased("star_num")
+    total_stars: int = pydantic.Field(alias="star_num")
     max_floor: str
-    total_battles: int = Aliased("battle_num")
+    total_battles: int = pydantic.Field(alias="battle_num")
     has_data: bool
 
-    floors: List[StarRailFloor] = Aliased("all_floor_detail")
-    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    floors: List[StarRailFloor] = pydantic.Field(alias="all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = pydantic.Field(alias="groups")
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]
@@ -97,8 +92,8 @@ class ChallengeBuff(APIModel):
     """Buff used in a pure fiction or apocalyptic shadow node."""
 
     id: int
-    name: str = Aliased("name_mi18n")
-    description: str = Aliased("desc_mi18n")
+    name: str = pydantic.Field(alias="name_mi18n")
+    description: str = pydantic.Field(alias="desc_mi18n")
     icon: str
 
 
@@ -130,16 +125,17 @@ class StarRailPureFiction(APIModel):
     begin_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
     end_time: PartialTime = pydantic.Field(deprecated="Use `season_id` together with `seasons instead`.")
 
-    total_stars: int = Aliased("star_num")
+    total_stars: int = pydantic.Field(alias="star_num")
     max_floor: str
-    total_battles: int = Aliased("battle_num")
+    total_battles: int = pydantic.Field(alias="battle_num")
     has_data: bool
 
-    floors: List[FictionFloor] = Aliased("all_floor_detail")
-    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    floors: List[FictionFloor] = pydantic.Field(alias="all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = pydantic.Field(alias="groups")
     max_floor_id: int
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]
@@ -197,11 +193,11 @@ class APCShadowSeason(StarRailChallengeSeason):
 class StarRailAPCShadow(APIModel):
     """Apocalyptic shadow challenge in a season."""
 
-    total_stars: int = Aliased("star_num")
+    total_stars: int = pydantic.Field(alias="star_num")
     max_floor: str
-    total_battles: int = Aliased("battle_num")
+    total_battles: int = pydantic.Field(alias="battle_num")
     has_data: bool
 
-    floors: List[APCShadowFloor] = Aliased("all_floor_detail")
-    seasons: List[APCShadowSeason] = Aliased("groups")
+    floors: List[APCShadowFloor] = pydantic.Field(alias="all_floor_detail")
+    seasons: List[APCShadowSeason] = pydantic.Field(alias="groups")
     max_floor_id: int

@@ -3,7 +3,9 @@
 import datetime
 import typing
 
-from genshin.models.model import Aliased, APIModel
+import pydantic
+
+from genshin.models.model import APIModel
 
 __all__ = ["StarRailExpedition", "StarRailNote"]
 
@@ -33,7 +35,7 @@ class StarRailNote(APIModel):
     current_stamina: int
     max_stamina: int
     stamina_recover_time: datetime.timedelta
-    accepted_expedition_num: int = Aliased("accepted_epedition_num")
+    accepted_expedition_num: int = pydantic.Field(alias="accepted_epedition_num")
     total_expedition_num: int
     expeditions: typing.Sequence[StarRailExpedition]
 
@@ -47,16 +49,16 @@ class StarRailNote(APIModel):
     max_rogue_score: int
     """Max simulated universe weekly points"""
 
-    have_bonus_synchronicity_points: bool = Aliased("rogue_tourn_weekly_unlocked")
+    have_bonus_synchronicity_points: bool = pydantic.Field(alias="rogue_tourn_weekly_unlocked")
     """Whether the Divergent Universe is unlocked"""
-    max_bonus_synchronicity_points: int = Aliased("rogue_tourn_weekly_max")
+    max_bonus_synchronicity_points: int = pydantic.Field(alias="rogue_tourn_weekly_max")
     """The max number of this week's Bonus Synchronicity Points"""
-    current_bonus_synchronicity_points: int = Aliased("rogue_tourn_weekly_cur")
+    current_bonus_synchronicity_points: int = pydantic.Field(alias="rogue_tourn_weekly_cur")
     """The current number of this week's Bonus Synchronicity Points"""
 
-    remaining_weekly_discounts: int = Aliased("weekly_cocoon_cnt")
+    remaining_weekly_discounts: int = pydantic.Field(alias="weekly_cocoon_cnt")
     """Remaining echo of war rewards"""
-    max_weekly_discounts: int = Aliased("weekly_cocoon_limit")
+    max_weekly_discounts: int = pydantic.Field(alias="weekly_cocoon_limit")
     """Echo of war attempt limit"""
 
     current_reserve_stamina: int

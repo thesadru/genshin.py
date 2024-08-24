@@ -267,7 +267,7 @@
 - Chinese daily reward claiming will no longer consistently raise errors due to invalid headers.
 - `get_banner_details` no longer requires gacha ids. They will be fetched from a user-maintained database from now on.
 - `genshin.models.base.BaseCharacter` is now a string instead of `CharacterIcon`
-- `genshin.models.base.GenshinModel.dict()` now also includes properties as it is immutable.
+- `genshin.models.base.GenshinModel.model_dump()` now also includes properties as it is immutable.
 
 ## Documentation
 

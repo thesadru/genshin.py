@@ -4,16 +4,10 @@ import enum
 import typing
 from collections import defaultdict
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 __all__ = [
     "Artifact",
@@ -51,41 +45,41 @@ class PartialCharacter(character.BaseCharacter):
     """Character without any equipment."""
 
     level: int
-    friendship: int = Aliased("fetter")
-    constellation: int = Aliased("actived_constellation_num")
+    friendship: int = pydantic.Field(alias="fetter")
+    constellation: int = pydantic.Field(alias="actived_constellation_num")
 
 
-class CharacterWeapon(APIModel, Unique):
+class CharacterWeapon(APIModel):
     """Character's equipped weapon."""
 
     id: int
     icon: str
     name: str
     rarity: int
-    description: str = Aliased("desc")
+    description: str = pydantic.Field(alias="desc")
     level: int
-    type: str = Aliased("type_name")
-    ascension: int = Aliased("promote_level")
-    refinement: int = Aliased("affix_level")
+    type: str = pydantic.Field(alias="type_name")
+    ascension: int = pydantic.Field(alias="promote_level")
+    refinement: int = pydantic.Field(alias="affix_level")
 
 
 class ArtifactSetEffect(APIModel):
     """Effect of an artifact set."""
 
-    required_piece_num: int = Aliased("activation_number")
+    required_piece_num: int = pydantic.Field(alias="activation_number")
     effect: str
-    active: bool = Aliased("enabled", default=False)
+    active: bool = pydantic.Field(alias="enabled", default=False)
 
 
-class ArtifactSet(APIModel, Unique):
+class ArtifactSet(APIModel):
     """Artifact set."""
 
     id: int
     name: str
-    effects: typing.Sequence[ArtifactSetEffect] = Aliased("affixes")
+    effects: typing.Sequence[ArtifactSetEffect] = pydantic.Field(alias="affixes")
 
 
-class Artifact(APIModel, Unique):
+class Artifact(APIModel):
     """Character's equipped artifact."""
 
     id: int
@@ -98,7 +92,7 @@ class Artifact(APIModel, Unique):
     set: ArtifactSet
 
 
-class Constellation(APIModel, Unique):
+class Constellation(APIModel):
     """Character constellation."""
 
     id: int
@@ -106,7 +100,7 @@ class Constellation(APIModel, Unique):
     pos: int
     name: str
     effect: str
-    activated: bool = Aliased("is_actived")
+    activated: bool = pydantic.Field(alias="is_actived")
 
     @property
     def scaling(self) -> bool:
@@ -114,7 +108,7 @@ class Constellation(APIModel, Unique):
         return "U" in self.icon
 
 
-class Outfit(APIModel, Unique):
+class Outfit(APIModel):
     """Outfit of a character."""
 
     id: int
@@ -126,11 +120,11 @@ class Character(PartialCharacter):
     """Character with equipment."""
 
     weapon: CharacterWeapon
-    artifacts: typing.Sequence[Artifact] = Aliased("reliquaries")
+    artifacts: typing.Sequence[Artifact] = pydantic.Field(alias="reliquaries")
     constellations: typing.Sequence[Constellation]
-    outfits: typing.Sequence[Outfit] = Aliased("costumes")
+    outfits: typing.Sequence[Outfit] = pydantic.Field(alias="costumes")
 
-    @pydantic.validator("artifacts")
+    @pydantic.field_validator("artifacts")
     @classmethod
     def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
         set_nums: typing.DefaultDict[int, int] = defaultdict(int)
@@ -141,7 +135,7 @@ class Character(PartialCharacter):
             for effect in artifact.set.effects:
                 if effect.required_piece_num <= set_nums[artifact.set.id]:
                     # To bypass model's immutability
-                    effect = effect.copy(update={"active": True})
+                    effect = effect.model_copy(update={"active": True})
 
         return artifacts
 
@@ -149,12 +143,12 @@ class Character(PartialCharacter):
 class PropInfo(APIModel):
     """A property such as Crit Rate, HP, HP%."""
 
-    type: int = Aliased("property_type")
+    type: int = pydantic.Field(alias="property_type")
     name: str
     icon: typing.Optional[str]
     filter_name: str
 
-    @pydantic.validator("name", "filter_name")
+    @pydantic.field_validator("name", "filter_name")
     @classmethod
     def __fix_names(cls, value: str) -> str:
         r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
@@ -173,8 +167,8 @@ class PropertyValue(APIModel):
 class DetailCharacterWeapon(CharacterWeapon):
     """Detailed Genshin Weapon with main/sub stats."""
 
-    main_stat: PropertyValue = Aliased("main_property")
-    sub_stat: typing.Optional[PropertyValue] = Aliased("sub_property")
+    main_stat: PropertyValue = pydantic.Field(alias="main_property")
+    sub_stat: typing.Optional[PropertyValue] = pydantic.Field(alias="sub_property")
 
 
 class ArtifactProperty(APIModel):
@@ -188,8 +182,8 @@ class ArtifactProperty(APIModel):
 class DetailArtifact(Artifact):
     """Detailed artifact with main/sub stats."""
 
-    main_stat: ArtifactProperty = Aliased("main_property")
-    sub_stats: typing.Sequence[ArtifactProperty] = Aliased("sub_property_list")
+    main_stat: ArtifactProperty = pydantic.Field(alias="main_property")
+    sub_stats: typing.Sequence[ArtifactProperty] = pydantic.Field(alias="sub_property_list")
 
 
 class SkillAffix(APIModel):
@@ -202,15 +196,15 @@ class SkillAffix(APIModel):
 class CharacterSkill(APIModel):
     """Character's skill."""
 
-    id: int = Aliased("skill_id")
+    id: int = pydantic.Field(alias="skill_id")
     skill_type: int
     name: str
     level: int
 
-    description: str = Aliased("desc")
-    affixes: typing.Sequence[SkillAffix] = Aliased("skill_affix_list")
+    description: str = pydantic.Field(alias="desc")
+    affixes: typing.Sequence[SkillAffix] = pydantic.Field(alias="skill_affix_list")
     icon: str
-    is_unlocked: bool = Aliased("is_unlock")
+    is_unlocked: bool = pydantic.Field(alias="is_unlock")
 
 
 class GenshinDetailCharacter(PartialCharacter):
@@ -219,14 +213,14 @@ class GenshinDetailCharacter(PartialCharacter):
     is_chosen: bool
 
     # display_image is a different image that is returned by the full character endpoint, but it is not the full gacha art.
-    display_image: str = Aliased("image")
+    display_image: str = pydantic.Field(alias="image")
 
     weapon_type: GenshinWeaponType
     weapon: DetailCharacterWeapon
 
     costumes: typing.Sequence[Outfit]
 
-    artifacts: typing.Sequence[DetailArtifact] = Aliased("relics")
+    artifacts: typing.Sequence[DetailArtifact] = pydantic.Field(alias="relics")
     constellations: typing.Sequence[Constellation]
 
     skills: typing.Sequence[CharacterSkill]
@@ -240,16 +234,19 @@ class GenshinDetailCharacter(PartialCharacter):
 class GenshinDetailCharacters(APIModel):
     """Genshin character list."""
 
-    characters: typing.Sequence[GenshinDetailCharacter] = Aliased("list")
+    characters: typing.Sequence[GenshinDetailCharacter] = pydantic.Field(alias="list")
 
     property_map: typing.Mapping[str, PropInfo]
-    possible_artifact_stats: typing.Mapping[str, typing.Sequence[PropInfo]] = Aliased("relic_property_options")
+    possible_artifact_stats: typing.Mapping[str, typing.Sequence[PropInfo]] = pydantic.Field(
+        alias="relic_property_options"
+    )
 
-    artifact_wiki: typing.Mapping[str, str] = Aliased("relic_wiki")
+    artifact_wiki: typing.Mapping[str, str] = pydantic.Field(alias="relic_wiki")
     weapon_wiki: typing.Mapping[str, str]
     avatar_wiki: typing.Mapping[str, str]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
         relic_property_options: typing.Dict[str, list[int]] = values.get("possible_artifact_stats", {})

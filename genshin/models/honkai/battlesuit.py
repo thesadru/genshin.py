@@ -2,19 +2,10 @@
 
 import logging
 import re
-import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
-
-from .constants import BATTLESUIT_IDENTIFIERS
+from genshin.models.model import APIModel
 
 __all__ = ["Battlesuit"]
 
@@ -31,29 +22,15 @@ BATTLESUIT_TYPES = {
 ICON_BASE = "https://upload-os-bbs.mihoyo.com/game_record/honkai3rd/global/SpriteOutput/"
 
 
-class Battlesuit(APIModel, Unique):
+class Battlesuit(APIModel):
     """Represents a battlesuit without equipment or level."""
 
     id: int
     name: str
-    rarity: int = Aliased("star")
-    closeup_icon_background: str = Aliased("avatar_background_path")
-    tall_icon: str = Aliased("figure_path")
-    banner_art: str = Aliased("image_path")
-
-    @pydantic.validator("tall_icon")
-    def __autocomplete_figpath(cls, tall_icon: str, values: typing.Dict[str, typing.Any]) -> str:
-        """figure_path is empty for gamemode endpoints, and cannot be inferred from other fields."""
-        if tall_icon:
-            # might as well just update the BATTLESUIT_IDENTIFIERS if we have the data
-            if values["id"] not in BATTLESUIT_IDENTIFIERS:
-                _LOGGER.debug("Updating BATTLESUIT_IDENTIFIERS with %s", tall_icon)
-                BATTLESUIT_IDENTIFIERS[values["id"]] = tall_icon.split("/")[-1].split(".")[0]
-
-            return tall_icon
-
-        suit_identifier = BATTLESUIT_IDENTIFIERS.get(values["id"])
-        return ICON_BASE + f"AvatarTachie/{suit_identifier or 'Unknown'}.png"
+    rarity: int = pydantic.Field(alias="star")
+    closeup_icon_background: str = pydantic.Field(alias="avatar_background_path")
+    tall_icon: str = pydantic.Field(alias="figure_path")
+    banner_art: str = pydantic.Field(alias="image_path")
 
     @property
     def character(self) -> str:

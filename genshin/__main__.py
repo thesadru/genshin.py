@@ -74,26 +74,6 @@ cli.add_command(honkai_group)
 cli.add_command(starrail_group)
 
 
-@honkai_group.command("stats")
-@click.argument("uid", type=int)
-@client_command
-async def honkai_stats(client: genshin.Client, uid: int) -> None:
-    """Show simple honkai statistics."""
-    cuid = click.style(str(uid), fg="blue")
-    click.echo(f"User stats of {cuid}\n")
-
-    data = await client.get_honkai_user(uid)
-
-    click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.as_dict(lang=client.lang).items():
-        if isinstance(v, dict):
-            click.echo(f"{k}:")
-            for nested_k, nested_v in typing.cast("typing.Dict[str, object]", v).items():
-                click.echo(f"  {nested_k}: {click.style(str(nested_v), bold=True)}")
-        else:
-            click.echo(f"{k}: {click.style(str(v), bold=True)}")
-
-
 @genshin_group.command("stats")
 @click.argument("uid", type=int)
 @client_command
@@ -105,7 +85,7 @@ async def genshin_stats(client: genshin.Client, uid: int) -> None:
     data = await client.get_partial_genshin_user(uid)
 
     click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.as_dict(lang=client.lang).items():
+    for k, v in data.stats.model_dump().items():
         value = click.style(str(v), bold=True)
         click.echo(f"{k}: {value}")
 
@@ -229,43 +209,6 @@ async def starrail_notes(client: genshin.Client, uid: typing.Optional[int]) -> N
 
 
 @cli.command()
-@click.option("--scenario", help="Scenario ID or name to use (eg '12-3').", type=str, default=None)
-@client_command
-async def lineups(client: genshin.Client, scenario: typing.Optional[str]) -> None:
-    """Show popular genshin lineups."""
-    scenarios = await client.get_lineup_scenarios()
-
-    if scenario is None:
-        scenario_id = None
-    elif scenario.isdigit():
-        scenario_id = int(scenario)
-    else:
-        for s in scenarios.all_children:
-            if s.name.lower() == scenario.lower():
-                scenario_id = s.id
-                break
-        else:
-            raise Exception(f"Scenario {scenario!r} not found.")
-
-    lineups = await client.get_lineups(scenario_id, limit=10, page_size=10)
-
-    for lineup in lineups:
-        scenario_names = [s.name for s in scenarios.all_children if s.id in lineup.scenario_ids]
-
-        click.echo(f"{click.style(lineup.title, fg='cyan')} | {click.style(str(lineup.likes), fg='green')} likes")
-        click.echo(f"{click.style('Author:', bold=True)} {lineup.author_nickname} (AR {lineup.author_level})")
-        click.echo(f"{click.style('Scenarios:', bold=True)} {', '.join(scenario_names)}")
-        click.echo(f"{click.style('Characters:', bold=True)}")
-        for group, characters in enumerate(lineup.characters, 1):
-            if len(lineup.characters) > 1:
-                click.echo(f"- Group {group}:")
-            for character in characters:
-                click.echo(f" - {character.name} ({character.role})")
-
-        click.echo("")
-
-
-@cli.command()
 @click.option("--limit", help="The maximum amount of wishes to show.", type=int, default=None)
 @client_command
 async def wishes(client: genshin.Client, limit: typing.Optional[int] = None) -> None:
@@ -339,7 +282,7 @@ async def login(account: str, password: str, port: int) -> None:
     """Login with a password."""
     client = genshin.Client()
     result = await client.os_login_with_password(account, password, port=port)
-    cookies = await genshin.complete_cookies(result.dict())
+    cookies = await genshin.complete_cookies(result.model_dump())
 
     base: http.cookies.BaseCookie[str] = http.cookies.BaseCookie(cookies)
     click.echo(f"Your cookies are: {click.style(base.output(header='', sep=';'), bold=True)}")

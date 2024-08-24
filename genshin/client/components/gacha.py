@@ -252,7 +252,7 @@ class WishClient(base.BaseClient):
             lang=lang,
             game=types.Game.GENSHIN,
             authkey=authkey,
-            static_cache=client_cache.cache_key("banner", endpoint="names", lang=lang or self.lang),
+            static_cache=client_cache.cache_key("banner", endpoint="names"),
         )
         return {int(i["key"]): i["name"] for i in data["gacha_type_list"]}
 

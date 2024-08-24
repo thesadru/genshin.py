@@ -1,7 +1,6 @@
 """Base ABC Client."""
 
 import abc
-import asyncio
 import base64
 import functools
 import json
@@ -20,7 +19,6 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
-from genshin.models import model as base_model
 from genshin.utility import concurrency, deprecation, ds
 
 __all__ = ["BaseClient"]
@@ -456,7 +454,7 @@ class BaseClient(abc.ABC):
         url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
 
         headers = parse_loose_headers(headers)
-        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region))
         headers["Referer"] = str(routes.BBS_REFERER_URL.get_url(self.region))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
@@ -484,7 +482,7 @@ class BaseClient(abc.ABC):
         url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
 
         headers = parse_loose_headers(headers)
-        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region))
 
         data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
         return data
@@ -591,37 +589,6 @@ class BaseClient(abc.ABC):
             raise RuntimeError("Hoyolab ID must be provided when using multi-cookie managers.")
 
         raise RuntimeError("No default hoyolab ID provided.")
-
-    async def _fetch_mi18n(self, key: str, lang: str, *, force: bool = False) -> None:
-        """Update mi18n for a single url."""
-        if not force:
-            if key in base_model.APIModel._mi18n:
-                return
-
-        base_model.APIModel._mi18n[key] = {}
-
-        url = routes.MI18N[key]
-        cache_key = client_cache.cache_key("mi18n", mi18n=key, lang=lang)
-
-        data = await self.request_webstatic(url.format(lang=lang), cache=cache_key)
-        for k, v in data.items():
-            actual_key = str.lower(key + "/" + k)
-            base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v
-
-    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
-        """Fetch mi18n for partially localized endpoints."""
-        if not force:
-            if base_model.APIModel._mi18n:
-                return
-
-        langs = tuple(langs)
-
-        coros: typing.List[typing.Awaitable[None]] = []
-        for key in routes.MI18N:
-            for lang in langs:
-                coros.append(self._fetch_mi18n(key, lang, force=force))
-
-        await asyncio.gather(*coros)
 
 
 def region_specific(region: types.Region) -> typing.Callable[[AsyncCallableT], AsyncCallableT]:

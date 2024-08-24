@@ -2,15 +2,17 @@
 
 import datetime
 
-from genshin.models.model import Aliased, APIModel, Unique
+import pydantic
+
+from genshin.models.model import APIModel
 
 __all__ = ["Announcement"]
 
 
-class Announcement(APIModel, Unique):
+class Announcement(APIModel):
     """Announcement model."""
 
-    id: int = Aliased("ann_id")
+    id: int = pydantic.Field(alias="ann_id")
     title: str
     subtitle: str
     banner: str

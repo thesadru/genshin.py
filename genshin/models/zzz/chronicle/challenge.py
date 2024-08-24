@@ -1,17 +1,11 @@
 import datetime
 import typing
 
-from genshin.constants import CN_TIMEZONE
-from genshin.models.model import Aliased, APIModel
-from genshin.models.zzz.character import ZZZElementType
+import pydantic
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+from genshin.constants import CN_TIMEZONE
+from genshin.models.model import APIModel
+from genshin.models.zzz.character import ZZZElementType
 
 __all__ = (
     "ShiyuDefense",
@@ -42,7 +36,7 @@ class ShiyuDefenseCharacter(APIModel):
     id: int
     level: int
     rarity: typing.Literal["S", "A"]
-    element: ZZZElementType = Aliased("element_type")
+    element: ZZZElementType = pydantic.Field(alias="element_type")
 
     @property
     def icon(self) -> str:
@@ -63,19 +57,19 @@ class ShiyuDefenseMonster(APIModel):
 
     id: int
     name: str
-    weakness: ZZZElementType = Aliased("weak_element_type")
+    weakness: ZZZElementType = pydantic.Field(alias="weak_element_type")
     level: int
 
 
 class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
-    characters: typing.List[ShiyuDefenseCharacter] = Aliased("avatars")
-    bangboo: ShiyuDefenseBangboo = Aliased("buddy")
-    recommended_elements: typing.List[ZZZElementType] = Aliased("element_type_list")
-    enemies: typing.List[ShiyuDefenseMonster] = Aliased("monster_info")
+    characters: typing.List[ShiyuDefenseCharacter] = pydantic.Field(alias="avatars")
+    bangboo: ShiyuDefenseBangboo = pydantic.Field(alias="buddy")
+    recommended_elements: typing.List[ZZZElementType] = pydantic.Field(alias="element_type_list")
+    enemies: typing.List[ShiyuDefenseMonster] = pydantic.Field(alias="monster_info")
 
-    @pydantic.validator("enemies", pre=True)
+    @pydantic.field_validator("enemies", mode="before")
     @classmethod
     def __convert_enemies(
         cls, value: typing.Dict[typing.Literal["level", "list"], typing.Any]
@@ -91,16 +85,16 @@ class ShiyuDefenseNode(APIModel):
 class ShiyuDefenseFloor(APIModel):
     """Shiyu Defense floor model."""
 
-    index: int = Aliased("layer_index")
+    index: int = pydantic.Field(alias="layer_index")
     rating: typing.Literal["S", "A", "B"]
-    id: int = Aliased("layer_id")
+    id: int = pydantic.Field(alias="layer_id")
     buffs: typing.List[ShiyuDefenseBuff]
     node_1: ShiyuDefenseNode
     node_2: ShiyuDefenseNode
-    challenge_time: datetime.datetime = Aliased("floor_challenge_time")
-    name: str = Aliased("zone_name")
+    challenge_time: datetime.datetime = pydantic.Field(alias="floor_challenge_time")
+    name: str = pydantic.Field(alias="zone_name")
 
-    @pydantic.validator("challenge_time", pre=True)
+    @pydantic.field_validator("challenge_time", mode="before")
     @classmethod
     def __add_timezone(
         cls, v: typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]
@@ -114,23 +108,23 @@ class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: typing.Optional[datetime.datetime] = Aliased("hadal_begin_time")
-    end_time: typing.Optional[datetime.datetime] = Aliased("hadal_end_time")
+    begin_time: typing.Optional[datetime.datetime] = pydantic.Field(alias="hadal_begin_time")
+    end_time: typing.Optional[datetime.datetime] = pydantic.Field(alias="hadal_end_time")
     has_data: bool
-    ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
-    floors: typing.List[ShiyuDefenseFloor] = Aliased("all_floor_detail")
-    fastest_clear_time: int = Aliased("fast_layer_time")
+    ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = pydantic.Field(alias="rating_list")
+    floors: typing.List[ShiyuDefenseFloor] = pydantic.Field(alias="all_floor_detail")
+    fastest_clear_time: int = pydantic.Field(alias="fast_layer_time")
     """Fastest clear time this season in seconds."""
-    max_floor: int = Aliased("max_layer")
+    max_floor: int = pydantic.Field(alias="max_layer")
 
-    @pydantic.validator("ratings", pre=True)
+    @pydantic.field_validator("ratings", mode="before")
     @classmethod
     def __convert_ratings(
         cls, v: typing.List[typing.Dict[typing.Literal["times", "rating"], typing.Any]]
     ) -> typing.Mapping[typing.Literal["S", "A", "B"], int]:
         return {d["rating"]: d["times"] for d in v}
 
-    @pydantic.validator("begin_time", "end_time", pre=True)
+    @pydantic.field_validator("begin_time", "end_time", mode="before")
     @classmethod
     def __add_timezone(
         cls, v: typing.Optional[typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]]

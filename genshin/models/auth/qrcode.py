@@ -4,13 +4,7 @@ import enum
 import json
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 __all__ = ["QRCodeCheckResult", "QRCodeCreationResult", "QRCodePayload", "QRCodeRawData", "QRCodeStatus"]
 
@@ -38,7 +32,8 @@ class QRCodePayload(pydantic.BaseModel):
     ext: str
     raw: typing.Optional[QRCodeRawData] = None
 
-    @pydantic.validator("raw", pre=True)
+    @pydantic.field_validator("raw", mode="before")
+    @classmethod
     def _convert_raw_data(cls, value: typing.Optional[str] = None) -> typing.Union[QRCodeRawData, None]:
         if value:
             return QRCodeRawData(**json.loads(value))

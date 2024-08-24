@@ -4,7 +4,9 @@ import datetime
 import enum
 import typing
 
-from genshin.models.model import Aliased, APIModel, Unique
+import pydantic
+
+from genshin.models.model import APIModel
 
 __all__ = ["BaseTransaction", "ItemTransaction", "Transaction", "TransactionKind"]
 
@@ -28,15 +30,15 @@ class TransactionKind(str, enum.Enum):
     """Weapon items from domains and wishes."""
 
 
-class BaseTransaction(APIModel, Unique):
+class BaseTransaction(APIModel):
     """Genshin transaction."""
 
     kind: TransactionKind
 
     id: int
-    time: datetime.datetime = Aliased("datetime")
-    amount: int = Aliased("add_num")
-    reason: str = Aliased("reason")
+    time: datetime.datetime = pydantic.Field(alias="datetime")
+    amount: int = pydantic.Field(alias="add_num")
+    reason: str = pydantic.Field(alias="reason")
 
 
 class Transaction(BaseTransaction):
@@ -51,4 +53,4 @@ class ItemTransaction(BaseTransaction):
     kind: typing.Literal[TransactionKind.ARTIFACT, TransactionKind.WEAPON]
 
     name: str
-    rarity: int = Aliased("quality")
+    rarity: int = pydantic.Field(alias="quality")

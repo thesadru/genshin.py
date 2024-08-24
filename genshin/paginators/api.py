@@ -8,15 +8,17 @@ import warnings
 
 from . import base
 
-if typing.TYPE_CHECKING:
-    from genshin import models
-
-
 __all__ = ["CursorPaginator", "PagedPaginator", "TokenPaginator"]
 
 T = typing.TypeVar("T")
 T_co = typing.TypeVar("T_co", covariant=True)
-UniqueT = typing.TypeVar("UniqueT", bound="models.Unique")
+
+
+class Unique(typing.Protocol):
+    id: int
+
+
+UniqueT = typing.TypeVar("UniqueT", bound="Unique")
 
 
 class GetterCallback(typing.Protocol[T_co]):

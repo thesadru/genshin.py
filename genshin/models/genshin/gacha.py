@@ -5,15 +5,9 @@ import enum
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 __all__ = [
     "BannerDetailItem",
@@ -85,59 +79,62 @@ class ZZZBannerType(enum.IntEnum):
     """Bangboo banner."""
 
 
-class Wish(APIModel, Unique):
+class Wish(APIModel):
     """Wish made on any banner."""
 
     uid: int
 
     id: int
-    type: str = Aliased("item_type")
+    type: str = pydantic.Field(alias="item_type")
     name: str
-    rarity: int = Aliased("rank_type")
+    rarity: int = pydantic.Field(alias="rank_type")
     time: datetime.datetime
 
     banner_type: GenshinBannerType
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
+    @classmethod
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
 
-class Warp(APIModel, Unique):
+class Warp(APIModel):
     """Warp made on any banner."""
 
     uid: int
 
     id: int
     item_id: int
-    type: str = Aliased("item_type")
+    type: str = pydantic.Field(alias="item_type")
     name: str
-    rarity: int = Aliased("rank_type")
+    rarity: int = pydantic.Field(alias="rank_type")
     time: datetime.datetime
 
     banner_type: StarRailBannerType
-    banner_id: int = Aliased("gacha_id")
+    banner_id: int = pydantic.Field(alias="gacha_id")
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
+    @classmethod
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
 
-class SignalSearch(APIModel, Unique):
+class SignalSearch(APIModel):
     """Signal Search made on any banner."""
 
     uid: int
 
     id: int
     item_id: int
-    type: str = Aliased("item_type")
+    type: str = pydantic.Field(alias="item_type")
     name: str
-    rarity: int = Aliased("rank_type")
+    rarity: int = pydantic.Field(alias="rank_type")
     time: datetime.datetime
 
     banner_type: ZZZBannerType
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
+    @classmethod
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
@@ -145,23 +142,24 @@ class SignalSearch(APIModel, Unique):
 class BannerDetailItem(APIModel):
     """Item that may be gotten from a banner."""
 
-    name: str = Aliased("item_name")
-    type: str = Aliased("item_type")
-    rarity: int = Aliased("rank")
+    name: str = pydantic.Field(alias="item_name")
+    type: str = pydantic.Field(alias="item_type")
+    rarity: int = pydantic.Field(alias="rank")
 
-    up: bool = Aliased("is_up")
-    order: int = Aliased("order_value")
+    up: bool = pydantic.Field(alias="is_up")
+    order: int = pydantic.Field(alias="order_value")
 
 
 class BannerDetailsUpItem(APIModel):
     """Item that has a rate-up on a banner."""
 
-    name: str = Aliased("item_name")
-    type: str = Aliased("item_type")
-    element: str = Aliased("item_attr")
-    icon: str = Aliased("item_img")
+    name: str = pydantic.Field(alias="item_name")
+    type: str = pydantic.Field(alias="item_type")
+    element: str = pydantic.Field(alias="item_attr")
+    icon: str = pydantic.Field(alias="item_img")
 
-    @pydantic.validator("element", pre=True)
+    @pydantic.field_validator("element", mode="before")
+    @classmethod
     def __parse_element(cls, v: str) -> str:
         return {
             "风": "Anemo",
@@ -179,7 +177,7 @@ class BannerDetails(APIModel):
     """Details of a banner."""
 
     banner_id: str
-    banner_type: int = Aliased("gacha_type")
+    banner_type: int = pydantic.Field(alias="gacha_type")
     title: str
     content: str
     date_range: str
@@ -189,22 +187,23 @@ class BannerDetails(APIModel):
     r5_prob: typing.Optional[float]
     r4_prob: typing.Optional[float]
     r3_prob: typing.Optional[float]
-    r5_guarantee_prob: typing.Optional[float] = Aliased("r5_baodi_prob")
-    r4_guarantee_prob: typing.Optional[float] = Aliased("r4_baodi_prob")
-    r3_guarantee_prob: typing.Optional[float] = Aliased("r3_baodi_prob")
+    r5_guarantee_prob: typing.Optional[float] = pydantic.Field(alias="r5_baodi_prob")
+    r4_guarantee_prob: typing.Optional[float] = pydantic.Field(alias="r4_baodi_prob")
+    r3_guarantee_prob: typing.Optional[float] = pydantic.Field(alias="r3_baodi_prob")
 
     r5_up_items: typing.Sequence[BannerDetailsUpItem]
     r4_up_items: typing.Sequence[BannerDetailsUpItem]
 
-    r5_items: typing.List[BannerDetailItem] = Aliased("r5_prob_list")
-    r4_items: typing.List[BannerDetailItem] = Aliased("r4_prob_list")
-    r3_items: typing.List[BannerDetailItem] = Aliased("r3_prob_list")
+    r5_items: typing.List[BannerDetailItem] = pydantic.Field(alias="r5_prob_list")
+    r4_items: typing.List[BannerDetailItem] = pydantic.Field(alias="r4_prob_list")
+    r3_items: typing.List[BannerDetailItem] = pydantic.Field(alias="r3_prob_list")
 
-    @pydantic.validator("r5_up_items", "r4_up_items", pre=True)
+    @pydantic.field_validator("r5_up_items", "r4_up_items", mode="before")
+    @classmethod
     def __replace_none(cls, v: typing.Optional[typing.Sequence[typing.Any]]) -> typing.Sequence[typing.Any]:
         return v or []
 
-    @pydantic.validator(
+    @pydantic.field_validator(
         "r5_up_prob",
         "r4_up_prob",
         "r5_prob",
@@ -213,7 +212,7 @@ class BannerDetails(APIModel):
         "r5_guarantee_prob",
         "r4_guarantee_prob",
         "r3_guarantee_prob",
-        pre=True,
+        mode="before",
     )
     def __parse_percentage(cls, v: typing.Optional[str]) -> typing.Optional[float]:
         if v is None or isinstance(v, (int, float)):
@@ -242,15 +241,16 @@ class BannerDetails(APIModel):
         return sorted(items, key=lambda x: x.order)
 
 
-class GachaItem(APIModel, Unique):
+class GachaItem(APIModel):
     """Item that can be gotten from the gacha."""
 
     name: str
-    type: str = Aliased("item_type")
-    rarity: int = Aliased("rank_type")
-    id: int = Aliased("item_id")
+    type: str = pydantic.Field(alias="item_type")
+    rarity: int = pydantic.Field(alias="rank_type")
+    id: int = pydantic.Field(alias="item_id")
 
-    @pydantic.validator("id")
+    @pydantic.field_validator("id")
+    @classmethod
     def __format_id(cls, v: int) -> int:
         return 10000000 + v - 1000 if len(str(v)) == 4 else v
 

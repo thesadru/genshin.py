@@ -77,7 +77,7 @@ class WikiClient(base.BaseClient):
     ) -> typing.Sequence[models.BaseWikiPreview]:
         """Get a list of wiki previews."""
         payload = dict(filters=[], menu_id=int(menu), page_num=1, page_size=1000, use_es=True)
-        cache_key = cache.cache_key("wiki", endpoint="entry", menu=menu, lang=lang or self.lang)
+        cache_key = cache.cache_key("wiki", endpoint="entry", menu=menu)
         data = await self.request_wiki("get_entry_page_list", data=payload, lang=lang, static_cache=cache_key)
 
         cls = models._ENTRY_PAGE_MODELS.get(typing.cast(models.WikiPageType, menu), models.BaseWikiPreview)
@@ -86,21 +86,21 @@ class WikiClient(base.BaseClient):
 
     async def get_wiki_page(
         self,
-        id: types.IDOr[models.BaseWikiPreview],
+        id: types.ID,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.WikiPage:
         """Get a wiki page."""
         params = dict(entry_page_id=int(id))
-        cache_key = cache.cache_key("wiki", endpoint="page", id=id, lang=lang or self.lang)
+        cache_key = cache.cache_key("wiki", endpoint="page", id=id)
         data = await self.request_wiki("entry_page", lang=lang, params=params, static_cache=cache_key)
 
         data["page"].pop("lang", "")  # always an empty string
-        return models.WikiPage(**data["page"], lang=lang or self.lang)
+        return models.WikiPage(**data["page"])
 
     async def get_wiki_pages(
         self,
-        ids: typing.Collection[types.IDOr[models.BaseWikiPreview]],
+        ids: typing.Collection[types.ID],
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.WikiPage]:

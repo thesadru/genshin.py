@@ -188,7 +188,7 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
     _heap: typing.List[typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
     """Underlying heap queue.
 
-    List of (comparable, unique order id, value, iterator)
+    List of (comparable order id, value, iterator)
     """
 
     limit: typing.Optional[int]

@@ -3,13 +3,7 @@
 import json
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 __all__ = [
     "ActionTicket",
@@ -30,7 +24,8 @@ class ActionTicket(pydantic.BaseModel):
     risk_ticket: str
     verify_str: VerifyStrategy
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
+    @classmethod
     def __parse_data(cls, data: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Parse the data if it was provided in a raw format."""
         verify_str = data["verify_str"]
@@ -41,6 +36,6 @@ class ActionTicket(pydantic.BaseModel):
 
     def to_rpc_verify_header(self) -> str:
         """Convert the action ticket to `x-rpc-verify` header."""
-        ticket = self.dict()
+        ticket = self.model_dump()
         ticket["verify_str"] = json.dumps(ticket["verify_str"])
         return json.dumps(ticket)

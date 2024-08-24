@@ -6,16 +6,10 @@ import enum
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin import types
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import APIModel
 
 __all__ = [
     "FullHoyolabUser",
@@ -36,11 +30,11 @@ class GenshinAccount(APIModel):
     """Genshin account."""
 
     game_biz: str
-    uid: int = Aliased("game_uid")
+    uid: int = pydantic.Field(alias="game_uid")
     level: int
     nickname: str
-    server: str = Aliased("region")
-    server_name: str = Aliased("region_name")
+    server: str = pydantic.Field(alias="region")
+    server_name: str = pydantic.Field(alias="region_name")
 
     @property
     def game(self) -> types.Game:
@@ -65,9 +59,9 @@ class UserInfo(APIModel):
     """Chronicle user info."""
 
     nickname: str
-    server: str = Aliased("region")
+    server: str = pydantic.Field(alias="region")
     level: int
-    icon: str = Aliased("AvatarUrl")
+    icon: str = pydantic.Field(alias="AvatarUrl")
 
 
 class RecordCardData(APIModel):
@@ -77,12 +71,12 @@ class RecordCardData(APIModel):
     value: str
 
 
-class RecordCardSetting(APIModel, Unique):
+class RecordCardSetting(APIModel):
     """Privacy setting of a record card."""
 
-    id: int = Aliased("switch_id")
-    description: str = Aliased("switch_name")
-    public: bool = Aliased("is_public")
+    id: int = pydantic.Field(alias="switch_id")
+    description: str = pydantic.Field(alias="switch_name")
+    public: bool = pydantic.Field(alias="is_public")
 
 
 class RecordCardSettingType(enum.IntEnum):
@@ -105,14 +99,15 @@ class Gender(enum.IntEnum):
 class PartialHoyolabUser(APIModel):
     """Partial hoyolab user from a search result."""
 
-    hoyolab_id: int = Aliased("uid")
+    hoyolab_id: int = pydantic.Field(alias="uid")
     nickname: str
-    introduction: str = Aliased("introduce")
-    avatar_id: int = Aliased("avatar")
+    introduction: str = pydantic.Field(alias="introduce")
+    avatar_id: int = pydantic.Field(alias="avatar")
     gender: Gender
-    icon: str = Aliased("avatar_url")
+    icon: str = pydantic.Field(alias="avatar_url")
 
-    @pydantic.validator("nickname")
+    @pydantic.field_validator("nickname")
+    @classmethod
     def __remove_highlight(cls, v: str) -> str:
         return re.sub(r"<.+?>", "", v)
 
@@ -124,7 +119,7 @@ class HoyolabUserCertification(APIModel):
     """
 
     icon_url: typing.Optional[str] = None
-    description: typing.Optional[str] = Aliased("desc", default=None)
+    description: typing.Optional[str] = pydantic.Field(alias="desc", default=None)
     type: int
 
 
@@ -146,7 +141,7 @@ class FullHoyolabUser(PartialHoyolabUser):
 
     certification: typing.Optional[HoyolabUserCertification] = None
     level: typing.Optional[HoyolabUserLevel] = None
-    pendant_url: str = Aliased("pendant")
+    pendant_url: str = pydantic.Field(alias="pendant")
     bg_url: typing.Optional[str] = None
     pc_bg_url: typing.Optional[str] = None
 
@@ -171,20 +166,16 @@ class RecordCard(GenshinAccount):
     game_id: int
     game_biz: str = ""
     game_name: str
-    game_logo: str = Aliased("logo")
-    uid: int = Aliased("game_role_id")
+    game_logo: str = pydantic.Field(alias="logo")
+    uid: int = pydantic.Field(alias="game_role_id")
 
     data: typing.Sequence[RecordCardData]
-    settings: typing.Sequence[RecordCardSetting] = Aliased("data_switches")
+    settings: typing.Sequence[RecordCardSetting] = pydantic.Field(alias="data_switches")
 
-    public: bool = Aliased("is_public")
+    public: bool = pydantic.Field(alias="is_public")
     background_image: str
-    has_uid: bool = Aliased("has_role")
+    has_uid: bool = pydantic.Field(alias="has_role")
     url: str
-
-    def as_dict(self) -> typing.Dict[str, typing.Any]:
-        """Return data as a dictionary."""
-        return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 
 
 class GenshinRecordCard(RecordCard):
