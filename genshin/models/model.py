@@ -94,7 +94,7 @@ class APIModel(BaseModel, abc.ABC):
         super().__init__(**data, lang=lang)
 
         for name in self.model_fields.keys():
-            value = getattr(self, name)
+            value = getattr(self, name, None)
             if isinstance(value, APIModel):
                 object.__setattr__(value, "lang", self.lang)
 
@@ -143,10 +143,9 @@ class APIModel(BaseModel, abc.ABC):
                 and isinstance(field.json_schema_extra, dict)
             ):
                 timezone = field.json_schema_extra.get("timezone", 0)
-                if isinstance(timezone, int):
-                    timezone = datetime.timezone(datetime.timedelta(hours=timezone))
-                if isinstance(timezone, datetime.timezone):
-                    setattr(self, name, value.replace(tzinfo=timezone))
+                tzinfo = datetime.timezone(datetime.timedelta(hours=timezone)) if isinstance(timezone, int) else None
+                if isinstance(tzinfo, datetime.timezone):
+                    setattr(self, name, value.replace(tzinfo=tzinfo))
 
         return self
 
@@ -184,7 +183,7 @@ class APIModel(BaseModel, abc.ABC):
             if not field.json_schema_extra.get("mi18n"):
                 raise TypeError(f"{field!r} does not have mi18n.")
 
-            key = field.json_schema_extra["mi18n"]
+            key = str(field.json_schema_extra["mi18n"])
             default = default or field.alias
 
         if key not in self._mi18n:
