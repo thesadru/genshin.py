@@ -79,6 +79,8 @@ class TransformerTimedelta(datetime.timedelta):
     def seconds(self) -> int:
         return self.timedata[3]
 
+    model_config = pydantic.ConfigDict(frozen=False)
+
 
 class TaskRewardStatus(str, enum.Enum):
     """Task Reward Statuses."""
