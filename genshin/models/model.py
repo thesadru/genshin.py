@@ -49,7 +49,7 @@ class APIModel(BaseModel, abc.ABC):
 
     lang: str = "UNKNOWN"
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
         """"""
@@ -146,7 +146,7 @@ class APIModel(BaseModel, abc.ABC):
             ):
                 timezone = field.json_schema_extra.get("timezone", 0)
                 if not isinstance(timezone, datetime.timezone):
-                    timezone = datetime.timezone(datetime.timedelta(hours=float(timezone)))
+                    timezone = datetime.timezone(datetime.timedelta(hours=timezone))
 
                 setattr(self, name, value.replace(tzinfo=timezone))
 
@@ -190,7 +190,7 @@ class APIModel(BaseModel, abc.ABC):
             default = default or field.alias
 
         if key not in self._mi18n:
-            return default
+            return default or ""
 
         if lang not in self._mi18n[key]:
             raise TypeError(f"mi18n not loaded for {lang}")
