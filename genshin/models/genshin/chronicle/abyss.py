@@ -109,7 +109,7 @@ class SpiralAbyss(APIModel):
         return values
 
     @pydantic.field_validator("start_time", "end_time", mode="before")
-    def __parse_timezones(cls, value: str) -> datetime.datetime:
+    def __parse_timezone(cls, value: str) -> datetime.datetime:
         return datetime.datetime.fromtimestamp(int(value), tz=CN_TIMEZONE)
 
 
