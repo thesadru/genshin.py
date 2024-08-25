@@ -196,7 +196,7 @@ class APIModel(BaseModel, abc.ABC):
         return self._mi18n[key][lang]
 
     if not typing.TYPE_CHECKING:
-        model_config = ConfigDict(frozen=False)
+        model_config = ConfigDict(frozen=False, arbitrary_types_allowed=True)
 
 
 class Unique(abc.ABC):
