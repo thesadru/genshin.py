@@ -4,17 +4,10 @@ import logging
 import re
 import typing
 
-from genshin.utility import deprecation
-
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import APIModel, Unique
+from genshin.utility import deprecation
 
 from . import constants
 
@@ -118,7 +111,7 @@ class BaseCharacter(APIModel, Unique):
 
     collab: bool = False
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))

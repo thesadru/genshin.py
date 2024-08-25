@@ -5,13 +5,7 @@ from __future__ import annotations
 import datetime
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -73,11 +67,11 @@ class TeapotReplica(APIModel, Unique):
     has_more_content: bool
     token: str
 
-    @pydantic.validator("images", pre=True)
+    @pydantic.field_validator("images", mode="before")
     def __extract_urls(cls, images: typing.Sequence[typing.Any]) -> typing.Sequence[str]:
         return [image if isinstance(image, str) else image["url"] for image in images]
 
-    @pydantic.validator("video", pre=True)
+    @pydantic.field_validator("video", mode="before")
     def __extract_url(cls, video: typing.Any) -> typing.Optional[str]:
         if isinstance(video, str):
             return video

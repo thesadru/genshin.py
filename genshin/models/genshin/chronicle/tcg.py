@@ -5,13 +5,7 @@ from __future__ import annotations
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -73,7 +67,7 @@ class TCGCost(APIModel):
     element: str = Aliased("cost_type")
     value: int = Aliased("cost_value")
 
-    @pydantic.validator("element")
+    @pydantic.field_validator("element")
     def __fix_element(cls, value: str) -> str:
         return {
             "CostTypeCryo": "Cryo",

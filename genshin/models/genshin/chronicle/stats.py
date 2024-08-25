@@ -3,13 +3,7 @@ from __future__ import annotations
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
@@ -57,9 +51,9 @@ class Stats(APIModel):
     def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
         """Turn fields into properly named ones."""
         return {
-            self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-            if field.name != "lang"
+            self._get_mi18n(field, lang or self.lang): getattr(self, field_name)
+            for field_name, field in self.model_fields.items()
+            if field_name != "lang"
         }
 
 
@@ -117,14 +111,14 @@ class Exploration(APIModel):
         """The percentage explored."""
         return self.raw_explored / 10
 
-    @pydantic.validator("offerings", pre=True)
+    @pydantic.field_validator("offerings", mode="before")
     def __add_base_offering(
         cls,
         offerings: typing.Sequence[typing.Any],
-        values: typing.Dict[str, typing.Any],
+        values: pydantic.ValidationInfo,
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
-            offerings = [*offerings, dict(name=values["type"], level=values["level"])]
+        if values.data["type"] == "Reputation" and not any(values.data["type"] == o["name"] for o in offerings):
+            offerings = [*offerings, dict(name=values.data["type"], level=values.data["level"])]
 
         return offerings
 
@@ -162,7 +156,7 @@ class PartialGenshinUserStats(APIModel):
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
-    @pydantic.validator("teapot", pre=True)
+    @pydantic.field_validator("teapot", mode="before")
     def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
         if not v:
             return None

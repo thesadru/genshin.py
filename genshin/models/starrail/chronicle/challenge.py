@@ -1,14 +1,8 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
-if TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 from genshin.models.starrail.character import FloorCharacter
@@ -83,7 +77,7 @@ class StarRailChallenge(APIModel):
     floors: List[StarRailFloor] = Aliased("all_floor_detail")
     seasons: List[StarRailChallengeSeason] = Aliased("groups")
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]
@@ -139,7 +133,7 @@ class StarRailPureFiction(APIModel):
     seasons: List[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         if "seasons" in values and isinstance(values["seasons"], List):
             seasons: List[Dict[str, Any]] = values["seasons"]

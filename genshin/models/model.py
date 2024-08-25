@@ -8,14 +8,9 @@ import sys
 import types
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-    from pydantic.v1.fields import ModelField
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic.config import JsonDict
+from pydantic.fields import FieldInfo
 
 import genshin.constants as genshin_constants
 
@@ -28,9 +23,11 @@ def _get_init_fields(cls: typing.Type[APIModel]) -> typing.Tuple[typing.Set[str]
     api_init_fields: typing.Set[str] = set()
     model_init_fields: typing.Set[str] = set()
 
-    for name, field in cls.__fields__.items():
-        alias = field.field_info.extra.get("galias")
-        if alias:
+    for name, field in cls.model_fields.items():
+        if not isinstance(field.json_schema_extra, dict):
+            continue
+        alias = field.json_schema_extra.get("galias")
+        if isinstance(alias, str):
             api_init_fields.add(alias)
             model_init_fields.add(name)
 
@@ -42,19 +39,17 @@ def _get_init_fields(cls: typing.Type[APIModel]) -> typing.Tuple[typing.Set[str]
     return api_init_fields, model_init_fields
 
 
-class APIModel(pydantic.BaseModel, abc.ABC):
+class APIModel(BaseModel, abc.ABC):
     """Modified pydantic model."""
 
     __api_init_fields__: typing.ClassVar[typing.Set[str]]
     __model_init_fields__: typing.ClassVar[typing.Set[str]]
 
-    # nasty pydantic bug fixed only on the master branch - waiting for pypi release
-    if typing.TYPE_CHECKING:
-        _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]]
-    else:
-        _mi18n = {}
+    _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]] = {}
 
     lang: str = "UNKNOWN"
+
+    model_config = ConfigDict(frozen=True)
 
     def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
         """"""
@@ -90,7 +85,7 @@ class APIModel(pydantic.BaseModel, abc.ABC):
                 if lang:
                     break
 
-                # validator, it's a skipper
+                # field_validator, it's a skipper
                 if isinstance(frame.f_locals.get("cls"), type) and issubclass(frame.f_locals["cls"], APIModel):
                     continue
 
@@ -100,7 +95,7 @@ class APIModel(pydantic.BaseModel, abc.ABC):
         object.__setattr__(self, "lang", lang)
         super().__init__(**data, lang=lang)
 
-        for name in self.__fields__.keys():
+        for name in self.model_fields.keys():
             value = getattr(self, name)
             if isinstance(value, APIModel):
                 object.__setattr__(value, "lang", self.lang)
@@ -111,7 +106,8 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     def __init_subclass__(cls) -> None:
         cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
 
-    @pydantic.root_validator(pre=True)
+    @model_validator(mode="before")
+    @classmethod
     def __parse_galias(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Due to alias being reserved for actual aliases we use a custom alias."""
         if cls.__model_init_fields__:
@@ -124,27 +120,39 @@ class APIModel(pydantic.BaseModel, abc.ABC):
                 return values
 
         aliases: typing.Dict[str, str] = {}
-        for name, field in cls.__fields__.items():
-            alias = field.field_info.extra.get("galias")
-            if alias is not None:
-                aliases[alias] = name
+        for name, field in cls.model_fields.items():
+            json_schema_extra = field.json_schema_extra
+            if callable(json_schema_extra):
+                temp_dict: JsonDict = {}
+                json_schema_extra(temp_dict)
+                json_schema_extra = temp_dict
+
+            if isinstance(json_schema_extra, dict):
+                alias = json_schema_extra.get("galias")
+                if isinstance(alias, str):
+                    aliases[alias] = name
 
         return {aliases.get(name, name): value for name, value in values.items()}
 
-    @pydantic.root_validator()
-    def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @model_validator(mode="after")
+    def __parse_timezones(self) -> "APIModel":
         """Timezones are a pain to deal with so we at least allow a plain hour offset."""
-        for name, field in cls.__fields__.items():
-            if isinstance(values.get(name), datetime.datetime) and values[name].tzinfo is None:
-                timezone = field.field_info.extra.get("timezone", 0)
+        for name, field in self.model_fields.items():
+            value = getattr(self, name)
+            if (
+                isinstance(value, datetime.datetime)
+                and value.tzinfo is None
+                and isinstance(field.json_schema_extra, dict)
+            ):
+                timezone = field.json_schema_extra.get("timezone", 0)
                 if not isinstance(timezone, datetime.timezone):
-                    timezone = datetime.timezone(datetime.timedelta(hours=timezone))
+                    timezone = datetime.timezone(datetime.timedelta(hours=float(timezone)))
 
-                values[name] = values[name].replace(tzinfo=timezone)
+                setattr(self, name, value.replace(tzinfo=timezone))
 
-        return values
+        return self
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+    def model_dump(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         """Generate a dictionary representation of the model.
 
         Takes the liberty of also giving properties as fields.
@@ -159,11 +167,11 @@ class APIModel(pydantic.BaseModel, abc.ABC):
 
                 self.__dict__[name] = value
 
-        return super().dict(**kwargs)
+        return super().model_dump(**kwargs)
 
     def _get_mi18n(
         self,
-        field: typing.Union[ModelField, str],
+        field: typing.Union[FieldInfo, str],
         lang: str,
         *,
         default: typing.Optional[str] = None,
@@ -173,11 +181,13 @@ class APIModel(pydantic.BaseModel, abc.ABC):
             key = field.lower()
             default = default or key
         else:
-            if not field.field_info.extra.get("mi18n"):
+            if not isinstance(field.json_schema_extra, dict):
+                raise TypeError(f"json_schema_extra is not a dict for {field!r}.")
+            if not field.json_schema_extra.get("mi18n"):
                 raise TypeError(f"{field!r} does not have mi18n.")
 
-            key = field.field_info.extra["mi18n"]
-            default = default or field.name
+            key = field.json_schema_extra["mi18n"]
+            default = default or field.alias
 
         if key not in self._mi18n:
             return default
@@ -186,11 +196,6 @@ class APIModel(pydantic.BaseModel, abc.ABC):
             raise TypeError(f"mi18n not loaded for {lang}")
 
         return self._mi18n[key][lang]
-
-    if not typing.TYPE_CHECKING:
-
-        class Config:
-            allow_mutation = False
 
 
 class Unique(abc.ABC):
@@ -207,7 +212,7 @@ class Unique(abc.ABC):
 
 def Aliased(
     galias: typing.Optional[str] = None,
-    default: typing.Any = pydantic.main.Undefined,  # type: ignore
+    default: typing.Any = ...,
     *,
     timezone: typing.Optional[typing.Union[int, datetime.datetime]] = None,
     mi18n: typing.Optional[str] = None,
@@ -221,4 +226,4 @@ def Aliased(
     if mi18n is not None:
         kwargs.update(mi18n=mi18n)
 
-    return pydantic.Field(default, **kwargs)
+    return Field(default, **kwargs)

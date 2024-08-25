@@ -4,13 +4,7 @@ import enum
 import typing
 from collections import defaultdict
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel, Unique
@@ -130,7 +124,7 @@ class Character(PartialCharacter):
     constellations: typing.Sequence[Constellation]
     outfits: typing.Sequence[Outfit] = Aliased("costumes")
 
-    @pydantic.validator("artifacts")
+    @pydantic.field_validator("artifacts")
     @classmethod
     def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
         set_nums: typing.DefaultDict[int, int] = defaultdict(int)
@@ -141,7 +135,7 @@ class Character(PartialCharacter):
             for effect in artifact.set.effects:
                 if effect.required_piece_num <= set_nums[artifact.set.id]:
                     # To bypass model's immutability
-                    effect = effect.copy(update={"active": True})
+                    effect = effect.model_copy(update={"active": True})
 
         return artifacts
 
@@ -154,7 +148,7 @@ class PropInfo(APIModel):
     icon: typing.Optional[str]
     filter_name: str
 
-    @pydantic.validator("name", "filter_name")
+    @pydantic.field_validator("name", "filter_name")
     @classmethod
     def __fix_names(cls, value: str) -> str:
         r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
@@ -249,7 +243,7 @@ class GenshinDetailCharacters(APIModel):
     weapon_wiki: typing.Mapping[str, str]
     avatar_wiki: typing.Mapping[str, str]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
         relic_property_options: typing.Dict[str, list[int]] = values.get("possible_artifact_stats", {})

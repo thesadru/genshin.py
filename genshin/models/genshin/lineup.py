@@ -5,13 +5,7 @@ from __future__ import annotations
 import datetime
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel, Unique
@@ -55,7 +49,7 @@ class PartialLineupCharacter(character.BaseCharacter):
 
         super().__init__(_frame=_frame + 3, **data)  # type: ignore
 
-    @pydantic.validator("element", pre=True)
+    @pydantic.field_validator("element", mode="before")
     def __parse_element(cls, value: typing.Any) -> str:
         if isinstance(value, str) and not value.isdigit():
             return value
@@ -70,7 +64,7 @@ class PartialLineupCharacter(character.BaseCharacter):
             7: "Cryo",
         }[int(value)]
 
-    @pydantic.validator("weapon_type", pre=True)
+    @pydantic.field_validator("weapon_type", mode="before")
     def __parse_weapon_type(cls, value: typing.Any) -> str:
         if isinstance(value, str) and not value.isdigit():
             return value
@@ -94,7 +88,7 @@ class PartialLineupWeapon(APIModel, Unique):
     rarity: int = Aliased("level")
     type: str = Aliased("cat_id")
 
-    @pydantic.validator("type", pre=True)
+    @pydantic.field_validator("type", mode="before")
     def __parse_weapon_type(cls, value: int) -> str:
         if isinstance(value, str) and not value.isdigit():
             return value
@@ -120,24 +114,24 @@ class PartialLineupArtifactSet(APIModel, Unique):
 class LineupArtifactStatFields(APIModel):
     """Lineup artifact stat fields."""
 
-    flower: typing.Mapping[int, str] = pydantic.Field(artifact_id=1)
-    plume: typing.Mapping[int, str] = pydantic.Field(artifact_id=2)
-    sands: typing.Mapping[int, str] = pydantic.Field(artifact_id=3)
-    goblet: typing.Mapping[int, str] = pydantic.Field(artifact_id=4)
-    circlet: typing.Mapping[int, str] = pydantic.Field(artifact_id=5)
+    flower: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={"artifact_id": 1})
+    plume: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={"artifact_id": 2})
+    sands: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={"artifact_id": 3})
+    goblet: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={"artifact_id": 4})
+    circlet: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={"artifact_id": 5})
 
     secondary_stats: typing.Mapping[int, str] = Aliased("reliquary_sec_attr")
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __flatten_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Name certain stats."""
         if "reliquary_fst_attr" not in values:
             return values
 
         artifact_ids = {
-            field.field_info.extra["artifact_id"]: name
-            for name, field in cls.__fields__.items()
-            if field.field_info.extra.get("artifact_id")
+            field.json_schema_extra["artifact_id"]: name
+            for name, field in cls.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("artifact_id")
         }
 
         for scenario in values["reliquary_fst_attr"]:
@@ -149,7 +143,7 @@ class LineupArtifactStatFields(APIModel):
 
         return values
 
-    @pydantic.validator("secondary_stats", "flower", "plume", "sands", "goblet", "circlet", pre=True)
+    @pydantic.field_validator("secondary_stats", "flower", "plume", "sands", "goblet", "circlet", mode="before")
     def __parse_secondary_stats(cls, value: typing.Any) -> typing.Dict[int, str]:
         if not isinstance(value, typing.Sequence):
             return value
@@ -192,13 +186,13 @@ class LineupScenario(APIModel, Unique):
     name: str
     children: typing.Sequence[LineupScenario]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __flatten_scenarios(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Name certain scenarios."""
         scenario_ids = {
-            field.field_info.extra["scenario_id"]: name
-            for name, field in cls.__fields__.items()
-            if field.field_info.extra.get("scenario_id")
+            field.json_schema_extra["scenario_id"]: name
+            for name, field in cls.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("scenario_id")
         }
 
         for scenario in values["children"]:
@@ -223,23 +217,23 @@ class LineupScenario(APIModel, Unique):
 class LineupWorldScenarios(LineupScenario):
     """Lineup world scenario."""
 
-    trounce_domains: LineupScenario = pydantic.Field(scenario_id=3)
-    domain_challenges: LineupScenario = pydantic.Field(scenario_id=9)
-    battles: LineupScenario = pydantic.Field(scenario_id=24)
+    trounce_domains: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 3})
+    domain_challenges: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 9})
+    battles: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 24})
 
 
 class LineupAbyssScenarios(LineupScenario):
     """Lineup abyss scenario."""
 
-    corridor: LineupScenario = pydantic.Field(scenario_id=42)
-    spire: LineupScenario = pydantic.Field(scenario_id=41)
+    corridor: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 42})
+    spire: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 41})
 
 
 class LineupScenarios(LineupScenario):
     """Lineup scenarios."""
 
-    world: LineupWorldScenarios = pydantic.Field(scenario_id=1)
-    abyss: LineupAbyssScenarios = pydantic.Field(scenario_id=2)
+    world: LineupWorldScenarios = pydantic.Field(json_schema_extra={"scenario_id": 1})
+    abyss: LineupAbyssScenarios = pydantic.Field(json_schema_extra={"scenario_id": 2})
 
 
 class LineupCharacterPreview(PartialLineupCharacter):
@@ -250,7 +244,7 @@ class LineupCharacterPreview(PartialLineupCharacter):
     icon: str = Aliased("standard_icon")
     pc_icon: str = Aliased("pc_icon")
 
-    @pydantic.validator("role", pre=True)
+    @pydantic.field_validator("role", mode="before")
     def __parse_role(cls, value: typing.Any) -> str:
         if isinstance(value, str):
             return value
@@ -291,7 +285,7 @@ class LineupPreview(APIModel, Unique):
 
     original_lang: str = Aliased("trans_from")
 
-    @pydantic.validator("characters", pre=True)
+    @pydantic.field_validator("characters", mode="before")
     def __parse_characters(cls, value: typing.Any) -> typing.Any:
         if isinstance(value[0], typing.Sequence):
             return value

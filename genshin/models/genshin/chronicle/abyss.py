@@ -1,13 +1,7 @@
 import datetime
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
@@ -56,9 +50,9 @@ class CharacterRanks(APIModel):
     def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
         """Turn fields into properly named ones."""
         return {
-            self._get_mi18n(field, lang or self.lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-            if field.name != "lang"
+            self._get_mi18n(field, lang or self.lang): getattr(self, field_name)
+            for field_name, field in self.model_fields.items()
+            if field_name != "lang"
         }
 
 
@@ -108,13 +102,13 @@ class SpiralAbyss(APIModel):
 
     floors: typing.Sequence[Floor]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __nest_ranks(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, AbyssCharacter]:
         """By default ranks are for some reason on the same level as the rest of the abyss."""
         values.setdefault("ranks", {}).update(values)
         return values
 
-    @pydantic.validator("start_time", "end_time", pre=True)
+    @pydantic.field_validator("start_time", "end_time", mode="before")
     def __parse_timezones(cls, value: str) -> datetime.datetime:
         return datetime.datetime.fromtimestamp(int(value), tz=CN_TIMEZONE)
 

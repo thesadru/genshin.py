@@ -2,13 +2,7 @@
 
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
@@ -26,12 +20,12 @@ __all__ = [
 def _model_to_dict(model: APIModel, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
     """Turn fields into properly named ones."""
     ret: typing.Dict[str, typing.Any] = {}
-    for field in model.__fields__.values():
-        if not field.field_info.extra.get("mi18n"):
+    for field_name, field in model.model_fields.items():
+        if isinstance(field.json_schema_extra, dict) and not field.json_schema_extra.get("mi18n"):
             continue
 
         mi18n = model._get_mi18n(field, lang)
-        val = getattr(model, field.name)
+        val = getattr(model, field_name)
         if isinstance(val, APIModel):
             ret[mi18n] = _model_to_dict(val, lang)
         else:
@@ -51,7 +45,7 @@ class MemorialArenaStats(APIModel):
     raw_tier: int =  Aliased("battle_field_area",               mi18n="bbs/settled_level")
     # fmt: on
 
-    @pydantic.validator("ranking", pre=True)
+    @pydantic.field_validator("ranking", mode="before")
     def __normalize_ranking(cls, value: typing.Union[str, float]) -> float:
         return float(value) if value else 0
 
@@ -126,7 +120,7 @@ class OldAbyssStats(APIModel):
     latest_type: str =                            Aliased(                    mi18n="bbs/latest_type")
     # fmt: on
 
-    @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
+    @pydantic.field_validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", mode="before")
     def __normalize_rank(cls, rank: typing.Optional[str]) -> typing.Optional[int]:  # modes.OldAbyss.__normalize_rank
         if isinstance(rank, int):
             return rank
@@ -224,7 +218,7 @@ class HonkaiStats(APIModel):
     memorial_arena: MemorialArenaStats = Aliased(mi18n="bbs/battle_field_ranking_percentage")
     elysian_realm: ElysianRealmStats = Aliased(mi18n="bbs/godwor")
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __pack_gamemode_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if "new_abyss" in values:
             values["abyss"] = SuperstringAbyssStats(**values["new_abyss"], **values)

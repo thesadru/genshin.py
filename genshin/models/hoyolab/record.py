@@ -6,13 +6,7 @@ import enum
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin import types
 from genshin.models.model import Aliased, APIModel, Unique
@@ -112,7 +106,7 @@ class PartialHoyolabUser(APIModel):
     gender: Gender
     icon: str = Aliased("avatar_url")
 
-    @pydantic.validator("nickname")
+    @pydantic.field_validator("nickname")
     def __remove_highlight(cls, v: str) -> str:
         return re.sub(r"<.+?>", "", v)
 

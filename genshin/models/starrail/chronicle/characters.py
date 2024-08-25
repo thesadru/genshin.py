@@ -1,16 +1,9 @@
 """Starrail chronicle character."""
 
 import enum
-import typing
 from typing import Any, Mapping, Optional, Sequence
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
@@ -183,7 +176,7 @@ class StarRailDetailCharacters(APIModel):
     recommend_property: Mapping[str, RecommendProperty]
     relic_properties: Sequence[ModifyRelicProperty]
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __fill_additional_fields(cls, values: Mapping[str, Any]) -> Mapping[str, Any]:
         """Fill additional fields for convenience."""
         characters = values.get("avatar_list", [])

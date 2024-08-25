@@ -339,7 +339,7 @@ async def login(account: str, password: str, port: int) -> None:
     """Login with a password."""
     client = genshin.Client()
     result = await client.os_login_with_password(account, password, port=port)
-    cookies = await genshin.complete_cookies(result.dict())
+    cookies = await genshin.complete_cookies(result.model_dump())
 
     base: http.cookies.BaseCookie[str] = http.cookies.BaseCookie(cookies)
     click.echo(f"Your cookies are: {click.style(base.output(header='', sep=';'), bold=True)}")
