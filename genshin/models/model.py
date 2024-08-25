@@ -49,8 +49,6 @@ class APIModel(BaseModel, abc.ABC):
 
     lang: str = "UNKNOWN"
 
-    model_config = ConfigDict(frozen=False)
-
     def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
         """"""
         from genshin.client.components import base as client_base
@@ -134,7 +132,7 @@ class APIModel(BaseModel, abc.ABC):
 
         return {aliases.get(name, name): value for name, value in values.items()}
 
-    @model_validator(mode="after")
+    @model_validator(mode="before")
     def __parse_timezones(self) -> "APIModel":
         """Timezones are a pain to deal with so we at least allow a plain hour offset."""
         for name, field in self.model_fields.items():
@@ -145,10 +143,10 @@ class APIModel(BaseModel, abc.ABC):
                 and isinstance(field.json_schema_extra, dict)
             ):
                 timezone = field.json_schema_extra.get("timezone", 0)
-                if not isinstance(timezone, datetime.timezone):
+                if isinstance(timezone, int):
                     timezone = datetime.timezone(datetime.timedelta(hours=timezone))
-
-                setattr(self, name, value.replace(tzinfo=timezone))
+                if isinstance(timezone, datetime.timezone):
+                    setattr(self, name, value.replace(tzinfo=timezone))
 
         return self
 
@@ -196,6 +194,9 @@ class APIModel(BaseModel, abc.ABC):
             raise TypeError(f"mi18n not loaded for {lang}")
 
         return self._mi18n[key][lang]
+
+    if not typing.TYPE_CHECKING:
+        model_config = ConfigDict(frozen=False)
 
 
 class Unique(abc.ABC):
