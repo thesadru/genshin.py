@@ -49,7 +49,7 @@ class APIModel(BaseModel, abc.ABC):
 
     lang: str = "UNKNOWN"
 
-    model_config = ConfigDict(arbitrary_types_allowed=True)
+    model_config = ConfigDict(frozen=False)
 
     def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
         """"""
