@@ -51,7 +51,7 @@ class PartialLineupCharacter(character.BaseCharacter):
         if data.get("pc_icon") and data.get("icon"):
             ...
         elif icons_amount >= 2 and "static" in data.get("icon", ""):
-            data["standard_icon"] = data.pop("icon")
+            data["pc_icon"] = data.pop("icon")
 
         super().__init__(_frame=_frame + 3, **data)  # type: ignore
 
