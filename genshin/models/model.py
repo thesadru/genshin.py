@@ -29,7 +29,7 @@ def _get_init_fields(cls: typing.Type[APIModel]) -> typing.Tuple[typing.Set[str]
     model_init_fields: typing.Set[str] = set()
 
     for name, field in cls.__fields__.items():
-        alias = field.field_info.extra.get("galias")
+        alias = field.field_info.alias
         if alias:
             api_init_fields.add(alias)
             model_init_fields.add(name)
@@ -111,26 +111,6 @@ class APIModel(pydantic.BaseModel, abc.ABC):
     def __init_subclass__(cls) -> None:
         cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
 
-    @pydantic.root_validator(pre=True)
-    def __parse_galias(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        """Due to alias being reserved for actual aliases we use a custom alias."""
-        if cls.__model_init_fields__:
-            # has all model init fields
-            if cls.__model_init_fields__.issubset(set(values)):
-                return values
-
-            # has some model init fields but no api init fields
-            if set(values) & cls.__model_init_fields__ and not set(values) & cls.__api_init_fields__:
-                return values
-
-        aliases: typing.Dict[str, str] = {}
-        for name, field in cls.__fields__.items():
-            alias = field.field_info.extra.get("galias")
-            if alias is not None:
-                aliases[alias] = name
-
-        return {aliases.get(name, name): value for name, value in values.items()}
-
     @pydantic.root_validator()
     def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Timezones are a pain to deal with so we at least allow a plain hour offset."""
@@ -206,7 +186,7 @@ class Unique(abc.ABC):
 
 
 def Aliased(
-    galias: typing.Optional[str] = None,
+    alias: typing.Optional[str] = None,
     default: typing.Any = pydantic.main.Undefined,  # type: ignore
     *,
     timezone: typing.Optional[typing.Union[int, datetime.datetime]] = None,
@@ -214,11 +194,9 @@ def Aliased(
     **kwargs: typing.Any,
 ) -> typing.Any:
     """Create an aliased field."""
-    if galias is not None:
-        kwargs.update(galias=galias)
     if timezone is not None:
         kwargs.update(timezone=timezone)
     if mi18n is not None:
         kwargs.update(mi18n=mi18n)
 
-    return pydantic.Field(default, **kwargs)
+    return pydantic.Field(default, alias=alias, **kwargs)
