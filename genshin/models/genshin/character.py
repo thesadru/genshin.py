@@ -42,9 +42,6 @@ def _parse_icon(icon: typing.Union[str, int]) -> str:
 
 
 def _create_icon(icon: str, specifier: str) -> str:
-    if "http" in icon and "genshin" not in icon:
-        return icon  # no point in trying to parse invalid urls
-
     icon_name = _parse_icon(icon)
     return ICON_BASE + f"{specifier.format(icon_name)}.png"
 
