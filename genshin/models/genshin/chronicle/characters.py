@@ -252,9 +252,9 @@ class GenshinDetailCharacters(APIModel):
     @pydantic.root_validator(pre=True)
     def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
-        relic_property_options: typing.Dict[str, list[int]] = values.get("possible_artifact_stats", {})
+        relic_property_options: typing.Dict[str, list[int]] = values.get("relic_property_options", {})
         prop_map: typing.Dict[str, typing.Dict[str, typing.Any]] = values.get("property_map", {})
-        characters: list[typing.Dict[str, typing.Any]] = values.get("characters", [])
+        characters: list[typing.Dict[str, typing.Any]] = values.get("list", [])
 
         # Map properties to artifacts
         new_relic_prop_options: typing.Dict[str, list[typing.Dict[str, typing.Any]]] = {}
@@ -264,8 +264,8 @@ class GenshinDetailCharacters(APIModel):
             ]
             new_relic_prop_options[relic_type] = formatted_properties
 
-        # Override possible_artifact_stats
-        values["possible_artifact_stats"] = new_relic_prop_options
+        # Override relic_property_options
+        values["relic_property_options"] = new_relic_prop_options
 
         for char in characters:
             # Extract character info from .base
