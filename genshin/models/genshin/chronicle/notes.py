@@ -142,7 +142,7 @@ class DailyTasks(APIModel):
     attendance_visible: bool
 
     stored_attendance: float
-    stored_attendance_refresh_countdown: datetime.timedelta = Aliased("attendance_refresh_time")
+    stored_attendance_refresh_countdown: typing.Optional[datetime.timedelta] = Aliased("attendance_refresh_time", default=None)
 
 
 class ArchonQuestStatus(str, enum.Enum):
