@@ -24,29 +24,8 @@ __all__ = ["APIModel", "Aliased", "Unique"]
 _SENTINEL = object()
 
 
-def _get_init_fields(cls: typing.Type[APIModel]) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
-    api_init_fields: typing.Set[str] = set()
-    model_init_fields: typing.Set[str] = set()
-
-    for name, field in cls.__fields__.items():
-        alias = field.field_info.alias
-        if alias:
-            api_init_fields.add(alias)
-            model_init_fields.add(name)
-
-    for name in dir(cls):
-        obj = getattr(cls, name, None)
-        if isinstance(obj, property):
-            model_init_fields.add(name)
-
-    return api_init_fields, model_init_fields
-
-
 class APIModel(pydantic.BaseModel, abc.ABC):
     """Modified pydantic model."""
-
-    __api_init_fields__: typing.ClassVar[typing.Set[str]]
-    __model_init_fields__: typing.ClassVar[typing.Set[str]]
 
     # nasty pydantic bug fixed only on the master branch - waiting for pypi release
     if typing.TYPE_CHECKING:
@@ -107,9 +86,6 @@ class APIModel(pydantic.BaseModel, abc.ABC):
 
         if self.lang not in genshin_constants.LANGS:
             raise Exception(f"Invalid model lang: {self.lang}")
-
-    def __init_subclass__(cls) -> None:
-        cls.__api_init_fields__, cls.__model_init_fields__ = _get_init_fields(cls)
 
     @pydantic.root_validator()
     def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
