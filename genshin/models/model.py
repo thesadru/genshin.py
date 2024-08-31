@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import abc
 import datetime
-import sys
-import types
 import typing
 
 if typing.TYPE_CHECKING:
@@ -17,7 +15,6 @@ else:
     except ImportError:
         import pydantic
 
-import genshin.constants as genshin_constants
 
 __all__ = ["APIModel", "Aliased", "Unique"]
 
@@ -27,65 +24,7 @@ _SENTINEL = object()
 class APIModel(pydantic.BaseModel, abc.ABC):
     """Modified pydantic model."""
 
-    # nasty pydantic bug fixed only on the master branch - waiting for pypi release
-    if typing.TYPE_CHECKING:
-        _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]]
-    else:
-        _mi18n = {}
-
-    lang: str = "UNKNOWN"
-
-    def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
-        """"""
-        from genshin.client.components import base as client_base
-
-        lang = data.pop("lang", None)
-
-        if lang is None:
-            frames = [sys._getframe(_frame)]
-            while _frame <= 100:  # ensure we give up in a reasonable amount of time
-                _frame += 1
-                try:
-                    frame = sys._getframe(_frame)
-                except ValueError:
-                    break
-
-                if frame.f_code.co_name == "__init__" and frame.f_code.co_filename == __file__:
-                    frames.append(frame)
-                    break
-
-            for frame in frames:
-                if frame.f_code.co_name == "<listcomp>":
-                    frame = typing.cast("types.FrameType", frame.f_back)
-                    assert frame
-
-                if isinstance(frame.f_locals.get("lang"), str):
-                    lang = frame.f_locals["lang"]
-
-                for name, value in frame.f_locals.items():
-                    if isinstance(value, (APIModel, client_base.BaseClient)):
-                        lang = value.lang
-
-                if lang:
-                    break
-
-                # validator, it's a skipper
-                if isinstance(frame.f_locals.get("cls"), type) and issubclass(frame.f_locals["cls"], APIModel):
-                    continue
-
-            else:
-                raise Exception("lang not found")
-
-        object.__setattr__(self, "lang", lang)
-        super().__init__(**data, lang=lang)
-
-        for name in self.__fields__.keys():
-            value = getattr(self, name)
-            if isinstance(value, APIModel):
-                object.__setattr__(value, "lang", self.lang)
-
-        if self.lang not in genshin_constants.LANGS:
-            raise Exception(f"Invalid model lang: {self.lang}")
+    _mi18n: typing.ClassVar[typing.Dict[str, typing.Dict[str, str]]] = {}
 
     @pydantic.root_validator()
     def __parse_timezones(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:

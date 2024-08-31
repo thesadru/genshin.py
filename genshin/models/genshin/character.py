@@ -123,7 +123,7 @@ class BaseCharacter(APIModel, Unique):
         """Complete missing data."""
         id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
 
-        char = _get_db_char(id, name, icon, element, rarity, lang=values["lang"])
+        char = _get_db_char(id, name, icon, element, rarity, lang="en-us")
         icon = _create_icon(char.icon_name, "UI_AvatarIcon_{}")
 
         values["id"] = char.id
