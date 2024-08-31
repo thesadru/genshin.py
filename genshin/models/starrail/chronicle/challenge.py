@@ -85,8 +85,8 @@ class StarRailChallenge(APIModel):
 
     @pydantic.root_validator(pre=True)
     def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "seasons" in values and isinstance(values["seasons"], List):
-            seasons: List[Dict[str, Any]] = values["seasons"]
+        if "groups" in values and isinstance(values["groups"], List):
+            seasons: List[Dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
 
@@ -141,8 +141,8 @@ class StarRailPureFiction(APIModel):
 
     @pydantic.root_validator(pre=True)
     def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "seasons" in values and isinstance(values["seasons"], List):
-            seasons: List[Dict[str, Any]] = values["seasons"]
+        if "seasons" in values and isinstance(values["groups"], List):
+            seasons: List[Dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
                 values["season_id"] = seasons[0]["schedule_id"]
