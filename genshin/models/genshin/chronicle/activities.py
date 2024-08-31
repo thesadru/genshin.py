@@ -43,7 +43,7 @@ class OldActivity(APIModel, pydantic_generics.GenericModel, typing.Generic[Model
     records: typing.Sequence[ModelT]
 
 
-class Activity(OldActivity[ModelT]):
+class Activity(OldActivity[ModelT], typing.Generic[ModelT]):
     """Arbitrary activity for chinese events."""
 
     start_time: typing.Optional[datetime.datetime] = None
