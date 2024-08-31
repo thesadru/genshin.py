@@ -45,6 +45,16 @@ class PartialLineupCharacter(character.BaseCharacter):
     icon: str = Aliased("head_icon")
     pc_icon: str = Aliased("standard_icon")
 
+    def __init__(self, _frame: int = 1, **data: typing.Any) -> None:
+        # rename "icon" due to pydantic's aliasing
+        icons_amount = sum(1 for key, value in data.items() if "icon" in key if value)
+        if data.get("pc_icon") and data.get("icon"):
+            ...
+        elif icons_amount >= 2 and "static" in data.get("icon", ""):
+            data["standard_icon"] = data.pop("icon")
+
+        super().__init__(_frame=_frame + 3, **data)  # type: ignore
+
     @pydantic.validator("element", pre=True)
     def __parse_element(cls, value: typing.Any) -> str:
         if isinstance(value, str) and not value.isdigit():
