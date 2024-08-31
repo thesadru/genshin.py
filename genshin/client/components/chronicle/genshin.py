@@ -79,13 +79,32 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record("character", uid, lang=lang, method="POST")
         return [models.Character(**i) for i in data["avatars"]]
 
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: int,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -> models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: int,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_detailed_characters(
         self,
         uid: int,
         *,
         characters: typing.Optional[typing.Sequence[int]] = None,
         lang: typing.Optional[str] = None,
-    ) -> models.GenshinDetailCharacters:
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
         """Return a list of genshin characters with full details."""
         if (
             characters is None
@@ -96,6 +115,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record(
             "character/detail", uid, lang=lang, method="POST", payload={"character_ids": (*characters,)}
         )
+        if return_raw_data:
+            return data
         return models.GenshinDetailCharacters(**data)
 
     async def get_genshin_user(
