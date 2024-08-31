@@ -121,7 +121,14 @@ class BaseCharacter(APIModel, Unique):
     @pydantic.root_validator(pre=True)
     def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
-        id, name, icon, element, rarity = (values.get(x) for x in ("id", "name", "icon", "element", "rarity"))
+        all_fields = list(cls.__fields__.keys())
+        all_aliases = {f: cls.__fields__[f].alias for f in all_fields if cls.__fields__[f].alias}
+        # If the field is aliased, it may have a different key name in 'values',
+        # e.g. 'id' is aliased to 'avatar_id', so we need to get the correct key name from the alias
+
+        id, name, icon, element, rarity = (
+            values.get(all_aliases.get(x, x)) for x in ("id", "name", "icon", "element", "rarity")
+        )
 
         char = _get_db_char(id, name, icon, element, rarity, lang="en-us")
         icon = _create_icon(char.icon_name, "UI_AvatarIcon_{}")
