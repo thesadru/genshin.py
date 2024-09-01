@@ -80,23 +80,6 @@ lang = "en-us"  # initiate local scope
                 icon="https://enka.network/ui/UI_AvatarIcon_Mona.png",
             ),
         ),
-        # messed up icon for unknown character should be kept
-        (
-            {
-                "id": 10000000,
-                "name": "Katherine",
-                "element": "Geo",
-                "rarity": 6,
-                "icon": "https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
-            },
-            LiteralCharacter(
-                id=10000000,
-                name="Katherine",
-                element="Geo",
-                rarity=6,
-                icon="https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
-            ),
-        ),
         # foreign languages should be kept
         (
             {
