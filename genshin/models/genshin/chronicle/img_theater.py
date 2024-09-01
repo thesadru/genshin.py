@@ -42,7 +42,7 @@ class TheaterDifficulty(enum.IntEnum):
     EASY = 1
     NORMAL = 2
     HARD = 3
-    IDK = 4
+    VISIONARY = 4
 
 
 class ActCharacter(character.BaseCharacter):
