@@ -45,6 +45,7 @@ class Stats(APIModel):
     dendroculi: int =         Aliased("dendroculus_number",     mi18n="bbs/dendro_culus")
     electroculi: int =        Aliased("electroculus_number",    mi18n="bbs/electroculus_god")
     hydroculi: int =          Aliased("hydroculus_number",      mi18n="bbs/hydro_god")
+    pyroculi: int =           Aliased("pyroculus_number",       mi18n="bbs/pyro_gid")
     common_chests: int =      Aliased("common_chest_number",    mi18n="bbs/general_treasure_box_count")
     exquisite_chests: int =   Aliased("exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")
     precious_chests: int =    Aliased("precious_chest_number",  mi18n="bbs/rarity_treasure_box_count")
