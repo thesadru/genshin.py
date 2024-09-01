@@ -1,6 +1,7 @@
 """Public genshin announcement models."""
 
 import datetime
+import typing
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -15,6 +16,7 @@ class Announcement(APIModel, Unique):
     subtitle: str
     banner: str
     content: str
+    img: typing.Optional[str] = None
 
     type_label: str
     type: int
