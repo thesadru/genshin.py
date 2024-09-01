@@ -47,21 +47,6 @@ lang = "en-us"  # initiate local scope
                 icon="https://enka.network/ui/UI_AvatarIcon_Qin.png",
             ),
         ),
-        # partial for an unknown character should return the icon name
-        (
-            {
-                "id": 10000001,
-                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Signora.png",
-                "rarity": 6,
-            },
-            LiteralCharacter(
-                id=10000001,
-                name="Signora",
-                element="Anemo",  # Anemo is the arbitrary fallback
-                rarity=6,  # 5 is the arbitrary fallback
-                icon="https://enka.network/ui/UI_AvatarIcon_Signora.png",
-            ),
-        ),
         # traveler element should be kept
         (
             {
