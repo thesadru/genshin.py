@@ -69,6 +69,14 @@ EMAIL_VERIFY_HEADERS = {
     "x-rpc-client_type": "2",
 }
 
+QRCODE_HEADERS = {
+    "x-rpc-app_id": "bll8iq97cem8",
+    "x-rpc-client_type": "4",
+    "x-rpc-game_biz": "bbs_cn",
+    "x-rpc-device_fp": "38d7fa104e5d7",
+    "x-rpc-device_id": "586f1440-856a-4243-8076-2b0a12314197",
+}
+
 CREATE_MMT_HEADERS = {
     types.Region.OVERSEAS: {
         "x-rpc-challenge_path": "https://bbs-api-os.hoyolab.com/game_record/app/hkrpg/api/challenge",

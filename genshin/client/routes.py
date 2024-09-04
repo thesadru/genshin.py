@@ -269,8 +269,8 @@ CHECK_MOBILE_VALIDITY_URL = Route("https://webapi.account.mihoyo.com/Api/is_mobi
 MOBILE_OTP_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-verifier/verifier/createLoginCaptcha")
 MOBILE_LOGIN_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/loginByMobileCaptcha")
 
-CREATE_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch")
-CHECK_QRCODE_URL = Route("https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/query")
+CREATE_QRCODE_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/createQRLogin")
+CHECK_QRCODE_URL = Route("https://passport-api.miyoushe.com/account/ma-cn-passport/web/queryQRLoginStatus")
 
 CREATE_MMT_URL = InternationalRoute(
     overseas="https://sg-public-api.hoyolab.com/event/toolcomsrv/risk/createGeetest?is_high=true",

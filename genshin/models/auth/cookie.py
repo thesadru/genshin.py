@@ -58,11 +58,12 @@ class QRLoginResult(CookieLoginResult):
     Returned by `client.login_with_qrcode`.
     """
 
-    stoken_v2: str
-    account_id: str
-    ltuid: str
-    ltmid: str
-    cookie_token: str
+    cookie_token_v2: str
+    account_mid_v2: str
+    account_id_v2: str
+    ltoken_v2: str
+    ltmid_v2: str
+    ltuid_v2: str
 
 
 class AppLoginResult(CookieLoginResult):

@@ -15,7 +15,6 @@ from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.client.manager import managers
-from genshin.client.manager.cookie import fetch_cookie_token_with_game_token, fetch_stoken_with_game_token
 from genshin.models.auth.cookie import (
     AppLoginResult,
     CNWebLoginResult,
@@ -247,35 +246,19 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         scanned = False
         while True:
-            check_result = await self._check_qrcode(
-                creation_result.app_id, creation_result.device_id, creation_result.ticket
-            )
-            if check_result.status == QRCodeStatus.SCANNED and not scanned:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
                 LOGGER_.info("QR code scanned")
                 scanned = True
-            elif check_result.status == QRCodeStatus.CONFIRMED:
+            elif status is QRCodeStatus.CONFIRMED:
                 LOGGER_.info("QR code login confirmed")
                 break
 
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
 
-        raw_data = check_result.payload.raw
-        assert raw_data is not None
-
-        cookie_token = await fetch_cookie_token_with_game_token(
-            game_token=raw_data.game_token, account_id=raw_data.account_id
-        )
-        stoken = await fetch_stoken_with_game_token(game_token=raw_data.game_token, account_id=int(raw_data.account_id))
-
-        cookies = {
-            "stoken_v2": stoken.token,
-            "ltuid": stoken.aid,
-            "account_id": stoken.aid,
-            "ltmid": stoken.mid,
-            "cookie_token": cookie_token,
-        }
         self.set_cookies(cookies)
-        return QRLoginResult(**cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
 
     @managers.no_multi
     async def create_mmt(self) -> MMT:
