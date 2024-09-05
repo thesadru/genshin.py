@@ -72,10 +72,10 @@ class WishClient(base.BaseClient):
             # America: UTC-5, Europe: UTC+1, others are UTC+8
             tz_offsets = {"os_usa": -13, "os_euro": -7}
             tz_offset = tz_offsets.get(data["region"], 0)
-
-        tz_offset = data["region_time_zone"]
-        if game is types.Game.STARRAIL:
-            tz_offset -= 8  # Star rail returns UTC+n for this value
+        else:
+            tz_offset = data["region_time_zone"]
+            if game is types.Game.STARRAIL:
+                tz_offset -= 8  # Star rail returns UTC+n for this value
 
         return data["list"], tz_offset
 
