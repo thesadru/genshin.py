@@ -21,6 +21,7 @@ __all__ = [
     "BannerDetailsUpItem",
     "GachaItem",
     "GenshinBannerType",
+    "StarRailBannerType",
     "SignalSearch",
     "Warp",
     "Wish",
