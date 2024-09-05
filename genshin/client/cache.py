@@ -215,6 +215,13 @@ class SQLiteCache(BaseCache):
         self.ttl = ttl
         self.static_ttl = static_ttl
 
+    async def _clear_cache(self) -> None:
+        """Clear timed-out items."""
+        now = time.time()
+
+        await self.conn.execute("DELETE FROM cache WHERE expiration < ?", (now,))
+        await self.conn.commit()
+
     async def initialize(self) -> None:
         """Initialize the cache."""
         await self.conn.execute(
@@ -254,6 +261,8 @@ class SQLiteCache(BaseCache):
         )
         await self.conn.commit()
 
+        await self._clear_cache()
+
     async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
         """Get a static object with a key."""
         return await self.get(key)
@@ -265,3 +274,5 @@ class SQLiteCache(BaseCache):
             (self.serialize_key(key), self.serialize_value(value), int(time.time() + self.static_ttl)),
         )
         await self.conn.commit()
+
+        await self._clear_cache()
