@@ -57,7 +57,7 @@ class WishClient(base.BaseClient):
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
         authkey: typing.Optional[str] = None,
-    ) -> typing.Sequence[typing.Any]:
+    ) -> typing.Tuple[typing.Sequence[typing.Any], int]:
         """Get a single page of wishes."""
         data = await self.request_gacha_info(
             "getGachaLog",
@@ -66,7 +66,18 @@ class WishClient(base.BaseClient):
             authkey=authkey,
             params=dict(gacha_type=banner_type, real_gacha_type=banner_type, size=20, end_id=end_id),
         )
-        return data["list"]
+
+        if game is types.Game.GENSHIN:
+            # Genshin doesn't return timezone data
+            # America: UTC-5, Europe: UTC+1, others are UTC+8
+            tz_offsets = {"os_usa": -13, "os_euro": -7}
+            tz_offset = tz_offsets.get(data["region"], 0)
+
+        tz_offset = data["region_time_zone"]
+        if game is types.Game.STARRAIL:
+            tz_offset -= 8  # Star rail returns UTC+n for this value
+
+        return data["list"], tz_offset
 
     async def _get_wish_page(
         self,
@@ -77,15 +88,14 @@ class WishClient(base.BaseClient):
         authkey: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Wish]:
         """Get a single page of wishes."""
-        data = await self._get_gacha_page(
+        data, tz_offset = await self._get_gacha_page(
             end_id=end_id,
             banner_type=banner_type,
             lang=lang,
             authkey=authkey,
             game=types.Game.GENSHIN,
         )
-
-        return [models.Wish(**i, banner_type=banner_type) for i in data]
+        return [models.Wish(**i, banner_type=banner_type, tz_offset=tz_offset) for i in data]
 
     async def _get_warp_page(
         self,
@@ -96,7 +106,7 @@ class WishClient(base.BaseClient):
         authkey: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Warp]:
         """Get a single page of warps."""
-        data = await self._get_gacha_page(
+        data, tz_offset = await self._get_gacha_page(
             end_id=end_id,
             banner_type=banner_type,
             lang=lang,
@@ -104,7 +114,7 @@ class WishClient(base.BaseClient):
             game=types.Game.STARRAIL,
         )
 
-        return [models.Warp(**i, banner_type=banner_type) for i in data]
+        return [models.Warp(**i, banner_type=banner_type, tz_offset=tz_offset) for i in data]
 
     async def _get_signal_page(
         self,
@@ -115,7 +125,7 @@ class WishClient(base.BaseClient):
         authkey: typing.Optional[str] = None,
     ) -> typing.Sequence[models.SignalSearch]:
         """Get a single page of warps."""
-        data = await self._get_gacha_page(
+        data, tz_offset = await self._get_gacha_page(
             end_id=end_id,
             banner_type=banner_type,
             lang=lang,
@@ -123,7 +133,7 @@ class WishClient(base.BaseClient):
             game=types.Game.ZZZ,
         )
 
-        return [models.SignalSearch(**i, banner_type=banner_type) for i in data]
+        return [models.SignalSearch(**i, banner_type=banner_type, tz_offset=tz_offset) for i in data]
 
     def wish_history(
         self,

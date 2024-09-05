@@ -85,17 +85,30 @@ class ZZZBannerType(enum.IntEnum):
     """Bangboo banner."""
 
 
-class Wish(APIModel, Unique):
-    """Wish made on any banner."""
+class BaseWish(APIModel, Unique):
+    """Base wish model."""
 
     uid: int
-
     id: int
-    type: str = Aliased("item_type")
     name: str
     rarity: int = Aliased("rank_type")
-    time: datetime.datetime
 
+    tz_offset: int
+    """Number of hours from UTC+8."""
+    time: datetime.datetime
+    """Timezone-aware time of when the wish was made"""
+
+    @pydantic.validator("time", pre=True)
+    def __parse_time(cls, v: str, values: typing.Dict[str, typing.Any]) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(v).replace(
+            tzinfo=datetime.timezone(datetime.timedelta(hours=8 + values["tz_offset"]))
+        )
+
+
+class Wish(BaseWish):
+    """Wish made on any banner."""
+
+    type: str = Aliased("item_type")
     banner_type: GenshinBannerType
 
     @pydantic.validator("banner_type", pre=True)
@@ -103,17 +116,11 @@ class Wish(APIModel, Unique):
         return int(v)
 
 
-class Warp(APIModel, Unique):
+class Warp(BaseWish):
     """Warp made on any banner."""
 
-    uid: int
-
-    id: int
     item_id: int
     type: str = Aliased("item_type")
-    name: str
-    rarity: int = Aliased("rank_type")
-    time: datetime.datetime
 
     banner_type: StarRailBannerType
     banner_id: int = Aliased("gacha_id")
@@ -123,17 +130,11 @@ class Warp(APIModel, Unique):
         return int(v)
 
 
-class SignalSearch(APIModel, Unique):
+class SignalSearch(BaseWish):
     """Signal Search made on any banner."""
 
-    uid: int
-
-    id: int
     item_id: int
     type: str = Aliased("item_type")
-    name: str
-    rarity: int = Aliased("rank_type")
-    time: datetime.datetime
 
     banner_type: ZZZBannerType
 
