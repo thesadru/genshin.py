@@ -12,8 +12,9 @@ import typing
 
 if typing.TYPE_CHECKING:
     import aioredis
+    import aiosqlite
 
-__all__ = ["BaseCache", "Cache", "RedisCache", "StaticCache"]
+__all__ = ["BaseCache", "Cache", "RedisCache", "StaticCache", "SQLiteCache"]
 
 MINUTE = 60
 HOUR = MINUTE * 60
@@ -200,3 +201,67 @@ class RedisCache(BaseCache):
             self.serialize_value(value),
             ex=self.static_ttl,
         )
+
+
+class SQLiteCache(BaseCache):
+    """SQLite implementation of the cache."""
+
+    conn: aiosqlite.Connection
+    ttl: int
+    static_ttl: int
+
+    def __init__(self, conn: aiosqlite.Connection, *, ttl: int = HOUR, static_ttl: int = DAY) -> None:
+        self.conn = conn
+        self.ttl = ttl
+        self.static_ttl = static_ttl
+
+    async def initialize(self) -> None:
+        """Initialize the cache."""
+        await self.conn.execute(
+            "CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT, expiration INTEGER)"
+        )
+        await self.conn.commit()
+
+    def serialize_key(self, key: typing.Any) -> str:
+        """Serialize a key by turning it into a string."""
+        return str(key)
+
+    def serialize_value(self, value: typing.Any) -> str:
+        """Serialize a value by turning it into a string."""
+        return json.dumps(value)
+
+    def deserialize_value(self, value: str) -> typing.Any:
+        """Deserialize a value back into data."""
+        return json.loads(value)
+
+    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
+        """Get an object with a key."""
+        async with self.conn.execute(
+            "SELECT value FROM cache WHERE key = ? AND expiration > ?", (self.serialize_key(key), int(time.time()))
+        ) as cursor:
+            value = await cursor.fetchone()
+
+        if value is None:
+            return None
+
+        return self.deserialize_value(value[0])
+
+    async def set(self, key: typing.Any, value: typing.Any) -> None:
+        """Save an object with a key."""
+        await self.conn.execute(
+            "INSERT OR REPLACE INTO cache (key, value, expiration) VALUES (?, ?, ?)",
+            (self.serialize_key(key), self.serialize_value(value), int(time.time() + self.ttl)),
+        )
+        await self.conn.commit()
+
+    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
+        """Get a static object with a key."""
+        return await self.get(key)
+
+    async def set_static(self, key: typing.Any, value: typing.Any) -> None:
+        """Save a static object with a key."""
+        await self.conn.execute(
+            "INSERT OR REPLACE INTO cache (key, value, expiration) VALUES (?, ?, ?)",
+            (self.serialize_key(key), self.serialize_value(value), int(time.time() + self.static_ttl)),
+        )
+        await self.conn.commit()

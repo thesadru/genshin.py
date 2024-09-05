@@ -8,6 +8,7 @@ yarl
 browser-cookie3
 rsa
 aioredis
+aiosqlite
 click
 qrcode[pil]
 aiohttp-socks
