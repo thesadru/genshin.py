@@ -24,6 +24,8 @@ __all__ = (
     "TheaterDifficulty",
     "TheaterSchedule",
     "TheaterStats",
+    "TheaterBattleStats",
+    "BattleStatCharacter",
 )
 
 
@@ -42,6 +44,7 @@ class TheaterDifficulty(enum.IntEnum):
     EASY = 1
     NORMAL = 2
     HARD = 3
+    VISIONARY = 4
 
 
 class ActCharacter(character.BaseCharacter):
@@ -128,21 +131,48 @@ class TheaterSchedule(APIModel):
         )
 
 
+class BattleStatCharacter(APIModel):
+    """Imaginarium theater battle statistic character."""
+
+    id: int = Aliased("avatar_id")
+    icon: str = Aliased("avatar_icon")
+    value: int
+    rarity: int
+
+    @pydantic.validator("value", pre=True)
+    def __intify_value(cls, value: str) -> int:
+        if not value:
+            return 0
+        return int(value)
+
+
+class TheaterBattleStats(APIModel):
+    """Imaginarium theater battle statistics."""
+
+    max_defeat_character: typing.Optional[BattleStatCharacter] = Aliased("max_defeat_avatar", default=None)
+    max_damage_character: typing.Optional[BattleStatCharacter] = Aliased("max_damage_avatar", default=None)
+    max_take_damage_character: typing.Optional[BattleStatCharacter] = Aliased("max_take_damage_avatar", default=None)
+    fastest_character_list: typing.Sequence[BattleStatCharacter] = Aliased("shortest_avatar_list")
+    total_cast_seconds: int = Aliased("total_use_time")
+
+
 class ImgTheaterData(APIModel):
     """Imaginarium theater data."""
 
     acts: typing.Sequence[Act] = Aliased(alias="rounds_data")
-    backup_characters: typing.Sequence[ActCharacter] = Aliased(alias="backup_avatars")  # Not sure what this is
+    backup_characters: typing.Sequence[ActCharacter] = Aliased("backup_avatars")  # Not sure what this is
     stats: TheaterStats = Aliased(alias="stat")
     schedule: TheaterSchedule
     has_data: bool
     has_detail_data: bool
+    battle_stats: TheaterBattleStats = Aliased("fight_statisic", default=None)
 
     @pydantic.root_validator(pre=True)
     def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
         values["rounds_data"] = detail.get("rounds_data", []) if detail is not None else []
         values["backup_avatars"] = detail.get("backup_avatars", []) if detail is not None else []
+        values["fight_statisic"] = detail.get("fight_statisic", None) if detail is not None else None
         return values
 
 

@@ -4,9 +4,8 @@ Covers HoYoLAB and Miyoushe app auth endpoints.
 """
 
 import json
-import random
 import typing
-from string import ascii_letters, digits
+from http.cookies import SimpleCookie
 
 import aiohttp
 
@@ -15,7 +14,7 @@ from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.auth.cookie import AppLoginResult
 from genshin.models.auth.geetest import SessionMMT, SessionMMTResult
-from genshin.models.auth.qrcode import QRCodeCheckResult, QRCodeCreationResult
+from genshin.models.auth.qrcode import QRCodeCreationResult, QRCodeStatus
 from genshin.models.auth.verification import ActionTicket
 from genshin.utility import auth as auth_utility
 from genshin.utility import ds as ds_utility
@@ -180,46 +179,34 @@ class AppAuthClient(base.BaseClient):
 
     async def _create_qrcode(self) -> QRCodeCreationResult:
         """Create a QR code for login."""
-        if self.default_game is None:
-            raise RuntimeError("No default game set.")
-
-        app_id = constants.APP_IDS[self.default_game][self.region]
-        device_id = "".join(random.choices(ascii_letters + digits, k=64))
-
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 routes.CREATE_QRCODE_URL.get_url(),
-                json={"app_id": app_id, "device": device_id},
+                headers=auth_utility.QRCODE_HEADERS,
             ) as r:
                 data = await r.json()
 
         if not data["data"]:
             errors.raise_for_retcode(data)
 
-        url: str = data["data"]["url"]
         return QRCodeCreationResult(
-            app_id=app_id,
-            ticket=url.split("ticket=")[1],
-            device_id=device_id,
-            url=url,
+            ticket=data["data"]["ticket"],
+            url=data["data"]["url"],
         )
 
-    async def _check_qrcode(self, app_id: str, device_id: str, ticket: str) -> QRCodeCheckResult:
+    async def _check_qrcode(self, ticket: str) -> typing.Tuple[QRCodeStatus, SimpleCookie]:
         """Check the status of a QR code login."""
-        payload = {
-            "app_id": app_id,
-            "device": device_id,
-            "ticket": ticket,
-        }
+        payload = {"ticket": ticket}
 
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 routes.CHECK_QRCODE_URL.get_url(),
                 json=payload,
+                headers=auth_utility.QRCODE_HEADERS,
             ) as r:
                 data = await r.json()
 
-        if not data["data"]:
-            errors.raise_for_retcode(data)
+                if not data["data"]:
+                    errors.raise_for_retcode(data)
 
-        return QRCodeCheckResult(**data["data"])
+                return QRCodeStatus(data["data"]["status"]), r.cookies

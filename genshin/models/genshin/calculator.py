@@ -214,7 +214,7 @@ class CalculatorConsumable(APIModel, Unique):
     id: int
     name: str
     icon: str
-    amount: int = Aliased("num")
+    amount: int = Aliased("num", default=1)
 
 
 class CalculatorArtifactResult(APIModel):

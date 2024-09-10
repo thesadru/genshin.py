@@ -95,7 +95,10 @@ class HoyolabClient(base.BaseClient):
         )
 
         announcements: typing.List[typing.Mapping[str, typing.Any]] = []
-        for sublist in info["list"]:
+        extra_list: typing.List[typing.Mapping[str, typing.Any]] = (
+            info["pic_list"][0]["type_list"] if "pic_list" in info and info["pic_list"] else []
+        )
+        for sublist in info["list"] + extra_list:
             for info in sublist["list"]:
                 detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
                 announcements.append({**info, **(detail or {})})
@@ -224,6 +227,7 @@ class HoyolabClient(base.BaseClient):
                 game_biz=utility.get_prod_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
+            method="POST" if game is types.Game.STARRAIL else "GET"
         )
 
     @managers.no_multi

@@ -12,7 +12,7 @@ from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.models.auth.cookie import CNWebLoginResult, MobileLoginResult, WebLoginResult
-from genshin.models.auth.geetest import SessionMMT, SessionMMTResult
+from genshin.models.auth.geetest import SessionMMT, SessionMMTResult, SessionMMTv4
 from genshin.utility import auth as auth_utility
 from genshin.utility import ds as ds_utility
 
@@ -164,7 +164,7 @@ class WebAuthClient(base.BaseClient):
         *,
         encrypted: bool = False,
         mmt_result: typing.Optional[SessionMMTResult] = None,
-    ) -> typing.Union[None, SessionMMT]:
+    ) -> typing.Union[None, SessionMMTv4]:
         """Attempt to send OTP to the provided mobile number.
 
         May return aigis headers if captcha is triggered, None otherwise.
@@ -192,7 +192,7 @@ class WebAuthClient(base.BaseClient):
         if data["retcode"] == -3101:
             # Captcha triggered
             aigis = json.loads(r.headers["x-rpc-aigis"])
-            return SessionMMT(**aigis)
+            return SessionMMTv4(**aigis)
 
         if not data["data"]:
             errors.raise_for_retcode(data)

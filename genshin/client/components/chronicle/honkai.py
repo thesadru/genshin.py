@@ -52,7 +52,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.HonkaiUserStats:
         """Get honkai user stats."""
         data = await self._request_honkai_record("index", uid, lang=lang)
-        return models.HonkaiUserStats(**data, lang=lang or self.lang)
+        return models.HonkaiUserStats(**data)
 
     async def get_honkai_battlesuits(
         self,
@@ -75,7 +75,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         Only for level > 80.
         """
         data = await self._request_honkai_record("latestOldAbyssReport", uid, lang=lang)
-        return [models.OldAbyss(**x, lang=lang or self.lang) for x in data["reports"]]
+        return [models.OldAbyss(**x) for x in data["reports"]]
 
     async def get_honkai_superstring_abyss(
         self,
@@ -88,7 +88,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         Only for level <= 80.
         """
         data = await self._request_honkai_record("newAbyssReport", uid, lang=lang)
-        return [models.SuperstringAbyss(**x, lang=lang or self.lang) for x in data["reports"]]
+        return [models.SuperstringAbyss(**x) for x in data["reports"]]
 
     async def get_honkai_abyss(
         self,
@@ -128,7 +128,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Sequence[models.MemorialArena]:
         """Get honkai memorial arena."""
         data = await self._request_honkai_record("battleFieldReport", uid, lang=lang)
-        return [models.MemorialArena(**x, lang=lang or self.lang) for x in data["reports"]]
+        return [models.MemorialArena(**x) for x in data["reports"]]
 
     async def get_full_honkai_user(
         self,
@@ -146,7 +146,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         )
 
         return models.FullHonkaiUserStats(
-            **user.dict(),
+            **user.dict(by_alias=True),
             battlesuits=battlesuits,
             abyss=abyss,
             memorial_arena=mr,

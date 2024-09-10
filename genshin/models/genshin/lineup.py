@@ -262,7 +262,6 @@ class LineupCharacter(LineupCharacterPreview):
     """Lineup character."""
 
     icon: str = Aliased("head_icon")
-    pc_icon: str = Aliased("standard_icon")
 
     weapon: PartialLineupWeapon
     artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased("set_list")

@@ -79,6 +79,46 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record("character", uid, lang=lang, method="POST")
         return [models.Character(**i) for i in data["avatars"]]
 
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: int,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -> models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: int,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: int,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        """Return a list of genshin characters with full details."""
+        if (
+            characters is None
+        ):  # If characters aren't provided, fetch the list of owned ID's first as they're required in the payload.
+            character_data = await self._request_genshin_record("character/list", uid, lang=lang, method="POST")
+            characters = [char["id"] for char in character_data["list"]]
+
+        data = await self._request_genshin_record(
+            "character/detail", uid, lang=lang, method="POST", payload={"character_ids": (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
     async def get_genshin_user(
         self,
         uid: int,
@@ -220,7 +260,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
-        return models.FullGenshinUserStats(**user.dict(), abyss=abyss, activities=activities)
+        return models.FullGenshinUserStats(**user.dict(by_alias=True), abyss=abyss, activities=activities)
 
     async def set_top_genshin_characters(
         self,

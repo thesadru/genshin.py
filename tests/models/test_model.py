@@ -31,7 +31,6 @@ lang = "en-us"  # initiate local scope
                 element="Cryo",
                 rarity=5,
                 icon="https://enka.network/ui/UI_AvatarIcon_Ayaka.png",
-                lang="en-us",
             ),
         ),
         # partial should provide the proper name
@@ -46,23 +45,6 @@ lang = "en-us"  # initiate local scope
                 element="Anemo",
                 rarity=5,
                 icon="https://enka.network/ui/UI_AvatarIcon_Qin.png",
-                lang="en-us",
-            ),
-        ),
-        # partial for an unknown character should return the icon name
-        (
-            {
-                "id": 10000001,
-                "icon": "https://upload-os-bbs.mihoyo.com/game_record/genshin/character_icon/UI_AvatarIcon_Signora.png",
-                "rarity": 6,
-            },
-            LiteralCharacter(
-                id=10000001,
-                name="Signora",
-                element="Anemo",  # Anemo is the arbitrary fallback
-                rarity=6,  # 5 is the arbitrary fallback
-                icon="https://enka.network/ui/UI_AvatarIcon_Signora.png",
-                lang="en-us",
             ),
         ),
         # traveler element should be kept
@@ -79,7 +61,6 @@ lang = "en-us"  # initiate local scope
                 element="Light",
                 rarity=5,
                 icon="https://enka.network/ui/UI_AvatarIcon_PlayerBoy.png",
-                lang="en-us",
             ),
         ),
         # messed up icon should be replaced
@@ -97,25 +78,6 @@ lang = "en-us"  # initiate local scope
                 element="Hydro",
                 rarity=5,
                 icon="https://enka.network/ui/UI_AvatarIcon_Mona.png",
-                lang="en-us",
-            ),
-        ),
-        # messed up icon for unknown character should be kept
-        (
-            {
-                "id": 10000000,
-                "name": "Katherine",
-                "element": "Geo",
-                "rarity": 6,
-                "icon": "https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
-            },
-            LiteralCharacter(
-                id=10000000,
-                name="Katherine",
-                element="Geo",
-                rarity=6,
-                icon="https://uploadstatic-sea.hoyoverse.com/hk4e/e20200928calculate/item_icon_ud09dc/1dbbc3a2852c11033e1754314d9b292d.png",
-                lang="en-us",
             ),
         ),
         # foreign languages should be kept
@@ -133,13 +95,12 @@ lang = "en-us"  # initiate local scope
                 element="Pyro",
                 rarity=5,
                 icon="https://enka.network/ui/UI_AvatarIcon_Hutao.png",
-                lang="en-us",
             ),
         ),
     ),
 )
 def test_genshin_base_character_model(data: typing.Dict[str, typing.Any], expected: genshin.models.BaseCharacter):
-    assert genshin.models.BaseCharacter(**data, lang="en-us") == expected
+    assert genshin.models.BaseCharacter(**data) == expected
 
 
 # reserialization stuff

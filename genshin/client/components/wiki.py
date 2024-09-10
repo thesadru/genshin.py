@@ -96,7 +96,7 @@ class WikiClient(base.BaseClient):
         data = await self.request_wiki("entry_page", lang=lang, params=params, static_cache=cache_key)
 
         data["page"].pop("lang", "")  # always an empty string
-        return models.WikiPage(**data["page"], lang=lang or self.lang)
+        return models.WikiPage(**data["page"])
 
     async def get_wiki_pages(
         self,

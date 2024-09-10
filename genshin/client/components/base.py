@@ -84,7 +84,7 @@ class BaseClient(abc.ABC):
         device_id: typing.Optional[str] = None,
         device_fp: typing.Optional[str] = None,
         headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
-        cache: typing.Optional[client_cache.Cache] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
         debug: bool = False,
     ) -> None:
         self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)

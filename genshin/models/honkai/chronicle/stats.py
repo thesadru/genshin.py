@@ -55,8 +55,8 @@ class MemorialArenaStats(APIModel):
     def __normalize_ranking(cls, value: typing.Union[str, float]) -> float:
         return float(value) if value else 0
 
-    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang or self.lang)
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
     @property
     def rank(self) -> str:
@@ -68,10 +68,10 @@ class MemorialArenaStats(APIModel):
         """The user's Memorial Arena tier as displayed in-game."""
         return self.get_tier()
 
-    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+    def get_tier(self, lang: str = "en-us") -> str:
         """Get the user's Memorial Arena tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.lang)
+        return self._get_mi18n(key, lang)
 
 
 # flake8: noqa: E222
@@ -88,28 +88,28 @@ class SuperstringAbyssStats(APIModel):
     # for consistency between types; also allows us to forego the mi18n fuckery
     latest_type: typing.ClassVar[str] = "Superstring"
 
-    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang or self.lang)
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
     @property
     def rank(self) -> str:
         """The user's Abyss rank as displayed in-game."""
         return self.get_rank()
 
-    def get_rank(self, lang: typing.Optional[str] = None) -> str:
+    def get_rank(self, lang: str = "en-us") -> str:
         """Get the user's Abyss rank in a specific language."""
         key = modes.get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.lang)
+        return self._get_mi18n(key, lang)
 
     @property
     def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
         return self.get_tier()
 
-    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+    def get_tier(self, lang: str = "en-us") -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.lang)
+        return self._get_mi18n(key, lang)
 
 
 # flake8: noqa: E222
@@ -162,26 +162,26 @@ class OldAbyssStats(APIModel):
 
         return self.get_rank(self.raw_latest_rank)
 
-    def get_rank(self, rank: int, lang: typing.Optional[str] = None) -> str:
+    def get_rank(self, rank: int, lang: str = "en-us") -> str:
         """Get the user's Abyss rank in a specific language.
 
         Must be supplied with one of the raw ranks stored on this class.
         """
         key = modes.get_abyss_rank_mi18n(rank, self.raw_tier)
-        return self._get_mi18n(key, lang or self.lang)
+        return self._get_mi18n(key, lang)
 
     @property
     def tier(self) -> str:
         """The user's Abyss tier as displayed in-game."""
         return modes.get_competitive_tier_mi18n(self.raw_tier)
 
-    def get_tier(self, lang: typing.Optional[str] = None) -> str:
+    def get_tier(self, lang: str = "en-us") -> str:
         """Get the user's Abyss tier in a specific language."""
         key = modes.get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang or self.lang)
+        return self._get_mi18n(key, lang)
 
-    def as_dict(self, lang: typing.Optional[str] = None) -> typing.Mapping[str, typing.Any]:
-        return _model_to_dict(self, lang or self.lang)
+    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
+        return _model_to_dict(self, lang)
 
     class Config:
         # this is for the "stat_lang" field, hopefully nobody abuses this

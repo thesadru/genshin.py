@@ -25,7 +25,7 @@ class DailyReward(APIModel):
     """Claimable daily reward."""
 
     name: str
-    amount: int = Aliased("cnt")
+    amount: int = Aliased("cnt", default=0)
     icon: str
 
 
