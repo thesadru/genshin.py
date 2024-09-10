@@ -227,6 +227,7 @@ class HoyolabClient(base.BaseClient):
                 game_biz=utility.get_prod_game_biz(self.region, game),
                 lang=utility.create_short_lang_code(lang or self.lang),
             ),
+            method="POST" if game is types.Game.STARRAIL else "GET"
         )
 
     @managers.no_multi
