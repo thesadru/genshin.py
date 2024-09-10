@@ -149,9 +149,9 @@ class BattleStatCharacter(APIModel):
 class TheaterBattleStats(APIModel):
     """Imaginarium theater battle statistics."""
 
-    max_defeat_character: BattleStatCharacter = Aliased("max_defeat_avatar")
-    max_damage_character: BattleStatCharacter = Aliased("max_damage_avatar")
-    max_take_damage_character: BattleStatCharacter = Aliased("max_take_damage_avatar")
+    max_defeat_character: typing.Optional[BattleStatCharacter] = Aliased("max_defeat_avatar", default=None)
+    max_damage_character: typing.Optional[BattleStatCharacter] = Aliased("max_damage_avatar", default=None)
+    max_take_damage_character: typing.Optional[BattleStatCharacter] = Aliased("max_take_damage_avatar", default=None)
     fastest_character_list: typing.Sequence[BattleStatCharacter] = Aliased("shortest_avatar_list")
     total_cast_seconds: int = Aliased("total_use_time")
 
