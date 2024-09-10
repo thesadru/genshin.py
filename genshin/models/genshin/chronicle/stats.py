@@ -27,6 +27,8 @@ __all__ = [
     "Stats",
     "Teapot",
     "TeapotRealm",
+    "NatlanReputation",
+    "NatlanTribe",
 ]
 
 
@@ -91,6 +93,22 @@ class AreaExploration(APIModel):
         return self.raw_explored / 10
 
 
+class NatlanTribe(APIModel):
+    """Natlan tribe data."""
+
+    icon: str
+    image: str
+    name: str
+    id: int
+    level: int
+
+
+class NatlanReputation(APIModel):
+    """Natlan reputation data."""
+
+    tribes: typing.Sequence[NatlanTribe]
+
+
 class Exploration(APIModel):
     """Exploration data."""
 
@@ -112,6 +130,7 @@ class Exploration(APIModel):
     offerings: typing.Sequence[Offering]
     boss_list: typing.Sequence[BossKill]
     area_exploration_list: typing.Sequence[AreaExploration]
+    natlan_reputation: typing.Optional[NatlanReputation] = Aliased("natan_reputation", default=None)
 
     @property
     def explored(self) -> float:
