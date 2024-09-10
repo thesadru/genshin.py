@@ -106,7 +106,7 @@ class NatlanTribe(APIModel):
 class NatlanReputation(APIModel):
     """Natlan reputation data."""
 
-    tribes: typing.Sequence[NatlanTribe]
+    tribes: typing.Sequence[NatlanTribe] = Aliased("tribal_list")
 
 
 class Exploration(APIModel):
