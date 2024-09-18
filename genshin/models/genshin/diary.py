@@ -4,6 +4,9 @@ import datetime
 import enum
 import typing
 
+import pydantic
+
+from genshin.constants import CN_TIMEZONE
 from genshin.models.model import Aliased, APIModel
 
 __all__ = [
@@ -88,8 +91,13 @@ class DiaryAction(APIModel):
 
     action_id: int
     action: str
-    time: datetime.datetime = Aliased(timezone=8)
+    time: datetime.datetime
     amount: int = Aliased("num")
+
+    @pydantic.field_validator("time")
+    @classmethod
+    def __add_timezone(cls, value: datetime.datetime) -> datetime.datetime:
+        return value.replace(tzinfo=CN_TIMEZONE)
 
 
 class DiaryPage(BaseDiary):
@@ -154,8 +162,13 @@ class StarRailDiaryAction(APIModel):
 
     action: str
     action_name: str
-    time: datetime.datetime = Aliased(timezone=8)
+    time: datetime.datetime
     amount: int = Aliased("num")
+
+    @pydantic.field_validator("time")
+    @classmethod
+    def __add_timezone(cls, value: datetime.datetime) -> datetime.datetime:
+        return value.replace(tzinfo=CN_TIMEZONE)
 
 
 class StarRailDiaryPage(BaseDiary):
