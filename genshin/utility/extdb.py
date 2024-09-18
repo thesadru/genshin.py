@@ -45,7 +45,7 @@ GENSHINDATA_TEXTMAP_URL = GENSHINDATA_REPO + "TextMap/TextMap{lang}.json"
 ENKA_CHARACTERS_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json"
 ENKA_LOC_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json"
 
-AMBR_URL = "https://gi.yatta.top/api/v2/{lang}/avatar"
+AMBR_URL = "https://gi.yatta.moe/api/v2/{lang}/avatar"
 
 ELEMENTS_MAP = {
     "Fire": "Pyro",
