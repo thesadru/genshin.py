@@ -34,11 +34,7 @@ class GenshinException(Exception):
     original: str = ""
     msg: str = ""
 
-    def __init__(
-        self,
-        response: typing.Mapping[str, typing.Any] = {},
-        msg: typing.Optional[str] = None,
-    ) -> None:
+    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -> None:
         self.retcode = response.get("retcode", self.retcode)
         self.original = response.get("message", "")
         self.msg = msg or self.msg or self.original
@@ -249,10 +245,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     # database game record
     10101: TooManyRequests,
     10102: DataNotPublic,
-    10103: (
-        InvalidCookies,
-        "Cookies are valid but do not have a hoyolab account bound to them.",
-    ),
+    10103: (InvalidCookies, "Cookies are valid but do not have a hoyolab account bound to them."),
     10104: "Cannot view real-time notes of other users.",
     # calculator
     -500001: "Invalid fields in calculation.",
@@ -273,10 +266,7 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
     -2018: RedemptionClaimed,
-    -2021: (
-        RedemptionException,
-        "Cannot claim codes for accounts with adventure rank lower than 10.",
-    ),
+    -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
     # rewards
     -5003: AlreadyClaimed,
     # chinese
@@ -296,10 +286,14 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -202: IncorrectGamePassword,
 }
 
-ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {
-    retcode: ((exc, None) if isinstance(exc, type) else (GenshinException, exc) if isinstance(exc, str) else exc)
-    for retcode, exc in _errors.items()
-}
+ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {}
+for retcode, exc in _errors.items():
+    if isinstance(exc, str):
+        ERRORS[retcode] = (GenshinException, exc)
+    elif isinstance(exc, tuple):
+        ERRORS[retcode] = exc
+    else:
+        ERRORS[retcode] = (exc, None)
 
 
 def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
