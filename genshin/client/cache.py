@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
     import aiosqlite
 
 
-__all__ = ["BaseCache", "Cache", "RedisCache", "StaticCache", "SQLiteCache"]
+__all__ = ["BaseCache", "Cache", "RedisCache", "SQLiteCache", "StaticCache"]
 
 MINUTE = 60
 HOUR = MINUTE * 60

@@ -17,15 +17,15 @@ from genshin.models.model import Aliased, APIModel
 __all__ = (
     "Act",
     "ActCharacter",
+    "BattleStatCharacter",
     "ImgTheater",
     "ImgTheaterData",
+    "TheaterBattleStats",
     "TheaterBuff",
     "TheaterCharaType",
     "TheaterDifficulty",
     "TheaterSchedule",
     "TheaterStats",
-    "TheaterBattleStats",
-    "BattleStatCharacter",
 )
 
 
