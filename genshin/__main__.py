@@ -39,10 +39,7 @@ def client_command(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> 
     @functools.wraps(func)
     @asynchronous
     async def command(
-        cookies: typing.Optional[str] = None,
-        lang: str = "en-us",
-        debug: bool = False,
-        **kwargs: typing.Any,
+        cookies: typing.Optional[str] = None, lang: str = "en-us", debug: bool = False, **kwargs: typing.Any
     ) -> typing.Any:
         client = genshin.Client(cookies, lang=lang, debug=debug)
         if cookies is None:
@@ -85,7 +82,7 @@ async def honkai_stats(client: genshin.Client, uid: int) -> None:
     data = await client.get_honkai_user(uid)
 
     click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.as_dict(lang=client.lang).items():
+    for k, v in data.stats.dict().items():
         if isinstance(v, dict):
             click.echo(f"{k}:")
             for nested_k, nested_v in typing.cast("typing.Dict[str, object]", v).items():
@@ -105,7 +102,7 @@ async def genshin_stats(client: genshin.Client, uid: int) -> None:
     data = await client.get_partial_genshin_user(uid)
 
     click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.as_dict(lang=client.lang).items():
+    for k, v in data.stats.dict().items():
         value = click.style(str(v), bold=True)
         click.echo(f"{k}: {value}")
 
@@ -178,8 +175,7 @@ async def genshin_notes(client: genshin.Client, uid: typing.Optional[int]) -> No
     click.echo(f"{click.style('Resin:', bold=True)} {data.current_resin}/{data.max_resin}")
     click.echo(f"{click.style('Realm currency:', bold=True)} {data.current_realm_currency}/{data.max_realm_currency}")
     click.echo(
-        f"{click.style('Commissions:', bold=True)} " f"{data.completed_commissions}/{data.max_commissions}",
-        nl=False,
+        f"{click.style('Commissions:', bold=True)} " f"{data.completed_commissions}/{data.max_commissions}", nl=False
     )
     if data.completed_commissions == data.max_commissions and not data.claimed_commission_reward:
         click.echo(f" | [{click.style('X', fg='red')}] Haven't claimed rewards")

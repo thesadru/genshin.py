@@ -17,15 +17,7 @@ else:
 from genshin.models.honkai import battlesuit
 from genshin.models.model import Aliased, APIModel, Unique
 
-__all__ = [
-    "ELF",
-    "Boss",
-    "ElysianRealm",
-    "MemorialArena",
-    "MemorialBattle",
-    "OldAbyss",
-    "SuperstringAbyss",
-]
+__all__ = ["ELF", "Boss", "ElysianRealm", "MemorialArena", "MemorialBattle", "OldAbyss", "SuperstringAbyss"]
 
 REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
     119301: ("The MOTH Insignia", 1),
@@ -77,11 +69,6 @@ REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
 
 
 # GENERIC
-
-
-def get_competitive_tier_mi18n(tier: int) -> str:
-    """Turn the tier returned by the API into the respective tier name displayed in-game."""
-    return "bbs/" + ("area1", "area2", "area3", "area4")[tier - 1]
 
 
 class Boss(APIModel, Unique):
@@ -143,16 +130,6 @@ class BaseAbyss(APIModel):
     boss: Boss
     elf: typing.Optional[ELF]
 
-    @property
-    def tier(self) -> str:
-        """The user's Abyss tier as displayed in-game."""
-        return self.get_tier()
-
-    def get_tier(self, lang: str = "en-us") -> str:
-        """Get the user's Abyss tier in a specific language."""
-        key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang)
-
 
 class OldAbyss(BaseAbyss):
     """Represents once cycle of Quantum Singularis or Dirac Sea.
@@ -176,26 +153,6 @@ class OldAbyss(BaseAbyss):
 
         return 69 - ord(rank)
 
-    @property
-    def rank(self) -> str:
-        """The user's Abyss rank as displayed in-game."""
-        return self.get_rank()
-
-    def get_rank(self, lang: str = "en-us") -> str:
-        """Get the user's Abyss rank in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
-
-    @property
-    def type(self) -> str:
-        """The name of this cycle's abyss type."""
-        return self.get_type()
-
-    def get_type(self, lang: str = "en-us") -> str:
-        """Get the name of this cycle's abyss type in a specific language."""
-        key = "bbs/" + ("level_of_ow" if self.raw_type == "OW" else self.raw_type)
-        return self._get_mi18n(key, lang)
-
 
 class SuperstringAbyss(BaseAbyss):
     """Represents one cycle of Superstring Abyss, exclusive to players of level 81 and up."""
@@ -209,26 +166,6 @@ class SuperstringAbyss(BaseAbyss):
     end_trophies: int = Aliased("cup_number")
     raw_start_rank: int = Aliased("level")
     raw_end_rank: int = Aliased("settled_level")
-
-    @property
-    def start_rank(self) -> str:
-        """The rank the user started the abyss cycle with, as displayed in-game."""
-        return self.get_start_rank()
-
-    def get_start_rank(self, lang: str = "en-us") -> str:
-        """Get the rank the user started the abyss cycle with in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_start_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
-
-    @property
-    def end_rank(self) -> str:
-        """The rank the user ended the abyss cycle with, as displayed in-game."""
-        return self.get_end_rank()
-
-    def get_end_rank(self, lang: str = "en-us") -> str:
-        """Get the rank the user ended the abyss cycle with in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_end_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
 
     @property
     def start_trophies(self) -> int:
@@ -267,16 +204,6 @@ class MemorialArena(APIModel):
     def rank(self) -> str:
         """The user's Memorial Arena rank as displayed in-game."""
         return prettify_MA_rank(self.raw_rank)
-
-    @property
-    def tier(self) -> str:
-        """The user's Memorial Arena tier as displayed in-game."""
-        return self.get_tier()
-
-    def get_tier(self, lang: str = "en-us") -> str:
-        """Get the user's Memorial Arena tier in a specific language."""
-        key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang)
 
 
 # ELYSIAN REALMS

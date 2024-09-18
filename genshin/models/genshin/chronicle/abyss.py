@@ -44,22 +44,12 @@ class AbyssCharacter(character.BaseCharacter):
 class CharacterRanks(APIModel):
     """Collection of rankings achieved during spiral abyss runs."""
 
-    # fmt: off
-    most_played: typing.Sequence[AbyssRankCharacter] =      Aliased("reveal_rank",       default=[], mi18n="bbs/go_fight_count")
-    most_kills: typing.Sequence[AbyssRankCharacter] =       Aliased("defeat_rank",       default=[], mi18n="bbs/max_rout_count")
-    strongest_strike: typing.Sequence[AbyssRankCharacter] = Aliased("damage_rank",       default=[], mi18n="bbs/powerful_attack")
-    most_damage_taken: typing.Sequence[AbyssRankCharacter] = Aliased("take_damage_rank", default=[], mi18n="bbs/receive_max_damage")  # noqa: E501
-    most_bursts_used: typing.Sequence[AbyssRankCharacter] = Aliased("energy_skill_rank", default=[], mi18n="bbs/element_break_count") # noqa: E501
-    most_skills_used: typing.Sequence[AbyssRankCharacter] = Aliased("normal_skill_rank", default=[], mi18n="bbs/element_skill_use_count") # noqa: E501
-    # fmt: on
-
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-        """Turn fields into properly named ones."""
-        return {
-            self._get_mi18n(field, lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-            if field.name != "lang"
-        }
+    most_played: typing.Sequence[AbyssRankCharacter] = Aliased("reveal_rank", default=[])
+    most_kills: typing.Sequence[AbyssRankCharacter] = Aliased("defeat_rank", default=[])
+    strongest_strike: typing.Sequence[AbyssRankCharacter] = Aliased("damage_rank", default=[])
+    most_damage_taken: typing.Sequence[AbyssRankCharacter] = Aliased("take_damage_rank", default=[])  # noqa: E501
+    most_bursts_used: typing.Sequence[AbyssRankCharacter] = Aliased("energy_skill_rank", default=[])  # noqa: E501
+    most_skills_used: typing.Sequence[AbyssRankCharacter] = Aliased("normal_skill_rank", default=[])  # noqa: E501
 
 
 class Battle(APIModel):
