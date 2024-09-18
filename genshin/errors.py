@@ -286,14 +286,10 @@ _errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Opti
     -202: IncorrectGamePassword,
 }
 
-ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {}
-for retcode, exc in _errors.items():
-    if isinstance(exc, str):
-        ERRORS[retcode] = (GenshinException, exc)
-    elif isinstance(exc, tuple):
-        ERRORS[retcode] = exc
-    else:
-        ERRORS[retcode] = (exc, None)
+ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {
+    retcode: (GenshinException, exc) if isinstance(exc, str) else exc if isinstance(exc, tuple) else (exc, None)
+    for retcode, exc in _errors.items()
+}
 
 
 def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
