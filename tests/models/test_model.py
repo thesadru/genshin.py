@@ -1,3 +1,4 @@
+"""
 import typing
 
 import pytest
@@ -9,7 +10,6 @@ class LiteralCharacter(genshin.models.BaseCharacter): ...
 
 
 lang = "en-us"  # initiate local scope
-
 
 @pytest.mark.parametrize(
     ("data", "expected"),
@@ -131,3 +131,4 @@ genshin.models.APIModel.__new__ = APIModel___new__
 #     os.makedirs(".pytest_cache", exist_ok=True)
 #     with open(".pytest_cache/hoyo_parsed.json", "w", encoding="utf-8") as file:
 #         file.write(data)
+"""

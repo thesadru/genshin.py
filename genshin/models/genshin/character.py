@@ -71,6 +71,8 @@ def _get_db_char(
 ) -> constants.DBChar:
     """Get the appropriate DBChar object from specific fields."""
     if lang not in constants.CHARACTER_NAMES:
+        if id and name and icon and element and rarity:
+            return constants.DBChar(id or 0, _parse_icon(icon), name, element, rarity, guessed=True)
         raise Exception(
             f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_any()`."
         )

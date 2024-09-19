@@ -17,7 +17,7 @@ __all__ = ["APIModel", "Aliased", "Unique"]
 class APIModel(pydantic.BaseModel):
     """Modified pydantic model."""
 
-    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
+    model_config: pydantic.ConfigDict = pydantic.ConfigDict(arbitrary_types_allowed=True)  # type: ignore
 
 
 class Unique(abc.ABC):

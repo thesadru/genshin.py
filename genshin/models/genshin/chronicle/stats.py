@@ -8,7 +8,8 @@ import pydantic
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
 
-from . import abyss, activities, characters
+from . import abyss, activities
+from . import characters as characters_module
 
 __all__ = [
     "AreaExploration",
@@ -159,7 +160,7 @@ class PartialGenshinUserStats(APIModel):
 
     info: hoyolab.UserInfo = Aliased("role")
     stats: Stats
-    characters: typing.Sequence["characters.PartialCharacter"] = Aliased("avatars")
+    characters: typing.Sequence[characters_module.PartialCharacter] = Aliased("avatars")
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
@@ -175,7 +176,7 @@ class PartialGenshinUserStats(APIModel):
 class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
 
-    characters: typing.Sequence["characters.Character"] = Aliased("avatars")
+    characters: typing.Sequence[characters_module.Character] = Aliased("avatars")
 
 
 class FullGenshinUserStats(GenshinUserStats):
