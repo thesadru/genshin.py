@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import datetime
 import typing
 
 import pydantic
 
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import Aliased, APIModel, DateTimeField, Unique
 
 __all__ = [
     "Lineup",
@@ -280,7 +279,7 @@ class LineupPreview(APIModel, Unique):
 
     likes: int = Aliased("like_cnt")
     comments: int = Aliased("comment_cnt")
-    created_at: datetime.datetime
+    created_at: DateTimeField
 
     original_lang: str = Aliased("trans_from")
 

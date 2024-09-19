@@ -3,10 +3,8 @@
 import datetime
 import typing
 
-import pydantic
-
 from genshin.constants import CN_TIMEZONE
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import Aliased, APIModel, DateTimeField, Unique
 
 __all__ = ["ClaimedDailyReward", "DailyReward", "DailyRewardInfo"]
 
@@ -38,8 +36,4 @@ class ClaimedDailyReward(APIModel, Unique):
     name: str
     amount: int = Aliased("cnt")
     icon: str = Aliased("img")
-    time: datetime.datetime = Aliased("created_at")
-
-    @pydantic.field_validator("time")
-    def __add_timezone(cls, value: datetime.datetime) -> datetime.datetime:
-        return value.replace(tzinfo=CN_TIMEZONE)
+    time: DateTimeField = Aliased("created_at")

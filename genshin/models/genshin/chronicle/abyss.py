@@ -1,11 +1,9 @@
-import datetime
 import typing
 
 import pydantic
 
-from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, DateTimeField
 
 __all__ = [
     "AbyssCharacter",
@@ -50,7 +48,7 @@ class Battle(APIModel):
     """Battle in the spiral abyss."""
 
     half: int = Aliased("index")
-    timestamp: datetime.datetime
+    timestamp: DateTimeField
     characters: typing.Sequence[AbyssCharacter] = Aliased("avatars")
 
 
@@ -80,11 +78,11 @@ class SpiralAbyss(APIModel):
 
     unlocked: bool = Aliased("is_unlock")
     season: int = Aliased("schedule_id")
-    start_time: datetime.datetime
-    end_time: datetime.datetime
+    start_time: DateTimeField
+    end_time: DateTimeField
 
     total_battles: int = Aliased("total_battle_times")
-    total_wins: str = Aliased("total_win_times")
+    total_wins: int = Aliased("total_win_times")
     max_floor: str
     total_stars: int = Aliased("total_star")
 
@@ -97,10 +95,6 @@ class SpiralAbyss(APIModel):
         """By default ranks are for some reason on the same level as the rest of the abyss."""
         values.setdefault("ranks", {}).update(values)
         return values
-
-    @pydantic.field_validator("start_time", "end_time", mode="before")
-    def __parse_timezones(cls, value: str) -> datetime.datetime:
-        return datetime.datetime.fromtimestamp(int(value), tz=CN_TIMEZONE)
 
 
 class SpiralAbyssPair(APIModel):

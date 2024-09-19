@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import abc
+import datetime
 import typing
 
 import pydantic
+from typing_extensions import Annotated
+
+from genshin.constants import CN_TIMEZONE
 
 __all__ = ["APIModel", "Aliased", "Unique"]
 
@@ -35,3 +39,10 @@ def Aliased(
 ) -> typing.Any:
     """Create an aliased field."""
     return pydantic.Field(default, alias=alias, **kwargs)
+
+
+def add_timezone(value: datetime.datetime) -> datetime.datetime:
+    return value.replace(tzinfo=CN_TIMEZONE)
+
+
+DateTimeField = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]

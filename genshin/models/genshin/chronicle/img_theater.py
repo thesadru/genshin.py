@@ -4,9 +4,8 @@ import typing
 
 import pydantic
 
-from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, DateTimeField
 
 __all__ = (
     "Act",
@@ -68,19 +67,11 @@ class Act(APIModel):
     medal_obtained: bool = Aliased("is_get_medal")
     round_id: int
     finish_time: int  # As timestamp
-    finish_datetime: datetime.datetime = Aliased("finish_date_time")
+    finish_datetime: DateTimeField = Aliased("finish_date_time")
 
     @pydantic.field_validator("finish_datetime", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
-        return datetime.datetime(
-            year=value["year"],
-            month=value["month"],
-            day=value["day"],
-            hour=value["hour"],
-            minute=value["minute"],
-            second=value["second"],
-            tzinfo=CN_TIMEZONE,
-        )
+        return datetime.datetime(**value)
 
 
 class TheaterStats(APIModel):
@@ -109,20 +100,12 @@ class TheaterSchedule(APIModel):
     end_time: int  # As timestamp
     schedule_type: int  # Not sure what this is
     id: int = Aliased("schedule_id")
-    start_datetime: datetime.datetime = Aliased("start_date_time")
-    end_datetime: datetime.datetime = Aliased("end_date_time")
+    start_datetime: DateTimeField = Aliased("start_date_time")
+    end_datetime: DateTimeField = Aliased("end_date_time")
 
     @pydantic.field_validator("start_datetime", "end_datetime", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
-        return datetime.datetime(
-            year=value["year"],
-            month=value["month"],
-            day=value["day"],
-            hour=value["hour"],
-            minute=value["minute"],
-            second=value["second"],
-            tzinfo=CN_TIMEZONE,
-        )
+        return datetime.datetime(**value)
 
 
 class BattleStatCharacter(APIModel):

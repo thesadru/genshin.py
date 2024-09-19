@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-import datetime
 import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import Aliased, APIModel, DateTimeField, Unique
 
 __all__ = [
     "TeapotReplica",
@@ -53,7 +52,7 @@ class TeapotReplica(APIModel, Unique):
     title: str
     content: str
     images: typing.List[str] = Aliased("imgs")
-    created_at: datetime.datetime
+    created_at: DateTimeField
     stats: TeapotReplicaStats
     lang: str  # type: ignore
 
