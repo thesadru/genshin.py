@@ -2,13 +2,7 @@ import datetime
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.constants import CN_TIMEZONE
 from genshin.models.genshin import character
@@ -76,7 +70,7 @@ class Act(APIModel):
     finish_time: int  # As timestamp
     finish_datetime: datetime.datetime = Aliased("finish_date_time")
 
-    @pydantic.validator("finish_datetime", pre=True)
+    @pydantic.field_validator("finish_datetime", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
         return datetime.datetime(
             year=value["year"],
@@ -118,7 +112,7 @@ class TheaterSchedule(APIModel):
     start_datetime: datetime.datetime = Aliased("start_date_time")
     end_datetime: datetime.datetime = Aliased("end_date_time")
 
-    @pydantic.validator("start_datetime", "end_datetime", pre=True)
+    @pydantic.field_validator("start_datetime", "end_datetime", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> datetime.datetime:
         return datetime.datetime(
             year=value["year"],
@@ -139,7 +133,7 @@ class BattleStatCharacter(APIModel):
     value: int
     rarity: int
 
-    @pydantic.validator("value", pre=True)
+    @pydantic.field_validator("value", mode="before")
     def __intify_value(cls, value: str) -> int:
         if not value:
             return 0
@@ -167,7 +161,7 @@ class ImgTheaterData(APIModel):
     has_detail_data: bool
     battle_stats: TheaterBattleStats = Aliased("fight_statisic", default=None)
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
         values["rounds_data"] = detail.get("rounds_data", []) if detail is not None else []

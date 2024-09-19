@@ -6,13 +6,7 @@ import datetime
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.honkai import battlesuit
 from genshin.models.model import Aliased, APIModel, Unique
@@ -78,7 +72,7 @@ class Boss(APIModel, Unique):
     name: str
     icon: str = Aliased("avatar")
 
-    @pydantic.validator("icon")
+    @pydantic.field_validator("icon")
     def __fix_url(cls, url: str) -> str:
         # I noticed that sometimes the urls are returned incorrectly, which appears to be
         # a problem on the hoyolab website too, so I expect this to be fixed sometime.
@@ -95,7 +89,7 @@ class ELF(APIModel, Unique):
     rarity: str
     upgrade_level: int = Aliased("star")
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
     def __fix_rank(cls, rarity: typing.Union[int, str]) -> str:
         if isinstance(rarity, str):
             return rarity
@@ -142,7 +136,7 @@ class OldAbyss(BaseAbyss):
     result: str = Aliased("reward_type")
     raw_rank: int = Aliased("level")
 
-    @pydantic.validator("raw_rank", pre=True)
+    @pydantic.field_validator("raw_rank", mode="before")
     def __normalize_level(cls, rank: str) -> int:
         # The latestOldAbyssReport endpoint returns ranks as D/C/B/A,
         # while newAbyssReport returns them as 1/2/3/4(/5) respectively.
@@ -287,7 +281,7 @@ class ElysianRealm(APIModel):
     elf: typing.Optional[ELF]
     remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
 
-    @pydantic.validator("remembrance_sigil", pre=True)
+    @pydantic.field_validator("remembrance_sigil", mode="before")
     def __extend_sigil(cls, sigil: typing.Any) -> typing.Any:
         if isinstance(sigil, str):
             return dict(icon=sigil)

@@ -3,13 +3,7 @@ from __future__ import annotations
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
@@ -126,12 +120,12 @@ class Exploration(APIModel):
         """The percentage explored."""
         return self.raw_explored / 10
 
-    @pydantic.validator("offerings", pre=True)
+    @pydantic.field_validator("offerings", mode="before")
     def __add_base_offering(
-        cls, offerings: typing.Sequence[typing.Any], values: typing.Dict[str, typing.Any]
+        cls, offerings: typing.Sequence[typing.Any], info: pydantic.ValidationInfo
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
-            offerings = [*offerings, dict(name=values["type"], level=values["level"])]
+        if info.data["type"] == "Reputation" and not any(info.data["type"] == o["name"] for o in offerings):
+            offerings = [*offerings, dict(name=info.data["type"], level=info.data["level"])]
 
         return offerings
 
@@ -165,11 +159,11 @@ class PartialGenshinUserStats(APIModel):
 
     info: hoyolab.UserInfo = Aliased("role")
     stats: Stats
-    characters: typing.Sequence[characters.PartialCharacter] = Aliased("avatars")
+    characters: typing.Sequence["characters.PartialCharacter"] = Aliased("avatars")
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
-    @pydantic.validator("teapot", pre=True)
+    @pydantic.field_validator("teapot", mode="before")
     def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
         if not v:
             return None
@@ -181,7 +175,7 @@ class PartialGenshinUserStats(APIModel):
 class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
 
-    characters: typing.Sequence[characters.Character] = Aliased("avatars")
+    characters: typing.Sequence["characters.Character"] = Aliased("avatars")
 
 
 class FullGenshinUserStats(GenshinUserStats):

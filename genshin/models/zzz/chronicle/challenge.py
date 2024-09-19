@@ -1,17 +1,11 @@
 import datetime
 import typing
 
+import pydantic
+
 from genshin.constants import CN_TIMEZONE
 from genshin.models.model import Aliased, APIModel
 from genshin.models.zzz.character import ZZZElementType
-
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
 
 __all__ = (
     "ShiyuDefense",
@@ -75,7 +69,7 @@ class ShiyuDefenseNode(APIModel):
     recommended_elements: typing.List[ZZZElementType] = Aliased("element_type_list")
     enemies: typing.List[ShiyuDefenseMonster] = Aliased("monster_info")
 
-    @pydantic.validator("enemies", pre=True)
+    @pydantic.field_validator("enemies", mode="before")
     @classmethod
     def __convert_enemies(
         cls, value: typing.Dict[typing.Literal["level", "list"], typing.Any]
@@ -100,7 +94,7 @@ class ShiyuDefenseFloor(APIModel):
     challenge_time: datetime.datetime = Aliased("floor_challenge_time")
     name: str = Aliased("zone_name")
 
-    @pydantic.validator("challenge_time", pre=True)
+    @pydantic.field_validator("challenge_time", mode="before")
     @classmethod
     def __add_timezone(
         cls, v: typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]
@@ -123,14 +117,14 @@ class ShiyuDefense(APIModel):
     """Fastest clear time this season in seconds."""
     max_floor: int = Aliased("max_layer")
 
-    @pydantic.validator("ratings", pre=True)
+    @pydantic.field_validator("ratings", mode="before")
     @classmethod
     def __convert_ratings(
         cls, v: typing.List[typing.Dict[typing.Literal["times", "rating"], typing.Any]]
     ) -> typing.Mapping[typing.Literal["S", "A", "B"], int]:
         return {d["rating"]: d["times"] for d in v}
 
-    @pydantic.validator("begin_time", "end_time", pre=True)
+    @pydantic.field_validator("begin_time", "end_time", mode="before")
     @classmethod
     def __add_timezone(
         cls, v: typing.Optional[typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]]

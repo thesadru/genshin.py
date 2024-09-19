@@ -4,13 +4,7 @@ import datetime
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
@@ -99,7 +93,7 @@ class TaskReward(APIModel):
 
     status: typing.Union[TaskRewardStatus, str]
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[TaskRewardStatus, str]:
         try:
             return TaskRewardStatus(v)
@@ -122,7 +116,7 @@ class AttendanceReward(APIModel):
     status: typing.Union[AttendanceRewardStatus, str]
     progress: int
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[AttendanceRewardStatus, str]:
         try:
             return AttendanceRewardStatus(v)
@@ -216,7 +210,7 @@ class Notes(APIModel):
         remaining = datetime.datetime.now().astimezone() + self.remaining_transformer_recovery_time
         return remaining
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __flatten_transformer(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if "transformer_recovery_time" in values:
             return values

@@ -297,7 +297,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             **auth_utility.CREATE_MMT_HEADERS[self.region],
         }
 
-        body = mmt_result.dict()
+        body = mmt_result.model_dump()
         body["app_key"] = constants.GEETEST_RECORD_KEYS[self.default_game]
 
         assert isinstance(self.cookie_manager, managers.CookieManager)

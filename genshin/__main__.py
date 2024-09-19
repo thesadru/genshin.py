@@ -82,7 +82,7 @@ async def honkai_stats(client: genshin.Client, uid: int) -> None:
     data = await client.get_honkai_user(uid)
 
     click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.dict().items():
+    for k, v in data.stats.model_dump().items():
         if isinstance(v, dict):
             click.echo(f"{k}:")
             for nested_k, nested_v in typing.cast("typing.Dict[str, object]", v).items():
@@ -102,7 +102,7 @@ async def genshin_stats(client: genshin.Client, uid: int) -> None:
     data = await client.get_partial_genshin_user(uid)
 
     click.secho("Stats:", fg="yellow")
-    for k, v in data.stats.dict().items():
+    for k, v in data.stats.model_dump().items():
         value = click.style(str(v), bold=True)
         click.echo(f"{k}: {value}")
 
@@ -335,7 +335,7 @@ async def login(account: str, password: str, port: int) -> None:
     """Login with a password."""
     client = genshin.Client()
     result = await client.os_login_with_password(account, password, port=port)
-    cookies = await genshin.complete_cookies(result.dict())
+    cookies = await genshin.complete_cookies(result.model_dump())
 
     base: http.cookies.BaseCookie[str] = http.cookies.BaseCookie(cookies)
     click.echo(f"Your cookies are: {click.style(base.output(header='', sep=';'), bold=True)}")

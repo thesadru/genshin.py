@@ -5,22 +5,15 @@ from __future__ import annotations
 import abc
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
-
+import pydantic
 
 __all__ = ["APIModel", "Aliased", "Unique"]
 
-_SENTINEL = object()
 
-
-class APIModel(pydantic.BaseModel, abc.ABC):
+class APIModel(pydantic.BaseModel):
     """Modified pydantic model."""
+
+    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
 
 
 class Unique(abc.ABC):
@@ -37,7 +30,7 @@ class Unique(abc.ABC):
 
 def Aliased(
     alias: typing.Optional[str] = None,
-    default: typing.Any = pydantic.main.Undefined,  # type: ignore
+    default: typing.Any = None,
     **kwargs: typing.Any,
 ) -> typing.Any:
     """Create an aliased field."""

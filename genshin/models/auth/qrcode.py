@@ -1,15 +1,8 @@
 """Miyoushe QR Code Models"""
 
 import enum
-import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 __all__ = ["QRCodeCreationResult", "QRCodeStatus"]
 

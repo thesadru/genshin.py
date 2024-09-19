@@ -2,13 +2,7 @@
 
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
@@ -28,7 +22,7 @@ class MemorialArenaStats(APIModel):
     score: int = Aliased("battle_field_score")
     raw_tier: int = Aliased("battle_field_area")
 
-    @pydantic.validator("ranking", pre=True)
+    @pydantic.field_validator("ranking", mode="before")
     def __normalize_ranking(cls, value: typing.Union[str, float]) -> float:
         return float(value) if value else 0
 
@@ -63,7 +57,7 @@ class OldAbyssStats(APIModel):
     # TODO: Add proper key
     latest_type: str = Aliased()
 
-    @pydantic.validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", pre=True)
+    @pydantic.field_validator("raw_q_singularis_rank", "raw_dirac_sea_rank", "raw_latest_rank", mode="before")
     def __normalize_rank(cls, rank: typing.Optional[str]) -> typing.Optional[int]:  # modes.OldAbyss.__normalize_rank
         if isinstance(rank, int):
             return rank
@@ -73,9 +67,7 @@ class OldAbyssStats(APIModel):
 
         return 69 - ord(rank)
 
-    class Config:
-        # this is for the "stat_lang" field, hopefully nobody abuses this
-        allow_mutation = True
+    model_config = pydantic.ConfigDict(frozen=False)
 
 
 # flake8: noqa: E222
@@ -107,7 +99,7 @@ class HonkaiStats(APIModel):
     memorial_arena: MemorialArenaStats = Aliased()
     elysian_realm: ElysianRealmStats = Aliased()
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __pack_gamemode_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if "new_abyss" in values:
             values["abyss"] = SuperstringAbyssStats(**values["new_abyss"], **values)

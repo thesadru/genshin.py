@@ -4,17 +4,7 @@ import datetime
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-    import pydantic.v1.generics as pydantic_generics
-else:
-    try:
-        import pydantic.v1 as pydantic
-        import pydantic.v1.generics as pydantic_generics
-    except ImportError:
-        import pydantic
-        import pydantic.generics as pydantic_generics
-
+import pydantic
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel
@@ -33,7 +23,7 @@ __all__ = [
 ModelT = typing.TypeVar("ModelT", bound=APIModel)
 
 
-class OldActivity(APIModel, pydantic_generics.GenericModel, typing.Generic[ModelT]):
+class OldActivity(APIModel, typing.Generic[ModelT]):
     """Arbitrary activity for chinese events."""
 
     # sometimes __parameters__ may not be provided in older versions
@@ -80,7 +70,7 @@ class HyakuninIkkiBattle(APIModel):
     characters: typing.Sequence[HyakuninIkkiCharacter] = Aliased("avatars")
     skills: typing.Sequence[HyakuninIkkiSkill] = Aliased("skills")
 
-    @pydantic.validator("characters", pre=True)
+    @pydantic.field_validator("characters", mode="before")
     def __validate_characters(cls, value: typing.Sequence[typing.Any]) -> typing.Sequence[typing.Any]:
         """Remove characters with a null id."""
         return [character for character in value if character["id"]]
@@ -236,7 +226,7 @@ class SummerMemories(APIModel):
     icon: str
     name: str
 
-    @pydantic.validator("finish_time", pre=True)
+    @pydantic.field_validator("finish_time", mode="before")
     def __validate_time(cls, value: typing.Any) -> typing.Optional[datetime.datetime]:
         if value is None or isinstance(value, datetime.datetime):
             return value
@@ -263,7 +253,7 @@ class SummerRealmExploration(APIModel):
     name: str
     icon: str
 
-    @pydantic.validator("finish_time", pre=True)
+    @pydantic.field_validator("finish_time", mode="before")
     def __validate_time(cls, value: typing.Any) -> typing.Optional[datetime.datetime]:
         if value is None or isinstance(value, datetime.datetime):
             return value
@@ -282,7 +272,7 @@ class Summer(APIModel):
     memories: typing.Sequence[SummerMemories] = Aliased("story")
     realm_exploration: typing.Sequence[SummerRealmExploration] = Aliased("challenge")
 
-    @pydantic.validator("surfpiercer", "memories", "realm_exploration", pre=True)
+    @pydantic.field_validator("surfpiercer", "memories", "realm_exploration", mode="before")
     def __flatten_records(cls, value: typing.Any) -> typing.Sequence[typing.Any]:
         if isinstance(value, typing.Sequence):
             return typing.cast("typing.Sequence[object]", value)
@@ -297,12 +287,20 @@ class Summer(APIModel):
 class Activities(APIModel):
     """Collection of genshin activities."""
 
-    hyakunin_ikki_v21: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(None, gslug="sumo")
-    hyakunin_ikki_v25: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(None, gslug="sumo_second")
-    labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(None, gslug="rogue")
-    energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(None, gslug="channeller_slab_copy")
-    study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, gslug="potion")
-    summertime_odyssey: typing.Optional[Summer] = pydantic.Field(None, gslug="summer_v2")
+    hyakunin_ikki_v21: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(
+        None, json_schema_extra={"gslug": "sumo"}
+    )
+    hyakunin_ikki_v25: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(
+        None, json_schema_extra={"gslug": "sumo_second"}
+    )
+    labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(
+        None, json_schema_extra={"gslug": "rogue"}
+    )
+    energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(
+        None, json_schema_extra={"gslug": "channeller_slab_copy"}
+    )
+    study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, json_schema_extra={"gslug": "potion"})
+    summertime_odyssey: typing.Optional[Summer] = pydantic.Field(None, json_schema_extra={"gslug": "summer_v2"})
 
     effigy: typing.Optional[Activity[typing.Any]] = None
     mechanicus: typing.Optional[Activity[typing.Any]] = None
@@ -311,15 +309,15 @@ class Activities(APIModel):
     martial_legend: typing.Optional[Activity[typing.Any]] = None
     chess: typing.Optional[Activity[typing.Any]] = None
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if not values.get("activities"):
             return values
 
         slugs = {
-            field.field_info.extra["gslug"]: name
-            for name, field in cls.__fields__.items()
-            if field.field_info.extra.get("gslug")
+            field.json_schema_extra["gslug"]: name
+            for name, field in cls.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("gslug")
         }
 
         for activity in values["activities"]:
