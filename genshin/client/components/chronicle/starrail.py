@@ -22,7 +22,7 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         method: str = "GET",
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        cache: bool = True,
+        cache: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary starrail object."""
         payload = dict(payload or {})
@@ -66,7 +66,7 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.StarRailNote:
         """Get starrail real-time notes."""
         try:
-            data = await self._request_starrail_record("note", uid, lang=lang, cache=False)
+            data = await self._request_starrail_record("note", uid, lang=lang)
         except errors.DataNotPublic as e:
             # error raised only when real-time notes are not enabled
             if uid and (await self._get_uid(types.Game.STARRAIL)) != uid:
@@ -75,7 +75,7 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
                 raise errors.GenshinException(e.response, "Real-time notes are not enabled.") from e
 
             await self.update_settings(3, True, game=types.Game.STARRAIL)
-            data = await self._request_starrail_record("note", uid, lang=lang, cache=False)
+            data = await self._request_starrail_record("note", uid, lang=lang)
 
         return models.StarRailNote(**data)
 

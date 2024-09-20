@@ -24,7 +24,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         method: str = "GET",
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        cache: bool = True,
+        cache: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
         payload = dict(payload or {})
@@ -173,7 +173,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.Notes:
         """Get genshin real-time notes."""
         try:
-            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang)
         except errors.DataNotPublic as e:
             # error raised only when real-time notes are not enabled
             if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
@@ -182,7 +182,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
                 raise errors.GenshinException(e.response, "Real-time notes are not enabled.") from e
 
             await self.update_settings(3, True, game=types.Game.GENSHIN)
-            data = await self._request_genshin_record("dailyNote", uid, lang=lang, cache=False)
+            data = await self._request_genshin_record("dailyNote", uid, lang=lang)
 
         return models.Notes(**data)
 
@@ -215,7 +215,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             limit=limit,
             need_stats="false",
         )
-        data = await self._request_genshin_record("gcg/cardList", uid, lang=lang, payload=params, cache=False)
+        data = await self._request_genshin_record("gcg/cardList", uid, lang=lang, payload=params)
         return [
             (models.TCGCharacterCard(**i) if i["card_type"] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
             for i in data["card_list"]
