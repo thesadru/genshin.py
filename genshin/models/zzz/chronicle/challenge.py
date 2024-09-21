@@ -54,8 +54,8 @@ class ShiyuDefenseCharacter(APIModel):
 class ShiyuDefenseBuff(APIModel):
     """Shiyu Defense buff model."""
 
-    title: str
-    text: str
+    name: str = Aliased("title")
+    description: str = Aliased("text")
 
 
 class ShiyuDefenseMonster(APIModel):
