@@ -121,8 +121,8 @@ class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: typing.Optional[datetime.datetime] = Aliased("hadal_begin_time")
-    end_time: typing.Optional[datetime.datetime] = Aliased("hadal_end_time")
+    begin_time: datetime.datetime = Aliased("hadal_begin_time")
+    end_time: datetime.datetime = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
     floors: typing.List[ShiyuDefenseFloor] = Aliased("all_floor_detail")
