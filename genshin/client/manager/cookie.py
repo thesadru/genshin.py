@@ -86,7 +86,7 @@ async def fetch_cookie_with_cookie(
 async def fetch_cookie_with_stoken_v2(
     cookies: managers.CookieOrHeader,
     *,
-    token_types: list[typing.Literal[2, 4]],
+    token_types: typing.List[typing.Literal[2, 4]],
 ) -> typing.Mapping[str, str]:
     """Fetch cookie (v2) with an stoken (v2) and mid."""
     cookies = managers.parse_cookie(cookies)

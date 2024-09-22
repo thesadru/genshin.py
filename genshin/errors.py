@@ -188,7 +188,7 @@ class WrongOTP(GenshinException):
 class GeetestError(GenshinException):
     """Geetest triggered during the battle chronicle API request."""
 
-    def __init__(self, response: dict[str, typing.Any]) -> None:
+    def __init__(self, response: typing.Dict[str, typing.Any]) -> None:
         super().__init__(response)
 
     msg = "Geetest triggered during the battle chronicle API request."
@@ -232,8 +232,8 @@ class VerificationCodeRateLimited(GenshinException):
     msg = "Too many verification code requests for the account."
 
 
-_TGE = type[GenshinException]
-_errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] = {
+_TGE = typing.Type[GenshinException]
+_errors: typing.Dict[int, typing.Union[_TGE, str, typing.Tuple[_TGE, typing.Optional[str]]]] = {
     # misc hoyolab
     -100: InvalidCookies,
     -108: "Invalid language.",
@@ -286,13 +286,13 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -202: IncorrectGamePassword,
 }
 
-ERRORS: dict[int, tuple[_TGE, typing.Optional[str]]] = {
+ERRORS: typing.Dict[int, typing.Tuple[_TGE, typing.Optional[str]]] = {
     retcode: (GenshinException, exc) if isinstance(exc, str) else exc if isinstance(exc, tuple) else (exc, None)
     for retcode, exc in _errors.items()
 }
 
 
-def raise_for_retcode(data: dict[str, typing.Any]) -> typing.NoReturn:
+def raise_for_retcode(data: typing.Dict[str, typing.Any]) -> typing.NoReturn:
     """Raise an equivalent error to a response.
 
     game record:
@@ -327,7 +327,7 @@ def raise_for_retcode(data: dict[str, typing.Any]) -> typing.NoReturn:
     raise GenshinException(data)
 
 
-def check_for_geetest(data: dict[str, typing.Any]) -> None:
+def check_for_geetest(data: typing.Dict[str, typing.Any]) -> None:
     """Check if geetest was triggered during the request and raise an error if so."""
     if data["retcode"] in GEETEST_RETCODES:
         raise GeetestError(data)

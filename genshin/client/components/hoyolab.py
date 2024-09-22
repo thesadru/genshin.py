@@ -94,8 +94,8 @@ class HoyolabClient(base.BaseClient):
             ),
         )
 
-        announcements: list[typing.Mapping[str, typing.Any]] = []
-        extra_list: list[typing.Mapping[str, typing.Any]] = (
+        announcements: typing.List[typing.Mapping[str, typing.Any]] = []
+        extra_list: typing.List[typing.Mapping[str, typing.Any]] = (
             info["pic_list"][0]["type_list"] if "pic_list" in info and info["pic_list"] else []
         )
         for sublist in info["list"] + extra_list:

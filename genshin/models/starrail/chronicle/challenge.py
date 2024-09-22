@@ -1,6 +1,6 @@
 """Starrail chronicle challenge."""
 
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
 
 import pydantic
 
@@ -30,7 +30,7 @@ class FloorNode(APIModel):
     """Node for a memory of chaos floor."""
 
     challenge_time: PartialTime
-    avatars: list[FloorCharacter]
+    avatars: List[FloorCharacter]
 
 
 class StarRailChallengeFloor(APIModel):
@@ -74,13 +74,13 @@ class StarRailChallenge(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: list[StarRailFloor] = Aliased("all_floor_detail")
-    seasons: list[StarRailChallengeSeason] = Aliased("groups")
+    floors: List[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
 
     @pydantic.model_validator(mode="before")
-    def __extract_name(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], list):
-            seasons: list[dict[str, Any]] = values["groups"]
+    def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], List):
+            seasons: List[Dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
 
@@ -129,14 +129,14 @@ class StarRailPureFiction(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: list[FictionFloor] = Aliased("all_floor_detail")
-    seasons: list[StarRailChallengeSeason] = Aliased("groups")
+    floors: List[FictionFloor] = Aliased("all_floor_detail")
+    seasons: List[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
 
     @pydantic.model_validator(mode="before")
-    def __unnest_groups(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], list):
-            seasons: list[dict[str, Any]] = values["groups"]
+    def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], List):
+            seasons: List[Dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
                 values["season_id"] = seasons[0]["schedule_id"]
@@ -196,6 +196,6 @@ class StarRailAPCShadow(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: list[APCShadowFloor] = Aliased("all_floor_detail")
-    seasons: list[APCShadowSeason] = Aliased("groups")
+    floors: List[APCShadowFloor] = Aliased("all_floor_detail")
+    seasons: List[APCShadowSeason] = Aliased("groups")
     max_floor_id: int

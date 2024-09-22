@@ -32,7 +32,7 @@ class BaseMMT(pydantic.BaseModel):
     success: int
 
     @pydantic.model_validator(mode="before")
-    def __parse_data(cls, data: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __parse_data(cls, data: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Parse the data if it was provided in a raw format."""
         if "data" in data:
             # Assume the data is aigis header and parse it
@@ -89,7 +89,7 @@ class RiskyCheckMMT(MMT):
 class BaseMMTResult(pydantic.BaseModel):
     """Base Geetest verification result model."""
 
-    def get_data(self) -> dict[str, typing.Any]:
+    def get_data(self) -> typing.Dict[str, typing.Any]:
         """Get the base MMT result data.
 
         This method acts as `dict` but excludes the `session_id` field.

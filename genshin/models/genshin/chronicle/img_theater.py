@@ -145,8 +145,8 @@ class ImgTheaterData(APIModel):
     battle_stats: TheaterBattleStats = Aliased("fight_statisic", default=None)
 
     @pydantic.model_validator(mode="before")
-    def __unnest_detail(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
-        detail: typing.Optional[dict[str, typing.Any]] = values.get("detail")
+    def __unnest_detail(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        detail: typing.Optional[typing.Dict[str, typing.Any]] = values.get("detail")
         values["rounds_data"] = detail.get("rounds_data", []) if detail is not None else []
         values["backup_avatars"] = detail.get("backup_avatars", []) if detail is not None else []
         values["fight_statisic"] = detail.get("fight_statisic", None) if detail is not None else None

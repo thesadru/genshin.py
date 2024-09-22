@@ -168,7 +168,7 @@ class CalculatorFurnishing(APIModel, Unique):
     icon: str = Aliased("icon_url")
     rarity: int = Aliased("level")
 
-    amount: int | None = Aliased("num")
+    amount: typing.Optional[int] = Aliased("num")
 
 
 class CalculatorCharacterDetails(APIModel):
@@ -181,7 +181,7 @@ class CalculatorCharacterDetails(APIModel):
     @pydantic.field_validator("talents")
     def __correct_talent_current_level(cls, v: typing.Sequence[CalculatorTalent]) -> typing.Sequence[CalculatorTalent]:
         # passive talent have current levels at 0 for some reason
-        talents: list[CalculatorTalent] = []
+        talents: typing.List[CalculatorTalent] = []
 
         for talent in v:
             if talent.max_level == 1 and talent.level == 0:
@@ -221,17 +221,17 @@ class CalculatorArtifactResult(APIModel):
 class CalculatorResult(APIModel):
     """Calculation result."""
 
-    character: list[CalculatorConsumable] = Aliased("avatar_consume")
-    weapon: list[CalculatorConsumable] = Aliased("weapon_consume")
-    talents: list[CalculatorConsumable] = Aliased("avatar_skill_consume")
-    artifacts: list[CalculatorArtifactResult] = Aliased("reliquary_consume")
+    character: typing.List[CalculatorConsumable] = Aliased("avatar_consume")
+    weapon: typing.List[CalculatorConsumable] = Aliased("weapon_consume")
+    talents: typing.List[CalculatorConsumable] = Aliased("avatar_skill_consume")
+    artifacts: typing.List[CalculatorArtifactResult] = Aliased("reliquary_consume")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:
         artifacts = [i for a in self.artifacts for i in a.list]
         combined = self.character + self.weapon + self.talents + artifacts
 
-        grouped: dict[int, list[CalculatorConsumable]] = collections.defaultdict(list)
+        grouped: typing.Dict[int, typing.List[CalculatorConsumable]] = collections.defaultdict(list)
         for i in combined:
             grouped[i.id].append(i)
 
@@ -251,7 +251,7 @@ class CalculatorResult(APIModel):
 class CalculatorFurnishingResults(APIModel):
     """Furnishing calculation result."""
 
-    furnishings: list[CalculatorConsumable] = Aliased("list")
+    furnishings: typing.List[CalculatorConsumable] = Aliased("list")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:

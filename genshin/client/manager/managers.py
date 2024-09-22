@@ -36,7 +36,7 @@ AsyncCallableT = typing.TypeVar("AsyncCallableT", bound="typing.Callable[..., ty
 MaybeSequence = typing.Union[T, typing.Sequence[T]]
 
 
-def parse_cookie(cookie: CookieOrHeader | None) -> dict[str, str]:
+def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, str]:
     """Parse a cookie or header into a cookie mapping."""
     if cookie is None:
         return {}
@@ -47,7 +47,7 @@ def parse_cookie(cookie: CookieOrHeader | None) -> dict[str, str]:
     return {str(k): v.value if isinstance(v, http.cookies.Morsel) else str(v) for k, v in cookie.items()}
 
 
-def get_cookie_identifier(cookie: typing.Mapping[str, str]) -> str | None:
+def get_cookie_identifier(cookie: typing.Mapping[str, str]) -> typing.Optional[str]:
     """Get a unique identifier for a cookie."""
     for name, value in cookie.items():
         if name in ("ltuid", "account_id", "ltuid_v2", "account_id_v2"):
@@ -64,11 +64,11 @@ def get_cookie_identifier(cookie: typing.Mapping[str, str]) -> str | None:
 class BaseCookieManager(abc.ABC):
     """A cookie manager for making requests."""
 
-    _proxy: yarl.URL | None = None
-    _socks_proxy: str | None = None
+    _proxy: typing.Optional[yarl.URL] = None
+    _socks_proxy: typing.Optional[str] = None
 
     @classmethod
-    def from_cookies(cls, cookies: AnyCookieOrHeader | None = None) -> BaseCookieManager:
+    def from_cookies(cls, cookies: typing.Optional[AnyCookieOrHeader] = None) -> BaseCookieManager:
         """Create an arbitrary cookie manager implementation instance."""
         if not cookies:
             return CookieManager()
@@ -79,7 +79,7 @@ class BaseCookieManager(abc.ABC):
         return CookieManager(cookies)
 
     @classmethod
-    def from_browser_cookies(cls, browser: str | None = None) -> CookieManager:
+    def from_browser_cookies(cls, browser: typing.Optional[str] = None) -> CookieManager:
         """Create a cookie manager with browser cookies."""
         manager = CookieManager()
         manager.set_browser_cookies(browser)
@@ -97,7 +97,7 @@ class BaseCookieManager(abc.ABC):
         return False
 
     @property
-    def user_id(self) -> int | None:
+    def user_id(self) -> typing.Optional[int]:
         """The id of the user that owns cookies.
 
         Returns None if not found or not applicable.
@@ -105,12 +105,12 @@ class BaseCookieManager(abc.ABC):
         return None
 
     @property
-    def proxy(self) -> yarl.URL | None:
+    def proxy(self) -> typing.Optional[yarl.URL]:
         """Proxy for http(s) requests."""
         return self._proxy
 
     @proxy.setter
-    def proxy(self, proxy: aiohttp.typedefs.StrOrURL | None) -> None:
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -> None:
         if proxy is None:
             self._proxy = None
             self._socks_proxy = None
@@ -179,11 +179,11 @@ class BaseCookieManager(abc.ABC):
         url: aiohttp.typedefs.StrOrURL,
         *,
         method: str = "GET",
-        params: typing.Mapping[str, typing.Any] | None = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         data: typing.Any = None,
         json: typing.Any = None,
-        cookies: aiohttp.typedefs.LooseCookies | None = None,
-        headers: aiohttp.typedefs.LooseHeaders | None = None,
+        cookies: typing.Optional[aiohttp.typedefs.LooseCookies] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         **kwargs: typing.Any,
     ) -> typing.Any:
         """Make an authenticated request."""
@@ -192,11 +192,11 @@ class BaseCookieManager(abc.ABC):
 class CookieManager(BaseCookieManager):
     """Standard implementation of the cookie manager."""
 
-    _cookies: dict[str, str]
+    _cookies: typing.Dict[str, str]
 
     def __init__(
         self,
-        cookies: CookieOrHeader | None = None,
+        cookies: typing.Optional[CookieOrHeader] = None,
     ) -> None:
         self.cookies = parse_cookie(cookies)
 
@@ -209,7 +209,7 @@ class CookieManager(BaseCookieManager):
         return self._cookies
 
     @cookies.setter
-    def cookies(self, cookies: CookieOrHeader | None) -> None:
+    def cookies(self, cookies: typing.Optional[CookieOrHeader]) -> None:
         if not cookies:
             self._cookies = {}
             return
@@ -239,7 +239,7 @@ class CookieManager(BaseCookieManager):
 
     def set_cookies(
         self,
-        cookies: CookieOrHeader | None = None,
+        cookies: typing.Optional[CookieOrHeader] = None,
         **kwargs: typing.Any,
     ) -> typing.MutableMapping[str, str]:
         """Parse and set cookies."""
@@ -249,7 +249,7 @@ class CookieManager(BaseCookieManager):
         self.cookies = parse_cookie(cookies or kwargs)
         return self.cookies
 
-    def set_browser_cookies(self, browser: str | None = None) -> typing.Mapping[str, str]:
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -> typing.Mapping[str, str]:
         """Extract cookies from your browser and set them as client cookies.
 
         Available browsers: chrome, chromium, opera, edge, firefox.
@@ -258,7 +258,7 @@ class CookieManager(BaseCookieManager):
         return self.cookies
 
     @property
-    def user_id(self) -> int | None:
+    def user_id(self) -> typing.Optional[int]:
         """The id of the user that owns cookies.
 
         Returns None if cookies are not set.
@@ -287,9 +287,9 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
     MAX_USES: int = 30
 
     # {id: ({cookie}, uses), ...}
-    _cookies: dict[str, tuple[dict[str, str], int]]
+    _cookies: typing.Dict[str, typing.Tuple[typing.Dict[str, str], int]]
 
-    def __init__(self, cookies: typing.Sequence[CookieOrHeader] | None = None) -> None:
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
 
     @property
@@ -299,7 +299,7 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
         return [cookies for cookies, _ in cookies]
 
     @cookies.setter
-    def cookies(self, cookies: typing.Sequence[CookieOrHeader] | None) -> None:
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -> None:
         if not cookies:
             self._cookies = {}
             return
@@ -335,7 +335,7 @@ class RotatingCookieManager(BaseCookieManager):
 
     _cookies: CookieSequence
 
-    def __init__(self, cookies: typing.Sequence[CookieOrHeader] | None = None) -> None:
+    def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.set_cookies(cookies)
 
     @property
@@ -344,7 +344,7 @@ class RotatingCookieManager(BaseCookieManager):
         return self._cookies
 
     @cookies.setter
-    def cookies(self, cookies: typing.Sequence[CookieOrHeader] | None) -> None:
+    def cookies(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]]) -> None:
         self._cookies.cookies = cookies  # type: ignore # mypy does not understand property setters
 
     def __repr__(self) -> str:
@@ -360,7 +360,7 @@ class RotatingCookieManager(BaseCookieManager):
 
     def set_cookies(
         self,
-        cookies: typing.Sequence[CookieOrHeader] | None = None,
+        cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None,
     ) -> typing.Sequence[typing.Mapping[str, str]]:
         """Parse and set cookies."""
         self._cookies = CookieSequence(cookies)
@@ -401,7 +401,7 @@ class InternationalCookieManager(BaseCookieManager):
 
     _cookies: typing.Mapping[types.Region, CookieSequence]
 
-    def __init__(self, cookies: typing.Mapping[str, MaybeSequence[CookieOrHeader]] | None = None) -> None:
+    def __init__(self, cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None) -> None:
         self.set_cookies(cookies)
 
     @property
@@ -422,7 +422,7 @@ class InternationalCookieManager(BaseCookieManager):
 
     def set_cookies(
         self,
-        cookies: typing.Mapping[str, MaybeSequence[CookieOrHeader]] | None = None,
+        cookies: typing.Optional[typing.Mapping[str, MaybeSequence[CookieOrHeader]]] = None,
     ) -> typing.Mapping[types.Region, typing.Sequence[typing.Mapping[str, str]]]:
         """Parse and set cookies."""
         self._cookies = {}

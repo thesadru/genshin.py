@@ -33,10 +33,10 @@ class CalculatorClient(base.BaseClient):
         endpoint: str,
         *,
         method: str = "POST",
-        lang: str | None = None,
-        params: typing.Mapping[str, typing.Any] | None = None,
-        data: typing.Mapping[str, typing.Any] | None = None,
-        headers: aiohttp.typedefs.LooseHeaders | None = None,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the calculator endpoint."""
@@ -70,7 +70,7 @@ class CalculatorClient(base.BaseClient):
         self,
         data: typing.Mapping[str, typing.Any],
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> models.CalculatorResult:
         """Calculate the results of a builder."""
         data = await self.request_calculator("compute", lang=lang, data=data)
@@ -80,17 +80,17 @@ class CalculatorClient(base.BaseClient):
         self,
         data: typing.Mapping[str, typing.Any],
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> models.CalculatorFurnishingResults:
         """Calculate the results of a builder."""
         data = await self.request_calculator("furniture/compute", lang=lang, data=data)
         return models.CalculatorFurnishingResults(**data)
 
-    def calculator(self, *, lang: str | None = None) -> Calculator:
+    def calculator(self, *, lang: typing.Optional[str] = None) -> Calculator:
         """Create a calculator builder object."""
         return Calculator(self, lang=lang)
 
-    def furnishings_calculator(self, *, lang: str | None = None) -> FurnishingCalculator:
+    def furnishings_calculator(self, *, lang: typing.Optional[str] = None) -> FurnishingCalculator:
         """Create a calculator builder object."""
         return FurnishingCalculator(self, lang=lang)
 
@@ -102,12 +102,12 @@ class CalculatorClient(base.BaseClient):
         self,
         slug: str,
         filters: typing.Mapping[str, typing.Any],
-        query: str | None = None,
+        query: typing.Optional[str] = None,
         *,
-        uid: int | None = None,
+        uid: typing.Optional[int] = None,
         is_all: bool = False,
         sync: bool = False,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
         autoauth: bool = True,
     ) -> typing.Sequence[typing.Mapping[str, typing.Any]]:
         """Get all items of a specific slug from a calculator."""
@@ -119,14 +119,14 @@ class CalculatorClient(base.BaseClient):
 
             filters = dict(keywords=query, **filters)
 
-        payload: dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
+        payload: typing.Dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
 
         if sync:
             uid = uid or await self._get_uid(types.Game.GENSHIN)
             payload["uid"] = uid
             payload["region"] = utility.recognize_genshin_server(uid)
 
-        cache: client_cache.CacheKey | None = None
+        cache: typing.Optional[client_cache.CacheKey] = None
         if not any(filters.values()) and not sync:
             cache = client_cache.cache_key("calculator", slug=slug, lang=lang or self.lang)
 
@@ -146,13 +146,13 @@ class CalculatorClient(base.BaseClient):
     async def get_calculator_characters(
         self,
         *,
-        query: str | None = None,
-        elements: typing.Sequence[int] | None = None,
-        weapon_types: typing.Sequence[int] | None = None,
+        query: typing.Optional[str] = None,
+        elements: typing.Optional[typing.Sequence[int]] = None,
+        weapon_types: typing.Optional[typing.Sequence[int]] = None,
         include_traveler: bool = False,
         sync: bool = False,
-        uid: int | None = None,
-        lang: str | None = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorCharacter]:
         """Get all characters provided by the Enhancement Progression Calculator."""
         data = await self._get_calculator_items(
@@ -172,10 +172,10 @@ class CalculatorClient(base.BaseClient):
     async def get_calculator_weapons(
         self,
         *,
-        query: str | None = None,
-        types: typing.Sequence[int] | None = None,
-        rarities: typing.Sequence[int] | None = None,
-        lang: str | None = None,
+        query: typing.Optional[str] = None,
+        types: typing.Optional[typing.Sequence[int]] = None,
+        rarities: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorWeapon]:
         """Get all weapons provided by the Enhancement Progression Calculator."""
         data = await self._get_calculator_items(
@@ -192,10 +192,10 @@ class CalculatorClient(base.BaseClient):
     async def get_calculator_artifacts(
         self,
         *,
-        query: str | None = None,
+        query: typing.Optional[str] = None,
         pos: int = 1,
-        rarities: typing.Sequence[int] | None = None,
-        lang: str | None = None,
+        rarities: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorArtifact]:
         """Get all artifacts provided by the Enhancement Progression Calculator."""
         data = await self._get_calculator_items(
@@ -212,9 +212,9 @@ class CalculatorClient(base.BaseClient):
     async def get_calculator_furnishings(
         self,
         *,
-        types: int | None = None,
-        rarities: int | None = None,
-        lang: str | None = None,
+        types: typing.Optional[int] = None,
+        rarities: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorFurnishing]:
         """Get all furnishings provided by the Enhancement Progression Calculator."""
         data = await self._get_calculator_items(
@@ -231,8 +231,8 @@ class CalculatorClient(base.BaseClient):
         self,
         character: types.IDOr[genshin_models.BaseCharacter],
         *,
-        uid: int | None = None,
-        lang: str | None = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> models.CalculatorCharacterDetails:
         """Get the weapon, artifacts and talents of a character.
 
@@ -257,7 +257,7 @@ class CalculatorClient(base.BaseClient):
         self,
         character: types.IDOr[genshin_models.BaseCharacter],
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorTalent]:
         """Get the talents of a character.
 
@@ -274,9 +274,9 @@ class CalculatorClient(base.BaseClient):
 
     async def get_complete_artifact_set(
         self,
-        artifact: types.IDOr[genshin_models.Artifact | genshin_models.CalculatorArtifact],
+        artifact: types.IDOr[typing.Union[genshin_models.Artifact, genshin_models.CalculatorArtifact]],
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorArtifact]:
         """Get all other artifacts that share a set with any given artifact.
 
@@ -300,9 +300,9 @@ class CalculatorClient(base.BaseClient):
         self,
         share_code: int,
         *,
-        region: str | None = None,
-        uid: int | None = None,
-        lang: str | None = None,
+        region: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.CalculatorFurnishing]:
         """Get furnishings used by a teapot replica blueprint."""
         if not region:
@@ -319,7 +319,7 @@ class CalculatorClient(base.BaseClient):
         return [models.CalculatorFurnishing(**i) for i in data["list"]]
 
     @deprecation.deprecated("await genshin.utility.update_characters_any()")
-    async def update_character_names(self, *, lang: str | None = None) -> None:
+    async def update_character_names(self, *, lang: typing.Optional[str] = None) -> None:
         """Update stored db characters with the names from the calculator."""
         characters = await self.get_calculator_characters(lang=lang, include_traveler=True)
 

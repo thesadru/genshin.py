@@ -102,7 +102,7 @@ class BasicPaginator(typing.Generic[T], Paginator[T], abc.ABC):
     iterator: typing.AsyncIterator[T]
     """Underlying iterator."""
 
-    def __init__(self, iterable: typing.Iterable[T] | typing.AsyncIterable[T]) -> None:
+    def __init__(self, iterable: typing.Union[typing.Iterable[T], typing.AsyncIterable[T]]) -> None:
         if isinstance(iterable, typing.AsyncIterable):
             self.iterator = iterable.__aiter__()
         else:
@@ -120,16 +120,16 @@ class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
 
     __slots__ = ("limit", "_buffer", "_counter")
 
-    limit: int | None
+    limit: typing.Optional[int]
     """Limit of items to be yielded."""
 
-    _buffer: typing.Iterator[T] | None
+    _buffer: typing.Optional[typing.Iterator[T]]
     """Item buffer. If none then exhausted."""
 
     _counter: int
     """Amount of yielded items so far. No guarantee to be synchronized."""
 
-    def __init__(self, *, limit: int | None = None) -> None:
+    def __init__(self, *, limit: typing.Optional[int] = None) -> None:
         self.limit = limit
 
         self._buffer = iter(())
@@ -147,7 +147,7 @@ class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
         raise  # pyright bug
 
     @abc.abstractmethod
-    async def next_page(self) -> typing.Iterable[T] | None:
+    async def next_page(self) -> typing.Optional[typing.Iterable[T]]:
         """Get the next page of the paginator."""
 
     async def __anext__(self) -> T:
@@ -185,16 +185,16 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
     Only used as pointers to a heap.
     """
 
-    _heap: list[tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    _heap: typing.List[typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
     """Underlying heap queue.
 
     List of (comparable, unique order id, value, iterator)
     """
 
-    limit: int | None
+    limit: typing.Optional[int]
     """Limit of items to be yielded"""
 
-    _key: typing.Callable[[T], typing.Any] | None
+    _key: typing.Optional[typing.Callable[[T], typing.Any]]
     """Sorting key."""
 
     _prepared: bool
@@ -207,8 +207,8 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         self,
         iterables: typing.Collection[typing.AsyncIterable[T]],
         *,
-        key: typing.Callable[[T], typing.Any] | None = None,
-        limit: int | None = None,
+        key: typing.Optional[typing.Callable[[T], typing.Any]] = None,
+        limit: typing.Optional[int] = None,
     ) -> None:
         self.iterators = [iterable.__aiter__() for iterable in iterables]
         self._key = key
@@ -230,8 +230,8 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         self,
         value: T,
         iterator: typing.AsyncIterator[T],
-        order: int | None = None,
-    ) -> tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+        order: typing.Optional[int] = None,
+    ) -> typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
         """Create a new item for the heap queue."""
         sort_value = self._key(value) if self._key else value
         if order is None:

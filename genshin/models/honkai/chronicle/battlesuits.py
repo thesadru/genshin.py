@@ -46,7 +46,7 @@ class FullBattlesuit(battlesuit.Battlesuit):
     stigmata: typing.Sequence[Stigma] = Aliased("stigmatas")
 
     @pydantic.model_validator(mode="before")
-    def __unnest_char_data(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __unnest_char_data(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if isinstance(values.get("character"), typing.Mapping):
             values.update(values["character"])
 

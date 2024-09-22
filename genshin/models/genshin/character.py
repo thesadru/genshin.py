@@ -132,7 +132,7 @@ class BaseCharacter(APIModel, Unique):
     collab: bool = False
 
     @pydantic.model_validator(mode="before")
-    def __autocomplete(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Complete missing data."""
         all_fields = list(cls.model_fields.keys())
         all_aliases = {f: cls.model_fields[f].alias for f in all_fields if cls.model_fields[f].alias}

@@ -92,4 +92,4 @@ class DBChar(typing.NamedTuple):
 #     10000071: ("Cyno", "Electro", 5),
 #     10000072: ("Candace", "Hydro", 4),
 # }
-CHARACTER_NAMES: dict[str, dict[int, DBChar]] = {}
+CHARACTER_NAMES: typing.Dict[str, typing.Dict[int, DBChar]] = {}

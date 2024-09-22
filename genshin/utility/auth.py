@@ -152,12 +152,12 @@ def encrypt_credentials(text: str, key_type: typing.Literal[1, 2]) -> str:
     return base64.b64encode(crypto).decode("utf-8")
 
 
-def get_aigis_header(session_id: str, mmt_data: dict[str, typing.Any]) -> str:
+def get_aigis_header(session_id: str, mmt_data: typing.Dict[str, typing.Any]) -> str:
     """Get aigis header."""
     return f"{session_id};{base64.b64encode(json.dumps(mmt_data).encode()).decode()}"
 
 
-def generate_sign(data: dict[str, typing.Any], key: str) -> str:
+def generate_sign(data: typing.Dict[str, typing.Any], key: str) -> str:
     """Generate a sign for the given `data` and `app_key`."""
     string = ""
     for k in sorted(data.keys()):

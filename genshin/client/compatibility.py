@@ -24,8 +24,8 @@ class GenshinClient(clients.Client):
 
     def __init__(
         self,
-        cookies: typing.Any | None = None,
-        authkey: str | None = None,
+        cookies: typing.Optional[typing.Any] = None,
+        authkey: typing.Optional[str] = None,
         *,
         lang: str = "en-us",
         region: types.Region = types.Region.OVERSEAS,
@@ -59,7 +59,7 @@ class GenshinClient(clients.Client):
         setattr(self.cookie_manager, "cookies", cookies)
 
     @property
-    def uid(self) -> int | None:
+    def uid(self) -> typing.Optional[int]:
         deprecation.warn_deprecated(self.__class__.uid, alternative="Client.uids[genshin.Game.GENSHIN]")
         return self.uids[types.Game.GENSHIN]
 
@@ -83,7 +83,7 @@ class GenshinClient(clients.Client):
         self,
         uid: int,
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> models.PartialGenshinUserStats:
         """Get partial genshin user without character equipment."""
         return await self.get_partial_genshin_user(uid, lang=lang)
@@ -93,7 +93,7 @@ class GenshinClient(clients.Client):
         self,
         uid: int,
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
         """Get genshin user characters."""
         return await self.get_genshin_characters(uid, lang=lang)
@@ -103,7 +103,7 @@ class GenshinClient(clients.Client):
         self,
         uid: int,
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> models.GenshinUserStats:
         """Get genshin user."""
         return await self.get_genshin_user(uid, lang=lang)
@@ -113,7 +113,7 @@ class GenshinClient(clients.Client):
         self,
         uid: int,
         *,
-        lang: str | None = None,
+        lang: typing.Optional[str] = None,
     ) -> models.FullGenshinUserStats:
         """Get a user with all their possible data."""
         return await self.get_full_genshin_user(uid, lang=lang)
@@ -129,8 +129,8 @@ class ChineseClient(GenshinClient):
 
     def __init__(
         self,
-        cookies: typing.Mapping[str, str] | None = None,
-        authkey: str | None = None,
+        cookies: typing.Optional[typing.Mapping[str, str]] = None,
+        authkey: typing.Optional[str] = None,
         *,
         lang: str = "zh-cn",
         debug: bool = False,
@@ -154,7 +154,7 @@ class MultiCookieClient(GenshinClient):
 
     def __init__(
         self,
-        cookie_list: typing.Sequence[typing.Mapping[str, str]] | None = None,
+        cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
         lang: str = "en-us",
         debug: bool = False,
@@ -176,7 +176,7 @@ class ChineseMultiCookieClient(GenshinClient):
 
     def __init__(
         self,
-        cookie_list: typing.Sequence[typing.Mapping[str, str]] | None = None,
+        cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
         lang: str = "en-us",
         debug: bool = False,

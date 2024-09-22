@@ -27,7 +27,7 @@ class OldActivity(APIModel, typing.Generic[ModelT]):
     """Arbitrary activity for chinese events."""
 
     # sometimes __parameters__ may not be provided in older versions
-    __parameters__: typing.ClassVar[tuple[typing.Any, ...]] = (ModelT,)  # type: ignore
+    __parameters__: typing.ClassVar[typing.Tuple[typing.Any, ...]] = (ModelT,)  # type: ignore
 
     exists_data: bool
     records: typing.Sequence[ModelT]
@@ -310,7 +310,7 @@ class Activities(APIModel):
     chess: typing.Optional[Activity[typing.Any]] = None
 
     @pydantic.model_validator(mode="before")
-    def __flatten_activities(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __flatten_activities(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if not values.get("activities"):
             return values
 

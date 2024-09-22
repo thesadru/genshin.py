@@ -57,7 +57,7 @@ class WishClient(base.BaseClient):
         game: typing.Optional[types.Game] = None,
         lang: typing.Optional[str] = None,
         authkey: typing.Optional[str] = None,
-    ) -> tuple[typing.Sequence[typing.Any], int]:
+    ) -> typing.Tuple[typing.Sequence[typing.Any], int]:
         """Get a single page of wishes."""
         data = await self.request_gacha_info(
             "getGachaLog",
@@ -150,7 +150,7 @@ class WishClient(base.BaseClient):
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
 
-        iterators: list[paginators.Paginator[models.Wish]] = []
+        iterators: typing.List[paginators.Paginator[models.Wish]] = []
         for banner in banner_types:
             iterators.append(
                 paginators.CursorPaginator(
@@ -185,7 +185,7 @@ class WishClient(base.BaseClient):
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
 
-        iterators: list[paginators.Paginator[models.Warp]] = []
+        iterators: typing.List[paginators.Paginator[models.Warp]] = []
         for banner in banner_types:
             iterators.append(
                 paginators.CursorPaginator(
@@ -220,7 +220,7 @@ class WishClient(base.BaseClient):
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
 
-        iterators: list[paginators.Paginator[models.SignalSearch]] = []
+        iterators: typing.List[paginators.Paginator[models.SignalSearch]] = []
         for banner in banner_types:
             iterators.append(
                 paginators.CursorPaginator(

@@ -122,7 +122,7 @@ class LineupArtifactStatFields(APIModel):
     secondary_stats: typing.Mapping[int, str] = Aliased("reliquary_sec_attr")
 
     @pydantic.model_validator(mode="before")
-    def __flatten_stats(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __flatten_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Name certain stats."""
         if "reliquary_fst_attr" not in values:
             return values
@@ -143,7 +143,7 @@ class LineupArtifactStatFields(APIModel):
         return values
 
     @pydantic.field_validator("secondary_stats", "flower", "plume", "sands", "goblet", "circlet", mode="before")
-    def __parse_secondary_stats(cls, value: typing.Any) -> dict[int, str]:
+    def __parse_secondary_stats(cls, value: typing.Any) -> typing.Dict[int, str]:
         if not isinstance(value, typing.Sequence):
             return value
 
@@ -186,7 +186,7 @@ class LineupScenario(APIModel, Unique):
     children: typing.Sequence[LineupScenario]
 
     @pydantic.model_validator(mode="before")
-    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __flatten_scenarios(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         """Name certain scenarios."""
         scenario_ids = {
             field.json_schema_extra["scenario_id"]: name

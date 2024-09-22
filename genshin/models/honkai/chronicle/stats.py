@@ -100,7 +100,7 @@ class HonkaiStats(APIModel):
     elysian_realm: ElysianRealmStats = Aliased()
 
     @pydantic.model_validator(mode="before")
-    def __pack_gamemode_stats(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __pack_gamemode_stats(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         if "new_abyss" in values:
             values["abyss"] = SuperstringAbyssStats(**values["new_abyss"], **values)
         elif "old_abyss" in values:

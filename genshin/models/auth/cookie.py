@@ -26,7 +26,7 @@ class StokenResult(pydantic.BaseModel):
     token: str
 
     @pydantic.model_validator(mode="before")
-    def _transform_result(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def _transform_result(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         return {
             "aid": values["user_info"]["aid"],
             "mid": values["user_info"]["mid"],
@@ -41,7 +41,7 @@ class CookieLoginResult(pydantic.BaseModel):
         """Convert the login cookies to a string."""
         return "; ".join(f"{key}={value}" for key, value in self.model_dump().items())
 
-    def to_dict(self) -> dict[str, str]:
+    def to_dict(self) -> typing.Dict[str, str]:
         """Convert the login cookies to a dictionary."""
         return self.model_dump()
 
@@ -121,7 +121,7 @@ class DeviceGrantResult(pydantic.BaseModel):
     login_ticket: typing.Optional[str] = None
 
     @pydantic.model_validator(mode="before")
-    def _str_to_none(cls, data: dict[str, typing.Union[str, None]]) -> dict[str, typing.Union[str, None]]:
+    def _str_to_none(cls, data: typing.Dict[str, typing.Union[str, None]]) -> typing.Dict[str, typing.Union[str, None]]:
         """Convert empty strings to `None`."""
         for key in data:
             if data[key] == "" or data[key] == "None":

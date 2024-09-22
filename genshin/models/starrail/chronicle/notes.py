@@ -11,7 +11,7 @@ __all__ = ["StarRailExpedition", "StarRailNote"]
 class StarRailExpedition(APIModel):
     """StarRail expedition."""
 
-    avatars: list[str]
+    avatars: typing.List[str]
     status: typing.Literal["Ongoing", "Finished"]
     remaining_time: datetime.timedelta
     name: str

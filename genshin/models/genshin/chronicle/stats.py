@@ -114,7 +114,7 @@ class Exploration(APIModel):
     offerings: typing.Sequence[Offering]
     boss_list: typing.Sequence[BossKill]
     area_exploration_list: typing.Sequence[AreaExploration]
-    natlan_reputation: NatlanReputation | None = Aliased("natan_reputation", default=None)
+    natlan_reputation: typing.Optional[NatlanReputation] = Aliased("natan_reputation", default=None)
 
     @property
     def explored(self) -> float:
@@ -162,10 +162,10 @@ class PartialGenshinUserStats(APIModel):
     stats: Stats
     characters: typing.Sequence[characters_module.PartialCharacter] = Aliased("avatars")
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
-    teapot: Teapot | None = Aliased("homes")
+    teapot: typing.Optional[Teapot] = Aliased("homes")
 
     @pydantic.field_validator("teapot", mode="before")
-    def __format_teapot(cls, v: typing.Any) -> dict[str, typing.Any] | None:
+    def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
         if not v:
             return None
         if isinstance(v, dict):

@@ -37,7 +37,7 @@ class BatteryCharge(APIModel):
         return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_full)
 
     @pydantic.model_validator(mode="before")
-    def __unnest_progress(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __unnest_progress(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         return {**values, **values.pop("progress")}
 
 
@@ -61,6 +61,6 @@ class ZZZNotes(APIModel):
         return v == "CardSignDone"
 
     @pydantic.model_validator(mode="before")
-    def __unnest_value(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    def __unnest_value(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         values["video_store_state"] = values["vhs_sale"]["sale_state"]
         return values

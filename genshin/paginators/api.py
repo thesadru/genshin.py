@@ -30,7 +30,7 @@ class GetterCallback(typing.Protocol[T_co]):
 class TokenGetterCallback(typing.Protocol[T_co]):
     """Callback for returning resources based on a page or cursor."""
 
-    async def __call__(self, token: str, /) -> tuple[str, typing.Sequence[T_co]]:
+    async def __call__(self, token: str, /) -> typing.Tuple[str, typing.Sequence[T_co]]:
         """Return a sequence of resources."""
         ...
 
@@ -55,18 +55,18 @@ class PagedPaginator(typing.Generic[T], APIPaginator[T]):
     getter: GetterCallback[T]
     """Underlying getter that yields the next page."""
 
-    _page_size: int | None
+    _page_size: typing.Optional[int]
     """Expected non-zero page size to be able to tell the end."""
 
-    current_page: int | None
+    current_page: typing.Optional[int]
     """Current page counter.."""
 
     def __init__(
         self,
         getter: GetterCallback[T],
         *,
-        limit: int | None = None,
-        page_size: int | None = None,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
     ) -> None:
         super().__init__(limit=limit)
         self.getter = getter
@@ -74,7 +74,7 @@ class PagedPaginator(typing.Generic[T], APIPaginator[T]):
 
         self.current_page = 1
 
-    async def next_page(self) -> typing.Iterable[T] | None:
+    async def next_page(self) -> typing.Optional[typing.Iterable[T]]:
         """Get the next page of the paginator."""
         if self.current_page is None:
             return None
@@ -101,17 +101,17 @@ class TokenPaginator(typing.Generic[T], APIPaginator[T]):
     getter: TokenGetterCallback[T]
     """Underlying getter that yields the next page."""
 
-    _page_size: int | None
+    _page_size: typing.Optional[int]
     """Expected non-zero page size to be able to tell the end."""
 
-    token: str | None
+    token: typing.Optional[str]
 
     def __init__(
         self,
         getter: TokenGetterCallback[T],
         *,
-        limit: int | None = None,
-        page_size: int | None = None,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
     ) -> None:
         super().__init__(limit=limit)
         self.getter = getter
@@ -119,7 +119,7 @@ class TokenPaginator(typing.Generic[T], APIPaginator[T]):
 
         self.token = ""
 
-    async def next_page(self) -> typing.Iterable[T] | None:
+    async def next_page(self) -> typing.Optional[typing.Iterable[T]]:
         """Get the next page of the paginator."""
         if self.token is None:
             return None
@@ -145,19 +145,19 @@ class CursorPaginator(typing.Generic[UniqueT], APIPaginator[UniqueT]):
     getter: GetterCallback[UniqueT]
     """Underlying getter that yields the next page."""
 
-    _page_size: int | None
+    _page_size: typing.Optional[int]
     """Expected non-zero page size to be able to tell the end."""
 
-    end_id: int | None
+    end_id: typing.Optional[int]
     """Current end id. If none then exhausted."""
 
     def __init__(
         self,
         getter: GetterCallback[UniqueT],
         *,
-        limit: int | None = None,
+        limit: typing.Optional[int] = None,
         end_id: int = 0,
-        page_size: int | None = 20,
+        page_size: typing.Optional[int] = 20,
     ) -> None:
         super().__init__(limit=limit)
         self.getter = getter
@@ -165,7 +165,7 @@ class CursorPaginator(typing.Generic[UniqueT], APIPaginator[UniqueT]):
 
         self._page_size = page_size
 
-    async def next_page(self) -> typing.Iterable[UniqueT] | None:
+    async def next_page(self) -> typing.Optional[typing.Iterable[UniqueT]]:
         """Get the next page of the paginator."""
         if self.end_id is None:
             return None

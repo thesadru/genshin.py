@@ -20,7 +20,7 @@ def prevent_concurrency(func: CallableT) -> CallableT:
     """
 
     def wrapper(func: AnyCallable) -> AnyCallable:
-        lock: asyncio.Lock | None = None
+        lock: typing.Optional[asyncio.Lock] = None
 
         @functools.wraps(func)
         async def inner(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:
@@ -48,7 +48,7 @@ class MethodDecorator:
         method: AnyCallable,
         decorator: typing.Callable[[AnyCallable], AnyCallable],
         *,
-        name: str | None = None,
+        name: typing.Optional[str] = None,
     ) -> None:
         self.method = method  # type: ignore # mypy doesn't understand methods
         self.decorator = decorator  # type: ignore # mypy doesn't understand methods
@@ -57,7 +57,7 @@ class MethodDecorator:
     def __set_name__(self, owner: type, name: str) -> None:
         self.name = name
 
-    def __get__(self, instance: T | None, owner: type[T]) -> AnyCallable:
+    def __get__(self, instance: typing.Optional[T], owner: typing.Type[T]) -> AnyCallable:
         if instance is None:
             return self.method
 

@@ -33,7 +33,7 @@ class Unique(abc.ABC):
 
 
 def Aliased(
-    alias: str | None = None,
+    alias: typing.Optional[str] = None,
     default: typing.Any = None,
     **kwargs: typing.Any,
 ) -> typing.Any:

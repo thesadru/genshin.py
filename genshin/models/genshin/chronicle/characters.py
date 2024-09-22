@@ -127,7 +127,7 @@ class Character(PartialCharacter):
     @pydantic.field_validator("artifacts")
     @classmethod
     def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
-        set_nums: defaultdict[int, int] = defaultdict(int)
+        set_nums: typing.DefaultDict[int, int] = defaultdict(int)
         for arti in artifacts:
             set_nums[arti.set.id] += 1
 
@@ -244,16 +244,16 @@ class GenshinDetailCharacters(APIModel):
     avatar_wiki: typing.Mapping[str, str]
 
     @pydantic.model_validator(mode="before")
-    def __fill_prop_info(cls, values: dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
+    def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
-        relic_property_options: dict[str, list[int]] = values.get("relic_property_options", {})
-        prop_map: dict[str, dict[str, typing.Any]] = values.get("property_map", {})
-        characters: list[dict[str, typing.Any]] = values.get("list", [])
+        relic_property_options: typing.Dict[str, list[int]] = values.get("relic_property_options", {})
+        prop_map: typing.Dict[str, typing.Dict[str, typing.Any]] = values.get("property_map", {})
+        characters: list[typing.Dict[str, typing.Any]] = values.get("list", [])
 
         # Map properties to artifacts
-        new_relic_prop_options: dict[str, list[dict[str, typing.Any]]] = {}
+        new_relic_prop_options: typing.Dict[str, list[typing.Dict[str, typing.Any]]] = {}
         for relic_type, properties in relic_property_options.items():
-            formatted_properties: list[dict[str, typing.Any]] = [
+            formatted_properties: list[typing.Dict[str, typing.Any]] = [
                 prop_map[str(prop)] for prop in properties if str(prop) in prop_map
             ]
             new_relic_prop_options[relic_type] = formatted_properties
