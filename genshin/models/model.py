@@ -7,7 +7,7 @@ import datetime
 import typing
 
 import pydantic
-from typing_extensions import Annotated
+from typing import Annotated
 
 from genshin.constants import CN_TIMEZONE
 

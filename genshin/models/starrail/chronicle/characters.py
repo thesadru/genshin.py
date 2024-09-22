@@ -1,7 +1,8 @@
 """Starrail chronicle character."""
 
 import enum
-from typing import Any, Mapping, Optional, Sequence
+from typing import Any, Optional
+from collections.abc import Mapping, Sequence
 
 import pydantic
 
