@@ -89,7 +89,11 @@ async def cache():
 
     os.makedirs(".pytest_cache", exist_ok=True)
     with open(".pytest_cache/hoyo_cache.json", "w", encoding="utf-8") as file:
-        json.dump(cache, file, indent=4, ensure_ascii=False)
+        try:
+            json.dump(cache, file, indent=4, ensure_ascii=False)
+        except TypeError:
+            # Some objects are not serializable
+            pass
 
 
 @pytest.fixture(scope="session")
