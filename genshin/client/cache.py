@@ -25,7 +25,7 @@ WEEK = DAY * 7
 
 def _separate(values: typing.Iterable[typing.Any], sep: str = ":") -> str:
     """Separate a sequence by a separator into a single string."""
-    parts: typing.List[str] = []
+    parts: list[str] = []
     for value in values:
         if value is None:
             parts.append("null")
@@ -64,7 +64,7 @@ class BaseCache(abc.ABC):
     """Base cache for the client."""
 
     @abc.abstractmethod
-    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get(self, key: typing.Any) -> typing.Any | None:
         """Get an object with a key."""
 
     @abc.abstractmethod
@@ -72,7 +72,7 @@ class BaseCache(abc.ABC):
         """Save an object with a key."""
 
     @abc.abstractmethod
-    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get_static(self, key: typing.Any) -> typing.Any | None:
         """Get a static object with a key."""
 
     @abc.abstractmethod
@@ -83,7 +83,7 @@ class BaseCache(abc.ABC):
 class Cache(BaseCache):
     """Standard implementation of the cache."""
 
-    cache: typing.Dict[typing.Any, typing.Tuple[float, typing.Any]]
+    cache: dict[typing.Any, tuple[float, typing.Any]]
     maxsize: int
     ttl: float
     static_ttl: float
@@ -115,7 +115,7 @@ class Cache(BaseCache):
             for key in keys:
                 del self.cache[key]
 
-    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get(self, key: typing.Any) -> typing.Any | None:
         """Get an object with a key."""
         self._clear_cache()
 
@@ -130,7 +130,7 @@ class Cache(BaseCache):
 
         self._clear_cache()
 
-    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get_static(self, key: typing.Any) -> typing.Any | None:
         """Get a static object with a key."""
         return await self.get(key)
 
@@ -167,7 +167,7 @@ class RedisCache(BaseCache):
         """Serialize a key by turning it into a string."""
         return str(key)
 
-    def serialize_value(self, value: typing.Any) -> typing.Union[str, bytes]:
+    def serialize_value(self, value: typing.Any) -> str | bytes:
         """Serialize a value by turning it into bytes."""
         return json.dumps(value)
 
@@ -175,7 +175,7 @@ class RedisCache(BaseCache):
         """Deserialize a value back into data."""
         return json.loads(value)
 
-    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get(self, key: typing.Any) -> typing.Any | None:
         """Get an object with a key."""
         value = typing.cast("typing.Optional[bytes]", await self.redis.get(self.serialize_key(key)))  # pyright: ignore
         if value is None:
@@ -191,7 +191,7 @@ class RedisCache(BaseCache):
             ex=self.ttl,
         )
 
-    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get_static(self, key: typing.Any) -> typing.Any | None:
         """Get a static object with a key."""
         return await self.get(key)
 
@@ -258,7 +258,7 @@ class SQLiteCache(BaseCache):
         """Deserialize a value back into data."""
         return json.loads(value)
 
-    async def get(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get(self, key: typing.Any) -> typing.Any | None:
         """Get an object with a key."""
         import aiosqlite
 
@@ -299,7 +299,7 @@ class SQLiteCache(BaseCache):
         if self.conn is None:
             await conn.close()
 
-    async def get_static(self, key: typing.Any) -> typing.Optional[typing.Any]:
+    async def get_static(self, key: typing.Any) -> typing.Any | None:
         """Get a static object with a key."""
         return await self.get(key)
 

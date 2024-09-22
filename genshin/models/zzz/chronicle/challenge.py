@@ -70,18 +70,18 @@ class ShiyuDefenseMonster(APIModel):
 class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
-    characters: typing.List[ShiyuDefenseCharacter] = Aliased("avatars")
+    characters: list[ShiyuDefenseCharacter] = Aliased("avatars")
     bangboo: ShiyuDefenseBangboo = Aliased("buddy")
-    recommended_elements: typing.List[ZZZElementType] = Aliased("element_type_list")
-    enemies: typing.List[ShiyuDefenseMonster] = Aliased("monster_info")
+    recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
+    enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
 
     @pydantic.field_validator("enemies", mode="before")
     @classmethod
     def __convert_enemies(
-        cls, value: typing.Dict[typing.Literal["level", "list"], typing.Any]
-    ) -> typing.List[ShiyuDefenseMonster]:
+        cls, value: dict[typing.Literal["level", "list"], typing.Any]
+    ) -> list[ShiyuDefenseMonster]:
         level = value["level"]
-        result: typing.List[ShiyuDefenseMonster] = []
+        result: list[ShiyuDefenseMonster] = []
         for monster in value["list"]:
             monster["level"] = level
             result.append(ShiyuDefenseMonster(**monster))
@@ -94,7 +94,7 @@ class ShiyuDefenseFloor(APIModel):
     index: int = Aliased("layer_index")
     rating: typing.Literal["S", "A", "B"]
     id: int = Aliased("layer_id")
-    buffs: typing.List[ShiyuDefenseBuff]
+    buffs: list[ShiyuDefenseBuff]
     node_1: ShiyuDefenseNode
     node_2: ShiyuDefenseNode
     challenge_time: DateTimeField = Aliased("floor_challenge_time")
@@ -116,7 +116,7 @@ class ShiyuDefense(APIModel):
     end_time: typing.Optional[DateTimeField] = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
-    floors: typing.List[ShiyuDefenseFloor] = Aliased("all_floor_detail")
+    floors: list[ShiyuDefenseFloor] = Aliased("all_floor_detail")
     fastest_clear_time: int = Aliased("fast_layer_time")
     """Fastest clear time this season in seconds."""
     max_floor: int = Aliased("max_layer")
@@ -131,6 +131,6 @@ class ShiyuDefense(APIModel):
     @pydantic.field_validator("ratings", mode="before")
     @classmethod
     def __convert_ratings(
-        cls, v: typing.List[typing.Dict[typing.Literal["times", "rating"], typing.Any]]
+        cls, v: list[dict[typing.Literal["times", "rating"], typing.Any]]
     ) -> typing.Mapping[typing.Literal["S", "A", "B"], int]:
         return {d["rating"]: d["times"] for d in v}

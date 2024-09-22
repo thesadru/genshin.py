@@ -56,7 +56,7 @@ class LineupClient(base.BaseClient):
             lang=lang,
             static_cache=cache.cache_key("lineup", endpoint="tags", lang=lang or self.lang),
         )
-        dummy: typing.Dict[str, typing.Any] = dict(id=0, name="", children=data["tree"])
+        dummy: dict[str, typing.Any] = dict(id=0, name="", children=data["tree"])
 
         return models.LineupScenarios(**dummy)
 
@@ -70,9 +70,9 @@ class LineupClient(base.BaseClient):
         order: typing.Optional[str] = None,
         uid: typing.Optional[int] = None,
         lang: typing.Optional[str] = None,
-    ) -> typing.Tuple[str, typing.Sequence[models.LineupPreview]]:
+    ) -> tuple[str, typing.Sequence[models.LineupPreview]]:
         """Get a single page of lineups."""
-        params: typing.Dict[str, typing.Any] = dict(
+        params: dict[str, typing.Any] = dict(
             next_page_token=token,
             limit=limit or "",
             tag_id=tag_id or "",

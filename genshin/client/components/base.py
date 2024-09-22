@@ -62,10 +62,10 @@ class BaseClient(abc.ABC):
     _region: types.Region
     _default_game: typing.Optional[types.Game]
 
-    uids: typing.Dict[types.Game, int]
-    authkeys: typing.Dict[types.Game, str]
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
     _hoyolab_id: typing.Optional[int]
-    _accounts: typing.Dict[types.Game, hoyolab_models.GenshinAccount]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
     custom_headers: multidict.CIMultiDict[str]
 
     def __init__(
@@ -500,7 +500,7 @@ class BaseClient(abc.ABC):
         """Update cached fallback uids."""
         mixed_accounts = await self.get_game_accounts()
 
-        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
         for account in mixed_accounts:
             if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
                 continue
@@ -533,7 +533,7 @@ class BaseClient(abc.ABC):
         """Update cached fallback accounts."""
         mixed_accounts = await self.get_game_accounts()
 
-        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
         for account in mixed_accounts:
             if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
                 continue

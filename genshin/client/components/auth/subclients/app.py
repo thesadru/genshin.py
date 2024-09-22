@@ -194,7 +194,7 @@ class AppAuthClient(base.BaseClient):
             url=data["data"]["url"],
         )
 
-    async def _check_qrcode(self, ticket: str) -> typing.Tuple[QRCodeStatus, SimpleCookie]:
+    async def _check_qrcode(self, ticket: str) -> tuple[QRCodeStatus, SimpleCookie]:
         """Check the status of a QR code login."""
         payload = {"ticket": ticket}
 

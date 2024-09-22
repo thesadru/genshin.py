@@ -117,8 +117,8 @@ class HoyolabUserCertification(APIModel):
     For example artist's type is 2.
     """
 
-    icon_url: typing.Optional[str] = None
-    description: typing.Optional[str] = Aliased("desc", default=None)
+    icon_url: str | None = None
+    description: str | None = Aliased("desc", default=None)
     type: int
 
 
@@ -138,11 +138,11 @@ class FullHoyolabUser(PartialHoyolabUser):
     Not actually full, but most of the data is useless.
     """
 
-    certification: typing.Optional[HoyolabUserCertification] = None
-    level: typing.Optional[HoyolabUserLevel] = None
+    certification: HoyolabUserCertification | None = None
+    level: HoyolabUserLevel | None = None
     pendant_url: str = Aliased("pendant")
-    bg_url: typing.Optional[str] = None
-    pc_bg_url: typing.Optional[str] = None
+    bg_url: str | None = None
+    pc_bg_url: str | None = None
 
 
 class RecordCard(GenshinAccount):
@@ -176,7 +176,7 @@ class RecordCard(GenshinAccount):
     has_uid: bool = Aliased("has_role")
     url: str
 
-    def as_dict(self) -> typing.Dict[str, typing.Any]:
+    def as_dict(self) -> dict[str, typing.Any]:
         """Return data as a dictionary."""
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 

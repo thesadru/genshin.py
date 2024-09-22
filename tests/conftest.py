@@ -209,7 +209,7 @@ def pytest_addoption(parser: pytest.Parser):
     parser.addoption("--cooperative", action="store_true")
 
 
-def pytest_collection_modifyitems(items: typing.List[pytest.Item], config: pytest.Config):
+def pytest_collection_modifyitems(items: list[pytest.Item], config: pytest.Config):
     if config.option.cooperative:
         for item in items:
             if isinstance(item, pytest.Function) and asyncio.iscoroutinefunction(item.obj):

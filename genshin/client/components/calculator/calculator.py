@@ -42,10 +42,10 @@ class CalculatorState:
     """Stores character details if multiple objects require them."""
 
     client: Client
-    cache: typing.Dict[str, typing.Any]
+    cache: dict[str, typing.Any]
     lock: asyncio.Lock
 
-    character_id: typing.Optional[int] = None
+    character_id: int | None = None
 
     def __init__(self, client: Client) -> None:
         self.client = client
@@ -87,10 +87,10 @@ class CharacterResolver(CalculatorResolver[typing.Mapping[str, typing.Any]]):
     def __init__(
         self,
         character: types.IDOr[genshin_models.BaseCharacter],
-        current: typing.Optional[int] = None,
-        target: typing.Optional[int] = None,
+        current: int | None = None,
+        target: int | None = None,
         *,
-        element: typing.Optional[int] = None,
+        element: int | None = None,
     ) -> None:
         if isinstance(character, genshin_models.BaseCharacter):
             current = current or getattr(character, "level", None)
@@ -150,7 +150,7 @@ class CurrentWeaponResolver(WeaponResolver):
 
 
 class ArtifactResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
-    data: typing.List[typing.Mapping[str, typing.Any]]
+    data: list[typing.Mapping[str, typing.Any]]
 
     def __init__(self) -> None:
         self.data = []
@@ -180,17 +180,17 @@ class ArtifactSetResolver(ArtifactResolver):
 
 
 class CurrentArtifactResolver(ArtifactResolver):
-    artifacts: typing.Sequence[typing.Optional[int]]
+    artifacts: typing.Sequence[int | None]
 
     def __init__(
         self,
-        target: typing.Optional[int] = None,
+        target: int | None = None,
         *,
-        flower: typing.Optional[int] = None,
-        feather: typing.Optional[int] = None,
-        sands: typing.Optional[int] = None,
-        goblet: typing.Optional[int] = None,
-        circlet: typing.Optional[int] = None,
+        flower: int | None = None,
+        feather: int | None = None,
+        sands: int | None = None,
+        goblet: int | None = None,
+        circlet: int | None = None,
     ) -> None:
         if target:
             self.artifacts = (target,) * 5
@@ -208,7 +208,7 @@ class CurrentArtifactResolver(ArtifactResolver):
 
 
 class TalentResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
-    data: typing.List[typing.Mapping[str, typing.Any]]
+    data: list[typing.Mapping[str, typing.Any]]
 
     def __init__(self) -> None:
         self.data = []
@@ -221,16 +221,16 @@ class TalentResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typi
 
 
 class CurrentTalentResolver(TalentResolver):
-    talents: typing.Mapping[str, typing.Optional[int]]
+    talents: typing.Mapping[str, int | None]
 
     def __init__(
         self,
-        target: typing.Optional[int] = None,
-        current: typing.Optional[int] = None,
+        target: int | None = None,
+        current: int | None = None,
         *,
-        attack: typing.Optional[int] = None,
-        skill: typing.Optional[int] = None,
-        burst: typing.Optional[int] = None,
+        attack: int | None = None,
+        skill: int | None = None,
+        burst: int | None = None,
     ) -> None:
         self.current = current
         if target:
@@ -272,16 +272,16 @@ class Calculator:
     """Builder for the genshin impact enhancement calculator."""
 
     client: Client
-    lang: typing.Optional[str]
+    lang: str | None
 
-    character: typing.Optional[CharacterResolver]
-    weapon: typing.Optional[WeaponResolver]
-    artifacts: typing.Optional[ArtifactResolver]
-    talents: typing.Optional[TalentResolver]
+    character: CharacterResolver | None
+    weapon: WeaponResolver | None
+    artifacts: ArtifactResolver | None
+    talents: TalentResolver | None
 
     _state: CalculatorState
 
-    def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -> None:
+    def __init__(self, client: Client, *, lang: str | None = None) -> None:
         self.client = client
         self.lang = lang
 
@@ -295,10 +295,10 @@ class Calculator:
     def set_character(
         self,
         character: types.IDOr[genshin_models.BaseCharacter],
-        current: typing.Optional[int] = None,
-        target: typing.Optional[int] = None,
+        current: int | None = None,
+        target: int | None = None,
         *,
-        element: typing.Optional[int] = None,
+        element: int | None = None,
     ) -> Calculator:
         """Set the character."""
         self.character = CharacterResolver(character, current, target, element=element)
@@ -338,13 +338,13 @@ class Calculator:
 
     def with_current_artifacts(
         self,
-        target: typing.Optional[int] = None,
+        target: int | None = None,
         *,
-        flower: typing.Optional[int] = None,
-        feather: typing.Optional[int] = None,
-        sands: typing.Optional[int] = None,
-        goblet: typing.Optional[int] = None,
-        circlet: typing.Optional[int] = None,
+        flower: int | None = None,
+        feather: int | None = None,
+        sands: int | None = None,
+        goblet: int | None = None,
+        circlet: int | None = None,
     ) -> Calculator:
         """Add all artifacts of the selected character."""
         self.artifacts = CurrentArtifactResolver(
@@ -359,12 +359,12 @@ class Calculator:
 
     def with_current_talents(
         self,
-        target: typing.Optional[int] = None,
-        current: typing.Optional[int] = None,
+        target: int | None = None,
+        current: int | None = None,
         *,
-        attack: typing.Optional[int] = None,
-        skill: typing.Optional[int] = None,
-        burst: typing.Optional[int] = None,
+        attack: int | None = None,
+        skill: int | None = None,
+        burst: int | None = None,
     ) -> Calculator:
         """Add all talents of the currently selected character."""
         self.talents = CurrentTalentResolver(
@@ -378,7 +378,7 @@ class Calculator:
 
     async def build(self) -> typing.Mapping[str, typing.Any]:
         """Build the calculator object."""
-        data: typing.Dict[str, typing.Any] = {}
+        data: dict[str, typing.Any] = {}
 
         if self.character:
             data.update(await self.character(self._state))
@@ -406,13 +406,13 @@ class FurnishingCalculator:
     """Builder for the genshin impact furnishing calculator."""
 
     client: Client
-    lang: typing.Optional[str]
+    lang: str | None
 
-    furnishings: typing.Dict[int, int]
-    replica_code: typing.Optional[int] = None
-    replica_region: typing.Optional[str] = None
+    furnishings: dict[int, int]
+    replica_code: int | None = None
+    replica_region: str | None = None
 
-    def __init__(self, client: Client, *, lang: typing.Optional[str] = None) -> None:
+    def __init__(self, client: Client, *, lang: str | None = None) -> None:
         self.client = client
         self.lang = lang
 
@@ -426,7 +426,7 @@ class FurnishingCalculator:
         self.furnishings[int(id)] += amount
         return self
 
-    def with_replica(self, code: int, *, region: typing.Optional[str] = None) -> FurnishingCalculator:
+    def with_replica(self, code: int, *, region: str | None = None) -> FurnishingCalculator:
         """Set the replica code."""
         self.replica_code = code
         self.replica_region = region
@@ -434,7 +434,7 @@ class FurnishingCalculator:
 
     async def build(self) -> typing.Mapping[str, typing.Any]:
         """Build the calculator object."""
-        data: typing.Dict[str, typing.Any] = {}
+        data: dict[str, typing.Any] = {}
 
         if self.replica_code:
             furnishings = await self.client.get_teapot_replica_blueprint(self.replica_code, region=self.replica_region)

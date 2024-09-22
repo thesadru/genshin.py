@@ -13,7 +13,7 @@ from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = ["ELF", "Boss", "ElysianRealm", "MemorialArena", "MemorialBattle", "OldAbyss", "SuperstringAbyss"]
 
-REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
+REMEMBRANCE_SIGILS: dict[int, tuple[str, int]] = {
     119301: ("The MOTH Insignia", 1),
     119302: ("Home Lost", 1),
     119303: ("False Hope", 1),
@@ -90,7 +90,7 @@ class ELF(APIModel, Unique):
     upgrade_level: int = Aliased("star")
 
     @pydantic.field_validator("rarity", mode="before")
-    def __fix_rank(cls, rarity: typing.Union[int, str]) -> str:
+    def __fix_rank(cls, rarity: int | str) -> str:
         if isinstance(rarity, str):
             return rarity
 
@@ -122,7 +122,7 @@ class BaseAbyss(APIModel):
     score: int
     lineup: typing.Sequence[battlesuit.Battlesuit]
     boss: Boss
-    elf: typing.Optional[ELF]
+    elf: ELF | None
 
 
 class OldAbyss(BaseAbyss):
@@ -180,7 +180,7 @@ class MemorialBattle(APIModel):
 
     score: int
     lineup: typing.Sequence[battlesuit.Battlesuit]
-    elf: typing.Optional[ELF]
+    elf: ELF | None
     boss: Boss
 
 
@@ -278,7 +278,7 @@ class ElysianRealm(APIModel):
     signets: typing.Sequence[Signet] = Aliased("buffs")
     leader: battlesuit.Battlesuit = Aliased("main_avatar")
     supports: typing.Sequence[battlesuit.Battlesuit] = Aliased("support_avatars")
-    elf: typing.Optional[ELF]
+    elf: ELF | None
     remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
 
     @pydantic.field_validator("remembrance_sigil", mode="before")

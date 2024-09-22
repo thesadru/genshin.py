@@ -51,7 +51,7 @@ class TeapotReplica(APIModel):
     post_id: str
     title: str
     content: str
-    images: typing.List[str] = Aliased("imgs")
+    images: list[str] = Aliased("imgs")
     created_at: DateTimeField
     stats: TeapotReplicaStats
     lang: str  # type: ignore
@@ -61,7 +61,7 @@ class TeapotReplica(APIModel):
     view_type: int
     sub_type: int
     blueprint: TeapotReplicaBlueprint
-    video: typing.Optional[str]
+    video: str | None
 
     has_more_content: bool
     token: str
@@ -71,7 +71,7 @@ class TeapotReplica(APIModel):
         return [image if isinstance(image, str) else image["url"] for image in images]
 
     @pydantic.field_validator("video", mode="before")
-    def __extract_url(cls, video: typing.Any) -> typing.Optional[str]:
+    def __extract_url(cls, video: typing.Any) -> str | None:
         if isinstance(video, str):
             return video
 

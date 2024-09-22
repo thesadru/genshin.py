@@ -47,7 +47,7 @@ def get_ds_headers(
     data: typing.Any = None,
     params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
     lang: typing.Optional[str] = None,
-) -> typing.Dict[str, typing.Any]:
+) -> dict[str, typing.Any]:
     """Get ds http headers."""
     if region == types.Region.OVERSEAS:
         ds_headers = {
