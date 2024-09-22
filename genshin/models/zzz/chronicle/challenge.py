@@ -47,8 +47,8 @@ class ShiyuDefenseCharacter(APIModel):
 class ShiyuDefenseBuff(APIModel):
     """Shiyu Defense buff model."""
 
-    title: str
-    text: str
+    name: str = Aliased("title")
+    description: str = Aliased("text")
 
 
 class ShiyuDefenseMonster(APIModel):
@@ -56,15 +56,15 @@ class ShiyuDefenseMonster(APIModel):
 
     id: int
     name: str
-    weakness: typing.Optional[ZZZElementType] = Aliased("weak_element_type")
+    weakness: typing.Union[ZZZElementType, int] = Aliased("weak_element_type")
     level: int
 
-    @pydantic.field_validator("weakness", mode="before")
-    @classmethod
-    def __parse_weakness(cls, value: int) -> typing.Optional[ZZZElementType]:
-        if value == 0:
-            return None
-        return ZZZElementType(value)
+    @pydantic.validator("weakness", pre=True)
+    def __convert_weakness(cls, v: int) -> typing.Union[ZZZElementType, int]:
+        try:
+            return ZZZElementType(v)
+        except ValueError:
+            return v
 
 
 class ShiyuDefenseNode(APIModel):

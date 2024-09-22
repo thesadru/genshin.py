@@ -20,7 +20,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-        cache: bool = True,
+        cache: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary honkai object."""
         uid = uid or await self._get_uid(types.Game.HONKAI)

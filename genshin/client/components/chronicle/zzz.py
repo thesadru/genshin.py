@@ -21,7 +21,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         method: str = "GET",
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
-        cache: bool = True,
+        cache: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary ZZZ object."""
         payload = dict(payload or {})
@@ -65,7 +65,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> models.ZZZNotes:
         """Get ZZZ sticky notes (real-time notes)."""
         try:
-            data = await self._request_zzz_record("note", uid, lang=lang, cache=False)
+            data = await self._request_zzz_record("note", uid, lang=lang)
         except errors.DataNotPublic as e:
             # error raised only when real-time notes are not enabled
             if uid and (await self._get_uid(types.Game.ZZZ)) != uid:
@@ -74,7 +74,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
                 raise errors.GenshinException(e.response, "Real-time notes are not enabled.") from e
 
             await self.update_settings(3, True, game=types.Game.ZZZ)
-            data = await self._request_zzz_record("note", uid, lang=lang, cache=False)
+            data = await self._request_zzz_record("note", uid, lang=lang)
 
         return models.ZZZNotes(**data)
 
@@ -85,21 +85,21 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.ZZZUserStats:
         """Get ZZZ user stats."""
-        data = await self._request_zzz_record("index", uid, lang=lang, cache=False)
+        data = await self._request_zzz_record("index", uid, lang=lang)
         return models.ZZZUserStats(**data)
 
     async def get_zzz_agents(
         self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
     ) -> typing.Sequence[models.ZZZPartialAgent]:
         """Get all owned ZZZ characters (only brief info)."""
-        data = await self._request_zzz_record("avatar/basic", uid, lang=lang, cache=False)
+        data = await self._request_zzz_record("avatar/basic", uid, lang=lang)
         return [models.ZZZPartialAgent(**item) for item in data["avatar_list"]]
 
     async def get_bangboos(
         self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
     ) -> typing.Sequence[models.ZZZBaseBangboo]:
         """Get all owned ZZZ bangboos."""
-        data = await self._request_zzz_record("buddy/info", uid, lang=lang, cache=False)
+        data = await self._request_zzz_record("buddy/info", uid, lang=lang)
         return [models.ZZZBaseBangboo(**item) for item in data["list"]]
 
     @typing.overload
