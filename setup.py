@@ -15,7 +15,7 @@ setup(
         "Issue tracker": "https://github.com/thesadru/genshin.py/issues",
     },
     packages=find_packages(exclude=["tests.*"]),
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     install_requires=["aiohttp", "pydantic"],
     extras_require={
         "all": ["browser-cookie3", "rsa", "click", "qrcode[pil]", "aiohttp-socks"],
