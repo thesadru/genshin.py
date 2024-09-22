@@ -45,6 +45,10 @@ class Expedition(APIModel):
     status: typing.Literal["Ongoing", "Finished"]
     remaining_time: datetime.timedelta = Aliased("remained_time")
 
+    @pydantic.field_validator("remaining_time", mode="before")
+    def __process_timedelta(cls, v: str) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
     @property
     def finished(self) -> bool:
         """Whether the expedition has finished."""
@@ -190,6 +194,10 @@ class Notes(APIModel):
     max_expeditions: int = Aliased("max_expedition_num")
 
     archon_quest_progress: ArchonQuestProgress
+
+    @pydantic.field_validator("remaining_resin_recovery_time", "remaining_realm_currency_recovery_time", mode="before")
+    def __process_timedelta(cls, v: str) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
 
     @property
     def resin_recovery_time(self) -> datetime.datetime:
