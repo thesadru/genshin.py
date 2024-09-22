@@ -6,28 +6,14 @@ import datetime
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.honkai import battlesuit
 from genshin.models.model import Aliased, APIModel, Unique
 
-__all__ = [
-    "ELF",
-    "Boss",
-    "ElysianRealm",
-    "MemorialArena",
-    "MemorialBattle",
-    "OldAbyss",
-    "SuperstringAbyss",
-]
+__all__ = ["ELF", "Boss", "ElysianRealm", "MemorialArena", "MemorialBattle", "OldAbyss", "SuperstringAbyss"]
 
-REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
+REMEMBRANCE_SIGILS: dict[int, tuple[str, int]] = {
     119301: ("The MOTH Insignia", 1),
     119302: ("Home Lost", 1),
     119303: ("False Hope", 1),
@@ -79,11 +65,6 @@ REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
 # GENERIC
 
 
-def get_competitive_tier_mi18n(tier: int) -> str:
-    """Turn the tier returned by the API into the respective tier name displayed in-game."""
-    return "bbs/" + ("area1", "area2", "area3", "area4")[tier - 1]
-
-
 class Boss(APIModel, Unique):
     """Represents a Boss encountered in Abyss or Memorial Arena."""
 
@@ -91,7 +72,7 @@ class Boss(APIModel, Unique):
     name: str
     icon: str = Aliased("avatar")
 
-    @pydantic.validator("icon")
+    @pydantic.field_validator("icon")
     def __fix_url(cls, url: str) -> str:
         # I noticed that sometimes the urls are returned incorrectly, which appears to be
         # a problem on the hoyolab website too, so I expect this to be fixed sometime.
@@ -108,7 +89,7 @@ class ELF(APIModel, Unique):
     rarity: str
     upgrade_level: int = Aliased("star")
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
     def __fix_rank(cls, rarity: typing.Union[int, str]) -> str:
         if isinstance(rarity, str):
             return rarity
@@ -143,16 +124,6 @@ class BaseAbyss(APIModel):
     boss: Boss
     elf: typing.Optional[ELF]
 
-    @property
-    def tier(self) -> str:
-        """The user's Abyss tier as displayed in-game."""
-        return self.get_tier()
-
-    def get_tier(self, lang: str = "en-us") -> str:
-        """Get the user's Abyss tier in a specific language."""
-        key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang)
-
 
 class OldAbyss(BaseAbyss):
     """Represents once cycle of Quantum Singularis or Dirac Sea.
@@ -165,7 +136,7 @@ class OldAbyss(BaseAbyss):
     result: str = Aliased("reward_type")
     raw_rank: int = Aliased("level")
 
-    @pydantic.validator("raw_rank", pre=True)
+    @pydantic.field_validator("raw_rank", mode="before")
     def __normalize_level(cls, rank: str) -> int:
         # The latestOldAbyssReport endpoint returns ranks as D/C/B/A,
         # while newAbyssReport returns them as 1/2/3/4(/5) respectively.
@@ -175,26 +146,6 @@ class OldAbyss(BaseAbyss):
             return rank
 
         return 69 - ord(rank)
-
-    @property
-    def rank(self) -> str:
-        """The user's Abyss rank as displayed in-game."""
-        return self.get_rank()
-
-    def get_rank(self, lang: str = "en-us") -> str:
-        """Get the user's Abyss rank in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
-
-    @property
-    def type(self) -> str:
-        """The name of this cycle's abyss type."""
-        return self.get_type()
-
-    def get_type(self, lang: str = "en-us") -> str:
-        """Get the name of this cycle's abyss type in a specific language."""
-        key = "bbs/" + ("level_of_ow" if self.raw_type == "OW" else self.raw_type)
-        return self._get_mi18n(key, lang)
 
 
 class SuperstringAbyss(BaseAbyss):
@@ -209,26 +160,6 @@ class SuperstringAbyss(BaseAbyss):
     end_trophies: int = Aliased("cup_number")
     raw_start_rank: int = Aliased("level")
     raw_end_rank: int = Aliased("settled_level")
-
-    @property
-    def start_rank(self) -> str:
-        """The rank the user started the abyss cycle with, as displayed in-game."""
-        return self.get_start_rank()
-
-    def get_start_rank(self, lang: str = "en-us") -> str:
-        """Get the rank the user started the abyss cycle with in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_start_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
-
-    @property
-    def end_rank(self) -> str:
-        """The rank the user ended the abyss cycle with, as displayed in-game."""
-        return self.get_end_rank()
-
-    def get_end_rank(self, lang: str = "en-us") -> str:
-        """Get the rank the user ended the abyss cycle with in a specific language."""
-        key = get_abyss_rank_mi18n(self.raw_end_rank, self.raw_tier)
-        return self._get_mi18n(key, lang)
 
     @property
     def start_trophies(self) -> int:
@@ -267,16 +198,6 @@ class MemorialArena(APIModel):
     def rank(self) -> str:
         """The user's Memorial Arena rank as displayed in-game."""
         return prettify_MA_rank(self.raw_rank)
-
-    @property
-    def tier(self) -> str:
-        """The user's Memorial Arena tier as displayed in-game."""
-        return self.get_tier()
-
-    def get_tier(self, lang: str = "en-us") -> str:
-        """Get the user's Memorial Arena tier in a specific language."""
-        key = get_competitive_tier_mi18n(self.raw_tier)
-        return self._get_mi18n(key, lang)
 
 
 # ELYSIAN REALMS
@@ -360,7 +281,7 @@ class ElysianRealm(APIModel):
     elf: typing.Optional[ELF]
     remembrance_sigil: RemembranceSigil = Aliased("extra_item_icon")
 
-    @pydantic.validator("remembrance_sigil", pre=True)
+    @pydantic.field_validator("remembrance_sigil", mode="before")
     def __extend_sigil(cls, sigil: typing.Any) -> typing.Any:
         if isinstance(sigil, str):
             return dict(icon=sigil)

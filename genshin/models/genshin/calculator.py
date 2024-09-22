@@ -5,13 +5,7 @@ from __future__ import annotations
 import collections
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -67,14 +61,14 @@ class CalculatorCharacter(character.BaseCharacter):
     level: int = Aliased("level_current", default=0)
     max_level: int
 
-    @pydantic.validator("element", pre=True)
+    @pydantic.field_validator("element", mode="before")
     def __parse_element(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
 
         return CALCULATOR_ELEMENTS[int(v)]
 
-    @pydantic.validator("weapon_type", pre=True)
+    @pydantic.field_validator("weapon_type", mode="before")
     def __parse_weapon_type(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
@@ -93,7 +87,7 @@ class CalculatorWeapon(APIModel, Unique):
     level: int = Aliased("level_current", default=0)
     max_level: int
 
-    @pydantic.validator("type", pre=True)
+    @pydantic.field_validator("type", mode="before")
     def __parse_weapon_type(cls, v: typing.Any) -> str:
         if isinstance(v, str):
             return v
@@ -184,14 +178,14 @@ class CalculatorCharacterDetails(APIModel):
     talents: typing.Sequence[CalculatorTalent] = Aliased("skill_list")
     artifacts: typing.Sequence[CalculatorArtifact] = Aliased("reliquary_list")
 
-    @pydantic.validator("talents")
+    @pydantic.field_validator("talents")
     def __correct_talent_current_level(cls, v: typing.Sequence[CalculatorTalent]) -> typing.Sequence[CalculatorTalent]:
         # passive talent have current levels at 0 for some reason
-        talents: typing.List[CalculatorTalent] = []
+        talents: list[CalculatorTalent] = []
 
         for talent in v:
             if talent.max_level == 1 and talent.level == 0:
-                raw = talent.dict()
+                raw = talent.model_dump()
                 raw["level"] = 1
                 talent = CalculatorTalent(**raw)
 
@@ -227,17 +221,17 @@ class CalculatorArtifactResult(APIModel):
 class CalculatorResult(APIModel):
     """Calculation result."""
 
-    character: typing.List[CalculatorConsumable] = Aliased("avatar_consume")
-    weapon: typing.List[CalculatorConsumable] = Aliased("weapon_consume")
-    talents: typing.List[CalculatorConsumable] = Aliased("avatar_skill_consume")
-    artifacts: typing.List[CalculatorArtifactResult] = Aliased("reliquary_consume")
+    character: list[CalculatorConsumable] = Aliased("avatar_consume")
+    weapon: list[CalculatorConsumable] = Aliased("weapon_consume")
+    talents: list[CalculatorConsumable] = Aliased("avatar_skill_consume")
+    artifacts: list[CalculatorArtifactResult] = Aliased("reliquary_consume")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:
         artifacts = [i for a in self.artifacts for i in a.list]
         combined = self.character + self.weapon + self.talents + artifacts
 
-        grouped: typing.Dict[int, typing.List[CalculatorConsumable]] = collections.defaultdict(list)
+        grouped: dict[int, list[CalculatorConsumable]] = collections.defaultdict(list)
         for i in combined:
             grouped[i.id].append(i)
 
@@ -257,7 +251,7 @@ class CalculatorResult(APIModel):
 class CalculatorFurnishingResults(APIModel):
     """Furnishing calculation result."""
 
-    furnishings: typing.List[CalculatorConsumable] = Aliased("list")
+    furnishings: list[CalculatorConsumable] = Aliased("list")
 
     @property
     def total(self) -> typing.Sequence[CalculatorConsumable]:

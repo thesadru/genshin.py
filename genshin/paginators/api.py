@@ -30,7 +30,7 @@ class GetterCallback(typing.Protocol[T_co]):
 class TokenGetterCallback(typing.Protocol[T_co]):
     """Callback for returning resources based on a page or cursor."""
 
-    async def __call__(self, token: str, /) -> typing.Tuple[str, typing.Sequence[T_co]]:
+    async def __call__(self, token: str, /) -> tuple[str, typing.Sequence[T_co]]:
         """Return a sequence of resources."""
         ...
 

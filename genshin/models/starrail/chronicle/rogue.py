@@ -1,7 +1,5 @@
 """Starrail Rogue models."""
 
-from typing import List
-
 from genshin.models.model import APIModel
 
 from ..character import RogueCharacter
@@ -54,7 +52,7 @@ class RogueBuff(APIModel):
     """Rogue buff info."""
 
     base_type: RogueBuffType
-    items: List[RogueBuffItem]
+    items: list[RogueBuffItem]
 
 
 class RogueMiracle(APIModel):
@@ -71,11 +69,11 @@ class RogueRecordDetail(APIModel):
     name: str
     finish_time: PartialTime
     score: int
-    final_lineup: List[RogueCharacter]
-    base_type_list: List[RogueBuffType]
-    cached_avatars: List[RogueCharacter]
-    buffs: List[RogueBuff]
-    miracles: List[RogueMiracle]
+    final_lineup: list[RogueCharacter]
+    base_type_list: list[RogueBuffType]
+    cached_avatars: list[RogueCharacter]
+    buffs: list[RogueBuff]
+    miracles: list[RogueMiracle]
     difficulty: int
     progress: int
 
@@ -84,7 +82,7 @@ class RogueRecord(APIModel):
     """generic record data."""
 
     basic: RogueRecordBasic
-    records: List[RogueRecordDetail]
+    records: list[RogueRecordDetail]
     has_data: bool
 
 

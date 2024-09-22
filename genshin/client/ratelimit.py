@@ -11,7 +11,7 @@ CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Awaita
 
 def handle_ratelimits(
     tries: int = 5,
-    exception: typing.Type[errors.GenshinException] = errors.VisitsTooFrequently,
+    exception: type[errors.GenshinException] = errors.VisitsTooFrequently,
     delay: float = 0.3,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle ratelimits for requests."""

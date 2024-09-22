@@ -4,17 +4,10 @@ import logging
 import re
 import typing
 
-from genshin.utility import deprecation
-
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import APIModel, Unique
+from genshin.utility import deprecation
 
 from . import constants
 
@@ -78,6 +71,8 @@ def _get_db_char(
 ) -> constants.DBChar:
     """Get the appropriate DBChar object from specific fields."""
     if lang not in constants.CHARACTER_NAMES:
+        if id and name and icon and element and rarity:
+            return constants.DBChar(id or 0, _parse_icon(icon), name, element, rarity, guessed=True)
         raise Exception(
             f"Character names not loaded for {lang!r}. Please run `await genshin.utility.update_characters_any()`."
         )
@@ -136,11 +131,12 @@ class BaseCharacter(APIModel, Unique):
 
     collab: bool = False
 
-    @pydantic.root_validator(pre=True)
-    def __autocomplete(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __autocomplete(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         """Complete missing data."""
-        all_fields = list(cls.__fields__.keys())
-        all_aliases = {f: cls.__fields__[f].alias for f in all_fields if cls.__fields__[f].alias}
+        all_fields = list(cls.model_fields.keys())
+        all_aliases = {f: cls.model_fields[f].alias for f in all_fields if cls.model_fields[f].alias}
+        all_aliases = {k: v for k, v in all_aliases.items() if v is not None}
         # If the field is aliased, it may have a different key name in 'values',
         # so we need to get the correct key name from the alias
 

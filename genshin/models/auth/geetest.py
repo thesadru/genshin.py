@@ -4,13 +4,7 @@ import enum
 import json
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.utility import auth as auth_utility
 
@@ -37,8 +31,8 @@ class BaseMMT(pydantic.BaseModel):
     new_captcha: int
     success: int
 
-    @pydantic.root_validator(pre=True)
-    def __parse_data(cls, data: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __parse_data(cls, data: dict[str, typing.Any]) -> dict[str, typing.Any]:
         """Parse the data if it was provided in a raw format."""
         if "data" in data:
             # Assume the data is aigis header and parse it
@@ -66,7 +60,7 @@ class SessionMMT(MMT):
 
     def get_mmt(self) -> MMT:
         """Get the base MMT data."""
-        return MMT(**self.dict(exclude={"session_id"}))
+        return MMT(**self.model_dump(exclude={"session_id"}))
 
 
 class MMTv4(BaseMMT):
@@ -83,7 +77,7 @@ class SessionMMTv4(MMTv4):
 
     def get_mmt(self) -> MMTv4:
         """Get the base MMTv4 data."""
-        return MMTv4(**self.dict(exclude={"session_id"}))
+        return MMTv4(**self.model_dump(exclude={"session_id"}))
 
 
 class RiskyCheckMMT(MMT):
@@ -95,12 +89,12 @@ class RiskyCheckMMT(MMT):
 class BaseMMTResult(pydantic.BaseModel):
     """Base Geetest verification result model."""
 
-    def get_data(self) -> typing.Dict[str, typing.Any]:
+    def get_data(self) -> dict[str, typing.Any]:
         """Get the base MMT result data.
 
         This method acts as `dict` but excludes the `session_id` field.
         """
-        return self.dict(exclude={"session_id"})
+        return self.model_dump(exclude={"session_id"})
 
 
 class BaseSessionMMTResult(BaseMMTResult):
@@ -170,4 +164,4 @@ class RiskyCheckResult(pydantic.BaseModel):
         if self.mmt is None:
             raise ValueError("The check result does not contain a MMT object.")
 
-        return RiskyCheckMMT(**self.mmt.dict(), check_id=self.id)
+        return RiskyCheckMMT(**self.mmt.model_dump(), check_id=self.id)

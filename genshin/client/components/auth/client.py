@@ -297,7 +297,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             **auth_utility.CREATE_MMT_HEADERS[self.region],
         }
 
-        body = mmt_result.dict()
+        body = mmt_result.model_dump()
         body["app_key"] = constants.GEETEST_RECORD_KEYS[self.default_game]
 
         assert isinstance(self.cookie_manager, managers.CookieManager)
@@ -385,9 +385,10 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             device_id_key: str(uuid.uuid4()).lower(),
         }
 
-        async with aiohttp.ClientSession() as session, session.post(
-            routes.GET_FP_URL.get_url(self.region), json=payload
-        ) as r:
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
             data = await r.json()
 
         if data["data"]["code"] != 200:

@@ -5,13 +5,7 @@ import enum
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -21,8 +15,8 @@ __all__ = [
     "BannerDetailsUpItem",
     "GachaItem",
     "GenshinBannerType",
-    "StarRailBannerType",
     "SignalSearch",
+    "StarRailBannerType",
     "Warp",
     "Wish",
     "ZZZBannerType",
@@ -99,10 +93,10 @@ class BaseWish(APIModel, Unique):
     time: datetime.datetime
     """Timezone-aware time of when the wish was made"""
 
-    @pydantic.validator("time", pre=True)
-    def __parse_time(cls, v: str, values: typing.Dict[str, typing.Any]) -> datetime.datetime:
+    @pydantic.field_validator("time", mode="before")
+    def __parse_time(cls, v: str, info: pydantic.ValidationInfo) -> datetime.datetime:
         return datetime.datetime.fromisoformat(v).replace(
-            tzinfo=datetime.timezone(datetime.timedelta(hours=8 + values["tz_offset"]))
+            tzinfo=datetime.timezone(datetime.timedelta(hours=8 + info.data["tz_offset"]))
         )
 
 
@@ -112,7 +106,7 @@ class Wish(BaseWish):
     type: str = Aliased("item_type")
     banner_type: GenshinBannerType
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
@@ -126,7 +120,7 @@ class Warp(BaseWish):
     banner_type: StarRailBannerType
     banner_id: int = Aliased("gacha_id")
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
@@ -139,7 +133,7 @@ class SignalSearch(BaseWish):
 
     banner_type: ZZZBannerType
 
-    @pydantic.validator("banner_type", pre=True)
+    @pydantic.field_validator("banner_type", mode="before")
     def __cast_banner_type(cls, v: typing.Any) -> int:
         return int(v)
 
@@ -163,7 +157,7 @@ class BannerDetailsUpItem(APIModel):
     element: str = Aliased("item_attr")
     icon: str = Aliased("item_img")
 
-    @pydantic.validator("element", pre=True)
+    @pydantic.field_validator("element", mode="before")
     def __parse_element(cls, v: str) -> str:
         return {
             "风": "Anemo",
@@ -198,15 +192,15 @@ class BannerDetails(APIModel):
     r5_up_items: typing.Sequence[BannerDetailsUpItem]
     r4_up_items: typing.Sequence[BannerDetailsUpItem]
 
-    r5_items: typing.List[BannerDetailItem] = Aliased("r5_prob_list")
-    r4_items: typing.List[BannerDetailItem] = Aliased("r4_prob_list")
-    r3_items: typing.List[BannerDetailItem] = Aliased("r3_prob_list")
+    r5_items: list[BannerDetailItem] = Aliased("r5_prob_list")
+    r4_items: list[BannerDetailItem] = Aliased("r4_prob_list")
+    r3_items: list[BannerDetailItem] = Aliased("r3_prob_list")
 
-    @pydantic.validator("r5_up_items", "r4_up_items", pre=True)
+    @pydantic.field_validator("r5_up_items", "r4_up_items", mode="before")
     def __replace_none(cls, v: typing.Optional[typing.Sequence[typing.Any]]) -> typing.Sequence[typing.Any]:
         return v or []
 
-    @pydantic.validator(
+    @pydantic.field_validator(
         "r5_up_prob",
         "r4_up_prob",
         "r5_prob",
@@ -215,7 +209,7 @@ class BannerDetails(APIModel):
         "r5_guarantee_prob",
         "r4_guarantee_prob",
         "r3_guarantee_prob",
-        pre=True,
+        mode="before",
     )
     def __parse_percentage(cls, v: typing.Optional[str]) -> typing.Optional[float]:
         if v is None or isinstance(v, (int, float)):
@@ -252,7 +246,7 @@ class GachaItem(APIModel, Unique):
     rarity: int = Aliased("rank_type")
     id: int = Aliased("item_id")
 
-    @pydantic.validator("id")
+    @pydantic.field_validator("id")
     def __format_id(cls, v: int) -> int:
         return 10000000 + v - 1000 if len(str(v)) == 4 else v
 

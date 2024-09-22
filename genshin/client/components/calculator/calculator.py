@@ -42,7 +42,7 @@ class CalculatorState:
     """Stores character details if multiple objects require them."""
 
     client: Client
-    cache: typing.Dict[str, typing.Any]
+    cache: dict[str, typing.Any]
     lock: asyncio.Lock
 
     character_id: typing.Optional[int] = None
@@ -150,7 +150,7 @@ class CurrentWeaponResolver(WeaponResolver):
 
 
 class ArtifactResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
-    data: typing.List[typing.Mapping[str, typing.Any]]
+    data: list[typing.Mapping[str, typing.Any]]
 
     def __init__(self) -> None:
         self.data = []
@@ -208,7 +208,7 @@ class CurrentArtifactResolver(ArtifactResolver):
 
 
 class TalentResolver(CalculatorResolver[typing.Sequence[typing.Mapping[str, typing.Any]]]):
-    data: typing.List[typing.Mapping[str, typing.Any]]
+    data: list[typing.Mapping[str, typing.Any]]
 
     def __init__(self) -> None:
         self.data = []
@@ -378,7 +378,7 @@ class Calculator:
 
     async def build(self) -> typing.Mapping[str, typing.Any]:
         """Build the calculator object."""
-        data: typing.Dict[str, typing.Any] = {}
+        data: dict[str, typing.Any] = {}
 
         if self.character:
             data.update(await self.character(self._state))
@@ -408,7 +408,7 @@ class FurnishingCalculator:
     client: Client
     lang: typing.Optional[str]
 
-    furnishings: typing.Dict[int, int]
+    furnishings: dict[int, int]
     replica_code: typing.Optional[int] = None
     replica_region: typing.Optional[str] = None
 
@@ -434,7 +434,7 @@ class FurnishingCalculator:
 
     async def build(self) -> typing.Mapping[str, typing.Any]:
         """Build the calculator object."""
-        data: typing.Dict[str, typing.Any] = {}
+        data: dict[str, typing.Any] = {}
 
         if self.replica_code:
             furnishings = await self.client.get_teapot_replica_blueprint(self.replica_code, region=self.replica_region)

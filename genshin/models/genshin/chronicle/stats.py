@@ -3,18 +3,13 @@ from __future__ import annotations
 import re
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models import hoyolab
 from genshin.models.model import Aliased, APIModel
 
-from . import abyss, activities, characters
+from . import abyss, activities
+from . import characters as characters_module
 
 __all__ = [
     "AreaExploration",
@@ -22,13 +17,13 @@ __all__ = [
     "Exploration",
     "FullGenshinUserStats",
     "GenshinUserStats",
+    "NatlanReputation",
+    "NatlanTribe",
     "Offering",
     "PartialGenshinUserStats",
     "Stats",
     "Teapot",
     "TeapotRealm",
-    "NatlanReputation",
-    "NatlanTribe",
 ]
 
 
@@ -36,34 +31,23 @@ __all__ = [
 class Stats(APIModel):
     """Overall user stats."""
 
-    # This is such fucking bullshit, just why?
-    # fmt: off
-    achievements: int =       Aliased("achievement_number",     mi18n="bbs/achievement_complete_count")
-    days_active: int =        Aliased("active_day_number",      mi18n="bbs/active_day")
-    characters: int =         Aliased("avatar_number",          mi18n="bbs/other_people_character")
-    spiral_abyss: str =       Aliased("spiral_abyss",           mi18n="bbs/unlock_portal")
-    anemoculi: int =          Aliased("anemoculus_number",      mi18n="bbs/wind_god")
-    geoculi: int =            Aliased("geoculus_number",        mi18n="bbs/rock_god")
-    dendroculi: int =         Aliased("dendroculus_number",     mi18n="bbs/dendro_culus")
-    electroculi: int =        Aliased("electroculus_number",    mi18n="bbs/electroculus_god")
-    hydroculi: int =          Aliased("hydroculus_number",      mi18n="bbs/hydro_god")
-    pyroculi: int =           Aliased("pyroculus_number",       mi18n="bbs/pyro_gid")
-    common_chests: int =      Aliased("common_chest_number",    mi18n="bbs/general_treasure_box_count")
-    exquisite_chests: int =   Aliased("exquisite_chest_number", mi18n="bbs/delicacy_treasure_box_count")
-    precious_chests: int =    Aliased("precious_chest_number",  mi18n="bbs/rarity_treasure_box_count")
-    luxurious_chests: int =   Aliased("luxurious_chest_number", mi18n="bbs/magnificent_treasure_box_count")
-    remarkable_chests: int =  Aliased("magic_chest_number",     mi18n="bbs/magic_chest_number")
-    unlocked_waypoints: int = Aliased("way_point_number",       mi18n="bbs/unlock_portal")
-    unlocked_domains: int =   Aliased("domain_number",          mi18n="bbs/unlock_secret_area")
-    # fmt: on
-
-    def as_dict(self, lang: str = "en-us") -> typing.Mapping[str, typing.Any]:
-        """Turn fields into properly named ones."""
-        return {
-            self._get_mi18n(field, lang): getattr(self, field.name)
-            for field in self.__fields__.values()
-            if field.name != "lang"
-        }
+    achievements: int = Aliased("achievement_number")
+    days_active: int = Aliased("active_day_number")
+    characters: int = Aliased("avatar_number")
+    spiral_abyss: str = Aliased("spiral_abyss")
+    anemoculi: int = Aliased("anemoculus_number")
+    geoculi: int = Aliased("geoculus_number")
+    dendroculi: int = Aliased("dendroculus_number")
+    electroculi: int = Aliased("electroculus_number")
+    hydroculi: int = Aliased("hydroculus_number")
+    pyroculi: int = Aliased("pyroculus_number")
+    common_chests: int = Aliased("common_chest_number")
+    exquisite_chests: int = Aliased("exquisite_chest_number")
+    precious_chests: int = Aliased("precious_chest_number")
+    luxurious_chests: int = Aliased("luxurious_chest_number")
+    remarkable_chests: int = Aliased("magic_chest_number")
+    unlocked_waypoints: int = Aliased("way_point_number")
+    unlocked_domains: int = Aliased("domain_number")
 
 
 class Offering(APIModel):
@@ -137,14 +121,12 @@ class Exploration(APIModel):
         """The percentage explored."""
         return self.raw_explored / 10
 
-    @pydantic.validator("offerings", pre=True)
+    @pydantic.field_validator("offerings", mode="before")
     def __add_base_offering(
-        cls,
-        offerings: typing.Sequence[typing.Any],
-        values: typing.Dict[str, typing.Any],
+        cls, offerings: typing.Sequence[typing.Any], info: pydantic.ValidationInfo
     ) -> typing.Sequence[typing.Any]:
-        if values["type"] == "Reputation" and not any(values["type"] == o["name"] for o in offerings):
-            offerings = [*offerings, dict(name=values["type"], level=values["level"])]
+        if info.data["type"] == "Reputation" and not any(info.data["type"] == o["name"] for o in offerings):
+            offerings = [*offerings, dict(name=info.data["type"], level=info.data["level"])]
 
         return offerings
 
@@ -178,12 +160,12 @@ class PartialGenshinUserStats(APIModel):
 
     info: hoyolab.UserInfo = Aliased("role")
     stats: Stats
-    characters: typing.Sequence[characters.PartialCharacter] = Aliased("avatars")
+    characters: typing.Sequence[characters_module.PartialCharacter] = Aliased("avatars")
     explorations: typing.Sequence[Exploration] = Aliased("world_explorations")
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
-    @pydantic.validator("teapot", pre=True)
-    def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
+    @pydantic.field_validator("teapot", mode="before")
+    def __format_teapot(cls, v: typing.Any) -> typing.Optional[dict[str, typing.Any]]:
         if not v:
             return None
         if isinstance(v, dict):
@@ -194,7 +176,7 @@ class PartialGenshinUserStats(APIModel):
 class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
 
-    characters: typing.Sequence[characters.Character] = Aliased("avatars")
+    characters: typing.Sequence[characters_module.Character] = Aliased("avatars")
 
 
 class FullGenshinUserStats(GenshinUserStats):

@@ -58,4 +58,4 @@ async def test_monthly_rewards(lclient: genshin.Client):
 
 async def test_claimed_rewards(lclient: genshin.Client):
     claimed = await lclient.claimed_rewards(limit=10).flatten()
-    assert claimed[0].time <= datetime.datetime.now().astimezone()
+    assert claimed[0].time <= datetime.datetime.now(genshin.constants.CN_TIMEZONE)

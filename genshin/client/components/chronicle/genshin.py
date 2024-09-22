@@ -260,7 +260,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
         abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
 
-        return models.FullGenshinUserStats(**user.dict(by_alias=True), abyss=abyss, activities=activities)
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
 
     async def set_top_genshin_characters(
         self,

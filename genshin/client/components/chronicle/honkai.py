@@ -146,7 +146,7 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         )
 
         return models.FullHonkaiUserStats(
-            **user.dict(by_alias=True),
+            **user.model_dump(by_alias=True),
             battlesuits=battlesuits,
             abyss=abyss,
             memorial_arena=mr,

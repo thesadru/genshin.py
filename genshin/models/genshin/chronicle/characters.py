@@ -4,13 +4,7 @@ import enum
 import typing
 from collections import defaultdict
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.genshin import character
 from genshin.models.model import Aliased, APIModel, Unique
@@ -130,10 +124,10 @@ class Character(PartialCharacter):
     constellations: typing.Sequence[Constellation]
     outfits: typing.Sequence[Outfit] = Aliased("costumes")
 
-    @pydantic.validator("artifacts")
+    @pydantic.field_validator("artifacts")
     @classmethod
     def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
-        set_nums: typing.DefaultDict[int, int] = defaultdict(int)
+        set_nums: defaultdict[int, int] = defaultdict(int)
         for arti in artifacts:
             set_nums[arti.set.id] += 1
 
@@ -141,7 +135,7 @@ class Character(PartialCharacter):
             for effect in artifact.set.effects:
                 if effect.required_piece_num <= set_nums[artifact.set.id]:
                     # To bypass model's immutability
-                    effect = effect.copy(update={"active": True})
+                    effect = effect.model_copy(update={"active": True})
 
         return artifacts
 
@@ -154,7 +148,7 @@ class PropInfo(APIModel):
     icon: typing.Optional[str]
     filter_name: str
 
-    @pydantic.validator("name", "filter_name")
+    @pydantic.field_validator("name", "filter_name")
     @classmethod
     def __fix_names(cls, value: str) -> str:
         r"""Fix "\xa0" in Crit Damage + Crit Rate names."""
@@ -249,17 +243,17 @@ class GenshinDetailCharacters(APIModel):
     weapon_wiki: typing.Mapping[str, str]
     avatar_wiki: typing.Mapping[str, str]
 
-    @pydantic.root_validator(pre=True)
-    def __fill_prop_info(cls, values: typing.Dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __fill_prop_info(cls, values: dict[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
         """Fill property info from properety_map."""
-        relic_property_options: typing.Dict[str, list[int]] = values.get("relic_property_options", {})
-        prop_map: typing.Dict[str, typing.Dict[str, typing.Any]] = values.get("property_map", {})
-        characters: list[typing.Dict[str, typing.Any]] = values.get("list", [])
+        relic_property_options: dict[str, list[int]] = values.get("relic_property_options", {})
+        prop_map: dict[str, dict[str, typing.Any]] = values.get("property_map", {})
+        characters: list[dict[str, typing.Any]] = values.get("list", [])
 
         # Map properties to artifacts
-        new_relic_prop_options: typing.Dict[str, list[typing.Dict[str, typing.Any]]] = {}
+        new_relic_prop_options: dict[str, list[dict[str, typing.Any]]] = {}
         for relic_type, properties in relic_property_options.items():
-            formatted_properties: list[typing.Dict[str, typing.Any]] = [
+            formatted_properties: list[dict[str, typing.Any]] = [
                 prop_map[str(prop)] for prop in properties if str(prop) in prop_map
             ]
             new_relic_prop_options[relic_type] = formatted_properties

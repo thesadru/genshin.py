@@ -4,13 +4,7 @@ import datetime
 import enum
 import typing
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
@@ -51,6 +45,10 @@ class Expedition(APIModel):
     status: typing.Literal["Ongoing", "Finished"]
     remaining_time: datetime.timedelta = Aliased("remained_time")
 
+    @pydantic.field_validator("remaining_time", mode="before")
+    def __process_timedelta(cls, v: str) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
     @property
     def finished(self) -> bool:
         """Whether the expedition has finished."""
@@ -65,7 +63,7 @@ class TransformerTimedelta(datetime.timedelta):
     """Transformer recovery time."""
 
     @property
-    def timedata(self) -> typing.Tuple[int, int, int, int]:
+    def timedata(self) -> tuple[int, int, int, int]:
         seconds: int = super().seconds
         days: int = super().days
         hour, second = divmod(seconds, 3600)
@@ -99,7 +97,7 @@ class TaskReward(APIModel):
 
     status: typing.Union[TaskRewardStatus, str]
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[TaskRewardStatus, str]:
         try:
             return TaskRewardStatus(v)
@@ -122,7 +120,7 @@ class AttendanceReward(APIModel):
     status: typing.Union[AttendanceRewardStatus, str]
     progress: int
 
-    @pydantic.validator("status", pre=True)
+    @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[AttendanceRewardStatus, str]:
         try:
             return AttendanceRewardStatus(v)
@@ -197,6 +195,10 @@ class Notes(APIModel):
 
     archon_quest_progress: ArchonQuestProgress
 
+    @pydantic.field_validator("remaining_resin_recovery_time", "remaining_realm_currency_recovery_time", mode="before")
+    def __process_timedelta(cls, v: str) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
     @property
     def resin_recovery_time(self) -> datetime.datetime:
         """The time when resin will be recovered."""
@@ -216,8 +218,8 @@ class Notes(APIModel):
         remaining = datetime.datetime.now().astimezone() + self.remaining_transformer_recovery_time
         return remaining
 
-    @pydantic.root_validator(pre=True)
-    def __flatten_transformer(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __flatten_transformer(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if "transformer_recovery_time" in values:
             return values
 

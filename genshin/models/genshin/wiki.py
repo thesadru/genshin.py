@@ -5,13 +5,7 @@ import json
 import typing
 import unicodedata
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
@@ -42,8 +36,8 @@ class BaseWikiPreview(APIModel, Unique):
     icon: str = Aliased("icon_url")
     name: str
 
-    @pydantic.root_validator(pre=True)
-    def __unpack_filter_values(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __unpack_filter_values(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         filter_values = {
             key.split("_", 1)[1]: value["values"][0]
             for key, value in values.get("filter_values", {}).items()
@@ -52,14 +46,10 @@ class BaseWikiPreview(APIModel, Unique):
         values.update(filter_values)
         return values
 
-    @pydantic.root_validator(pre=True)
-    def __flatten_display_field(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __flatten_display_field(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         values.update(values.get("display_field", {}))
         return values
-
-
-# shuffle validators around because of nesting
-BaseWikiPreview.__pre_root_validators__.reverse()
 
 
 class CharacterPreview(BaseWikiPreview):
@@ -71,7 +61,7 @@ class CharacterPreview(BaseWikiPreview):
     element: str = Aliased("vision", "")
     weapon: str
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
         if not isinstance(value, str):
             return value
@@ -89,7 +79,7 @@ class WeaponPreview(BaseWikiPreview):
     rarity: int
     type: str
 
-    @pydantic.validator("rarity", pre=True)
+    @pydantic.field_validator("rarity", mode="before")
     def __extract_rarity(cls, value: typing.Union[int, str]) -> int:
         if not isinstance(value, str):
             return value
@@ -113,8 +103,8 @@ class ArtifactPreview(BaseWikiPreview):
 
     effects: typing.Mapping[int, str]
 
-    @pydantic.root_validator(pre=True)
-    def __group_effects(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __group_effects(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         effects = {
             1: values["single_set_effect"],
             2: values["two_set_effect"],
@@ -129,12 +119,12 @@ class EnemyPreview(BaseWikiPreview):
 
     drop_materials: typing.Sequence[str]
 
-    @pydantic.validator("drop_materials", pre=True)
+    @pydantic.field_validator("drop_materials", mode="before")
     def __parse_drop_materials(cls, value: typing.Union[str, typing.Sequence[str]]) -> typing.Sequence[str]:
         return json.loads(value) if isinstance(value, str) else value
 
 
-_ENTRY_PAGE_MODELS: typing.Mapping[WikiPageType, typing.Type[BaseWikiPreview]] = {
+_ENTRY_PAGE_MODELS: typing.Mapping[WikiPageType, type[BaseWikiPreview]] = {
     WikiPageType.CHARACTER: CharacterPreview,
     WikiPageType.WEAPON: WeaponPreview,
     WikiPageType.ARTIFACT: ArtifactPreview,
@@ -154,17 +144,17 @@ class WikiPage(APIModel):
 
     modules: typing.Mapping[str, typing.Mapping[str, typing.Any]]
 
-    @pydantic.validator("modules", pre=True)
+    @pydantic.field_validator("modules", mode="before")
     def __format_modules(
         cls,
-        value: typing.Union[typing.List[typing.Dict[str, typing.Any]], typing.Dict[str, typing.Any]],
-    ) -> typing.Dict[str, typing.Any]:
+        value: typing.Union[list[dict[str, typing.Any]], dict[str, typing.Any]],
+    ) -> dict[str, typing.Any]:
         if isinstance(value, typing.Mapping):
             return value
 
-        modules: typing.Dict[str, typing.Dict[str, typing.Any]] = {}
+        modules: dict[str, dict[str, typing.Any]] = {}
         for module in value:
-            components: typing.Dict[str, typing.Dict[str, typing.Any]] = {
+            components: dict[str, dict[str, typing.Any]] = {
                 component["component_id"]: json.loads(component["data"] or "{}") for component in module["components"]
             }
 

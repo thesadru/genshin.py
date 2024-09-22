@@ -49,7 +49,7 @@ def get_output_log(*, game: typing.Optional[types.Game] = None) -> pathlib.Path:
     """Get output_log.txt for a game."""
     locallow = pathlib.Path("~/AppData/LocalLow").expanduser()
 
-    game_name: typing.List[str] = []
+    game_name: list[str] = []
     if game is None or game == types.Game.GENSHIN:
         game_name += ["Genshin Impact", "原神"]
     if game is None or game == types.Game.STARRAIL:
@@ -70,7 +70,7 @@ def get_output_log(*, game: typing.Optional[types.Game] = None) -> pathlib.Path:
 
 def _expand_game_location(game_location: pathlib.Path, *, game: typing.Optional[types.Game] = None) -> pathlib.Path:
     """Expand a game location folder to data_2."""
-    data_location: typing.List[pathlib.Path] = []
+    data_location: list[pathlib.Path] = []
     if "Data" in str(game_location):
         while "Data" not in game_location.name:
             game_location = game_location.parent

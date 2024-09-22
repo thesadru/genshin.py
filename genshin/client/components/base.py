@@ -1,7 +1,6 @@
 """Base ABC Client."""
 
 import abc
-import asyncio
 import base64
 import functools
 import json
@@ -20,7 +19,6 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
-from genshin.models import model as base_model
 from genshin.utility import concurrency, deprecation, ds
 
 __all__ = ["BaseClient"]
@@ -64,10 +62,10 @@ class BaseClient(abc.ABC):
     _region: types.Region
     _default_game: typing.Optional[types.Game]
 
-    uids: typing.Dict[types.Game, int]
-    authkeys: typing.Dict[types.Game, str]
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
     _hoyolab_id: typing.Optional[int]
-    _accounts: typing.Dict[types.Game, hoyolab_models.GenshinAccount]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
     custom_headers: multidict.CIMultiDict[str]
 
     def __init__(
@@ -289,22 +287,13 @@ class BaseClient(abc.ABC):
         self.authkeys[game] = authkey
 
     def set_cache(
-        self,
-        maxsize: int = 1024,
-        *,
-        ttl: int = client_cache.HOUR,
-        static_ttl: int = client_cache.DAY,
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
     ) -> None:
         """Create and set a new cache."""
         self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
 
     def set_redis_cache(
-        self,
-        url: str,
-        *,
-        ttl: int = client_cache.HOUR,
-        static_ttl: int = client_cache.DAY,
-        **redis_kwargs: typing.Any,
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
     ) -> None:
         """Create and set a new redis cache."""
         import aioredis
@@ -384,12 +373,7 @@ class BaseClient(abc.ABC):
         await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
 
         response = await self.cookie_manager.request(
-            url,
-            method=method,
-            params=params,
-            json=data,
-            headers=headers,
-            **kwargs,
+            url, method=method, params=params, json=data, headers=headers, **kwargs
         )
 
         # cache
@@ -491,9 +475,7 @@ class BaseClient(abc.ABC):
 
     @managers.no_multi
     async def get_game_accounts(
-        self,
-        *,
-        lang: typing.Optional[str] = None,
+        self, *, lang: typing.Optional[str] = None
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the game accounts of the currently logged-in user."""
         if self.hoyolab_id is None:
@@ -508,9 +490,7 @@ class BaseClient(abc.ABC):
 
     @deprecation.deprecated("get_game_accounts")
     async def genshin_accounts(
-        self,
-        *,
-        lang: typing.Optional[str] = None,
+        self, *, lang: typing.Optional[str] = None
     ) -> typing.Sequence[hoyolab_models.GenshinAccount]:
         """Get the genshin accounts of the currently logged-in user."""
         accounts = await self.get_game_accounts(lang=lang)
@@ -520,7 +500,7 @@ class BaseClient(abc.ABC):
         """Update cached fallback uids."""
         mixed_accounts = await self.get_game_accounts()
 
-        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
         for account in mixed_accounts:
             if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
                 continue
@@ -553,7 +533,7 @@ class BaseClient(abc.ABC):
         """Update cached fallback accounts."""
         mixed_accounts = await self.get_game_accounts()
 
-        game_accounts: typing.Dict[types.Game, typing.List[hoyolab_models.GenshinAccount]] = {}
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
         for account in mixed_accounts:
             if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
                 continue
@@ -591,37 +571,6 @@ class BaseClient(abc.ABC):
             raise RuntimeError("Hoyolab ID must be provided when using multi-cookie managers.")
 
         raise RuntimeError("No default hoyolab ID provided.")
-
-    async def _fetch_mi18n(self, key: str, lang: str, *, force: bool = False) -> None:
-        """Update mi18n for a single url."""
-        if not force:
-            if key in base_model.APIModel._mi18n:
-                return
-
-        base_model.APIModel._mi18n[key] = {}
-
-        url = routes.MI18N[key]
-        cache_key = client_cache.cache_key("mi18n", mi18n=key, lang=lang)
-
-        data = await self.request_webstatic(url.format(lang=lang), cache=cache_key)
-        for k, v in data.items():
-            actual_key = str.lower(key + "/" + k)
-            base_model.APIModel._mi18n.setdefault(actual_key, {})[lang] = v
-
-    async def update_mi18n(self, langs: typing.Iterable[str] = constants.LANGS, *, force: bool = False) -> None:
-        """Fetch mi18n for partially localized endpoints."""
-        if not force:
-            if base_model.APIModel._mi18n:
-                return
-
-        langs = tuple(langs)
-
-        coros: typing.List[typing.Awaitable[None]] = []
-        for key in routes.MI18N:
-            for lang in langs:
-                coros.append(self._fetch_mi18n(key, lang, force=force))
-
-        await asyncio.gather(*coros)
 
 
 def region_specific(region: types.Region) -> typing.Callable[[AsyncCallableT], AsyncCallableT]:

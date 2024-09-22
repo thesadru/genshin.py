@@ -1,10 +1,9 @@
 """Genshin diary models."""
 
-import datetime
 import enum
 import typing
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, DateTimeField
 
 __all__ = [
     "BaseDiary",
@@ -88,7 +87,7 @@ class DiaryAction(APIModel):
 
     action_id: int
     action: str
-    time: datetime.datetime = Aliased(timezone=8)
+    time: DateTimeField
     amount: int = Aliased("num")
 
 
@@ -154,7 +153,7 @@ class StarRailDiaryAction(APIModel):
 
     action: str
     action_name: str
-    time: datetime.datetime = Aliased(timezone=8)
+    time: DateTimeField
     amount: int = Aliased("num")
 
 

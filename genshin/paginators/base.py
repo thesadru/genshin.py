@@ -185,7 +185,7 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
     Only used as pointers to a heap.
     """
 
-    _heap: typing.List[typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    _heap: list[tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
     """Underlying heap queue.
 
     List of (comparable, unique order id, value, iterator)
@@ -231,7 +231,7 @@ class MergedPaginator(typing.Generic[T], Paginator[T]):
         value: T,
         iterator: typing.AsyncIterator[T],
         order: typing.Optional[int] = None,
-    ) -> typing.Tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+    ) -> tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
         """Create a new item for the heap queue."""
         sort_value = self._key(value) if self._key else value
         if order is None:

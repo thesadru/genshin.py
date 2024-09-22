@@ -61,10 +61,10 @@ class TransactionClient(base.BaseClient):
             params=dict(end_id=end_id, size=20),
         )
 
-        transactions: typing.List[models.BaseTransaction] = []
+        transactions: list[models.BaseTransaction] = []
         for trans in data["list"]:
             model = models.ItemTransaction if "name" in trans else models.Transaction
-            model = typing.cast("typing.Type[models.BaseTransaction]", model)
+            model = typing.cast("type[models.BaseTransaction]", model)
             transactions.append(model(**trans, kind=kind))
 
         return transactions
@@ -84,7 +84,7 @@ class TransactionClient(base.BaseClient):
         if isinstance(kinds, str):
             kinds = [kinds]
 
-        iterators: typing.List[paginators.Paginator[models.BaseTransaction]] = []
+        iterators: list[paginators.Paginator[models.BaseTransaction]] = []
         for kind in kinds:
             iterators.append(
                 paginators.CursorPaginator(

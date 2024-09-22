@@ -41,7 +41,7 @@ good references for how projects should be type-hinted to be type-complete.
 
 - This project deviates from the common convention of importing types from the typing module and instead
   imports the typing module itself to use generics and types in it like `typing.Union` and `typing.Optional`.
-- Since this project supports python 3.8+, the `typing` module takes priority over `collections.abc`.
+- Since this project supports python 3.9+, the `typing` module takes priority over `collections.abc`.
 - All exported symbols should have docstrings.
 
 ---

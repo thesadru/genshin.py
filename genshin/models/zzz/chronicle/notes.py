@@ -4,15 +4,9 @@ import datetime
 import enum
 import typing
 
-from genshin.models.model import Aliased, APIModel
+import pydantic
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+from genshin.models.model import Aliased, APIModel
 
 __all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZNotes")
 
@@ -42,8 +36,8 @@ class BatteryCharge(APIModel):
         """Get the datetime when the energy will be full."""
         return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_full)
 
-    @pydantic.root_validator(pre=True)
-    def __unnest_progress(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __unnest_progress(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         return {**values, **values.pop("progress")}
 
 
@@ -62,11 +56,11 @@ class ZZZNotes(APIModel):
     scratch_card_completed: bool = Aliased("card_sign")
     video_store_state: VideoStoreState
 
-    @pydantic.validator("scratch_card_completed", pre=True)
+    @pydantic.field_validator("scratch_card_completed", mode="before")
     def __transform_value(cls, v: typing.Literal["CardSignDone", "CardSignNotDone"]) -> bool:
         return v == "CardSignDone"
 
-    @pydantic.root_validator(pre=True)
-    def __unnest_value(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    @pydantic.model_validator(mode="before")
+    def __unnest_value(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         values["video_store_state"] = values["vhs_sale"]["sale_state"]
         return values

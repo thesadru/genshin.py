@@ -119,7 +119,7 @@ class CalculatorClient(base.BaseClient):
 
             filters = dict(keywords=query, **filters)
 
-        payload: typing.Dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
+        payload: dict[str, typing.Any] = dict(page=1, size=69420, is_all=is_all, **filters)
 
         if sync:
             uid = uid or await self._get_uid(types.Game.GENSHIN)

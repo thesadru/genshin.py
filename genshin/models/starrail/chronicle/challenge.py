@@ -1,14 +1,8 @@
 """Starrail chronicle challenge."""
 
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any, Optional
 
-if TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+import pydantic
 
 from genshin.models.model import Aliased, APIModel
 from genshin.models.starrail.character import FloorCharacter
@@ -36,7 +30,7 @@ class FloorNode(APIModel):
     """Node for a memory of chaos floor."""
 
     challenge_time: PartialTime
-    avatars: List[FloorCharacter]
+    avatars: list[FloorCharacter]
 
 
 class StarRailChallengeFloor(APIModel):
@@ -80,13 +74,13 @@ class StarRailChallenge(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: List[StarRailFloor] = Aliased("all_floor_detail")
-    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    floors: list[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: list[StarRailChallengeSeason] = Aliased("groups")
 
-    @pydantic.root_validator(pre=True)
-    def __extract_name(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], List):
-            seasons: List[Dict[str, Any]] = values["groups"]
+    @pydantic.model_validator(mode="before")
+    def __extract_name(cls, values: dict[str, Any]) -> dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], list):
+            seasons: list[dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
 
@@ -135,14 +129,14 @@ class StarRailPureFiction(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: List[FictionFloor] = Aliased("all_floor_detail")
-    seasons: List[StarRailChallengeSeason] = Aliased("groups")
+    floors: list[FictionFloor] = Aliased("all_floor_detail")
+    seasons: list[StarRailChallengeSeason] = Aliased("groups")
     max_floor_id: int
 
-    @pydantic.root_validator(pre=True)
-    def __unnest_groups(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        if "groups" in values and isinstance(values["groups"], List):
-            seasons: List[Dict[str, Any]] = values["groups"]
+    @pydantic.model_validator(mode="before")
+    def __unnest_groups(cls, values: dict[str, Any]) -> dict[str, Any]:
+        if "groups" in values and isinstance(values["groups"], list):
+            seasons: list[dict[str, Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
                 values["season_id"] = seasons[0]["schedule_id"]
@@ -202,6 +196,6 @@ class StarRailAPCShadow(APIModel):
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: List[APCShadowFloor] = Aliased("all_floor_detail")
-    seasons: List[APCShadowSeason] = Aliased("groups")
+    floors: list[APCShadowFloor] = Aliased("all_floor_detail")
+    seasons: list[APCShadowSeason] = Aliased("groups")
     max_floor_id: int

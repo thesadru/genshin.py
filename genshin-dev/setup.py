@@ -6,12 +6,12 @@ import typing
 import setuptools
 
 
-def parse_requirements_file(path: pathlib.Path) -> typing.List[str]:
+def parse_requirements_file(path: pathlib.Path) -> list[str]:
     """Parse a requirements file into a list of requirements."""
     with open(path) as fp:
         raw_dependencies = fp.readlines()
 
-    dependencies: typing.List[str] = []
+    dependencies: list[str] = []
     for dependency in raw_dependencies:
         comment_index = dependency.find("#")
         if comment_index == 0:
@@ -30,8 +30,8 @@ dev_directory = pathlib.Path(__file__).parent
 
 normal_requirements = parse_requirements_file(dev_directory / ".." / "requirements.txt")
 
-all_extras: typing.Set[str] = set()
-extras: typing.Dict[str, typing.Sequence[str]] = {}
+all_extras: set[str] = set()
+extras: dict[str, typing.Sequence[str]] = {}
 
 for path in dev_directory.glob("*-requirements.txt"):
     name = path.name.split("-")[0]

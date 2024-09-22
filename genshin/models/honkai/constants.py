@@ -1,12 +1,10 @@
 """Honkai model constants."""
 
-import typing
-
 __all__ = ["BATTLESUIT_IDENTIFIERS"]
 
 # TODO: Make this more dynamic
 # fmt: off
-BATTLESUIT_IDENTIFIERS: typing.Dict[int, str] = {
+BATTLESUIT_IDENTIFIERS: dict[int, str] = {
     101: "KianaC2",
     102: "KianaC1",
     103: "KianaC4",

@@ -1,17 +1,10 @@
 import datetime
 import typing
 
-from genshin.constants import CN_TIMEZONE
-from genshin.models.model import Aliased, APIModel
-from genshin.models.zzz.character import ZZZElementType
+import pydantic
 
-if typing.TYPE_CHECKING:
-    import pydantic.v1 as pydantic
-else:
-    try:
-        import pydantic.v1 as pydantic
-    except ImportError:
-        import pydantic
+from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.zzz.character import ZZZElementType
 
 __all__ = (
     "ShiyuDefense",
@@ -66,7 +59,7 @@ class ShiyuDefenseMonster(APIModel):
     weakness: typing.Union[ZZZElementType, int] = Aliased("weak_element_type")
     level: int
 
-    @pydantic.validator("weakness", pre=True)
+    @pydantic.field_validator("weakness", mode="before")
     def __convert_weakness(cls, v: int) -> typing.Union[ZZZElementType, int]:
         try:
             return ZZZElementType(v)
@@ -77,18 +70,16 @@ class ShiyuDefenseMonster(APIModel):
 class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
-    characters: typing.List[ShiyuDefenseCharacter] = Aliased("avatars")
+    characters: list[ShiyuDefenseCharacter] = Aliased("avatars")
     bangboo: ShiyuDefenseBangboo = Aliased("buddy")
-    recommended_elements: typing.List[ZZZElementType] = Aliased("element_type_list")
-    enemies: typing.List[ShiyuDefenseMonster] = Aliased("monster_info")
+    recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
+    enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
 
-    @pydantic.validator("enemies", pre=True)
+    @pydantic.field_validator("enemies", mode="before")
     @classmethod
-    def __convert_enemies(
-        cls, value: typing.Dict[typing.Literal["level", "list"], typing.Any]
-    ) -> typing.List[ShiyuDefenseMonster]:
+    def __convert_enemies(cls, value: dict[typing.Literal["level", "list"], typing.Any]) -> list[ShiyuDefenseMonster]:
         level = value["level"]
-        result: typing.List[ShiyuDefenseMonster] = []
+        result: list[ShiyuDefenseMonster] = []
         for monster in value["list"]:
             monster["level"] = level
             result.append(ShiyuDefenseMonster(**monster))
@@ -101,49 +92,43 @@ class ShiyuDefenseFloor(APIModel):
     index: int = Aliased("layer_index")
     rating: typing.Literal["S", "A", "B"]
     id: int = Aliased("layer_id")
-    buffs: typing.List[ShiyuDefenseBuff]
+    buffs: list[ShiyuDefenseBuff]
     node_1: ShiyuDefenseNode
     node_2: ShiyuDefenseNode
-    challenge_time: datetime.datetime = Aliased("floor_challenge_time")
+    challenge_time: DateTimeField = Aliased("floor_challenge_time")
     name: str = Aliased("zone_name")
 
-    @pydantic.validator("challenge_time", pre=True)
+    @pydantic.field_validator("challenge_time", mode="before")
     @classmethod
-    def __add_timezone(
-        cls, v: typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]
-    ) -> datetime.datetime:
-        return datetime.datetime(
-            v["year"], v["month"], v["day"], v["hour"], v["minute"], v["second"], tzinfo=CN_TIMEZONE
-        )
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+        if value:
+            return datetime.datetime(**value)
+        return None
 
 
 class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: typing.Optional[datetime.datetime] = Aliased("hadal_begin_time")
-    end_time: typing.Optional[datetime.datetime] = Aliased("hadal_end_time")
+    begin_time: typing.Optional[DateTimeField] = Aliased("hadal_begin_time")
+    end_time: typing.Optional[DateTimeField] = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
-    floors: typing.List[ShiyuDefenseFloor] = Aliased("all_floor_detail")
+    floors: list[ShiyuDefenseFloor] = Aliased("all_floor_detail")
     fastest_clear_time: int = Aliased("fast_layer_time")
     """Fastest clear time this season in seconds."""
     max_floor: int = Aliased("max_layer")
 
-    @pydantic.validator("ratings", pre=True)
+    @pydantic.field_validator("begin_time", "end_time", mode="before")
+    @classmethod
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+        if value:
+            return datetime.datetime(**value)
+        return None
+
+    @pydantic.field_validator("ratings", mode="before")
     @classmethod
     def __convert_ratings(
-        cls, v: typing.List[typing.Dict[typing.Literal["times", "rating"], typing.Any]]
+        cls, v: list[dict[typing.Literal["times", "rating"], typing.Any]]
     ) -> typing.Mapping[typing.Literal["S", "A", "B"], int]:
         return {d["rating"]: d["times"] for d in v}
-
-    @pydantic.validator("begin_time", "end_time", pre=True)
-    @classmethod
-    def __add_timezone(
-        cls, v: typing.Optional[typing.Dict[typing.Literal["year", "month", "day", "hour", "minute", "second"], int]]
-    ) -> typing.Optional[datetime.datetime]:
-        if v is not None:
-            return datetime.datetime(
-                v["year"], v["month"], v["day"], v["hour"], v["minute"], v["second"], tzinfo=CN_TIMEZONE
-            )
-        return None
