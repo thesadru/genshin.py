@@ -59,7 +59,7 @@ class ShiyuDefenseMonster(APIModel):
     weakness: typing.Union[ZZZElementType, int] = Aliased("weak_element_type")
     level: int
 
-    @pydantic.validator("weakness", pre=True)
+    @pydantic.field_validator("weakness", mode="before")
     def __convert_weakness(cls, v: int) -> typing.Union[ZZZElementType, int]:
         try:
             return ZZZElementType(v)
