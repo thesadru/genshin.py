@@ -385,9 +385,10 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
             device_id_key: str(uuid.uuid4()).lower(),
         }
 
-        async with aiohttp.ClientSession() as session, session.post(
-            routes.GET_FP_URL.get_url(self.region), json=payload
-        ) as r:
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
             data = await r.json()
 
         if data["data"]["code"] != 200:

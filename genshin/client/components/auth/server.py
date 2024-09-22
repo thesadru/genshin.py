@@ -25,7 +25,7 @@ from genshin.utility import auth as auth_utility
 
 __all__ = ["PAGES", "enter_code", "launch_webapp", "solve_geetest"]
 
-PAGES: typing.Final[typing.Dict[typing.Literal["captcha", "enter-code"], str]] = {
+PAGES: typing.Final[dict[typing.Literal["captcha", "enter-code"], str]] = {
     "captcha": """
     <!DOCTYPE html>
     <head>

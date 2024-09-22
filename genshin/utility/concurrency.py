@@ -57,7 +57,7 @@ class MethodDecorator:
     def __set_name__(self, owner: type, name: str) -> None:
         self.name = name
 
-    def __get__(self, instance: typing.Optional[T], owner: typing.Type[T]) -> AnyCallable:
+    def __get__(self, instance: typing.Optional[T], owner: type[T]) -> AnyCallable:
         if instance is None:
             return self.method
 

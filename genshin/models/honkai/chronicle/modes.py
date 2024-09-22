@@ -13,7 +13,7 @@ from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = ["ELF", "Boss", "ElysianRealm", "MemorialArena", "MemorialBattle", "OldAbyss", "SuperstringAbyss"]
 
-REMEMBRANCE_SIGILS: typing.Dict[int, typing.Tuple[str, int]] = {
+REMEMBRANCE_SIGILS: dict[int, tuple[str, int]] = {
     119301: ("The MOTH Insignia", 1),
     119302: ("Home Lost", 1),
     119303: ("False Hope", 1),

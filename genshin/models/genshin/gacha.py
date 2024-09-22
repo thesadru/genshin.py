@@ -192,9 +192,9 @@ class BannerDetails(APIModel):
     r5_up_items: typing.Sequence[BannerDetailsUpItem]
     r4_up_items: typing.Sequence[BannerDetailsUpItem]
 
-    r5_items: typing.List[BannerDetailItem] = Aliased("r5_prob_list")
-    r4_items: typing.List[BannerDetailItem] = Aliased("r4_prob_list")
-    r3_items: typing.List[BannerDetailItem] = Aliased("r3_prob_list")
+    r5_items: list[BannerDetailItem] = Aliased("r5_prob_list")
+    r4_items: list[BannerDetailItem] = Aliased("r4_prob_list")
+    r3_items: list[BannerDetailItem] = Aliased("r3_prob_list")
 
     @pydantic.field_validator("r5_up_items", "r4_up_items", mode="before")
     def __replace_none(cls, v: typing.Optional[typing.Sequence[typing.Any]]) -> typing.Sequence[typing.Any]:

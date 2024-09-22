@@ -51,7 +51,7 @@ class TeapotReplica(APIModel):
     post_id: str
     title: str
     content: str
-    images: typing.List[str] = Aliased("imgs")
+    images: list[str] = Aliased("imgs")
     created_at: DateTimeField
     stats: TeapotReplicaStats
     lang: str  # type: ignore

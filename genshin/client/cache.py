@@ -25,7 +25,7 @@ WEEK = DAY * 7
 
 def _separate(values: typing.Iterable[typing.Any], sep: str = ":") -> str:
     """Separate a sequence by a separator into a single string."""
-    parts: typing.List[str] = []
+    parts: list[str] = []
     for value in values:
         if value is None:
             parts.append("null")
@@ -83,7 +83,7 @@ class BaseCache(abc.ABC):
 class Cache(BaseCache):
     """Standard implementation of the cache."""
 
-    cache: typing.Dict[typing.Any, typing.Tuple[float, typing.Any]]
+    cache: dict[typing.Any, tuple[float, typing.Any]]
     maxsize: int
     ttl: float
     static_ttl: float

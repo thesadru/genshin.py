@@ -63,7 +63,7 @@ class TransformerTimedelta(datetime.timedelta):
     """Transformer recovery time."""
 
     @property
-    def timedata(self) -> typing.Tuple[int, int, int, int]:
+    def timedata(self) -> tuple[int, int, int, int]:
         seconds: int = super().seconds
         days: int = super().days
         hour, second = divmod(seconds, 3600)
@@ -219,7 +219,7 @@ class Notes(APIModel):
         return remaining
 
     @pydantic.model_validator(mode="before")
-    def __flatten_transformer(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __flatten_transformer(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if "transformer_recovery_time" in values:
             return values
 

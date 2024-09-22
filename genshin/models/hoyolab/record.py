@@ -176,7 +176,7 @@ class RecordCard(GenshinAccount):
     has_uid: bool = Aliased("has_role")
     url: str
 
-    def as_dict(self) -> typing.Dict[str, typing.Any]:
+    def as_dict(self) -> dict[str, typing.Any]:
         """Return data as a dictionary."""
         return {d.name: (int(d.value) if d.value.isdigit() else d.value) for d in self.data}
 

@@ -25,7 +25,7 @@ class ActionTicket(pydantic.BaseModel):
     verify_str: VerifyStrategy
 
     @pydantic.model_validator(mode="before")
-    def __parse_data(cls, data: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __parse_data(cls, data: dict[str, typing.Any]) -> dict[str, typing.Any]:
         """Parse the data if it was provided in a raw format."""
         verify_str = data["verify_str"]
         if isinstance(verify_str, str):

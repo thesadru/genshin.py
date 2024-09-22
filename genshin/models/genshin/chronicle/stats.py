@@ -165,7 +165,7 @@ class PartialGenshinUserStats(APIModel):
     teapot: typing.Optional[Teapot] = Aliased("homes")
 
     @pydantic.field_validator("teapot", mode="before")
-    def __format_teapot(cls, v: typing.Any) -> typing.Optional[typing.Dict[str, typing.Any]]:
+    def __format_teapot(cls, v: typing.Any) -> typing.Optional[dict[str, typing.Any]]:
         if not v:
             return None
         if isinstance(v, dict):

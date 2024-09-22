@@ -37,7 +37,7 @@ class BaseWikiPreview(APIModel, Unique):
     name: str
 
     @pydantic.model_validator(mode="before")
-    def __unpack_filter_values(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __unpack_filter_values(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         filter_values = {
             key.split("_", 1)[1]: value["values"][0]
             for key, value in values.get("filter_values", {}).items()
@@ -47,7 +47,7 @@ class BaseWikiPreview(APIModel, Unique):
         return values
 
     @pydantic.model_validator(mode="before")
-    def __flatten_display_field(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __flatten_display_field(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         values.update(values.get("display_field", {}))
         return values
 
@@ -104,7 +104,7 @@ class ArtifactPreview(BaseWikiPreview):
     effects: typing.Mapping[int, str]
 
     @pydantic.model_validator(mode="before")
-    def __group_effects(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def __group_effects(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         effects = {
             1: values["single_set_effect"],
             2: values["two_set_effect"],
@@ -124,7 +124,7 @@ class EnemyPreview(BaseWikiPreview):
         return json.loads(value) if isinstance(value, str) else value
 
 
-_ENTRY_PAGE_MODELS: typing.Mapping[WikiPageType, typing.Type[BaseWikiPreview]] = {
+_ENTRY_PAGE_MODELS: typing.Mapping[WikiPageType, type[BaseWikiPreview]] = {
     WikiPageType.CHARACTER: CharacterPreview,
     WikiPageType.WEAPON: WeaponPreview,
     WikiPageType.ARTIFACT: ArtifactPreview,
@@ -147,14 +147,14 @@ class WikiPage(APIModel):
     @pydantic.field_validator("modules", mode="before")
     def __format_modules(
         cls,
-        value: typing.Union[typing.List[typing.Dict[str, typing.Any]], typing.Dict[str, typing.Any]],
-    ) -> typing.Dict[str, typing.Any]:
+        value: typing.Union[list[dict[str, typing.Any]], dict[str, typing.Any]],
+    ) -> dict[str, typing.Any]:
         if isinstance(value, typing.Mapping):
             return value
 
-        modules: typing.Dict[str, typing.Dict[str, typing.Any]] = {}
+        modules: dict[str, dict[str, typing.Any]] = {}
         for module in value:
-            components: typing.Dict[str, typing.Dict[str, typing.Any]] = {
+            components: dict[str, dict[str, typing.Any]] = {
                 component["component_id"]: json.loads(component["data"] or "{}") for component in module["components"]
             }
 

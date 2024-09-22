@@ -36,7 +36,7 @@ AsyncCallableT = typing.TypeVar("AsyncCallableT", bound="typing.Callable[..., ty
 MaybeSequence = typing.Union[T, typing.Sequence[T]]
 
 
-def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> typing.Dict[str, str]:
+def parse_cookie(cookie: typing.Optional[CookieOrHeader]) -> dict[str, str]:
     """Parse a cookie or header into a cookie mapping."""
     if cookie is None:
         return {}
@@ -192,7 +192,7 @@ class BaseCookieManager(abc.ABC):
 class CookieManager(BaseCookieManager):
     """Standard implementation of the cookie manager."""
 
-    _cookies: typing.Dict[str, str]
+    _cookies: dict[str, str]
 
     def __init__(
         self,
@@ -287,7 +287,7 @@ class CookieSequence(typing.Sequence[typing.Mapping[str, str]]):
     MAX_USES: int = 30
 
     # {id: ({cookie}, uses), ...}
-    _cookies: typing.Dict[str, typing.Tuple[typing.Dict[str, str], int]]
+    _cookies: dict[str, tuple[dict[str, str], int]]
 
     def __init__(self, cookies: typing.Optional[typing.Sequence[CookieOrHeader]] = None) -> None:
         self.cookies = [parse_cookie(cookie) for cookie in cookies or []]
