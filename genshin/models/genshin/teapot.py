@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, DateTimeField, Unique
+from genshin.models.model import Aliased, APIModel, DateTimeField
 
 __all__ = [
     "TeapotReplica",
@@ -45,7 +45,7 @@ class TeapotReplicaBlueprint(APIModel):
     is_invalid: bool
 
 
-class TeapotReplica(APIModel, Unique):
+class TeapotReplica(APIModel):
     """Genshin serenitea pot replica."""
 
     post_id: str
