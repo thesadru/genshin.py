@@ -161,7 +161,7 @@ class HoyolabClient(base.BaseClient):
         if self.cookie_manager.multi:
             uid = uid or await self._get_uid(types.Game.GENSHIN)
         else:
-            uid = 900000005
+            uid = uid or 900000005
         return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
 
     async def get_zzz_announcements(
@@ -174,7 +174,7 @@ class HoyolabClient(base.BaseClient):
         if self.cookie_manager.multi:
             uid = uid or await self._get_uid(types.Game.ZZZ)
         else:
-            uid = 1300000000
+            uid = uid or 1300000000
         return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
 
     async def get_starrail_announcements(
@@ -187,7 +187,7 @@ class HoyolabClient(base.BaseClient):
         if self.cookie_manager.multi:
             uid = uid or await self._get_uid(types.Game.STARRAIL)
         else:
-            uid = 809162009
+            uid = uid or 809162009
         return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
 
     @managers.requires_cookie_token
