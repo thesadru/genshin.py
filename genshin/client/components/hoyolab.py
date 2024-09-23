@@ -84,13 +84,11 @@ class HoyolabClient(base.BaseClient):
                 url / "announcement/api/getAnnList",
                 lang=lang,
                 params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="info", lang=lang or self.lang),
             ),
             self.request_hoyolab(
                 url / "announcement/api/getAnnContent",
                 lang=lang,
                 params=params,
-                static_cache=client_cache.cache_key("announcements", endpoint="details", lang=lang or self.lang),
             ),
         )
 
