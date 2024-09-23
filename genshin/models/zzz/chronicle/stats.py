@@ -21,6 +21,7 @@ class ZZZStats(APIModel):
     inter_knot_reputation: str = Aliased("world_level_name")
     shiyu_defense_frontiers: int = Aliased("cur_period_zone_layer_count")
     bangboo_obtained: int = Aliased("buddy_num")
+    achievement_count: int
 
 
 class ZZZBaseBangboo(APIModel):
