@@ -13,7 +13,7 @@ nox.options.reuse_existing_virtualenvs = True
 PACKAGE = "genshin"
 GENERAL_TARGETS = ["./noxfile.py", "./genshin", "./tests"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
-UV_RUN = ("uv", "run", "--isolated", "--no-dev", "--extra")
+UV_RUN_EXTRA = ("uv", "run", "--isolated", "--no-dev", "--extra")
 
 LOGGER = logging.getLogger("nox")
 
@@ -34,25 +34,24 @@ def docs(session: nox.Session) -> None:
     output_directory = pathlib.Path("./docs/pdoc/")
     session.log("Building docs into %s", output_directory)
 
-    session.run(*UV_RUN, "docs", "pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
+    session.run(*UV_RUN_EXTRA, "docs", "pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
     session.log("Docs generated: %s", output_directory / "index.html")
 
 
 @nox.session()
 def lint(session: nox.Session) -> None:
     """Run this project's modules against the pre-defined flake8 linters."""
-    session.run(*UV_RUN, "lint", "ruff", "check", *GENERAL_TARGETS, *verbose_args())
+    session.run(*UV_RUN_EXTRA, "lint", "ruff", "check", *GENERAL_TARGETS, *verbose_args())
 
 
 @nox.session()
 def reformat(session: nox.Session) -> None:
     """Reformat this project's modules to fit the standard style."""
-    extra = "reformat"
-    session.run(*UV_RUN, extra, "black", *GENERAL_TARGETS, *verbose_args())
+    session.run(*UV_RUN_EXTRA, "reformat", "black", *GENERAL_TARGETS, *verbose_args())
     # sort __all__ and format imports
     session.run(
-        *UV_RUN,
-        extra,
+        *UV_RUN_EXTRA,
+        "reformat",
         "ruff",
         "check",
         "--select",
@@ -62,17 +61,17 @@ def reformat(session: nox.Session) -> None:
         *verbose_args(),
     )
     # fix all fixable linting errors
-    session.run(*UV_RUN, extra, "ruff", "check", "--fix", *GENERAL_TARGETS, *verbose_args())
+    session.run(*UV_RUN_EXTRA, "reformat", "ruff", "check", "--fix", *GENERAL_TARGETS, *verbose_args())
 
 
 @nox.session(name="test")
 def test(session: nox.Session) -> None:
     """Run this project's tests using pytest."""
     session.run(
-        *UV_RUN,
+        *UV_RUN_EXTRA,
+        "pytest",
         "--extra",
         "all",
-        "pytest",
         "pytest",
         "--asyncio-mode=auto",
         "-r",
@@ -93,16 +92,15 @@ def test(session: nox.Session) -> None:
 @nox.session(name="type-check")
 def type_check(session: nox.Session) -> None:
     """Statically analyse and veirfy this project using pyright and mypy."""
-    extra = "typecheck"
-    session.run(*UV_RUN, extra, "--extra", "all", "pyright", PACKAGE, *verbose_args(), env=PYRIGHT_ENV)
-    session.run(*UV_RUN, extra, "--extra", "all", "mypy", PACKAGE, *verbose_args())
+    session.run(*UV_RUN_EXTRA, "typecheck", "--extra", "all", "pyright", PACKAGE, *verbose_args(), env=PYRIGHT_ENV)
+    session.run(*UV_RUN_EXTRA, "typecheck", "--extra", "all", "mypy", PACKAGE, *verbose_args())
 
 
 @nox.session(name="verify-types")
 def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
     session.run(
-        *UV_RUN,
+        *UV_RUN_EXTRA,
         "typecheck",
         "--extra",
         "all",
