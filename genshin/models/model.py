@@ -5,9 +5,9 @@ from __future__ import annotations
 import abc
 import datetime
 import typing
+from typing import Annotated
 
 import pydantic
-from typing import Annotated
 
 from genshin.constants import CN_TIMEZONE
 

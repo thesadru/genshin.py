@@ -1,6 +1,7 @@
-from enum import Enum
 import typing
-from genshin.models.model import APIModel, Aliased, DateTimeField
+from enum import Enum
+
+from genshin.models.model import Aliased, APIModel, DateTimeField
 
 __all__ = (
     "PolychromeIncomeType",

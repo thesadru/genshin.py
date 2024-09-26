@@ -1,6 +1,67 @@
+[project]
+name = "genshin"
+version = "1.7.1"
+description = "API wrapper for HoYoLAB/Miyoushe API built on asyncio and pydantic."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["aiohttp>=3.10.6", "pydantic>=2.9.2"]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+all = [
+    "aiohttp-socks>=0.9.0",
+    "browser-cookie3>=0.19.1",
+    "click>=8.1.7",
+    "qrcode[pil]>=7.4.2",
+    "rsa>=4.9",
+]
+cookies = ["browser-cookie3>=0.19.1"]
+auth = ["qrcode[pil]>=7.4.2", "rsa>=4.9"]
+cli = ["click>=8.1.7"]
+socks-proxy = ["aiohttp-socks>=0.9.0"]
+docs = [
+    "mkdocs-material>=9.5.38",
+    "pdoc3>=0.11.1",
+]
+lint = ["ruff>=0.6.8"]
+pytest = [
+    "coverage[toml]>=7.6.1",
+    "devtools>=0.12.2",
+    "pytest>=8.3.3",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "pytest-dotenv>=0.5.2",
+]
+reformat = ["black>=24.8.0", "ruff>=0.6.8"]
+typecheck = ["mypy>=1.11.2", "pyright>=1.1.382.post0", "types-click>=7.1.8"]
+redis = ["aioredis>=2.0.1"]
+sqlite = ["aiosqlite>=0.20.0"]
+
+[project.urls]
+Homepage = "https://github.com/thesadru/genshin.py"
+Documentation = "https://thesadru.github.io/genshin.py"
+Repository = "https://github.com/thesadru/genshin.py.git"
+Issues = "https://github.com/thesadru/genshin.py/issues"
+
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["genshin"]
 
 [tool.black]
 line-length = 120
@@ -10,19 +71,7 @@ line-length = 120
 target-version = "py39"
 
 [tool.ruff.lint]
-select = [
-    "A",
-    "C4",
-    "C9",
-    "D",
-    "E",
-    "F",
-    "S",
-    "W",
-    "T20",
-    "PT",
-    "RSE"
-]
+select = ["A", "C4", "C9", "D", "E", "F", "S", "W", "T20", "PT", "RSE"]
 exclude = ["tests", "test.py"]
 
 # A001, A002, A003: `id` variable/parameter/attribute
@@ -39,11 +88,21 @@ exclude = ["tests", "test.py"]
 # S311: Use of pseudo-random generators
 # S324: Use of md5 without usedforsecurity=False (3.9+)
 ignore = [
-    "A001", "A002", "A003",
+    "A001",
+    "A002",
+    "A003",
     "C408",
-    "D100", "D105", "D106", "D400", "D419",
-    "PT007", "PT018",
-    "S101", "S303", "S311", "S324",
+    "D100",
+    "D105",
+    "D106",
+    "D400",
+    "D419",
+    "PT007",
+    "PT018",
+    "S101",
+    "S303",
+    "S311",
+    "S324",
 ]
 
 # auto-fixing too intrusive
@@ -82,8 +141,8 @@ exclude = ["**/__init__.py", "tests/**"]
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "none"
 reportImportCycles = "none"
-reportIncompatibleMethodOverride = "none"  # This relies on ordering for keyword-only arguments
-reportUnusedFunction = "none"  # Makes usage of validators impossible
+reportIncompatibleMethodOverride = "none"   # This relies on ordering for keyword-only arguments
+reportUnusedFunction = "none"               # Makes usage of validators impossible
 reportPrivateUsage = "none"
 reportUnknownMemberType = "none"
 reportUntypedFunctionDecorator = "none"
@@ -110,3 +169,6 @@ omit = ["**/__init__.py", "**/__main__.py"]
 show_missing = true
 skip_covered = false
 sort = "cover"
+
+[tool.uv]
+dev-dependencies = ["nox>=2024.4.15"]
