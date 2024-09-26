@@ -48,6 +48,28 @@ class ZZZEngagement(APIModel):
     max: int
 
 
+class BountyCommission(APIModel):
+    """ZZZ sticky notes, Hollow Zero bounty commission model."""
+
+    num: int
+    total: int
+
+
+class SurveyPoints(APIModel):
+    """ZZZ sticky notes, Hollow Zero investigation points model."""
+
+    num: int
+    total: int
+    is_max_level: bool  # Not sure what this means
+
+
+class HollowZero(APIModel):
+    """Hollow Zero in ZZZ sticky notes model."""
+
+    bounty_commission: BountyCommission
+    investigation_point: SurveyPoints = Aliased("survey_points")
+
+
 class ZZZNotes(APIModel):
     """Zenless Zone Zero sticky notes model."""
 
@@ -55,6 +77,7 @@ class ZZZNotes(APIModel):
     engagement: ZZZEngagement = Aliased("vitality")
     scratch_card_completed: bool = Aliased("card_sign")
     video_store_state: VideoStoreState
+    hollow_zero: HollowZero
 
     @pydantic.field_validator("scratch_card_completed", mode="before")
     def __transform_value(cls, v: typing.Literal["CardSignDone", "CardSignNotDone"]) -> bool:
@@ -63,4 +86,8 @@ class ZZZNotes(APIModel):
     @pydantic.model_validator(mode="before")
     def __unnest_value(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         values["video_store_state"] = values["vhs_sale"]["sale_state"]
+        values["hollow_zero"] = {
+            "bounty_commission": values["bounty_commission"],
+            "survey_points": values["survey_points"],
+        }
         return values
