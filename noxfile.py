@@ -70,6 +70,8 @@ def test(session: nox.Session) -> None:
     """Run this project's tests using pytest."""
     session.run(
         *UV_RUN,
+        "--extra",
+        "all",
         "pytest",
         "pytest",
         "--asyncio-mode=auto",
@@ -92,15 +94,24 @@ def test(session: nox.Session) -> None:
 def type_check(session: nox.Session) -> None:
     """Statically analyse and veirfy this project using pyright and mypy."""
     extra = "typecheck"
-    session.run(*UV_RUN, extra, "pyright", PACKAGE, *verbose_args(), env=PYRIGHT_ENV)
-    session.run(*UV_RUN, extra, "mypy", PACKAGE, *verbose_args())
+    session.run(*UV_RUN, extra, "--extra", "all", "pyright", PACKAGE, *verbose_args(), env=PYRIGHT_ENV)
+    session.run(*UV_RUN, extra, "--extra", "all", "mypy", PACKAGE, *verbose_args())
 
 
 @nox.session(name="verify-types")
 def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
     session.run(
-        *UV_RUN, "typecheck", "pyright", "--verifytypes", PACKAGE, "--ignoreexternal", *verbose_args(), env=PYRIGHT_ENV
+        *UV_RUN,
+        "--extra",
+        "all",
+        "typecheck",
+        "pyright",
+        "--verifytypes",
+        PACKAGE,
+        "--ignoreexternal",
+        *verbose_args(),
+        env=PYRIGHT_ENV,
     )
 
 
