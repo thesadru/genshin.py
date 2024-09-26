@@ -23,6 +23,8 @@ classifiers = [
 [project.optional-dependencies]
 all = [
     "aiohttp-socks>=0.9.0",
+    "aioredis>=2.0.1",
+    "aiosqlite>=0.20.0",
     "browser-cookie3>=0.19.1",
     "click>=8.1.7",
     "qrcode[pil]>=7.4.2",
