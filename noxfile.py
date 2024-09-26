@@ -103,9 +103,9 @@ def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
     session.run(
         *UV_RUN,
+        "typecheck",
         "--extra",
         "all",
-        "typecheck",
         "pyright",
         "--verifytypes",
         PACKAGE,
