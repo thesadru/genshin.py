@@ -45,11 +45,14 @@ class BaseBattleChronicleClient(base.BaseClient):
         region: typing.Optional[types.Region] = None,
         game: typing.Optional[types.Game] = None,
         is_card_wapi: bool = False,
+        is_nap_ledger: bool = False,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
         if is_card_wapi:
             base_url = routes.CARD_WAPI_URL.get_url(region or self.region)
+        elif is_nap_ledger:
+            base_url = routes.NAP_LEDGER_URL.get_url()
         else:
             game = game or self.default_game
             if game is None:

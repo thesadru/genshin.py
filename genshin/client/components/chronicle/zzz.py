@@ -22,13 +22,26 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         cache: bool = False,
+        is_nap_ledger: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary ZZZ object."""
         payload = dict(payload or {})
         original_payload = payload.copy()
 
         uid = uid or await self._get_uid(types.Game.ZZZ)
-        payload = dict(role_id=uid, server=utility.recognize_zzz_server(uid), **payload)
+
+        if is_nap_ledger:
+            payload = {
+                "uid": uid,
+                "region": utility.recognize_zzz_server(uid),
+                **payload,
+            }
+        else:
+            payload = {
+                "role_id": uid,
+                "server": utility.recognize_zzz_server(uid),
+                **payload,
+            }
 
         data, params = None, None
         if method == "POST":
@@ -54,6 +67,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             params=params,
             data=data,
             cache=cache_key,
+            is_nap_ledger=is_nap_ledger,
         )
 
     async def get_zzz_notes(
@@ -77,6 +91,42 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             data = await self._request_zzz_record("note", uid, lang=lang)
 
         return models.ZZZNotes(**data)
+
+    async def get_zzz_diary(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        month: typing.Optional[str] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.ZZZDiary:
+        """Get ZZZ inter-knot monthly earning data."""
+        data = await self._request_zzz_record(
+            "month_info", uid, lang=lang, payload={"month": month or ""}, is_nap_ledger=True
+        )
+        return models.ZZZDiary(**data)
+
+    async def get_zzz_diary_detail(
+        self,
+        month: str,
+        *,
+        type: models.ZZZCurrencyType,
+        page: int = 1,
+        page_size: int = 20,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.ZZZDiaryDetail:
+        """Get ZZZ inter-knot monthly earning data."""
+        if not month:
+            raise ValueError("month is required.")
+
+        data = await self._request_zzz_record(
+            "month_detail",
+            uid,
+            lang=lang,
+            payload={"month": month, "current_page": page, "type": type.value, "page_size": page_size},
+            is_nap_ledger=True,
+        )
+        return models.ZZZDiaryDetail(**data)
 
     async def get_zzz_user(
         self,

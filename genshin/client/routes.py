@@ -152,6 +152,8 @@ RECORD_URL = GameRoute(
         nap="https://api-takumi-record.mihoyo.com/event/game_record_zzz/api/zzz",
     ),
 )
+NAP_LEDGER_URL = Route("https://sg-public-api.hoyolab.com/event/nap_ledger")
+
 CARD_WAPI_URL = InternationalRoute(
     overseas="https://bbs-api-os.hoyolab.com/game_record/card/wapi",
     chinese="https://api-takumi-record.mihoyo.com/game_record/app/card/wapi",
