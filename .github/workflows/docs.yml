@@ -29,4 +29,4 @@ jobs:
           python -m nox -s docs
       - name: Deploy docs
         run: |
-          mkdocs gh-deploy --force
+          uv run mkdocs gh-deploy --force
