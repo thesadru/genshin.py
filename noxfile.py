@@ -14,6 +14,7 @@ PACKAGE = "genshin"
 GENERAL_TARGETS = ["./noxfile.py", "./genshin", "./tests"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 UV_RUN_EXTRA = ("uv", "run", "--isolated", "--no-dev", "--extra")
+UV_RUN_NO_ISOLATE = ("uv", "run", "--no-dev", "--extra")
 
 LOGGER = logging.getLogger("nox")
 
@@ -34,7 +35,7 @@ def docs(session: nox.Session) -> None:
     output_directory = pathlib.Path("./docs/pdoc/")
     session.log("Building docs into %s", output_directory)
 
-    session.run(*UV_RUN_EXTRA, "docs", "pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
+    session.run(*UV_RUN_NO_ISOLATE, "docs", "pdoc3", "--html", PACKAGE, "-o", str(output_directory), "--force")
     session.log("Docs generated: %s", output_directory / "index.html")
 
 
