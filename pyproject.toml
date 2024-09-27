@@ -24,7 +24,7 @@ classifiers = [
 all = [
     "aiohttp-socks>=0.9.0",
     "aioredis>=2.0.1",
-    "aiosqlite>=0.20.0",
+    "aiosqlite>=0.17.0",
     "browser-cookie3>=0.19.1",
     "click>=8.1.7",
     "qrcode[pil]>=7.4.2",
@@ -50,7 +50,7 @@ pytest = [
 reformat = ["black>=24.8.0", "ruff>=0.6.8"]
 typecheck = ["mypy>=1.11.2", "pyright>=1.1.382.post0", "types-click>=7.1.8"]
 redis = ["aioredis>=2.0.1"]
-sqlite = ["aiosqlite>=0.20.0"]
+sqlite = ["aiosqlite>=0.17.0"]
 
 [project.urls]
 Homepage = "https://github.com/thesadru/genshin.py"
