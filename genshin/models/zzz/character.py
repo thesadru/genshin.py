@@ -96,6 +96,14 @@ class ZZZPropertyType(enum.IntEnum):
     AGENT_ANOMALY_PROFICIENCY = 8
     AGENT_PEN_RATIO = 9
     AGENT_ENERGY_GEN = 10
+    AGENT_PEN = 232
+
+    # Agent DMG bonus
+    PHYSICAL_DMG_BONUS = 315
+    FIRE_DMG_BONUS = 316
+    ICE_DMG_BONUS = 317
+    ELECTRIC_DMG_BONUS = 318
+    ETHER_DMG_BONUS = 319
 
     # Disc drive
     DISC_HP = 11103
