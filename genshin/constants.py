@@ -88,7 +88,7 @@ APP_IDS = {
 """App IDs used for game login."""
 
 GEETEST_RECORD_KEYS = {
-    types.Game.GENSHIN: "hk4e_game_record",
+    types.Game.GENSHIN: "genshin_game_record",
     types.Game.STARRAIL: "hkrpg_game_record",
     types.Game.HONKAI: "bh3_game_record",
     types.Game.ZZZ: "nap_game_record",
