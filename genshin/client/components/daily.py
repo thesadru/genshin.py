@@ -47,6 +47,11 @@ class DailyRewardClient(base.BaseClient):
         base_url = routes.REWARD_URL.get_url(self.region, game)
         url = (base_url / endpoint).update_query(**base_url.query)
 
+        if game is types.Game.GENSHIN:
+            headers["x-rpc-signgame"] = "hk4e"
+        elif game is types.Game.ZZZ:
+            headers["x-rpc-signgame"] = "zzz"
+
         if self.region == types.Region.OVERSEAS:
             params["lang"] = lang or self.lang
             headers["referer"] = "https://act.hoyolab.com/"
@@ -66,15 +71,7 @@ class DailyRewardClient(base.BaseClient):
             headers["x-rpc-channel"] = "miyousheluodi"
             headers["x-rpc-device_model"] = str(self.hoyolab_id) or ""
 
-            if game is types.Game.GENSHIN:
-                headers["x-rpc-signgame"] = "hk4e"
-            elif game is types.Game.ZZZ:
-                headers["x-rpc-signgame"] = "zzz"
-
             headers["ds"] = ds_utility.generate_dynamic_secret(constants.DS_SALT["cn_signin"])
-
-        else:
-            raise TypeError(f"{self.region!r} is not a valid region.")
 
         if challenge:
             headers["x-rpc-challenge"] = challenge["challenge"]
