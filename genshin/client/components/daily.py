@@ -49,6 +49,8 @@ class DailyRewardClient(base.BaseClient):
 
         if game is types.Game.GENSHIN:
             headers["x-rpc-signgame"] = "hk4e"
+        elif game is types.Game.STARRAIL:
+            headers["x-rpc-signgame"] = "hkrpg"
         elif game is types.Game.ZZZ:
             headers["x-rpc-signgame"] = "zzz"
 
