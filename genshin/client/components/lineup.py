@@ -35,12 +35,14 @@ class LineupClient(base.BaseClient):
 
         return await self.request(url, method=method, params=params, **kwargs)
 
-    async def get_lineup_fields(self, *, lang: typing.Optional[str] = None) -> models.LineupFields:
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -> models.LineupFields:
         """Get configuration lineup fields."""
         data = await self.request_lineup(
             "config",
             lang=lang,
-            static_cache=cache.cache_key("lineup", endpoint="config", lang=lang or self.lang),
+            static_cache=cache.cache_key("lineup", endpoint="config", lang=lang or self.lang) if use_cache else None,
         )
 
         return models.LineupFields(**data)
