@@ -166,6 +166,7 @@ class APCShadowFloor(StarRailChallengeFloor):
     node_1: APCShadowFloorNode
     node_2: APCShadowFloorNode
     last_update_time: PartialTime
+    is_quick_clear: bool = Aliased("is_fast")
 
     @property
     def score(self) -> int:
