@@ -44,6 +44,11 @@ class ZZZSpecialty(enum.IntEnum):
     DEFENSE = 5
 
 
+SPECIAL_KIDS = {
+    1251,  # Qingyi
+}
+
+
 class ZZZBaseAgent(APIModel, Unique):
     """ZZZ base agent model."""
 
@@ -57,21 +62,25 @@ class ZZZBaseAgent(APIModel, Unique):
     flat_icon: str = Aliased("hollow_icon_path")
 
     @property
+    def base_icon_url(self) -> str:
+        if self.id in SPECIAL_KIDS:
+            return "https://act-webstatic.hoyoverse.com/game_record/nap"
+        return "https://act-webstatic.hoyoverse.com/game_record/zzz"
+
+    @property
     def square_icon(self) -> str:
         """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png"""
-        return (
-            f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_{self.id}.png"
-        )
+        return f"{self.base_icon_url}/role_square_avatar/role_square_avatar_{self.id}.png"
 
     @property
     def rectangle_icon(self) -> str:
         """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png"""
-        return f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_{self.id}.png"
+        return f"{self.base_icon_url}/role_rectangle_avatar/role_rectangle_avatar_{self.id}.png"
 
     @property
     def banner_icon(self) -> str:
         """Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png"""
-        return f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_{self.id}.png"
+        return f"{self.base_icon_url}/role_vertical_painting/role_vertical_painting_{self.id}.png"
 
 
 class ZZZPartialAgent(ZZZBaseAgent):
