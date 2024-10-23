@@ -231,5 +231,4 @@ class HoyolabClient(base.BaseClient):
     @managers.no_multi
     async def check_in_community(self) -> None:
         """Check in to the hoyolab community and claim your daily 5 community exp."""
-        url = routes.COMMUNITY_URL.get_url(self.region) / "apihub/wapi/mission/signIn"
-        await self.request(url, method="POST", data={})
+        raise RuntimeError("This API is deprecated.")
