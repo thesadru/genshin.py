@@ -130,6 +130,16 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_honkai_record("battleFieldReport", uid, lang=lang)
         return [models.MemorialArena(**x) for x in data["reports"]]
 
+    async def get_honkai_notes(
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.HonkaiNotes:
+        """Get honkai memorial arena."""
+        data = await self._request_honkai_record("note", uid, lang=lang)
+        return models.HonkaiNotes(**data)
+
     async def get_full_honkai_user(
         self,
         uid: int,
