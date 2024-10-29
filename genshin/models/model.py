@@ -42,7 +42,7 @@ def Aliased(
 
 
 def add_timezone(value: datetime.datetime) -> datetime.datetime:
-    return value.replace(tzinfo=CN_TIMEZONE)
+    return value.astimezone(CN_TIMEZONE)
 
 
 DateTimeField = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
