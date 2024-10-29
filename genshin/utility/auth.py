@@ -56,7 +56,12 @@ CN_LOGIN_HEADERS = {
     "x-rpc-app_id": "bll8iq97cem8",
     "x-rpc-client_type": "4",
     "x-rpc-source": "v2.webLogin",
-    "x-rpc-device_id": "586f2440-856a-4243-8076-2b0a12314197",
+    "x-rpc-device_fp": "38d7fff8fd68c",
+    "x-rpc-device_id": "469af8a4-0754-4a3c-a999-dec592f00894",
+    "x-rpc-device_model": "Firefox%20131.0",
+    "x-rpc-device_name": "Firefox",
+    "x-rpc-game_biz": "bbs_cn",
+    "x-rpc-sdk_version": "2.31.0",
 }
 
 EMAIL_SEND_HEADERS = {
