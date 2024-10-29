@@ -58,6 +58,7 @@ def reformat(session: nox.Session) -> None:
         "--select",
         "RUF022,I",
         "--fix",
+        "--preview",
         *GENERAL_TARGETS,
         *verbose_args(),
     )
