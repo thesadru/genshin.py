@@ -2,5 +2,5 @@
 
 from .battlesuits import *
 from .modes import *
-from .stats import *
 from .notes import *
+from .stats import *
