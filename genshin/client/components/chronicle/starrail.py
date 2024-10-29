@@ -151,3 +151,13 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge_boss", uid, lang=lang, payload=payload)
         return models.StarRailAPCShadow(**data)
+
+    async def get_starrail_event_calendar(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -> models.HSREventCalendar:
+        """Get HSR event calendar."""
+        data = await self._request_starrail_record("get_act_calender", uid, lang=lang, cache=True)
+        return models.HSREventCalendar(**data)
