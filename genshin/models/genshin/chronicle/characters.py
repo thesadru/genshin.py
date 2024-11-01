@@ -148,6 +148,7 @@ class DetailCharacterWeapon(CharacterWeapon):
 
     main_stat: PropertyValue = Aliased("main_property")
     sub_stat: typing.Optional[PropertyValue] = Aliased("sub_property")
+    ascension: int = Aliased("promote_level")
 
 
 class ArtifactProperty(APIModel):
