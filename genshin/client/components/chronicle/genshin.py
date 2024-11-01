@@ -76,8 +76,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
         """Get genshin user characters."""
-        data = await self._request_genshin_record("character", uid, lang=lang, method="POST")
-        return [models.Character(**i) for i in data["avatars"]]
+        data = await self._request_genshin_record("character/list", uid, lang=lang, method="POST")
+        return [models.Character(**i) for i in data["list"]]
 
     @typing.overload
     async def get_genshin_detailed_characters(

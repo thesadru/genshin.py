@@ -2,7 +2,6 @@
 
 import enum
 import typing
-from collections import defaultdict
 
 import pydantic
 
@@ -56,10 +55,8 @@ class CharacterWeapon(APIModel, Unique):
     icon: str
     name: str
     rarity: int
-    description: str = Aliased("desc")
     level: int
-    type: str = Aliased("type_name")
-    ascension: int = Aliased("promote_level")
+    type: int
     refinement: int = Aliased("affix_level")
 
 
@@ -120,24 +117,6 @@ class Character(PartialCharacter):
     """Character with equipment."""
 
     weapon: CharacterWeapon
-    artifacts: typing.Sequence[Artifact] = Aliased("reliquaries")
-    constellations: typing.Sequence[Constellation]
-    outfits: typing.Sequence[Outfit] = Aliased("costumes")
-
-    @pydantic.field_validator("artifacts")
-    @classmethod
-    def __enable_artifact_set_effects(cls, artifacts: typing.Sequence[Artifact]) -> typing.Sequence[Artifact]:
-        set_nums: defaultdict[int, int] = defaultdict(int)
-        for arti in artifacts:
-            set_nums[arti.set.id] += 1
-
-        for artifact in artifacts:
-            for effect in artifact.set.effects:
-                if effect.required_piece_num <= set_nums[artifact.set.id]:
-                    # To bypass model's immutability
-                    effect = effect.model_copy(update={"active": True})
-
-        return artifacts
 
 
 class PropInfo(APIModel):

@@ -154,14 +154,6 @@ async def genshin_characters(client: genshin.Client, uid: int) -> None:
             f"lvl {char.weapon.level} R{char.weapon.refinement}"
         )
 
-        if char.artifacts:
-            click.echo("Artifacts:")
-            for arti in char.artifacts:
-                click.echo(f" - {arti.pos_name}: {arti.set.name} ({'★' * arti.rarity})")
-
-        if char.outfits:
-            click.echo(f"Outfits: {', '.join(o.name for o in char.outfits)}")
-
 
 @genshin_group.command("notes")
 @click.argument("uid", type=int, default=None, required=False)
