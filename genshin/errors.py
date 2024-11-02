@@ -329,7 +329,8 @@ def raise_for_retcode(data: dict[str, typing.Any]) -> typing.NoReturn:
 
 def check_for_geetest(data: dict[str, typing.Any]) -> None:
     """Check if geetest was triggered during the request and raise an error if so."""
-    if data["retcode"] in GEETEST_RETCODES:
+    retcode = data.get("retcode")
+    if retcode is not None and retcode in GEETEST_RETCODES:
         raise GeetestError(data)
 
     if not data.get("data"):  # if is an error

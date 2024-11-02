@@ -168,8 +168,11 @@ class BaseCookieManager(abc.ABC):
 
         errors.check_for_geetest(data)
 
-        if data["retcode"] == 0:
-            return data["data"]
+        retcode = data.get("retcode")
+        if retcode is None or retcode == 0:
+            if "data" in data:
+                return data["data"]
+            return data
 
         errors.raise_for_retcode(data)
 

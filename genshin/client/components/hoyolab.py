@@ -232,3 +232,11 @@ class HoyolabClient(base.BaseClient):
     async def check_in_community(self) -> None:
         """Check in to the hoyolab community and claim your daily 5 community exp."""
         raise RuntimeError("This API is deprecated.")
+
+    async def fetch_mi18n(self, filename: str, *, lang: typing.Optional[str] = None) -> typing.Mapping[str, str]:
+        """Fetch a mi18n file."""
+        data = await self.request(
+            routes.MI18N_URL.get_url() / f"{filename}/{filename}-{lang or self.lang}.json",
+            cache=client_cache.cache_key("mi18n", filename=filename, lang=lang or self.lang),
+        )
+        return data

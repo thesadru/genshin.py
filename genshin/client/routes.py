@@ -328,3 +328,5 @@ GET_FP_URL = InternationalRoute(
     overseas="https://sg-public-data-api.hoyoverse.com/device-fp/api/getFp",
     chinese="https://public-data-api.mihoyo.com/device-fp/api/getFp",
 )
+
+MI18N_URL = Route("https://fastcdn.hoyoverse.com/mi18n/bbs_oversea")
