@@ -97,7 +97,7 @@ class ZZZPropertyType(enum.IntEnum):
     AGENT_ANOMALY_MASTERY = 7
     AGENT_ANOMALY_PROFICIENCY = 8
     AGENT_PEN_RATIO = 9
-    AGENT_ENERGY_GEN = 10
+    AGENT_ENERGY_GEN = 11
     AGENT_PEN = 232
 
     # Agent DMG bonus
