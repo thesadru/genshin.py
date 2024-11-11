@@ -44,11 +44,6 @@ class ZZZSpecialty(enum.IntEnum):
     DEFENSE = 5
 
 
-SPECIAL_KIDS = {
-    1251,  # Qingyi
-}
-
-
 class ZZZBaseAgent(APIModel, Unique):
     """ZZZ base agent model."""
 
@@ -63,9 +58,7 @@ class ZZZBaseAgent(APIModel, Unique):
 
     @property
     def base_icon_url(self) -> str:
-        if self.id in SPECIAL_KIDS:
-            return "https://act-webstatic.hoyoverse.com/game_record/nap"
-        return "https://act-webstatic.hoyoverse.com/game_record/zzz"
+        return "https://act-webstatic.hoyoverse.com/game_record/zzzv2"
 
     @property
     def square_icon(self) -> str:
