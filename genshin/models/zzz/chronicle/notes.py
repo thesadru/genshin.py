@@ -66,8 +66,8 @@ class SurveyPoints(APIModel):
 class HollowZero(APIModel):
     """Hollow Zero in ZZZ sticky notes model."""
 
-    bounty_commission: BountyCommission
-    investigation_point: SurveyPoints = Aliased("survey_points")
+    bounty_commission: typing.Optional[BountyCommission] = None
+    investigation_point: typing.Optional[SurveyPoints] = Aliased("survey_points", default=None)
 
 
 class ZZZNotes(APIModel):
