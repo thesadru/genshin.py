@@ -46,7 +46,6 @@ class PartialCharacter(character.BaseCharacter):
     level: int
     friendship: int = Aliased("fetter")
     constellation: int = Aliased("actived_constellation_num")
-    weapon_type: int
 
 
 class CharacterWeapon(APIModel, Unique):
@@ -118,6 +117,7 @@ class Character(PartialCharacter):
     """Character with equipment."""
 
     weapon: CharacterWeapon
+    weapon_type: int
 
 
 class PropInfo(APIModel):

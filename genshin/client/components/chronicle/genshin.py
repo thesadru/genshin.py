@@ -26,7 +26,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         cache: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
-        """Get an arbitrary honkai object."""
+        """Get an arbitrary genshin object."""
         payload = dict(payload or {})
         original_payload = payload.copy()
 
@@ -66,7 +66,12 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> models.PartialGenshinUserStats:
         """Get partial genshin user without character equipment."""
-        data = await self._request_genshin_record("index", uid, lang=lang)
+        data = await self._request_genshin_record(
+            "index",
+            uid,
+            lang=lang,
+            payload={"avatar_list_type": 0},  # Set to 1 for characters with equipment
+        )
         return models.PartialGenshinUserStats(**data)
 
     async def get_genshin_characters(
