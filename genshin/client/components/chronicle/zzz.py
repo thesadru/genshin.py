@@ -1,5 +1,6 @@
 """StarRail battle chronicle component."""
 
+import asyncio
 import typing
 
 from genshin import errors, types, utility
@@ -176,13 +177,16 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         lang: typing.Optional[str] = None,
     ) -> typing.Union[models.ZZZFullAgent, typing.Sequence[models.ZZZFullAgent]]:
         """Get a ZZZ character's detailed info."""
-        if isinstance(character_id, list):
-            character_id = tuple(character_id)
+        if isinstance(character_id, typing.Sequence):
+            tasks = [
+                self._request_zzz_record("avatar/info", uid, lang=lang, payload={"id_list[]": character_id_})
+                for character_id_ in character_id
+            ]
+            results = await asyncio.gather(*tasks)
+            return [models.ZZZFullAgent(**data["avatar_list"][0]) for data in results]
 
         data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"id_list[]": character_id})
-        if isinstance(character_id, int):
-            return models.ZZZFullAgent(**data["avatar_list"][0])
-        return [models.ZZZFullAgent(**item) for item in data["avatar_list"]]
+        return models.ZZZFullAgent(**data["avatar_list"][0])
 
     async def get_shiyu_defense(
         self, uid: typing.Optional[int] = None, *, previous: bool = False, lang: typing.Optional[str] = None
