@@ -128,7 +128,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get genshin user."""
         data, character_data = await asyncio.gather(
             self._request_genshin_record("index", uid, lang=lang),
-            self._request_genshin_record("character", uid, lang=lang, method="POST"),
+            self._request_genshin_record("character/list", uid, lang=lang, method="POST"),
         )
         data = {**data, **character_data}
 

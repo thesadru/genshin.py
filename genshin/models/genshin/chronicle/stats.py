@@ -176,7 +176,7 @@ class PartialGenshinUserStats(APIModel):
 class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
 
-    characters: typing.Sequence[characters_module.Character] = Aliased("avatars")
+    characters: typing.Sequence[characters_module.Character] = Aliased("list")
 
 
 class FullGenshinUserStats(GenshinUserStats):
