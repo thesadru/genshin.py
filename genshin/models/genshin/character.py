@@ -15,7 +15,8 @@ __all__ = ["BaseCharacter"]
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_BASE = "https://enka.network/ui/"
+ENKA_ICON_BASE = "https://enka.network/ui/"
+AMBR_ICON_BASE = "https://gi.yatta.moe/assets/UI/"
 
 
 def _parse_icon(icon: typing.Union[str, int]) -> str:
@@ -52,12 +53,12 @@ def _create_icon(icon: str, specifier: str) -> str:
         return icon  # no point in trying to parse invalid urls
 
     icon_name = _parse_icon(icon)
-    return ICON_BASE + f"{specifier.format(icon_name)}.png"
+    return ENKA_ICON_BASE + f"{specifier.format(icon_name)}.png"
 
 
 def _create_icon_from_id(character_id: int, specifier: str) -> str:
     icon_name = _get_icon_name_from_id(character_id)
-    return ICON_BASE + f"{specifier.format(icon_name)}.png"
+    return AMBR_ICON_BASE + f"{specifier.format(icon_name)}.png"
 
 
 def _get_db_char(
