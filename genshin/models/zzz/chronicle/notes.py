@@ -85,9 +85,11 @@ class ZZZNotes(APIModel):
 
     @pydantic.model_validator(mode="before")
     def __unnest_value(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
-        values["video_store_state"] = values["vhs_sale"]["sale_state"]
-        values["hollow_zero"] = {
-            "bounty_commission": values["bounty_commission"],
-            "survey_points": values["survey_points"],
-        }
+        if "video_store_state" not in values:
+            values["video_store_state"] = values["vhs_sale"]["sale_state"]
+        if "hollow_zero" not in values:
+            values["hollow_zero"] = {
+                "bounty_commission": values["bounty_commission"],
+                "survey_points": values["survey_points"],
+            }
         return values
