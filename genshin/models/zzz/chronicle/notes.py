@@ -38,7 +38,7 @@ class BatteryCharge(APIModel):
 
     @pydantic.model_validator(mode="before")
     def __unnest_progress(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
-        return {**values, **values.pop("progress")}
+        return {**values, **values.pop("progress", {})}
 
 
 class ZZZEngagement(APIModel):
