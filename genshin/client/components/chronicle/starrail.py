@@ -57,13 +57,34 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
             cache=cache_key,
         )
 
+    @typing.overload
+    async def get_starrail_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...
+    ) -> models.StarRailNote:
+        ...
+    @typing.overload
+    async def get_starrail_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...
+    ) -> typing.Mapping[str, typing.Any]:
+        ...
     async def get_starrail_notes(
         self,
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
         autoauth: bool = True,
-    ) -> models.StarRailNote:
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.StarRailNote, typing.Mapping[str, typing.Any]]:
         """Get starrail real-time notes."""
         try:
             data = await self._request_starrail_record("note", uid, lang=lang)
@@ -77,6 +98,8 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
             await self.update_settings(3, True, game=types.Game.STARRAIL)
             data = await self._request_starrail_record("note", uid, lang=lang)
 
+        if return_raw_data:
+            return data
         return models.StarRailNote(**data)
 
     async def get_starrail_user(

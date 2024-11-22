@@ -71,13 +71,32 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             is_nap_ledger=is_nap_ledger,
         )
 
+    @typing.overload
+    async def get_zzz_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -> models.ZZZNotes: ...
+    @typing.overload
+    async def get_zzz_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_zzz_notes(
         self,
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
         autoauth: bool = True,
-    ) -> models.ZZZNotes:
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.ZZZNotes, typing.Mapping[str, typing.Any]]:
         """Get ZZZ sticky notes (real-time notes)."""
         try:
             data = await self._request_zzz_record("note", uid, lang=lang)
@@ -91,6 +110,8 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             await self.update_settings(3, True, game=types.Game.ZZZ)
             data = await self._request_zzz_record("note", uid, lang=lang)
 
+        if return_raw_data:
+            return data
         return models.ZZZNotes(**data)
 
     async def get_zzz_diary(

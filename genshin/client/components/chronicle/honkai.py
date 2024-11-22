@@ -130,14 +130,33 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_honkai_record("battleFieldReport", uid, lang=lang)
         return [models.MemorialArena(**x) for x in data["reports"]]
 
+    @typing.overload
+    async def get_honkai_notes(
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...
+    ) -> models.HonkaiNotes: ...
+    @typing.overload
+    async def get_honkai_notes(
+        self,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_honkai_notes(
         self,
         uid: int,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.HonkaiNotes:
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.HonkaiNotes, typing.Mapping[str, typing.Any]]:
         """Get honkai memorial arena."""
         data = await self._request_honkai_record("note", uid, lang=lang)
+        if return_raw_data:
+            return data
         return models.HonkaiNotes(**data)
 
     async def get_full_honkai_user(

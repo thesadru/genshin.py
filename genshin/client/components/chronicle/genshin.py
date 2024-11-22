@@ -169,13 +169,32 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.ImgTheater(**data)
 
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -> models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_notes(
         self,
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
         autoauth: bool = True,
-    ) -> models.Notes:
+        return_raw_data: bool = False,
+    ) -> typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
         """Get genshin real-time notes."""
         try:
             data = await self._request_genshin_record("dailyNote", uid, lang=lang)
@@ -189,6 +208,8 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             await self.update_settings(3, True, game=types.Game.GENSHIN)
             data = await self._request_genshin_record("dailyNote", uid, lang=lang)
 
+        if return_raw_data:
+            return data
         return models.Notes(**data)
 
     async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
