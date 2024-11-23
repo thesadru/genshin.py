@@ -48,6 +48,7 @@ class Stats(APIModel):
     remarkable_chests: int = Aliased("magic_chest_number")
     unlocked_waypoints: int = Aliased("way_point_number")
     unlocked_domains: int = Aliased("domain_number")
+    max_friendship_characters: int = Aliased("full_fetter_avatar_num")
 
 
 class Offering(APIModel):
