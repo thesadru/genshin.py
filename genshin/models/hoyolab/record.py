@@ -62,6 +62,7 @@ class UserInfo(APIModel):
     server: str = Aliased("region")
     level: int
     icon: str = Aliased("AvatarUrl")
+    in_game_avatar: str = Aliased("game_head_icon")
 
 
 class RecordCardData(APIModel):
