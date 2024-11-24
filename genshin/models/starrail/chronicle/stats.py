@@ -33,6 +33,7 @@ class PartialStarRailUserStats(APIModel):
     in_game_avatar: str = Aliased("cur_head_icon_url")
     phone_background: str = Aliased("phone_background_image_url")
 
+
 class StarRailUserInfo(APIModel):
     """User info."""
 

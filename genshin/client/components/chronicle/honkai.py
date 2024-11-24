@@ -132,19 +132,11 @@ class HonkaiBattleChronicleClient(base.BaseBattleChronicleClient):
 
     @typing.overload
     async def get_honkai_notes(
-        self,
-        uid: int,
-        *,
-        lang: typing.Optional[str] = ...,
-        return_raw_data: typing.Literal[False] = ...
+        self, uid: int, *, lang: typing.Optional[str] = ..., return_raw_data: typing.Literal[False] = ...
     ) -> models.HonkaiNotes: ...
     @typing.overload
     async def get_honkai_notes(
-        self,
-        uid: int,
-        *,
-        lang: typing.Optional[str] = ...,
-        return_raw_data: typing.Literal[True] = ...
+        self, uid: int, *, lang: typing.Optional[str] = ..., return_raw_data: typing.Literal[True] = ...
     ) -> typing.Mapping[str, typing.Any]: ...
     async def get_honkai_notes(
         self,

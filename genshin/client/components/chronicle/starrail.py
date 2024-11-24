@@ -64,9 +64,8 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = ...,
         autoauth: bool = ...,
-        return_raw_data: typing.Literal[False] = ...
-    ) -> models.StarRailNote:
-        ...
+        return_raw_data: typing.Literal[False] = ...,
+    ) -> models.StarRailNote: ...
     @typing.overload
     async def get_starrail_notes(
         self,
@@ -74,9 +73,8 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         *,
         lang: typing.Optional[str] = ...,
         autoauth: bool = ...,
-        return_raw_data: typing.Literal[True] = ...
-    ) -> typing.Mapping[str, typing.Any]:
-        ...
+        return_raw_data: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_starrail_notes(
         self,
         uid: typing.Optional[int] = None,
