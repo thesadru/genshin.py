@@ -33,7 +33,7 @@ class ZZZStats(APIModel):
     shiyu_defense_frontiers: int = Aliased("cur_period_zone_layer_count")
     bangboo_obtained: int = Aliased("buddy_num")
     achievement_count: int
-    hia_coin: HIACoin
+    hia_coin: HIACoin = Aliased("commemorative_coins_list")
 
     @pydantic.field_validator("hia_coin", mode="before")
     def __unnest_hia_coin(cls, v: typing.List[typing.Dict[str, typing.Any]]) -> typing.Dict[str, typing.Any]:
