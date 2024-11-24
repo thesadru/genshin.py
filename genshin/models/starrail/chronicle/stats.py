@@ -22,6 +22,7 @@ class StarRailStats(APIModel):
     achievement_num: int
     chest_num: int
     abyss_process: str
+    dreamscape_pass_sticker: int = Aliased("dream_paster_num")
 
 
 class PartialStarRailUserStats(APIModel):
