@@ -56,3 +56,4 @@ class ZZZUserStats(APIModel):
     stats: ZZZStats
     agents: typing.Sequence[ZZZPartialAgent] = Aliased("avatar_list")
     bangboos: typing.Sequence[ZZZBaseBangboo] = Aliased("buddy_list")
+    in_game_avatar: str = Aliased("cur_head_icon_url")
