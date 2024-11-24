@@ -334,6 +334,7 @@ MI18N_URL = GameRoute(
         genshin="https://fastcdn.hoyoverse.com/mi18n/bbs_oversea",
         hkrpg="https://webstatic.hoyoverse.com/admin/mi18n/bbs_oversea",
         nap="https://fastcdn.hoyoverse.com/mi18n/nap_global",
+        honkai="https://fastcdn.hoyoverse.com/mi18n/bbs_oversea",
     ),
     chinese=dict(),
 )
