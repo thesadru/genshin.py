@@ -140,7 +140,7 @@ COMMUNITY_URL = InternationalRoute(
 )
 RECORD_URL = GameRoute(
     overseas=dict(
-        genshin="https://bbs-api-os.hoyolab.com/game_record/genshin/api",
+        genshin="https://sg-public-api.hoyolab.com/event/game_record/genshin/api",
         hkrpg="https://bbs-api-os.hoyolab.com/game_record/hkrpg/api",
         honkai3rd="https://bbs-api-os.hoyolab.com/game_record/honkai3rd/api",
         nap="https://sg-act-nap-api.hoyolab.com/event/game_record_zzz/api/zzz",
