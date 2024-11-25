@@ -308,6 +308,11 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             ),
         )
 
+    async def get_genshin_event_calendar(self, uid: int, *, lang: typing.Optional[str] = None) -> models.GenshinEventCalendar:
+        """Get Genshin event calendar."""
+        data = await self._request_genshin_record("act_calendar", uid, lang=lang, method="POST")
+        return models.GenshinEventCalendar(**data)
+
     get_spiral_abyss = get_genshin_spiral_abyss
     get_notes = get_genshin_notes
     get_activities = get_genshin_activities
