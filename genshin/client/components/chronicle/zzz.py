@@ -4,6 +4,7 @@ import asyncio
 import typing
 
 from genshin import errors, types, utility
+from genshin.client import routes
 from genshin.models import zzz as models
 
 from . import base
@@ -68,7 +69,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             params=params,
             data=data,
             cache=cache_key,
-            is_nap_ledger=is_nap_ledger,
+            custom_route=routes.NAP_LEDGER_URL,
         )
 
     @typing.overload

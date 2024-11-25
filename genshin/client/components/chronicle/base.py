@@ -44,15 +44,14 @@ class BaseBattleChronicleClient(base.BaseClient):
         lang: typing.Optional[str] = None,
         region: typing.Optional[types.Region] = None,
         game: typing.Optional[types.Game] = None,
-        is_card_wapi: bool = False,
-        is_nap_ledger: bool = False,
+        custom_route: typing.Optional[typing.Union[routes.Route, routes.InternationalRoute]] = None,
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
-        if is_card_wapi:
+        if isinstance(custom_route, routes.InternationalRoute):
             base_url = routes.CARD_WAPI_URL.get_url(region or self.region)
-        elif is_nap_ledger:
-            base_url = routes.NAP_LEDGER_URL.get_url()
+        elif isinstance(custom_route, routes.Route):
+            base_url = custom_route.get_url()
         else:
             game = game or self.default_game
             if game is None:
@@ -81,7 +80,7 @@ class BaseBattleChronicleClient(base.BaseClient):
         cache_key = cache.cache_key("records", hoyolab_id=hoyolab_id, lang=lang or self.lang)
         if not (data := await self.cache.get(cache_key)):
             data = await self.request_game_record(
-                "getGameRecordCard", lang=lang, params=dict(uid=hoyolab_id), is_card_wapi=True
+                "getGameRecordCard", lang=lang, params=dict(uid=hoyolab_id), custom_route=routes.CARD_WAPI_URL
             )
 
             if data["list"]:
@@ -129,7 +128,7 @@ class BaseBattleChronicleClient(base.BaseClient):
             "changeDataSwitch",
             method="POST",
             data=dict(switch_id=int(setting), is_public=on, game_id=game_id),
-            is_card_wapi=True,
+            custom_route=routes.CARD_WAPI_URL,
         )
 
     @deprecation.deprecated("update_settings")
