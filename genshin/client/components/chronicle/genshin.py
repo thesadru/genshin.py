@@ -308,7 +308,9 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             ),
         )
 
-    async def get_genshin_event_calendar(self, uid: int, *, lang: typing.Optional[str] = None) -> models.GenshinEventCalendar:
+    async def get_genshin_event_calendar(
+        self, uid: int, *, lang: typing.Optional[str] = None
+    ) -> models.GenshinEventCalendar:
         """Get Genshin event calendar."""
         data = await self._request_genshin_record("act_calendar", uid, lang=lang, method="POST")
         return models.GenshinEventCalendar(**data)
