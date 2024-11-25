@@ -1,6 +1,6 @@
 """Starrail chronicle challenge."""
 
-from typing import Any, Optional
+import typing
 
 import pydantic
 
@@ -66,23 +66,25 @@ class StarRailChallenge(APIModel):
 
     name: str
     season: int = Aliased("schedule_id")
-    begin_time: PartialTime
-    end_time: PartialTime
+    begin_time: typing.Optional[PartialTime]
+    end_time: typing.Optional[PartialTime]
 
     total_stars: int = Aliased("star_num")
     max_floor: str
     total_battles: int = Aliased("battle_num")
     has_data: bool
 
-    floors: list[StarRailFloor] = Aliased("all_floor_detail")
-    seasons: list[StarRailChallengeSeason] = Aliased("groups")
+    floors: typing.Sequence[StarRailFloor] = Aliased("all_floor_detail")
+    seasons: typing.Sequence[StarRailChallengeSeason] = Aliased("groups")
 
     @pydantic.model_validator(mode="before")
-    def __extract_name(cls, values: dict[str, Any]) -> dict[str, Any]:
+    def __extract_name(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if "groups" in values and isinstance(values["groups"], list):
-            seasons: list[dict[str, Any]] = values["groups"]
+            seasons: list[dict[str, typing.Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
+            else:
+                values["name"] = ""
 
         return values
 
@@ -99,7 +101,7 @@ class ChallengeBuff(APIModel):
 class FictionFloorNode(FloorNode):
     """Node for a Pure Fiction floor."""
 
-    buff: Optional[ChallengeBuff]
+    buff: typing.Optional[ChallengeBuff]
     score: int
 
 
@@ -134,9 +136,9 @@ class StarRailPureFiction(APIModel):
     max_floor_id: int
 
     @pydantic.model_validator(mode="before")
-    def __unnest_groups(cls, values: dict[str, Any]) -> dict[str, Any]:
+    def __unnest_groups(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if "groups" in values and isinstance(values["groups"], list):
-            seasons: list[dict[str, Any]] = values["groups"]
+            seasons: list[dict[str, typing.Any]] = values["groups"]
             if len(seasons) > 0:
                 values["name"] = seasons[0]["name_mi18n"]
                 values["season_id"] = seasons[0]["schedule_id"]
@@ -149,8 +151,8 @@ class StarRailPureFiction(APIModel):
 class APCShadowFloorNode(FloorNode):
     """Node for a apocalyptic shadow floor."""
 
-    challenge_time: Optional[PartialTime]  # type: ignore[assignment]
-    buff: Optional[ChallengeBuff]
+    challenge_time: typing.Optional[PartialTime]
+    buff: typing.Optional[ChallengeBuff]
     score: int
     boss_defeated: bool
 
