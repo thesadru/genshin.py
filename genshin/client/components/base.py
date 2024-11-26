@@ -167,6 +167,9 @@ class BaseClient(abc.ABC):
     def lang(self, lang: str) -> None:
         if lang not in constants.LANGS:
             raise ValueError(f"{lang} is not a valid language, must be one of: " + ", ".join(constants.LANGS))
+        if lang == "tr-tr" and self.default_game is types.Game.STARRAIL:
+            warnings.warn("Starrail does not support Turkish language, falling back to English.")
+            self.lang = "en-us"
 
         self._lang = lang
 
