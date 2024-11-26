@@ -143,7 +143,7 @@ class Event(APIModel):
     exploration_detail: typing.Optional[EventExplorationDetail] = Aliased("explore_detail", default=None)
     double_reward_detail: typing.Optional[DoubleRewardDetail] = Aliased("double_detail", default=None)
     abyss_detail: typing.Optional[AbyssDetail] = Aliased("tower_detail", default=None)
-    theater_detail: typing.Optional[TheaterDetail] = Aliased("theater_detail", default=None)
+    theater_detail: typing.Optional[TheaterDetail] = Aliased("role_combat_detail", default=None)
 
     @pydantic.field_validator("description", mode="after")
     def __format_description(cls, v: str) -> str:
