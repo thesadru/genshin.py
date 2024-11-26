@@ -69,7 +69,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
             params=params,
             data=data,
             cache=cache_key,
-            custom_route=routes.NAP_LEDGER_URL,
+            custom_route=routes.NAP_LEDGER_URL if is_nap_ledger else None,
         )
 
     @typing.overload
