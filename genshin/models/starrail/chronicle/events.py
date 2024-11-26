@@ -199,6 +199,10 @@ class HSREvent(HSRBaseEvent):
         except ValueError:
             return v
 
+    @pydantic.field_validator("description", mode="after")
+    def __format_description(cls, v: str) -> str:
+        return v.replace("\\n", "\n")
+
 
 class HSRChallenge(HSRBaseEvent):
     """HSR challenge model."""
