@@ -156,3 +156,4 @@ class GenshinEventCalendar(APIModel):
     character_banners: typing.Sequence[Banner] = Aliased("avatar_card_pool_list")
     weapon_banners: typing.Sequence[Banner] = Aliased("weapon_card_pool_list")
     events: typing.Sequence[Event] = Aliased("act_list")
+    challenges: typing.Sequence[Event] = Aliased("fixed_act_list")
