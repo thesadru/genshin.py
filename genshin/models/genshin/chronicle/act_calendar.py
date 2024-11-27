@@ -132,8 +132,8 @@ class Event(APIModel):
 
     start_timestamp: int
     end_timestamp: int
-    start_time: DateTime
-    end_time: DateTime
+    start_time: typing.Optional[DateTime] = None
+    end_time: typing.Optional[DateTime] = None
 
     status: int
     countdown_seconds: int
