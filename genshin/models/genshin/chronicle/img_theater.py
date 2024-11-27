@@ -142,7 +142,7 @@ class ImgTheaterData(APIModel):
     schedule: TheaterSchedule
     has_data: bool
     has_detail_data: bool
-    battle_stats: TheaterBattleStats = Aliased("fight_statisic", default=None)
+    battle_stats: typing.Optional[TheaterBattleStats] = Aliased("fight_statisic", default=None)
 
     @pydantic.model_validator(mode="before")
     def __unnest_detail(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
