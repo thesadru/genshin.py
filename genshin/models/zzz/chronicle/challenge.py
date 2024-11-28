@@ -71,7 +71,7 @@ class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
     characters: list[ShiyuDefenseCharacter] = Aliased("avatars")
-    bangboo: ShiyuDefenseBangboo = Aliased("buddy")
+    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy")
     recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
     enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
 
