@@ -4,6 +4,8 @@ import asyncio
 import typing
 import warnings
 
+import yarl
+
 from genshin import types, utility
 from genshin.client import cache as client_cache
 from genshin.client import routes
@@ -235,12 +237,12 @@ class HoyolabClient(base.BaseClient):
 
     @base.region_specific(types.Region.OVERSEAS)
     async def fetch_mi18n(
-        self, filename: str, game: types.Game, *, lang: typing.Optional[str] = None
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
     ) -> typing.Mapping[str, str]:
         """Fetch a mi18n file."""
         return await self.request(
-            routes.MI18N_URL.get_url(types.Region.OVERSEAS, game) / f"{filename}/{filename}-{lang or self.lang}.json",
-            cache=client_cache.cache_key("mi18n", filename=filename, game=game, lang=lang or self.lang),
+            yarl.URL(url) / f"{filename}/{filename}-{lang or self.lang}.json",
+            cache=client_cache.cache_key("mi18n", filename=filename, url=url, lang=lang or self.lang),
         )
 
     @base.region_specific(types.Region.OVERSEAS)

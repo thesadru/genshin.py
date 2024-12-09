@@ -329,14 +329,4 @@ GET_FP_URL = InternationalRoute(
     chinese="https://public-data-api.mihoyo.com/device-fp/api/getFp",
 )
 
-MI18N_URL = GameRoute(
-    overseas=dict(
-        genshin="https://fastcdn.hoyoverse.com/mi18n/bbs_oversea",
-        hkrpg="https://webstatic.hoyoverse.com/admin/mi18n/bbs_oversea",
-        nap="https://fastcdn.hoyoverse.com/mi18n/nap_global",
-        honkai3rd="https://fastcdn.hoyoverse.com/mi18n/bbs_oversea",
-    ),
-    chinese=dict(),
-)
-
 MIMO_URL = Route("https://sg-public-api.hoyolab.com/event/e2023mimotravel")
