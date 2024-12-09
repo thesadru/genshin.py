@@ -338,3 +338,5 @@ MI18N_URL = GameRoute(
     ),
     chinese=dict(),
 )
+
+MIMO_URL = Route("https://sg-public-api.hoyolab.com/event/e2023mimotravel")

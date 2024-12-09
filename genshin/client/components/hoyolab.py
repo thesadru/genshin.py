@@ -238,8 +238,74 @@ class HoyolabClient(base.BaseClient):
         self, filename: str, game: types.Game, *, lang: typing.Optional[str] = None
     ) -> typing.Mapping[str, str]:
         """Fetch a mi18n file."""
-        data = await self.request(
+        return await self.request(
             routes.MI18N_URL.get_url(types.Region.OVERSEAS, game) / f"{filename}/{filename}-{lang or self.lang}.json",
             cache=client_cache.cache_key("mi18n", filename=filename, game=game, lang=lang or self.lang),
         )
-        return data
+
+    def _get_mimo_data(
+        self, game: typing.Optional[typing.Union[types.Game, typing.Literal["hoyolab"]]] = None
+    ) -> typing.Tuple[int, int]:
+        """Get the game and version IDs for Mimo tasks."""
+        game = game or self.game
+        if game is None:
+            raise ValueError("No game specified.")
+
+        if game == "hoyolab":
+            game_id = 5
+            version_id = 23
+        elif game is types.Game.ZZZ:
+            game_id = 8
+            version_id = 13
+        elif game is types.Game.STARRAIL:
+            game_id = 6
+            version_id = 27
+        else:
+            raise ValueError(f"{game!r} is not supported.")
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game: typing.Optional[typing.Union[types.Game, typing.Literal["hoyolab"]]] = None,
+        lang: typing.Optional[str] = None,
+    ) -> typing.Sequence[models.MimoTask]:
+        """Get a list of Traveling Mimo missions (tasks)."""
+        game_id, version_id = self._get_mimo_data(game)
+        data = await self.request(
+            routes.MIMO_URL.get_url() / "task-list",
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data["task_list"]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game: typing.Optional[typing.Union[types.Game, typing.Literal["hoyolab"]]] = None,
+        lang: typing.Optional[str] = None,
+    ) -> None:
+        """Claim a Traveling Mimo mission (task) reward."""
+        game_id, version_id = self._get_mimo_data(game)
+        await self.request(
+            routes.MIMO_URL.get_url() / "receive-point",
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game: typing.Optional[typing.Union[types.Game, typing.Literal["hoyolab"]]] = None,
+        lang: typing.Optional[str] = None,
+    ) -> None:
+        """Finish a Traveling Mimo mission (task) reward."""
+        game_id, version_id = self._get_mimo_data(game)
+        await self.request(
+            routes.MIMO_URL.get_url() / "finish-task",
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method="POST",
+        )
