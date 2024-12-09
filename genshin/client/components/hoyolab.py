@@ -349,6 +349,7 @@ class HoyolabClient(base.BaseClient):
         )
         return [models.MimoShopItem(**i) for i in data["exchange_award_list"]]
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def buy_mimo_shop_item(
         self,
         item_id: int,
@@ -366,3 +367,17 @@ class HoyolabClient(base.BaseClient):
             method="POST",
         )
         return data["exchange_code"]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal["hoyolab"], types.Game]] = None,
+    ) -> int:
+        """Get the current Traveling Mimo point count."""
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f"Game {game!r} not found in the list of Traveling Mimo games.")
+        return mimo_game.point
