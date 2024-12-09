@@ -251,7 +251,6 @@ class HoyolabClient(base.BaseClient):
         data = await self.request(
             routes.MIMO_URL.get_url() / "index",
             params=dict(lang=lang or self.lang),
-            cache=client_cache.cache_key("mimo_games", lang=lang or self.lang),
         )
         return [models.MimoGame(**i) for i in data["list"]]
 
