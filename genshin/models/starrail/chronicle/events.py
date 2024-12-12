@@ -199,6 +199,10 @@ class HSREvent(HSRBaseEvent):
         except ValueError:
             return v
 
+    @pydantic.field_validator("name", mode="after")
+    def __format_name(cls, v: str) -> str:
+        return v.replace("\\n", " ")
+
     @pydantic.field_validator("description", mode="after")
     def __format_description(cls, v: str) -> str:
         return v.replace("\\n", "\n")
