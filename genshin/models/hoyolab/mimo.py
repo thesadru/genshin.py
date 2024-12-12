@@ -34,6 +34,7 @@ class MimoShopItemStatus(enum.IntEnum):
     EXCHANGEABLE = 1
     NOT_EXCHANGEABLE = 2
     LIMIT_REACHED = 3
+    SOLD_OUT = 4
 
 
 class MimoGame(APIModel):
