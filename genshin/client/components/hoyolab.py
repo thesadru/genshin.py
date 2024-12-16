@@ -278,7 +278,11 @@ class HoyolabClient(base.BaseClient):
                 if self.default_game is None:
                     raise RuntimeError("No default game set.")
                 game = self.default_game
+
+            if game not in {types.Game.ZZZ, types.Game.STARRAIL, "hoyolab"}:
+                raise ValueError(f"{game!r} does not support Traveling Mimo.")
             game_id, version_id = await self._get_mimo_game_data(game)
+
         return game_id, version_id
 
     @base.region_specific(types.Region.OVERSEAS)
