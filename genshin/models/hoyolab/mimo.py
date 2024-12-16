@@ -33,10 +33,21 @@ class MimoTaskType(enum.IntEnum):
     """Mimo task type."""
 
     FINISHABLE = 1
-    COMMUNITY = 3
-    DAILY_LOGIN = 12
-    CONSECUTIVE_LOGIN = 13
-    IN_GAME = 16
+    """e.g. Sunday Advanced Tutorial: What is the core Charge mechanic?"""
+    VISIT = 2
+    """e.g. Visit the 【Honkai: Star Rail】 Interest Group on the day"""
+    COMMENT = 3
+    """e.g. Participate in this week's creative interactions and leave your creations in the comments"""
+    HSR_GAME = 8
+    """e.g. Complete Divergent Universe or Simulated Universe 1 time"""
+    TRAILER = 10
+    """e.g. Myriad Celestia Trailer — "After the Sunset" | Honkai: Star Rail"""
+    ZZZ_DAILY_LOGIN = 12
+    """e.g. Log into Zenless Zone Zero today"""
+    ZZZ_CONSECUTIVE_LOGIN = 13
+    """e.g. Log into the game for 7 days"""
+    ZZZ_GAME = 16
+    """e.g. Reach 400 Engagement today"""
 
 
 class MimoShopItemStatus(enum.IntEnum):
