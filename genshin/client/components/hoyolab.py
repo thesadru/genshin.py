@@ -1,7 +1,9 @@
 """Hoyolab component."""
 
 import asyncio
+import json
 import typing
+import uuid
 import warnings
 
 import yarl
@@ -415,3 +417,27 @@ class HoyolabClient(base.BaseClient):
             method="POST",
         )
         return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -> int:
+        """Reply to a community post."""
+        data = await self.request_bbs(
+            "community/post/wapi/releaseReply",
+            data=dict(
+                post_id=str(post_id),
+                content=f"<p>{content}</p>",
+                image_list=[],
+                reply_bubble_id="",
+                structured_content=json.dumps([{"insert": f"{content}\n"}]),
+            ),
+            method="POST",
+            headers={"x-rpc-device_id": str(uuid.uuid4())},
+        )
+        return int(data["reply_id"])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -> None:
+        """Delete a reply."""
+        await self.request_bbs(
+            "community/post/wapi/deleteReply",
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method="POST",
+        )
