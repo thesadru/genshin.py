@@ -380,3 +380,38 @@ class HoyolabClient(base.BaseClient):
         if mimo_game is None:
             raise ValueError(f"Game {game!r} not found in the list of Traveling Mimo games.")
         return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal["hoyolab"], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.MimoLotteryInfo:
+        """Get Traveling Mimo lottery info."""
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self.request(
+            routes.MIMO_URL.get_url() / "lottery-info",
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal["hoyolab"], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -> models.MimoLotteryResult:
+        """Draw a Traveling Mimo lottery."""
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self.request(
+            routes.MIMO_URL.get_url() / "lottery",
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method="POST",
+        )
+        return models.MimoLotteryResult(**data)
