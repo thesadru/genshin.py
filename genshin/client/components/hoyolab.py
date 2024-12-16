@@ -445,3 +445,11 @@ class HoyolabClient(base.BaseClient):
             data=dict(reply_id=reply_id, post_id=post_id),
             method="POST",
         )
+
+    async def get_replies(self, *, size: int = 15) -> typing.Sequence[typing.Tuple[int, str]]:
+        """Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content."""
+        data = await self.request_bbs(
+            "community/post/wapi/userReply",
+            params=dict(size=size),
+        )
+        return [(int(i["reply"]["reply_id"]), i["reply"]["content"]) for i in data["list"]]
