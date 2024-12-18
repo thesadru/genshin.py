@@ -453,3 +453,18 @@ class HoyolabClient(base.BaseClient):
             params=dict(size=size),
         )
         return [models.Reply(**i["reply"]) for i in data["list"]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -> None:
+        await self.request_bbs(
+            "community/topic/wapi/join",
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method="POST",
+        )
+
+    async def join_topic(self, topic_id: int) -> None:
+        """Join a topic."""
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -> None:
+        """Leave a topic."""
+        await self._request_join(topic_id, is_cancel=True)
