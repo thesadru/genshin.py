@@ -49,10 +49,21 @@ class ZZZEngagement(APIModel):
 
 
 class BountyCommission(APIModel):
-    """ZZZ sticky notes, Hollow Zero bounty commission model."""
+    """Bounty commission progress model."""
 
-    num: int
+    cur_completed: int = Aliased("num")
     total: int
+    refresh_time: datetime.timedelta
+
+    @property
+    def completed(self) -> bool:
+        """Whether the bounty commissions are completed."""
+        return self.cur_completed == self.total
+
+    @property
+    def reset_datetime(self) -> datetime.datetime:
+        """The datetime when the bounty commission will be reset."""
+        return datetime.datetime.now().astimezone() + self.refresh_time
 
 
 class SurveyPoints(APIModel):
@@ -69,22 +80,24 @@ class HollowZero(APIModel):
     bounty_commission: typing.Optional[BountyCommission] = None
     investigation_point: typing.Optional[SurveyPoints] = Aliased("survey_points", default=None)
 
+
 class WeeklyTask(APIModel):
     """ZZZ sticky notes, Weekly task model."""
 
     cur_point: int
     max_point: int
-    seconds_till_reset: int = Aliased("refresh_time")
+    refresh_time: datetime.timedelta
 
     @property
-    def is_full_completed(self) -> bool:
-        """Check if the tasks is full completed."""
+    def completed(self) -> bool:
+        """Whether the weekly tasks is full completed."""
         return self.cur_point >= self.max_point
 
     @property
     def reset_datetime(self) -> datetime.datetime:
-        """Get the datetime when the tasks will be reset."""
-        return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_reset)
+        """The datetime when the weekly tasks will be reset."""
+        return datetime.datetime.now().astimezone() + self.refresh_time
+
 
 class ZZZNotes(APIModel):
     """Zenless Zone Zero sticky notes model."""
