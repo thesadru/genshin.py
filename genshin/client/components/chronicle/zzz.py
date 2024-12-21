@@ -226,3 +226,10 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         payload = {"schedule_type": 2 if previous else 1}
         data = await self._request_zzz_record("mem_detail", uid, lang=lang, payload=payload, is_special_payload=True)
         return models.DeadlyAssault(**data)
+
+    async def get_lost_void_summary(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> models.LostVoidSummary:
+        """Get ZZZ Lost Void summary."""
+        data = await self._request_zzz_record("abysss2_abstract", uid, lang=lang, is_special_payload=True)
+        return models.LostVoidSummary(**data)
