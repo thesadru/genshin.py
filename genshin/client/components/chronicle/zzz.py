@@ -25,6 +25,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
         cache: bool = False,
         is_nap_ledger: bool = False,
+        is_special_payload: bool = False,
     ) -> typing.Mapping[str, typing.Any]:
         """Get an arbitrary ZZZ object."""
         payload = dict(payload or {})
@@ -32,7 +33,7 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
 
         uid = uid or await self._get_uid(types.Game.ZZZ)
 
-        if is_nap_ledger:
+        if is_nap_ledger or is_special_payload:
             payload = {
                 "uid": uid,
                 "region": utility.recognize_zzz_server(uid),
@@ -217,3 +218,11 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         payload = {"schedule_type": 2 if previous else 1, "need_all": "true"}
         data = await self._request_zzz_record("challenge", uid, lang=lang, payload=payload)
         return models.ShiyuDefense(**data)
+
+    async def get_deadly_assault(
+        self, uid: typing.Optional[int] = None, *, previous: bool = False, lang: typing.Optional[str] = None
+    ) -> models.DeadlyAssault:
+        """Get ZZZ Shiyu defense stats."""
+        payload = {"schedule_type": 2 if previous else 1}
+        data = await self._request_zzz_record("mem_detail", uid, lang=lang, payload=payload, is_special_payload=True)
+        return models.DeadlyAssault(**data)
