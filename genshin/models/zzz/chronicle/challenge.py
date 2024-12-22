@@ -204,6 +204,7 @@ class DeadlyAssault(APIModel):
     has_data: bool
     total_score: int
     total_star: int
+    rank_percent: str
 
     nickname: str = Aliased("nick_name")
     player_avatar: str = Aliased("avatar_icon")
@@ -213,3 +214,7 @@ class DeadlyAssault(APIModel):
         if value:
             return datetime.datetime(**value)
         return None
+
+    @pydantic.field_validator("rank_percent", mode="before")
+    def __parse_rank_percent(cls, value: int) -> str:
+        return f"{value/100}%"
