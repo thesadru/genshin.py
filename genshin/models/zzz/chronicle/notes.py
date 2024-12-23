@@ -107,7 +107,7 @@ class ZZZNotes(APIModel):
     scratch_card_completed: bool = Aliased("card_sign")
     video_store_state: VideoStoreState
     hollow_zero: HollowZero
-    weekly_task: WeeklyTask
+    weekly_task: typing.Optional[WeeklyTask] = None
 
     @pydantic.field_validator("scratch_card_completed", mode="before")
     def __transform_value(cls, v: typing.Literal["CardSignDone", "CardSignNotDone"]) -> bool:
