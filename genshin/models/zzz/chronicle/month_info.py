@@ -1,7 +1,7 @@
 import typing
 from enum import Enum
 
-from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.model import Aliased, APIModel, TZDateTime
 
 __all__ = (
     "IncomeData",
@@ -84,7 +84,7 @@ class ZZZDiaryDetailItem(APIModel):
 
     id: str
     source: PolychromeIncomeType = Aliased("action")
-    time: DateTimeField
+    time: TZDateTime
     num: int
 
 

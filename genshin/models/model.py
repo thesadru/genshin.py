@@ -51,5 +51,5 @@ def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) ->
     return None
 
 
-DateTimeField = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
+TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
 DateTime = Annotated[datetime.datetime, pydantic.BeforeValidator(convert_datetime)]

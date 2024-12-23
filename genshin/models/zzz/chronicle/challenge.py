@@ -3,7 +3,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.model import Aliased, APIModel, TZDateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
@@ -100,12 +100,12 @@ class ShiyuDefenseFloor(APIModel):
     buffs: list[ShiyuDefenseBuff]
     node_1: ShiyuDefenseNode
     node_2: ShiyuDefenseNode
-    challenge_time: DateTimeField = Aliased("floor_challenge_time")
+    challenge_time: TZDateTime = Aliased("floor_challenge_time")
     name: str = Aliased("zone_name")
 
     @pydantic.field_validator("challenge_time", mode="before")
     @classmethod
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
         if value:
             return datetime.datetime(**value)
         return None
@@ -115,8 +115,8 @@ class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: typing.Optional[DateTimeField] = Aliased("hadal_begin_time")
-    end_time: typing.Optional[DateTimeField] = Aliased("hadal_end_time")
+    begin_time: typing.Optional[TZDateTime] = Aliased("hadal_begin_time")
+    end_time: typing.Optional[TZDateTime] = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
     floors: list[ShiyuDefenseFloor] = Aliased("all_floor_detail")
@@ -126,7 +126,7 @@ class ShiyuDefense(APIModel):
 
     @pydantic.field_validator("begin_time", "end_time", mode="before")
     @classmethod
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
         if value:
             return datetime.datetime(**value)
         return None
@@ -181,7 +181,7 @@ class DeadlyAssaultChallenge(APIModel):
     agents: typing.Sequence[DeadlyAssaultAgent] = Aliased("avatar_list")
 
     @pydantic.field_validator("challenge_time", mode="before")
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
         if value:
             return datetime.datetime(**value)
         return None
@@ -210,7 +210,7 @@ class DeadlyAssault(APIModel):
     player_avatar: str = Aliased("avatar_icon")
 
     @pydantic.field_validator("start_time", "end_time", mode="before")
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[DateTimeField]:
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
         if value:
             return datetime.datetime(**value)
         return None

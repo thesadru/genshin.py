@@ -1,6 +1,6 @@
 import pydantic
 
-from genshin.models.model import DateTimeField
+from genshin.models.model import TZDateTime
 
 __all__ = ("BattleField", "GodWar", "GreedyEndless", "HonkaiNotes", "UltraEndless")
 
@@ -8,7 +8,7 @@ __all__ = ("BattleField", "GodWar", "GreedyEndless", "HonkaiNotes", "UltraEndles
 class HonkaiNotesEvent(pydantic.BaseModel):
     """Base event model."""
 
-    end_time: DateTimeField = pydantic.Field(alias="schedule_end")
+    end_time: TZDateTime = pydantic.Field(alias="schedule_end")
     is_open: bool
 
 

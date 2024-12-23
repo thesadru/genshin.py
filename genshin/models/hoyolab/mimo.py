@@ -5,7 +5,7 @@ import typing
 import pydantic
 
 from genshin import types
-from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.model import Aliased, APIModel, TZDateTime
 
 __all__ = (
     "MimoGame",
@@ -66,8 +66,8 @@ class MimoGame(APIModel):
     version_id: int
     expire_point: bool
     point: int
-    start_time: DateTimeField
-    end_time: DateTimeField
+    start_time: TZDateTime
+    end_time: TZDateTime
 
     @property
     def game(self) -> typing.Union[typing.Literal["hoyolab"], types.Game, int]:
