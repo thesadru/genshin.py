@@ -1,18 +1,16 @@
 """Event calendar models."""
 
-import datetime
 import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, DateTime
 
 __all__ = (
     "AbyssDetail",
     "Banner",
     "BannerCharacter",
     "BannerWeapon",
-    "DateTime",
     "DoubleRewardDetail",
     "Event",
     "EventExplorationDetail",
@@ -40,21 +38,6 @@ class BannerWeapon(APIModel):
     rarity: typing.Literal[4, 5]
     name: str
     wiki_url: str
-
-
-class DateTime(APIModel):
-    """Date time model"""
-
-    year: int
-    month: int
-    day: int
-    hour: int
-    minute: int
-    second: int
-
-    @property
-    def dt(self) -> datetime.datetime:
-        return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second)
 
 
 class Banner(APIModel):
