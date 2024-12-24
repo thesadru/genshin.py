@@ -173,6 +173,10 @@ class PartialGenshinUserStats(APIModel):
             return typing.cast("dict[str, typing.Any]", v)
         return {**v[0], "realms": v}
 
+    @pydantic.field_validator("characters", mode="before")
+    def __format_characters(cls, v: typing.Sequence[typing.Any]) -> typing.Sequence[typing.Any]:
+        return [c for c in v if c["id"] != 0]
+
 
 class GenshinUserStats(PartialGenshinUserStats):
     """User stats with characters with equipment"""
