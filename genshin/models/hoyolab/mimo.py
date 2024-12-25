@@ -38,6 +38,8 @@ class MimoTaskType(enum.IntEnum):
     """e.g. Visit the 【Honkai: Star Rail】 Interest Group on the day"""
     COMMENT = 3
     """e.g. Participate in this week's creative interactions and leave your creations in the comments"""
+    VIEW_TOPIC = 4
+    """e.g. View the "Roaming Through the Realm of Saurians" topic"""
     GI_LOGIN = 5
     """e.g. Log into Genshin Impact today"""
     GI_GAME = 6
