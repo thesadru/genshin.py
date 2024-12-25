@@ -3,7 +3,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, TZDateTime
+from genshin.models.model import Aliased, APIModel, TZDateTime, DateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
@@ -198,8 +198,8 @@ class DeadlyAssault(APIModel):
     """ZZZ Deadly Assault model."""
 
     id: int = Aliased("zone_id")
-    start_time: datetime.datetime
-    end_time: datetime.datetime
+    start_time: typing.Optional[DateTime]
+    end_time: typing.Optional[DateTime]
 
     challenges: typing.Sequence[DeadlyAssaultChallenge] = Aliased("list")
     has_data: bool
@@ -209,12 +209,6 @@ class DeadlyAssault(APIModel):
 
     nickname: str = Aliased("nick_name")
     player_avatar: str = Aliased("avatar_icon")
-
-    @pydantic.field_validator("start_time", "end_time", mode="before")
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
-        if value:
-            return datetime.datetime(**value)
-        return None
 
     @pydantic.field_validator("rank_percent", mode="before")
     def __parse_rank_percent(cls, value: int) -> str:
