@@ -76,7 +76,7 @@ class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
     characters: list[ShiyuDefenseCharacter] = Aliased("avatars")
-    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy")
+    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
     recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
     enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
 
@@ -179,6 +179,7 @@ class DeadlyAssaultChallenge(APIModel):
     boss: DeadlyAssaultBoss
     buffs: typing.Sequence[DeadlyAssaultBuff] = Aliased("buffer")
     agents: typing.Sequence[DeadlyAssaultAgent] = Aliased("avatar_list")
+    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
 
     @pydantic.field_validator("challenge_time", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
