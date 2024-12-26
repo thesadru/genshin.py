@@ -3,17 +3,17 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, TZDateTime, DateTime
+from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
+    "ChallengeBangboo",
     "DeadlyAssault",
     "DeadlyAssaultAgent",
     "DeadlyAssaultBoss",
     "DeadlyAssaultBuff",
     "DeadlyAssaultChallenge",
     "ShiyuDefense",
-    "ShiyuDefenseBangboo",
     "ShiyuDefenseBuff",
     "ShiyuDefenseCharacter",
     "ShiyuDefenseFloor",
@@ -22,16 +22,13 @@ __all__ = (
 )
 
 
-class ShiyuDefenseBangboo(APIModel):
+class ChallengeBangboo(APIModel):
     """Shiyu Defense bangboo model."""
 
     id: int
     rarity: typing.Literal["S", "A"]
     level: int
-
-    @property
-    def icon(self) -> str:
-        return f"https://act-webstatic.hoyoverse.com/game_record/zzz/bangboo_square_avatar/bangboo_square_avatar_{self.id}.png"
+    icon: str = Aliased("bangboo_rectangle_url")
 
 
 class ShiyuDefenseCharacter(APIModel):
@@ -76,7 +73,7 @@ class ShiyuDefenseNode(APIModel):
     """Shiyu Defense node model."""
 
     characters: list[ShiyuDefenseCharacter] = Aliased("avatars")
-    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
+    bangboo: typing.Optional[ChallengeBangboo] = Aliased("buddy", default=None)
     recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
     enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
 
@@ -179,7 +176,7 @@ class DeadlyAssaultChallenge(APIModel):
     boss: DeadlyAssaultBoss
     buffs: typing.Sequence[DeadlyAssaultBuff] = Aliased("buffer")
     agents: typing.Sequence[DeadlyAssaultAgent] = Aliased("avatar_list")
-    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
+    bangboo: typing.Optional[ChallengeBangboo] = Aliased("buddy", default=None)
 
     @pydantic.field_validator("challenge_time", mode="before")
     def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
