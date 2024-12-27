@@ -319,7 +319,7 @@ def raise_for_retcode(data: dict[str, typing.Any]) -> typing.NoReturn:
 
     if r in ERRORS:
         exctype, msg = ERRORS[r]
-        raise exctype(data, msg)
+        raise exctype(data, m or msg)
 
     if "redemption" in m:
         raise RedemptionException(data)
