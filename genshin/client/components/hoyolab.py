@@ -491,6 +491,7 @@ class HoyolabClient(base.BaseClient):
         """Leave a topic."""
         await self._request_join(topic_id, is_cancel=True)
 
+    @base.region_specific(types.Region.OVERSEAS)
     async def get_web_events(
         self,
         game: typing.Optional[types.Game] = None,
