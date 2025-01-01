@@ -13,6 +13,7 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.client.manager import managers
+from genshin.constants import WEB_EVENT_GAME_IDS
 from genshin.models import hoyolab as models
 
 __all__ = ["HoyolabClient"]
@@ -489,3 +490,23 @@ class HoyolabClient(base.BaseClient):
     async def leave_topic(self, topic_id: int) -> None:
         """Leave a topic."""
         await self._request_join(topic_id, is_cancel=True)
+
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> list[models.WebEvent]:
+        """Get a list of web events."""
+        game = game or self.default_game
+        if game is None:
+            raise ValueError("No default game set.")
+
+        data = await self.request_bbs(
+            "community/community_contribution/wapi/event/list",
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or ""),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data["list"]]
