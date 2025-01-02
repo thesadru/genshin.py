@@ -1,5 +1,6 @@
 import datetime
-from genshin.models.model import APIModel, Aliased
+
+from genshin.models.model import Aliased, APIModel
 
 __all__ = ("WebEvent",)
 
