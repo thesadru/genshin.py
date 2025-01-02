@@ -5,6 +5,8 @@ import json
 import logging
 import time
 import typing
+import random
+import string
 import warnings
 from base64 import b64decode as parse_token
 
@@ -190,7 +192,10 @@ async def update_characters_enka(langs: typing.Sequence[str] = ()) -> None:
 async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
     """Update characters with https://ambr.top/."""
     langs = langs or list(LANGS.keys())
-    urls = [AMBR_URL.format(lang=LANG_MAP[lang]) for lang in langs]
+    urls = [
+        AMBR_URL.format(lang=LANG_MAP[lang]) + f"?{''.join(random.choices(string.ascii_letters, k=5))}"
+        for lang in langs
+    ]
 
     characters_list = await _fetch_jsons(*urls)
 
