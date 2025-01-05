@@ -5,7 +5,7 @@ import typing
 import pydantic
 
 from genshin import types
-from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.model import Aliased, APIModel, TZDateTime
 
 __all__ = (
     "MimoGame",
@@ -38,6 +38,12 @@ class MimoTaskType(enum.IntEnum):
     """e.g. Visit the 【Honkai: Star Rail】 Interest Group on the day"""
     COMMENT = 3
     """e.g. Participate in this week's creative interactions and leave your creations in the comments"""
+    VIEW_TOPIC = 4
+    """e.g. View the "Roaming Through the Realm of Saurians" topic"""
+    GI_LOGIN = 5
+    """e.g. Log into Genshin Impact today"""
+    GI_GAME = 6
+    """e.g. Claim rewards from Ley Line Blossoms 2 times"""
     HSR_GAME = 8
     """e.g. Complete Divergent Universe or Simulated Universe 1 time"""
     TRAILER = 10
@@ -66,8 +72,8 @@ class MimoGame(APIModel):
     version_id: int
     expire_point: bool
     point: int
-    start_time: DateTimeField
-    end_time: DateTimeField
+    start_time: TZDateTime
+    end_time: TZDateTime
 
     @property
     def game(self) -> typing.Union[typing.Literal["hoyolab"], types.Game, int]:
@@ -77,6 +83,8 @@ class MimoGame(APIModel):
             return types.Game.STARRAIL
         if self.id == 8:
             return types.Game.ZZZ
+        if self.id == 2:
+            return types.Game.GENSHIN
         return self.id
 
 

@@ -3,7 +3,7 @@
 import enum
 import typing
 
-from genshin.models.model import Aliased, APIModel, DateTimeField, Unique
+from genshin.models.model import Aliased, APIModel, TZDateTime, Unique
 
 __all__ = ["BaseTransaction", "ItemTransaction", "Transaction", "TransactionKind"]
 
@@ -33,7 +33,7 @@ class BaseTransaction(APIModel, Unique):
     kind: TransactionKind
 
     id: int
-    time: DateTimeField = Aliased("datetime")
+    time: TZDateTime = Aliased("datetime")
     amount: int = Aliased("add_num")
     reason: str = Aliased("reason")
 

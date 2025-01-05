@@ -46,6 +46,7 @@ ENKA_CHARACTERS_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/ma
 ENKA_LOC_URL = "https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json"
 
 AMBR_URL = "https://gi.yatta.moe/api/v2/{lang}/avatar"
+AMBR_VERSION_URL = "https://gi.yatta.moe/api/v2/static/version"
 
 ELEMENTS_MAP = {
     "Fire": "Pyro",
@@ -189,8 +190,9 @@ async def update_characters_enka(langs: typing.Sequence[str] = ()) -> None:
 
 async def update_characters_ambr(langs: typing.Sequence[str] = ()) -> None:
     """Update characters with https://ambr.top/."""
+    version = (await _fetch_jsons(AMBR_VERSION_URL))[0]["data"]["vh"]
     langs = langs or list(LANGS.keys())
-    urls = [AMBR_URL.format(lang=LANG_MAP[lang]) for lang in langs]
+    urls = [AMBR_URL.format(lang=LANG_MAP[lang]) + f"?vh={version}" for lang in langs]
 
     characters_list = await _fetch_jsons(*urls)
 

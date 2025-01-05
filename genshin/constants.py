@@ -111,3 +111,11 @@ GAME_BIZS = {
         types.Game.ZZZ: "nap_cn",
     },
 }
+
+WEB_EVENT_GAME_IDS = {
+    types.Game.GENSHIN: 2,
+    types.Game.STARRAIL: 6,
+    types.Game.HONKAI: 1,
+    types.Game.ZZZ: 8,
+    types.Game.TOT: 4,
+}

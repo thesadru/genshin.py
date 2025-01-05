@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, DateTimeField
+from genshin.models.model import Aliased, APIModel, TZDateTime
 
 __all__ = [
     "TeapotReplica",
@@ -52,7 +52,7 @@ class TeapotReplica(APIModel):
     title: str
     content: str
     images: list[str] = Aliased("imgs")
-    created_at: DateTimeField
+    created_at: TZDateTime
     stats: TeapotReplicaStats
     lang: str  # type: ignore
 

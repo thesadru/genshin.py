@@ -50,6 +50,7 @@ class ZZZBaseBangboo(APIModel):
     rarity: typing.Literal["S", "A"]
     level: int
     star: int
+    icon: str = Aliased("bangboo_rectangle_url")
 
 
 class ZZZUserStats(APIModel):

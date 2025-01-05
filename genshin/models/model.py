@@ -45,4 +45,11 @@ def add_timezone(value: datetime.datetime) -> datetime.datetime:
     return value.astimezone(CN_TIMEZONE)
 
 
-DateTimeField = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
+def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) -> typing.Optional[datetime.datetime]:
+    if value:
+        return datetime.datetime(**value)
+    return None
+
+
+TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
+DateTime = Annotated[datetime.datetime, pydantic.BeforeValidator(convert_datetime)]

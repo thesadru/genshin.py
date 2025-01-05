@@ -13,6 +13,7 @@ from genshin.client import cache as client_cache
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.client.manager import managers
+from genshin.constants import WEB_EVENT_GAME_IDS
 from genshin.models import hoyolab as models
 
 __all__ = ["HoyolabClient"]
@@ -106,6 +107,24 @@ class HoyolabClient(base.BaseClient):
                 announcements.append({**info, **(detail or {})})
 
         return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -> typing.Any:
+        game_id = params.get("game_id") if params else data.get("game_id")
+        if game_id is None and self.game is None:
+            raise ValueError("Cannot determine game for this traveling mimo request.")
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / "nata" / endpoint.replace("-", "_")
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
 
     async def search_users(
         self,
@@ -250,10 +269,12 @@ class HoyolabClient(base.BaseClient):
     @base.region_specific(types.Region.OVERSEAS)
     async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -> typing.Sequence[models.MimoGame]:
         """Get a list of Traveling Mimo games."""
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "index",
-            params=dict(lang=lang or self.lang),
-        )
+        data = await self._request_mimo("index", params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError("No default game set.")
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i["act_info"]) for i in data["act_list"]]
         return [models.MimoGame(**i) for i in data["list"]]
 
     @base.region_specific(types.Region.OVERSEAS)
@@ -279,7 +300,7 @@ class HoyolabClient(base.BaseClient):
                     raise RuntimeError("No default game set.")
                 game = self.default_game
 
-            if game not in {types.Game.ZZZ, types.Game.STARRAIL, "hoyolab"}:
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, "hoyolab"}:
                 raise ValueError(f"{game!r} does not support Traveling Mimo.")
             game_id, version_id = await self._get_mimo_game_data(game)
 
@@ -296,8 +317,8 @@ class HoyolabClient(base.BaseClient):
     ) -> typing.Sequence[models.MimoTask]:
         """Get a list of Traveling Mimo missions (tasks)."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "task-list",
+        data = await self._request_mimo(
+            "task-list",
             params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
         )
         return [models.MimoTask(**i) for i in data["task_list"]]
@@ -314,9 +335,10 @@ class HoyolabClient(base.BaseClient):
     ) -> None:
         """Claim a Traveling Mimo mission (task) reward."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        await self.request(
-            routes.MIMO_URL.get_url() / "receive-point",
+        await self._request_mimo(
+            "receive-point",
             params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method="POST" if game_id == 2 else "GET",
         )
 
     @base.region_specific(types.Region.OVERSEAS)
@@ -331,8 +353,8 @@ class HoyolabClient(base.BaseClient):
     ) -> None:
         """Finish a Traveling Mimo mission (task) reward."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        await self.request(
-            routes.MIMO_URL.get_url() / "finish-task",
+        await self._request_mimo(
+            "finish-task",
             data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
             method="POST",
         )
@@ -348,8 +370,8 @@ class HoyolabClient(base.BaseClient):
     ) -> typing.Sequence[models.MimoShopItem]:
         """Get a list of Traveling Mimo shop items."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "exchange-list",
+        data = await self._request_mimo(
+            "exchange-list",
             params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
         )
         return [models.MimoShopItem(**i) for i in data["exchange_award_list"]]
@@ -366,8 +388,8 @@ class HoyolabClient(base.BaseClient):
     ) -> str:
         """Buy an item from the Traveling Mimo shop and return a gift code to redeem it."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "exchange",
+        data = await self._request_mimo(
+            "exchange",
             data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
             method="POST",
         )
@@ -398,8 +420,8 @@ class HoyolabClient(base.BaseClient):
     ) -> models.MimoLotteryInfo:
         """Get Traveling Mimo lottery info."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "lottery-info",
+        data = await self._request_mimo(
+            "lottery-info",
             params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
         )
         return models.MimoLotteryInfo(**data)
@@ -415,8 +437,8 @@ class HoyolabClient(base.BaseClient):
     ) -> models.MimoLotteryResult:
         """Draw a Traveling Mimo lottery."""
         game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
-        data = await self.request(
-            routes.MIMO_URL.get_url() / "lottery",
+        data = await self._request_mimo(
+            "lottery",
             data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
             method="POST",
         )
@@ -468,3 +490,24 @@ class HoyolabClient(base.BaseClient):
     async def leave_topic(self, topic_id: int) -> None:
         """Leave a topic."""
         await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -> list[models.WebEvent]:
+        """Get a list of web events."""
+        game = game or self.default_game
+        if game is None:
+            raise ValueError("No default game set.")
+
+        data = await self.request_bbs(
+            "community/community_contribution/wapi/event/list",
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or ""),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data["list"]]

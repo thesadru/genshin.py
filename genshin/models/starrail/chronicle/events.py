@@ -3,7 +3,7 @@ from enum import Enum
 
 import pydantic
 
-from genshin.models.model import APIModel, DateTimeField
+from genshin.models.model import APIModel, TZDateTime
 
 __all__ = (
     "ChallengeStatus",
@@ -70,9 +70,9 @@ class ChallengeStatus(Enum):
 class TimeInfo(APIModel):
     """Time info model."""
 
-    start: DateTimeField = pydantic.Field(alias="start_ts")
-    end: DateTimeField = pydantic.Field(alias="end_ts")
-    now: DateTimeField
+    start: TZDateTime = pydantic.Field(alias="start_ts")
+    end: TZDateTime = pydantic.Field(alias="end_ts")
+    now: TZDateTime
 
 
 class HSRBaseEvent(APIModel):
@@ -254,4 +254,4 @@ class HSREventCalendar(APIModel):
 
     cur_game_version: str
     """Current game version."""
-    now: DateTimeField
+    now: TZDateTime
