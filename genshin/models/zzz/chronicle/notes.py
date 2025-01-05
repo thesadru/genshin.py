@@ -80,8 +80,6 @@ class HollowZero(APIModel):
     bounty_commission: typing.Optional[BountyCommission] = None
     investigation_point: typing.Optional[SurveyPoints] = Aliased("survey_points", default=None)
 
-class WeeklyTask(APIModel):
-    """ZZZ sticky notes, Weekly task model."""
 
 class WeeklyTask(APIModel):
     """ZZZ sticky notes, Weekly task model."""
