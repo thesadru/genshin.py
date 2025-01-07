@@ -13,6 +13,8 @@ __all__ = (
     "ZZZBaseBangboo",
     "ZZZStats",
     "ZZZUserStats",
+    "ZZZCatNote",
+    "ZZZGameData"
 )
 
 
@@ -41,6 +43,25 @@ class ZZZStats(APIModel):
     ) -> typing.Optional[typing.Dict[str, typing.Any]]:
         return v[0] if v else None
 
+class ZZZCatNote(APIModel):
+    """ZZZ Cat note model."""
+
+    icon: str
+    id: int
+    is_lock: bool
+    name: str
+    num: int
+    total: int
+
+class ZZZGameData(APIModel):
+    """ZZZ game data model."""
+
+    personal_title: str
+    title_main_color: str
+    title_bottom_color: str
+    title_bg_url: str
+    medal_list: typing.Sequence[str]
+    card_url: str
 
 class ZZZBaseBangboo(APIModel):
     """Base bangboo (buddy) model."""
@@ -60,3 +81,5 @@ class ZZZUserStats(APIModel):
     agents: typing.Sequence[ZZZPartialAgent] = Aliased("avatar_list")
     bangboos: typing.Sequence[ZZZBaseBangboo] = Aliased("buddy_list")
     in_game_avatar: str = Aliased("cur_head_icon_url")
+    cat_notes: typing.Sequence[ZZZCatNote] = Aliased("cat_notes_list")
+    in_game_data: ZZZGameData = Aliased("game_data_show")
