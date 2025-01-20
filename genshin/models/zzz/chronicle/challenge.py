@@ -7,6 +7,7 @@ from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
+    "ChallengeBangboo",
     "DeadlyAssault",
     "DeadlyAssaultAgent",
     "DeadlyAssaultBoss",
@@ -29,6 +30,10 @@ class ShiyuDefenseBangboo(APIModel):
     rarity: typing.Literal["S", "A"]
     level: int
     icon: str = Aliased("bangboo_rectangle_url")
+
+
+class ChallengeBangboo(ShiyuDefenseBangboo):
+    """Bangboo model for backward compatibility."""
 
 
 class ShiyuDefenseCharacter(APIModel):
