@@ -13,22 +13,25 @@ def handle_ratelimits(
     tries: int = 5,
     exception: type[errors.GenshinException] = errors.VisitsTooFrequently,
     delay: float = 0.3,
+    backoff_factor: float = 2.0,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle ratelimits for requests."""
-    # TODO: Support exponential backoff
 
     def wrapper(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> typing.Any:
         @functools.wraps(func)
         async def inner(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-            for _ in range(tries):
+            current_delay = delay
+            for attempt in range(tries):
                 try:
                     x = await func(*args, **kwargs)
                 except exception:
-                    await asyncio.sleep(delay)
+                    if attempt < tries - 1:  # No need to sleep on last attempt
+                        await asyncio.sleep(current_delay)
+                        current_delay *= backoff_factor
+                    else:
+                        raise exception({}, f"Got ratelimited {tries} times in a row")
                 else:
                     return x
-            else:
-                raise exception({}, f"Got ratelimited {tries} times in a row")
 
         return inner
 
