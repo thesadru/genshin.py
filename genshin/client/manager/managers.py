@@ -143,6 +143,7 @@ class BaseCookieManager(abc.ABC):
         )
 
     @ratelimit.handle_ratelimits()
+    @ratelimit.handle_request_timeouts()
     async def _request(
         self,
         method: str,

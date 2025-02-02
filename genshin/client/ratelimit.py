@@ -1,38 +1,41 @@
 """Ratelimit handlers."""
 
-import asyncio
-import functools
+import logging
 import typing
+
+import aiohttp
+from tenacity import before_sleep_log, retry, retry_if_exception_type, stop_after_attempt, wait_random_exponential
 
 from genshin import errors
 
+LOGGER_ = logging.getLogger(__name__)
 CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Awaitable[typing.Any]])
 
 
 def handle_ratelimits(
     tries: int = 5,
     exception: type[errors.GenshinException] = errors.VisitsTooFrequently,
-    delay: float = 0.3,
-    backoff_factor: float = 2.0,
+    delay: float = 0.5,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle ratelimits for requests."""
+    return retry(
+        stop=stop_after_attempt(tries),
+        wait=wait_random_exponential(multiplier=delay, min=delay),
+        retry=retry_if_exception_type(exception),
+        reraise=True,  # Raise the final exception after retries are exhausted
+        before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+    )
 
-    def wrapper(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> typing.Any:
-        @functools.wraps(func)
-        async def inner(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-            current_delay = delay
-            for attempt in range(tries):
-                try:
-                    x = await func(*args, **kwargs)
-                except exception:
-                    if attempt < tries - 1:  # No need to sleep on last attempt
-                        await asyncio.sleep(current_delay)
-                        current_delay *= backoff_factor
-                    else:
-                        raise exception({}, f"Got ratelimited {tries} times in a row")
-                else:
-                    return x
 
-        return inner
-
-    return wrapper
+def handle_request_timeouts(
+    tries: int = 5,
+    delay: float = 0.3,
+) -> typing.Callable[[CallableT], CallableT]:
+    """Handle timeout errors for requests."""
+    return retry(
+        stop=stop_after_attempt(tries),
+        wait=wait_random_exponential(multiplier=delay, min=delay),
+        retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError)),
+        reraise=True,
+        before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+    )
