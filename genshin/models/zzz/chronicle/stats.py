@@ -8,14 +8,7 @@ from genshin.models.model import Aliased, APIModel
 
 from ..character import ZZZPartialAgent
 
-__all__ = (
-    "HIACoin",
-    "ZZZBaseBangboo",
-    "ZZZStats",
-    "ZZZUserStats",
-    "ZZZCatNote",
-    "ZZZGameData"
-)
+__all__ = ("HIACoin", "ZZZBaseBangboo", "ZZZCatNote", "ZZZGameData", "ZZZStats", "ZZZUserStats")
 
 
 class HIACoin(APIModel):
@@ -43,6 +36,7 @@ class ZZZStats(APIModel):
     ) -> typing.Optional[typing.Dict[str, typing.Any]]:
         return v[0] if v else None
 
+
 class ZZZCatNote(APIModel):
     """ZZZ Cat note model."""
 
@@ -53,6 +47,7 @@ class ZZZCatNote(APIModel):
     num: int
     total: int
 
+
 class ZZZGameData(APIModel):
     """ZZZ game data model."""
 
@@ -62,6 +57,7 @@ class ZZZGameData(APIModel):
     title_bg_url: str
     medal_list: typing.Sequence[str]
     card_url: str
+
 
 class ZZZBaseBangboo(APIModel):
     """Base bangboo (buddy) model."""
