@@ -37,6 +37,7 @@ CALCULATOR_ELEMENTS: typing.Mapping[int, str] = {
     7: "Cryo",
 }
 CALCULATOR_WEAPON_TYPES: typing.Mapping[int, str] = {
+    0: "Unknown",
     1: "Sword",
     10: "Catalyst",
     11: "Claymore",

@@ -7,6 +7,7 @@ import typing
 import pydantic
 
 from genshin.models.genshin import character
+from genshin.models.genshin.calculator import CALCULATOR_WEAPON_TYPES
 from genshin.models.model import Aliased, APIModel, TZDateTime, Unique
 
 __all__ = [
@@ -68,14 +69,7 @@ class PartialLineupCharacter(character.BaseCharacter):
         if isinstance(value, str) and not value.isdigit():
             return value
 
-        return {
-            0: "Unknown",
-            1: "Sword",
-            10: "Catalyst",
-            11: "Claymore",
-            12: "Bow",
-            13: "Polearm",
-        }[int(value)]
+        return CALCULATOR_WEAPON_TYPES[int(value)]
 
 
 class PartialLineupWeapon(APIModel, Unique):
@@ -92,13 +86,7 @@ class PartialLineupWeapon(APIModel, Unique):
         if isinstance(value, str) and not value.isdigit():
             return value
 
-        return {
-            1: "Sword",
-            10: "Catalyst",
-            11: "Claymore",
-            12: "Bow",
-            13: "Polearm",
-        }[value]
+        return CALCULATOR_WEAPON_TYPES[value]
 
 
 class PartialLineupArtifactSet(APIModel, Unique):
