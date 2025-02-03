@@ -1,6 +1,7 @@
 """Constants hardcoded for optimizations."""
 
 import datetime
+import typing
 
 from . import types
 
@@ -35,7 +36,7 @@ LANGS = {
 }
 """Languages supported by the API."""
 
-DS_SALT = {
+DS_SALT: typing.Final[typing.Dict[typing.Union[types.Region, str], str]] = {
     types.Region.OVERSEAS: "6s25p5ox5y14umn1p61aqyyvbvvl3lrt",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
     "app_login": "IZPgfb0dRPtBeLuFkdDznSZ6f4wWt6y2",
