@@ -238,6 +238,7 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -100: InvalidCookies,
     -108: "Invalid language.",
     -110: VisitsTooFrequently,
+    1028: VisitsTooFrequently,
     # game record
     10001: InvalidCookies,
     -10001: "Malformed request.",
