@@ -39,7 +39,7 @@ class GenshinException(Exception):
         self.original = response.get("message", "")
         self.msg = msg or self.msg or self.original
 
-        if self.retcode:
+        if self.retcode and f"[{self.retcode}]" not in self.msg:
             msg = f"[{self.retcode}] {self.msg}"
         else:
             msg = self.msg
