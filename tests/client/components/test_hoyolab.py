@@ -71,3 +71,9 @@ async def test_starrail_redeem_code(lclient: genshin.Client):
         pytest.skip(f"Redemption code is inconsistent: {e}")
     except genshin.AccountNotFound:
         pytest.skip("No star rail account.")
+
+
+async def test_accompany_characters(client: genshin.Client):
+    characters = await client.get_accompany_characters()
+
+    assert characters

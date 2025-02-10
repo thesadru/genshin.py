@@ -511,3 +511,11 @@ class HoyolabClient(base.BaseClient):
             lang=lang,
         )
         return [models.WebEvent(**i) for i in data["list"]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(self) -> typing.Sequence[models.AccompanyCharacterGame]:
+        """Get a list of accompany characters."""
+        data = await self.request_bbs(
+            "community/painter/api/getChannelRoleList", cache=client_cache.cache_key("accp_chars"), method="POST"
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data["game_roles_list"]]
