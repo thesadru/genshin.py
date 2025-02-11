@@ -524,3 +524,11 @@ class HoyolabClient(base.BaseClient):
             lang=lang,
         )
         return [models.AccompanyCharacterGame(**i) for i in data["game_roles_list"]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -> models.AccompanyResult:
+        """Accompany a character, role_id and topic_id can be found by calling get_accompany_characters."""
+        data = await self.request_bbs(
+            "community/apihub/api/user/accompany/role", params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)
