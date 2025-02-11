@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.1">
+<title>genshin.models.starrail.chronicle.characters API documentation</title>
+<meta name="description" content="Starrail chronicle character.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.starrail.chronicle.characters</code></h1>
+</header>
+<section id="section-intro">
+<p>Starrail chronicle character.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty"><code class="flex name class">
+<span>class <span class="ident">CharacterProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base character property.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CharacterProperty(APIModel):
+    &#34;&#34;&#34;Base character property.&#34;&#34;&#34;
+
+    property_type: int
+    base: str
+    add: str
+    final: str
+    preferred: bool
+    recommended: bool
+    info: PropertyInfo</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.add"><code class="name">var <span class="ident">add</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.base"><code class="name">var <span class="ident">base</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.final"><code class="name">var <span class="ident">final</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.info"><code class="name">var <span class="ident">info</span> : <a title="genshin.models.starrail.chronicle.characters.PropertyInfo" href="#genshin.models.starrail.chronicle.characters.PropertyInfo">PropertyInfo</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.preferred"><code class="name">var <span class="ident">preferred</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.property_type"><code class="name">var <span class="ident">property_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.CharacterProperty.recommended"><code class="name">var <span class="ident">recommended</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty"><code class="flex name class">
+<span>class <span class="ident">ModifyRelicProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Modify relic property.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ModifyRelicProperty(APIModel):
+    &#34;&#34;&#34;Modify relic property.&#34;&#34;&#34;
+
+    property_type: int
+    modify_property_type: int</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.modify_property_type"><code class="name">var <span class="ident">modify_property_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.property_type"><code class="name">var <span class="ident">property_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo"><code class="flex name class">
+<span>class <span class="ident">PropertyInfo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Relic property info.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PropertyInfo(APIModel):
+    &#34;&#34;&#34;Relic property info.&#34;&#34;&#34;
+
+    property_type: int
+    name: str
+    icon: str
+    property_name_relic: str
+    property_name_filter: str</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_filter"><code class="name">var <span class="ident">property_name_filter</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_relic"><code class="name">var <span class="ident">property_name_relic</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.PropertyInfo.property_type"><code class="name">var <span class="ident">property_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank"><code class="flex name class">
+<span>class <span class="ident">Rank</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character rank.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Rank(APIModel):
+    &#34;&#34;&#34;Character rank.&#34;&#34;&#34;
+
+    id: int
+    pos: int
+    name: str
+    icon: str
+    desc: str
+    is_unlocked: bool</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.desc"><code class="name">var <span class="ident">desc</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.is_unlocked"><code class="name">var <span class="ident">is_unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Rank.pos"><code class="name">var <span class="ident">pos</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty"><code class="flex name class">
+<span>class <span class="ident">RecommendProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character recommended and preferred properties.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RecommendProperty(APIModel):
+    &#34;&#34;&#34;Character recommended and preferred properties.&#34;&#34;&#34;
+
+    recommend_relic_properties: Sequence[int]
+    custom_relic_properties: Sequence[int]
+    is_custom_property_valid: bool</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.custom_relic_properties"><code class="name">var <span class="ident">custom_relic_properties</span> : collections.abc.Sequence[int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.is_custom_property_valid"><code class="name">var <span class="ident">is_custom_property_valid</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RecommendProperty.recommend_relic_properties"><code class="name">var <span class="ident">recommend_relic_properties</span> : collections.abc.Sequence[int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic"><code class="flex name class">
+<span>class <span class="ident">Relic</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character relic.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Relic(APIModel):
+    &#34;&#34;&#34;Character relic.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    pos: int
+    name: str
+    desc: str
+    icon: str
+    rarity: int
+    wiki: str
+    main_property: RelicProperty
+    properties: Sequence[RelicProperty]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.desc"><code class="name">var <span class="ident">desc</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.main_property"><code class="name">var <span class="ident">main_property</span> : <a title="genshin.models.starrail.chronicle.characters.RelicProperty" href="#genshin.models.starrail.chronicle.characters.RelicProperty">RelicProperty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.pos"><code class="name">var <span class="ident">pos</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.properties"><code class="name">var <span class="ident">properties</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.RelicProperty" href="#genshin.models.starrail.chronicle.characters.RelicProperty">RelicProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Relic.wiki"><code class="name">var <span class="ident">wiki</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty"><code class="flex name class">
+<span>class <span class="ident">RelicProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Relic property.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RelicProperty(APIModel):
+    &#34;&#34;&#34;Relic property.&#34;&#34;&#34;
+
+    property_type: int
+    value: str
+    times: int
+    preferred: bool
+    recommended: bool
+    info: PropertyInfo</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.info"><code class="name">var <span class="ident">info</span> : <a title="genshin.models.starrail.chronicle.characters.PropertyInfo" href="#genshin.models.starrail.chronicle.characters.PropertyInfo">PropertyInfo</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.preferred"><code class="name">var <span class="ident">preferred</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.property_type"><code class="name">var <span class="ident">property_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.recommended"><code class="name">var <span class="ident">recommended</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.times"><code class="name">var <span class="ident">times</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.RelicProperty.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill"><code class="flex name class">
+<span>class <span class="ident">Skill</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character skill.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Skill(APIModel):
+    &#34;&#34;&#34;Character skill.&#34;&#34;&#34;
+
+    point_id: str
+    point_type: int
+    item_url: str
+    level: int
+    is_activated: bool
+    is_rank_work: bool
+    pre_point: str
+    anchor: str
+    remake: str
+    skill_stages: Sequence[SkillStage]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.anchor"><code class="name">var <span class="ident">anchor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.is_activated"><code class="name">var <span class="ident">is_activated</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.is_rank_work"><code class="name">var <span class="ident">is_rank_work</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.item_url"><code class="name">var <span class="ident">item_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.point_id"><code class="name">var <span class="ident">point_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.point_type"><code class="name">var <span class="ident">point_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.pre_point"><code class="name">var <span class="ident">pre_point</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.remake"><code class="name">var <span class="ident">remake</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.Skill.skill_stages"><code class="name">var <span class="ident">skill_stages</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.SkillStage" href="#genshin.models.starrail.chronicle.characters.SkillStage">SkillStage</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage"><code class="flex name class">
+<span>class <span class="ident">SkillStage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character skill stage.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SkillStage(APIModel):
+    &#34;&#34;&#34;Character skill stage.&#34;&#34;&#34;
+
+    name: str
+    desc: str
+    level: int
+    remake: str
+    item_url: str
+    is_activated: bool
+    is_rank_work: bool</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.desc"><code class="name">var <span class="ident">desc</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.is_activated"><code class="name">var <span class="ident">is_activated</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.is_rank_work"><code class="name">var <span class="ident">is_rank_work</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.item_url"><code class="name">var <span class="ident">item_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.SkillStage.remake"><code class="name">var <span class="ident">remake</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter"><code class="flex name class">
+<span>class <span class="ident">StarRailDetailCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>StarRail character with equipment and relics.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDetailCharacter(character.StarRailPartialCharacter):
+    &#34;&#34;&#34;StarRail character with equipment and relics.&#34;&#34;&#34;
+
+    image: str
+    equip: Optional[StarRailEquipment]
+    relics: Sequence[Relic]
+    ornaments: Sequence[Relic]
+    ranks: Sequence[Rank]
+    properties: Sequence[CharacterProperty]
+    path: StarRailPath = Aliased(&#34;base_type&#34;)
+    figure_path: str
+    skills: Sequence[Skill]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.character.StarRailPartialCharacter" href="../character.html#genshin.models.starrail.character.StarRailPartialCharacter">StarRailPartialCharacter</a></li>
+<li><a title="genshin.models.starrail.character.StarRailBaseCharacter" href="../character.html#genshin.models.starrail.character.StarRailBaseCharacter">StarRailBaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.equip"><code class="name">var <span class="ident">equip</span> : Optional[<a title="genshin.models.starrail.chronicle.characters.StarRailEquipment" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment">StarRailEquipment</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.figure_path"><code class="name">var <span class="ident">figure_path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.image"><code class="name">var <span class="ident">image</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ornaments"><code class="name">var <span class="ident">ornaments</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.Relic" href="#genshin.models.starrail.chronicle.characters.Relic">Relic</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.path"><code class="name">var <span class="ident">path</span> : <a title="genshin.models.starrail.chronicle.characters.StarRailPath" href="#genshin.models.starrail.chronicle.characters.StarRailPath">StarRailPath</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.properties"><code class="name">var <span class="ident">properties</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.CharacterProperty" href="#genshin.models.starrail.chronicle.characters.CharacterProperty">CharacterProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ranks"><code class="name">var <span class="ident">ranks</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.Rank" href="#genshin.models.starrail.chronicle.characters.Rank">Rank</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.relics"><code class="name">var <span class="ident">relics</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.Relic" href="#genshin.models.starrail.chronicle.characters.Relic">Relic</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.skills"><code class="name">var <span class="ident">skills</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.Skill" href="#genshin.models.starrail.chronicle.characters.Skill">Skill</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters"><code class="flex name class">
+<span>class <span class="ident">StarRailDetailCharacters</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>StarRail characters.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDetailCharacters(APIModel):
+    &#34;&#34;&#34;StarRail characters.&#34;&#34;&#34;
+
+    avatar_list: Sequence[StarRailDetailCharacter]
+    equip_wiki: Mapping[str, str]
+    relic_wiki: Mapping[str, str]
+    property_info: Mapping[str, PropertyInfo]
+    recommend_property: Mapping[str, RecommendProperty]
+    relic_properties: Sequence[ModifyRelicProperty]
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __fill_additional_fields(cls, values: Mapping[str, Any]) -&gt; Mapping[str, Any]:
+        &#34;&#34;&#34;Fill additional fields for convenience.&#34;&#34;&#34;
+        characters = values.get(&#34;avatar_list&#34;, [])
+        props_info = values.get(&#34;property_info&#34;, {})
+        rec_props = values.get(&#34;recommend_property&#34;, {})
+        equip_wiki = values.get(&#34;equip_wiki&#34;, {})
+        relic_wiki = values.get(&#34;relic_wiki&#34;, {})
+
+        for char in characters:
+            char_id = str(char[&#34;id&#34;])
+            char_rec_props = rec_props[char_id][&#34;recommend_relic_properties&#34;]
+            char_custom_props = rec_props[char_id][&#34;custom_relic_properties&#34;]
+
+            for relic in char[&#34;relics&#34;] + char[&#34;ornaments&#34;]:
+                prop_type = relic[&#34;main_property&#34;][&#34;property_type&#34;]
+                relic[&#34;main_property&#34;][&#34;info&#34;] = props_info[str(prop_type)]
+                relic[&#34;main_property&#34;][&#34;recommended&#34;] = prop_type in char_rec_props
+                relic[&#34;main_property&#34;][&#34;preferred&#34;] = prop_type in char_custom_props
+
+                for prop in relic[&#34;properties&#34;]:
+                    prop_type = prop[&#34;property_type&#34;]
+                    prop[&#34;recommended&#34;] = prop_type in char_rec_props
+                    prop[&#34;preferred&#34;] = prop_type in char_custom_props
+                    prop[&#34;info&#34;] = props_info[str(prop_type)]
+
+                relic[&#34;wiki&#34;] = relic_wiki.get(str(relic[&#34;id&#34;]), &#34;&#34;)
+
+            for prop in char[&#34;properties&#34;]:
+                prop_type = prop[&#34;property_type&#34;]
+                prop[&#34;recommended&#34;] = prop_type in char_rec_props
+                prop[&#34;preferred&#34;] = prop_type in char_custom_props
+                prop[&#34;info&#34;] = props_info[str(prop_type)]
+
+            if char[&#34;equip&#34;]:
+                char[&#34;equip&#34;][&#34;wiki&#34;] = equip_wiki.get(str(char[&#34;equip&#34;][&#34;id&#34;]), &#34;&#34;)
+
+        return values</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.avatar_list"><code class="name">var <span class="ident">avatar_list</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter">StarRailDetailCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.equip_wiki"><code class="name">var <span class="ident">equip_wiki</span> : collections.abc.Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.property_info"><code class="name">var <span class="ident">property_info</span> : collections.abc.Mapping[str, <a title="genshin.models.starrail.chronicle.characters.PropertyInfo" href="#genshin.models.starrail.chronicle.characters.PropertyInfo">PropertyInfo</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.recommend_property"><code class="name">var <span class="ident">recommend_property</span> : collections.abc.Mapping[str, <a title="genshin.models.starrail.chronicle.characters.RecommendProperty" href="#genshin.models.starrail.chronicle.characters.RecommendProperty">RecommendProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_properties"><code class="name">var <span class="ident">relic_properties</span> : collections.abc.Sequence[<a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty">ModifyRelicProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_wiki"><code class="name">var <span class="ident">relic_wiki</span> : collections.abc.Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment"><code class="flex name class">
+<span>class <span class="ident">StarRailEquipment</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Character equipment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailEquipment(APIModel):
+    &#34;&#34;&#34;Character equipment.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    rank: int
+    name: str
+    desc: str
+    icon: str
+    rarity: int
+    wiki: str</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.desc"><code class="name">var <span class="ident">desc</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_computed_fields"><code class="name">var <span class="ident">model_computed_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.rank"><code class="name">var <span class="ident">rank</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailEquipment.wiki"><code class="name">var <span class="ident">wiki</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath"><code class="flex name class">
+<span>class <span class="ident">StarRailPath</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>StarRail character path.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailPath(enum.IntEnum):
+    &#34;&#34;&#34;StarRail character path.&#34;&#34;&#34;
+
+    DESTRUCTION = 1
+    THE_HUNT = 2
+    ERUDITION = 3
+    HARMONY = 4
+    NIHILITY = 5
+    PRESERVATION = 6
+    ABUNDANCE = 7
+    REMEMBRANCE = 8</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.ABUNDANCE"><code class="name">var <span class="ident">ABUNDANCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.DESTRUCTION"><code class="name">var <span class="ident">DESTRUCTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.ERUDITION"><code class="name">var <span class="ident">ERUDITION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.HARMONY"><code class="name">var <span class="ident">HARMONY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.NIHILITY"><code class="name">var <span class="ident">NIHILITY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.PRESERVATION"><code class="name">var <span class="ident">PRESERVATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.REMEMBRANCE"><code class="name">var <span class="ident">REMEMBRANCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.characters.StarRailPath.THE_HUNT"><code class="name">var <span class="ident">THE_HUNT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.starrail.chronicle" href="index.html">genshin.models.starrail.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty" href="#genshin.models.starrail.chronicle.characters.CharacterProperty">CharacterProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.add" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.add">add</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.base" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.base">base</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.final" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.final">final</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.info" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.info">info</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.model_config" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.model_fields" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.preferred" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.preferred">preferred</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.property_type" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.property_type">property_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.CharacterProperty.recommended" href="#genshin.models.starrail.chronicle.characters.CharacterProperty.recommended">recommended</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty">ModifyRelicProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_config" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_fields" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.modify_property_type" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty.modify_property_type">modify_property_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.ModifyRelicProperty.property_type" href="#genshin.models.starrail.chronicle.characters.ModifyRelicProperty.property_type">property_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo" href="#genshin.models.starrail.chronicle.characters.PropertyInfo">PropertyInfo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.icon" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.model_config" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.model_fields" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.name" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_filter" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_filter">property_name_filter</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_relic" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.property_name_relic">property_name_relic</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.PropertyInfo.property_type" href="#genshin.models.starrail.chronicle.characters.PropertyInfo.property_type">property_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.Rank" href="#genshin.models.starrail.chronicle.characters.Rank">Rank</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.desc" href="#genshin.models.starrail.chronicle.characters.Rank.desc">desc</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.icon" href="#genshin.models.starrail.chronicle.characters.Rank.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.id" href="#genshin.models.starrail.chronicle.characters.Rank.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.is_unlocked" href="#genshin.models.starrail.chronicle.characters.Rank.is_unlocked">is_unlocked</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.Rank.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.model_config" href="#genshin.models.starrail.chronicle.characters.Rank.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.model_fields" href="#genshin.models.starrail.chronicle.characters.Rank.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.name" href="#genshin.models.starrail.chronicle.characters.Rank.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Rank.pos" href="#genshin.models.starrail.chronicle.characters.Rank.pos">pos</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty" href="#genshin.models.starrail.chronicle.characters.RecommendProperty">RecommendProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.custom_relic_properties" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.custom_relic_properties">custom_relic_properties</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.is_custom_property_valid" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.is_custom_property_valid">is_custom_property_valid</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.model_config" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.model_fields" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RecommendProperty.recommend_relic_properties" href="#genshin.models.starrail.chronicle.characters.RecommendProperty.recommend_relic_properties">recommend_relic_properties</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.Relic" href="#genshin.models.starrail.chronicle.characters.Relic">Relic</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.desc" href="#genshin.models.starrail.chronicle.characters.Relic.desc">desc</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.icon" href="#genshin.models.starrail.chronicle.characters.Relic.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.id" href="#genshin.models.starrail.chronicle.characters.Relic.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.level" href="#genshin.models.starrail.chronicle.characters.Relic.level">level</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.main_property" href="#genshin.models.starrail.chronicle.characters.Relic.main_property">main_property</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.Relic.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.model_config" href="#genshin.models.starrail.chronicle.characters.Relic.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.model_fields" href="#genshin.models.starrail.chronicle.characters.Relic.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.name" href="#genshin.models.starrail.chronicle.characters.Relic.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.pos" href="#genshin.models.starrail.chronicle.characters.Relic.pos">pos</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.properties" href="#genshin.models.starrail.chronicle.characters.Relic.properties">properties</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.rarity" href="#genshin.models.starrail.chronicle.characters.Relic.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Relic.wiki" href="#genshin.models.starrail.chronicle.characters.Relic.wiki">wiki</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty" href="#genshin.models.starrail.chronicle.characters.RelicProperty">RelicProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.info" href="#genshin.models.starrail.chronicle.characters.RelicProperty.info">info</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.RelicProperty.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.model_config" href="#genshin.models.starrail.chronicle.characters.RelicProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.model_fields" href="#genshin.models.starrail.chronicle.characters.RelicProperty.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.preferred" href="#genshin.models.starrail.chronicle.characters.RelicProperty.preferred">preferred</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.property_type" href="#genshin.models.starrail.chronicle.characters.RelicProperty.property_type">property_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.recommended" href="#genshin.models.starrail.chronicle.characters.RelicProperty.recommended">recommended</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.times" href="#genshin.models.starrail.chronicle.characters.RelicProperty.times">times</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.RelicProperty.value" href="#genshin.models.starrail.chronicle.characters.RelicProperty.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.Skill" href="#genshin.models.starrail.chronicle.characters.Skill">Skill</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.anchor" href="#genshin.models.starrail.chronicle.characters.Skill.anchor">anchor</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.is_activated" href="#genshin.models.starrail.chronicle.characters.Skill.is_activated">is_activated</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.is_rank_work" href="#genshin.models.starrail.chronicle.characters.Skill.is_rank_work">is_rank_work</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.item_url" href="#genshin.models.starrail.chronicle.characters.Skill.item_url">item_url</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.level" href="#genshin.models.starrail.chronicle.characters.Skill.level">level</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.Skill.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.model_config" href="#genshin.models.starrail.chronicle.characters.Skill.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.model_fields" href="#genshin.models.starrail.chronicle.characters.Skill.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.point_id" href="#genshin.models.starrail.chronicle.characters.Skill.point_id">point_id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.point_type" href="#genshin.models.starrail.chronicle.characters.Skill.point_type">point_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.pre_point" href="#genshin.models.starrail.chronicle.characters.Skill.pre_point">pre_point</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.remake" href="#genshin.models.starrail.chronicle.characters.Skill.remake">remake</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.Skill.skill_stages" href="#genshin.models.starrail.chronicle.characters.Skill.skill_stages">skill_stages</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.SkillStage" href="#genshin.models.starrail.chronicle.characters.SkillStage">SkillStage</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.desc" href="#genshin.models.starrail.chronicle.characters.SkillStage.desc">desc</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.is_activated" href="#genshin.models.starrail.chronicle.characters.SkillStage.is_activated">is_activated</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.is_rank_work" href="#genshin.models.starrail.chronicle.characters.SkillStage.is_rank_work">is_rank_work</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.item_url" href="#genshin.models.starrail.chronicle.characters.SkillStage.item_url">item_url</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.level" href="#genshin.models.starrail.chronicle.characters.SkillStage.level">level</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.SkillStage.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.model_config" href="#genshin.models.starrail.chronicle.characters.SkillStage.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.model_fields" href="#genshin.models.starrail.chronicle.characters.SkillStage.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.name" href="#genshin.models.starrail.chronicle.characters.SkillStage.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.SkillStage.remake" href="#genshin.models.starrail.chronicle.characters.SkillStage.remake">remake</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter">StarRailDetailCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.equip" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.equip">equip</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.figure_path" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.figure_path">figure_path</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.image" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.image">image</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_config" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_fields" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ornaments" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ornaments">ornaments</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.path" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.path">path</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.properties" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.properties">properties</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ranks" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.ranks">ranks</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.relics" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.relics">relics</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.skills" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacter.skills">skills</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters">StarRailDetailCharacters</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.avatar_list" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.avatar_list">avatar_list</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.equip_wiki" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.equip_wiki">equip_wiki</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_config" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_fields" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.property_info" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.property_info">property_info</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.recommend_property" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.recommend_property">recommend_property</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_properties" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_properties">relic_properties</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_wiki" href="#genshin.models.starrail.chronicle.characters.StarRailDetailCharacters.relic_wiki">relic_wiki</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment">StarRailEquipment</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.desc" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.desc">desc</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.icon" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.id" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.level" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.level">level</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_computed_fields" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.model_computed_fields">model_computed_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_config" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.model_fields" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.model_fields">model_fields</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.name" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.rank" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.rank">rank</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.rarity" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailEquipment.wiki" href="#genshin.models.starrail.chronicle.characters.StarRailEquipment.wiki">wiki</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath" href="#genshin.models.starrail.chronicle.characters.StarRailPath">StarRailPath</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.ABUNDANCE" href="#genshin.models.starrail.chronicle.characters.StarRailPath.ABUNDANCE">ABUNDANCE</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.DESTRUCTION" href="#genshin.models.starrail.chronicle.characters.StarRailPath.DESTRUCTION">DESTRUCTION</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.ERUDITION" href="#genshin.models.starrail.chronicle.characters.StarRailPath.ERUDITION">ERUDITION</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.HARMONY" href="#genshin.models.starrail.chronicle.characters.StarRailPath.HARMONY">HARMONY</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.NIHILITY" href="#genshin.models.starrail.chronicle.characters.StarRailPath.NIHILITY">NIHILITY</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.PRESERVATION" href="#genshin.models.starrail.chronicle.characters.StarRailPath.PRESERVATION">PRESERVATION</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.REMEMBRANCE" href="#genshin.models.starrail.chronicle.characters.StarRailPath.REMEMBRANCE">REMEMBRANCE</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.characters.StarRailPath.THE_HUNT" href="#genshin.models.starrail.chronicle.characters.StarRailPath.THE_HUNT">THE_HUNT</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.1</a>.</p>
+</footer>
+</body>
+</html>
