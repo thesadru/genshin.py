@@ -18,7 +18,18 @@ if not isinstance(commit_message, str) or "chore(ver)" in commit_message:
     exit()
 
 # Get the current version
-current_version = repo.tags[-1].name.removeprefix("v")  # e.g. 1.7.4
+current_version = None
+with open("pyproject.toml", "r") as f:
+    lines = f.readlines()
+    for line in lines:
+        if line.startswith("version = "):
+            current_version = line.split('"')[1]
+            break
+
+if current_version is None:
+    logger.error("Current version not found in pyproject.toml")
+    exit()
+
 logger.info(f"Current version: {current_version!r}")
 
 # Get patch version
@@ -28,9 +39,6 @@ new_version = f"{major}.{minor}.{patch}"  # e.g. 1.7.5
 logger.info(f"New version: {new_version!r}")
 
 # Update the version number in pyproject.toml
-with open("pyproject.toml", "r") as f:
-    lines = f.readlines()
-
 with open("pyproject.toml", "w") as f:
     for line in lines:
         if line.startswith("version = "):
