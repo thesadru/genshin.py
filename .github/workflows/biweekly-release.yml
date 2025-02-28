@@ -28,26 +28,13 @@ jobs:
       - name: Run biweekly_release.py
         run: uv run biweekly_release.py
 
-      - name: Check for changes
-        id: check_changes
-        run: |
-          # If no changes detected, mark as false; else, mark as true.
-          if git diff --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Commit and push changes
-        if: steps.check_changes.outputs.changed == 'true'
         run: |
           # Configure git
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Stage all changes and commit with the specified message
-          git add .
-          git commit -m "chore(ver): Bump version"
-          git push
+          git config user.name 'github-actions'
+          git config user.email 'github-actions@github.com'
+          git add pyproject.toml
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(ver): Bump version" && git push)
         env:
           # Use the GitHub token for authentication when pushing changes
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
