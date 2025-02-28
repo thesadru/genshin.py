@@ -1,0 +1,53 @@
+name: Biweekly Release
+
+on:
+  # Run on the 1st and 15th of every month (approx. every 2 weeks)
+  schedule:
+    - cron: '0 0 1,15 * *'
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Ensure the token is not persisted to avoid credential issues when pushing changes.
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install GitPython
+        run: uv pip install gitpython
+
+      - name: Run biweekly_release.py
+        run: uv run biweekly_release.py
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          # If no changes detected, mark as false; else, mark as true.
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          # Configure git
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          # Stage all changes and commit with the specified message
+          git add .
+          git commit -m "chore(ver): Bump version"
+          git push
+        env:
+          # Use the GitHub token for authentication when pushing changes
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
