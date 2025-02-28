@@ -30,11 +30,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          # Configure git
           git config user.name 'github-actions'
           git config user.email 'github-actions@github.com'
           git add pyproject.toml
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore(ver): Bump version" && git push)
-        env:
-          # Use the GitHub token for authentication when pushing changes
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
