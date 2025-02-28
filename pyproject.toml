@@ -1,6 +1,6 @@
 [project]
 name = "genshin"
-version = "1.7.5"
+version = "1.7.6"
 description = "API wrapper for HoYoLAB/Miyoushe API built on asyncio and pydantic."
 readme = "README.md"
 requires-python = ">=3.9"
