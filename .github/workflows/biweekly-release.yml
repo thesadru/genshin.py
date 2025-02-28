@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  update-version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -42,6 +42,7 @@ jobs:
           branch: ${{ github.ref }}
 
   create-release:
+    needs: update-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
