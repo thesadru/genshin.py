@@ -92,7 +92,7 @@ jobs:
           coverage xml -i
 
       - name: Upload coverage to codeclimate
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: cd8c7d84ae5f98d86882d666dce0946fe5aae1e63f442995bd9c6e17869e6513
         with:
