@@ -263,6 +263,7 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -2001: (RedemptionInvalid, "Redemption code has expired."),
     -2003: (RedemptionInvalid, "Redemption code is incorrectly formatted."),
     -2004: RedemptionInvalid,
+    -2006: (RedemptionInvalid, "Redemption code has reached max usage limit."),
     -2014: (RedemptionInvalid, "Redemption code not activated"),
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
