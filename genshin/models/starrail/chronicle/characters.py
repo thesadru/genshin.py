@@ -160,6 +160,12 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
     figure_path: str
     skills: Sequence[Skill]
 
+    @pydantic.computed_field
+    @property
+    def is_wearing_outfit(self) -> bool:
+        """Whether the character is wearing an outfit."""
+        return "avatar_skin_image" in self.image
+
 
 class ModifyRelicProperty(APIModel):
     """Modify relic property."""
