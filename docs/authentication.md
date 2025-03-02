@@ -104,40 +104,21 @@ async for wish in client.wish_history(authkey="..."):
 
 ### How can I get my authkey?
 
-To get your authkey manually from other platforms, you can use any of these approaches:
-
 #### PC
 
-- Open the wish history in the game and wait for it to load
-- Open the file at `~\AppData\LocalLow\miHoYo\Genshin Impact\output_log.txt`
-- Find the link which starts with `OnGetWebViewPageFinish` and copy it
+- Genshin Impact: <https://stardb.gg/en/wish-import>
+- Honkai Star Rail: <https://stardb.gg/en/warp-import>
+- Zenless Zone Zero: <https://stardb.gg/en/signal-import>
+
+Future games can also be found on the same website.
 
 #### Android
 
-- Open the Paimon menu
-- Click Feedback
-- Wait for it to load, and a feedback page should open
-- Turn off your Wi-Fi
-- Refresh the page
-- The page should display an error containing a link
-- Copy the link
+Difficult, check <https://gist.github.com/jogerj/2372d0e5bee51e001a6d8956240d527b> for more information. If it's no longer valid, utilize Google and search "android genshin impact wish import" or similar.
 
-#### PS
+#### iOS
 
-- Open any event mail which contains a QR Code
-- Scan the QR Code with your phone
-- Copy the link
-  > You can only use this if you have an in-game mail with QR Code to open the web event
-
-After that, you can extract the authkey from the link using `genshin.utility.extract_authkey`.
-
-```py
-url = "https://webstatic-sea.mihoyo.com/ys/event/im-service/index.html?..."
-authkey = genshin.utility.extract_authkey(url)
-
-client = genshin.Client()
-client.authkey = authkey
-```
+No clue, maybe use a sniffer.
 
 ### Setting authkeys automatically
 
