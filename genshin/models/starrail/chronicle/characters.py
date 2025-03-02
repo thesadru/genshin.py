@@ -12,6 +12,8 @@ from .. import character
 
 __all__ = [
     "CharacterProperty",
+    "MemoSprite",
+    "MemoSpriteProperty",
     "ModifyRelicProperty",
     "PropertyInfo",
     "Rank",
@@ -125,7 +127,7 @@ class SkillStage(APIModel):
 
 
 class Skill(APIModel):
-    """Character skill."""
+    """Character/Memosprite skill."""
 
     point_id: str
     point_type: int
@@ -147,6 +149,26 @@ class RecommendProperty(APIModel):
     is_custom_property_valid: bool
 
 
+class MemoSpriteProperty(APIModel):
+    """Memosprite property."""
+
+    property_type: int
+    base: str
+    add: str
+    final: str
+    info: PropertyInfo
+
+
+class MemoSprite(APIModel):
+    """Memosprite data."""
+
+    id: int = Aliased("servant_id")
+    name: str = Aliased("servant_name")
+    icon: str = Aliased("servant_icon")
+    properties: Sequence[MemoSpriteProperty] = Aliased("servant_properties")
+    skills: Sequence[Skill] = Aliased("servant_skills")
+
+
 class StarRailDetailCharacter(character.StarRailPartialCharacter):
     """StarRail character with equipment and relics."""
 
@@ -159,6 +181,20 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
     path: StarRailPath = Aliased("base_type")
     figure_path: str
     skills: Sequence[Skill]
+    memosprite: Optional[MemoSprite] = Aliased("servant_detail")
+
+    @property
+    def is_wearing_outfit(self) -> bool:
+        """Whether the character is wearing an outfit."""
+        return "avatar_skin_image" in self.image
+
+    @pydantic.field_validator("memosprite", mode="before")
+    @classmethod
+    def __return_none(cls, value: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Return None if memosprite ID is 0."""
+        if value.get("servant_id", "0") == "0":
+            return None
+        return value
 
 
 class ModifyRelicProperty(APIModel):
@@ -191,6 +227,10 @@ class StarRailDetailCharacters(APIModel):
             char_id = str(char["id"])
             char_rec_props = rec_props[char_id]["recommend_relic_properties"]
             char_custom_props = rec_props[char_id]["custom_relic_properties"]
+
+            for prop in char["servant_detail"]["servant_properties"]:
+                prop_type = prop["property_type"]
+                prop["info"] = props_info[str(prop_type)]
 
             for relic in char["relics"] + char["ornaments"]:
                 prop_type = relic["main_property"]["property_type"]
