@@ -89,6 +89,7 @@ exclude = ["tests", "test.py"]
 # S303: Use of md5
 # S311: Use of pseudo-random generators
 # S324: Use of md5 without usedforsecurity=False (3.9+)
+# A005: Module `X` shadows a Python standard-library module
 ignore = [
     "A001",
     "A002",
@@ -105,6 +106,7 @@ ignore = [
     "S303",
     "S311",
     "S324",
+    "A005"
 ]
 
 # auto-fixing too intrusive
