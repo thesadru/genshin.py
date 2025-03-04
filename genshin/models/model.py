@@ -42,7 +42,7 @@ def Aliased(
 
 
 def add_timezone(value: datetime.datetime) -> datetime.datetime:
-    return value.astimezone(CN_TIMEZONE)
+    return value.replace(tzinfo=CN_TIMEZONE)
 
 
 def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) -> typing.Optional[datetime.datetime]:
