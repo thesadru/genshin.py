@@ -190,8 +190,10 @@ class StarRailDetailCharacter(character.StarRailPartialCharacter):
 
     @pydantic.field_validator("memosprite", mode="before")
     @classmethod
-    def __return_none(cls, value: dict[str, Any]) -> Optional[dict[str, Any]]:
+    def __return_none(cls, value: Optional[dict[str, Any]]) -> Optional[dict[str, Any]]:
         """Return None if memosprite ID is 0."""
+        if value is None:
+            return None
         if value.get("servant_id", "0") == "0":
             return None
         return value
@@ -228,9 +230,11 @@ class StarRailDetailCharacters(APIModel):
             char_rec_props = rec_props[char_id]["recommend_relic_properties"]
             char_custom_props = rec_props[char_id]["custom_relic_properties"]
 
-            for prop in char["servant_detail"]["servant_properties"]:
-                prop_type = prop["property_type"]
-                prop["info"] = props_info[str(prop_type)]
+            servant = char.get("servant_detail", {})
+            if servant:
+                for prop in servant["servant_properties"]:
+                    prop_type = prop["property_type"]
+                    prop["info"] = props_info[str(prop_type)]
 
             for relic in char["relics"] + char["ornaments"]:
                 prop_type = relic["main_property"]["property_type"]
