@@ -4,6 +4,7 @@ import logging
 import typing
 
 import aiohttp
+
 from tenacity import before_sleep_log, retry, retry_if_exception_type, stop_after_attempt, wait_random_exponential
 
 from genshin import errors
@@ -32,10 +33,21 @@ def handle_request_timeouts(
     delay: float = 0.3,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle timeout errors for requests."""
-    return retry(
-        stop=stop_after_attempt(tries),
-        wait=wait_random_exponential(multiplier=delay, min=delay),
-        retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError)),
-        reraise=True,
-        before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
-    )
+    try:
+        from aiohttp_socks import ProxyError
+    except ImportError:
+        return retry(
+            stop=stop_after_attempt(tries),
+            wait=wait_random_exponential(multiplier=delay, min=delay),
+            retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError)),
+            reraise=True,
+            before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+        )
+    else:
+        return retry(
+            stop=stop_after_attempt(tries),
+            wait=wait_random_exponential(multiplier=delay, min=delay),
+            retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError, ProxyError)),
+            reraise=True,
+            before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+        )
