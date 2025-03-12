@@ -139,7 +139,7 @@ class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.
 
         Returns True if the mobile number is valid, False otherwise.
         """
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.get(
                 routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
                 params={"mobile": mobile},

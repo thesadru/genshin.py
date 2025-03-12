@@ -6,8 +6,6 @@ Covers HoYoLAB and Miyoushe web auth endpoints.
 import json
 import typing
 
-import aiohttp
-
 from genshin import constants, errors, types
 from genshin.client import routes
 from genshin.client.components import base
@@ -68,7 +66,7 @@ class WebAuthClient(base.BaseClient):
             "token_type": token_type,
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.WEB_LOGIN_URL.get_url(),
                 json=payload,
@@ -137,7 +135,7 @@ class WebAuthClient(base.BaseClient):
             "password": password if encrypted else auth_utility.encrypt_credentials(password, 2),
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.CN_WEB_LOGIN_URL.get_url(),
                 json=payload,
@@ -181,7 +179,7 @@ class WebAuthClient(base.BaseClient):
             "area_code": auth_utility.encrypt_credentials("+86", 2),
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.MOBILE_OTP_URL.get_url(),
                 json=payload,
@@ -215,7 +213,7 @@ class WebAuthClient(base.BaseClient):
             "captcha": otp,
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.MOBILE_LOGIN_URL.get_url(),
                 json=payload,
