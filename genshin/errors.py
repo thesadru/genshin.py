@@ -34,7 +34,11 @@ class GenshinException(Exception):
     original: str = ""
     msg: str = ""
 
-    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -> None:
+    def __init__(
+        self, response: typing.Optional[typing.Mapping[str, typing.Any]] = None, msg: typing.Optional[str] = None
+    ) -> None:
+        response = response or {}
+
         self.retcode = response.get("retcode", self.retcode)
         self.original = response.get("message", "")
         self.msg = msg or self.msg or self.original
