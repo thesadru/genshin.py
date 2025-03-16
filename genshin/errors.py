@@ -236,6 +236,13 @@ class VerificationCodeRateLimited(GenshinException):
     msg = "Too many verification code requests for the account."
 
 
+class AccountMuted(GenshinException):
+    """Account is muted."""
+
+    retcode = 2010
+    msg = "Account is muted."
+
+
 _TGE = type[GenshinException]
 _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] = {
     # misc hoyolab
@@ -243,6 +250,7 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -108: "Invalid language.",
     -110: VisitsTooFrequently,
     1028: VisitsTooFrequently,
+    2010: AccountMuted,
     # game record
     10001: InvalidCookies,
     -10001: "Malformed request.",
