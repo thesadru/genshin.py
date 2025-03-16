@@ -6,6 +6,7 @@ from genshin.constants import GEETEST_RETCODES
 
 __all__ = [
     "ERRORS",
+    "AccountMuted",
     "AccountNotFound",
     "AlreadyClaimed",
     "AuthkeyException",
