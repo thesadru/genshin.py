@@ -8,7 +8,7 @@ from genshin.models.model import Aliased, APIModel
 
 from ..character import ZZZPartialAgent
 
-__all__ = ("HIACoin", "ZZZBaseBangboo", "ZZZCatNote", "ZZZGameData", "ZZZStats", "ZZZUserStats")
+__all__ = ("HIACoin", "ZZZBaseBangboo", "ZZZCatNote", "ZZZGameData", "ZZZMedal", "ZZZStats", "ZZZUserStats")
 
 
 class HIACoin(APIModel):
@@ -48,6 +48,17 @@ class ZZZCatNote(APIModel):
     total: int
 
 
+class ZZZMedal(APIModel):
+    """ZZZ player medal model."""
+
+    icon: str = Aliased("medal_icon")
+    number: int
+    id: int = Aliased("medal_id")
+    type: str = Aliased("medal_type")
+    name: str
+    is_show: bool
+
+
 class ZZZGameData(APIModel):
     """ZZZ game data model."""
 
@@ -55,8 +66,9 @@ class ZZZGameData(APIModel):
     title_main_color: str
     title_bottom_color: str
     title_bg_url: str
-    medal_list: typing.Sequence[str]
+    medal_icons: typing.Sequence[str] = Aliased("medal_list")
     card_url: str
+    medals: typing.Sequence[ZZZMedal] = Aliased("all_medal_list")
 
 
 class ZZZBaseBangboo(APIModel):
