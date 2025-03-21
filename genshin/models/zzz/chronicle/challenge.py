@@ -81,6 +81,7 @@ class ShiyuDefenseNode(APIModel):
     bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
     recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
     enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
+    battle_time: typing.Optional[datetime.timedelta] = None
 
     @pydantic.field_validator("enemies", mode="before")
     @classmethod
