@@ -139,19 +139,60 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.GenshinUserStats(**data)
 
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: int,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: int,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_spiral_abyss(
         self,
         uid: int,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.SpiralAbyss:
+        raw: bool = False,
+    ) -> typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
         """Get genshin spiral abyss runs."""
         payload = dict(schedule_type=2 if previous else 1)
         data = await self._request_genshin_record("spiralAbyss", uid, lang=lang, payload=payload)
+        if raw:
+            return data
 
         return models.SpiralAbyss(**data)
 
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: int,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: int,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_imaginarium_theater(
         self,
         uid: int,
@@ -159,13 +200,16 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         previous: bool = False,
         need_detail: bool = True,
         lang: typing.Optional[str] = None,
-    ) -> models.ImgTheater:
+        raw: bool = False,
+    ) -> typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
         """Get Genshin Impact imaginarium theater runs."""
         payload = {
-            "schedule_type": 2 if previous else 1,  # There's 1 season for now but I assume it works like this
+            "schedule_type": 2 if previous else 1,
             "need_detail": str(need_detail).lower(),
         }
         data = await self._request_genshin_record("role_combat", uid, lang=lang, payload=payload)
+        if raw:
+            return data
 
         return models.ImgTheater(**data)
 
