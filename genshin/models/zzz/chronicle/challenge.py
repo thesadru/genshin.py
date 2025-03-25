@@ -43,7 +43,7 @@ class ShiyuDefenseCharacter(APIModel):
     level: int
     rarity: typing.Literal["S", "A"]
     element: ZZZElementType = Aliased("element_type")
-    icon: str = Aliased("role_square_avatar")
+    icon: str = Aliased("role_square_url")
     mindscape: int = Aliased("rank")
 
 
