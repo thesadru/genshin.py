@@ -34,7 +34,7 @@ class Unique(abc.ABC):
 
 def Aliased(
     alias: typing.Optional[str] = None,
-    default: typing.Any = None,
+    default: typing.Any = ...,
     **kwargs: typing.Any,
 ) -> typing.Any:
     """Create an aliased field."""
