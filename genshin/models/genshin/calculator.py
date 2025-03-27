@@ -169,8 +169,7 @@ class CalculatorFurnishing(APIModel, Unique):
     icon: str = Aliased("icon_url")
     rarity: int = Aliased("level")
 
-    amount: typing.Optional[int] = Aliased("num")
-
+    amount: typing.Optional[int] = Aliased("num", default=None)
 
 class CalculatorCharacterDetails(APIModel):
     """Details of a synced calculator character."""
