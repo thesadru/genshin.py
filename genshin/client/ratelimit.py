@@ -13,7 +13,7 @@ CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Awaita
 
 
 def handle_ratelimits(
-    tries: int = 5,
+    tries: int = 10,
     exception: type[errors.GenshinException] = errors.VisitsTooFrequently,
     delay: float = 0.5,
 ) -> typing.Callable[[CallableT], CallableT]:
@@ -22,14 +22,14 @@ def handle_ratelimits(
         stop=stop_after_attempt(tries),
         wait=wait_random_exponential(multiplier=delay, min=delay),
         retry=retry_if_exception_type(exception),
-        reraise=True,  # Raise the final exception after retries are exhausted
+        reraise=True,
         before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
     )
 
 
 def handle_request_timeouts(
-    tries: int = 5,
-    delay: float = 0.3,
+    tries: int = 10,
+    delay: float = 0.5,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle timeout errors for requests."""
     try:
