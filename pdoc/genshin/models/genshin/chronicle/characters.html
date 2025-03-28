@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.characters API documentation</title>
+<meta name="description" content="Genshin chronicle character.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.characters</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin chronicle character.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact"><code class="flex name class">
+<span>class <span class="ident">Artifact</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Artifact(APIModel, Unique):
+    &#34;&#34;&#34;Character&#39;s equipped artifact.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    name: str
+    pos_name: str
+    pos: int
+    rarity: int
+    level: int
+    set: ArtifactSet</code></pre>
+</details>
+<div class="desc"><p>Character's equipped artifact.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.DetailArtifact" href="#genshin.models.genshin.chronicle.characters.DetailArtifact">DetailArtifact</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.pos"><code class="name">var <span class="ident">pos</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.pos_name"><code class="name">var <span class="ident">pos_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Artifact.set"><code class="name">var <span class="ident">set</span> : <a title="genshin.models.genshin.chronicle.characters.ArtifactSet" href="#genshin.models.genshin.chronicle.characters.ArtifactSet">ArtifactSet</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactProperty"><code class="flex name class">
+<span>class <span class="ident">ArtifactProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArtifactProperty(APIModel):
+    &#34;&#34;&#34;Artifact&#39;s Property value &amp; roll count.&#34;&#34;&#34;
+
+    value: str
+    times: int
+    info: PropInfo</code></pre>
+</details>
+<div class="desc"><p>Artifact's Property value &amp; roll count.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactProperty.info"><code class="name">var <span class="ident">info</span> : <a title="genshin.models.genshin.chronicle.characters.PropInfo" href="#genshin.models.genshin.chronicle.characters.PropInfo">PropInfo</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactProperty.times"><code class="name">var <span class="ident">times</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactProperty.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSet"><code class="flex name class">
+<span>class <span class="ident">ArtifactSet</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArtifactSet(APIModel, Unique):
+    &#34;&#34;&#34;Artifact set.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    effects: typing.Sequence[ArtifactSetEffect] = Aliased(&#34;affixes&#34;)</code></pre>
+</details>
+<div class="desc"><p>Artifact set.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSet.effects"><code class="name">var <span class="ident">effects</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect">ArtifactSetEffect</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSet.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSet.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSet.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSetEffect"><code class="flex name class">
+<span>class <span class="ident">ArtifactSetEffect</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArtifactSetEffect(APIModel):
+    &#34;&#34;&#34;Effect of an artifact set.&#34;&#34;&#34;
+
+    required_piece_num: int = Aliased(&#34;activation_number&#34;)
+    effect: str
+    active: bool = Aliased(&#34;enabled&#34;, default=False)</code></pre>
+</details>
+<div class="desc"><p>Effect of an artifact set.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.active"><code class="name">var <span class="ident">active</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.effect"><code class="name">var <span class="ident">effect</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.required_piece_num"><code class="name">var <span class="ident">required_piece_num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Character"><code class="flex name class">
+<span>class <span class="ident">Character</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Character(PartialCharacter):
+    &#34;&#34;&#34;Character with equipment.&#34;&#34;&#34;
+
+    weapon: CharacterWeapon
+    weapon_type: int</code></pre>
+</details>
+<div class="desc"><p>Character with equipment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.PartialCharacter" href="#genshin.models.genshin.chronicle.characters.PartialCharacter">PartialCharacter</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Character.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Character.weapon"><code class="name">var <span class="ident">weapon</span> : <a title="genshin.models.genshin.chronicle.characters.CharacterWeapon" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon">CharacterWeapon</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Character.weapon_type"><code class="name">var <span class="ident">weapon_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.chronicle.characters.PartialCharacter" href="#genshin.models.genshin.chronicle.characters.PartialCharacter">PartialCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill"><code class="flex name class">
+<span>class <span class="ident">CharacterSkill</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CharacterSkill(APIModel):
+    &#34;&#34;&#34;Character&#39;s skill.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;skill_id&#34;)
+    skill_type: int
+    name: str
+    level: int
+
+    description: str = Aliased(&#34;desc&#34;)
+    affixes: typing.Sequence[SkillAffix] = Aliased(&#34;skill_affix_list&#34;)
+    icon: str
+    is_unlocked: bool = Aliased(&#34;is_unlock&#34;)</code></pre>
+</details>
+<div class="desc"><p>Character's skill.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.affixes"><code class="name">var <span class="ident">affixes</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.SkillAffix" href="#genshin.models.genshin.chronicle.characters.SkillAffix">SkillAffix</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.is_unlocked"><code class="name">var <span class="ident">is_unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterSkill.skill_type"><code class="name">var <span class="ident">skill_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon"><code class="flex name class">
+<span>class <span class="ident">CharacterWeapon</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CharacterWeapon(APIModel, Unique):
+    &#34;&#34;&#34;Character&#39;s equipped weapon.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    name: str
+    rarity: int
+    level: int
+    type: int
+    refinement: int = Aliased(&#34;affix_level&#34;)</code></pre>
+</details>
+<div class="desc"><p>Character's equipped weapon.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon">DetailCharacterWeapon</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.refinement"><code class="name">var <span class="ident">refinement</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.CharacterWeapon.type"><code class="name">var <span class="ident">type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation"><code class="flex name class">
+<span>class <span class="ident">Constellation</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Constellation(APIModel, Unique):
+    &#34;&#34;&#34;Character constellation.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    pos: int
+    name: str
+    effect: str
+    activated: bool = Aliased(&#34;is_actived&#34;)
+
+    @property
+    def scaling(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the constellation is simply for talent scaling&#34;&#34;&#34;
+        return &#34;U&#34; in self.icon</code></pre>
+</details>
+<div class="desc"><p>Character constellation.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.activated"><code class="name">var <span class="ident">activated</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.effect"><code class="name">var <span class="ident">effect</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.pos"><code class="name">var <span class="ident">pos</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Constellation.scaling"><code class="name">prop <span class="ident">scaling</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def scaling(self) -&gt; bool:
+    &#34;&#34;&#34;Whether the constellation is simply for talent scaling&#34;&#34;&#34;
+    return &#34;U&#34; in self.icon</code></pre>
+</details>
+<div class="desc"><p>Whether the constellation is simply for talent scaling</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailArtifact"><code class="flex name class">
+<span>class <span class="ident">DetailArtifact</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DetailArtifact(Artifact):
+    &#34;&#34;&#34;Detailed artifact with main/sub stats.&#34;&#34;&#34;
+
+    main_stat: ArtifactProperty = Aliased(&#34;main_property&#34;)
+    sub_stats: typing.Sequence[ArtifactProperty] = Aliased(&#34;sub_property_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Detailed artifact with main/sub stats.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.Artifact" href="#genshin.models.genshin.chronicle.characters.Artifact">Artifact</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.DetailArtifact.main_stat"><code class="name">var <span class="ident">main_stat</span> : <a title="genshin.models.genshin.chronicle.characters.ArtifactProperty" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty">ArtifactProperty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailArtifact.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailArtifact.sub_stats"><code class="name">var <span class="ident">sub_stats</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.ArtifactProperty" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty">ArtifactProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon"><code class="flex name class">
+<span>class <span class="ident">DetailCharacterWeapon</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DetailCharacterWeapon(CharacterWeapon):
+    &#34;&#34;&#34;Detailed Genshin Weapon with main/sub stats.&#34;&#34;&#34;
+
+    main_stat: PropertyValue = Aliased(&#34;main_property&#34;)
+    sub_stat: typing.Optional[PropertyValue] = Aliased(&#34;sub_property&#34;)
+    ascension: int = Aliased(&#34;promote_level&#34;)</code></pre>
+</details>
+<div class="desc"><p>Detailed Genshin Weapon with main/sub stats.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon">CharacterWeapon</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.ascension"><code class="name">var <span class="ident">ascension</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.main_stat"><code class="name">var <span class="ident">main_stat</span> : <a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.sub_stat"><code class="name">var <span class="ident">sub_stat</span> : <a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter"><code class="flex name class">
+<span>class <span class="ident">GenshinDetailCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinDetailCharacter(PartialCharacter):
+    &#34;&#34;&#34;Full Detailed Genshin Character&#34;&#34;&#34;
+
+    is_chosen: bool
+
+    # display_image is a different image that is returned by the full character endpoint, but it is not the full gacha art.
+    display_image: str = Aliased(&#34;image&#34;)
+
+    weapon_type: GenshinWeaponType
+    weapon: DetailCharacterWeapon
+
+    costumes: typing.Sequence[Outfit]
+
+    artifacts: typing.Sequence[DetailArtifact] = Aliased(&#34;relics&#34;)
+    constellations: typing.Sequence[Constellation]
+
+    skills: typing.Sequence[CharacterSkill]
+
+    selected_properties: typing.Sequence[PropertyValue]
+    base_properties: typing.Sequence[PropertyValue]
+    extra_properties: typing.Sequence[PropertyValue]
+    element_properties: typing.Sequence[PropertyValue]</code></pre>
+</details>
+<div class="desc"><p>Full Detailed Genshin Character</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.PartialCharacter" href="#genshin.models.genshin.chronicle.characters.PartialCharacter">PartialCharacter</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.artifacts"><code class="name">var <span class="ident">artifacts</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.DetailArtifact" href="#genshin.models.genshin.chronicle.characters.DetailArtifact">DetailArtifact</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.base_properties"><code class="name">var <span class="ident">base_properties</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.constellations"><code class="name">var <span class="ident">constellations</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.Constellation" href="#genshin.models.genshin.chronicle.characters.Constellation">Constellation</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.costumes"><code class="name">var <span class="ident">costumes</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.Outfit" href="#genshin.models.genshin.chronicle.characters.Outfit">Outfit</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.display_image"><code class="name">var <span class="ident">display_image</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.element_properties"><code class="name">var <span class="ident">element_properties</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.extra_properties"><code class="name">var <span class="ident">extra_properties</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.is_chosen"><code class="name">var <span class="ident">is_chosen</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.selected_properties"><code class="name">var <span class="ident">selected_properties</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.skills"><code class="name">var <span class="ident">skills</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.CharacterSkill" href="#genshin.models.genshin.chronicle.characters.CharacterSkill">CharacterSkill</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon"><code class="name">var <span class="ident">weapon</span> : <a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon">DetailCharacterWeapon</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon_type"><code class="name">var <span class="ident">weapon_type</span> : <a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType">GenshinWeaponType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.chronicle.characters.PartialCharacter" href="#genshin.models.genshin.chronicle.characters.PartialCharacter">PartialCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters"><code class="flex name class">
+<span>class <span class="ident">GenshinDetailCharacters</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinDetailCharacters(APIModel):
+    &#34;&#34;&#34;Genshin character list.&#34;&#34;&#34;
+
+    characters: typing.Sequence[GenshinDetailCharacter] = Aliased(&#34;list&#34;)
+
+    property_map: typing.Mapping[str, PropInfo]
+    possible_artifact_stats: typing.Mapping[str, typing.Sequence[PropInfo]] = Aliased(&#34;relic_property_options&#34;)
+
+    artifact_wiki: typing.Mapping[str, str] = Aliased(&#34;relic_wiki&#34;)
+    weapon_wiki: typing.Mapping[str, str]
+    avatar_wiki: typing.Mapping[str, str]
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __fill_prop_info(cls, values: dict[str, typing.Any]) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Fill property info from properety_map.&#34;&#34;&#34;
+        relic_property_options: dict[str, list[int]] = values.get(&#34;relic_property_options&#34;, {})
+        prop_map: dict[str, dict[str, typing.Any]] = values.get(&#34;property_map&#34;, {})
+        characters: list[dict[str, typing.Any]] = values.get(&#34;list&#34;, [])
+
+        # Map properties to artifacts
+        new_relic_prop_options: dict[str, list[dict[str, typing.Any]]] = {}
+        for relic_type, properties in relic_property_options.items():
+            formatted_properties: list[dict[str, typing.Any]] = [
+                prop_map[str(prop)] for prop in properties if str(prop) in prop_map
+            ]
+            new_relic_prop_options[relic_type] = formatted_properties
+
+        # Override relic_property_options
+        values[&#34;relic_property_options&#34;] = new_relic_prop_options
+
+        for char in characters:
+            # Extract character info from .base
+            for key, value in char[&#34;base&#34;].items():
+                if key == &#34;weapon&#34;:  # Ignore .weapon in base as it does not have full info.
+                    continue
+                char[key] = value
+
+            # Map properties to main/sub stat for weapon.
+            main_property = char[&#34;weapon&#34;][&#34;main_property&#34;]
+            char[&#34;weapon&#34;][&#34;main_property&#34;][&#34;info&#34;] = prop_map[str(main_property[&#34;property_type&#34;])]
+            if sub_property := char[&#34;weapon&#34;][&#34;sub_property&#34;]:
+                char[&#34;weapon&#34;][&#34;sub_property&#34;][&#34;info&#34;] = prop_map[str(sub_property[&#34;property_type&#34;])]
+
+            # Map properties to artifacts
+            for artifact in char[&#34;relics&#34;]:
+                main_property = artifact[&#34;main_property&#34;]
+                artifact[&#34;main_property&#34;][&#34;info&#34;] = prop_map[str(main_property[&#34;property_type&#34;])]
+                for sub_property in artifact[&#34;sub_property_list&#34;]:
+                    sub_property[&#34;info&#34;] = prop_map[str(sub_property[&#34;property_type&#34;])]
+
+            # Map character properties
+            for prop in (
+                char[&#34;base_properties&#34;]
+                + char[&#34;selected_properties&#34;]
+                + char[&#34;extra_properties&#34;]
+                + char[&#34;element_properties&#34;]
+            ):
+                prop[&#34;info&#34;] = prop_map[str(prop[&#34;property_type&#34;])]
+
+        return values</code></pre>
+</details>
+<div class="desc"><p>Genshin character list.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.artifact_wiki"><code class="name">var <span class="ident">artifact_wiki</span> : Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.avatar_wiki"><code class="name">var <span class="ident">avatar_wiki</span> : Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter">GenshinDetailCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.possible_artifact_stats"><code class="name">var <span class="ident">possible_artifact_stats</span> : Mapping[str, Sequence[<a title="genshin.models.genshin.chronicle.characters.PropInfo" href="#genshin.models.genshin.chronicle.characters.PropInfo">PropInfo</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.property_map"><code class="name">var <span class="ident">property_map</span> : Mapping[str, <a title="genshin.models.genshin.chronicle.characters.PropInfo" href="#genshin.models.genshin.chronicle.characters.PropInfo">PropInfo</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.weapon_wiki"><code class="name">var <span class="ident">weapon_wiki</span> : Mapping[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType"><code class="flex name class">
+<span>class <span class="ident">GenshinWeaponType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinWeaponType(enum.IntEnum):
+    &#34;&#34;&#34;Character weapon types.&#34;&#34;&#34;
+
+    SWORD = 1
+    CATALYST = 10
+    CLAYMORE = 11
+    BOW = 12
+    POLEARM = 13</code></pre>
+</details>
+<div class="desc"><p>Character weapon types.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType.BOW"><code class="name">var <span class="ident">BOW</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType.CATALYST"><code class="name">var <span class="ident">CATALYST</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType.CLAYMORE"><code class="name">var <span class="ident">CLAYMORE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType.POLEARM"><code class="name">var <span class="ident">POLEARM</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.GenshinWeaponType.SWORD"><code class="name">var <span class="ident">SWORD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Outfit"><code class="flex name class">
+<span>class <span class="ident">Outfit</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Outfit(APIModel, Unique):
+    &#34;&#34;&#34;Outfit of a character.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    name: str</code></pre>
+</details>
+<div class="desc"><p>Outfit of a character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.Outfit.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Outfit.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Outfit.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.Outfit.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PartialCharacter"><code class="flex name class">
+<span>class <span class="ident">PartialCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PartialCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;Character without any equipment.&#34;&#34;&#34;
+
+    level: int
+    friendship: int = Aliased(&#34;fetter&#34;)
+    constellation: int = Aliased(&#34;actived_constellation_num&#34;)</code></pre>
+</details>
+<div class="desc"><p>Character without any equipment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.characters.Character" href="#genshin.models.genshin.chronicle.characters.Character">Character</a></li>
+<li><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter">GenshinDetailCharacter</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.PartialCharacter.constellation"><code class="name">var <span class="ident">constellation</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PartialCharacter.friendship"><code class="name">var <span class="ident">friendship</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PartialCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PartialCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo"><code class="flex name class">
+<span>class <span class="ident">PropInfo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PropInfo(APIModel):
+    &#34;&#34;&#34;A property such as Crit Rate, HP, HP%.&#34;&#34;&#34;
+
+    type: int = Aliased(&#34;property_type&#34;)
+    name: str
+    icon: typing.Optional[str]
+    filter_name: str
+
+    @pydantic.field_validator(&#34;name&#34;, &#34;filter_name&#34;)
+    @classmethod
+    def __fix_names(cls, value: str) -&gt; str:
+        r&#34;&#34;&#34;Fix &#34;\xa0&#34; in Crit Damage + Crit Rate names.&#34;&#34;&#34;
+        return value.replace(&#34;\xa0&#34;, &#34; &#34;)</code></pre>
+</details>
+<div class="desc"><p>A property such as Crit Rate, HP, HP%.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo.filter_name"><code class="name">var <span class="ident">filter_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo.icon"><code class="name">var <span class="ident">icon</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropInfo.type"><code class="name">var <span class="ident">type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue"><code class="flex name class">
+<span>class <span class="ident">PropertyValue</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PropertyValue(APIModel):
+    &#34;&#34;&#34;A property with a value.&#34;&#34;&#34;
+
+    base: str
+    add: str
+    final: str
+    info: PropInfo</code></pre>
+</details>
+<div class="desc"><p>A property with a value.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue.add"><code class="name">var <span class="ident">add</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue.base"><code class="name">var <span class="ident">base</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue.final"><code class="name">var <span class="ident">final</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue.info"><code class="name">var <span class="ident">info</span> : <a title="genshin.models.genshin.chronicle.characters.PropInfo" href="#genshin.models.genshin.chronicle.characters.PropInfo">PropInfo</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.PropertyValue.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.SkillAffix"><code class="flex name class">
+<span>class <span class="ident">SkillAffix</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SkillAffix(APIModel):
+    &#34;&#34;&#34;Skill affix texts.&#34;&#34;&#34;
+
+    name: str
+    value: str</code></pre>
+</details>
+<div class="desc"><p>Skill affix texts.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.characters.SkillAffix.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.SkillAffix.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.characters.SkillAffix.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.Artifact" href="#genshin.models.genshin.chronicle.characters.Artifact">Artifact</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.icon" href="#genshin.models.genshin.chronicle.characters.Artifact.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.id" href="#genshin.models.genshin.chronicle.characters.Artifact.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.level" href="#genshin.models.genshin.chronicle.characters.Artifact.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.model_config" href="#genshin.models.genshin.chronicle.characters.Artifact.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.name" href="#genshin.models.genshin.chronicle.characters.Artifact.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.pos" href="#genshin.models.genshin.chronicle.characters.Artifact.pos">pos</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.pos_name" href="#genshin.models.genshin.chronicle.characters.Artifact.pos_name">pos_name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.rarity" href="#genshin.models.genshin.chronicle.characters.Artifact.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Artifact.set" href="#genshin.models.genshin.chronicle.characters.Artifact.set">set</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.ArtifactProperty" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty">ArtifactProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactProperty.info" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty.info">info</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactProperty.model_config" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactProperty.times" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty.times">times</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactProperty.value" href="#genshin.models.genshin.chronicle.characters.ArtifactProperty.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSet" href="#genshin.models.genshin.chronicle.characters.ArtifactSet">ArtifactSet</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSet.effects" href="#genshin.models.genshin.chronicle.characters.ArtifactSet.effects">effects</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSet.id" href="#genshin.models.genshin.chronicle.characters.ArtifactSet.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSet.model_config" href="#genshin.models.genshin.chronicle.characters.ArtifactSet.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSet.name" href="#genshin.models.genshin.chronicle.characters.ArtifactSet.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect">ArtifactSetEffect</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.active" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect.active">active</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.effect" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect.effect">effect</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.model_config" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.ArtifactSetEffect.required_piece_num" href="#genshin.models.genshin.chronicle.characters.ArtifactSetEffect.required_piece_num">required_piece_num</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.Character" href="#genshin.models.genshin.chronicle.characters.Character">Character</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.Character.model_config" href="#genshin.models.genshin.chronicle.characters.Character.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Character.weapon" href="#genshin.models.genshin.chronicle.characters.Character.weapon">weapon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Character.weapon_type" href="#genshin.models.genshin.chronicle.characters.Character.weapon_type">weapon_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill" href="#genshin.models.genshin.chronicle.characters.CharacterSkill">CharacterSkill</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.affixes" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.affixes">affixes</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.description" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.icon" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.id" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.is_unlocked" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.is_unlocked">is_unlocked</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.level" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.model_config" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.name" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterSkill.skill_type" href="#genshin.models.genshin.chronicle.characters.CharacterSkill.skill_type">skill_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon">CharacterWeapon</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.icon" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.id" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.level" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.model_config" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.name" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.rarity" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.refinement" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.refinement">refinement</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.CharacterWeapon.type" href="#genshin.models.genshin.chronicle.characters.CharacterWeapon.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.Constellation" href="#genshin.models.genshin.chronicle.characters.Constellation">Constellation</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.activated" href="#genshin.models.genshin.chronicle.characters.Constellation.activated">activated</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.effect" href="#genshin.models.genshin.chronicle.characters.Constellation.effect">effect</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.icon" href="#genshin.models.genshin.chronicle.characters.Constellation.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.id" href="#genshin.models.genshin.chronicle.characters.Constellation.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.model_config" href="#genshin.models.genshin.chronicle.characters.Constellation.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.name" href="#genshin.models.genshin.chronicle.characters.Constellation.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.pos" href="#genshin.models.genshin.chronicle.characters.Constellation.pos">pos</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Constellation.scaling" href="#genshin.models.genshin.chronicle.characters.Constellation.scaling">scaling</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.DetailArtifact" href="#genshin.models.genshin.chronicle.characters.DetailArtifact">DetailArtifact</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailArtifact.main_stat" href="#genshin.models.genshin.chronicle.characters.DetailArtifact.main_stat">main_stat</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailArtifact.model_config" href="#genshin.models.genshin.chronicle.characters.DetailArtifact.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailArtifact.sub_stats" href="#genshin.models.genshin.chronicle.characters.DetailArtifact.sub_stats">sub_stats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon">DetailCharacterWeapon</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.ascension" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.ascension">ascension</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.main_stat" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.main_stat">main_stat</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.model_config" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.sub_stat" href="#genshin.models.genshin.chronicle.characters.DetailCharacterWeapon.sub_stat">sub_stat</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter">GenshinDetailCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.artifacts" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.base_properties" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.base_properties">base_properties</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.constellations" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.constellations">constellations</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.costumes" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.costumes">costumes</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.display_image" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.display_image">display_image</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.element_properties" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.element_properties">element_properties</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.extra_properties" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.extra_properties">extra_properties</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.is_chosen" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.is_chosen">is_chosen</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.model_config" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.selected_properties" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.selected_properties">selected_properties</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.skills" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.skills">skills</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon">weapon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon_type" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacter.weapon_type">weapon_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters">GenshinDetailCharacters</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.artifact_wiki" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.artifact_wiki">artifact_wiki</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.avatar_wiki" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.avatar_wiki">avatar_wiki</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.characters" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.model_config" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.possible_artifact_stats" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.possible_artifact_stats">possible_artifact_stats</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.property_map" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.property_map">property_map</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.weapon_wiki" href="#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters.weapon_wiki">weapon_wiki</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType">GenshinWeaponType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType.BOW" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType.BOW">BOW</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType.CATALYST" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType.CATALYST">CATALYST</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType.CLAYMORE" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType.CLAYMORE">CLAYMORE</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType.POLEARM" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType.POLEARM">POLEARM</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.GenshinWeaponType.SWORD" href="#genshin.models.genshin.chronicle.characters.GenshinWeaponType.SWORD">SWORD</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.Outfit" href="#genshin.models.genshin.chronicle.characters.Outfit">Outfit</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.Outfit.icon" href="#genshin.models.genshin.chronicle.characters.Outfit.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Outfit.id" href="#genshin.models.genshin.chronicle.characters.Outfit.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Outfit.model_config" href="#genshin.models.genshin.chronicle.characters.Outfit.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.Outfit.name" href="#genshin.models.genshin.chronicle.characters.Outfit.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter" href="#genshin.models.genshin.chronicle.characters.PartialCharacter">PartialCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.constellation" href="#genshin.models.genshin.chronicle.characters.PartialCharacter.constellation">constellation</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.friendship" href="#genshin.models.genshin.chronicle.characters.PartialCharacter.friendship">friendship</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.level" href="#genshin.models.genshin.chronicle.characters.PartialCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PartialCharacter.model_config" href="#genshin.models.genshin.chronicle.characters.PartialCharacter.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.PropInfo" href="#genshin.models.genshin.chronicle.characters.PropInfo">PropInfo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropInfo.filter_name" href="#genshin.models.genshin.chronicle.characters.PropInfo.filter_name">filter_name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropInfo.icon" href="#genshin.models.genshin.chronicle.characters.PropInfo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropInfo.model_config" href="#genshin.models.genshin.chronicle.characters.PropInfo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropInfo.name" href="#genshin.models.genshin.chronicle.characters.PropInfo.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropInfo.type" href="#genshin.models.genshin.chronicle.characters.PropInfo.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue" href="#genshin.models.genshin.chronicle.characters.PropertyValue">PropertyValue</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue.add" href="#genshin.models.genshin.chronicle.characters.PropertyValue.add">add</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue.base" href="#genshin.models.genshin.chronicle.characters.PropertyValue.base">base</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue.final" href="#genshin.models.genshin.chronicle.characters.PropertyValue.final">final</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue.info" href="#genshin.models.genshin.chronicle.characters.PropertyValue.info">info</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.PropertyValue.model_config" href="#genshin.models.genshin.chronicle.characters.PropertyValue.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.characters.SkillAffix" href="#genshin.models.genshin.chronicle.characters.SkillAffix">SkillAffix</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.characters.SkillAffix.model_config" href="#genshin.models.genshin.chronicle.characters.SkillAffix.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.SkillAffix.name" href="#genshin.models.genshin.chronicle.characters.SkillAffix.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.characters.SkillAffix.value" href="#genshin.models.genshin.chronicle.characters.SkillAffix.value">value</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
