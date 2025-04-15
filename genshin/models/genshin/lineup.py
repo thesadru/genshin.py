@@ -115,7 +115,7 @@ class LineupArtifactStatFields(APIModel):
         if "reliquary_fst_attr" not in values:
             return values
 
-        artifact_ids = {
+        artifact_ids = {  # type: ignore
             field.json_schema_extra["artifact_id"]: name
             for name, field in cls.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("artifact_id")
@@ -176,7 +176,7 @@ class LineupScenario(APIModel, Unique):
     @pydantic.model_validator(mode="before")
     def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         """Name certain scenarios."""
-        scenario_ids = {
+        scenario_ids = {  # type: ignore
             field.json_schema_extra["scenario_id"]: name
             for name, field in cls.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("scenario_id")
