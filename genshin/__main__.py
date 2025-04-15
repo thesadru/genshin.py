@@ -10,6 +10,7 @@ import typing
 import click
 
 import genshin
+from genshin import types
 
 if os.name == "nt":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # type: ignore
@@ -39,7 +40,7 @@ def client_command(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> 
     @functools.wraps(func)
     @asynchronous
     async def command(
-        cookies: typing.Optional[str] = None, lang: str = "en-us", debug: bool = False, **kwargs: typing.Any
+        cookies: typing.Optional[str] = None, lang: types.Lang = "en-us", debug: bool = False, **kwargs: typing.Any
     ) -> typing.Any:
         client = genshin.Client(cookies, lang=lang, debug=debug)
         if cookies is None:

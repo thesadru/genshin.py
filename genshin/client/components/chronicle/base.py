@@ -9,6 +9,7 @@ from genshin import errors, models, types, utility
 from genshin.client import cache, routes
 from genshin.client.components import base
 from genshin.client.manager import managers
+from genshin.constants import GAME_LANGS
 from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import deprecation
 
@@ -48,15 +49,20 @@ class BaseBattleChronicleClient(base.BaseClient):
         **kwargs: typing.Any,
     ) -> typing.Mapping[str, typing.Any]:
         """Make a request towards the game record endpoint."""
+        game = game or self.default_game
+
         if isinstance(custom_route, routes.InternationalRoute):
             base_url = routes.CARD_WAPI_URL.get_url(region or self.region)
         elif isinstance(custom_route, routes.Route):
             base_url = custom_route.get_url()
         else:
-            game = game or self.default_game
             if game is None:
                 raise RuntimeError("No default game set.")
             base_url = routes.RECORD_URL.get_url(region or self.region, game)
+
+        if game is not None and (lang or self.lang) not in GAME_LANGS[game]:
+            warnings.warn(f"Language '{lang or self.lang}' is not supported for {game.name}. Defaulting to 'en-us'.")
+            lang = "en-us"
 
         url = base_url / endpoint
 

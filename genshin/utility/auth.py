@@ -6,7 +6,7 @@ import json
 import typing
 from hashlib import sha256
 
-from genshin import constants, types
+from genshin import types
 
 __all__ = ["encrypt_credentials", "generate_sign"]
 
@@ -124,28 +124,28 @@ GAME_LOGIN_HEADERS = {
     "x-rpc-device_id": DEVICE_ID,
 }
 
-GEETEST_LANGS = {
-    "简体中文": "zh-cn",
-    "繁體中文": "zh-tw",
-    "Deutsch": "de",
-    "English": "en",
-    "Español": "es",
-    "Français": "fr",
-    "Indonesia": "id",
-    "Italiano": "it",
-    "日本語": "ja",
-    "한국어": "ko",
-    "Português": "pt-pt",
-    "Pусский": "ru",
-    "ภาษาไทย": "th",
-    "Tiếng Việt": "vi",
-    "Türkçe": "tr",
+GEETEST_LANGS: typing.Final[typing.Dict[types.Lang, str]] = {
+    "zh-cn": "zh-cn",
+    "zh-tw": "zh-tw",
+    "de-de": "de",
+    "en-us": "en",
+    "es-es": "es",
+    "fr-fr": "fr",
+    "id-id": "id",
+    "it-it": "it",
+    "ja-jp": "ja",
+    "ko-kr": "ko",
+    "pt-pt": "pt-pt",
+    "ru-ru": "ru",
+    "th-th": "th",
+    "vi-vn": "vi",
+    "tr-tr": "tr",
 }
 
 
-def lang_to_geetest_lang(lang: str) -> str:
+def lang_to_geetest_lang(lang: types.Lang) -> str:
     """Convert `client.lang` to geetest lang."""
-    return GEETEST_LANGS.get(constants.LANGS.get(lang, "en-us"), "en")
+    return GEETEST_LANGS.get(lang, "en")
 
 
 def encrypt_credentials(text: str, key_type: typing.Literal[1, 2]) -> str:

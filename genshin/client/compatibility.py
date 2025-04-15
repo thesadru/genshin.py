@@ -27,7 +27,7 @@ class GenshinClient(clients.Client):
         cookies: typing.Optional[typing.Any] = None,
         authkey: typing.Optional[str] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         region: types.Region = types.Region.OVERSEAS,
         debug: bool = False,
     ) -> None:
@@ -132,7 +132,7 @@ class ChineseClient(GenshinClient):
         cookies: typing.Optional[typing.Mapping[str, str]] = None,
         authkey: typing.Optional[str] = None,
         *,
-        lang: str = "zh-cn",
+        lang: types.Lang = "zh-cn",
         debug: bool = False,
     ) -> None:
         super().__init__(
@@ -156,7 +156,7 @@ class MultiCookieClient(GenshinClient):
         self,
         cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         debug: bool = False,
     ) -> None:
         super().__init__(
@@ -178,7 +178,7 @@ class ChineseMultiCookieClient(GenshinClient):
         self,
         cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         debug: bool = False,
     ) -> None:
         super().__init__(

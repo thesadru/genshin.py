@@ -9,6 +9,7 @@ import webbrowser
 import aiohttp
 from aiohttp import web
 
+from genshin import types
 from genshin.models.auth.geetest import (
     MMT,
     MMTResult,
@@ -207,7 +208,7 @@ async def launch_webapp(
 async def solve_geetest(
     mmt: RiskyCheckMMT,
     *,
-    lang: str = ...,
+    lang: types.Lang = ...,
     api_server: str = ...,
     port: int = ...,
 ) -> RiskyCheckMMTResult: ...
@@ -215,7 +216,7 @@ async def solve_geetest(
 async def solve_geetest(
     mmt: SessionMMT,
     *,
-    lang: str = ...,
+    lang: types.Lang = ...,
     api_server: str = ...,
     port: int = ...,
 ) -> SessionMMTResult: ...
@@ -223,7 +224,7 @@ async def solve_geetest(
 async def solve_geetest(
     mmt: MMT,
     *,
-    lang: str = ...,
+    lang: types.Lang = ...,
     api_server: str = ...,
     port: int = ...,
 ) -> MMTResult: ...
@@ -231,7 +232,7 @@ async def solve_geetest(
 async def solve_geetest(
     mmt: SessionMMTv4,
     *,
-    lang: str = ...,
+    lang: types.Lang = ...,
     api_server: str = ...,
     port: int = ...,
 ) -> SessionMMTv4Result: ...
@@ -239,23 +240,23 @@ async def solve_geetest(
 async def solve_geetest(
     mmt: MMTv4,
     *,
-    lang: str = ...,
+    lang: types.Lang = ...,
     api_server: str = ...,
     port: int = ...,
 ) -> MMTv4Result: ...
 async def solve_geetest(
     mmt: typing.Union[MMT, MMTv4, SessionMMT, SessionMMTv4, RiskyCheckMMT],
     *,
-    lang: str = "en-us",
+    lang: types.Lang = "en-us",
     api_server: str = "api-na.geetest.com",
     port: int = 5000,
 ) -> typing.Union[MMTResult, MMTv4Result, SessionMMTResult, SessionMMTv4Result, RiskyCheckMMTResult]:
     """Start a web server and manually solve geetest captcha."""
-    lang = auth_utility.lang_to_geetest_lang(lang)
+    geetest_lang = auth_utility.lang_to_geetest_lang(lang)
     return await launch_webapp(
         "captcha",
         mmt=mmt,
-        lang=lang,
+        lang=geetest_lang,
         api_server=api_server,
         port=port,
     )
