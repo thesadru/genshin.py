@@ -175,6 +175,7 @@ GEETEST_RECORD_KEYS = {
     types.Game.STARRAIL: "hkrpg_game_record",
     types.Game.HONKAI: "bh3_game_record",
     types.Game.ZZZ: "nap_game_record",
+    types.Game.TOT: "nxx_game_record"
 }
 """Keys used to submit geetest result."""
 
