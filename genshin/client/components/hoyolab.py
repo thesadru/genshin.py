@@ -165,9 +165,7 @@ class HoyolabClient(base.BaseClient):
 
     async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
-        warnings.warn(
-            "This endpoint is removed and an empty list will always be returned", DeprecationWarning
-        )
+        warnings.warn("This endpoint is removed and an empty list will always be returned", DeprecationWarning)
         return []
 
     async def get_genshin_announcements(

@@ -2,6 +2,7 @@
 
 import enum
 import typing
+
 import typing_extensions
 
 if typing.TYPE_CHECKING:
