@@ -165,12 +165,10 @@ class HoyolabClient(base.BaseClient):
 
     async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
-        data = await self.request_bbs(
-            "community/user/wapi/recommendActive",
-            params=dict(page_size=limit),
-            cache=client_cache.cache_key("recommended"),
+        warnings.warn(
+            "This endpoint is removed and an empty list will always be returned", DeprecationWarning
         )
-        return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
+        return []
 
     async def get_genshin_announcements(
         self,

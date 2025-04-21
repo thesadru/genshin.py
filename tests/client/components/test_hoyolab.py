@@ -27,12 +27,6 @@ async def test_hoyolab_user(client: genshin.Client, hoyolab_id: int):
     assert user.nickname == "seria_ati"
 
 
-async def test_recommended_users(client: genshin.Client):
-    users = await client.get_recommended_users()
-
-    assert len(users) > 80
-
-
 async def test_genshin_announcements(client: genshin.Client):
     announcements = await client.get_genshin_announcements()
 
