@@ -171,6 +171,7 @@ class CalculatorFurnishing(APIModel, Unique):
 
     amount: typing.Optional[int] = Aliased("num", default=None)
 
+
 class CalculatorCharacterDetails(APIModel):
     """Details of a synced calculator character."""
 
