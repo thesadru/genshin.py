@@ -316,7 +316,7 @@ class Activities(APIModel):
 
         slugs = {  # type: ignore
             field.json_schema_extra["gslug"]: name
-            for name, field in cls.model_fields.items()
+            for name, field in Activities.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("gslug")
         }
 
