@@ -135,8 +135,10 @@ class BaseCharacter(APIModel, Unique):
     @pydantic.model_validator(mode="before")
     def __autocomplete(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         """Complete missing data."""
-        all_fields = list(cls.model_fields.keys())
-        all_aliases = {f: cls.model_fields[f].alias for f in all_fields if cls.model_fields[f].alias}
+        all_fields = list(BaseCharacter.model_fields.keys())
+        all_aliases = {
+            f: BaseCharacter.model_fields[f].alias for f in all_fields if BaseCharacter.model_fields[f].alias
+        }
         all_aliases = {k: v for k, v in all_aliases.items() if v is not None}
         # If the field is aliased, it may have a different key name in 'values',
         # so we need to get the correct key name from the alias
