@@ -178,7 +178,7 @@ class LineupScenario(APIModel, Unique):
         """Name certain scenarios."""
         scenario_ids = {  # type: ignore
             field.json_schema_extra["scenario_id"]: name
-            for name, field in LineupScenario.model_fields.items()
+            for name, field in cls.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("scenario_id")
         }
 
