@@ -50,6 +50,8 @@ jobs:
           GENSHIN_COOKIES: ${{ secrets.GENSHIN_COOKIES }}
           HONKAI_COOKIES: ${{ secrets.HONKAI_COOKIES }}
           LOCAL_GENSHIN_COOKIES: ${{ matrix.python-version == '3.10' && secrets.LOCAL_GENSHIN_COOKIES || '' }}
+          HSR_COOKIES: ${{ secrets.HSR_COOKIES }}
+          ZZZ_COOKIES: ${{ secrets.ZZZ_COOKIES }}
 
         run: |
           python -m nox -s test --verbose -- --cov-append
