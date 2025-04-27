@@ -199,7 +199,7 @@ class PotionStage(APIModel):
     difficulty: int
     difficulty_id: int
     score: int
-    score_multiplier: int = Aliased("factor")
+    score_multiplier: float = Aliased("factor")
 
     characters: typing.Sequence[PotionCharacter] = Aliased("avatars")
     buffs: typing.Sequence[PotionBuff]
