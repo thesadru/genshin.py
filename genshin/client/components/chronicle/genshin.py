@@ -3,6 +3,7 @@
 import asyncio
 import functools
 import typing
+import warnings
 
 from genshin import errors, paginators, types, utility
 from genshin.models.genshin import character as character_models
@@ -203,10 +204,12 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         raw: bool = False,
     ) -> typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
         """Get Genshin Impact imaginarium theater runs."""
-        payload = {
-            "schedule_type": 2 if previous else 1,
-            "need_detail": str(need_detail).lower(),
-        }
+        if previous:
+            warnings.warn(
+                "The 'previous' parameter does nothing for this endpoint, previous data will always be returned."
+            )
+
+        payload = {"need_detail": str(need_detail).lower()}
         data = await self._request_genshin_record("role_combat", uid, lang=lang, payload=payload)
         if raw:
             return data
