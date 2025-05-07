@@ -111,8 +111,8 @@ class HoyolabClient(base.BaseClient):
                 if same_title is not None:
                     if ann.get("banner"):
                         same_title["banner"] = ann["banner"]
-                    if ann.get("pic"):
-                        same_title["pic"] = ann["pic"]
+                    if ann.get("img"):
+                        same_title["img"] = ann["img"]
                     continue
 
                 announcements.append({**ann, **(detail or {})})
