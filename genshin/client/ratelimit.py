@@ -9,6 +9,7 @@ from tenacity import before_sleep_log, retry, retry_if_exception_type, stop_afte
 from genshin import errors
 
 LOGGER_ = logging.getLogger(__name__)
+TIMEOUT_ERRORS = (TimeoutError, aiohttp.ClientError, ConnectionResetError)
 CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Awaitable[typing.Any]])
 
 
@@ -38,7 +39,7 @@ def handle_request_timeouts(
         return retry(
             stop=stop_after_attempt(tries),
             wait=wait_random_exponential(multiplier=delay, min=delay),
-            retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError)),
+            retry=retry_if_exception_type(TIMEOUT_ERRORS),
             reraise=True,
             before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
         )
@@ -46,7 +47,7 @@ def handle_request_timeouts(
         return retry(
             stop=stop_after_attempt(tries),
             wait=wait_random_exponential(multiplier=delay, min=delay),
-            retry=retry_if_exception_type((TimeoutError, aiohttp.ClientError, ProxyError)),
+            retry=retry_if_exception_type((ProxyError, *TIMEOUT_ERRORS)),
             reraise=True,
             before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
         )
