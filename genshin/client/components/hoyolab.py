@@ -97,14 +97,25 @@ class HoyolabClient(base.BaseClient):
             ),
         )
 
-        announcements: list[typing.Mapping[str, typing.Any]] = []
-        extra_list: list[typing.Mapping[str, typing.Any]] = (
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
             info["pic_list"][0]["type_list"] if "pic_list" in info and info["pic_list"] else []
         )
+
         for sublist in info["list"] + extra_list:
-            for info in sublist["list"]:
-                detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
-                announcements.append({**info, **(detail or {})})
+            for ann in sublist["list"]:
+                detail = next((i for i in details["list"] if i["ann_id"] == ann["ann_id"]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a["title"] == ann["title"]), None)
+                if same_title is not None:
+                    if ann.get("banner"):
+                        same_title["banner"] = ann["banner"]
+                    if ann.get("pic"):
+                        same_title["pic"] = ann["pic"]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
 
         return [models.Announcement(**i) for i in announcements]
 
