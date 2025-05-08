@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.zzz.chronicle.month_info API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.zzz.chronicle.month_info</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.IncomeData"><code class="flex name class">
+<span>class <span class="ident">IncomeData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IncomeData(APIModel):
+    &#34;&#34;&#34;Income model.&#34;&#34;&#34;
+
+    currencies: typing.Sequence[ZZZIncomeCurrency] = Aliased(&#34;list&#34;)
+    polychrome_incomes: typing.Sequence[PolychromeIncome] = Aliased(&#34;income_components&#34;)</code></pre>
+</details>
+<div class="desc"><p>Income model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.IncomeData.currencies"><code class="name">var <span class="ident">currencies</span> : Sequence[<a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency">ZZZIncomeCurrency</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.IncomeData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.IncomeData.polychrome_incomes"><code class="name">var <span class="ident">polychrome_incomes</span> : Sequence[<a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome">PolychromeIncome</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncome"><code class="flex name class">
+<span>class <span class="ident">PolychromeIncome</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolychromeIncome(APIModel):
+    &#34;&#34;&#34;Polychrome income model.&#34;&#34;&#34;
+
+    source: PolychromeIncomeType = Aliased(&#34;action&#34;)
+    num: int
+    percent: int</code></pre>
+</details>
+<div class="desc"><p>Polychrome income model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncome.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncome.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncome.percent"><code class="name">var <span class="ident">percent</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncome.source"><code class="name">var <span class="ident">source</span> : <a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType">PolychromeIncomeType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType"><code class="flex name class">
+<span>class <span class="ident">PolychromeIncomeType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PolychromeIncomeType(Enum):
+    &#34;&#34;&#34;Polychrome income type enum.&#34;&#34;&#34;
+
+    DAILY = &#34;daily_activity_rewards&#34;
+    DEVELOPMENT = &#34;growth_rewards&#34;
+    SHIYU_DEFENSE = &#34;shiyu_rewards&#34;
+    MAIL = &#34;mail_rewards&#34;
+    HOLLOW_ZERO = &#34;hollow_rewards&#34;
+    EVENT = &#34;event_rewards&#34;
+    OTHER = &#34;other_rewards&#34;</code></pre>
+</details>
+<div class="desc"><p>Polychrome income type enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DAILY"><code class="name">var <span class="ident">DAILY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DEVELOPMENT"><code class="name">var <span class="ident">DEVELOPMENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.EVENT"><code class="name">var <span class="ident">EVENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.HOLLOW_ZERO"><code class="name">var <span class="ident">HOLLOW_ZERO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.MAIL"><code class="name">var <span class="ident">MAIL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.OTHER"><code class="name">var <span class="ident">OTHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.SHIYU_DEFENSE"><code class="name">var <span class="ident">SHIYU_DEFENSE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType"><code class="flex name class">
+<span>class <span class="ident">ZZZCurrencyType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZCurrencyType(Enum):
+    &#34;&#34;&#34;Currency type enum.&#34;&#34;&#34;
+
+    POLYCHROME = &#34;PolychromesData&#34;
+    MASTER_TAPE = &#34;MatserTapeData&#34;
+    BOOPONS = &#34;BooponsData&#34;</code></pre>
+</details>
+<div class="desc"><p>Currency type enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.BOOPONS"><code class="name">var <span class="ident">BOOPONS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.MASTER_TAPE"><code class="name">var <span class="ident">MASTER_TAPE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.POLYCHROME"><code class="name">var <span class="ident">POLYCHROME</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary"><code class="flex name class">
+<span>class <span class="ident">ZZZDiary</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZDiary(APIModel):
+    &#34;&#34;&#34;ZZZ monthly earnings model.&#34;&#34;&#34;
+
+    uid: int
+    region: str
+    current_month: str
+    data_month: str
+
+    income: IncomeData = Aliased(&#34;month_data&#34;)
+    month_options: typing.Sequence[str] = Aliased(&#34;optional_month&#34;)
+    player: ZZZDiaryPlayerInfo = Aliased(&#34;role_info&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ monthly earnings model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.current_month"><code class="name">var <span class="ident">current_month</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.data_month"><code class="name">var <span class="ident">data_month</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.income"><code class="name">var <span class="ident">income</span> : <a title="genshin.models.zzz.chronicle.month_info.IncomeData" href="#genshin.models.zzz.chronicle.month_info.IncomeData">IncomeData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.month_options"><code class="name">var <span class="ident">month_options</span> : Sequence[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.player"><code class="name">var <span class="ident">player</span> : <a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo">ZZZDiaryPlayerInfo</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.region"><code class="name">var <span class="ident">region</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiary.uid"><code class="name">var <span class="ident">uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail"><code class="flex name class">
+<span>class <span class="ident">ZZZDiaryDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZDiaryDetail(APIModel):
+    &#34;&#34;&#34;ZZZ monthly earning detail model.&#34;&#34;&#34;
+
+    uid: int
+    region: str
+    data_month: str
+    current_page: int
+    total: int
+    items: typing.Sequence[ZZZDiaryDetailItem] = Aliased(&#34;list&#34;)
+
+    currency_name: str = Aliased(&#34;data_name&#34;)
+    currency_type: ZZZCurrencyType = Aliased(&#34;data_type&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ monthly earning detail model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_name"><code class="name">var <span class="ident">currency_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_type"><code class="name">var <span class="ident">currency_type</span> : <a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType">ZZZCurrencyType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.current_page"><code class="name">var <span class="ident">current_page</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.data_month"><code class="name">var <span class="ident">data_month</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.items"><code class="name">var <span class="ident">items</span> : Sequence[<a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem">ZZZDiaryDetailItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.region"><code class="name">var <span class="ident">region</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.total"><code class="name">var <span class="ident">total</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.uid"><code class="name">var <span class="ident">uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem"><code class="flex name class">
+<span>class <span class="ident">ZZZDiaryDetailItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZDiaryDetailItem(APIModel):
+    &#34;&#34;&#34;ZZZ monthly earning detail item model.&#34;&#34;&#34;
+
+    id: str
+    source: PolychromeIncomeType = Aliased(&#34;action&#34;)
+    time: TZDateTime
+    num: int</code></pre>
+</details>
+<div class="desc"><p>ZZZ monthly earning detail item model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.source"><code class="name">var <span class="ident">source</span> : <a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType">PolychromeIncomeType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.time"><code class="name">var <span class="ident">time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo"><code class="flex name class">
+<span>class <span class="ident">ZZZDiaryPlayerInfo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZDiaryPlayerInfo(APIModel):
+    &#34;&#34;&#34;Player info model.&#34;&#34;&#34;
+
+    nickname: str
+    avatar_url: str = Aliased(&#34;avatar&#34;)</code></pre>
+</details>
+<div class="desc"><p>Player info model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.avatar_url"><code class="name">var <span class="ident">avatar_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency"><code class="flex name class">
+<span>class <span class="ident">ZZZIncomeCurrency</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZIncomeCurrency(APIModel):
+    &#34;&#34;&#34;Currency model.&#34;&#34;&#34;
+
+    type: ZZZCurrencyType = Aliased(&#34;data_type&#34;)
+    num: int = Aliased(&#34;count&#34;)
+    name: str = Aliased(&#34;data_name&#34;)</code></pre>
+</details>
+<div class="desc"><p>Currency model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType">ZZZCurrencyType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.zzz.chronicle" href="index.html">genshin.models.zzz.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.IncomeData" href="#genshin.models.zzz.chronicle.month_info.IncomeData">IncomeData</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.IncomeData.currencies" href="#genshin.models.zzz.chronicle.month_info.IncomeData.currencies">currencies</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.IncomeData.model_config" href="#genshin.models.zzz.chronicle.month_info.IncomeData.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.IncomeData.polychrome_incomes" href="#genshin.models.zzz.chronicle.month_info.IncomeData.polychrome_incomes">polychrome_incomes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome">PolychromeIncome</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome.model_config" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome.num" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome.num">num</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome.percent" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome.percent">percent</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncome.source" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncome.source">source</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType">PolychromeIncomeType</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DAILY" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DAILY">DAILY</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DEVELOPMENT" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.DEVELOPMENT">DEVELOPMENT</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.EVENT" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.EVENT">EVENT</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.HOLLOW_ZERO" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.HOLLOW_ZERO">HOLLOW_ZERO</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.MAIL" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.MAIL">MAIL</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.OTHER" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.OTHER">OTHER</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.SHIYU_DEFENSE" href="#genshin.models.zzz.chronicle.month_info.PolychromeIncomeType.SHIYU_DEFENSE">SHIYU_DEFENSE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType">ZZZCurrencyType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.BOOPONS" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.BOOPONS">BOOPONS</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.MASTER_TAPE" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.MASTER_TAPE">MASTER_TAPE</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.POLYCHROME" href="#genshin.models.zzz.chronicle.month_info.ZZZCurrencyType.POLYCHROME">POLYCHROME</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary">ZZZDiary</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.current_month" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.current_month">current_month</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.data_month" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.data_month">data_month</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.income" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.income">income</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.model_config" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.month_options" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.month_options">month_options</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.player" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.player">player</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.region" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.region">region</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiary.uid" href="#genshin.models.zzz.chronicle.month_info.ZZZDiary.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail">ZZZDiaryDetail</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_name" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_name">currency_name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_type" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.currency_type">currency_type</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.current_page" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.current_page">current_page</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.data_month" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.data_month">data_month</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.items" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.items">items</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.model_config" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.region" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.region">region</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.total" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.total">total</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.uid" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetail.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem">ZZZDiaryDetailItem</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.id" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.model_config" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.num" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.num">num</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.source" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.source">source</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.time" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryDetailItem.time">time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo">ZZZDiaryPlayerInfo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.avatar_url" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.avatar_url">avatar_url</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.model_config" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.nickname" href="#genshin.models.zzz.chronicle.month_info.ZZZDiaryPlayerInfo.nickname">nickname</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency">ZZZIncomeCurrency</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.model_config" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.name" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.num" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.num">num</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.type" href="#genshin.models.zzz.chronicle.month_info.ZZZIncomeCurrency.type">type</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
