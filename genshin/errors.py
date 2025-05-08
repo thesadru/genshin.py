@@ -268,6 +268,7 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -502002: "Calculator sync is not enabled.",
     # mixin
     -1: InternalDatabaseError,
+    10307: InternalDatabaseError,
     1009: AccountNotFound,
     # redemption
     -1065: RedemptionInvalid,
