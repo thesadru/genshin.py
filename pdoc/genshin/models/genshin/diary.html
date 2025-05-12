@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.diary API documentation</title>
+<meta name="description" content="Genshin diary models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.diary</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin diary models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.diary.BaseDiary"><code class="flex name class">
+<span>class <span class="ident">BaseDiary</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseDiary(APIModel):
+    &#34;&#34;&#34;Base model for diary and diary page.&#34;&#34;&#34;
+
+    uid: int
+    server: str = Aliased(&#34;region&#34;)
+    nickname: str = &#34;&#34;
+    month: int = Aliased(&#34;data_month&#34;)</code></pre>
+</details>
+<div class="desc"><p>Base model for diary and diary page.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.diary.Diary" href="#genshin.models.genshin.diary.Diary">Diary</a></li>
+<li><a title="genshin.models.genshin.diary.DiaryPage" href="#genshin.models.genshin.diary.DiaryPage">DiaryPage</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailDiary" href="#genshin.models.genshin.diary.StarRailDiary">StarRailDiary</a></li>
+<li><a title="genshin.models.genshin.diary.StarRailDiaryPage" href="#genshin.models.genshin.diary.StarRailDiaryPage">StarRailDiaryPage</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.BaseDiary.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.BaseDiary.month"><code class="name">var <span class="ident">month</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.BaseDiary.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.BaseDiary.server"><code class="name">var <span class="ident">server</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.BaseDiary.uid"><code class="name">var <span class="ident">uid</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.DayDiaryData"><code class="flex name class">
+<span>class <span class="ident">DayDiaryData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DayDiaryData(APIModel):
+    &#34;&#34;&#34;Diary data for a day.&#34;&#34;&#34;
+
+    current_primogems: int
+    current_mora: int</code></pre>
+</details>
+<div class="desc"><p>Diary data for a day.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.DayDiaryData.current_mora"><code class="name">var <span class="ident">current_mora</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DayDiaryData.current_primogems"><code class="name">var <span class="ident">current_primogems</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DayDiaryData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.Diary"><code class="flex name class">
+<span>class <span class="ident">Diary</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Diary(BaseDiary):
+    &#34;&#34;&#34;Traveler&#39;s diary.&#34;&#34;&#34;
+
+    data: MonthDiaryData = Aliased(&#34;month_data&#34;)
+    day_data: DayDiaryData
+
+    @property
+    def month_data(self) -&gt; MonthDiaryData:
+        return self.data</code></pre>
+</details>
+<div class="desc"><p>Traveler's diary.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.diary.BaseDiary" href="#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.Diary.data"><code class="name">var <span class="ident">data</span> : <a title="genshin.models.genshin.diary.MonthDiaryData" href="#genshin.models.genshin.diary.MonthDiaryData">MonthDiaryData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.Diary.day_data"><code class="name">var <span class="ident">day_data</span> : <a title="genshin.models.genshin.diary.DayDiaryData" href="#genshin.models.genshin.diary.DayDiaryData">DayDiaryData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.Diary.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.Diary.month_data"><code class="name">prop <span class="ident">month_data</span> : <a title="genshin.models.genshin.diary.MonthDiaryData" href="#genshin.models.genshin.diary.MonthDiaryData">MonthDiaryData</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def month_data(self) -&gt; MonthDiaryData:
+    return self.data</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryAction"><code class="flex name class">
+<span>class <span class="ident">DiaryAction</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DiaryAction(APIModel):
+    &#34;&#34;&#34;Action which earned currency.&#34;&#34;&#34;
+
+    action_id: int
+    action: str
+    time: TZDateTime
+    amount: int = Aliased(&#34;num&#34;)</code></pre>
+</details>
+<div class="desc"><p>Action which earned currency.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.DiaryAction.action"><code class="name">var <span class="ident">action</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryAction.action_id"><code class="name">var <span class="ident">action_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryAction.amount"><code class="name">var <span class="ident">amount</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryAction.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryAction.time"><code class="name">var <span class="ident">time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory"><code class="flex name class">
+<span>class <span class="ident">DiaryActionCategory</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DiaryActionCategory(APIModel):
+    &#34;&#34;&#34;Diary category for primogems.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;action_id&#34;)
+    name: str = Aliased(&#34;action&#34;)
+    amount: int = Aliased(&#34;num&#34;)
+    percentage: int = Aliased(&#34;percent&#34;)</code></pre>
+</details>
+<div class="desc"><p>Diary category for primogems.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory.amount"><code class="name">var <span class="ident">amount</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryActionCategory.percentage"><code class="name">var <span class="ident">percentage</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryPage"><code class="flex name class">
+<span>class <span class="ident">DiaryPage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DiaryPage(BaseDiary):
+    &#34;&#34;&#34;Page of a diary.&#34;&#34;&#34;
+
+    actions: typing.Sequence[DiaryAction] = Aliased(&#34;list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Page of a diary.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.diary.BaseDiary" href="#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.DiaryPage.actions"><code class="name">var <span class="ident">actions</span> : Sequence[<a title="genshin.models.genshin.diary.DiaryAction" href="#genshin.models.genshin.diary.DiaryAction">DiaryAction</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryPage.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryType"><code class="flex name class">
+<span>class <span class="ident">DiaryType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DiaryType(enum.IntEnum):
+    &#34;&#34;&#34;Type of diary pages.&#34;&#34;&#34;
+
+    PRIMOGEMS = 1
+    &#34;&#34;&#34;Primogems.&#34;&#34;&#34;
+
+    MORA = 2
+    &#34;&#34;&#34;Mora.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Type of diary pages.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.DiaryType.MORA"><code class="name">var <span class="ident">MORA</span></code></dt>
+<dd>
+<div class="desc"><p>Mora.</p></div>
+</dd>
+<dt id="genshin.models.genshin.diary.DiaryType.PRIMOGEMS"><code class="name">var <span class="ident">PRIMOGEMS</span></code></dt>
+<dd>
+<div class="desc"><p>Primogems.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData"><code class="flex name class">
+<span>class <span class="ident">MonthDiaryData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MonthDiaryData(APIModel):
+    &#34;&#34;&#34;Diary data for a month.&#34;&#34;&#34;
+
+    current_primogems: int
+    current_mora: int
+    last_primogems: int
+    last_mora: int
+    primogems_rate: int = Aliased(&#34;primogem_rate&#34;)
+    mora_rate: int
+    categories: typing.Sequence[DiaryActionCategory] = Aliased(&#34;group_by&#34;)</code></pre>
+</details>
+<div class="desc"><p>Diary data for a month.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.categories"><code class="name">var <span class="ident">categories</span> : Sequence[<a title="genshin.models.genshin.diary.DiaryActionCategory" href="#genshin.models.genshin.diary.DiaryActionCategory">DiaryActionCategory</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.current_mora"><code class="name">var <span class="ident">current_mora</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.current_primogems"><code class="name">var <span class="ident">current_primogems</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.last_mora"><code class="name">var <span class="ident">last_mora</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.last_primogems"><code class="name">var <span class="ident">last_primogems</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.mora_rate"><code class="name">var <span class="ident">mora_rate</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.MonthDiaryData.primogems_rate"><code class="name">var <span class="ident">primogems_rate</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData"><code class="flex name class">
+<span>class <span class="ident">StarRailDayDiaryData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDayDiaryData(APIModel):
+    &#34;&#34;&#34;Diary data for a day.&#34;&#34;&#34;
+
+    current_hcoin: int
+    current_rails_pass: int
+    last_hcoin: int
+    last_rails_pass: int</code></pre>
+</details>
+<div class="desc"><p>Diary data for a day.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData.current_hcoin"><code class="name">var <span class="ident">current_hcoin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData.current_rails_pass"><code class="name">var <span class="ident">current_rails_pass</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData.last_hcoin"><code class="name">var <span class="ident">last_hcoin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData.last_rails_pass"><code class="name">var <span class="ident">last_rails_pass</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDayDiaryData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiary"><code class="flex name class">
+<span>class <span class="ident">StarRailDiary</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDiary(BaseDiary):
+    &#34;&#34;&#34;Traveler&#39;s diary.&#34;&#34;&#34;
+
+    data: StarRailMonthDiaryData = Aliased(&#34;month_data&#34;)
+    day_data: StarRailDayDiaryData
+
+    @property
+    def month_data(self) -&gt; StarRailMonthDiaryData:
+        return self.data</code></pre>
+</details>
+<div class="desc"><p>Traveler's diary.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.diary.BaseDiary" href="#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiary.data"><code class="name">var <span class="ident">data</span> : <a title="genshin.models.genshin.diary.StarRailMonthDiaryData" href="#genshin.models.genshin.diary.StarRailMonthDiaryData">StarRailMonthDiaryData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiary.day_data"><code class="name">var <span class="ident">day_data</span> : <a title="genshin.models.genshin.diary.StarRailDayDiaryData" href="#genshin.models.genshin.diary.StarRailDayDiaryData">StarRailDayDiaryData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiary.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiary.month_data"><code class="name">prop <span class="ident">month_data</span> : <a title="genshin.models.genshin.diary.StarRailMonthDiaryData" href="#genshin.models.genshin.diary.StarRailMonthDiaryData">StarRailMonthDiaryData</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def month_data(self) -&gt; StarRailMonthDiaryData:
+    return self.data</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction"><code class="flex name class">
+<span>class <span class="ident">StarRailDiaryAction</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDiaryAction(APIModel):
+    &#34;&#34;&#34;Action which earned currency.&#34;&#34;&#34;
+
+    action: str
+    action_name: str
+    time: TZDateTime
+    amount: int = Aliased(&#34;num&#34;)</code></pre>
+</details>
+<div class="desc"><p>Action which earned currency.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction.action"><code class="name">var <span class="ident">action</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction.action_name"><code class="name">var <span class="ident">action_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction.amount"><code class="name">var <span class="ident">amount</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryAction.time"><code class="name">var <span class="ident">time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory"><code class="flex name class">
+<span>class <span class="ident">StarRailDiaryActionCategory</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDiaryActionCategory(APIModel):
+    &#34;&#34;&#34;Diary category for rails_pass .&#34;&#34;&#34;
+
+    id: str = Aliased(&#34;action&#34;)
+    name: str = Aliased(&#34;action_name&#34;)
+    amount: int = Aliased(&#34;num&#34;)
+    percentage: int = Aliased(&#34;percent&#34;)</code></pre>
+</details>
+<div class="desc"><p>Diary category for rails_pass .</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory.amount"><code class="name">var <span class="ident">amount</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryActionCategory.percentage"><code class="name">var <span class="ident">percentage</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryPage"><code class="flex name class">
+<span>class <span class="ident">StarRailDiaryPage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDiaryPage(BaseDiary):
+    &#34;&#34;&#34;Page of a diary.&#34;&#34;&#34;
+
+    actions: typing.Sequence[StarRailDiaryAction] = Aliased(&#34;list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Page of a diary.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.diary.BaseDiary" href="#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiaryPage.actions"><code class="name">var <span class="ident">actions</span> : Sequence[<a title="genshin.models.genshin.diary.StarRailDiaryAction" href="#genshin.models.genshin.diary.StarRailDiaryAction">StarRailDiaryAction</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryPage.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryType"><code class="flex name class">
+<span>class <span class="ident">StarRailDiaryType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailDiaryType(enum.IntEnum):
+    &#34;&#34;&#34;Type of diary pages.&#34;&#34;&#34;
+
+    STELLARJADE = 1
+    &#34;&#34;&#34;STELLARJADE.&#34;&#34;&#34;
+
+    STARRAILPASS = 2
+    &#34;&#34;&#34;STARRAILPASS.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Type of diary pages.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailDiaryType.STARRAILPASS"><code class="name">var <span class="ident">STARRAILPASS</span></code></dt>
+<dd>
+<div class="desc"><p>STARRAILPASS.</p></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailDiaryType.STELLARJADE"><code class="name">var <span class="ident">STELLARJADE</span></code></dt>
+<dd>
+<div class="desc"><p>STELLARJADE.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData"><code class="flex name class">
+<span>class <span class="ident">StarRailMonthDiaryData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailMonthDiaryData(APIModel):
+    &#34;&#34;&#34;Diary data for a month.&#34;&#34;&#34;
+
+    current_hcoin: int
+    current_rails_pass: int
+    last_hcoin: int
+    last_rails_pass: int
+    hcoin_rate: int
+    rails_rate: int
+    categories: typing.Sequence[StarRailDiaryActionCategory] = Aliased(&#34;group_by&#34;)</code></pre>
+</details>
+<div class="desc"><p>Diary data for a month.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.categories"><code class="name">var <span class="ident">categories</span> : Sequence[<a title="genshin.models.genshin.diary.StarRailDiaryActionCategory" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory">StarRailDiaryActionCategory</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.current_hcoin"><code class="name">var <span class="ident">current_hcoin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.current_rails_pass"><code class="name">var <span class="ident">current_rails_pass</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.hcoin_rate"><code class="name">var <span class="ident">hcoin_rate</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.last_hcoin"><code class="name">var <span class="ident">last_hcoin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.last_rails_pass"><code class="name">var <span class="ident">last_rails_pass</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.diary.StarRailMonthDiaryData.rails_rate"><code class="name">var <span class="ident">rails_rate</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin" href="index.html">genshin.models.genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.BaseDiary" href="#genshin.models.genshin.diary.BaseDiary">BaseDiary</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.BaseDiary.model_config" href="#genshin.models.genshin.diary.BaseDiary.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.BaseDiary.month" href="#genshin.models.genshin.diary.BaseDiary.month">month</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.BaseDiary.nickname" href="#genshin.models.genshin.diary.BaseDiary.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.BaseDiary.server" href="#genshin.models.genshin.diary.BaseDiary.server">server</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.BaseDiary.uid" href="#genshin.models.genshin.diary.BaseDiary.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.DayDiaryData" href="#genshin.models.genshin.diary.DayDiaryData">DayDiaryData</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.DayDiaryData.current_mora" href="#genshin.models.genshin.diary.DayDiaryData.current_mora">current_mora</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DayDiaryData.current_primogems" href="#genshin.models.genshin.diary.DayDiaryData.current_primogems">current_primogems</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DayDiaryData.model_config" href="#genshin.models.genshin.diary.DayDiaryData.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.Diary" href="#genshin.models.genshin.diary.Diary">Diary</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.Diary.data" href="#genshin.models.genshin.diary.Diary.data">data</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.Diary.day_data" href="#genshin.models.genshin.diary.Diary.day_data">day_data</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.Diary.model_config" href="#genshin.models.genshin.diary.Diary.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.Diary.month_data" href="#genshin.models.genshin.diary.Diary.month_data">month_data</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.DiaryAction" href="#genshin.models.genshin.diary.DiaryAction">DiaryAction</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.DiaryAction.action" href="#genshin.models.genshin.diary.DiaryAction.action">action</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryAction.action_id" href="#genshin.models.genshin.diary.DiaryAction.action_id">action_id</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryAction.amount" href="#genshin.models.genshin.diary.DiaryAction.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryAction.model_config" href="#genshin.models.genshin.diary.DiaryAction.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryAction.time" href="#genshin.models.genshin.diary.DiaryAction.time">time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.DiaryActionCategory" href="#genshin.models.genshin.diary.DiaryActionCategory">DiaryActionCategory</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.DiaryActionCategory.amount" href="#genshin.models.genshin.diary.DiaryActionCategory.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryActionCategory.id" href="#genshin.models.genshin.diary.DiaryActionCategory.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryActionCategory.model_config" href="#genshin.models.genshin.diary.DiaryActionCategory.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryActionCategory.name" href="#genshin.models.genshin.diary.DiaryActionCategory.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryActionCategory.percentage" href="#genshin.models.genshin.diary.DiaryActionCategory.percentage">percentage</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.DiaryPage" href="#genshin.models.genshin.diary.DiaryPage">DiaryPage</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.DiaryPage.actions" href="#genshin.models.genshin.diary.DiaryPage.actions">actions</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryPage.model_config" href="#genshin.models.genshin.diary.DiaryPage.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.DiaryType" href="#genshin.models.genshin.diary.DiaryType">DiaryType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.DiaryType.MORA" href="#genshin.models.genshin.diary.DiaryType.MORA">MORA</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.DiaryType.PRIMOGEMS" href="#genshin.models.genshin.diary.DiaryType.PRIMOGEMS">PRIMOGEMS</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.MonthDiaryData" href="#genshin.models.genshin.diary.MonthDiaryData">MonthDiaryData</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.categories" href="#genshin.models.genshin.diary.MonthDiaryData.categories">categories</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.current_mora" href="#genshin.models.genshin.diary.MonthDiaryData.current_mora">current_mora</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.current_primogems" href="#genshin.models.genshin.diary.MonthDiaryData.current_primogems">current_primogems</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.last_mora" href="#genshin.models.genshin.diary.MonthDiaryData.last_mora">last_mora</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.last_primogems" href="#genshin.models.genshin.diary.MonthDiaryData.last_primogems">last_primogems</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.model_config" href="#genshin.models.genshin.diary.MonthDiaryData.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.mora_rate" href="#genshin.models.genshin.diary.MonthDiaryData.mora_rate">mora_rate</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.MonthDiaryData.primogems_rate" href="#genshin.models.genshin.diary.MonthDiaryData.primogems_rate">primogems_rate</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData" href="#genshin.models.genshin.diary.StarRailDayDiaryData">StarRailDayDiaryData</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData.current_hcoin" href="#genshin.models.genshin.diary.StarRailDayDiaryData.current_hcoin">current_hcoin</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData.current_rails_pass" href="#genshin.models.genshin.diary.StarRailDayDiaryData.current_rails_pass">current_rails_pass</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData.last_hcoin" href="#genshin.models.genshin.diary.StarRailDayDiaryData.last_hcoin">last_hcoin</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData.last_rails_pass" href="#genshin.models.genshin.diary.StarRailDayDiaryData.last_rails_pass">last_rails_pass</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDayDiaryData.model_config" href="#genshin.models.genshin.diary.StarRailDayDiaryData.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDiary" href="#genshin.models.genshin.diary.StarRailDiary">StarRailDiary</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDiary.data" href="#genshin.models.genshin.diary.StarRailDiary.data">data</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiary.day_data" href="#genshin.models.genshin.diary.StarRailDiary.day_data">day_data</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiary.model_config" href="#genshin.models.genshin.diary.StarRailDiary.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiary.month_data" href="#genshin.models.genshin.diary.StarRailDiary.month_data">month_data</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDiaryAction" href="#genshin.models.genshin.diary.StarRailDiaryAction">StarRailDiaryAction</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryAction.action" href="#genshin.models.genshin.diary.StarRailDiaryAction.action">action</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryAction.action_name" href="#genshin.models.genshin.diary.StarRailDiaryAction.action_name">action_name</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryAction.amount" href="#genshin.models.genshin.diary.StarRailDiaryAction.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryAction.model_config" href="#genshin.models.genshin.diary.StarRailDiaryAction.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryAction.time" href="#genshin.models.genshin.diary.StarRailDiaryAction.time">time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory">StarRailDiaryActionCategory</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory.amount" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory.id" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory.model_config" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory.name" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryActionCategory.percentage" href="#genshin.models.genshin.diary.StarRailDiaryActionCategory.percentage">percentage</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDiaryPage" href="#genshin.models.genshin.diary.StarRailDiaryPage">StarRailDiaryPage</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryPage.actions" href="#genshin.models.genshin.diary.StarRailDiaryPage.actions">actions</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryPage.model_config" href="#genshin.models.genshin.diary.StarRailDiaryPage.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailDiaryType" href="#genshin.models.genshin.diary.StarRailDiaryType">StarRailDiaryType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryType.STARRAILPASS" href="#genshin.models.genshin.diary.StarRailDiaryType.STARRAILPASS">STARRAILPASS</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailDiaryType.STELLARJADE" href="#genshin.models.genshin.diary.StarRailDiaryType.STELLARJADE">STELLARJADE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData" href="#genshin.models.genshin.diary.StarRailMonthDiaryData">StarRailMonthDiaryData</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.categories" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.categories">categories</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.current_hcoin" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.current_hcoin">current_hcoin</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.current_rails_pass" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.current_rails_pass">current_rails_pass</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.hcoin_rate" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.hcoin_rate">hcoin_rate</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.last_hcoin" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.last_hcoin">last_hcoin</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.last_rails_pass" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.last_rails_pass">last_rails_pass</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.model_config" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.diary.StarRailMonthDiaryData.rails_rate" href="#genshin.models.genshin.diary.StarRailMonthDiaryData.rails_rate">rails_rate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
