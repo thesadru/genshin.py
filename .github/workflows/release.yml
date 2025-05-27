@@ -17,3 +17,6 @@ jobs:
         
       - name: Create release
         uses: seriaati/create-release@main
+        with:
+          pypi_token: ${{ secrets.PYPI_API_TOKEN }}
+          tool: "uv"
