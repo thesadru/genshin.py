@@ -63,10 +63,10 @@ import genshin
 
 async def main():
     cookies = {"ltuid": 119480035, "ltoken": "cnF7TiZqHAAvYqgCBoSPx5EjwezOh1ZHoqSHf7dT"}
-    client = genshin.Client(cookies)
+    client = genshin.Client(cookies, uid=710785423)
 
-    data = await client.get_genshin_user(710785423)
-    print(f"User has a total of {data.stats.characters} characters")
+    user = await client.get_genshin_user()
+    print(f"User has a total of {len(user.stats.characters)} characters")
 
 asyncio.run(main())
 ```
