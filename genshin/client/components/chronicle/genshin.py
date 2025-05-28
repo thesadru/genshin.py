@@ -62,7 +62,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_partial_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.PartialGenshinUserStats:
@@ -77,7 +77,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
@@ -88,7 +88,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         characters: typing.Optional[typing.Sequence[int]] = ...,
         lang: typing.Optional[str] = ...,
@@ -97,7 +97,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         characters: typing.Optional[typing.Sequence[int]] = ...,
         lang: typing.Optional[str] = ...,
@@ -105,7 +105,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         characters: typing.Optional[typing.Sequence[int]] = None,
         lang: typing.Optional[str] = None,
@@ -127,7 +127,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.GenshinUserStats:
@@ -143,7 +143,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_spiral_abyss(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         previous: bool = ...,
         lang: typing.Optional[str] = ...,
@@ -152,7 +152,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_spiral_abyss(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         previous: bool = ...,
         lang: typing.Optional[str] = ...,
@@ -160,7 +160,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_spiral_abyss(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
@@ -177,7 +177,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_imaginarium_theater(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         previous: bool = ...,
         need_detail: bool = ...,
@@ -187,7 +187,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_imaginarium_theater(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         previous: bool = ...,
         need_detail: bool = ...,
@@ -196,7 +196,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Mapping[str, typing.Any]: ...
     async def get_imaginarium_theater(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         need_detail: bool = True,
@@ -259,12 +259,16 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             return data
         return models.Notes(**data)
 
-    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> models.Activities:
         """Get genshin activities."""
         data = await self._request_genshin_record("activities", uid, lang=lang)
         return models.Activities(**data)
 
-    async def get_genshin_tcg_preview(self, uid: int, *, lang: typing.Optional[str] = None) -> models.TCGPreview:
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> models.TCGPreview:
         """Get genshin tcg."""
         data = await self._request_genshin_record("gcg/basicInfo", uid, lang=lang)
         return models.TCGPreview(**data)
@@ -320,7 +324,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_full_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.FullGenshinUserStats:
@@ -356,7 +360,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
 
     async def get_genshin_event_calendar(
-        self, uid: int, *, lang: typing.Optional[str] = None
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
     ) -> models.GenshinEventCalendar:
         """Get Genshin event calendar."""
         data = await self._request_genshin_record("act_calendar", uid, lang=lang, method="POST")
