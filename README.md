@@ -10,11 +10,11 @@ Modern API wrapper for HoYoLAB & Miyoushe(米游社) API built on asyncio and py
 
 ---
 
-Documentation: https://thesadru.github.io/genshin.py
+Documentation: <https://thesadru.github.io/genshin.py>
 
-API Reference: https://thesadru.github.io/genshin.py/pdoc/genshin
+API Reference: <https://thesadru.github.io/genshin.py/pdoc/genshin>
 
-Source Code: https://github.com/thesadru/genshin.py
+Source Code: <https://github.com/thesadru/genshin.py>
 
 ---
 
@@ -33,8 +33,9 @@ Key features:
 ## Requirements
 
 - Python 3.9+
-- aiohttp
-- Pydantic
+- aiohttp 3.0+
+- Pydantic 2.0+
+- tenacity 9.0+
 
 ```console
 pip install genshin
