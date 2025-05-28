@@ -8,3 +8,4 @@ from .img_theater import *
 from .notes import *
 from .stats import *
 from .tcg import *
+from .char_master import *

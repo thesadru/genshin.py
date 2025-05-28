@@ -366,6 +366,13 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record("act_calendar", uid, lang=lang, method="POST")
         return models.GenshinEventCalendar(**data)
 
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.EnvisagedEchoCharacter]:
+        """Get Genshin Envisaged Echo characters information."""
+        data = await self._request_genshin_record("char_master", uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data["list"]]
+
     get_spiral_abyss = get_genshin_spiral_abyss
     get_notes = get_genshin_notes
     get_activities = get_genshin_activities
