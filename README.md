@@ -37,9 +37,21 @@ Key features:
 - Pydantic 2.0+
 - tenacity 9.0+
 
+## Installation
+
+To install the stable version:
+
 ```console
 pip install genshin
 ```
+
+You can also install the latest development version from GitHub:
+
+```console
+pip install git+https://github.com/thesadru/genshin.py
+```
+
+A new release is made every 2 weeks.
 
 ## Example
 
