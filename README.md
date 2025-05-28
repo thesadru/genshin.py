@@ -75,3 +75,7 @@ asyncio.run(main())
 
 Any kind of contribution is welcome.
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) to see what you need to do to make a contribution.
+
+## License
+
+Genshin.py has been actively developed since [2021-02-06](https://github.com/thesadru/genshinstats/commit/223a2405ce6e05008eb8389e481e857fe33de771). Please report any potential copyright violations to the owner through [discord](https://discord.gg/sMkSKRPuCR).
