@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.gacha API documentation</title>
+<meta name="description" content="Genshin wish models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.gacha</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin wish models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem"><code class="flex name class">
+<span>class <span class="ident">BannerDetailItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BannerDetailItem(APIModel):
+    &#34;&#34;&#34;Item that may be gotten from a banner.&#34;&#34;&#34;
+
+    name: str = Aliased(&#34;item_name&#34;)
+    type: str = Aliased(&#34;item_type&#34;)
+    rarity: int = Aliased(&#34;rank&#34;)
+
+    up: bool = Aliased(&#34;is_up&#34;)
+    order: int = Aliased(&#34;order_value&#34;)</code></pre>
+</details>
+<div class="desc"><p>Item that may be gotten from a banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.order"><code class="name">var <span class="ident">order</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailItem.up"><code class="name">var <span class="ident">up</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails"><code class="flex name class">
+<span>class <span class="ident">BannerDetails</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BannerDetails(APIModel):
+    &#34;&#34;&#34;Details of a banner.&#34;&#34;&#34;
+
+    banner_id: str
+    banner_type: int = Aliased(&#34;gacha_type&#34;)
+    title: str
+    content: str
+    date_range: str
+
+    r5_up_prob: typing.Optional[float]
+    r4_up_prob: typing.Optional[float]
+    r5_prob: typing.Optional[float]
+    r4_prob: typing.Optional[float]
+    r3_prob: typing.Optional[float]
+    r5_guarantee_prob: typing.Optional[float] = Aliased(&#34;r5_baodi_prob&#34;)
+    r4_guarantee_prob: typing.Optional[float] = Aliased(&#34;r4_baodi_prob&#34;)
+    r3_guarantee_prob: typing.Optional[float] = Aliased(&#34;r3_baodi_prob&#34;)
+
+    r5_up_items: typing.Sequence[BannerDetailsUpItem]
+    r4_up_items: typing.Sequence[BannerDetailsUpItem]
+
+    r5_items: list[BannerDetailItem] = Aliased(&#34;r5_prob_list&#34;)
+    r4_items: list[BannerDetailItem] = Aliased(&#34;r4_prob_list&#34;)
+    r3_items: list[BannerDetailItem] = Aliased(&#34;r3_prob_list&#34;)
+
+    @pydantic.field_validator(&#34;r5_up_items&#34;, &#34;r4_up_items&#34;, mode=&#34;before&#34;)
+    def __replace_none(cls, v: typing.Optional[typing.Sequence[typing.Any]]) -&gt; typing.Sequence[typing.Any]:
+        return v or []
+
+    @pydantic.field_validator(
+        &#34;r5_up_prob&#34;,
+        &#34;r4_up_prob&#34;,
+        &#34;r5_prob&#34;,
+        &#34;r4_prob&#34;,
+        &#34;r3_prob&#34;,
+        &#34;r5_guarantee_prob&#34;,
+        &#34;r4_guarantee_prob&#34;,
+        &#34;r3_guarantee_prob&#34;,
+        mode=&#34;before&#34;,
+    )
+    def __parse_percentage(cls, v: typing.Optional[str]) -&gt; typing.Optional[float]:
+        if v is None or isinstance(v, (int, float)):
+            return v
+
+        return None if v == &#34;0%&#34; else float(v[:-1].replace(&#34;,&#34;, &#34;.&#34;))
+
+    @property
+    def name(self) -&gt; str:
+        return re.sub(r&#34;&lt;.*?&gt;&#34;, &#34;&#34;, self.title).strip()
+
+    @property
+    def banner_type_name(self) -&gt; str:
+        banners = {
+            100: &#34;Novice Wishes&#34;,
+            200: &#34;Permanent Wish&#34;,
+            301: &#34;Character Event Wish&#34;,
+            302: &#34;Weapon Event Wish&#34;,
+            400: &#34;Character Event Wish&#34;,
+        }
+        return banners[self.banner_type]
+
+    @property
+    def items(self) -&gt; typing.Sequence[BannerDetailItem]:
+        items = self.r5_items + self.r4_items + self.r3_items
+        return sorted(items, key=lambda x: x.order)</code></pre>
+</details>
+<div class="desc"><p>Details of a banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.BannerDetails.banner_id"><code class="name">var <span class="ident">banner_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.banner_type"><code class="name">var <span class="ident">banner_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.date_range"><code class="name">var <span class="ident">date_range</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r3_guarantee_prob"><code class="name">var <span class="ident">r3_guarantee_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r3_items"><code class="name">var <span class="ident">r3_items</span> : list[<a title="genshin.models.genshin.gacha.BannerDetailItem" href="#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r3_prob"><code class="name">var <span class="ident">r3_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r4_guarantee_prob"><code class="name">var <span class="ident">r4_guarantee_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r4_items"><code class="name">var <span class="ident">r4_items</span> : list[<a title="genshin.models.genshin.gacha.BannerDetailItem" href="#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r4_prob"><code class="name">var <span class="ident">r4_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r4_up_items"><code class="name">var <span class="ident">r4_up_items</span> : Sequence[<a title="genshin.models.genshin.gacha.BannerDetailsUpItem" href="#genshin.models.genshin.gacha.BannerDetailsUpItem">BannerDetailsUpItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r4_up_prob"><code class="name">var <span class="ident">r4_up_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r5_guarantee_prob"><code class="name">var <span class="ident">r5_guarantee_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r5_items"><code class="name">var <span class="ident">r5_items</span> : list[<a title="genshin.models.genshin.gacha.BannerDetailItem" href="#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r5_prob"><code class="name">var <span class="ident">r5_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r5_up_items"><code class="name">var <span class="ident">r5_up_items</span> : Sequence[<a title="genshin.models.genshin.gacha.BannerDetailsUpItem" href="#genshin.models.genshin.gacha.BannerDetailsUpItem">BannerDetailsUpItem</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.r5_up_prob"><code class="name">var <span class="ident">r5_up_prob</span> : float | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.BannerDetails.banner_type_name"><code class="name">prop <span class="ident">banner_type_name</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def banner_type_name(self) -&gt; str:
+    banners = {
+        100: &#34;Novice Wishes&#34;,
+        200: &#34;Permanent Wish&#34;,
+        301: &#34;Character Event Wish&#34;,
+        302: &#34;Weapon Event Wish&#34;,
+        400: &#34;Character Event Wish&#34;,
+    }
+    return banners[self.banner_type]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.items"><code class="name">prop <span class="ident">items</span> : Sequence[<a title="genshin.models.genshin.gacha.BannerDetailItem" href="#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a>]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def items(self) -&gt; typing.Sequence[BannerDetailItem]:
+    items = self.r5_items + self.r4_items + self.r3_items
+    return sorted(items, key=lambda x: x.order)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetails.name"><code class="name">prop <span class="ident">name</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self) -&gt; str:
+    return re.sub(r&#34;&lt;.*?&gt;&#34;, &#34;&#34;, self.title).strip()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem"><code class="flex name class">
+<span>class <span class="ident">BannerDetailsUpItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BannerDetailsUpItem(APIModel):
+    &#34;&#34;&#34;Item that has a rate-up on a banner.&#34;&#34;&#34;
+
+    name: str = Aliased(&#34;item_name&#34;)
+    type: str = Aliased(&#34;item_type&#34;)
+    element: str = Aliased(&#34;item_attr&#34;)
+    icon: str = Aliased(&#34;item_img&#34;)
+
+    @pydantic.field_validator(&#34;element&#34;, mode=&#34;before&#34;)
+    def __parse_element(cls, v: str) -&gt; str:
+        return {
+            &#34;风&#34;: &#34;Anemo&#34;,
+            &#34;火&#34;: &#34;Pyro&#34;,
+            &#34;水&#34;: &#34;Hydro&#34;,
+            &#34;雷&#34;: &#34;Electro&#34;,
+            &#34;冰&#34;: &#34;Cryo&#34;,
+            &#34;岩&#34;: &#34;Geo&#34;,
+            &#34;草&#34;: &#34;Dendro&#34;,
+            &#34;&#34;: &#34;&#34;,
+        }.get(v, v)</code></pre>
+</details>
+<div class="desc"><p>Item that has a rate-up on a banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.BannerDetailsUpItem.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.GachaItem"><code class="flex name class">
+<span>class <span class="ident">GachaItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GachaItem(APIModel, Unique):
+    &#34;&#34;&#34;Item that can be gotten from the gacha.&#34;&#34;&#34;
+
+    name: str
+    type: str = Aliased(&#34;item_type&#34;)
+    rarity: int = Aliased(&#34;rank_type&#34;)
+    id: int = Aliased(&#34;item_id&#34;)
+
+    @pydantic.field_validator(&#34;id&#34;)
+    def __format_id(cls, v: int) -&gt; int:
+        return 10000000 + v - 1000 if len(str(v)) == 4 else v
+
+    def is_character(self) -&gt; bool:
+        &#34;&#34;&#34;Whether this item is a character.&#34;&#34;&#34;
+        return len(str(self.id)) == 8</code></pre>
+</details>
+<div class="desc"><p>Item that can be gotten from the gacha.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.GachaItem.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GachaItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GachaItem.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GachaItem.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GachaItem.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.GachaItem.is_character"><code class="name flex">
+<span>def <span class="ident">is_character</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_character(self) -&gt; bool:
+    &#34;&#34;&#34;Whether this item is a character.&#34;&#34;&#34;
+    return len(str(self.id)) == 8</code></pre>
+</details>
+<div class="desc"><p>Whether this item is a character.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType"><code class="flex name class">
+<span>class <span class="ident">GenshinBannerType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBannerType(enum.IntEnum):
+    &#34;&#34;&#34;Banner types in wish histories.&#34;&#34;&#34;
+
+    NOVICE = 100
+    &#34;&#34;&#34;Temporary novice banner.&#34;&#34;&#34;
+
+    STANDARD = PERMANENT = 200
+    &#34;&#34;&#34;Permanent standard banner.&#34;&#34;&#34;
+
+    CHARACTER = 301
+    &#34;&#34;&#34;Rotating character banner.&#34;&#34;&#34;
+
+    WEAPON = 302
+    &#34;&#34;&#34;Rotating weapon banner.&#34;&#34;&#34;
+
+    CHRONICLED = 500
+    &#34;&#34;&#34;Chronicled banner.&#34;&#34;&#34;
+
+    # these are special cases
+    # they exist inside the history but should be counted as the same
+
+    CHARACTER1 = 301
+    &#34;&#34;&#34;Character banner #1.&#34;&#34;&#34;
+
+    CHARACTER2 = 400
+    &#34;&#34;&#34;Character banner #2.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Banner types in wish histories.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER"><code class="name">var <span class="ident">CHARACTER</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating character banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER1"><code class="name">var <span class="ident">CHARACTER1</span></code></dt>
+<dd>
+<div class="desc"><p>Character banner #1.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER2"><code class="name">var <span class="ident">CHARACTER2</span></code></dt>
+<dd>
+<div class="desc"><p>Character banner #2.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.CHRONICLED"><code class="name">var <span class="ident">CHRONICLED</span></code></dt>
+<dd>
+<div class="desc"><p>Chronicled banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.NOVICE"><code class="name">var <span class="ident">NOVICE</span></code></dt>
+<dd>
+<div class="desc"><p>Temporary novice banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.PERMANENT"><code class="name">var <span class="ident">PERMANENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.STANDARD"><code class="name">var <span class="ident">STANDARD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.GenshinBannerType.WEAPON"><code class="name">var <span class="ident">WEAPON</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating weapon banner.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.SignalSearch"><code class="flex name class">
+<span>class <span class="ident">SignalSearch</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SignalSearch(BaseWish):
+    &#34;&#34;&#34;Signal Search made on any banner.&#34;&#34;&#34;
+
+    item_id: int
+    type: str = Aliased(&#34;item_type&#34;)
+
+    banner_type: ZZZBannerType
+
+    @pydantic.field_validator(&#34;banner_type&#34;, mode=&#34;before&#34;)
+    def __cast_banner_type(cls, v: typing.Any) -&gt; int:
+        return int(v)</code></pre>
+</details>
+<div class="desc"><p>Signal Search made on any banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.genshin.gacha.BaseWish</li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.SignalSearch.banner_type"><code class="name">var <span class="ident">banner_type</span> : <a title="genshin.models.genshin.gacha.ZZZBannerType" href="#genshin.models.genshin.gacha.ZZZBannerType">ZZZBannerType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.SignalSearch.item_id"><code class="name">var <span class="ident">item_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.SignalSearch.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.SignalSearch.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType"><code class="flex name class">
+<span>class <span class="ident">StarRailBannerType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailBannerType(enum.IntEnum):
+    &#34;&#34;&#34;Banner types in wish histories.&#34;&#34;&#34;
+
+    STANDARD = PERMANENT = 1
+    &#34;&#34;&#34;Permanent standard banner.&#34;&#34;&#34;
+    NOVICE = 2
+    &#34;&#34;&#34;Temporary novice banner.&#34;&#34;&#34;
+    CHARACTER = 11
+    &#34;&#34;&#34;Rotating character banner.&#34;&#34;&#34;
+    WEAPON = 12
+    &#34;&#34;&#34;Rotating weapon banner.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Banner types in wish histories.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType.CHARACTER"><code class="name">var <span class="ident">CHARACTER</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating character banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType.NOVICE"><code class="name">var <span class="ident">NOVICE</span></code></dt>
+<dd>
+<div class="desc"><p>Temporary novice banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType.PERMANENT"><code class="name">var <span class="ident">PERMANENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType.STANDARD"><code class="name">var <span class="ident">STANDARD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.StarRailBannerType.WEAPON"><code class="name">var <span class="ident">WEAPON</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating weapon banner.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.Warp"><code class="flex name class">
+<span>class <span class="ident">Warp</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Warp(BaseWish):
+    &#34;&#34;&#34;Warp made on any banner.&#34;&#34;&#34;
+
+    item_id: int
+    type: str = Aliased(&#34;item_type&#34;)
+
+    banner_type: StarRailBannerType
+    banner_id: int = Aliased(&#34;gacha_id&#34;)
+
+    @pydantic.field_validator(&#34;banner_type&#34;, mode=&#34;before&#34;)
+    def __cast_banner_type(cls, v: typing.Any) -&gt; int:
+        return int(v)</code></pre>
+</details>
+<div class="desc"><p>Warp made on any banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.genshin.gacha.BaseWish</li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.Warp.banner_id"><code class="name">var <span class="ident">banner_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Warp.banner_type"><code class="name">var <span class="ident">banner_type</span> : <a title="genshin.models.genshin.gacha.StarRailBannerType" href="#genshin.models.genshin.gacha.StarRailBannerType">StarRailBannerType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Warp.item_id"><code class="name">var <span class="ident">item_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Warp.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Warp.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.Wish"><code class="flex name class">
+<span>class <span class="ident">Wish</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Wish(BaseWish):
+    &#34;&#34;&#34;Wish made on any banner.&#34;&#34;&#34;
+
+    type: str = Aliased(&#34;item_type&#34;)
+    banner_type: GenshinBannerType
+
+    @pydantic.field_validator(&#34;banner_type&#34;, mode=&#34;before&#34;)
+    def __cast_banner_type(cls, v: typing.Any) -&gt; int:
+        return int(v)</code></pre>
+</details>
+<div class="desc"><p>Wish made on any banner.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.genshin.gacha.BaseWish</li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.Wish.banner_type"><code class="name">var <span class="ident">banner_type</span> : <a title="genshin.models.genshin.gacha.GenshinBannerType" href="#genshin.models.genshin.gacha.GenshinBannerType">GenshinBannerType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Wish.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.Wish.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType"><code class="flex name class">
+<span>class <span class="ident">ZZZBannerType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZBannerType(enum.IntEnum):
+    &#34;&#34;&#34;Banner types in wish histories.&#34;&#34;&#34;
+
+    STANDARD = PERMANENT = 1
+    &#34;&#34;&#34;Permanent standard banner.&#34;&#34;&#34;
+
+    CHARACTER = 2
+    &#34;&#34;&#34;Rotating character banner.&#34;&#34;&#34;
+
+    WEAPON = 3
+    &#34;&#34;&#34;Rotating weapon banner.&#34;&#34;&#34;
+
+    BANGBOO = 5
+    &#34;&#34;&#34;Bangboo banner.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Banner types in wish histories.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType.BANGBOO"><code class="name">var <span class="ident">BANGBOO</span></code></dt>
+<dd>
+<div class="desc"><p>Bangboo banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType.CHARACTER"><code class="name">var <span class="ident">CHARACTER</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating character banner.</p></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType.PERMANENT"><code class="name">var <span class="ident">PERMANENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType.STANDARD"><code class="name">var <span class="ident">STANDARD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.gacha.ZZZBannerType.WEAPON"><code class="name">var <span class="ident">WEAPON</span></code></dt>
+<dd>
+<div class="desc"><p>Rotating weapon banner.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin" href="index.html">genshin.models.genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.BannerDetailItem" href="#genshin.models.genshin.gacha.BannerDetailItem">BannerDetailItem</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.model_config" href="#genshin.models.genshin.gacha.BannerDetailItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.name" href="#genshin.models.genshin.gacha.BannerDetailItem.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.order" href="#genshin.models.genshin.gacha.BannerDetailItem.order">order</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.rarity" href="#genshin.models.genshin.gacha.BannerDetailItem.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.type" href="#genshin.models.genshin.gacha.BannerDetailItem.type">type</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailItem.up" href="#genshin.models.genshin.gacha.BannerDetailItem.up">up</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.BannerDetails" href="#genshin.models.genshin.gacha.BannerDetails">BannerDetails</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.banner_id" href="#genshin.models.genshin.gacha.BannerDetails.banner_id">banner_id</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.banner_type" href="#genshin.models.genshin.gacha.BannerDetails.banner_type">banner_type</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.banner_type_name" href="#genshin.models.genshin.gacha.BannerDetails.banner_type_name">banner_type_name</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.content" href="#genshin.models.genshin.gacha.BannerDetails.content">content</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.date_range" href="#genshin.models.genshin.gacha.BannerDetails.date_range">date_range</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.items" href="#genshin.models.genshin.gacha.BannerDetails.items">items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.model_config" href="#genshin.models.genshin.gacha.BannerDetails.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.name" href="#genshin.models.genshin.gacha.BannerDetails.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r3_guarantee_prob" href="#genshin.models.genshin.gacha.BannerDetails.r3_guarantee_prob">r3_guarantee_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r3_items" href="#genshin.models.genshin.gacha.BannerDetails.r3_items">r3_items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r3_prob" href="#genshin.models.genshin.gacha.BannerDetails.r3_prob">r3_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r4_guarantee_prob" href="#genshin.models.genshin.gacha.BannerDetails.r4_guarantee_prob">r4_guarantee_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r4_items" href="#genshin.models.genshin.gacha.BannerDetails.r4_items">r4_items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r4_prob" href="#genshin.models.genshin.gacha.BannerDetails.r4_prob">r4_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r4_up_items" href="#genshin.models.genshin.gacha.BannerDetails.r4_up_items">r4_up_items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r4_up_prob" href="#genshin.models.genshin.gacha.BannerDetails.r4_up_prob">r4_up_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r5_guarantee_prob" href="#genshin.models.genshin.gacha.BannerDetails.r5_guarantee_prob">r5_guarantee_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r5_items" href="#genshin.models.genshin.gacha.BannerDetails.r5_items">r5_items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r5_prob" href="#genshin.models.genshin.gacha.BannerDetails.r5_prob">r5_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r5_up_items" href="#genshin.models.genshin.gacha.BannerDetails.r5_up_items">r5_up_items</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.r5_up_prob" href="#genshin.models.genshin.gacha.BannerDetails.r5_up_prob">r5_up_prob</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetails.title" href="#genshin.models.genshin.gacha.BannerDetails.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem" href="#genshin.models.genshin.gacha.BannerDetailsUpItem">BannerDetailsUpItem</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem.element" href="#genshin.models.genshin.gacha.BannerDetailsUpItem.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem.icon" href="#genshin.models.genshin.gacha.BannerDetailsUpItem.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem.model_config" href="#genshin.models.genshin.gacha.BannerDetailsUpItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem.name" href="#genshin.models.genshin.gacha.BannerDetailsUpItem.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.BannerDetailsUpItem.type" href="#genshin.models.genshin.gacha.BannerDetailsUpItem.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.GachaItem" href="#genshin.models.genshin.gacha.GachaItem">GachaItem</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.id" href="#genshin.models.genshin.gacha.GachaItem.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.is_character" href="#genshin.models.genshin.gacha.GachaItem.is_character">is_character</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.model_config" href="#genshin.models.genshin.gacha.GachaItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.name" href="#genshin.models.genshin.gacha.GachaItem.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.rarity" href="#genshin.models.genshin.gacha.GachaItem.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GachaItem.type" href="#genshin.models.genshin.gacha.GachaItem.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.GenshinBannerType" href="#genshin.models.genshin.gacha.GenshinBannerType">GenshinBannerType</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER" href="#genshin.models.genshin.gacha.GenshinBannerType.CHARACTER">CHARACTER</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER1" href="#genshin.models.genshin.gacha.GenshinBannerType.CHARACTER1">CHARACTER1</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.CHARACTER2" href="#genshin.models.genshin.gacha.GenshinBannerType.CHARACTER2">CHARACTER2</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.CHRONICLED" href="#genshin.models.genshin.gacha.GenshinBannerType.CHRONICLED">CHRONICLED</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.NOVICE" href="#genshin.models.genshin.gacha.GenshinBannerType.NOVICE">NOVICE</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.PERMANENT" href="#genshin.models.genshin.gacha.GenshinBannerType.PERMANENT">PERMANENT</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.STANDARD" href="#genshin.models.genshin.gacha.GenshinBannerType.STANDARD">STANDARD</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.GenshinBannerType.WEAPON" href="#genshin.models.genshin.gacha.GenshinBannerType.WEAPON">WEAPON</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.SignalSearch" href="#genshin.models.genshin.gacha.SignalSearch">SignalSearch</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.SignalSearch.banner_type" href="#genshin.models.genshin.gacha.SignalSearch.banner_type">banner_type</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.SignalSearch.item_id" href="#genshin.models.genshin.gacha.SignalSearch.item_id">item_id</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.SignalSearch.model_config" href="#genshin.models.genshin.gacha.SignalSearch.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.SignalSearch.type" href="#genshin.models.genshin.gacha.SignalSearch.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.StarRailBannerType" href="#genshin.models.genshin.gacha.StarRailBannerType">StarRailBannerType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.StarRailBannerType.CHARACTER" href="#genshin.models.genshin.gacha.StarRailBannerType.CHARACTER">CHARACTER</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.StarRailBannerType.NOVICE" href="#genshin.models.genshin.gacha.StarRailBannerType.NOVICE">NOVICE</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.StarRailBannerType.PERMANENT" href="#genshin.models.genshin.gacha.StarRailBannerType.PERMANENT">PERMANENT</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.StarRailBannerType.STANDARD" href="#genshin.models.genshin.gacha.StarRailBannerType.STANDARD">STANDARD</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.StarRailBannerType.WEAPON" href="#genshin.models.genshin.gacha.StarRailBannerType.WEAPON">WEAPON</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.Warp" href="#genshin.models.genshin.gacha.Warp">Warp</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.Warp.banner_id" href="#genshin.models.genshin.gacha.Warp.banner_id">banner_id</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Warp.banner_type" href="#genshin.models.genshin.gacha.Warp.banner_type">banner_type</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Warp.item_id" href="#genshin.models.genshin.gacha.Warp.item_id">item_id</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Warp.model_config" href="#genshin.models.genshin.gacha.Warp.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Warp.type" href="#genshin.models.genshin.gacha.Warp.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.Wish" href="#genshin.models.genshin.gacha.Wish">Wish</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.Wish.banner_type" href="#genshin.models.genshin.gacha.Wish.banner_type">banner_type</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Wish.model_config" href="#genshin.models.genshin.gacha.Wish.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.Wish.type" href="#genshin.models.genshin.gacha.Wish.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.gacha.ZZZBannerType" href="#genshin.models.genshin.gacha.ZZZBannerType">ZZZBannerType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.gacha.ZZZBannerType.BANGBOO" href="#genshin.models.genshin.gacha.ZZZBannerType.BANGBOO">BANGBOO</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.ZZZBannerType.CHARACTER" href="#genshin.models.genshin.gacha.ZZZBannerType.CHARACTER">CHARACTER</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.ZZZBannerType.PERMANENT" href="#genshin.models.genshin.gacha.ZZZBannerType.PERMANENT">PERMANENT</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.ZZZBannerType.STANDARD" href="#genshin.models.genshin.gacha.ZZZBannerType.STANDARD">STANDARD</a></code></li>
+<li><code><a title="genshin.models.genshin.gacha.ZZZBannerType.WEAPON" href="#genshin.models.genshin.gacha.ZZZBannerType.WEAPON">WEAPON</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
