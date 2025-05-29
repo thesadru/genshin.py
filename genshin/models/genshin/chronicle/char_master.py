@@ -1,7 +1,8 @@
 from enum import IntEnum
+
 import pydantic
 
-__all__ = ("EnvisagedEchoStatus", "EnvisagedEchoCharacter")
+__all__ = ("EnvisagedEchoCharacter", "EnvisagedEchoStatus")
 
 
 class EnvisagedEchoStatus(IntEnum):
