@@ -71,3 +71,7 @@ async def test_full_genshin_user(client: genshin.Client, genshin_uid: int):
 async def test_exceptions(client: genshin.Client):
     with pytest.raises(genshin.DataNotPublic):
         await client.get_record_cards(10000000)
+
+async def test_envisaged_echoes(client: genshin.Client):
+    echoes = await client.get_envisaged_echoes()
+    assert echoes
