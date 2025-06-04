@@ -8,11 +8,11 @@ from .components import (
     diary,
     gacha,
     hoyolab,
+    hsr_lineup,
     lineup,
     teapot,
     transaction,
     wiki,
-    hsr_lineup,
 )
 
 __all__ = ["Client"]

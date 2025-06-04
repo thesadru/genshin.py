@@ -1,6 +1,7 @@
 """HSR Lineup Simulator."""
 
 import typing
+
 import pydantic
 
 
@@ -37,12 +38,13 @@ class HSRGameMode(pydantic.BaseModel):
         v["floors"] = children[0]["children"]
         return v
 
+
 class HSRLineup(pydantic.BaseModel):
     """A HSR lineup."""
-    
+
     id: str
     uid: str = pydantic.Field(alias="account_uid")
     nickname: str
     avatar_url: str
-    
+
     title: str

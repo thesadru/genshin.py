@@ -1,12 +1,13 @@
 import typing
 
 import aiohttp.typedefs
+
 from genshin import types
 from genshin.client import routes
 from genshin.client.components import base
 from genshin.constants import GAME_LANGS
-from genshin.utility import ds
 from genshin.models.starrail import rpgsimulator as models
+from genshin.utility import ds
 
 
 class HSRLineupClient(base.BaseClient):
