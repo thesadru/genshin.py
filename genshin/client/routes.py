@@ -330,3 +330,5 @@ GET_FP_URL = InternationalRoute(
 )
 
 MIMO_URL = Route("https://sg-public-api.hoyolab.com/event/e2023mimotravel")
+
+HSR_LINEUP_SIMULATOR_URL = Route("https://sg-public-api.hoyolab.com/event/rpgsimulator")

@@ -12,6 +12,7 @@ from .components import (
     teapot,
     transaction,
     wiki,
+    hsr_lineup,
 )
 
 __all__ = ["Client"]
@@ -29,5 +30,6 @@ class Client(
     gacha.WishClient,
     transaction.TransactionClient,
     auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
 ):
     """A simple HTTP client for API endpoints."""
