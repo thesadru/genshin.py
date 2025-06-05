@@ -1,10 +1,10 @@
 """Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and pydantic.
 
-Documentation: https://thesadru.github.io/genshin.py
+Documentation: https://ashleney.github.io/genshin.py
 
-API Reference: https://thesadru.github.io/genshin.py/pdoc/genshin
+API Reference: https://ashleney.github.io/genshin.py/pdoc/genshin
 
-Source Code: https://github.com/thesadru/genshin.py
+Source Code: https://github.com/ashleney/genshin.py
 """
 
 from . import models, utility

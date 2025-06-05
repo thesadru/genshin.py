@@ -4,11 +4,11 @@ Modern API wrapper for HoYoLAB & Miyoushe(米游社) API built on asyncio and py
 
 ---
 
-Documentation: <https://thesadru.github.io/genshin.py>
+Documentation: <https://ashleney.github.io/genshin.py>
 
-API Reference: <https://thesadru.github.io/genshin.py/pdoc/genshin>
+API Reference: <https://ashleney.github.io/genshin.py/pdoc/genshin>
 
-Source Code: <https://github.com/thesadru/genshin.py>
+Source Code: <https://github.com/ashleney/genshin.py>
 
 ---
 
@@ -22,7 +22,7 @@ Key features:
 - Supports the majority of the popular endpoints.
 - Cleanly integrates with frameworks like FastAPI out of the box.
 
-> Note: This library is a successor to [genshinstats](https://github.com/thesadru/genshinstats) - an unofficial wrapper for the Genshin Impact api.
+> Note: This library is a successor to [genshinstats](https://github.com/ashleney/genshinstats) - an unofficial wrapper for the Genshin Impact api.
 
 ## Requirements
 
@@ -42,7 +42,7 @@ pip install genshin
 You can also install the latest development version from GitHub:
 
 ```console
-pip install git+https://github.com/thesadru/genshin.py
+pip install git+https://github.com/ashleney/genshin.py
 ```
 
 A new release is made every 2 weeks.
@@ -72,4 +72,4 @@ Please read [CONTRIBUTING.md](./CONTRIBUTING.md) to see what you need to do to m
 
 ## License
 
-Genshin.py has been actively developed since [2021-02-06](https://github.com/thesadru/genshinstats/commit/223a2405ce6e05008eb8389e481e857fe33de771). Please report any potential copyright violations to the owner through [discord](https://discord.gg/sMkSKRPuCR).
+Genshin.py has been actively developed since [2021-02-06](https://github.com/ashleney/genshinstats/commit/223a2405ce6e05008eb8389e481e857fe33de771). Please report any potential copyright violations to the owner through [discord](https://discord.gg/sMkSKRPuCR).

@@ -15,7 +15,7 @@ Thanks to these amazing people genshin.py can be where it is now:
 - [Chromosomologist](https://github.com/Chromosomologist): Helped with honkai endpoints.
 - [Pokurt](https://github.com/pokurt): Helped with capturing the requests coming from the hoyolab android app.
 - [GrassSand](https://github.com/grasssand) & [molehzy](https://github.com/molehzy): Provided me with working chinese cookies to test chinese endpoints.
-- [Ashlen](https://github.com/thesadru): me :^)
+- [Ashlen](https://github.com/ashleney): me :^)
 
 ### Feedback
 
