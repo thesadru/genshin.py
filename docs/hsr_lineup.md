@@ -45,8 +45,8 @@ for _ in range(5):
     next_page_token = page.next_page_token
 ```
 
-1. The 'lang' parameter matters for the language of lineups returned by the API.
-2. 'cookies' and 'uid' parameters are optional; if passed in, using the 'Match' order in `get_starrail_lineups` will return lineups with characters that the user has.
+1. The `lang` parameter matters for the language of lineups returned by the API.
+2. `cookies` and `uid` parameters are optional; if passed in, using the `Match` order in `get_starrail_lineups` will return lineups with characters that the user has.
 3. Use the helper method to get stage 11 of MOC.
 4. You can also use the enum for the game mode type.
 5. Get the MOC schedules (sort by most recent first.)
