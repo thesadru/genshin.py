@@ -1,7 +1,7 @@
 """Starrail chronicle character."""
 
-from collections.abc import Mapping, Sequence
 import typing
+from collections.abc import Mapping, Sequence
 
 import pydantic
 

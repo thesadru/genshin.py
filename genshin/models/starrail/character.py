@@ -4,7 +4,8 @@ import enum
 import typing
 
 import pydantic
-from genshin.models.model import APIModel, Aliased, Unique
+
+from genshin.models.model import Aliased, APIModel, Unique
 
 
 class StarRailPath(enum.IntEnum):

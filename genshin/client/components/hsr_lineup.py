@@ -9,6 +9,8 @@ from genshin.constants import GAME_LANGS
 from genshin.models.starrail import rpgsimulator as models
 from genshin.utility import ds
 
+__all__ = ("HSRLineupClient",)
+
 
 class HSRLineupClient(base.BaseClient):
     """HSR lineup simulator client."""
