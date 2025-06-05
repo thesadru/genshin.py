@@ -58,7 +58,7 @@ class StarRailGameModeSchedule(APIModel):
 
     id: int = Aliased("group_id")
     name: str = Aliased("name_mi18n")
-    begin_time: datetime.datetime = Aliased("schedule_begin_time")
+    start_time: datetime.datetime = Aliased("schedule_begin_time")
     end_time: datetime.datetime = Aliased("schedule_end_time")
 
     is_now: bool
