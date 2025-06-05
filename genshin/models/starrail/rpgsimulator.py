@@ -148,7 +148,9 @@ class StarRailLineup(APIModel):
 
     @pydantic.field_validator("characters", mode="before")
     @classmethod
-    def __unnest_characters(cls, v: typing.Sequence[dict[str, typing.Any]]) -> typing.Sequence[typing.Sequence[dict[str, typing.Any]]]:
+    def __unnest_characters(
+        cls, v: typing.Sequence[dict[str, typing.Any]]
+    ) -> typing.Sequence[typing.Sequence[dict[str, typing.Any]]]:
         return [g["avatar_details"] for g in v]
 
     @pydantic.model_validator(mode="before")
