@@ -19,6 +19,8 @@ theme:
   features:
     - navigation.instant
     - navigation.expand
+    - content.code.copy
+    - content.code.annotate
   language: en
 repo_name: ashleney/genshin.py
 repo_url: https://github.com/ashleney/genshin.py
@@ -26,7 +28,10 @@ plugins:
   - search
 markdown_extensions:
   - tables
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
