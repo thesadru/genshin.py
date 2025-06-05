@@ -1,6 +1,6 @@
 # HSR Lineup Simulator
 
-This is a HoYoLAB feature that allows players to submit the teams and buffs they used for the endgame challenges (MOC, Pure Fiction, and Apocalypse Universe.)
+This is a HoYoLAB feature that allows players to submit the teams and buffs they used for the endgame challenges (MOC, Pure Fiction, and Apocalyptic Shadow.)
 
 ## Example
 
