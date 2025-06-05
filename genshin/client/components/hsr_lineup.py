@@ -76,6 +76,7 @@ class HSRLineupClient(base.BaseClient):
         group_id: int,
         type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal["Chasm"]],
         next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal["Hot", "Match", "CreatedTime"] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.StarRailLineupResponse: ...
     @typing.overload
@@ -86,6 +87,7 @@ class HSRLineupClient(base.BaseClient):
         group_id: int,
         type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal["Story"]],
         next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal["Hot", "Match", "CreatedTime"] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.PureFictionLineupResponse: ...
     @typing.overload
@@ -96,6 +98,7 @@ class HSRLineupClient(base.BaseClient):
         group_id: int,
         type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal["Boss"]],
         next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal["Hot", "Match", "CreatedTime"] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.APCShadowLineupResponse: ...
     async def get_starrail_lineups(
@@ -105,6 +108,7 @@ class HSRLineupClient(base.BaseClient):
         group_id: int,
         type: LineupGameMode,
         next_page_token: typing.Optional[str] = None,
+        order: typing.Literal["Hot", "Match", "CreatedTime"] = "Match",
         lang: typing.Optional[str] = None,
     ) -> typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
         """Get the available lineups for the HSR lineup simulator."""
@@ -113,8 +117,12 @@ class HSRLineupClient(base.BaseClient):
             "group_id": group_id,
             "lineup_type": str(type),
             "game": "hkrpg",
-            "order": "Match",
         }
+
+        if order not in {"Hot", "Match", "CreatedTime"}:
+            msg = f"Invalid order {order!r}. Must be one of 'Hot', 'Match', or 'CreatedTime'."
+            raise ValueError(msg)
+        params["order"] = order
 
         if self.uid is not None:
             params["uid"] = self.uid
