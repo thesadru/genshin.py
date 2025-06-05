@@ -8,6 +8,7 @@ from .components import (
     diary,
     gacha,
     hoyolab,
+    hsr_lineup,
     lineup,
     teapot,
     transaction,
@@ -29,5 +30,6 @@ class Client(
     gacha.WishClient,
     transaction.TransactionClient,
     auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
 ):
     """A simple HTTP client for API endpoints."""

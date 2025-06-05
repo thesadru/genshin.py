@@ -119,11 +119,11 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailDetailCharacters:
+    ) -> models.StarRailDetailCharacterResponse:
         """Get starrail characters."""
         payload = {"need_wiki": "true"}
         data = await self._request_starrail_record("avatar/info", uid, lang=lang, payload=payload)
-        return models.StarRailDetailCharacters(**data)
+        return models.StarRailDetailCharacterResponse(**data)
 
     @typing.overload
     async def get_starrail_challenge(
