@@ -47,12 +47,55 @@ class HSRLineupClient(base.BaseClient):
         return [models.StarRailGameMode(**item) for item in data["tree"]]
 
     async def get_starrail_lineups(
-        self, tag_id: int, *, next_page_token: typing.Optional[str] = None, lang: typing.Optional[str] = None
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Literal["moc", "pf", "apc"],
+        next_page_token: typing.Optional[str] = None,
+        lang: typing.Optional[str] = None,
     ) -> models.StarRailLineupResponse:
         """Get the available lineups for the HSR lineup simulator."""
-        params: typing.Mapping[str, typing.Any] = {"tag_id": tag_id, "game": "hkrpg"}
+        type_convert = {"moc": "Chasm", "pf": "Story", "apc": "Boss"}
+        params: typing.Mapping[str, typing.Any] = {
+            "tag_id": tag_id,
+            "group_id": group_id,
+            "lineup_type": type_convert[type],
+        }
         if next_page_token:
             params["page_token"] = next_page_token
 
         data = await self._request("lineup/index", lang=lang, params=params)
         return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self, type: typing.Literal["moc"], *, lang: typing.Optional[str] = ...
+    ) -> list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self, type: typing.Literal["pf"], *, lang: typing.Optional[str] = ...
+    ) -> list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self, type: typing.Literal["apc"], *, lang: typing.Optional[str] = ...
+    ) -> list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: typing.Literal["moc", "pf", "apc"], *, lang: typing.Optional[str] = None
+    ) -> typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        """Get the schedule for the HSR lineup simulator."""
+        if type == "apc":
+            endpoint = "boss_schedule/list"
+            cls = models.APCShadowSchedule
+        elif type == "moc":
+            endpoint = "schedule/list"
+            cls = models.MOCSchedule
+        elif type == "pf":
+            endpoint = "story_schedule/list"
+            cls = models.PureFictionSchedule
+        else:
+            msg = f"Invalid type {type!r} for HSR lineup schedule."
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        return [cls(**item) for item in data["schedule"]]  # type: ignore
