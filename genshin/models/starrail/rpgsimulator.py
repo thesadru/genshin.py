@@ -2,6 +2,7 @@
 
 import datetime
 import typing
+from enum import Enum
 
 import pydantic
 
@@ -22,10 +23,22 @@ __all__ = (
     "StarRailGameModeBuff",
     "StarRailGameModeFloor",
     "StarRailGameModeSchedule",
+    "StarRailGameModeType",
     "StarRailLineup",
     "StarRailLineupPlayer",
     "StarRailLineupResponse",
 )
+
+
+class StarRailGameModeType(str, Enum):
+    """HSR lineup game mode enum."""
+
+    MOC = "Chasm"
+    """Memory of Chaos."""
+    PURE_FICTION = "Story"
+    """Pure Fiction."""
+    APC_SHADOW = "Boss"
+    """Apocalyptic Shadow."""
 
 
 class StarRailGameModeFloor(APIModel):
@@ -49,6 +62,7 @@ class StarRailGameMode(APIModel):
     id: int
     name: str
     floors: typing.Sequence[StarRailGameModeFloor]
+    type: StarRailGameModeType = Aliased("root_type")
 
     @pydantic.model_validator(mode="before")
     @classmethod
@@ -132,7 +146,7 @@ class StarRailLineup(APIModel):
 
     id: str
     player: StarRailLineupPlayer
-    type: typing.Literal["Chasm", "Story", "Boss"] = Aliased("lineup_type")
+    type: StarRailGameModeType = Aliased("lineup_type")
 
     title: str
     description: str

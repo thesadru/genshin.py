@@ -8,8 +8,11 @@ from genshin.client.components import base
 from genshin.constants import GAME_LANGS
 from genshin.models.starrail import rpgsimulator as models
 from genshin.utility import ds
+from genshin.utility.uid import recognize_server
 
 __all__ = ("HSRLineupClient",)
+
+LineupGameMode = typing.Union[models.StarRailGameModeType, typing.Literal["Chasm", "Story", "Boss"]]
 
 
 class HSRLineupClient(base.BaseClient):
@@ -48,13 +51,30 @@ class HSRLineupClient(base.BaseClient):
         data = await self._request("tag", lang=lang)
         return [models.StarRailGameMode(**item) for item in data["tree"]]
 
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -> typing.Optional[models.StarRailGameModeFloor]:
+        """Helper method to get a specific floor from the game modes."""
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
     @typing.overload
     async def get_starrail_lineups(
         self,
         *,
         tag_id: int,
         group_id: int,
-        type: typing.Literal["moc"],
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal["Chasm"]],
         next_page_token: typing.Optional[str] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.StarRailLineupResponse: ...
@@ -64,7 +84,7 @@ class HSRLineupClient(base.BaseClient):
         *,
         tag_id: int,
         group_id: int,
-        type: typing.Literal["pf"],
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal["Story"]],
         next_page_token: typing.Optional[str] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.PureFictionLineupResponse: ...
@@ -74,7 +94,7 @@ class HSRLineupClient(base.BaseClient):
         *,
         tag_id: int,
         group_id: int,
-        type: typing.Literal["apc"],
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal["Boss"]],
         next_page_token: typing.Optional[str] = ...,
         lang: typing.Optional[str] = ...,
     ) -> models.APCShadowLineupResponse: ...
@@ -83,23 +103,25 @@ class HSRLineupClient(base.BaseClient):
         *,
         tag_id: int,
         group_id: int,
-        type: typing.Literal["moc", "pf", "apc"],
+        type: LineupGameMode,
         next_page_token: typing.Optional[str] = None,
         lang: typing.Optional[str] = None,
     ) -> typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
         """Get the available lineups for the HSR lineup simulator."""
-        type_convert = {"moc": "Chasm", "pf": "Story", "apc": "Boss"}
-        if type not in type_convert:
-            msg = f"Invalid type {type!r} for HSR lineup."
-            raise ValueError(msg)
-
         params: dict[str, typing.Any] = {
             "tag_id": tag_id,
             "group_id": group_id,
-            "lineup_type": type_convert[type],
+            "lineup_type": str(type),
+            "game": "hkrpg",
+            "order": "Match",
         }
+
+        if self.uid is not None:
+            params["uid"] = self.uid
+            params["region"] = recognize_server(self.uid, types.Game.STARRAIL)
+
         if next_page_token:
-            params["page_token"] = next_page_token
+            params["next_page_token"] = next_page_token
 
         data = await self._request("lineup/index", lang=lang, params=params)
 
@@ -111,24 +133,33 @@ class HSRLineupClient(base.BaseClient):
 
     @typing.overload
     async def get_starrail_lineup_schedules(
-        self, type: typing.Literal["moc"], *, lang: typing.Optional[str] = ...
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal["Chasm"]],
+        *,
+        lang: typing.Optional[str] = ...,
     ) -> list[models.MOCSchedule]: ...
     @typing.overload
     async def get_starrail_lineup_schedules(
-        self, type: typing.Literal["pf"], *, lang: typing.Optional[str] = ...
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal["Story"]],
+        *,
+        lang: typing.Optional[str] = ...,
     ) -> list[models.PureFictionSchedule]: ...
     @typing.overload
     async def get_starrail_lineup_schedules(
-        self, type: typing.Literal["apc"], *, lang: typing.Optional[str] = ...
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal["Boss"]],
+        *,
+        lang: typing.Optional[str] = ...,
     ) -> list[models.APCShadowSchedule]: ...
     async def get_starrail_lineup_schedules(
-        self, type: typing.Literal["moc", "pf", "apc"], *, lang: typing.Optional[str] = None
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
     ) -> typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
         """Get the schedule for the HSR lineup simulator."""
         endpoints = {
-            "moc": "schedule/list",
-            "pf": "story_schedule/list",
-            "apc": "boss_schedule/list",
+            "Chasm": "schedule/list",
+            "Story": "story_schedule/list",
+            "Boss": "boss_schedule/list",
         }
         endpoint = endpoints.get(type)
         if endpoint is None:
@@ -136,8 +167,8 @@ class HSRLineupClient(base.BaseClient):
             raise ValueError(msg)
 
         data = await self._request(endpoint, lang=lang)
-        if type == "apc":
+        if type == "Boss":
             return [models.APCShadowSchedule(**item) for item in data["schedule"]]
-        if type == "moc":
+        if type == "Chasm":
             return [models.MOCSchedule(**item) for item in data["schedule"]]
         return [models.PureFictionSchedule(**item) for item in data["schedule"]]
