@@ -51,6 +51,7 @@ nav:
       - diary.md
       - wish_history.md
       - transactions.md
+      - hsr_lineup.md
   - Advanced Usage:
       - configuration.md
       - caching.md
