@@ -39,7 +39,20 @@ class HSRLineupClient(base.BaseClient):
 
         return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
 
-    async def get_hsr_lineup_game_modes(self, *, lang: typing.Optional[str] = None) -> list[models.HSRGameMode]:
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -> list[models.StarRailGameMode]:
         """Get the available game modes for the HSR lineup simulator."""
         data = await self._request("tag", lang=lang)
-        return [models.HSRGameMode(**item) for item in data["tree"]]
+        return [models.StarRailGameMode(**item) for item in data["tree"]]
+
+    async def get_starrail_lineups(
+        self, tag_id: int, *, next_page_token: typing.Optional[str] = None, lang: typing.Optional[str] = None
+    ) -> models.StarRailLineupResponse:
+        """Get the available lineups for the HSR lineup simulator."""
+        params: typing.Mapping[str, typing.Any] = {"tag_id": tag_id, "game": "hkrpg"}
+        if next_page_token:
+            params["page_token"] = next_page_token
+
+        data = await self._request("lineup/index", lang=lang, params=params)
+        return models.StarRailLineupResponse(**data)

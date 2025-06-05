@@ -4,8 +4,11 @@ import typing
 
 import pydantic
 
+from genshin.models.model import APIModel, Aliased
+from . import character
 
-class HSRGameModeFloor(pydantic.BaseModel):
+
+class StarRailGameModeFloor(APIModel):
     """A floor of a game mode, like MOC Stage 1."""
 
     id: int
@@ -20,12 +23,12 @@ class HSRGameModeFloor(pydantic.BaseModel):
         return v
 
 
-class HSRGameMode(pydantic.BaseModel):
+class StarRailGameMode(APIModel):
     """HSR game mode, like MOC."""
 
     id: int
     name: str
-    floors: list[HSRGameModeFloor]
+    floors: list[StarRailGameModeFloor]
 
     @pydantic.model_validator(mode="before")
     @classmethod
@@ -36,15 +39,29 @@ class HSRGameMode(pydantic.BaseModel):
             raise ValueError(msg)
 
         v["floors"] = children[0]["children"]
+        v["name"] = children[0]["name"]
         return v
 
 
-class HSRLineup(pydantic.BaseModel):
+class StarRailLineup(APIModel):
     """A HSR lineup."""
 
     id: str
-    uid: str = pydantic.Field(alias="account_uid")
+    uid: str = Aliased("account_uid")
     nickname: str
     avatar_url: str
 
     title: str
+    characters: list[list[character.StarRailLineupCharacter]] = Aliased("avatar_group")
+
+    @pydantic.field_validator("characters", mode="before")
+    @classmethod
+    def __unnest_characters(cls, v: list[dict[str, typing.Any]]) -> list[list[dict[str, typing.Any]]]:
+        return [g["avatar_details"] for g in v]
+
+
+class StarRailLineupResponse(APIModel):
+    """Response for HSR lineups."""
+
+    lineups: list[StarRailLineup] = Aliased("list")
+    next_page_token: str
