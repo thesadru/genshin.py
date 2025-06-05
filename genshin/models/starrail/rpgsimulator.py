@@ -5,7 +5,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import APIModel, Aliased
+from genshin.models.model import APIModel, Aliased, DateTime
 from . import character
 
 
@@ -70,8 +70,8 @@ class APCShadowSchedule(StarRailGameModeSchedule):
     """Apocalyptic Shadow schedule."""
 
     buff: StarRailGameModeBuff
-    node_1_small_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_1")
-    node_2_small_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_2")
+    node1_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_1")
+    node2_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_2")
 
     @pydantic.model_validator(mode="before")
     @classmethod
@@ -99,15 +99,32 @@ class PureFictionSchedule(StarRailGameModeSchedule):
     default_buffs: list[StarRailGameModeBuff] = Aliased("sub_maze_buff_list")
 
 
+class StarRailLineupPlayer(APIModel):
+    """A HSR lineup player."""
+
+    uid: str
+    nickname: str
+    avatar_url: str
+    level: int
+
+
 class StarRailLineup(APIModel):
     """A HSR lineup."""
 
     id: str
-    uid: str = Aliased("account_uid")
-    nickname: str
-    avatar_url: str
+    player: StarRailLineupPlayer
+    type: typing.Literal["Chasm", "Story", "Boss"] = Aliased("lineup_type")
 
     title: str
+    description: str
+    likes: int = Aliased("like_cnt")
+    comments: int = Aliased("comment_cnt")
+    favorites: int = Aliased("favour_cnt")
+    views: int = Aliased("view_cnt")
+
+    created_at: datetime.datetime
+    last_edited_at: datetime.datetime = Aliased("last_edit")
+
     characters: list[list[character.StarRailLineupCharacter]] = Aliased("avatar_group")
 
     @pydantic.field_validator("characters", mode="before")
@@ -115,9 +132,56 @@ class StarRailLineup(APIModel):
     def __unnest_characters(cls, v: list[dict[str, typing.Any]]) -> list[list[dict[str, typing.Any]]]:
         return [g["avatar_details"] for g in v]
 
+    @pydantic.model_validator(mode="before")
+    @classmethod
+    def __nest_player(cls, v: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        """Nest the player field."""
+        v["player"] = {
+            "uid": v["account_uid"],
+            "nickname": v["nickname"],
+            "avatar_url": v["avatar_url"],
+            "level": v["game_level"],
+        }
+        return v
+
+
+class LineupDetail(APIModel):
+    """Detail for a lineup."""
+
+    buffs: list[StarRailGameModeBuff] = Aliased("buff_list")
+    points: int
+
+
+class PureFictionLineup(StarRailLineup):
+    """A Pure Fiction lineup."""
+
+    detail: LineupDetail = Aliased("story_info")
+    node1_challenged_at: DateTime = Aliased("challenge_time")
+    node2_challenged_at: DateTime = Aliased("challenge_time_node2")
+
+
+class APCShadowLineup(StarRailLineup):
+    """A Apocalyptic Shadow lineup."""
+
+    detail: LineupDetail = Aliased("boss_info")
+    node1_challenged_at: DateTime = Aliased("challenge_time")
+    node2_challenged_at: DateTime = Aliased("challenge_time_node2")
+
 
 class StarRailLineupResponse(APIModel):
     """Response for HSR lineups."""
 
     lineups: list[StarRailLineup] = Aliased("list")
     next_page_token: str
+
+
+class PureFictionLineupResponse(StarRailLineupResponse):
+    """Response for Pure Fiction lineups."""
+
+    lineups: list[PureFictionLineup] = Aliased("list")
+
+
+class APCShadowLineupResponse(StarRailLineupResponse):
+    """Response for Apocalyptic Shadow lineups."""
+
+    lineups: list[APCShadowLineup] = Aliased("list")

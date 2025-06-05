@@ -46,6 +46,36 @@ class HSRLineupClient(base.BaseClient):
         data = await self._request("tag", lang=lang)
         return [models.StarRailGameMode(**item) for item in data["tree"]]
 
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Literal["moc"],
+        next_page_token: typing.Optional[str] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -> models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Literal["pf"],
+        next_page_token: typing.Optional[str] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -> models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Literal["apc"],
+        next_page_token: typing.Optional[str] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -> models.APCShadowLineupResponse: ...
     async def get_starrail_lineups(
         self,
         *,
@@ -54,9 +84,13 @@ class HSRLineupClient(base.BaseClient):
         type: typing.Literal["moc", "pf", "apc"],
         next_page_token: typing.Optional[str] = None,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailLineupResponse:
+    ) -> typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
         """Get the available lineups for the HSR lineup simulator."""
         type_convert = {"moc": "Chasm", "pf": "Story", "apc": "Boss"}
+        if type not in type_convert:
+            msg = f"Invalid type {type!r} for HSR lineup."
+            raise ValueError(msg)
+
         params: typing.Mapping[str, typing.Any] = {
             "tag_id": tag_id,
             "group_id": group_id,
@@ -66,6 +100,11 @@ class HSRLineupClient(base.BaseClient):
             params["page_token"] = next_page_token
 
         data = await self._request("lineup/index", lang=lang, params=params)
+
+        if type == "pf":
+            return models.PureFictionLineupResponse(**data)
+        elif type == "apc":
+            return models.APCShadowLineupResponse(**data)
         return models.StarRailLineupResponse(**data)
 
     @typing.overload
