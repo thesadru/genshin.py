@@ -58,7 +58,7 @@ class HSRLineupClient(base.BaseClient):
         type: LineupGameMode,
         floor: int,
     ) -> typing.Optional[models.StarRailGameModeFloor]:
-        """Helper method to get a specific floor from the game modes."""
+        """Get a specific floor from the game modes."""
         for mode in game_modes:
             if mode.type != type:
                 continue
