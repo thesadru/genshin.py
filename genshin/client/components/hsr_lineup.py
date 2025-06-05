@@ -137,7 +137,7 @@ class HSRLineupClient(base.BaseClient):
 
         data = await self._request(endpoint, lang=lang)
         if type == "apc":
-            return [models.APCShadowSchedule(**item) for item in data["list"]]
+            return [models.APCShadowSchedule(**item) for item in data["schedule"]]
         if type == "moc":
-            return [models.MOCSchedule(**item) for item in data["list"]]
-        return [models.PureFictionSchedule(**item) for item in data["list"]]
+            return [models.MOCSchedule(**item) for item in data["schedule"]]
+        return [models.PureFictionSchedule(**item) for item in data["schedule"]]
