@@ -111,6 +111,11 @@ class BaseRelic(APIModel):
     desc: str
     icon: str
     rarity: int
+
+
+class LineupRelic(APIModel):
+    """HSR lineup relic model."""
+
     main_property: RelicProperty
     properties: typing.Sequence[RelicProperty]
 
@@ -198,17 +203,22 @@ class DetailSkill(BaseSkill):
     skill_stages: typing.Sequence[SkillStage]
 
 
-class MemoSprite(APIModel):
-    """HSR memosprite data."""
+class BaseMemoSprite(APIModel):
+    """HSR base memosprite."""
 
     id: int = Aliased("servant_id")
     name: str = Aliased("servant_name")
     icon: str = Aliased("servant_icon")
+
+
+class LineupMemoSprite(BaseMemoSprite):
+    """HSR lineup memosprite."""
+
     properties: typing.Sequence[StarRailLineupProperty] = Aliased("servant_properties")
     skills: typing.Sequence[BaseSkill] = Aliased("servant_skills")
 
 
-class DetailMemoSprite(MemoSprite):
+class DetailMemoSprite(BaseMemoSprite):
     """HSR memosprite for detail character."""
 
     properties: typing.Sequence[StarRailBaseProperty] = Aliased("servant_properties")
@@ -251,11 +261,11 @@ class StarRailLineupCharacter(StarRailPartialCharacter):
     """HSR lineup simulator character."""
 
     equip: typing.Optional[StarRailBaseEquipment]
-    relics: typing.Sequence[BaseRelic]
+    relics: typing.Sequence[LineupRelic]
     ranks: typing.Sequence[Rank]
     properties: typing.Sequence[StarRailLineupProperty]
     skills: typing.Sequence[BaseSkill]
-    memosprite: typing.Optional[MemoSprite] = Aliased("servant_detail")
+    memosprite: typing.Optional[LineupMemoSprite] = Aliased("servant_detail")
 
     path: StarRailPath = Aliased("base_type")
     figure_path: str

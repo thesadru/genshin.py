@@ -64,12 +64,13 @@ class GenshinClient(clients.Client):
         return self.uids[types.Game.GENSHIN]
 
     @uid.setter
-    def uid(self, uid: int) -> None:
+    def uid(self, uid: typing.Optional[int]) -> None:
         deprecation.warn_deprecated(
             "Setting uid with GenshinClient.uid",
             alternative="Client.uids[genshin.Game.GENSHIN]",
         )
-        self.uids[types.Game.GENSHIN] = uid
+        if uid is not None:
+            self.uids[types.Game.GENSHIN] = uid
 
     @deprecation.deprecated()
     async def __aenter__(self) -> GenshinClient:

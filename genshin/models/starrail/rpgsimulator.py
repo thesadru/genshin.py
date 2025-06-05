@@ -48,7 +48,7 @@ class StarRailGameMode(APIModel):
 
     id: int
     name: str
-    floors: list[StarRailGameModeFloor]
+    floors: typing.Sequence[StarRailGameModeFloor]
 
     @pydantic.model_validator(mode="before")
     @classmethod
@@ -89,8 +89,8 @@ class APCShadowSchedule(StarRailGameModeSchedule):
     """Apocalyptic Shadow schedule."""
 
     buff: StarRailGameModeBuff
-    node1_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_1")
-    node2_buffs: list[StarRailGameModeBuff] = Aliased("addition_buff_2")
+    node1_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased("addition_buff_1")
+    node2_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased("addition_buff_2")
 
     @pydantic.model_validator(mode="before")
     @classmethod
@@ -114,8 +114,8 @@ class MOCSchedule(StarRailGameModeSchedule):
 class PureFictionSchedule(StarRailGameModeSchedule):
     """Pure Future schedule."""
 
-    buffs: list[StarRailGameModeBuff] = Aliased("addition_buff")
-    default_buffs: list[StarRailGameModeBuff] = Aliased("sub_maze_buff_list")
+    buffs: typing.Sequence[StarRailGameModeBuff] = Aliased("addition_buff")
+    default_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased("sub_maze_buff_list")
 
 
 class StarRailLineupPlayer(APIModel):
@@ -144,11 +144,11 @@ class StarRailLineup(APIModel):
     created_at: datetime.datetime
     last_edited_at: datetime.datetime = Aliased("last_edit")
 
-    characters: list[list[character.StarRailLineupCharacter]] = Aliased("avatar_group")
+    characters: typing.Sequence[typing.Sequence[character.StarRailLineupCharacter]] = Aliased("avatar_group")
 
     @pydantic.field_validator("characters", mode="before")
     @classmethod
-    def __unnest_characters(cls, v: list[dict[str, typing.Any]]) -> list[list[dict[str, typing.Any]]]:
+    def __unnest_characters(cls, v: typing.Sequence[dict[str, typing.Any]]) -> typing.Sequence[typing.Sequence[dict[str, typing.Any]]]:
         return [g["avatar_details"] for g in v]
 
     @pydantic.model_validator(mode="before")
@@ -167,7 +167,7 @@ class StarRailLineup(APIModel):
 class LineupDetail(APIModel):
     """Detail for a lineup."""
 
-    buffs: list[StarRailGameModeBuff] = Aliased("buff_list")
+    buffs: typing.Sequence[StarRailGameModeBuff] = Aliased("buff_list")
     points: int
 
 
@@ -190,17 +190,19 @@ class APCShadowLineup(StarRailLineup):
 class StarRailLineupResponse(APIModel):
     """Response for HSR lineups."""
 
-    lineups: list[StarRailLineup] = Aliased("list")
+    lineups: typing.Sequence[StarRailLineup] = Aliased("list")
     next_page_token: str
 
 
-class PureFictionLineupResponse(StarRailLineupResponse):
+class PureFictionLineupResponse(APIModel):
     """Response for Pure Fiction lineups."""
 
-    lineups: list[PureFictionLineup] = Aliased("list")
+    lineups: typing.Sequence[PureFictionLineup] = Aliased("list")
+    next_page_token: str
 
 
-class APCShadowLineupResponse(StarRailLineupResponse):
+class APCShadowLineupResponse(APIModel):
     """Response for Apocalyptic Shadow lineups."""
 
-    lineups: list[APCShadowLineup] = Aliased("list")
+    lineups: typing.Sequence[APCShadowLineup] = Aliased("list")
+    next_page_token: str
