@@ -42,6 +42,7 @@ class ZZZSpecialty(enum.IntEnum):
     ANOMALY = 3
     SUPPORT = 4
     DEFENSE = 5
+    RUPTURE = 6
 
 
 class ZZZBaseAgent(APIModel, Unique):
@@ -99,6 +100,8 @@ class ZZZPropertyType(enum.IntEnum):
     AGENT_PEN_RATIO = 9
     AGENT_ENERGY_GEN = 11
     AGENT_PEN = 232
+    AGENT_SHEER_FORCE = 19
+    AGENT_ADRENALINE = 20
 
     # Agent DMG bonus
     PHYSICAL_DMG_BONUS = 315
