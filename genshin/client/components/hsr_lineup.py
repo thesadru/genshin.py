@@ -133,9 +133,9 @@ class HSRLineupClient(base.BaseClient):
 
         data = await self._request("lineup/index", lang=lang, params=params)
 
-        if type == "pf":
+        if type == "Story":
             return models.PureFictionLineupResponse(**data)
-        elif type == "apc":
+        elif type == "Boss":
             return models.APCShadowLineupResponse(**data)
         return models.StarRailLineupResponse(**data)
 
