@@ -244,6 +244,14 @@ class AccountMuted(GenshinException):
     msg = "Account is muted."
 
 
+class ActionInCooldown(GenshinException):
+    """Action is in cooldown."""
+
+
+class NoNeedGeetest(GenshinException):
+    """No need to do geetest."""
+
+
 _TGE = type[GenshinException]
 _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] = {
     # misc hoyolab
@@ -283,23 +291,31 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -2017: RedemptionClaimed,
     -2018: RedemptionClaimed,
     -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
+    -2011: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
     # rewards
     -5003: AlreadyClaimed,
     # chinese
     1008: AccountNotFound,
     -1104: "This action must be done in the app.",
     # account
+    -3004: AccountLoginFail,
     -3208: AccountLoginFail,
     -3202: AccountHasLocked,
     -3203: AccountDoesNotExist,
     -3205: WrongOTP,
     -3206: VerificationCodeRateLimited,
+    -3102: WrongOTP,
     # Miyoushe
     -119: OTPRateLimited,
     -3006: "Request too frequent.",  # OTP endpoint
     # Game login
     -216: IncorrectGameAccount,
     -202: IncorrectGamePassword,
+    # lineup
+    -1004: ActionInCooldown,
+    -3101: ActionInCooldown,
+    # geetest
+    30001: NoNeedGeetest,
 }
 
 ERRORS: dict[int, tuple[_TGE, typing.Optional[str]]] = {
