@@ -172,6 +172,10 @@ class RedemptionClaimed(RedemptionException):
     msg = "Redemption code has been claimed already."
 
 
+class RedeemGameLevelTooLow(RedemptionException):
+    """Redemption code cannot be claimed because the game level is too low."""
+
+
 class AccountLoginFail(GenshinException):
     """Account if not exists in hoyoverse (Or password incorrect)."""
 
@@ -290,8 +294,8 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
     -2018: RedemptionClaimed,
-    -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
-    -2011: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
+    -2021: RedeemGameLevelTooLow,
+    -2011: RedeemGameLevelTooLow,
     # rewards
     -5003: AlreadyClaimed,
     # chinese
