@@ -8,7 +8,13 @@
 
 Modern API wrapper for HoYoLAB & Miyoushe(米游社) API built on asyncio and pydantic.
 
----
+## Project Transferred
+
+genshin.py was originally started by [ashleney](https://github.com/ashleney), due to lack of time to maintain, it has been transferred to [seriaati](https://github.com/seriaati).
+
+Downloading the package from <https://github.com/ashleney/genshin.py> will still work because GitHub automatically redirects to the new repository.
+
+## Useful Links
 
 Documentation: <https://seriaati.github.io/genshin.py>
 
@@ -16,7 +22,7 @@ API Reference: <https://seriaati.github.io/genshin.py/pdoc/genshin>
 
 Source Code: <https://github.com/seriaati/genshin.py>
 
----
+## Introduction
 
 The primary focus of genshin.py is convenience. The entire project is fully type-hinted and abstracts a large amount of the api to be easier to use.
 
