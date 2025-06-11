@@ -1,6 +1,6 @@
 site_name: Genshin.py
 site_description: Modern API wrapper for Genshin Impact & Honkai Impact 3rd built on asyncio and pydantic.
-site_url: https://ashleney.github.io/genshin.py
+site_url: https://seriaati.github.io/genshin.py
 theme:
   name: material
   palette:
@@ -22,8 +22,8 @@ theme:
     - content.code.copy
     - content.code.annotate
   language: en
-repo_name: ashleney/genshin.py
-repo_url: https://github.com/ashleney/genshin.py
+repo_name: seriaati/genshin.py
+repo_url: https://github.com/seriaati/genshin.py
 plugins:
   - search
 markdown_extensions:

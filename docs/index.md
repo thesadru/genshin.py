@@ -4,11 +4,11 @@ Modern API wrapper for HoYoLAB & Miyoushe(米游社) API built on asyncio and py
 
 ---
 
-Documentation: <https://ashleney.github.io/genshin.py>
+Documentation: <https://seriaati.github.io/genshin.py>
 
-API Reference: <https://ashleney.github.io/genshin.py/pdoc/genshin>
+API Reference: <https://seriaati.github.io/genshin.py/pdoc/genshin>
 
-Source Code: <https://github.com/ashleney/genshin.py>
+Source Code: <https://github.com/seriaati/genshin.py>
 
 ---
 
@@ -22,7 +22,7 @@ Key features:
 - Supports the majority of the popular endpoints.
 - Cleanly integrates with frameworks like FastAPI out of the box.
 
-> Note: This library is a successor to [genshinstats](https://github.com/ashleney/genshinstats) - an unofficial wrapper for the Genshin Impact api.
+> Note: This library is a successor to [genshinstats](https://github.com/seriaati/genshinstats) - an unofficial wrapper for the Genshin Impact api.
 
 ## Requirements
 
@@ -42,7 +42,7 @@ pip install genshin
 You can also install the latest development version from GitHub:
 
 ```console
-pip install git+https://github.com/ashleney/genshin.py
+pip install git+https://github.com/seriaati/genshin.py
 ```
 
 A new release is made every 2 weeks.

@@ -53,10 +53,10 @@ redis = ["aioredis>=2.0.1"]
 sqlite = ["aiosqlite>=0.17.0"]
 
 [project.urls]
-Homepage = "https://github.com/ashleney/genshin.py"
-Documentation = "https://ashleney.github.io/genshin.py"
-Repository = "https://github.com/ashleney/genshin.py.git"
-Issues = "https://github.com/ashleney/genshin.py/issues"
+Homepage = "https://github.com/seriaati/genshin.py"
+Documentation = "https://seriaati.github.io/genshin.py"
+Repository = "https://github.com/seriaati/genshin.py.git"
+Issues = "https://github.com/seriaati/genshin.py/issues"
 
 [build-system]
 requires = ["hatchling"]
