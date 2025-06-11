@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.lineup API documentation</title>
+<meta name="description" content="Genshin lineup models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.lineup</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin lineup models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.lineup.Lineup"><code class="flex name class">
+<span>class <span class="ident">Lineup</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Lineup(LineupPreview):
+    &#34;&#34;&#34;Lineup.&#34;&#34;&#34;
+
+    description: str
+    views: int = Aliased(&#34;view_cnt&#34;)
+
+    characters: typing.Sequence[typing.Sequence[LineupCharacter]] = Aliased(&#34;avatar_group&#34;)</code></pre>
+</details>
+<div class="desc"><p>Lineup.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupPreview" href="#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.Lineup.characters"><code class="name">var <span class="ident">characters</span> : Sequence[Sequence[<a title="genshin.models.genshin.lineup.LineupCharacter" href="#genshin.models.genshin.lineup.LineupCharacter">LineupCharacter</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.Lineup.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.Lineup.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.Lineup.views"><code class="name">var <span class="ident">views</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupAbyssScenarios"><code class="flex name class">
+<span>class <span class="ident">LineupAbyssScenarios</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupAbyssScenarios(LineupScenario):
+    &#34;&#34;&#34;Lineup abyss scenario.&#34;&#34;&#34;
+
+    corridor: LineupScenario = pydantic.Field(json_schema_extra={&#34;scenario_id&#34;: 42})
+    spire: LineupScenario = pydantic.Field(json_schema_extra={&#34;scenario_id&#34;: 41})
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Name certain scenarios.&#34;&#34;&#34;
+        return cls._pre_flatten_scenarios(LineupAbyssScenarios, values)</code></pre>
+</details>
+<div class="desc"><p>Lineup abyss scenario.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupAbyssScenarios.corridor"><code class="name">var <span class="ident">corridor</span> : <a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupAbyssScenarios.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupAbyssScenarios.spire"><code class="name">var <span class="ident">spire</span> : <a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.all_children" href="#genshin.models.genshin.lineup.LineupScenario.all_children">all_children</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStat"><code class="flex name class">
+<span>class <span class="ident">LineupArtifactStat</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupArtifactStat(APIModel, Unique):
+    &#34;&#34;&#34;Lineup artifact stat.&#34;&#34;&#34;
+
+    id: int
+    name: str</code></pre>
+</details>
+<div class="desc"><p>Lineup artifact stat.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupPrimaryArtifactStat" href="#genshin.models.genshin.lineup.LineupPrimaryArtifactStat">LineupPrimaryArtifactStat</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStat.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStat.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStat.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields"><code class="flex name class">
+<span>class <span class="ident">LineupArtifactStatFields</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupArtifactStatFields(APIModel):
+    &#34;&#34;&#34;Lineup artifact stat fields.&#34;&#34;&#34;
+
+    flower: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={&#34;artifact_id&#34;: 1})
+    plume: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={&#34;artifact_id&#34;: 2})
+    sands: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={&#34;artifact_id&#34;: 3})
+    goblet: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={&#34;artifact_id&#34;: 4})
+    circlet: typing.Mapping[int, str] = pydantic.Field(json_schema_extra={&#34;artifact_id&#34;: 5})
+
+    secondary_stats: typing.Mapping[int, str] = Aliased(&#34;reliquary_sec_attr&#34;)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_stats(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Name certain stats.&#34;&#34;&#34;
+        if &#34;reliquary_fst_attr&#34; not in values:
+            return values
+
+        artifact_ids = {  # type: ignore
+            field.json_schema_extra[&#34;artifact_id&#34;]: name
+            for name, field in LineupArtifactStatFields.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get(&#34;artifact_id&#34;)
+        }
+
+        for scenario in values[&#34;reliquary_fst_attr&#34;]:
+            if scenario[&#34;key&#34;] not in artifact_ids:
+                continue
+
+            name = artifact_ids[scenario[&#34;key&#34;]]
+            values[name] = scenario[&#34;value&#34;]
+
+        return values
+
+    @pydantic.field_validator(&#34;secondary_stats&#34;, &#34;flower&#34;, &#34;plume&#34;, &#34;sands&#34;, &#34;goblet&#34;, &#34;circlet&#34;, mode=&#34;before&#34;)
+    def __parse_secondary_stats(cls, value: typing.Any) -&gt; dict[int, str]:
+        if not isinstance(value, typing.Sequence):
+            return value
+
+        return {stat[&#34;id&#34;]: stat[&#34;name&#34;] for stat in value}  # type: ignore
+
+    @property
+    def all_stats(self) -&gt; typing.Mapping[int, str]:
+        &#34;&#34;&#34;All possible stats for any artifact.&#34;&#34;&#34;
+        return {**self.flower, **self.plume, **self.sands, **self.goblet, **self.circlet, **self.secondary_stats}</code></pre>
+</details>
+<div class="desc"><p>Lineup artifact stat fields.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.circlet"><code class="name">var <span class="ident">circlet</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.flower"><code class="name">var <span class="ident">flower</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.goblet"><code class="name">var <span class="ident">goblet</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.plume"><code class="name">var <span class="ident">plume</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.sands"><code class="name">var <span class="ident">sands</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.secondary_stats"><code class="name">var <span class="ident">secondary_stats</span> : Mapping[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupArtifactStatFields.all_stats"><code class="name">prop <span class="ident">all_stats</span> : typing.Mapping[int, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def all_stats(self) -&gt; typing.Mapping[int, str]:
+    &#34;&#34;&#34;All possible stats for any artifact.&#34;&#34;&#34;
+    return {**self.flower, **self.plume, **self.sands, **self.goblet, **self.circlet, **self.secondary_stats}</code></pre>
+</details>
+<div class="desc"><p>All possible stats for any artifact.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter"><code class="flex name class">
+<span>class <span class="ident">LineupCharacter</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupCharacter(LineupCharacterPreview):
+    &#34;&#34;&#34;Lineup character.&#34;&#34;&#34;
+
+    icon: str = Aliased(&#34;head_icon&#34;)
+
+    weapon: PartialLineupWeapon
+    artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased(&#34;set_list&#34;)
+
+    artifact_attributes: typing.Sequence[LineupPrimaryArtifactStat] = Aliased(&#34;first_attr&#34;)
+    secondary_attributes: typing.Sequence[LineupArtifactStat] = Aliased(&#34;secondary_attr_name&#34;)</code></pre>
+</details>
+<div class="desc"><p>Lineup character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupCharacterPreview" href="#genshin.models.genshin.lineup.LineupCharacterPreview">LineupCharacterPreview</a></li>
+<li><a title="genshin.models.genshin.lineup.PartialLineupCharacter" href="#genshin.models.genshin.lineup.PartialLineupCharacter">PartialLineupCharacter</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.artifact_attributes"><code class="name">var <span class="ident">artifact_attributes</span> : Sequence[<a title="genshin.models.genshin.lineup.LineupPrimaryArtifactStat" href="#genshin.models.genshin.lineup.LineupPrimaryArtifactStat">LineupPrimaryArtifactStat</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.artifacts"><code class="name">var <span class="ident">artifacts</span> : Sequence[<a title="genshin.models.genshin.lineup.PartialLineupArtifactSet" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet">PartialLineupArtifactSet</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.secondary_attributes"><code class="name">var <span class="ident">secondary_attributes</span> : Sequence[<a title="genshin.models.genshin.lineup.LineupArtifactStat" href="#genshin.models.genshin.lineup.LineupArtifactStat">LineupArtifactStat</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacter.weapon"><code class="name">var <span class="ident">weapon</span> : <a title="genshin.models.genshin.lineup.PartialLineupWeapon" href="#genshin.models.genshin.lineup.PartialLineupWeapon">PartialLineupWeapon</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.lineup.LineupCharacterPreview" href="#genshin.models.genshin.lineup.LineupCharacterPreview">LineupCharacterPreview</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview.image" href="character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacterPreview"><code class="flex name class">
+<span>class <span class="ident">LineupCharacterPreview</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupCharacterPreview(PartialLineupCharacter):
+    &#34;&#34;&#34;Partial lineup character preview.&#34;&#34;&#34;
+
+    role: str = Aliased(&#34;avatar_tag&#34;)
+
+    icon: str = Aliased(&#34;standard_icon&#34;)
+    pc_icon: str = Aliased(&#34;pc_icon&#34;)
+
+    @pydantic.field_validator(&#34;role&#34;, mode=&#34;before&#34;)
+    def __parse_role(cls, value: typing.Any) -&gt; str:
+        if isinstance(value, str):
+            return value
+
+        return value[&#34;name&#34;]</code></pre>
+</details>
+<div class="desc"><p>Partial lineup character preview.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.PartialLineupCharacter" href="#genshin.models.genshin.lineup.PartialLineupCharacter">PartialLineupCharacter</a></li>
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupCharacter" href="#genshin.models.genshin.lineup.LineupCharacter">LineupCharacter</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupCharacterPreview.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacterPreview.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacterPreview.pc_icon"><code class="name">var <span class="ident">pc_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupCharacterPreview.role"><code class="name">var <span class="ident">role</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.lineup.PartialLineupCharacter" href="#genshin.models.genshin.lineup.PartialLineupCharacter">PartialLineupCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.image" href="character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupFields"><code class="flex name class">
+<span>class <span class="ident">LineupFields</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupFields(APIModel):
+    &#34;&#34;&#34;Configuration lineup fields.&#34;&#34;&#34;
+
+    characters: typing.Sequence[PartialLineupCharacter] = Aliased(&#34;all_avatar&#34;)
+    weapons: typing.Sequence[PartialLineupWeapon] = Aliased(&#34;all_weapon&#34;)
+    artifacts: typing.Sequence[PartialLineupArtifactSet] = Aliased(&#34;all_set&#34;)
+
+    artifact_stats: LineupArtifactStatFields = Aliased(&#34;extra_config&#34;)</code></pre>
+</details>
+<div class="desc"><p>Configuration lineup fields.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupFields.artifact_stats"><code class="name">var <span class="ident">artifact_stats</span> : <a title="genshin.models.genshin.lineup.LineupArtifactStatFields" href="#genshin.models.genshin.lineup.LineupArtifactStatFields">LineupArtifactStatFields</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupFields.artifacts"><code class="name">var <span class="ident">artifacts</span> : Sequence[<a title="genshin.models.genshin.lineup.PartialLineupArtifactSet" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet">PartialLineupArtifactSet</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupFields.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.genshin.lineup.PartialLineupCharacter" href="#genshin.models.genshin.lineup.PartialLineupCharacter">PartialLineupCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupFields.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupFields.weapons"><code class="name">var <span class="ident">weapons</span> : Sequence[<a title="genshin.models.genshin.lineup.PartialLineupWeapon" href="#genshin.models.genshin.lineup.PartialLineupWeapon">PartialLineupWeapon</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview"><code class="flex name class">
+<span>class <span class="ident">LineupPreview</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupPreview(APIModel, Unique):
+    &#34;&#34;&#34;Lineup preview.&#34;&#34;&#34;
+
+    id: str  # type: ignore
+    title: str
+    scenario_ids: typing.Sequence[int] = Aliased(&#34;tag_ids&#34;)
+
+    characters: typing.Sequence[typing.Sequence[LineupCharacter]] = Aliased(&#34;avatar_group&#34;)
+
+    author_id: int = Aliased(&#34;account_uid&#34;)
+    author_nickname: str = Aliased(&#34;nickname&#34;)
+    author_icon: str = Aliased(&#34;avatar_url&#34;)
+    author_level: int = Aliased(&#34;level&#34;)
+
+    likes: int = Aliased(&#34;like_cnt&#34;)
+    comments: int = Aliased(&#34;comment_cnt&#34;)
+    created_at: TZDateTime
+
+    original_lang: str = Aliased(&#34;trans_from&#34;)
+
+    @pydantic.field_validator(&#34;characters&#34;, mode=&#34;before&#34;)
+    def __parse_characters(cls, value: typing.Any) -&gt; typing.Any:
+        if isinstance(value[0], typing.Sequence):
+            return value
+
+        return [list(group[&#34;group&#34;]) for group in value]</code></pre>
+</details>
+<div class="desc"><p>Lineup preview.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.Lineup" href="#genshin.models.genshin.lineup.Lineup">Lineup</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupPreview.author_icon"><code class="name">var <span class="ident">author_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.author_id"><code class="name">var <span class="ident">author_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.author_level"><code class="name">var <span class="ident">author_level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.author_nickname"><code class="name">var <span class="ident">author_nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.characters"><code class="name">var <span class="ident">characters</span> : Sequence[Sequence[<a title="genshin.models.genshin.lineup.LineupCharacter" href="#genshin.models.genshin.lineup.LineupCharacter">LineupCharacter</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.comments"><code class="name">var <span class="ident">comments</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.created_at"><code class="name">var <span class="ident">created_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.likes"><code class="name">var <span class="ident">likes</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.original_lang"><code class="name">var <span class="ident">original_lang</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.scenario_ids"><code class="name">var <span class="ident">scenario_ids</span> : Sequence[int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPreview.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPrimaryArtifactStat"><code class="flex name class">
+<span>class <span class="ident">LineupPrimaryArtifactStat</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupPrimaryArtifactStat(LineupArtifactStat):
+    &#34;&#34;&#34;Lineup primary artifact stat.&#34;&#34;&#34;
+
+    artifact_type: int = Aliased(&#34;cat_id&#34;)</code></pre>
+</details>
+<div class="desc"><p>Lineup primary artifact stat.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupArtifactStat" href="#genshin.models.genshin.lineup.LineupArtifactStat">LineupArtifactStat</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupPrimaryArtifactStat.artifact_type"><code class="name">var <span class="ident">artifact_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupPrimaryArtifactStat.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupScenario"><code class="flex name class">
+<span>class <span class="ident">LineupScenario</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupScenario(APIModel, Unique):
+    &#34;&#34;&#34;Lineup scenario such as domain, boss or spiral abyss.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    children: typing.Sequence[LineupScenario]
+
+    @staticmethod
+    def _pre_flatten_scenarios(class_: typing.Any, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        scenario_ids = {  # type: ignore
+            field.json_schema_extra[&#34;scenario_id&#34;]: name
+            for name, field in class_.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get(&#34;scenario_id&#34;)
+        }
+
+        for scenario in values[&#34;children&#34;]:
+            if scenario[&#34;id&#34;] not in scenario_ids:
+                continue
+
+            name = scenario_ids[scenario[&#34;id&#34;]]
+            values[name] = scenario
+
+        return values
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Name certain scenarios.&#34;&#34;&#34;
+        return cls._pre_flatten_scenarios(LineupScenario, values)
+
+    @property
+    def all_children(self) -&gt; typing.Sequence[LineupScenario]:
+        &#34;&#34;&#34;Get all children of this scenario.&#34;&#34;&#34;
+        children = list(self.children)
+        for child in self.children:
+            children.extend(child.all_children)
+
+        return children</code></pre>
+</details>
+<div class="desc"><p>Lineup scenario such as domain, boss or spiral abyss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupAbyssScenarios" href="#genshin.models.genshin.lineup.LineupAbyssScenarios">LineupAbyssScenarios</a></li>
+<li>genshin.models.genshin.lineup.LineupScenarios</li>
+<li><a title="genshin.models.genshin.lineup.LineupWorldScenarios" href="#genshin.models.genshin.lineup.LineupWorldScenarios">LineupWorldScenarios</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupScenario.children"><code class="name">var <span class="ident">children</span> : Sequence[<a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupScenario.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupScenario.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupScenario.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupScenario.all_children"><code class="name">prop <span class="ident">all_children</span> : typing.Sequence[<a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a>]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def all_children(self) -&gt; typing.Sequence[LineupScenario]:
+    &#34;&#34;&#34;Get all children of this scenario.&#34;&#34;&#34;
+    children = list(self.children)
+    for child in self.children:
+        children.extend(child.all_children)
+
+    return children</code></pre>
+</details>
+<div class="desc"><p>Get all children of this scenario.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupWorldScenarios"><code class="flex name class">
+<span>class <span class="ident">LineupWorldScenarios</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupWorldScenarios(LineupScenario):
+    &#34;&#34;&#34;Lineup world scenario.&#34;&#34;&#34;
+
+    trounce_domains: LineupScenario = pydantic.Field(json_schema_extra={&#34;scenario_id&#34;: 3})
+    domain_challenges: LineupScenario = pydantic.Field(json_schema_extra={&#34;scenario_id&#34;: 9})
+    battles: LineupScenario = pydantic.Field(json_schema_extra={&#34;scenario_id&#34;: 24})
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Name certain scenarios.&#34;&#34;&#34;
+        return cls._pre_flatten_scenarios(LineupWorldScenarios, values)</code></pre>
+</details>
+<div class="desc"><p>Lineup world scenario.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.LineupWorldScenarios.battles"><code class="name">var <span class="ident">battles</span> : <a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupWorldScenarios.domain_challenges"><code class="name">var <span class="ident">domain_challenges</span> : <a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupWorldScenarios.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.LineupWorldScenarios.trounce_domains"><code class="name">var <span class="ident">trounce_domains</span> : <a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.all_children" href="#genshin.models.genshin.lineup.LineupScenario.all_children">all_children</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet"><code class="flex name class">
+<span>class <span class="ident">PartialLineupArtifactSet</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PartialLineupArtifactSet(APIModel, Unique):
+    &#34;&#34;&#34;Parital lineup artifact set.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased(&#34;level&#34;)</code></pre>
+</details>
+<div class="desc"><p>Parital lineup artifact set.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupArtifactSet.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter"><code class="flex name class">
+<span>class <span class="ident">PartialLineupCharacter</span></span>
+<span>(</span><span>**data: typing.Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PartialLineupCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;Partial lineup character.&#34;&#34;&#34;
+
+    element: str
+    rarity: int = Aliased(&#34;level&#34;)
+    weapon_type: str = Aliased(&#34;weapon_cat_id&#34;)
+    icon: str = Aliased(&#34;head_icon&#34;)
+    pc_icon: str = Aliased(&#34;standard_icon&#34;)
+
+    def __init__(self, _frame: int = 1, **data: typing.Any) -&gt; None:
+        # rename &#34;icon&#34; due to pydantic&#39;s aliasing
+        icons_amount = sum(1 for key, value in data.items() if &#34;icon&#34; in key if value)
+        if data.get(&#34;pc_icon&#34;) and data.get(&#34;icon&#34;):
+            ...
+        elif icons_amount &gt;= 2 and &#34;static&#34; in data.get(&#34;icon&#34;, &#34;&#34;):
+            data[&#34;standard_icon&#34;] = data.pop(&#34;icon&#34;)
+
+        super().__init__(_frame=_frame + 3, **data)  # type: ignore
+
+    @pydantic.field_validator(&#34;element&#34;, mode=&#34;before&#34;)
+    def __parse_element(cls, value: typing.Any) -&gt; str:
+        if isinstance(value, str) and not value.isdigit():
+            return value
+
+        return {
+            1: &#34;Pyro&#34;,
+            2: &#34;Anemo&#34;,
+            3: &#34;Geo&#34;,
+            4: &#34;Dendro&#34;,
+            5: &#34;Electro&#34;,
+            6: &#34;Hydro&#34;,
+            7: &#34;Cryo&#34;,
+        }[int(value)]
+
+    @pydantic.field_validator(&#34;weapon_type&#34;, mode=&#34;before&#34;)
+    def __parse_weapon_type(cls, value: typing.Any) -&gt; str:
+        if isinstance(value, str) and not value.isdigit():
+            return value
+
+        return CALCULATOR_WEAPON_TYPES[int(value)]</code></pre>
+</details>
+<div class="desc"><p>Partial lineup character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.lineup.LineupCharacterPreview" href="#genshin.models.genshin.lineup.LineupCharacterPreview">LineupCharacterPreview</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.pc_icon"><code class="name">var <span class="ident">pc_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupCharacter.weapon_type"><code class="name">var <span class="ident">weapon_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon"><code class="flex name class">
+<span>class <span class="ident">PartialLineupWeapon</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PartialLineupWeapon(APIModel, Unique):
+    &#34;&#34;&#34;Partial lineup weapon.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased(&#34;level&#34;)
+    type: str = Aliased(&#34;cat_id&#34;)
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __parse_weapon_type(cls, value: int) -&gt; str:
+        if isinstance(value, str) and not value.isdigit():
+            return value
+
+        return CALCULATOR_WEAPON_TYPES[value]</code></pre>
+</details>
+<div class="desc"><p>Partial lineup weapon.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.lineup.PartialLineupWeapon.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin" href="index.html">genshin.models.genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.Lineup" href="#genshin.models.genshin.lineup.Lineup">Lineup</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.Lineup.characters" href="#genshin.models.genshin.lineup.Lineup.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.Lineup.description" href="#genshin.models.genshin.lineup.Lineup.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.Lineup.model_config" href="#genshin.models.genshin.lineup.Lineup.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.Lineup.views" href="#genshin.models.genshin.lineup.Lineup.views">views</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupAbyssScenarios" href="#genshin.models.genshin.lineup.LineupAbyssScenarios">LineupAbyssScenarios</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupAbyssScenarios.corridor" href="#genshin.models.genshin.lineup.LineupAbyssScenarios.corridor">corridor</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupAbyssScenarios.model_config" href="#genshin.models.genshin.lineup.LineupAbyssScenarios.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupAbyssScenarios.spire" href="#genshin.models.genshin.lineup.LineupAbyssScenarios.spire">spire</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupArtifactStat" href="#genshin.models.genshin.lineup.LineupArtifactStat">LineupArtifactStat</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStat.id" href="#genshin.models.genshin.lineup.LineupArtifactStat.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStat.model_config" href="#genshin.models.genshin.lineup.LineupArtifactStat.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStat.name" href="#genshin.models.genshin.lineup.LineupArtifactStat.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields" href="#genshin.models.genshin.lineup.LineupArtifactStatFields">LineupArtifactStatFields</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.all_stats" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.all_stats">all_stats</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.circlet" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.circlet">circlet</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.flower" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.flower">flower</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.goblet" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.goblet">goblet</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.model_config" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.plume" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.plume">plume</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.sands" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.sands">sands</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupArtifactStatFields.secondary_stats" href="#genshin.models.genshin.lineup.LineupArtifactStatFields.secondary_stats">secondary_stats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupCharacter" href="#genshin.models.genshin.lineup.LineupCharacter">LineupCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.artifact_attributes" href="#genshin.models.genshin.lineup.LineupCharacter.artifact_attributes">artifact_attributes</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.artifacts" href="#genshin.models.genshin.lineup.LineupCharacter.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.icon" href="#genshin.models.genshin.lineup.LineupCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.model_config" href="#genshin.models.genshin.lineup.LineupCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.secondary_attributes" href="#genshin.models.genshin.lineup.LineupCharacter.secondary_attributes">secondary_attributes</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacter.weapon" href="#genshin.models.genshin.lineup.LineupCharacter.weapon">weapon</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview" href="#genshin.models.genshin.lineup.LineupCharacterPreview">LineupCharacterPreview</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview.icon" href="#genshin.models.genshin.lineup.LineupCharacterPreview.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview.model_config" href="#genshin.models.genshin.lineup.LineupCharacterPreview.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview.pc_icon" href="#genshin.models.genshin.lineup.LineupCharacterPreview.pc_icon">pc_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupCharacterPreview.role" href="#genshin.models.genshin.lineup.LineupCharacterPreview.role">role</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupFields" href="#genshin.models.genshin.lineup.LineupFields">LineupFields</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupFields.artifact_stats" href="#genshin.models.genshin.lineup.LineupFields.artifact_stats">artifact_stats</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupFields.artifacts" href="#genshin.models.genshin.lineup.LineupFields.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupFields.characters" href="#genshin.models.genshin.lineup.LineupFields.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupFields.model_config" href="#genshin.models.genshin.lineup.LineupFields.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupFields.weapons" href="#genshin.models.genshin.lineup.LineupFields.weapons">weapons</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupPreview" href="#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.author_icon" href="#genshin.models.genshin.lineup.LineupPreview.author_icon">author_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.author_id" href="#genshin.models.genshin.lineup.LineupPreview.author_id">author_id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.author_level" href="#genshin.models.genshin.lineup.LineupPreview.author_level">author_level</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.author_nickname" href="#genshin.models.genshin.lineup.LineupPreview.author_nickname">author_nickname</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.characters" href="#genshin.models.genshin.lineup.LineupPreview.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.comments" href="#genshin.models.genshin.lineup.LineupPreview.comments">comments</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.created_at" href="#genshin.models.genshin.lineup.LineupPreview.created_at">created_at</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.id" href="#genshin.models.genshin.lineup.LineupPreview.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.likes" href="#genshin.models.genshin.lineup.LineupPreview.likes">likes</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.model_config" href="#genshin.models.genshin.lineup.LineupPreview.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.original_lang" href="#genshin.models.genshin.lineup.LineupPreview.original_lang">original_lang</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.scenario_ids" href="#genshin.models.genshin.lineup.LineupPreview.scenario_ids">scenario_ids</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPreview.title" href="#genshin.models.genshin.lineup.LineupPreview.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupPrimaryArtifactStat" href="#genshin.models.genshin.lineup.LineupPrimaryArtifactStat">LineupPrimaryArtifactStat</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupPrimaryArtifactStat.artifact_type" href="#genshin.models.genshin.lineup.LineupPrimaryArtifactStat.artifact_type">artifact_type</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupPrimaryArtifactStat.model_config" href="#genshin.models.genshin.lineup.LineupPrimaryArtifactStat.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupScenario" href="#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.all_children" href="#genshin.models.genshin.lineup.LineupScenario.all_children">all_children</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.children" href="#genshin.models.genshin.lineup.LineupScenario.children">children</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.id" href="#genshin.models.genshin.lineup.LineupScenario.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.model_config" href="#genshin.models.genshin.lineup.LineupScenario.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupScenario.name" href="#genshin.models.genshin.lineup.LineupScenario.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.LineupWorldScenarios" href="#genshin.models.genshin.lineup.LineupWorldScenarios">LineupWorldScenarios</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.LineupWorldScenarios.battles" href="#genshin.models.genshin.lineup.LineupWorldScenarios.battles">battles</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupWorldScenarios.domain_challenges" href="#genshin.models.genshin.lineup.LineupWorldScenarios.domain_challenges">domain_challenges</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupWorldScenarios.model_config" href="#genshin.models.genshin.lineup.LineupWorldScenarios.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.LineupWorldScenarios.trounce_domains" href="#genshin.models.genshin.lineup.LineupWorldScenarios.trounce_domains">trounce_domains</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet">PartialLineupArtifactSet</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet.icon" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet.id" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet.model_config" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet.name" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupArtifactSet.rarity" href="#genshin.models.genshin.lineup.PartialLineupArtifactSet.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter" href="#genshin.models.genshin.lineup.PartialLineupCharacter">PartialLineupCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.element" href="#genshin.models.genshin.lineup.PartialLineupCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.icon" href="#genshin.models.genshin.lineup.PartialLineupCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.model_config" href="#genshin.models.genshin.lineup.PartialLineupCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.pc_icon" href="#genshin.models.genshin.lineup.PartialLineupCharacter.pc_icon">pc_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.rarity" href="#genshin.models.genshin.lineup.PartialLineupCharacter.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupCharacter.weapon_type" href="#genshin.models.genshin.lineup.PartialLineupCharacter.weapon_type">weapon_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon" href="#genshin.models.genshin.lineup.PartialLineupWeapon">PartialLineupWeapon</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.icon" href="#genshin.models.genshin.lineup.PartialLineupWeapon.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.id" href="#genshin.models.genshin.lineup.PartialLineupWeapon.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.model_config" href="#genshin.models.genshin.lineup.PartialLineupWeapon.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.name" href="#genshin.models.genshin.lineup.PartialLineupWeapon.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.rarity" href="#genshin.models.genshin.lineup.PartialLineupWeapon.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.lineup.PartialLineupWeapon.type" href="#genshin.models.genshin.lineup.PartialLineupWeapon.type">type</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

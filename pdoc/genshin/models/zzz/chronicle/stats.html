@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.zzz.chronicle.stats API documentation</title>
+<meta name="description" content="ZZZ data overview models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.zzz.chronicle.stats</code></h1>
+</header>
+<section id="section-intro">
+<p>ZZZ data overview models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.HIACoin"><code class="flex name class">
+<span>class <span class="ident">HIACoin</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HIACoin(APIModel):
+    &#34;&#34;&#34;HIACoin model.&#34;&#34;&#34;
+
+    num: int
+    name: str
+    icon: str = Aliased(&#34;url&#34;)</code></pre>
+</details>
+<div class="desc"><p>HIACoin model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.HIACoin.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.HIACoin.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.HIACoin.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.HIACoin.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo"><code class="flex name class">
+<span>class <span class="ident">ZZZBaseBangboo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZBaseBangboo(APIModel):
+    &#34;&#34;&#34;Base bangboo (buddy) model.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    rarity: typing.Literal[&#34;S&#34;, &#34;A&#34;]
+    level: int
+    star: int
+    icon: str = pydantic.Field(
+        validation_alias=pydantic.aliases.AliasChoices(&#34;bangboo_square_url&#34;, &#34;bangboo_rectangle_url&#34;)
+    )</code></pre>
+</details>
+<div class="desc"><p>Base bangboo (buddy) model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.star"><code class="name">var <span class="ident">star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote"><code class="flex name class">
+<span>class <span class="ident">ZZZCatNote</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZCatNote(APIModel):
+    &#34;&#34;&#34;ZZZ Cat note model.&#34;&#34;&#34;
+
+    icon: str
+    id: int
+    is_lock: bool
+    name: str
+    num: int
+    total: int</code></pre>
+</details>
+<div class="desc"><p>ZZZ Cat note model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.is_lock"><code class="name">var <span class="ident">is_lock</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZCatNote.total"><code class="name">var <span class="ident">total</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData"><code class="flex name class">
+<span>class <span class="ident">ZZZGameData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZGameData(APIModel):
+    &#34;&#34;&#34;ZZZ game data model.&#34;&#34;&#34;
+
+    personal_title: str
+    title_main_color: str
+    title_bottom_color: str
+    title_bg_url: str
+    medal_icons: typing.Sequence[str] = Aliased(&#34;medal_list&#34;)
+    card_url: str
+    medals: typing.Sequence[ZZZMedal] = Aliased(&#34;all_medal_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ game data model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.card_url"><code class="name">var <span class="ident">card_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.medal_icons"><code class="name">var <span class="ident">medal_icons</span> : Sequence[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.medals"><code class="name">var <span class="ident">medals</span> : Sequence[<a title="genshin.models.zzz.chronicle.stats.ZZZMedal" href="#genshin.models.zzz.chronicle.stats.ZZZMedal">ZZZMedal</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.personal_title"><code class="name">var <span class="ident">personal_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.title_bg_url"><code class="name">var <span class="ident">title_bg_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.title_bottom_color"><code class="name">var <span class="ident">title_bottom_color</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZGameData.title_main_color"><code class="name">var <span class="ident">title_main_color</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal"><code class="flex name class">
+<span>class <span class="ident">ZZZMedal</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZMedal(APIModel):
+    &#34;&#34;&#34;ZZZ player medal model.&#34;&#34;&#34;
+
+    icon: str = Aliased(&#34;medal_icon&#34;)
+    number: int
+    id: int = Aliased(&#34;medal_id&#34;)
+    type: str = Aliased(&#34;medal_type&#34;)
+    name: str
+    is_show: bool</code></pre>
+</details>
+<div class="desc"><p>ZZZ player medal model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.is_show"><code class="name">var <span class="ident">is_show</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.number"><code class="name">var <span class="ident">number</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZMedal.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats"><code class="flex name class">
+<span>class <span class="ident">ZZZStats</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZStats(APIModel):
+    &#34;&#34;&#34;ZZZ data overview stats.&#34;&#34;&#34;
+
+    active_days: int
+    character_num: int = Aliased(&#34;avatar_num&#34;)
+    inter_knot_reputation: str = Aliased(&#34;world_level_name&#34;)
+    shiyu_defense_frontiers: int = Aliased(&#34;cur_period_zone_layer_count&#34;)
+    bangboo_obtained: int = Aliased(&#34;buddy_num&#34;)
+    achievement_count: int
+    hia_coin: typing.Optional[HIACoin] = Aliased(&#34;commemorative_coins_list&#34;)
+
+    @pydantic.field_validator(&#34;hia_coin&#34;, mode=&#34;before&#34;)
+    def __unnest_hia_coin(
+        cls, v: typing.List[typing.Dict[str, typing.Any]]
+    ) -&gt; typing.Optional[typing.Dict[str, typing.Any]]:
+        return v[0] if v else None</code></pre>
+</details>
+<div class="desc"><p>ZZZ data overview stats.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.achievement_count"><code class="name">var <span class="ident">achievement_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.active_days"><code class="name">var <span class="ident">active_days</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.bangboo_obtained"><code class="name">var <span class="ident">bangboo_obtained</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.character_num"><code class="name">var <span class="ident">character_num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.hia_coin"><code class="name">var <span class="ident">hia_coin</span> : <a title="genshin.models.zzz.chronicle.stats.HIACoin" href="#genshin.models.zzz.chronicle.stats.HIACoin">HIACoin</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.inter_knot_reputation"><code class="name">var <span class="ident">inter_knot_reputation</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZStats.shiyu_defense_frontiers"><code class="name">var <span class="ident">shiyu_defense_frontiers</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats"><code class="flex name class">
+<span>class <span class="ident">ZZZUserStats</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZUserStats(APIModel):
+    &#34;&#34;&#34;Zenless Zone Zero user model.&#34;&#34;&#34;
+
+    stats: ZZZStats
+    agents: typing.Sequence[ZZZPartialAgent] = Aliased(&#34;avatar_list&#34;)
+    bangboos: typing.Sequence[ZZZBaseBangboo] = Aliased(&#34;buddy_list&#34;)
+    in_game_avatar: str = Aliased(&#34;cur_head_icon_url&#34;)
+    cat_notes: typing.Sequence[ZZZCatNote] = Aliased(&#34;cat_notes_list&#34;)
+    in_game_data: ZZZGameData = Aliased(&#34;game_data_show&#34;)</code></pre>
+</details>
+<div class="desc"><p>Zenless Zone Zero user model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.agents"><code class="name">var <span class="ident">agents</span> : Sequence[<a title="genshin.models.zzz.character.ZZZPartialAgent" href="../character.html#genshin.models.zzz.character.ZZZPartialAgent">ZZZPartialAgent</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.bangboos"><code class="name">var <span class="ident">bangboos</span> : Sequence[<a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo">ZZZBaseBangboo</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.cat_notes"><code class="name">var <span class="ident">cat_notes</span> : Sequence[<a title="genshin.models.zzz.chronicle.stats.ZZZCatNote" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote">ZZZCatNote</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_avatar"><code class="name">var <span class="ident">in_game_avatar</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_data"><code class="name">var <span class="ident">in_game_data</span> : <a title="genshin.models.zzz.chronicle.stats.ZZZGameData" href="#genshin.models.zzz.chronicle.stats.ZZZGameData">ZZZGameData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.stats.ZZZUserStats.stats"><code class="name">var <span class="ident">stats</span> : <a title="genshin.models.zzz.chronicle.stats.ZZZStats" href="#genshin.models.zzz.chronicle.stats.ZZZStats">ZZZStats</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.zzz.chronicle" href="index.html">genshin.models.zzz.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.HIACoin" href="#genshin.models.zzz.chronicle.stats.HIACoin">HIACoin</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.stats.HIACoin.icon" href="#genshin.models.zzz.chronicle.stats.HIACoin.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.HIACoin.model_config" href="#genshin.models.zzz.chronicle.stats.HIACoin.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.HIACoin.name" href="#genshin.models.zzz.chronicle.stats.HIACoin.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.HIACoin.num" href="#genshin.models.zzz.chronicle.stats.HIACoin.num">num</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo">ZZZBaseBangboo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.icon" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.id" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.level" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.name" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.rarity" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.star" href="#genshin.models.zzz.chronicle.stats.ZZZBaseBangboo.star">star</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote">ZZZCatNote</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.icon" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.id" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.is_lock" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.is_lock">is_lock</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.name" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.num" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.num">num</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZCatNote.total" href="#genshin.models.zzz.chronicle.stats.ZZZCatNote.total">total</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData" href="#genshin.models.zzz.chronicle.stats.ZZZGameData">ZZZGameData</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.card_url" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.card_url">card_url</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.medal_icons" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.medal_icons">medal_icons</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.medals" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.medals">medals</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.personal_title" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.personal_title">personal_title</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.title_bg_url" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.title_bg_url">title_bg_url</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.title_bottom_color" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.title_bottom_color">title_bottom_color</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZGameData.title_main_color" href="#genshin.models.zzz.chronicle.stats.ZZZGameData.title_main_color">title_main_color</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal" href="#genshin.models.zzz.chronicle.stats.ZZZMedal">ZZZMedal</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.icon" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.id" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.is_show" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.is_show">is_show</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.name" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.number" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.number">number</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZMedal.type" href="#genshin.models.zzz.chronicle.stats.ZZZMedal.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats" href="#genshin.models.zzz.chronicle.stats.ZZZStats">ZZZStats</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.achievement_count" href="#genshin.models.zzz.chronicle.stats.ZZZStats.achievement_count">achievement_count</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.active_days" href="#genshin.models.zzz.chronicle.stats.ZZZStats.active_days">active_days</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.bangboo_obtained" href="#genshin.models.zzz.chronicle.stats.ZZZStats.bangboo_obtained">bangboo_obtained</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.character_num" href="#genshin.models.zzz.chronicle.stats.ZZZStats.character_num">character_num</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.hia_coin" href="#genshin.models.zzz.chronicle.stats.ZZZStats.hia_coin">hia_coin</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.inter_knot_reputation" href="#genshin.models.zzz.chronicle.stats.ZZZStats.inter_knot_reputation">inter_knot_reputation</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZStats.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZStats.shiyu_defense_frontiers" href="#genshin.models.zzz.chronicle.stats.ZZZStats.shiyu_defense_frontiers">shiyu_defense_frontiers</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats">ZZZUserStats</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.agents" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.agents">agents</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.bangboos" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.bangboos">bangboos</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.cat_notes" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.cat_notes">cat_notes</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_avatar" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_avatar">in_game_avatar</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_data" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.in_game_data">in_game_data</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.model_config" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.stats.ZZZUserStats.stats" href="#genshin.models.zzz.chronicle.stats.ZZZUserStats.stats">stats</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
