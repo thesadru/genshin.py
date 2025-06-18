@@ -211,20 +211,70 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_zzz_record("avatar/info", uid, lang=lang, payload={"id_list[]": character_id})
         return models.ZZZFullAgent(**data["avatar_list"][0])
 
+    @typing.overload
     async def get_shiyu_defense(
-        self, uid: typing.Optional[int] = None, *, previous: bool = False, lang: typing.Optional[str] = None
-    ) -> models.ShiyuDefense:
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.ShiyuDefense: ...
+    @typing.overload
+    async def get_shiyu_defense(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_shiyu_defense(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -> typing.Union[models.ShiyuDefense, typing.Mapping[str, typing.Any]]:
         """Get ZZZ Shiyu defense stats."""
         payload = {"schedule_type": 2 if previous else 1, "need_all": "true"}
         data = await self._request_zzz_record("challenge", uid, lang=lang, payload=payload)
+        if raw:
+            return data
         return models.ShiyuDefense(**data)
 
+    @typing.overload
     async def get_deadly_assault(
-        self, uid: typing.Optional[int] = None, *, previous: bool = False, lang: typing.Optional[str] = None
-    ) -> models.DeadlyAssault:
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.DeadlyAssault: ...
+    @typing.overload
+    async def get_deadly_assault(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_deadly_assault(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -> typing.Union[models.DeadlyAssault, typing.Mapping[str, typing.Any]]:
         """Get ZZZ Shiyu defense stats."""
         payload = {"schedule_type": 2 if previous else 1}
         data = await self._request_zzz_record("mem_detail", uid, lang=lang, payload=payload, is_special_payload=True)
+        if raw:
+            return data
         return models.DeadlyAssault(**data)
 
     async def get_lost_void_summary(

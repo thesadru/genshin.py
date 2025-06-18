@@ -119,22 +119,43 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailDetailCharacters:
+    ) -> models.StarRailDetailCharacterResponse:
         """Get starrail characters."""
         payload = {"need_wiki": "true"}
         data = await self._request_starrail_record("avatar/info", uid, lang=lang, payload=payload)
-        return models.StarRailDetailCharacters(**data)
+        return models.StarRailDetailCharacterResponse(**data)
 
+    @typing.overload
+    async def get_starrail_challenge(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.StarRailChallenge: ...
+    @typing.overload
+    async def get_starrail_challenge(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_starrail_challenge(
         self,
         uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailChallenge:
+        raw: bool = False,
+    ) -> typing.Union[models.StarRailChallenge, typing.Mapping[str, typing.Any]]:
         """Get starrail challenge runs."""
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge", uid, lang=lang, payload=payload)
+        if raw:
+            return data
         return models.StarRailChallenge(**data)
 
     async def get_starrail_rogue(
@@ -149,28 +170,70 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_starrail_record("rogue", uid, lang=lang, payload=payload)
         return models.StarRailRogue(**data)
 
+    @typing.overload
+    async def get_starrail_pure_fiction(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.StarRailPureFiction: ...
+    @typing.overload
+    async def get_starrail_pure_fiction(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_starrail_pure_fiction(
         self,
         uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailPureFiction:
+        raw: bool = False,
+    ) -> typing.Union[models.StarRailPureFiction, typing.Mapping[str, typing.Any]]:
         """Get starrail pure fiction runs."""
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge_story", uid, lang=lang, payload=payload)
+        if raw:
+            return data
         return models.StarRailPureFiction(**data)
 
+    @typing.overload
+    async def get_starrail_apc_shadow(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.StarRailAPCShadow: ...
+    @typing.overload
+    async def get_starrail_apc_shadow(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
     async def get_starrail_apc_shadow(
         self,
         uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailAPCShadow:
+        raw: bool = False,
+    ) -> typing.Union[models.StarRailAPCShadow, typing.Mapping[str, typing.Any]]:
         """Get starrail apocalyptic shadow runs."""
         payload = dict(schedule_type=2 if previous else 1, need_all="true")
         data = await self._request_starrail_record("challenge_boss", uid, lang=lang, payload=payload)
+        if raw:
+            return data
         return models.StarRailAPCShadow(**data)
 
     async def get_starrail_event_calendar(

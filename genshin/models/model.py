@@ -34,7 +34,7 @@ class Unique(abc.ABC):
 
 def Aliased(
     alias: typing.Optional[str] = None,
-    default: typing.Any = None,
+    default: typing.Any = ...,
     **kwargs: typing.Any,
 ) -> typing.Any:
     """Create an aliased field."""
@@ -42,13 +42,15 @@ def Aliased(
 
 
 def add_timezone(value: datetime.datetime) -> datetime.datetime:
-    return value.astimezone(CN_TIMEZONE)
+    return value.replace(tzinfo=CN_TIMEZONE)
 
 
-def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) -> typing.Optional[datetime.datetime]:
+def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) -> datetime.datetime:
     if value:
         return datetime.datetime(**value)
-    return None
+
+    msg = f"Invalid datetime value provided: {value!r}"
+    raise ValueError(msg)
 
 
 TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]

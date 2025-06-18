@@ -27,7 +27,7 @@ class GenshinClient(clients.Client):
         cookies: typing.Optional[typing.Any] = None,
         authkey: typing.Optional[str] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         region: types.Region = types.Region.OVERSEAS,
         debug: bool = False,
     ) -> None:
@@ -64,12 +64,13 @@ class GenshinClient(clients.Client):
         return self.uids[types.Game.GENSHIN]
 
     @uid.setter
-    def uid(self, uid: int) -> None:
+    def uid(self, uid: typing.Optional[int]) -> None:
         deprecation.warn_deprecated(
             "Setting uid with GenshinClient.uid",
             alternative="Client.uids[genshin.Game.GENSHIN]",
         )
-        self.uids[types.Game.GENSHIN] = uid
+        if uid is not None:
+            self.uids[types.Game.GENSHIN] = uid
 
     @deprecation.deprecated()
     async def __aenter__(self) -> GenshinClient:
@@ -132,7 +133,7 @@ class ChineseClient(GenshinClient):
         cookies: typing.Optional[typing.Mapping[str, str]] = None,
         authkey: typing.Optional[str] = None,
         *,
-        lang: str = "zh-cn",
+        lang: types.Lang = "zh-cn",
         debug: bool = False,
     ) -> None:
         super().__init__(
@@ -156,7 +157,7 @@ class MultiCookieClient(GenshinClient):
         self,
         cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         debug: bool = False,
     ) -> None:
         super().__init__(
@@ -178,7 +179,7 @@ class ChineseMultiCookieClient(GenshinClient):
         self,
         cookie_list: typing.Optional[typing.Sequence[typing.Mapping[str, str]]] = None,
         *,
-        lang: str = "en-us",
+        lang: types.Lang = "en-us",
         debug: bool = False,
     ) -> None:
         super().__init__(

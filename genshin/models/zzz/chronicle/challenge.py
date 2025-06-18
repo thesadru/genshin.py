@@ -7,6 +7,7 @@ from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
+    "ChallengeBangboo",
     "DeadlyAssault",
     "DeadlyAssaultAgent",
     "DeadlyAssaultBoss",
@@ -31,6 +32,10 @@ class ShiyuDefenseBangboo(APIModel):
     icon: str = Aliased("bangboo_rectangle_url")
 
 
+class ChallengeBangboo(ShiyuDefenseBangboo):
+    """Bangboo model for backward compatibility."""
+
+
 class ShiyuDefenseCharacter(APIModel):
     """Shiyu Defense character model."""
 
@@ -38,12 +43,8 @@ class ShiyuDefenseCharacter(APIModel):
     level: int
     rarity: typing.Literal["S", "A"]
     element: ZZZElementType = Aliased("element_type")
-
-    @property
-    def icon(self) -> str:
-        return (
-            f"https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_{self.id}.png"
-        )
+    icon: str = Aliased("role_square_url")
+    mindscape: int = Aliased("rank")
 
 
 class ShiyuDefenseBuff(APIModel):
@@ -76,6 +77,7 @@ class ShiyuDefenseNode(APIModel):
     bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased("buddy", default=None)
     recommended_elements: list[ZZZElementType] = Aliased("element_type_list")
     enemies: list[ShiyuDefenseMonster] = Aliased("monster_info")
+    battle_time: typing.Optional[datetime.timedelta] = None
 
     @pydantic.field_validator("enemies", mode="before")
     @classmethod
@@ -209,4 +211,4 @@ class DeadlyAssault(APIModel):
 
     @pydantic.field_validator("rank_percent", mode="before")
     def __parse_rank_percent(cls, value: int) -> str:
-        return f"{value/100}%"
+        return f"{value / 100}%"

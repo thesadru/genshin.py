@@ -7,8 +7,6 @@ import json
 import typing
 from http.cookies import SimpleCookie
 
-import aiohttp
-
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
@@ -90,7 +88,7 @@ class AppAuthClient(base.BaseClient):
             "password": password if encrypted else auth_utility.encrypt_credentials(password, 1),
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.APP_LOGIN_URL.get_url(),
                 json=payload,
@@ -136,7 +134,7 @@ class AppAuthClient(base.BaseClient):
         if mmt_result:
             headers["x-rpc-aigis"] = mmt_result.to_aigis_header()
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.SEND_VERIFICATION_CODE_URL.get_url(),
                 json={
@@ -159,7 +157,7 @@ class AppAuthClient(base.BaseClient):
 
     async def _verify_email(self, code: str, ticket: ActionTicket) -> None:
         """Verify email."""
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.VERIFY_EMAIL_URL.get_url(),
                 json={
@@ -179,7 +177,7 @@ class AppAuthClient(base.BaseClient):
 
     async def _create_qrcode(self) -> QRCodeCreationResult:
         """Create a QR code for login."""
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.CREATE_QRCODE_URL.get_url(),
                 headers=auth_utility.QRCODE_HEADERS,
@@ -198,7 +196,7 @@ class AppAuthClient(base.BaseClient):
         """Check the status of a QR code login."""
         payload = {"ticket": ticket}
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.CHECK_QRCODE_URL.get_url(),
                 json=payload,

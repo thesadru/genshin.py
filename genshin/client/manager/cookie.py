@@ -30,7 +30,6 @@ import uuid
 from string import ascii_letters, digits
 
 import aiohttp
-import aiohttp.typedefs
 
 from genshin import constants, errors, types
 from genshin.client import routes

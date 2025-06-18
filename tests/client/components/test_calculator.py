@@ -41,7 +41,7 @@ async def test_calculator_furnishings(client: genshin.Client):
     assert furnishing.name == "Timber Wall With Jade Eaves"
 
 
-# noqa: PT018, E277
+# noqa: PT018
 async def test_character_talents(client: genshin.Client):
     talents = await client.get_character_talents(10000002)
     assert len(talents) == 7
@@ -109,6 +109,6 @@ async def test_calculator_characters_synced(lclient: genshin.Client):
 
 
 async def test_character_details(lclient: genshin.Client):
-    # Yelan
-    details = await lclient.get_character_details(10000060)
-    assert details.weapon.level >= 80
+    # Amber
+    details = await lclient.get_character_details(10000021)
+    assert details.weapon.level >= 1

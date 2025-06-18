@@ -1,35 +1,53 @@
 """Ratelimit handlers."""
 
-import asyncio
-import functools
+import logging
 import typing
+
+import aiohttp
+from tenacity import before_sleep_log, retry, retry_if_exception_type, stop_after_attempt, wait_random_exponential
 
 from genshin import errors
 
+LOGGER_ = logging.getLogger(__name__)
+TIMEOUT_ERRORS = (TimeoutError, aiohttp.ClientError, ConnectionResetError)
 CallableT = typing.TypeVar("CallableT", bound=typing.Callable[..., typing.Awaitable[typing.Any]])
 
 
 def handle_ratelimits(
-    tries: int = 5,
+    tries: int = 10,
     exception: type[errors.GenshinException] = errors.VisitsTooFrequently,
-    delay: float = 0.3,
+    delay: float = 0.5,
 ) -> typing.Callable[[CallableT], CallableT]:
     """Handle ratelimits for requests."""
-    # TODO: Support exponential backoff
+    return retry(
+        stop=stop_after_attempt(tries),
+        wait=wait_random_exponential(multiplier=delay, min=delay),
+        retry=retry_if_exception_type(exception),
+        reraise=True,
+        before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+    )
 
-    def wrapper(func: typing.Callable[..., typing.Awaitable[typing.Any]]) -> typing.Any:
-        @functools.wraps(func)
-        async def inner(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:
-            for _ in range(tries):
-                try:
-                    x = await func(*args, **kwargs)
-                except exception:
-                    await asyncio.sleep(delay)
-                else:
-                    return x
-            else:
-                raise exception({}, f"Got ratelimited {tries} times in a row")
 
-        return inner
-
-    return wrapper
+def handle_request_timeouts(
+    tries: int = 10,
+    delay: float = 0.5,
+) -> typing.Callable[[CallableT], CallableT]:
+    """Handle timeout errors for requests."""
+    try:
+        from aiohttp_socks import ProxyError
+    except ImportError:
+        return retry(
+            stop=stop_after_attempt(tries),
+            wait=wait_random_exponential(multiplier=delay, min=delay),
+            retry=retry_if_exception_type(TIMEOUT_ERRORS),
+            reraise=True,
+            before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+        )
+    else:
+        return retry(
+            stop=stop_after_attempt(tries),
+            wait=wait_random_exponential(multiplier=delay, min=delay),
+            retry=retry_if_exception_type((ProxyError, *TIMEOUT_ERRORS)),
+            reraise=True,
+            before_sleep=before_sleep_log(LOGGER_, logging.DEBUG),
+        )

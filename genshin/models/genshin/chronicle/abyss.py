@@ -43,6 +43,20 @@ class CharacterRanks(APIModel):
     most_bursts_used: typing.Sequence[AbyssRankCharacter] = Aliased("energy_skill_rank", default=[])  # noqa: E501
     most_skills_used: typing.Sequence[AbyssRankCharacter] = Aliased("normal_skill_rank", default=[])  # noqa: E501
 
+    @pydantic.field_validator(
+        "most_played",
+        "most_kills",
+        "strongest_strike",
+        "most_damage_taken",
+        "most_bursts_used",
+        "most_skills_used",
+        mode="before",
+    )
+    def __filter_invalid_chars(
+        cls, v: typing.List[typing.Dict[str, typing.Any]]
+    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        return [char for char in v if char["avatar_id"] != 0]
+
 
 class Battle(APIModel):
     """Battle in the spiral abyss."""

@@ -7,6 +7,7 @@ import typing
 import pydantic
 
 from genshin.models.genshin import character
+from genshin.models.genshin.calculator import CALCULATOR_WEAPON_TYPES
 from genshin.models.model import Aliased, APIModel, TZDateTime, Unique
 
 __all__ = [
@@ -68,14 +69,7 @@ class PartialLineupCharacter(character.BaseCharacter):
         if isinstance(value, str) and not value.isdigit():
             return value
 
-        return {
-            0: "Unknown",
-            1: "Sword",
-            10: "Catalyst",
-            11: "Claymore",
-            12: "Bow",
-            13: "Polearm",
-        }[int(value)]
+        return CALCULATOR_WEAPON_TYPES[int(value)]
 
 
 class PartialLineupWeapon(APIModel, Unique):
@@ -92,13 +86,7 @@ class PartialLineupWeapon(APIModel, Unique):
         if isinstance(value, str) and not value.isdigit():
             return value
 
-        return {
-            1: "Sword",
-            10: "Catalyst",
-            11: "Claymore",
-            12: "Bow",
-            13: "Polearm",
-        }[value]
+        return CALCULATOR_WEAPON_TYPES[value]
 
 
 class PartialLineupArtifactSet(APIModel, Unique):
@@ -127,9 +115,9 @@ class LineupArtifactStatFields(APIModel):
         if "reliquary_fst_attr" not in values:
             return values
 
-        artifact_ids = {
+        artifact_ids = {  # type: ignore
             field.json_schema_extra["artifact_id"]: name
-            for name, field in cls.model_fields.items()
+            for name, field in LineupArtifactStatFields.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("artifact_id")
         }
 
@@ -185,12 +173,11 @@ class LineupScenario(APIModel, Unique):
     name: str
     children: typing.Sequence[LineupScenario]
 
-    @pydantic.model_validator(mode="before")
-    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
-        """Name certain scenarios."""
-        scenario_ids = {
+    @staticmethod
+    def _pre_flatten_scenarios(class_: typing.Any, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        scenario_ids = {  # type: ignore
             field.json_schema_extra["scenario_id"]: name
-            for name, field in cls.model_fields.items()
+            for name, field in class_.model_fields.items()
             if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get("scenario_id")
         }
 
@@ -202,6 +189,11 @@ class LineupScenario(APIModel, Unique):
             values[name] = scenario
 
         return values
+
+    @pydantic.model_validator(mode="before")
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        """Name certain scenarios."""
+        return cls._pre_flatten_scenarios(LineupScenario, values)
 
     @property
     def all_children(self) -> typing.Sequence[LineupScenario]:
@@ -220,6 +212,11 @@ class LineupWorldScenarios(LineupScenario):
     domain_challenges: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 9})
     battles: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 24})
 
+    @pydantic.model_validator(mode="before")
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        """Name certain scenarios."""
+        return cls._pre_flatten_scenarios(LineupWorldScenarios, values)
+
 
 class LineupAbyssScenarios(LineupScenario):
     """Lineup abyss scenario."""
@@ -227,12 +224,22 @@ class LineupAbyssScenarios(LineupScenario):
     corridor: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 42})
     spire: LineupScenario = pydantic.Field(json_schema_extra={"scenario_id": 41})
 
+    @pydantic.model_validator(mode="before")
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        """Name certain scenarios."""
+        return cls._pre_flatten_scenarios(LineupAbyssScenarios, values)
+
 
 class LineupScenarios(LineupScenario):
     """Lineup scenarios."""
 
     world: LineupWorldScenarios = pydantic.Field(json_schema_extra={"scenario_id": 1})
     abyss: LineupAbyssScenarios = pydantic.Field(json_schema_extra={"scenario_id": 2})
+
+    @pydantic.model_validator(mode="before")
+    def __flatten_scenarios(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        """Name certain scenarios."""
+        return cls._pre_flatten_scenarios(LineupScenarios, values)
 
 
 class LineupCharacterPreview(PartialLineupCharacter):

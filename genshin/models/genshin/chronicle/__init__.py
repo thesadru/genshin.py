@@ -3,6 +3,7 @@
 from .abyss import *
 from .act_calendar import *
 from .activities import *
+from .char_master import *
 from .characters import *
 from .img_theater import *
 from .notes import *

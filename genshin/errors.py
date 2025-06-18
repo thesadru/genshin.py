@@ -6,6 +6,7 @@ from genshin.constants import GEETEST_RETCODES
 
 __all__ = [
     "ERRORS",
+    "AccountMuted",
     "AccountNotFound",
     "AlreadyClaimed",
     "AuthkeyException",
@@ -34,12 +35,16 @@ class GenshinException(Exception):
     original: str = ""
     msg: str = ""
 
-    def __init__(self, response: typing.Mapping[str, typing.Any] = {}, msg: typing.Optional[str] = None) -> None:
+    def __init__(
+        self, response: typing.Optional[typing.Mapping[str, typing.Any]] = None, msg: typing.Optional[str] = None
+    ) -> None:
+        response = response or {}
+
         self.retcode = response.get("retcode", self.retcode)
         self.original = response.get("message", "")
         self.msg = msg or self.msg or self.original
 
-        if self.retcode:
+        if self.retcode and f"[{self.retcode}]" not in self.msg:
             msg = f"[{self.retcode}] {self.msg}"
         else:
             msg = self.msg
@@ -167,6 +172,10 @@ class RedemptionClaimed(RedemptionException):
     msg = "Redemption code has been claimed already."
 
 
+class RedeemGameLevelTooLow(RedemptionException):
+    """Redemption code cannot be claimed because the game level is too low."""
+
+
 class AccountLoginFail(GenshinException):
     """Account if not exists in hoyoverse (Or password incorrect)."""
 
@@ -232,12 +241,29 @@ class VerificationCodeRateLimited(GenshinException):
     msg = "Too many verification code requests for the account."
 
 
+class AccountMuted(GenshinException):
+    """Account is muted."""
+
+    retcode = 2010
+    msg = "Account is muted."
+
+
+class ActionInCooldown(GenshinException):
+    """Action is in cooldown."""
+
+
+class NoNeedGeetest(GenshinException):
+    """No need to do geetest."""
+
+
 _TGE = type[GenshinException]
 _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] = {
     # misc hoyolab
     -100: InvalidCookies,
     -108: "Invalid language.",
     -110: VisitsTooFrequently,
+    1028: VisitsTooFrequently,
+    2010: AccountMuted,
     # game record
     10001: InvalidCookies,
     -10001: "Malformed request.",
@@ -254,6 +280,7 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -502002: "Calculator sync is not enabled.",
     # mixin
     -1: InternalDatabaseError,
+    10307: InternalDatabaseError,
     1009: AccountNotFound,
     # redemption
     -1065: RedemptionInvalid,
@@ -262,28 +289,37 @@ _errors: dict[int, typing.Union[_TGE, str, tuple[_TGE, typing.Optional[str]]]] =
     -2001: (RedemptionInvalid, "Redemption code has expired."),
     -2003: (RedemptionInvalid, "Redemption code is incorrectly formatted."),
     -2004: RedemptionInvalid,
+    -2006: (RedemptionInvalid, "Redemption code has reached max usage limit."),
     -2014: (RedemptionInvalid, "Redemption code not activated"),
     -2016: RedemptionCooldown,
     -2017: RedemptionClaimed,
     -2018: RedemptionClaimed,
-    -2021: (RedemptionException, "Cannot claim codes for accounts with adventure rank lower than 10."),
+    -2021: RedeemGameLevelTooLow,
+    -2011: RedeemGameLevelTooLow,
     # rewards
     -5003: AlreadyClaimed,
     # chinese
     1008: AccountNotFound,
     -1104: "This action must be done in the app.",
     # account
+    -3004: AccountLoginFail,
     -3208: AccountLoginFail,
     -3202: AccountHasLocked,
     -3203: AccountDoesNotExist,
     -3205: WrongOTP,
     -3206: VerificationCodeRateLimited,
+    -3102: WrongOTP,
     # Miyoushe
     -119: OTPRateLimited,
     -3006: "Request too frequent.",  # OTP endpoint
     # Game login
     -216: IncorrectGameAccount,
     -202: IncorrectGamePassword,
+    # lineup
+    -1004: ActionInCooldown,
+    -3101: ActionInCooldown,
+    # geetest
+    30001: NoNeedGeetest,
 }
 
 ERRORS: dict[int, tuple[_TGE, typing.Optional[str]]] = {

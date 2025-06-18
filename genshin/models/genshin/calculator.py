@@ -37,6 +37,7 @@ CALCULATOR_ELEMENTS: typing.Mapping[int, str] = {
     7: "Cryo",
 }
 CALCULATOR_WEAPON_TYPES: typing.Mapping[int, str] = {
+    0: "Unknown",
     1: "Sword",
     10: "Catalyst",
     11: "Claymore",
@@ -168,7 +169,7 @@ class CalculatorFurnishing(APIModel, Unique):
     icon: str = Aliased("icon_url")
     rarity: int = Aliased("level")
 
-    amount: typing.Optional[int] = Aliased("num")
+    amount: typing.Optional[int] = Aliased("num", default=None)
 
 
 class CalculatorCharacterDetails(APIModel):

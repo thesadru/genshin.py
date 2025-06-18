@@ -97,14 +97,25 @@ class HoyolabClient(base.BaseClient):
             ),
         )
 
-        announcements: list[typing.Mapping[str, typing.Any]] = []
-        extra_list: list[typing.Mapping[str, typing.Any]] = (
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
             info["pic_list"][0]["type_list"] if "pic_list" in info and info["pic_list"] else []
         )
+
         for sublist in info["list"] + extra_list:
-            for info in sublist["list"]:
-                detail = next((i for i in details["list"] if i["ann_id"] == info["ann_id"]), None)
-                announcements.append({**info, **(detail or {})})
+            for ann in sublist["list"]:
+                detail = next((i for i in details["list"] if i["ann_id"] == ann["ann_id"]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a["title"] == ann["title"]), None)
+                if same_title is not None:
+                    if ann.get("banner"):
+                        same_title["banner"] = ann["banner"]
+                    if ann.get("img"):
+                        same_title["img"] = ann["img"]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
 
         return [models.Announcement(**i) for i in announcements]
 
@@ -165,12 +176,8 @@ class HoyolabClient(base.BaseClient):
 
     async def get_recommended_users(self, *, limit: int = 200) -> typing.Sequence[models.PartialHoyolabUser]:
         """Get a list of recommended active users."""
-        data = await self.request_bbs(
-            "community/user/wapi/recommendActive",
-            params=dict(page_size=limit),
-            cache=client_cache.cache_key("recommended"),
-        )
-        return [models.PartialHoyolabUser(**i["user"]) for i in data["list"]]
+        warnings.warn("This endpoint is removed and an empty list will always be returned", DeprecationWarning)
+        return []
 
     async def get_genshin_announcements(
         self,
@@ -511,3 +518,24 @@ class HoyolabClient(base.BaseClient):
             lang=lang,
         )
         return [models.WebEvent(**i) for i in data["list"]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.AccompanyCharacterGame]:
+        """Get a list of accompany characters, this endpoint doesn't require cookies."""
+        data = await self.request_bbs(
+            "community/painter/api/getChannelRoleList",
+            cache=client_cache.cache_key("accp_chars"),
+            method="POST",
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data["game_roles_list"]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -> models.AccompanyResult:
+        """Accompany a character, role_id and topic_id can be found by calling get_accompany_characters."""
+        data = await self.request_bbs(
+            "community/apihub/api/user/accompany/role", params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)

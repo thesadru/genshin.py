@@ -12,10 +12,10 @@ jobs:
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
 
       - name: install nox
         run: |
@@ -40,7 +40,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
 
       - name: install nox
         run: |
@@ -50,6 +50,8 @@ jobs:
           GENSHIN_COOKIES: ${{ secrets.GENSHIN_COOKIES }}
           HONKAI_COOKIES: ${{ secrets.HONKAI_COOKIES }}
           LOCAL_GENSHIN_COOKIES: ${{ matrix.python-version == '3.10' && secrets.LOCAL_GENSHIN_COOKIES || '' }}
+          HSR_COOKIES: ${{ secrets.HSR_COOKIES }}
+          ZZZ_COOKIES: ${{ secrets.ZZZ_COOKIES }}
 
         run: |
           python -m nox -s test --verbose -- --cov-append
@@ -75,13 +77,13 @@ jobs:
       - name: Setup python 3.10
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
 
       - name: Download coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage
 
@@ -92,7 +94,7 @@ jobs:
           coverage xml -i
 
       - name: Upload coverage to codeclimate
-        uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: cd8c7d84ae5f98d86882d666dce0946fe5aae1e63f442995bd9c6e17869e6513
         with:
@@ -105,12 +107,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Python 3.10
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
 
       - name: install nox
         run: |
@@ -126,12 +128,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Python 3.10
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
 
       - name: install nox
         run: |

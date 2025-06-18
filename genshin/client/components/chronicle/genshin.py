@@ -3,6 +3,7 @@
 import asyncio
 import functools
 import typing
+import warnings
 
 from genshin import errors, paginators, types, utility
 from genshin.models.genshin import character as character_models
@@ -61,7 +62,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_partial_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.PartialGenshinUserStats:
@@ -76,7 +77,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> typing.Sequence[models.Character]:
@@ -87,7 +88,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         characters: typing.Optional[typing.Sequence[int]] = ...,
         lang: typing.Optional[str] = ...,
@@ -96,7 +97,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
         *,
         characters: typing.Optional[typing.Sequence[int]] = ...,
         lang: typing.Optional[str] = ...,
@@ -104,7 +105,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     ) -> typing.Mapping[str, typing.Any]: ...
     async def get_genshin_detailed_characters(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         characters: typing.Optional[typing.Sequence[int]] = None,
         lang: typing.Optional[str] = None,
@@ -126,7 +127,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.GenshinUserStats:
@@ -139,33 +140,79 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
         return models.GenshinUserStats(**data)
 
+    @typing.overload
     async def get_genshin_spiral_abyss(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         lang: typing.Optional[str] = None,
-    ) -> models.SpiralAbyss:
+        raw: bool = False,
+    ) -> typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
         """Get genshin spiral abyss runs."""
         payload = dict(schedule_type=2 if previous else 1)
         data = await self._request_genshin_record("spiralAbyss", uid, lang=lang, payload=payload)
+        if raw:
+            return data
 
         return models.SpiralAbyss(**data)
 
+    @typing.overload
     async def get_imaginarium_theater(
         self,
-        uid: int,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -> models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
         *,
         previous: bool = False,
         need_detail: bool = True,
         lang: typing.Optional[str] = None,
-    ) -> models.ImgTheater:
+        raw: bool = False,
+    ) -> typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
         """Get Genshin Impact imaginarium theater runs."""
-        payload = {
-            "schedule_type": 2 if previous else 1,  # There's 1 season for now but I assume it works like this
-            "need_detail": str(need_detail).lower(),
-        }
+        if previous:
+            warnings.warn(
+                "The 'previous' parameter does nothing for this endpoint, previous data will always be returned."
+            )
+
+        payload = {"need_detail": str(need_detail).lower()}
         data = await self._request_genshin_record("role_combat", uid, lang=lang, payload=payload)
+        if raw:
+            return data
 
         return models.ImgTheater(**data)
 
@@ -212,12 +259,16 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
             return data
         return models.Notes(**data)
 
-    async def get_genshin_activities(self, uid: int, *, lang: typing.Optional[str] = None) -> models.Activities:
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> models.Activities:
         """Get genshin activities."""
         data = await self._request_genshin_record("activities", uid, lang=lang)
         return models.Activities(**data)
 
-    async def get_genshin_tcg_preview(self, uid: int, *, lang: typing.Optional[str] = None) -> models.TCGPreview:
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> models.TCGPreview:
         """Get genshin tcg."""
         data = await self._request_genshin_record("gcg/basicInfo", uid, lang=lang)
         return models.TCGPreview(**data)
@@ -273,7 +324,7 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
 
     async def get_full_genshin_user(
         self,
-        uid: int,
+        uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
     ) -> models.FullGenshinUserStats:
@@ -309,11 +360,18 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         )
 
     async def get_genshin_event_calendar(
-        self, uid: int, *, lang: typing.Optional[str] = None
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
     ) -> models.GenshinEventCalendar:
         """Get Genshin event calendar."""
         data = await self._request_genshin_record("act_calendar", uid, lang=lang, method="POST")
         return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> typing.Sequence[models.EnvisagedEchoCharacter]:
+        """Get Genshin Envisaged Echo characters information."""
+        data = await self._request_genshin_record("char_master", uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data["list"]]
 
     get_spiral_abyss = get_genshin_spiral_abyss
     get_notes = get_genshin_notes

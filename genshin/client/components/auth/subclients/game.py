@@ -6,8 +6,6 @@ Covers OS and CN game auth endpoints.
 import json
 import typing
 
-import aiohttp
-
 from genshin import constants, errors
 from genshin.client import routes
 from genshin.client.components import base
@@ -37,7 +35,7 @@ class GameAuthClient(base.BaseClient):
         headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.GAME_RISKY_CHECK_URL.get_url(self.region), json=payload, headers=headers
             ) as r:
@@ -102,7 +100,7 @@ class GameAuthClient(base.BaseClient):
             "password": password if encrypted else auth_utility.encrypt_credentials(password, 2),
             "is_crypto": True,
         }
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.SHIELD_LOGIN_URL.get_url(self.region, self.default_game), json=payload, headers=headers
             ) as r:
@@ -175,7 +173,7 @@ class GameAuthClient(base.BaseClient):
                 "device_name": device_name or "iPhone",
             },
         }
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.PRE_GRANT_TICKET_URL.get_url(self.region), json=payload, headers=headers
             ) as r:
@@ -196,7 +194,7 @@ class GameAuthClient(base.BaseClient):
         headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(routes.DEVICE_GRANT_URL.get_url(self.region), json=payload, headers=headers) as r:
                 data = await r.json()
 
@@ -219,7 +217,7 @@ class GameAuthClient(base.BaseClient):
         headers["x-rpc-game_biz"] = constants.GAME_BIZS[self.region][self.default_game]
         headers.update(self.custom_headers)
 
-        async with aiohttp.ClientSession() as session:
+        async with self.cookie_manager.create_session() as session:
             async with session.post(
                 routes.GAME_LOGIN_URL.get_url(self.region, self.default_game),
                 json=payload,

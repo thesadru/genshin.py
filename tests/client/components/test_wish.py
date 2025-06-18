@@ -28,7 +28,7 @@ async def test_banner_details(lclient: genshin.Client):
         pytest.skip("No genshin installation.")
 
     for details in banners:
-        assert details.banner_type in [100, 200, 301, 302, 400]
+        assert details.banner_type in [100, 200, 301, 302, 400, 500]
 
 
 # async def test_gacha_items(lclient: genshin.Client):

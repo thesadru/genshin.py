@@ -7,35 +7,37 @@ import pytest
 
 import genshin
 
-# @pytest.fixture(scope="session")
-# def event_loop():
-#     with warnings.catch_warnings():
-#         warnings.simplefilter("ignore")
-
-#         loop = asyncio.get_event_loop()
-
-#     yield loop
-#     loop.close()
-
 
 @pytest.fixture(scope="session")
 def honkai_cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("HONKAI_COOKIES"):
-        pytest.exit("No honkai cookies set", 1)
+        pytest.exit("No Honkai cookies set", 1)
 
-    cookies = genshin.client.manager.parse_cookie(os.environ["HONKAI_COOKIES"])
+    return genshin.client.manager.parse_cookie(os.environ["HONKAI_COOKIES"])
 
-    return cookies
+
+@pytest.fixture(scope="session")
+def zzz_cookies() -> typing.Mapping[str, str]:
+    if not os.environ.get("ZZZ_COOKIES"):
+        pytest.exit("No ZZZ cookies set", 1)
+
+    return genshin.client.manager.parse_cookie(os.environ["ZZZ_COOKIES"])
+
+
+@pytest.fixture(scope="session")
+def hsr_cookies() -> typing.Mapping[str, str]:
+    if not os.environ.get("HSR_COOKIES"):
+        pytest.exit("No HSR cookies set", 1)
+
+    return genshin.client.manager.parse_cookie(os.environ["HSR_COOKIES"])
 
 
 @pytest.fixture(scope="session")
 def cookies() -> typing.Mapping[str, str]:
     if not os.environ.get("GENSHIN_COOKIES"):
-        pytest.exit("No cookies set", 1)
+        pytest.exit("No Genshin cookies set", 1)
 
-    cookies = genshin.client.manager.parse_cookie(os.environ["GENSHIN_COOKIES"])
-
-    return cookies
+    return genshin.client.manager.parse_cookie(os.environ["GENSHIN_COOKIES"])
 
 
 @pytest.fixture(scope="session")
@@ -97,25 +99,43 @@ async def cache():
 
 
 @pytest.fixture(scope="session")
-async def honkai_client(honkai_cookies: typing.Mapping[str, str], cache: genshin.Cache):
-    """Return a client with environment cookies."""
-    client = genshin.Client()
-    client.debug = True
-    client.set_cookies(honkai_cookies)
-    client.cache = cache
-
-    return client
+def genshin_uid():
+    return 832705997
 
 
 @pytest.fixture(scope="session")
-async def client(cookies: typing.Mapping[str, str], cache: genshin.Cache):
-    """Return a client with environment cookies."""
-    client = genshin.Client()
-    client.debug = True
-    client.set_cookies(cookies)
-    client.cache = cache
+def honkai_uid():
+    return 10001138
 
-    return client
+
+@pytest.fixture(scope="session")
+def zzz_uid():
+    return 1309335571
+
+
+@pytest.fixture(scope="session")
+def hsr_uid():
+    return 828103396
+
+
+@pytest.fixture(scope="session")
+async def honkai_client(honkai_cookies: typing.Mapping[str, str], cache: genshin.Cache, honkai_uid: int):
+    return genshin.Client(honkai_cookies, debug=True, game=genshin.Game.HONKAI, cache=cache, uid=honkai_uid)
+
+
+@pytest.fixture(scope="session")
+async def zzz_client(zzz_cookies: typing.Mapping[str, str], cache: genshin.Cache, zzz_uid: int):
+    return genshin.Client(zzz_cookies, debug=True, game=genshin.Game.ZZZ, cache=cache, uid=zzz_uid)
+
+
+@pytest.fixture(scope="session")
+async def hsr_client(hsr_cookies: typing.Mapping[str, str], cache: genshin.Cache, hsr_uid: int):
+    return genshin.Client(hsr_cookies, debug=True, game=genshin.Game.STARRAIL, cache=cache, uid=hsr_uid)
+
+
+@pytest.fixture(scope="session")
+async def client(cookies: typing.Mapping[str, str], cache: genshin.Cache, genshin_uid: int):
+    return genshin.Client(cookies, debug=True, game=genshin.Game.GENSHIN, cache=cache, uid=genshin_uid)
 
 
 @pytest.fixture(scope="session")
@@ -178,16 +198,6 @@ async def lcnclient(local_chinese_cookies: typing.Mapping[str, str]):
     client.set_cookies(local_chinese_cookies)
 
     return client
-
-
-@pytest.fixture(scope="session")
-def genshin_uid():
-    return 901211014
-
-
-@pytest.fixture(scope="session")
-def honkai_uid():
-    return 200365120
 
 
 @pytest.fixture(scope="session")

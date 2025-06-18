@@ -1,10 +1,10 @@
 [project]
 name = "genshin"
-version = "1.7.3"
+version = "1.7.13"
 description = "API wrapper for HoYoLAB/Miyoushe API built on asyncio and pydantic."
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["aiohttp==3.*", "pydantic==2.*"]
+dependencies = ["aiohttp==3.*", "pydantic==2.*", "tenacity==9.*"]
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -53,10 +53,10 @@ redis = ["aioredis>=2.0.1"]
 sqlite = ["aiosqlite>=0.17.0"]
 
 [project.urls]
-Homepage = "https://github.com/thesadru/genshin.py"
-Documentation = "https://thesadru.github.io/genshin.py"
-Repository = "https://github.com/thesadru/genshin.py.git"
-Issues = "https://github.com/thesadru/genshin.py/issues"
+Homepage = "https://github.com/seriaati/genshin.py"
+Documentation = "https://seriaati.github.io/genshin.py"
+Repository = "https://github.com/seriaati/genshin.py.git"
+Issues = "https://github.com/seriaati/genshin.py/issues"
 
 [build-system]
 requires = ["hatchling"]
@@ -89,6 +89,7 @@ exclude = ["tests", "test.py"]
 # S303: Use of md5
 # S311: Use of pseudo-random generators
 # S324: Use of md5 without usedforsecurity=False (3.9+)
+# A005: Module `X` shadows a Python standard-library module
 ignore = [
     "A001",
     "A002",
@@ -105,6 +106,7 @@ ignore = [
     "S303",
     "S311",
     "S324",
+    "A005"
 ]
 
 # auto-fixing too intrusive

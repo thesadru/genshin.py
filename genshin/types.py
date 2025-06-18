@@ -3,6 +3,8 @@
 import enum
 import typing
 
+import typing_extensions
+
 if typing.TYPE_CHECKING:
     from genshin.models.model import Unique
 
@@ -40,5 +42,23 @@ class Game(str, enum.Enum):
     """Tears of Themis"""
 
 
-IDOr = typing.Union[int, UniqueT]
+IDOr: typing_extensions.TypeAlias = typing.Union[int, UniqueT]
 """Allows partial objects."""
+
+Lang: typing_extensions.TypeAlias = typing.Literal[
+    "zh-cn",
+    "zh-tw",
+    "de-de",
+    "en-us",
+    "es-es",
+    "fr-fr",
+    "id-id",
+    "it-it",
+    "ja-jp",
+    "ko-kr",
+    "pt-pt",
+    "ru-ru",
+    "th-th",
+    "vi-vn",
+    "tr-tr",
+]

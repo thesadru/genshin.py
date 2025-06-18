@@ -1,6 +1,7 @@
 """Constants hardcoded for optimizations."""
 
 import datetime
+import typing
 
 from . import types
 
@@ -10,13 +11,14 @@ __all__ = [
     "CN_TIMEZONE",
     "DS_SALT",
     "GAME_BIZS",
+    "GAME_LANGS",
     "GEETEST_RECORD_KEYS",
     "GEETEST_RETCODES",
     "LANGS",
 ]
 
 
-LANGS = {
+LANGS: typing.Final[typing.Dict[types.Lang, str]] = {
     "zh-cn": "简体中文",
     "zh-tw": "繁體中文",
     "de-de": "Deutsch",
@@ -35,7 +37,88 @@ LANGS = {
 }
 """Languages supported by the API."""
 
-DS_SALT = {
+# https://webstatic.hoyoverse.com/admin/mi18n/plat_cn/m10201340231541/m10201340231541-zh-cn.json
+GAME_LANGS: typing.Final[typing.Dict[types.Game, typing.Tuple[types.Lang, ...]]] = {
+    types.Game.HONKAI: (
+        "zh-cn",
+        "zh-tw",
+        "de-de",
+        "en-us",
+        "es-es",
+        "fr-fr",
+        "id-id",
+        "ja-jp",
+        "ko-kr",
+        "pt-pt",
+        "ru-ru",
+        "th-th",
+        "vi-vn",
+    ),
+    types.Game.GENSHIN: (
+        "zh-cn",
+        "zh-tw",
+        "de-de",
+        "en-us",
+        "es-es",
+        "fr-fr",
+        "id-id",
+        "it-it",
+        "ja-jp",
+        "ko-kr",
+        "pt-pt",
+        "ru-ru",
+        "th-th",
+        "tr-tr",
+        "vi-vn",
+    ),
+    types.Game.STARRAIL: (
+        "zh-cn",
+        "zh-tw",
+        "de-de",
+        "en-us",
+        "es-es",
+        "fr-fr",
+        "id-id",
+        "ja-jp",
+        "ko-kr",
+        "pt-pt",
+        "ru-ru",
+        "th-th",
+        "vi-vn",
+    ),
+    types.Game.ZZZ: (
+        "zh-cn",
+        "zh-tw",
+        "de-de",
+        "en-us",
+        "es-es",
+        "fr-fr",
+        "id-id",
+        "ja-jp",
+        "ko-kr",
+        "pt-pt",
+        "ru-ru",
+        "th-th",
+        "vi-vn",
+    ),
+    types.Game.TOT: (
+        "zh-cn",
+        "zh-tw",
+        "de-de",
+        "en-us",
+        "es-es",
+        "fr-fr",
+        "id-id",
+        "ja-jp",
+        "ko-kr",
+        "pt-pt",
+        "ru-ru",
+        "th-th",
+        "vi-vn",
+    ),
+}
+
+DS_SALT: typing.Final[typing.Dict[typing.Union[types.Region, str], str]] = {
     types.Region.OVERSEAS: "6s25p5ox5y14umn1p61aqyyvbvvl3lrt",
     types.Region.CHINESE: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
     "app_login": "IZPgfb0dRPtBeLuFkdDznSZ6f4wWt6y2",
@@ -92,6 +175,7 @@ GEETEST_RECORD_KEYS = {
     types.Game.STARRAIL: "hkrpg_game_record",
     types.Game.HONKAI: "bh3_game_record",
     types.Game.ZZZ: "nap_game_record",
+    types.Game.TOT: "nxx_game_record",
 }
 """Keys used to submit geetest result."""
 
