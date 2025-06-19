@@ -7,6 +7,27 @@ import pydantic
 
 from genshin.models.model import Aliased, APIModel, Unique
 
+__all__ = (
+    "BaseRelic",
+    "BaseSkill",
+    "DetailRelic",
+    "DetailRelicProperty",
+    "FloorCharacter",
+    "LineupRelic",
+    "PropertyInfo",
+    "Rank",
+    "RelicProperty",
+    "RogueCharacter",
+    "SkillStage",
+    "StarRailBaseCharacter",
+    "StarRailBaseEquipment",
+    "StarRailBaseProperty",
+    "StarRailCharacterProperty",
+    "StarRailEquipment",
+    "StarRailLineupProperty",
+    "StarRailPartialCharacter",
+)
+
 
 class StarRailPath(enum.IntEnum):
     """StarRail character path."""
@@ -102,26 +123,32 @@ class DetailRelicProperty(APIModel):
 
 
 class BaseRelic(APIModel):
-    """HSR base relic model."""
+    """HSR base relic."""
 
     id: int
-    level: int
     pos: int
-    name: str
-    desc: str
-    icon: str
     rarity: int
 
 
-class LineupRelic(APIModel):
-    """HSR lineup relic model."""
+class LineupRelic(BaseRelic):
+    """HSR lineup relic."""
+
+    set_name: str
+    set_num: int
 
     main_property: RelicProperty
     properties: typing.Sequence[RelicProperty]
 
+    wiki: str = Aliased("wiki_url")
+
 
 class DetailRelic(BaseRelic):
     """HSR character relic."""
+
+    level: int
+    name: str
+    desc: str
+    icon: str
 
     wiki: str
     main_property: DetailRelicProperty

@@ -158,6 +158,9 @@ class StarRailLineup(APIModel):
     created_at: datetime.datetime
     last_edited_at: datetime.datetime = Aliased("last_edit")
 
+    stars: int = Aliased("star_num")
+    cycles_taken: int = Aliased("round_num")
+
     characters: typing.Sequence[typing.Sequence[character.StarRailLineupCharacter]] = Aliased("avatar_group")
 
     @pydantic.field_validator("characters", mode="before")
@@ -165,6 +168,24 @@ class StarRailLineup(APIModel):
     def __unnest_characters(
         cls, v: typing.Sequence[dict[str, typing.Any]]
     ) -> typing.Sequence[typing.Sequence[dict[str, typing.Any]]]:
+        # Merge relic info from "group"
+        for g in v:
+            group = g["group"]
+
+            for avatar in g["avatar_details"]:
+                group_avatar = next((a for a in group if a["item_id"] == str(avatar["id"])), None)
+                if not group_avatar:
+                    continue
+
+                relics = group_avatar.get("relics", []) + group_avatar.get("relic_sides", [])
+
+                for relic in avatar.get("relics", []):
+                    group_avatar_relic = next((r for r in relics if r["item_id"] == str(relic["id"])), None)
+                    if not group_avatar_relic:
+                        continue
+
+                    relic.update(group_avatar_relic)
+
         return [g["avatar_details"] for g in v]
 
     @pydantic.model_validator(mode="before")
