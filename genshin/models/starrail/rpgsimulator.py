@@ -184,7 +184,7 @@ class StarRailLineup(APIModel):
                     if not group_avatar_relic:
                         continue
 
-                    relic = relic.update(group_avatar_relic)
+                    relic.update(group_avatar_relic)
 
         return [g["avatar_details"] for g in v]
 
