@@ -19,6 +19,12 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
+authors = [
+    { name = "ashleney", email = "thesadru@gmail.com"}
+]
+maintainers = [
+    { name = "seriaati", email = "seriaati@gmail.com" }
+]
 
 [project.optional-dependencies]
 all = [
