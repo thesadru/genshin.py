@@ -101,8 +101,24 @@ class DetailRelicProperty(APIModel):
     info: PropertyInfo
 
 
-class BaseRelic(APIModel):
-    """HSR base relic model."""
+class LineupRelic(APIModel):
+    """HSR lineup relic."""
+
+    id: int = Aliased("item_id")
+    pos: int
+    rarity: int
+
+    set_name: str
+    set_num: int
+
+    main_property: RelicProperty
+    properties: typing.Sequence[RelicProperty]
+
+    wiki: str = Aliased("wiki_url")
+
+
+class DetailRelic(APIModel):
+    """HSR character relic."""
 
     id: int
     level: int
@@ -111,17 +127,6 @@ class BaseRelic(APIModel):
     desc: str
     icon: str
     rarity: int
-
-
-class LineupRelic(APIModel):
-    """HSR lineup relic model."""
-
-    main_property: RelicProperty
-    properties: typing.Sequence[RelicProperty]
-
-
-class DetailRelic(BaseRelic):
-    """HSR character relic."""
 
     wiki: str
     main_property: DetailRelicProperty
