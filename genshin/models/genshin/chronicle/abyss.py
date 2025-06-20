@@ -13,6 +13,7 @@ __all__ = [
     "CharacterRanks",
     "Floor",
     "SpiralAbyss",
+    "SpiralAbyssEnemy",
     "SpiralAbyssPair",
 ]
 
