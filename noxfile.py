@@ -83,10 +83,6 @@ def test(session: nox.Session) -> None:
         PACKAGE,
         "--cov-report",
         "term",
-        "--cov-report",
-        "html:coverage_html",
-        "--cov-report",
-        "xml",
         *session.posargs,
     )
 
