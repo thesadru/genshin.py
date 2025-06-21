@@ -99,7 +99,7 @@ class ZZZTempleRunning(APIModel):
     def reset_datetime(self) -> datetime.datetime:
         """The datetime when the currency will be reset."""
         return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts
-    
+
     @pydantic.field_validator("currency_next_refresh_ts", mode="before")
     def parse_currency_refresh(cls, v: typing.Any) -> datetime.timedelta:
         return datetime.timedelta(seconds=int(v))
