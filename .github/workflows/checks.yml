@@ -82,19 +82,15 @@ jobs:
           pattern: coverage-*
           merge-multiple: true
 
-      - name: Combine coverage
+      - name: Generate lcov report
         run: |
-          uv sync --extra all --extra pytest
-          source .venv/bin/activate
-          python -m coverage combine
-          python -m coverage xml -i
+          uv run coverage lcov -o coverage.lcov
 
-      - name: Upload coverage to codeclimate
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: cd8c7d84ae5f98d86882d666dce0946fe5aae1e63f442995bd9c6e17869e6513
+      - name: Upload coverage to qlty cloud
+        uses: qltysh/qlty-action/coverage@v1
         with:
-          coverageLocations: .coverage.xml:coverage.py
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: lcov:coverage.lcov
 
   type-check:
     runs-on: ubuntu-latest
