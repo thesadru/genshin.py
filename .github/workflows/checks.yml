@@ -86,6 +86,7 @@ jobs:
         run: |
           uv venv
           uv pip install coverage
+          uv run coverage combine
           uv run coverage lcov -o coverage.lcov
 
       - name: Upload coverage to qlty cloud
