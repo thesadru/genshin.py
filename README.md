@@ -3,7 +3,7 @@
 [![Downloads](https://pepy.tech/badge/genshin)](https://pepy.tech/project/genshin)
 [![PyPI package](https://img.shields.io/pypi/v/genshin)](https://pypi.org/project/genshin/)
 [![Last Commit](https://img.shields.io/github/last-commit/seriaati/genshin.py)](https://github.com/seriaati/genshin.py/commits/master)
-[![Coverage](https://img.shields.io/codeclimate/coverage/thesadru/genshin.py)](https://codeclimate.com/github/thesadru/genshin.py)
+[![Code Coverage](https://qlty.sh/badges/f11cc069-77cf-4f20-a2f9-2dc3dc5b45cb/test_coverage.svg)](https://qlty.sh/gh/seriaati/projects/genshin.py)
 [![Discord](https://img.shields.io/discord/570841314200125460?color=7289DA)](https://discord.gg/sMkSKRPuCR)
 
 Modern API wrapper for HoYoLAB & Miyoushe(米游社) API built on asyncio and pydantic.
