@@ -67,7 +67,7 @@ jobs:
   upload-coverage:
     needs: [test]
     runs-on: ubuntu-latest
-    if: false
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout repo
