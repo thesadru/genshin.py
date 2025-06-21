@@ -87,13 +87,13 @@ jobs:
           uv venv
           uv pip install coverage
           uv run coverage combine
-          uv run coverage lcov -o coverage.lcov
+          uv run coverage lcov -o lcov.info
 
       - name: Upload coverage to qlty cloud
         uses: qltysh/qlty-action/coverage@v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: lcov:coverage.lcov
+          files: lcov.info
 
   type-check:
     runs-on: ubuntu-latest
