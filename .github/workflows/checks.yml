@@ -53,7 +53,9 @@ jobs:
 
         run: |
           uv run nox -s test --verbose -- --cov-append
-          # mv .coverage .coverage.${{ matrix.python-version }}
+          echo "--- Debug: Listing all files after test run ---"
+          ls -la
+          mv .coverage .coverage.${{ matrix.python-version }}
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
