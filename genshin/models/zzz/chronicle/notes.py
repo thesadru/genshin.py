@@ -74,6 +74,7 @@ class BatteryCharge(APIModel):
         return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_full)
 
     @pydantic.model_validator(mode="before")
+    @classmethod
     def __unnest_progress(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         return {**values, **values.pop("progress", {})}
 
@@ -102,10 +103,12 @@ class ZZZTempleRunning(APIModel):
         return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts
 
     @pydantic.field_validator("currency_next_refresh_ts", mode="before")
+    @classmethod
     def __parse_currency_refresh(cls, v: str) -> datetime.timedelta:
         return datetime.timedelta(seconds=int(v))
 
     @pydantic.field_validator("current_currency", "weekly_currency_max", mode="before")
+    @classmethod
     def __parse_int_fields(cls, v: str) -> int:
         return int(v)
 
@@ -193,10 +196,12 @@ class ZZZNotes(APIModel):
     temple_running: ZZZTempleRunning
 
     @pydantic.field_validator("scratch_card_completed", mode="before")
+    @classmethod
     def __transform_value(cls, v: typing.Literal["CardSignDone", "CardSignNotDone"]) -> bool:
         return v == "CardSignDone"
 
     @pydantic.model_validator(mode="before")
+    @classmethod
     def __unnest_value(cls, values: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if "video_store_state" not in values:
             values["video_store_state"] = values["vhs_sale"]["sale_state"]
