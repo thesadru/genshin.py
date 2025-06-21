@@ -13,6 +13,7 @@ __all__ = [
     "CharacterRanks",
     "Floor",
     "SpiralAbyss",
+    "SpiralAbyssEnemy",
     "SpiralAbyssPair",
 ]
 
@@ -66,6 +67,14 @@ class Battle(APIModel):
     characters: typing.Sequence[AbyssCharacter] = Aliased("avatars")
 
 
+class SpiralAbyssEnemy(APIModel):
+    """An enemy in Spiral Abyss."""
+
+    name: str
+    icon: str
+    level: int
+
+
 class Chamber(APIModel):
     """Chamber of the spiral abyss."""
 
@@ -73,6 +82,9 @@ class Chamber(APIModel):
     stars: int = Aliased("star")
     max_stars: typing.Literal[3] = Aliased("max_star")
     battles: typing.Sequence[Battle]
+
+    first_half_enemies: typing.Sequence[SpiralAbyssEnemy] = Aliased("top_half_floor_monster", default=[])
+    second_half_enemies: typing.Sequence[SpiralAbyssEnemy] = Aliased("bottom_half_floor_monster", default=[])
 
 
 class Floor(APIModel):
