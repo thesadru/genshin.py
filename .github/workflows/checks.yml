@@ -55,18 +55,18 @@ jobs:
           uv run nox -s test --verbose -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}
 
-      - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: ./.coverage.${{ matrix.python-version }}
-          retention-days: 1
-          if-no-files-found: error
+      # - name: Upload coverage artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage
+      #     path: ./.coverage.${{ matrix.python-version }}
+      #     retention-days: 1
+      #     if-no-files-found: error
 
   upload-coverage:
     needs: [test]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: false
 
     steps:
       - name: Checkout repo
