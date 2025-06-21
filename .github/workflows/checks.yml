@@ -36,17 +36,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: install nox
+      - name: Install nox
         run: |
-          python -m pip install nox
+          uv venv
+          uv pip install nox
+
       - name: Run tests
         env:
           GENSHIN_COOKIES: ${{ secrets.GENSHIN_COOKIES }}
@@ -56,7 +55,7 @@ jobs:
           ZZZ_COOKIES: ${{ secrets.ZZZ_COOKIES }}
 
         run: |
-          python -m nox -s test --verbose -- --cov-append
+          uv run nox -s test --verbose -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}
 
       - name: Upload coverage
