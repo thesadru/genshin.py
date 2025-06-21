@@ -8,7 +8,7 @@ import pydantic
 
 from genshin.models.model import Aliased, APIModel
 
-__all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZNotes")
+__all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZMemberCard", "ZZZNotes", "ZZZTempleRunning")
 
 
 class VideoStoreState(enum.Enum):
@@ -43,9 +43,10 @@ class ExpeditionState(enum.Enum):
 
 
 class ZZZMemberCardState(enum.Enum):
-    """ZZZ Member Card ACK state."""
+    """ZZZ Member Card state."""
 
     MEMBER = "MemberCardStateACK"
+    NO = "MemberCardStateNo"
 
 
 class ZZZCardSignState(enum.Enum):
@@ -101,11 +102,11 @@ class ZZZTempleRunning(APIModel):
         return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts
 
     @pydantic.field_validator("currency_next_refresh_ts", mode="before")
-    def parse_currency_refresh(cls, v: typing.Any) -> datetime.timedelta:
+    def __parse_currency_refresh(cls, v: str) -> datetime.timedelta:
         return datetime.timedelta(seconds=int(v))
 
     @pydantic.field_validator("current_currency", "weekly_currency_max", mode="before")
-    def parse_int_fields(cls, v: typing.Any) -> int:
+    def __parse_int_fields(cls, v: str) -> int:
         return int(v)
 
 
@@ -122,7 +123,8 @@ class ZZZMemberCard(APIModel):
         return datetime.datetime.now().astimezone() + self.exp_time
 
     @pydantic.field_validator("exp_time", mode="before")
-    def parse_currency_refresh(cls, v: typing.Any) -> datetime.timedelta:
+    @classmethod
+    def __parse_currency_refresh(cls, v: str) -> datetime.timedelta:
         return datetime.timedelta(seconds=int(v))
 
 
