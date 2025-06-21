@@ -5,6 +5,7 @@ on: [push, pull_request, issue_comment]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +28,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/test'))
+
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11"]
@@ -57,27 +59,22 @@ jobs:
           python -m nox -s test --verbose -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}
 
-      # - name: Upload coverage
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: coverage
-      #     path: .coverage.${{ matrix.python-version }}
-      #     retention-days: 1
-      #     if-no-files-found: error
+      - name: Upload coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: .coverage.${{ matrix.python-version }}
+          retention-days: 1
+          if-no-files-found: error
 
   upload-coverage:
     needs: [test]
     runs-on: ubuntu-latest
-    if: false # Temporarily disabled
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Setup python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
@@ -89,7 +86,7 @@ jobs:
 
       - name: Combine coverage
         run: |
-          pip install -r ./genshin-dev/pytest-requirements.txt
+          uv sync --extra all --extra pytest
           coverage combine
           coverage xml -i
 
@@ -102,6 +99,7 @@ jobs:
 
   type-check:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - uses: actions/checkout@v4
@@ -123,6 +121,7 @@ jobs:
 
   verify-types:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - uses: actions/checkout@v4
@@ -144,6 +143,7 @@ jobs:
 
   prettier:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - uses: actions/checkout@v4
