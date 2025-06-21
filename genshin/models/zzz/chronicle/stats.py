@@ -36,6 +36,7 @@ class ZZZStats(APIModel):
     ) -> typing.Optional[typing.Dict[str, typing.Any]]:
         return v[0] if v else None
 
+
 class ZZZCatNote(APIModel):
     """ZZZ Cat note model."""
 

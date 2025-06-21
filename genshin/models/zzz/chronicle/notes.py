@@ -19,6 +19,42 @@ class VideoStoreState(enum.Enum):
     CURRENTLY_OPEN = "SaleStateDoing"
 
 
+class BenchState(enum.Enum):
+    """Bench management state."""
+
+    CAN_PRODUCE = "BenchStateCanProduce"
+    PRODUCING = "BenchStateProducing"
+
+
+class ShelveStoreState(enum.Enum):
+    """Shelve management state."""
+
+    CAN_SELL = "ShelveStateCanSell"
+    SELLING = "ShelveStateSelling"
+    SOLD_OUT = "ShelveStateSoldOut"
+
+
+class ExpeditionState(enum.Enum):
+    """Expedition state."""
+
+    CAN_SEND = "ExpeditionStateInCanSend"
+    IN_PROGRESS = "ExpeditionStateInProgress"
+    ENDED = "ExpeditionStateEnd"
+
+
+class ZZZMemberCardState(enum.Enum):
+    """ZZZ Member Card ACK state."""
+
+    MEMBER = "MemberCardStateACK"
+
+
+class ZZZCardSignState(enum.Enum):
+    """ZZZ Member Card Sign state."""
+
+    NO = "CardSignNo"
+    DONE = "CardSignDone"
+
+
 class BatteryCharge(APIModel):
     """ZZZ battery charge model."""
 
@@ -46,6 +82,48 @@ class ZZZEngagement(APIModel):
 
     current: int
     max: int
+
+
+class ZZZTempleRunning(APIModel):
+    """ZZZ Suibian Temple Management model."""
+
+    bench_state: BenchState
+    currency_next_refresh_ts: datetime.timedelta
+    current_currency: int
+    expedition_state: ExpeditionState
+    level: int
+    shelve_state: ShelveStoreState
+    weekly_currency_max: int
+
+    @property
+    def reset_datetime(self) -> datetime.datetime:
+        """The datetime when the currency will be reset."""
+        return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts
+    
+    @pydantic.field_validator("currency_next_refresh_ts", mode="before")
+    def parse_currency_refresh(cls, v: typing.Any) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
+    @pydantic.field_validator("current_currency", "weekly_currency_max", mode="before")
+    def parse_int_fields(cls, v: typing.Any) -> int:
+        return int(v)
+
+
+class ZZZMemberCard(APIModel):
+    """ZZZ Member Card model."""
+
+    exp_time: datetime.timedelta
+    is_open: bool
+    member_card_state: ZZZMemberCardState
+
+    @property
+    def reset_datetime(self) -> datetime.datetime:
+        """The datetime when the member card will be reset."""
+        return datetime.datetime.now().astimezone() + self.exp_time
+
+    @pydantic.field_validator("exp_time", mode="before")
+    def parse_currency_refresh(cls, v: typing.Any) -> datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
 
 
 class BountyCommission(APIModel):
@@ -108,6 +186,9 @@ class ZZZNotes(APIModel):
     video_store_state: VideoStoreState
     hollow_zero: HollowZero
     weekly_task: typing.Optional[WeeklyTask] = None
+    card_sign: ZZZCardSignState
+    member_card: ZZZMemberCard
+    temple_running: ZZZTempleRunning
 
     @pydantic.field_validator("scratch_card_completed", mode="before")
     def __transform_value(cls, v: typing.Literal["CardSignDone", "CardSignNotDone"]) -> bool:
