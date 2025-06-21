@@ -55,13 +55,14 @@ jobs:
           uv run nox -s test --verbose -- --cov-append
           mv .coverage .coverage.${{ matrix.python-version }}
 
-      # - name: Upload coverage artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: coverage
-      #     path: ./.coverage.${{ matrix.python-version }}
-      #     retention-days: 1
-      #     if-no-files-found: error
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.python-version }}
+          path: .coverage.${{ matrix.python-version }}
+          retention-days: 1
+          if-no-files-found: error
+          include-hidden-files: true
 
   upload-coverage:
     needs: [test]
@@ -78,13 +79,15 @@ jobs:
       - name: Download coverage
         uses: actions/download-artifact@v4
         with:
-          name: coverage
+          pattern: coverage-*
+          merge-multiple: true
 
       - name: Combine coverage
         run: |
           uv sync --extra all --extra pytest
-          coverage combine
-          coverage xml -i
+          source .venv/bin/activate
+          python -m coverage combine
+          python -m coverage xml -i
 
       - name: Upload coverage to codeclimate
         uses: paambaati/codeclimate-action@v9.0.0
