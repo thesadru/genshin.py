@@ -8,11 +8,15 @@ import pydantic
 from genshin.models.model import Aliased, APIModel, Unique
 
 __all__ = (
+    "BaseMemoSprite",
     "BaseRelic",
     "BaseSkill",
+    "DetailMemoSprite",
     "DetailRelic",
     "DetailRelicProperty",
+    "DetailSkill",
     "FloorCharacter",
+    "LineupMemoSprite",
     "LineupRelic",
     "PropertyInfo",
     "Rank",
@@ -23,9 +27,12 @@ __all__ = (
     "StarRailBaseEquipment",
     "StarRailBaseProperty",
     "StarRailCharacterProperty",
+    "StarRailDetailCharacter",
     "StarRailEquipment",
+    "StarRailLineupCharacter",
     "StarRailLineupProperty",
     "StarRailPartialCharacter",
+    "StarRailPath",
 )
 
 
