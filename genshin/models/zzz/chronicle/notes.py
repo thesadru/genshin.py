@@ -113,11 +113,6 @@ class ZZZTempleRunning(APIModel):
     def __parse_currency_refresh(cls, v: str) -> datetime.timedelta:
         return datetime.timedelta(seconds=int(v))
 
-    @pydantic.field_validator("current_currency", "weekly_currency_max", mode="before")
-    @classmethod
-    def __parse_int_fields(cls, v: str) -> int:
-        return int(v)
-
     @pydantic.field_validator("bench_state", mode="before")
     @classmethod
     def __parse_bench_state(cls, v: str) -> typing.Union[BenchState, str]:
