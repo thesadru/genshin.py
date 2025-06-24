@@ -3,7 +3,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime
+from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime, prevent_enum_error
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
@@ -64,10 +64,7 @@ class ShiyuDefenseMonster(APIModel):
 
     @pydantic.field_validator("weakness", mode="before")
     def __convert_weakness(cls, v: int) -> typing.Union[ZZZElementType, int]:
-        try:
-            return ZZZElementType(v)
-        except ValueError:
-            return v
+        return prevent_enum_error(v, ZZZElementType)
 
 
 class ShiyuDefenseNode(APIModel):

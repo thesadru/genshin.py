@@ -5,7 +5,7 @@ import typing
 import pydantic
 
 from genshin import types
-from genshin.models.model import Aliased, APIModel, TZDateTime
+from genshin.models.model import Aliased, APIModel, TZDateTime, prevent_enum_error
 
 __all__ = (
     "MimoGame",
@@ -106,10 +106,7 @@ class MimoTask(APIModel):
 
     @pydantic.field_validator("type", mode="before")
     def __transform_task_type(cls, v: int) -> typing.Union[int, MimoTaskType]:
-        try:
-            return MimoTaskType(v)
-        except ValueError:
-            return v
+        return prevent_enum_error(v, MimoTaskType)
 
 
 class MimoShopItem(APIModel):

@@ -3,7 +3,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, Unique
+from genshin.models.model import Aliased, APIModel, Unique, prevent_enum_error
 
 __all__ = (
     "AgentSkill",
@@ -146,11 +146,7 @@ class ZZZProperty(APIModel):
 
     @pydantic.field_validator("type", mode="before")
     def __cast_id(cls, v: int) -> typing.Union[int, ZZZPropertyType]:
-        # Prevent enum crash
-        try:
-            return ZZZPropertyType(v)
-        except ValueError:
-            return v
+        return prevent_enum_error(v, ZZZPropertyType)
 
 
 class ZZZAgentProperty(ZZZProperty):

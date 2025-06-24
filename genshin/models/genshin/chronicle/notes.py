@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, prevent_enum_error
 
 __all__ = [
     "ArchonQuest",
@@ -99,10 +99,7 @@ class TaskReward(APIModel):
 
     @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[TaskRewardStatus, str]:
-        try:
-            return TaskRewardStatus(v)
-        except ValueError:
-            return v
+        return prevent_enum_error(v, TaskRewardStatus)
 
 
 class AttendanceRewardStatus(str, enum.Enum):
@@ -122,10 +119,7 @@ class AttendanceReward(APIModel):
 
     @pydantic.field_validator("status", mode="before")
     def __prevent_enum_crash(cls, v: str) -> typing.Union[AttendanceRewardStatus, str]:
-        try:
-            return AttendanceRewardStatus(v)
-        except ValueError:
-            return v
+        return prevent_enum_error(v, AttendanceRewardStatus)
 
 
 class DailyTasks(APIModel):
