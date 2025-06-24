@@ -2,6 +2,7 @@
 
 import datetime
 import enum
+import logging
 import typing
 
 import pydantic
@@ -9,6 +10,8 @@ import pydantic
 from genshin.models.model import Aliased, APIModel
 
 __all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZMemberCard", "ZZZNotes", "ZZZTempleRunning")
+
+logger = logging.getLogger(__name__)
 
 
 class VideoStoreState(enum.Enum):
@@ -24,6 +27,7 @@ class BenchState(enum.Enum):
 
     CAN_PRODUCE = "BenchStateCanProduce"
     PRODUCING = "BenchStateProducing"
+    UNKNOWN = "BenchStateUnknown"
 
 
 class ShelveStoreState(enum.Enum):
@@ -32,6 +36,7 @@ class ShelveStoreState(enum.Enum):
     CAN_SELL = "ShelveStateCanSell"
     SELLING = "ShelveStateSelling"
     SOLD_OUT = "ShelveStateSoldOut"
+    UNKNOWN = "ShelveStateUnknown"
 
 
 class ExpeditionState(enum.Enum):
@@ -40,6 +45,7 @@ class ExpeditionState(enum.Enum):
     CAN_SEND = "ExpeditionStateInCanSend"
     IN_PROGRESS = "ExpeditionStateInProgress"
     ENDED = "ExpeditionStateEnd"
+    UNKNOWN = "ExpeditionStateUnknown"
 
 
 class ZZZMemberCardState(enum.Enum):
@@ -89,12 +95,12 @@ class ZZZEngagement(APIModel):
 class ZZZTempleRunning(APIModel):
     """ZZZ Suibian Temple Management model."""
 
-    bench_state: BenchState
+    bench_state: typing.Union[BenchState, str]
     currency_next_refresh_ts: datetime.timedelta
     current_currency: int
-    expedition_state: ExpeditionState
+    expedition_state: typing.Union[ExpeditionState, str]
     level: int
-    shelve_state: ShelveStoreState
+    shelve_state: typing.Union[ShelveStoreState, str]
     weekly_currency_max: int
 
     @property
@@ -111,6 +117,33 @@ class ZZZTempleRunning(APIModel):
     @classmethod
     def __parse_int_fields(cls, v: str) -> int:
         return int(v)
+
+    @pydantic.field_validator("bench_state", mode="before")
+    @classmethod
+    def __parse_bench_state(cls, v: str) -> typing.Union[BenchState, str]:
+        try:
+            return BenchState(v)
+        except ValueError:
+            logger.warning("Unknown BenchState: %r, please report to developer", v)
+            return v
+
+    @pydantic.field_validator("expedition_state", mode="before")
+    @classmethod
+    def __parse_expedition_state(cls, v: str) -> typing.Union[ExpeditionState, str]:
+        try:
+            return ExpeditionState(v)
+        except ValueError:
+            logger.warning("Unknown ExpeditionState: %r, please report to developer", v)
+            return v
+
+    @pydantic.field_validator("shelve_state", mode="before")
+    @classmethod
+    def __parse_shelve_store_state(cls, v: str) -> typing.Union[ShelveStoreState, str]:
+        try:
+            return ShelveStoreState(v)
+        except ValueError:
+            logger.warning("Unknown ShelveStoreState: %r, please report to developer", v)
+            return v
 
 
 class ZZZMemberCard(APIModel):
