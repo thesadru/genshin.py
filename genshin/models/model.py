@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import abc
 import datetime
+import enum
+import logging
 import typing
 from typing import Annotated
 
@@ -12,6 +14,8 @@ import pydantic
 from genshin.constants import CN_TIMEZONE
 
 __all__ = ["APIModel", "Aliased", "Unique"]
+
+logger = logging.getLogger(__name__)
 
 
 class APIModel(pydantic.BaseModel):
@@ -51,6 +55,19 @@ def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) ->
 
     msg = f"Invalid datetime value provided: {value!r}"
     raise ValueError(msg)
+
+
+InputValue = typing.TypeVar("InputValue", str, int, enum.Enum)
+EnumType = typing.TypeVar("EnumType", bound=enum.Enum)
+
+
+def prevent_enum_error(value: InputValue, cls: typing.Type[EnumType]) -> typing.Union[EnumType, InputValue]:
+    """Prevent enum error by returning the value as is."""
+    try:
+        return cls(value)
+    except ValueError:
+        logger.warning("Unknown %s: %r, please report to developer", cls.__name__, value)
+        return value
 
 
 TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]

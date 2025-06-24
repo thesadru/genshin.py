@@ -7,7 +7,7 @@ import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel
+from genshin.models.model import Aliased, APIModel, prevent_enum_error
 
 __all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZMemberCard", "ZZZNotes", "ZZZTempleRunning")
 
@@ -121,29 +121,17 @@ class ZZZTempleRunning(APIModel):
     @pydantic.field_validator("bench_state", mode="before")
     @classmethod
     def __parse_bench_state(cls, v: str) -> typing.Union[BenchState, str]:
-        try:
-            return BenchState(v)
-        except ValueError:
-            logger.warning("Unknown BenchState: %r, please report to developer", v)
-            return v
+        return prevent_enum_error(v, BenchState)
 
     @pydantic.field_validator("expedition_state", mode="before")
     @classmethod
     def __parse_expedition_state(cls, v: str) -> typing.Union[ExpeditionState, str]:
-        try:
-            return ExpeditionState(v)
-        except ValueError:
-            logger.warning("Unknown ExpeditionState: %r, please report to developer", v)
-            return v
+        return prevent_enum_error(v, ExpeditionState)
 
     @pydantic.field_validator("shelve_state", mode="before")
     @classmethod
     def __parse_shelve_store_state(cls, v: str) -> typing.Union[ShelveStoreState, str]:
-        try:
-            return ShelveStoreState(v)
-        except ValueError:
-            logger.warning("Unknown ShelveStoreState: %r, please report to developer", v)
-            return v
+        return prevent_enum_error(v, ShelveStoreState)
 
 
 class ZZZMemberCard(APIModel):
