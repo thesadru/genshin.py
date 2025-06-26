@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'genshin/**.py'
       - 'noxfile.py'
@@ -13,7 +13,7 @@ on:
       - '.github/workflows/checks.yml'
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - 'genshin/**.py'
       - 'noxfile.py'
