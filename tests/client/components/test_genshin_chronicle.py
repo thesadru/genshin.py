@@ -73,6 +73,11 @@ async def test_exceptions(client: genshin.Client):
         await client.get_record_cards(10000000)
 
 
-async def test_envisaged_echoes(client: genshin.Client):
-    echoes = await client.get_envisaged_echoes()
+async def test_envisaged_echoes(client: genshin.Client, genshin_uid: int):
+    echoes = await client.get_envisaged_echoes(genshin_uid)
     assert echoes
+
+
+async def test_stygian_onslaught(client: genshin.Client, genshin_uid: int):
+    data = await client.get_stygian_onslaught(genshin_uid)
+    assert data
