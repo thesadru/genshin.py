@@ -94,12 +94,6 @@ def type_check(session: nox.Session) -> None:
     session.run(*UV_RUN_EXTRA, "typecheck", "--extra", "all", "mypy", PACKAGE, *verbose_args())
 
 
-@nox.session(name="mypy")
-def mypy(session: nox.Session) -> None:
-    """Statically analyse and veirfy this project using mypy."""
-    session.run(*UV_RUN_EXTRA, "all", "--with", "mypy", "mypy", PACKAGE, *verbose_args())
-
-
 @nox.session(name="verify-types")
 def verify_types(session: nox.Session) -> None:
     """Verify the "type completeness" of types exported by the library using pyright."""
