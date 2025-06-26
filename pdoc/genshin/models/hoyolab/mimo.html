@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.hoyolab.mimo API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.hoyolab.mimo</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoGame"><code class="flex name class">
+<span>class <span class="ident">MimoGame</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoGame(APIModel):
+    &#34;&#34;&#34;Mimo game.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;game_id&#34;)
+    version_id: int
+    expire_point: bool
+    point: int
+    start_time: TZDateTime
+    end_time: TZDateTime
+
+    @property
+    def game(self) -&gt; typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game, int]:
+        if self.id == 5:
+            return &#34;hoyolab&#34;
+        if self.id == 6:
+            return types.Game.STARRAIL
+        if self.id == 8:
+            return types.Game.ZZZ
+        if self.id == 2:
+            return types.Game.GENSHIN
+        return self.id</code></pre>
+</details>
+<div class="desc"><p>Mimo game.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.expire_point"><code class="name">var <span class="ident">expire_point</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.point"><code class="name">var <span class="ident">point</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.version_id"><code class="name">var <span class="ident">version_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoGame.game"><code class="name">prop <span class="ident">game</span> : Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | int</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def game(self) -&gt; typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game, int]:
+    if self.id == 5:
+        return &#34;hoyolab&#34;
+    if self.id == 6:
+        return types.Game.STARRAIL
+    if self.id == 8:
+        return types.Game.ZZZ
+    if self.id == 2:
+        return types.Game.GENSHIN
+    return self.id</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo"><code class="flex name class">
+<span>class <span class="ident">MimoLotteryInfo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoLotteryInfo(APIModel):
+    &#34;&#34;&#34;Mimo lottery info.&#34;&#34;&#34;
+
+    current_point: int = Aliased(&#34;point&#34;)
+    cost: int
+    current_count: int = Aliased(&#34;count&#34;)
+    limit_count: int
+    rewards: typing.Sequence[MimoLotteryReward] = Aliased(&#34;award_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Mimo lottery info.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.cost"><code class="name">var <span class="ident">cost</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.current_count"><code class="name">var <span class="ident">current_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.current_point"><code class="name">var <span class="ident">current_point</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.limit_count"><code class="name">var <span class="ident">limit_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryInfo.rewards"><code class="name">var <span class="ident">rewards</span> : Sequence[<a title="genshin.models.hoyolab.mimo.MimoLotteryReward" href="#genshin.models.hoyolab.mimo.MimoLotteryReward">MimoLotteryReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult"><code class="flex name class">
+<span>class <span class="ident">MimoLotteryResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoLotteryResult(APIModel):
+    &#34;&#34;&#34;Mimo lottery result.&#34;&#34;&#34;
+
+    reward: PartialMimoLotteryReward
+    reward_id: int = Aliased(&#34;award_id&#34;)
+    game_id: int
+    src_type: int
+    code: str = Aliased(&#34;exchange_code&#34;)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __nest_reward(cls, v: typing.Dict[str, typing.Any]) -&gt; typing.Dict[str, typing.Any]:
+        v[&#34;reward&#34;] = {&#34;type&#34;: v.pop(&#34;type&#34;), &#34;icon&#34;: v.pop(&#34;icon&#34;), &#34;name&#34;: v.pop(&#34;name&#34;)}
+        return v</code></pre>
+</details>
+<div class="desc"><p>Mimo lottery result.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.code"><code class="name">var <span class="ident">code</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.game_id"><code class="name">var <span class="ident">game_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.reward"><code class="name">var <span class="ident">reward</span> : <a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward">PartialMimoLotteryReward</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.reward_id"><code class="name">var <span class="ident">reward_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryResult.src_type"><code class="name">var <span class="ident">src_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryReward"><code class="flex name class">
+<span>class <span class="ident">MimoLotteryReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoLotteryReward(PartialMimoLotteryReward):
+    &#34;&#34;&#34;Mimo lottery reward.&#34;&#34;&#34;
+
+    expire_day: int</code></pre>
+</details>
+<div class="desc"><p>Mimo lottery reward.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward">PartialMimoLotteryReward</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryReward.expire_day"><code class="name">var <span class="ident">expire_day</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoLotteryReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem"><code class="flex name class">
+<span>class <span class="ident">MimoShopItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoShopItem(APIModel):
+    &#34;&#34;&#34;Mimo shop item.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;award_id&#34;)
+    status: MimoShopItemStatus
+    icon: str
+    name: str
+    cost: int
+    stock: int
+    user_count: int
+    next_refresh_time: datetime.timedelta
+    expire_day: int</code></pre>
+</details>
+<div class="desc"><p>Mimo shop item.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.cost"><code class="name">var <span class="ident">cost</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.expire_day"><code class="name">var <span class="ident">expire_day</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.next_refresh_time"><code class="name">var <span class="ident">next_refresh_time</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.hoyolab.mimo.MimoShopItemStatus" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus">MimoShopItemStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.stock"><code class="name">var <span class="ident">stock</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItem.user_count"><code class="name">var <span class="ident">user_count</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItemStatus"><code class="flex name class">
+<span>class <span class="ident">MimoShopItemStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoShopItemStatus(enum.IntEnum):
+    &#34;&#34;&#34;Mimo shop item status.&#34;&#34;&#34;
+
+    EXCHANGEABLE = 1
+    NOT_EXCHANGEABLE = 2
+    LIMIT_REACHED = 3
+    SOLD_OUT = 4</code></pre>
+</details>
+<div class="desc"><p>Mimo shop item status.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItemStatus.EXCHANGEABLE"><code class="name">var <span class="ident">EXCHANGEABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItemStatus.LIMIT_REACHED"><code class="name">var <span class="ident">LIMIT_REACHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItemStatus.NOT_EXCHANGEABLE"><code class="name">var <span class="ident">NOT_EXCHANGEABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoShopItemStatus.SOLD_OUT"><code class="name">var <span class="ident">SOLD_OUT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask"><code class="flex name class">
+<span>class <span class="ident">MimoTask</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoTask(APIModel):
+    &#34;&#34;&#34;Mimo task.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;task_id&#34;)
+    name: str = Aliased(&#34;task_name&#34;)
+    time_type: int
+    point: int
+    progress: int
+    total_progress: int
+
+    status: MimoTaskStatus
+    jump_url: str
+    window_text: str
+    type: typing.Union[int, MimoTaskType] = Aliased(&#34;task_type&#34;)
+    af_url: str
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __transform_task_type(cls, v: int) -&gt; typing.Union[int, MimoTaskType]:
+        return prevent_enum_error(v, MimoTaskType)</code></pre>
+</details>
+<div class="desc"><p>Mimo task.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.af_url"><code class="name">var <span class="ident">af_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.jump_url"><code class="name">var <span class="ident">jump_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.point"><code class="name">var <span class="ident">point</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.progress"><code class="name">var <span class="ident">progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.hoyolab.mimo.MimoTaskStatus" href="#genshin.models.hoyolab.mimo.MimoTaskStatus">MimoTaskStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.time_type"><code class="name">var <span class="ident">time_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.total_progress"><code class="name">var <span class="ident">total_progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.type"><code class="name">var <span class="ident">type</span> : int | <a title="genshin.models.hoyolab.mimo.MimoTaskType" href="#genshin.models.hoyolab.mimo.MimoTaskType">MimoTaskType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTask.window_text"><code class="name">var <span class="ident">window_text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskStatus"><code class="flex name class">
+<span>class <span class="ident">MimoTaskStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoTaskStatus(enum.IntEnum):
+    &#34;&#34;&#34;Mimo task status.&#34;&#34;&#34;
+
+    FINISHED = 1
+    ONGOING = 2
+    CLAIMED = 3</code></pre>
+</details>
+<div class="desc"><p>Mimo task status.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskStatus.CLAIMED"><code class="name">var <span class="ident">CLAIMED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskStatus.FINISHED"><code class="name">var <span class="ident">FINISHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskStatus.ONGOING"><code class="name">var <span class="ident">ONGOING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType"><code class="flex name class">
+<span>class <span class="ident">MimoTaskType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MimoTaskType(enum.IntEnum):
+    &#34;&#34;&#34;Mimo task type.&#34;&#34;&#34;
+
+    FINISHABLE = 1
+    &#34;&#34;&#34;e.g. Sunday Advanced Tutorial: What is the core Charge mechanic?&#34;&#34;&#34;
+    VISIT = 2
+    &#34;&#34;&#34;e.g. Visit the 【Honkai: Star Rail】 Interest Group on the day&#34;&#34;&#34;
+    COMMENT = 3
+    &#34;&#34;&#34;e.g. Participate in this week&#39;s creative interactions and leave your creations in the comments&#34;&#34;&#34;
+    VIEW_TOPIC = 4
+    &#34;&#34;&#34;e.g. View the &#34;Roaming Through the Realm of Saurians&#34; topic&#34;&#34;&#34;
+    GI_LOGIN = 5
+    &#34;&#34;&#34;e.g. Log into Genshin Impact today&#34;&#34;&#34;
+    GI_GAME = 6
+    &#34;&#34;&#34;e.g. Claim rewards from Ley Line Blossoms 2 times&#34;&#34;&#34;
+    HSR_GAME = 8
+    &#34;&#34;&#34;e.g. Complete Divergent Universe or Simulated Universe 1 time&#34;&#34;&#34;
+    TRAILER = 10
+    &#34;&#34;&#34;e.g. Myriad Celestia Trailer — &#34;After the Sunset&#34; | Honkai: Star Rail&#34;&#34;&#34;
+    ZZZ_DAILY_LOGIN = 12
+    &#34;&#34;&#34;e.g. Log into Zenless Zone Zero today&#34;&#34;&#34;
+    ZZZ_CONSECUTIVE_LOGIN = 13
+    &#34;&#34;&#34;e.g. Log into the game for 7 days&#34;&#34;&#34;
+    ZZZ_GAME = 16
+    &#34;&#34;&#34;e.g. Reach 400 Engagement today&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Mimo task type.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.COMMENT"><code class="name">var <span class="ident">COMMENT</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Participate in this week's creative interactions and leave your creations in the comments</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.FINISHABLE"><code class="name">var <span class="ident">FINISHABLE</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Sunday Advanced Tutorial: What is the core Charge mechanic?</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.GI_GAME"><code class="name">var <span class="ident">GI_GAME</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Claim rewards from Ley Line Blossoms 2 times</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.GI_LOGIN"><code class="name">var <span class="ident">GI_LOGIN</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Log into Genshin Impact today</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.HSR_GAME"><code class="name">var <span class="ident">HSR_GAME</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Complete Divergent Universe or Simulated Universe 1 time</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.TRAILER"><code class="name">var <span class="ident">TRAILER</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Myriad Celestia Trailer — "After the Sunset" | Honkai: Star Rail</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.VIEW_TOPIC"><code class="name">var <span class="ident">VIEW_TOPIC</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. View the "Roaming Through the Realm of Saurians" topic</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.VISIT"><code class="name">var <span class="ident">VISIT</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Visit the 【Honkai: Star Rail】 Interest Group on the day</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_CONSECUTIVE_LOGIN"><code class="name">var <span class="ident">ZZZ_CONSECUTIVE_LOGIN</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Log into the game for 7 days</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_DAILY_LOGIN"><code class="name">var <span class="ident">ZZZ_DAILY_LOGIN</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Log into Zenless Zone Zero today</p></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_GAME"><code class="name">var <span class="ident">ZZZ_GAME</span></code></dt>
+<dd>
+<div class="desc"><p>e.g. Reach 400 Engagement today</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.PartialMimoLotteryReward"><code class="flex name class">
+<span>class <span class="ident">PartialMimoLotteryReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PartialMimoLotteryReward(APIModel):
+    &#34;&#34;&#34;Partial mimo lottery reward.&#34;&#34;&#34;
+
+    type: int
+    icon: str
+    name: str</code></pre>
+</details>
+<div class="desc"><p>Partial mimo lottery reward.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.hoyolab.mimo.MimoLotteryReward" href="#genshin.models.hoyolab.mimo.MimoLotteryReward">MimoLotteryReward</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.type"><code class="name">var <span class="ident">type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.hoyolab" href="index.html">genshin.models.hoyolab</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoGame" href="#genshin.models.hoyolab.mimo.MimoGame">MimoGame</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.end_time" href="#genshin.models.hoyolab.mimo.MimoGame.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.expire_point" href="#genshin.models.hoyolab.mimo.MimoGame.expire_point">expire_point</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.game" href="#genshin.models.hoyolab.mimo.MimoGame.game">game</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.id" href="#genshin.models.hoyolab.mimo.MimoGame.id">id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.model_config" href="#genshin.models.hoyolab.mimo.MimoGame.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.point" href="#genshin.models.hoyolab.mimo.MimoGame.point">point</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.start_time" href="#genshin.models.hoyolab.mimo.MimoGame.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoGame.version_id" href="#genshin.models.hoyolab.mimo.MimoGame.version_id">version_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo">MimoLotteryInfo</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.cost" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.cost">cost</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.current_count" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.current_count">current_count</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.current_point" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.current_point">current_point</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.limit_count" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.limit_count">limit_count</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.model_config" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryInfo.rewards" href="#genshin.models.hoyolab.mimo.MimoLotteryInfo.rewards">rewards</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult" href="#genshin.models.hoyolab.mimo.MimoLotteryResult">MimoLotteryResult</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.code" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.code">code</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.game_id" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.game_id">game_id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.model_config" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.reward" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.reward">reward</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.reward_id" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.reward_id">reward_id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryResult.src_type" href="#genshin.models.hoyolab.mimo.MimoLotteryResult.src_type">src_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoLotteryReward" href="#genshin.models.hoyolab.mimo.MimoLotteryReward">MimoLotteryReward</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryReward.expire_day" href="#genshin.models.hoyolab.mimo.MimoLotteryReward.expire_day">expire_day</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoLotteryReward.model_config" href="#genshin.models.hoyolab.mimo.MimoLotteryReward.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoShopItem" href="#genshin.models.hoyolab.mimo.MimoShopItem">MimoShopItem</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.cost" href="#genshin.models.hoyolab.mimo.MimoShopItem.cost">cost</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.expire_day" href="#genshin.models.hoyolab.mimo.MimoShopItem.expire_day">expire_day</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.icon" href="#genshin.models.hoyolab.mimo.MimoShopItem.icon">icon</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.id" href="#genshin.models.hoyolab.mimo.MimoShopItem.id">id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.model_config" href="#genshin.models.hoyolab.mimo.MimoShopItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.name" href="#genshin.models.hoyolab.mimo.MimoShopItem.name">name</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.next_refresh_time" href="#genshin.models.hoyolab.mimo.MimoShopItem.next_refresh_time">next_refresh_time</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.status" href="#genshin.models.hoyolab.mimo.MimoShopItem.status">status</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.stock" href="#genshin.models.hoyolab.mimo.MimoShopItem.stock">stock</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItem.user_count" href="#genshin.models.hoyolab.mimo.MimoShopItem.user_count">user_count</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoShopItemStatus" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus">MimoShopItemStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItemStatus.EXCHANGEABLE" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus.EXCHANGEABLE">EXCHANGEABLE</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItemStatus.LIMIT_REACHED" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus.LIMIT_REACHED">LIMIT_REACHED</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItemStatus.NOT_EXCHANGEABLE" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus.NOT_EXCHANGEABLE">NOT_EXCHANGEABLE</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoShopItemStatus.SOLD_OUT" href="#genshin.models.hoyolab.mimo.MimoShopItemStatus.SOLD_OUT">SOLD_OUT</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoTask" href="#genshin.models.hoyolab.mimo.MimoTask">MimoTask</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.af_url" href="#genshin.models.hoyolab.mimo.MimoTask.af_url">af_url</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.id" href="#genshin.models.hoyolab.mimo.MimoTask.id">id</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.jump_url" href="#genshin.models.hoyolab.mimo.MimoTask.jump_url">jump_url</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.model_config" href="#genshin.models.hoyolab.mimo.MimoTask.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.name" href="#genshin.models.hoyolab.mimo.MimoTask.name">name</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.point" href="#genshin.models.hoyolab.mimo.MimoTask.point">point</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.progress" href="#genshin.models.hoyolab.mimo.MimoTask.progress">progress</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.status" href="#genshin.models.hoyolab.mimo.MimoTask.status">status</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.time_type" href="#genshin.models.hoyolab.mimo.MimoTask.time_type">time_type</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.total_progress" href="#genshin.models.hoyolab.mimo.MimoTask.total_progress">total_progress</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.type" href="#genshin.models.hoyolab.mimo.MimoTask.type">type</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTask.window_text" href="#genshin.models.hoyolab.mimo.MimoTask.window_text">window_text</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoTaskStatus" href="#genshin.models.hoyolab.mimo.MimoTaskStatus">MimoTaskStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskStatus.CLAIMED" href="#genshin.models.hoyolab.mimo.MimoTaskStatus.CLAIMED">CLAIMED</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskStatus.FINISHED" href="#genshin.models.hoyolab.mimo.MimoTaskStatus.FINISHED">FINISHED</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskStatus.ONGOING" href="#genshin.models.hoyolab.mimo.MimoTaskStatus.ONGOING">ONGOING</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.MimoTaskType" href="#genshin.models.hoyolab.mimo.MimoTaskType">MimoTaskType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.COMMENT" href="#genshin.models.hoyolab.mimo.MimoTaskType.COMMENT">COMMENT</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.FINISHABLE" href="#genshin.models.hoyolab.mimo.MimoTaskType.FINISHABLE">FINISHABLE</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.GI_GAME" href="#genshin.models.hoyolab.mimo.MimoTaskType.GI_GAME">GI_GAME</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.GI_LOGIN" href="#genshin.models.hoyolab.mimo.MimoTaskType.GI_LOGIN">GI_LOGIN</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.HSR_GAME" href="#genshin.models.hoyolab.mimo.MimoTaskType.HSR_GAME">HSR_GAME</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.TRAILER" href="#genshin.models.hoyolab.mimo.MimoTaskType.TRAILER">TRAILER</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.VIEW_TOPIC" href="#genshin.models.hoyolab.mimo.MimoTaskType.VIEW_TOPIC">VIEW_TOPIC</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.VISIT" href="#genshin.models.hoyolab.mimo.MimoTaskType.VISIT">VISIT</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_CONSECUTIVE_LOGIN" href="#genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_CONSECUTIVE_LOGIN">ZZZ_CONSECUTIVE_LOGIN</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_DAILY_LOGIN" href="#genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_DAILY_LOGIN">ZZZ_DAILY_LOGIN</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_GAME" href="#genshin.models.hoyolab.mimo.MimoTaskType.ZZZ_GAME">ZZZ_GAME</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward">PartialMimoLotteryReward</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.icon" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward.icon">icon</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.model_config" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.name" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward.name">name</a></code></li>
+<li><code><a title="genshin.models.hoyolab.mimo.PartialMimoLotteryReward.type" href="#genshin.models.hoyolab.mimo.PartialMimoLotteryReward.type">type</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

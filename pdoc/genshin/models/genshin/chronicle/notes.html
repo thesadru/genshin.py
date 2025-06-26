@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.notes API documentation</title>
+<meta name="description" content="Genshin chronicle notes.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.notes</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin chronicle notes.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest"><code class="flex name class">
+<span>class <span class="ident">ArchonQuest</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArchonQuest(APIModel):
+    &#34;&#34;&#34;Archon Quest.&#34;&#34;&#34;
+
+    id: int
+    status: ArchonQuestStatus
+    chapter_num: str
+    chapter_title: str</code></pre>
+</details>
+<div class="desc"><p>Archon Quest.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_num"><code class="name">var <span class="ident">chapter_num</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_title"><code class="name">var <span class="ident">chapter_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuest.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.genshin.chronicle.notes.ArchonQuestStatus" href="#genshin.models.genshin.chronicle.notes.ArchonQuestStatus">ArchonQuestStatus</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress"><code class="flex name class">
+<span>class <span class="ident">ArchonQuestProgress</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArchonQuestProgress(APIModel):
+    &#34;&#34;&#34;Archon Quest Progress.&#34;&#34;&#34;
+
+    list: typing.Sequence[ArchonQuest]
+    mainlines_finished: bool = Aliased(&#34;is_finish_all_mainline&#34;)
+    archon_quest_unlocked: bool = Aliased(&#34;is_open_archon_quest&#34;)
+    interchapters_finished: bool = Aliased(&#34;is_finish_all_interchapter&#34;)</code></pre>
+</details>
+<div class="desc"><p>Archon Quest Progress.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.archon_quest_unlocked"><code class="name">var <span class="ident">archon_quest_unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.interchapters_finished"><code class="name">var <span class="ident">interchapters_finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.list"><code class="name">var <span class="ident">list</span> : Sequence[<a title="genshin.models.genshin.chronicle.notes.ArchonQuest" href="#genshin.models.genshin.chronicle.notes.ArchonQuest">ArchonQuest</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.mainlines_finished"><code class="name">var <span class="ident">mainlines_finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestStatus"><code class="flex name class">
+<span>class <span class="ident">ArchonQuestStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArchonQuestStatus(str, enum.Enum):
+    &#34;&#34;&#34;Archon quest status.&#34;&#34;&#34;
+
+    ONGOING = &#34;StatusOngoing&#34;
+    NOT_OPEN = &#34;StatusNotOpen&#34;</code></pre>
+</details>
+<div class="desc"><p>Archon quest status.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestStatus.NOT_OPEN"><code class="name">var <span class="ident">NOT_OPEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.ArchonQuestStatus.ONGOING"><code class="name">var <span class="ident">ONGOING</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceReward"><code class="flex name class">
+<span>class <span class="ident">AttendanceReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AttendanceReward(APIModel):
+    &#34;&#34;&#34;Status of the Encounter Point.&#34;&#34;&#34;
+
+    status: typing.Union[AttendanceRewardStatus, str]
+    progress: int
+
+    @pydantic.field_validator(&#34;status&#34;, mode=&#34;before&#34;)
+    def __prevent_enum_crash(cls, v: str) -&gt; typing.Union[AttendanceRewardStatus, str]:
+        return prevent_enum_error(v, AttendanceRewardStatus)</code></pre>
+</details>
+<div class="desc"><p>Status of the Encounter Point.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceReward.progress"><code class="name">var <span class="ident">progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceReward.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus">AttendanceRewardStatus</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus"><code class="flex name class">
+<span>class <span class="ident">AttendanceRewardStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AttendanceRewardStatus(str, enum.Enum):
+    &#34;&#34;&#34;Attendance Reward Statuses.&#34;&#34;&#34;
+
+    AVAILABLE = &#34;AttendanceRewardStatusWaitTaken&#34;
+    COLLECTED = &#34;AttendanceRewardStatusTakenAward&#34;
+    FORBIDDEN = &#34;AttendanceRewardStatusForbid&#34;
+    UNAVAILABLE = &#34;AttendanceRewardStatusUnfinished&#34;</code></pre>
+</details>
+<div class="desc"><p>Attendance Reward Statuses.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.AVAILABLE"><code class="name">var <span class="ident">AVAILABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.COLLECTED"><code class="name">var <span class="ident">COLLECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.FORBIDDEN"><code class="name">var <span class="ident">FORBIDDEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.UNAVAILABLE"><code class="name">var <span class="ident">UNAVAILABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks"><code class="flex name class">
+<span>class <span class="ident">DailyTasks</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DailyTasks(APIModel):
+    &#34;&#34;&#34;Daily tasks section.&#34;&#34;&#34;
+
+    max_tasks: int = Aliased(&#34;total_num&#34;)
+    completed_tasks: int = Aliased(&#34;finished_num&#34;)
+    claimed_commission_reward: bool = Aliased(&#34;is_extra_task_reward_received&#34;)
+
+    task_rewards: typing.Sequence[TaskReward]
+    attendance_rewards: typing.Sequence[AttendanceReward]
+    attendance_visible: bool
+
+    stored_attendance: float
+    stored_attendance_refresh_countdown: typing.Optional[datetime.timedelta] = Aliased(
+        &#34;attendance_refresh_time&#34;, default=None
+    )</code></pre>
+</details>
+<div class="desc"><p>Daily tasks section.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.attendance_rewards"><code class="name">var <span class="ident">attendance_rewards</span> : Sequence[<a title="genshin.models.genshin.chronicle.notes.AttendanceReward" href="#genshin.models.genshin.chronicle.notes.AttendanceReward">AttendanceReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.attendance_visible"><code class="name">var <span class="ident">attendance_visible</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.claimed_commission_reward"><code class="name">var <span class="ident">claimed_commission_reward</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.completed_tasks"><code class="name">var <span class="ident">completed_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.max_tasks"><code class="name">var <span class="ident">max_tasks</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance"><code class="name">var <span class="ident">stored_attendance</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance_refresh_countdown"><code class="name">var <span class="ident">stored_attendance_refresh_countdown</span> : datetime.timedelta | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.DailyTasks.task_rewards"><code class="name">var <span class="ident">task_rewards</span> : Sequence[<a title="genshin.models.genshin.chronicle.notes.TaskReward" href="#genshin.models.genshin.chronicle.notes.TaskReward">TaskReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition"><code class="flex name class">
+<span>class <span class="ident">Expedition</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Expedition(APIModel):
+    &#34;&#34;&#34;Real-Time note expedition.&#34;&#34;&#34;
+
+    character_icon: str = Aliased(&#34;avatar_side_icon&#34;)
+    status: typing.Literal[&#34;Ongoing&#34;, &#34;Finished&#34;]
+    remaining_time: datetime.timedelta = Aliased(&#34;remained_time&#34;)
+
+    @pydantic.field_validator(&#34;remaining_time&#34;, mode=&#34;before&#34;)
+    def __process_timedelta(cls, v: str) -&gt; datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
+    @property
+    def finished(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the expedition has finished.&#34;&#34;&#34;
+        return self.remaining_time &lt;= datetime.timedelta(0)
+
+    @property
+    def completion_time(self) -&gt; datetime.datetime:
+        return datetime.datetime.now().astimezone() + self.remaining_time</code></pre>
+</details>
+<div class="desc"><p>Real-Time note expedition.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.character_icon"><code class="name">var <span class="ident">character_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.remaining_time"><code class="name">var <span class="ident">remaining_time</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.status"><code class="name">var <span class="ident">status</span> : Literal['Ongoing', 'Finished']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.completion_time"><code class="name">prop <span class="ident">completion_time</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def completion_time(self) -&gt; datetime.datetime:
+    return datetime.datetime.now().astimezone() + self.remaining_time</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Expedition.finished"><code class="name">prop <span class="ident">finished</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def finished(self) -&gt; bool:
+    &#34;&#34;&#34;Whether the expedition has finished.&#34;&#34;&#34;
+    return self.remaining_time &lt;= datetime.timedelta(0)</code></pre>
+</details>
+<div class="desc"><p>Whether the expedition has finished.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes"><code class="flex name class">
+<span>class <span class="ident">Notes</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Notes(APIModel):
+    &#34;&#34;&#34;Real-Time notes.&#34;&#34;&#34;
+
+    current_resin: int
+    max_resin: int
+    remaining_resin_recovery_time: datetime.timedelta = Aliased(&#34;resin_recovery_time&#34;)
+
+    current_realm_currency: int = Aliased(&#34;current_home_coin&#34;)
+    max_realm_currency: int = Aliased(&#34;max_home_coin&#34;)
+    remaining_realm_currency_recovery_time: datetime.timedelta = Aliased(&#34;home_coin_recovery_time&#34;)
+
+    completed_commissions: int = Aliased(&#34;finished_task_num&#34;)
+    max_commissions: int = Aliased(&#34;total_task_num&#34;)
+    claimed_commission_reward: bool = Aliased(&#34;is_extra_task_reward_received&#34;)
+
+    remaining_resin_discounts: int = Aliased(&#34;remain_resin_discount_num&#34;)
+    max_resin_discounts: int = Aliased(&#34;resin_discount_num_limit&#34;)
+
+    remaining_transformer_recovery_time: typing.Optional[TransformerTimedelta]
+
+    expeditions: typing.Sequence[Expedition]
+    max_expeditions: int = Aliased(&#34;max_expedition_num&#34;)
+
+    archon_quest_progress: ArchonQuestProgress
+
+    @pydantic.field_validator(&#34;remaining_resin_recovery_time&#34;, &#34;remaining_realm_currency_recovery_time&#34;, mode=&#34;before&#34;)
+    def __process_timedelta(cls, v: str) -&gt; datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
+    @property
+    def resin_recovery_time(self) -&gt; datetime.datetime:
+        &#34;&#34;&#34;The time when resin will be recovered.&#34;&#34;&#34;
+        return datetime.datetime.now().astimezone() + self.remaining_resin_recovery_time
+
+    @property
+    def realm_currency_recovery_time(self) -&gt; datetime.datetime:
+        &#34;&#34;&#34;The time when realm currency will be recovered.&#34;&#34;&#34;
+        return datetime.datetime.now().astimezone() + self.remaining_realm_currency_recovery_time
+
+    @property
+    def transformer_recovery_time(self) -&gt; typing.Optional[datetime.datetime]:
+        &#34;&#34;&#34;The time the transformer will be recovered.&#34;&#34;&#34;
+        if self.remaining_transformer_recovery_time is None:
+            return None
+
+        remaining = datetime.datetime.now().astimezone() + self.remaining_transformer_recovery_time
+        return remaining
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_transformer(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        if &#34;transformer_recovery_time&#34; in values:
+            return values
+
+        if values.get(&#34;transformer&#34;) and values[&#34;transformer&#34;][&#34;obtained&#34;]:
+            t = values[&#34;transformer&#34;][&#34;recovery_time&#34;]
+            delta = TransformerTimedelta(days=t[&#34;Day&#34;], hours=t[&#34;Hour&#34;], minutes=t[&#34;Minute&#34;], seconds=t[&#34;Second&#34;])
+            values[&#34;remaining_transformer_recovery_time&#34;] = delta
+        else:
+            values[&#34;remaining_transformer_recovery_time&#34;] = None
+
+        return values
+
+    daily_task: DailyTasks</code></pre>
+</details>
+<div class="desc"><p>Real-Time notes.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.archon_quest_progress"><code class="name">var <span class="ident">archon_quest_progress</span> : <a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress">ArchonQuestProgress</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.claimed_commission_reward"><code class="name">var <span class="ident">claimed_commission_reward</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.completed_commissions"><code class="name">var <span class="ident">completed_commissions</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.current_realm_currency"><code class="name">var <span class="ident">current_realm_currency</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.current_resin"><code class="name">var <span class="ident">current_resin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.daily_task"><code class="name">var <span class="ident">daily_task</span> : <a title="genshin.models.genshin.chronicle.notes.DailyTasks" href="#genshin.models.genshin.chronicle.notes.DailyTasks">DailyTasks</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.expeditions"><code class="name">var <span class="ident">expeditions</span> : Sequence[<a title="genshin.models.genshin.chronicle.notes.Expedition" href="#genshin.models.genshin.chronicle.notes.Expedition">Expedition</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.max_commissions"><code class="name">var <span class="ident">max_commissions</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.max_expeditions"><code class="name">var <span class="ident">max_expeditions</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.max_realm_currency"><code class="name">var <span class="ident">max_realm_currency</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.max_resin"><code class="name">var <span class="ident">max_resin</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.max_resin_discounts"><code class="name">var <span class="ident">max_resin_discounts</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.remaining_realm_currency_recovery_time"><code class="name">var <span class="ident">remaining_realm_currency_recovery_time</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.remaining_resin_discounts"><code class="name">var <span class="ident">remaining_resin_discounts</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.remaining_resin_recovery_time"><code class="name">var <span class="ident">remaining_resin_recovery_time</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.remaining_transformer_recovery_time"><code class="name">var <span class="ident">remaining_transformer_recovery_time</span> : genshin.models.genshin.chronicle.notes.TransformerTimedelta | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.realm_currency_recovery_time"><code class="name">prop <span class="ident">realm_currency_recovery_time</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def realm_currency_recovery_time(self) -&gt; datetime.datetime:
+    &#34;&#34;&#34;The time when realm currency will be recovered.&#34;&#34;&#34;
+    return datetime.datetime.now().astimezone() + self.remaining_realm_currency_recovery_time</code></pre>
+</details>
+<div class="desc"><p>The time when realm currency will be recovered.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.resin_recovery_time"><code class="name">prop <span class="ident">resin_recovery_time</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def resin_recovery_time(self) -&gt; datetime.datetime:
+    &#34;&#34;&#34;The time when resin will be recovered.&#34;&#34;&#34;
+    return datetime.datetime.now().astimezone() + self.remaining_resin_recovery_time</code></pre>
+</details>
+<div class="desc"><p>The time when resin will be recovered.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.Notes.transformer_recovery_time"><code class="name">prop <span class="ident">transformer_recovery_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def transformer_recovery_time(self) -&gt; typing.Optional[datetime.datetime]:
+    &#34;&#34;&#34;The time the transformer will be recovered.&#34;&#34;&#34;
+    if self.remaining_transformer_recovery_time is None:
+        return None
+
+    remaining = datetime.datetime.now().astimezone() + self.remaining_transformer_recovery_time
+    return remaining</code></pre>
+</details>
+<div class="desc"><p>The time the transformer will be recovered.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.TaskReward"><code class="flex name class">
+<span>class <span class="ident">TaskReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskReward(APIModel):
+    &#34;&#34;&#34;Status of the Commission/Task.&#34;&#34;&#34;
+
+    status: typing.Union[TaskRewardStatus, str]
+
+    @pydantic.field_validator(&#34;status&#34;, mode=&#34;before&#34;)
+    def __prevent_enum_crash(cls, v: str) -&gt; typing.Union[TaskRewardStatus, str]:
+        return prevent_enum_error(v, TaskRewardStatus)</code></pre>
+</details>
+<div class="desc"><p>Status of the Commission/Task.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.TaskReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.TaskReward.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.genshin.chronicle.notes.TaskRewardStatus" href="#genshin.models.genshin.chronicle.notes.TaskRewardStatus">TaskRewardStatus</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.TaskRewardStatus"><code class="flex name class">
+<span>class <span class="ident">TaskRewardStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TaskRewardStatus(str, enum.Enum):
+    &#34;&#34;&#34;Task Reward Statuses.&#34;&#34;&#34;
+
+    UNFINISHED = &#34;TaskRewardStatusUnfinished&#34;
+    FINISHED = &#34;TaskRewardStatusFinished&#34;
+    COLLECTED = &#34;TaskRewardStatusTakenAward&#34;</code></pre>
+</details>
+<div class="desc"><p>Task Reward Statuses.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.notes.TaskRewardStatus.COLLECTED"><code class="name">var <span class="ident">COLLECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.TaskRewardStatus.FINISHED"><code class="name">var <span class="ident">FINISHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.notes.TaskRewardStatus.UNFINISHED"><code class="name">var <span class="ident">UNFINISHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest" href="#genshin.models.genshin.chronicle.notes.ArchonQuest">ArchonQuest</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_num" href="#genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_num">chapter_num</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_title" href="#genshin.models.genshin.chronicle.notes.ArchonQuest.chapter_title">chapter_title</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest.id" href="#genshin.models.genshin.chronicle.notes.ArchonQuest.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest.model_config" href="#genshin.models.genshin.chronicle.notes.ArchonQuest.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuest.status" href="#genshin.models.genshin.chronicle.notes.ArchonQuest.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress">ArchonQuestProgress</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.archon_quest_unlocked" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress.archon_quest_unlocked">archon_quest_unlocked</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.interchapters_finished" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress.interchapters_finished">interchapters_finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.list" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress.list">list</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.mainlines_finished" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress.mainlines_finished">mainlines_finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestProgress.model_config" href="#genshin.models.genshin.chronicle.notes.ArchonQuestProgress.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestStatus" href="#genshin.models.genshin.chronicle.notes.ArchonQuestStatus">ArchonQuestStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestStatus.NOT_OPEN" href="#genshin.models.genshin.chronicle.notes.ArchonQuestStatus.NOT_OPEN">NOT_OPEN</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.ArchonQuestStatus.ONGOING" href="#genshin.models.genshin.chronicle.notes.ArchonQuestStatus.ONGOING">ONGOING</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.AttendanceReward" href="#genshin.models.genshin.chronicle.notes.AttendanceReward">AttendanceReward</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceReward.model_config" href="#genshin.models.genshin.chronicle.notes.AttendanceReward.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceReward.progress" href="#genshin.models.genshin.chronicle.notes.AttendanceReward.progress">progress</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceReward.status" href="#genshin.models.genshin.chronicle.notes.AttendanceReward.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus">AttendanceRewardStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.AVAILABLE" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.AVAILABLE">AVAILABLE</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.COLLECTED" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.COLLECTED">COLLECTED</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.FORBIDDEN" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.FORBIDDEN">FORBIDDEN</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.UNAVAILABLE" href="#genshin.models.genshin.chronicle.notes.AttendanceRewardStatus.UNAVAILABLE">UNAVAILABLE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks" href="#genshin.models.genshin.chronicle.notes.DailyTasks">DailyTasks</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.attendance_rewards" href="#genshin.models.genshin.chronicle.notes.DailyTasks.attendance_rewards">attendance_rewards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.attendance_visible" href="#genshin.models.genshin.chronicle.notes.DailyTasks.attendance_visible">attendance_visible</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.claimed_commission_reward" href="#genshin.models.genshin.chronicle.notes.DailyTasks.claimed_commission_reward">claimed_commission_reward</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.completed_tasks" href="#genshin.models.genshin.chronicle.notes.DailyTasks.completed_tasks">completed_tasks</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.max_tasks" href="#genshin.models.genshin.chronicle.notes.DailyTasks.max_tasks">max_tasks</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.model_config" href="#genshin.models.genshin.chronicle.notes.DailyTasks.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance" href="#genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance">stored_attendance</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance_refresh_countdown" href="#genshin.models.genshin.chronicle.notes.DailyTasks.stored_attendance_refresh_countdown">stored_attendance_refresh_countdown</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.DailyTasks.task_rewards" href="#genshin.models.genshin.chronicle.notes.DailyTasks.task_rewards">task_rewards</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.Expedition" href="#genshin.models.genshin.chronicle.notes.Expedition">Expedition</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.character_icon" href="#genshin.models.genshin.chronicle.notes.Expedition.character_icon">character_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.completion_time" href="#genshin.models.genshin.chronicle.notes.Expedition.completion_time">completion_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.finished" href="#genshin.models.genshin.chronicle.notes.Expedition.finished">finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.model_config" href="#genshin.models.genshin.chronicle.notes.Expedition.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.remaining_time" href="#genshin.models.genshin.chronicle.notes.Expedition.remaining_time">remaining_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Expedition.status" href="#genshin.models.genshin.chronicle.notes.Expedition.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.Notes" href="#genshin.models.genshin.chronicle.notes.Notes">Notes</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.archon_quest_progress" href="#genshin.models.genshin.chronicle.notes.Notes.archon_quest_progress">archon_quest_progress</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.claimed_commission_reward" href="#genshin.models.genshin.chronicle.notes.Notes.claimed_commission_reward">claimed_commission_reward</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.completed_commissions" href="#genshin.models.genshin.chronicle.notes.Notes.completed_commissions">completed_commissions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.current_realm_currency" href="#genshin.models.genshin.chronicle.notes.Notes.current_realm_currency">current_realm_currency</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.current_resin" href="#genshin.models.genshin.chronicle.notes.Notes.current_resin">current_resin</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.daily_task" href="#genshin.models.genshin.chronicle.notes.Notes.daily_task">daily_task</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.expeditions" href="#genshin.models.genshin.chronicle.notes.Notes.expeditions">expeditions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.max_commissions" href="#genshin.models.genshin.chronicle.notes.Notes.max_commissions">max_commissions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.max_expeditions" href="#genshin.models.genshin.chronicle.notes.Notes.max_expeditions">max_expeditions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.max_realm_currency" href="#genshin.models.genshin.chronicle.notes.Notes.max_realm_currency">max_realm_currency</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.max_resin" href="#genshin.models.genshin.chronicle.notes.Notes.max_resin">max_resin</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.max_resin_discounts" href="#genshin.models.genshin.chronicle.notes.Notes.max_resin_discounts">max_resin_discounts</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.model_config" href="#genshin.models.genshin.chronicle.notes.Notes.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.realm_currency_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.realm_currency_recovery_time">realm_currency_recovery_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.remaining_realm_currency_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.remaining_realm_currency_recovery_time">remaining_realm_currency_recovery_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.remaining_resin_discounts" href="#genshin.models.genshin.chronicle.notes.Notes.remaining_resin_discounts">remaining_resin_discounts</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.remaining_resin_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.remaining_resin_recovery_time">remaining_resin_recovery_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.remaining_transformer_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.remaining_transformer_recovery_time">remaining_transformer_recovery_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.resin_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.resin_recovery_time">resin_recovery_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.Notes.transformer_recovery_time" href="#genshin.models.genshin.chronicle.notes.Notes.transformer_recovery_time">transformer_recovery_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.TaskReward" href="#genshin.models.genshin.chronicle.notes.TaskReward">TaskReward</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.TaskReward.model_config" href="#genshin.models.genshin.chronicle.notes.TaskReward.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.TaskReward.status" href="#genshin.models.genshin.chronicle.notes.TaskReward.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.notes.TaskRewardStatus" href="#genshin.models.genshin.chronicle.notes.TaskRewardStatus">TaskRewardStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.notes.TaskRewardStatus.COLLECTED" href="#genshin.models.genshin.chronicle.notes.TaskRewardStatus.COLLECTED">COLLECTED</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.TaskRewardStatus.FINISHED" href="#genshin.models.genshin.chronicle.notes.TaskRewardStatus.FINISHED">FINISHED</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.notes.TaskRewardStatus.UNFINISHED" href="#genshin.models.genshin.chronicle.notes.TaskRewardStatus.UNFINISHED">UNFINISHED</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

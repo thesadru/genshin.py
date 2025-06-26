@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.calculator API documentation</title>
+<meta name="description" content="Genshin calculator models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.calculator</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin calculator models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact"><code class="flex name class">
+<span>class <span class="ident">CalculatorArtifact</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorArtifact(APIModel, Unique):
+    &#34;&#34;&#34;Artifact meant to be used with calculators.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased(&#34;reliquary_level&#34;)
+    pos: int = Aliased(&#34;reliquary_cat_id&#34;)
+    level: int = Aliased(&#34;level_current&#34;, default=0)
+    max_level: int
+
+    @property
+    def pos_name(self) -&gt; str:
+        return CALCULATOR_ARTIFACTS[self.pos]</code></pre>
+</details>
+<div class="desc"><p>Artifact meant to be used with calculators.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.max_level"><code class="name">var <span class="ident">max_level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.pos"><code class="name">var <span class="ident">pos</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifact.pos_name"><code class="name">prop <span class="ident">pos_name</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pos_name(self) -&gt; str:
+    return CALCULATOR_ARTIFACTS[self.pos]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifactResult"><code class="flex name class">
+<span>class <span class="ident">CalculatorArtifactResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorArtifactResult(APIModel):
+    &#34;&#34;&#34;Calculation result for a specific artifact.&#34;&#34;&#34;
+
+    artifact_id: int = Aliased(&#34;reliquary_id&#34;)
+    list: typing.Sequence[CalculatorConsumable] = Aliased(&#34;id_consume_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Calculation result for a specific artifact.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifactResult.artifact_id"><code class="name">var <span class="ident">artifact_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifactResult.list"><code class="name">var <span class="ident">list</span> : Sequence[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorArtifactResult.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter"><code class="flex name class">
+<span>class <span class="ident">CalculatorCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;Character meant to be used with calculators.&#34;&#34;&#34;
+
+    rarity: int = Aliased(&#34;avatar_level&#34;)
+    element: str = Aliased(&#34;element_attr_id&#34;)
+    weapon_type: str = Aliased(&#34;weapon_cat_id&#34;)
+    level: int = Aliased(&#34;level_current&#34;, default=0)
+    max_level: int
+
+    @pydantic.field_validator(&#34;element&#34;, mode=&#34;before&#34;)
+    def __parse_element(cls, v: typing.Any) -&gt; str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_ELEMENTS[int(v)]
+
+    @pydantic.field_validator(&#34;weapon_type&#34;, mode=&#34;before&#34;)
+    def __parse_weapon_type(cls, v: typing.Any) -&gt; str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_WEAPON_TYPES[int(v)]</code></pre>
+</details>
+<div class="desc"><p>Character meant to be used with calculators.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.max_level"><code class="name">var <span class="ident">max_level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacter.weapon_type"><code class="name">var <span class="ident">weapon_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails"><code class="flex name class">
+<span>class <span class="ident">CalculatorCharacterDetails</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorCharacterDetails(APIModel):
+    &#34;&#34;&#34;Details of a synced calculator character.&#34;&#34;&#34;
+
+    weapon: CalculatorWeapon = Aliased(&#34;weapon&#34;)
+    talents: typing.Sequence[CalculatorTalent] = Aliased(&#34;skill_list&#34;)
+    artifacts: typing.Sequence[CalculatorArtifact] = Aliased(&#34;reliquary_list&#34;)
+
+    @pydantic.field_validator(&#34;talents&#34;)
+    def __correct_talent_current_level(cls, v: typing.Sequence[CalculatorTalent]) -&gt; typing.Sequence[CalculatorTalent]:
+        # passive talent have current levels at 0 for some reason
+        talents: list[CalculatorTalent] = []
+
+        for talent in v:
+            if talent.max_level == 1 and talent.level == 0:
+                raw = talent.model_dump()
+                raw[&#34;level&#34;] = 1
+                talent = CalculatorTalent(**raw)
+
+            talents.append(talent)
+
+        return v
+
+    @property
+    def upgradeable_talents(self) -&gt; typing.Sequence[CalculatorTalent]:
+        &#34;&#34;&#34;All talents that can be leveled up.&#34;&#34;&#34;
+        if self.talents[2].type == &#34;dash&#34;:
+            return (self.talents[0], self.talents[1], self.talents[3])
+        else:
+            return (self.talents[0], self.talents[1], self.talents[2])</code></pre>
+</details>
+<div class="desc"><p>Details of a synced calculator character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails.artifacts"><code class="name">var <span class="ident">artifacts</span> : Sequence[<a title="genshin.models.genshin.calculator.CalculatorArtifact" href="#genshin.models.genshin.calculator.CalculatorArtifact">CalculatorArtifact</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails.talents"><code class="name">var <span class="ident">talents</span> : Sequence[<a title="genshin.models.genshin.calculator.CalculatorTalent" href="#genshin.models.genshin.calculator.CalculatorTalent">CalculatorTalent</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails.weapon"><code class="name">var <span class="ident">weapon</span> : <a title="genshin.models.genshin.calculator.CalculatorWeapon" href="#genshin.models.genshin.calculator.CalculatorWeapon">CalculatorWeapon</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorCharacterDetails.upgradeable_talents"><code class="name">prop <span class="ident">upgradeable_talents</span> : typing.Sequence[<a title="genshin.models.genshin.calculator.CalculatorTalent" href="#genshin.models.genshin.calculator.CalculatorTalent">CalculatorTalent</a>]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def upgradeable_talents(self) -&gt; typing.Sequence[CalculatorTalent]:
+    &#34;&#34;&#34;All talents that can be leveled up.&#34;&#34;&#34;
+    if self.talents[2].type == &#34;dash&#34;:
+        return (self.talents[0], self.talents[1], self.talents[3])
+    else:
+        return (self.talents[0], self.talents[1], self.talents[2])</code></pre>
+</details>
+<div class="desc"><p>All talents that can be leveled up.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable"><code class="flex name class">
+<span>class <span class="ident">CalculatorConsumable</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorConsumable(APIModel, Unique):
+    &#34;&#34;&#34;Item consumed when upgrading.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str
+    amount: int = Aliased(&#34;num&#34;, default=1)</code></pre>
+</details>
+<div class="desc"><p>Item consumed when upgrading.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable.amount"><code class="name">var <span class="ident">amount</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorConsumable.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing"><code class="flex name class">
+<span>class <span class="ident">CalculatorFurnishing</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorFurnishing(APIModel, Unique):
+    &#34;&#34;&#34;Furnishing meant to be used with calculators.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str = Aliased(&#34;icon_url&#34;)
+    rarity: int = Aliased(&#34;level&#34;)
+
+    amount: typing.Optional[int] = Aliased(&#34;num&#34;, default=None)</code></pre>
+</details>
+<div class="desc"><p>Furnishing meant to be used with calculators.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.amount"><code class="name">var <span class="ident">amount</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishing.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishingResults"><code class="flex name class">
+<span>class <span class="ident">CalculatorFurnishingResults</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorFurnishingResults(APIModel):
+    &#34;&#34;&#34;Furnishing calculation result.&#34;&#34;&#34;
+
+    furnishings: list[CalculatorConsumable] = Aliased(&#34;list&#34;)
+
+    @property
+    def total(self) -&gt; typing.Sequence[CalculatorConsumable]:
+        return self.furnishings</code></pre>
+</details>
+<div class="desc"><p>Furnishing calculation result.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishingResults.furnishings"><code class="name">var <span class="ident">furnishings</span> : list[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishingResults.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorFurnishingResults.total"><code class="name">prop <span class="ident">total</span> : typing.Sequence[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def total(self) -&gt; typing.Sequence[CalculatorConsumable]:
+    return self.furnishings</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorResult"><code class="flex name class">
+<span>class <span class="ident">CalculatorResult</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorResult(APIModel):
+    &#34;&#34;&#34;Calculation result.&#34;&#34;&#34;
+
+    character: list[CalculatorConsumable] = Aliased(&#34;avatar_consume&#34;)
+    weapon: list[CalculatorConsumable] = Aliased(&#34;weapon_consume&#34;)
+    talents: list[CalculatorConsumable] = Aliased(&#34;avatar_skill_consume&#34;)
+    artifacts: list[CalculatorArtifactResult] = Aliased(&#34;reliquary_consume&#34;)
+
+    @property
+    def total(self) -&gt; typing.Sequence[CalculatorConsumable]:
+        artifacts = [i for a in self.artifacts for i in a.list]
+        combined = self.character + self.weapon + self.talents + artifacts
+
+        grouped: dict[int, list[CalculatorConsumable]] = collections.defaultdict(list)
+        for i in combined:
+            grouped[i.id].append(i)
+
+        total = [
+            CalculatorConsumable(
+                id=x[0].id,
+                name=x[0].name,
+                icon=x[0].icon,
+                amount=sum(i.amount for i in x),
+            )
+            for x in grouped.values()
+        ]
+
+        return total</code></pre>
+</details>
+<div class="desc"><p>Calculation result.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.artifacts"><code class="name">var <span class="ident">artifacts</span> : list[<a title="genshin.models.genshin.calculator.CalculatorArtifactResult" href="#genshin.models.genshin.calculator.CalculatorArtifactResult">CalculatorArtifactResult</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.character"><code class="name">var <span class="ident">character</span> : list[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.talents"><code class="name">var <span class="ident">talents</span> : list[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.weapon"><code class="name">var <span class="ident">weapon</span> : list[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorResult.total"><code class="name">prop <span class="ident">total</span> : typing.Sequence[<a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a>]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def total(self) -&gt; typing.Sequence[CalculatorConsumable]:
+    artifacts = [i for a in self.artifacts for i in a.list]
+    combined = self.character + self.weapon + self.talents + artifacts
+
+    grouped: dict[int, list[CalculatorConsumable]] = collections.defaultdict(list)
+    for i in combined:
+        grouped[i.id].append(i)
+
+    total = [
+        CalculatorConsumable(
+            id=x[0].id,
+            name=x[0].name,
+            icon=x[0].icon,
+            amount=sum(i.amount for i in x),
+        )
+        for x in grouped.values()
+    ]
+
+    return total</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent"><code class="flex name class">
+<span>class <span class="ident">CalculatorTalent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorTalent(APIModel, Unique):
+    &#34;&#34;&#34;Talent of a character meant to be used with calculators.&#34;&#34;&#34;
+
+    id: int
+    group_id: int  # proudSkillGroupId
+    name: str
+    icon: str
+    level: int = Aliased(&#34;level_current&#34;, default=0)
+    max_level: int
+
+    @property
+    def type(self) -&gt; typing.Literal[&#34;attack&#34;, &#34;skill&#34;, &#34;burst&#34;, &#34;passive&#34;, &#34;dash&#34;] | None:
+        &#34;&#34;&#34;The type of the talent, parsed from the group id.
+
+        Does not work for traveler!
+        &#34;&#34;&#34;
+        # special cases
+        if self.id == self.group_id:
+            return &#34;passive&#34;  # maybe hoyo does this for unapgradables?
+
+        if len(str(self.id)) == 6:  # in candSkillDepotIds
+            return &#34;attack&#34;
+
+        # 4139 -&gt; group=41 identifier=3 order=9
+        _, relevant = divmod(self.group_id, 100)
+        identifier, order = divmod(relevant, 10)
+
+        if identifier == 2:
+            return &#34;passive&#34;
+        elif order == 1:
+            return &#34;attack&#34;
+        elif order == 2:
+            return &#34;skill&#34;
+        elif order == 9:
+            return &#34;burst&#34;
+        elif order == 3:
+            return &#34;dash&#34;
+        else:
+            return None
+
+    @property
+    def upgradeable(self) -&gt; bool:
+        &#34;&#34;&#34;Whether this talent can be leveled up.&#34;&#34;&#34;
+        return self.type not in (&#34;passive&#34;, &#34;dash&#34;)
+
+    def __int__(self) -&gt; int:
+        return self.group_id</code></pre>
+</details>
+<div class="desc"><p>Talent of a character meant to be used with calculators.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.group_id"><code class="name">var <span class="ident">group_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.max_level"><code class="name">var <span class="ident">max_level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.type"><code class="name">prop <span class="ident">type</span> : typing.Literal['attack', 'skill', 'burst', 'passive', 'dash'] | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def type(self) -&gt; typing.Literal[&#34;attack&#34;, &#34;skill&#34;, &#34;burst&#34;, &#34;passive&#34;, &#34;dash&#34;] | None:
+    &#34;&#34;&#34;The type of the talent, parsed from the group id.
+
+    Does not work for traveler!
+    &#34;&#34;&#34;
+    # special cases
+    if self.id == self.group_id:
+        return &#34;passive&#34;  # maybe hoyo does this for unapgradables?
+
+    if len(str(self.id)) == 6:  # in candSkillDepotIds
+        return &#34;attack&#34;
+
+    # 4139 -&gt; group=41 identifier=3 order=9
+    _, relevant = divmod(self.group_id, 100)
+    identifier, order = divmod(relevant, 10)
+
+    if identifier == 2:
+        return &#34;passive&#34;
+    elif order == 1:
+        return &#34;attack&#34;
+    elif order == 2:
+        return &#34;skill&#34;
+    elif order == 9:
+        return &#34;burst&#34;
+    elif order == 3:
+        return &#34;dash&#34;
+    else:
+        return None</code></pre>
+</details>
+<div class="desc"><p>The type of the talent, parsed from the group id.</p>
+<p>Does not work for traveler!</p></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorTalent.upgradeable"><code class="name">prop <span class="ident">upgradeable</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def upgradeable(self) -&gt; bool:
+    &#34;&#34;&#34;Whether this talent can be leveled up.&#34;&#34;&#34;
+    return self.type not in (&#34;passive&#34;, &#34;dash&#34;)</code></pre>
+</details>
+<div class="desc"><p>Whether this talent can be leveled up.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon"><code class="flex name class">
+<span>class <span class="ident">CalculatorWeapon</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalculatorWeapon(APIModel, Unique):
+    &#34;&#34;&#34;Weapon meant to be used with calculators.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    icon: str
+    rarity: int = Aliased(&#34;weapon_level&#34;)
+    type: str = Aliased(&#34;weapon_cat_id&#34;)
+    level: int = Aliased(&#34;level_current&#34;, default=0)
+    max_level: int
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __parse_weapon_type(cls, v: typing.Any) -&gt; str:
+        if isinstance(v, str):
+            return v
+
+        return CALCULATOR_WEAPON_TYPES[int(v)]</code></pre>
+</details>
+<div class="desc"><p>Weapon meant to be used with calculators.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.max_level"><code class="name">var <span class="ident">max_level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.calculator.CalculatorWeapon.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin" href="index.html">genshin.models.genshin</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorArtifact" href="#genshin.models.genshin.calculator.CalculatorArtifact">CalculatorArtifact</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.icon" href="#genshin.models.genshin.calculator.CalculatorArtifact.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.id" href="#genshin.models.genshin.calculator.CalculatorArtifact.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.level" href="#genshin.models.genshin.calculator.CalculatorArtifact.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.max_level" href="#genshin.models.genshin.calculator.CalculatorArtifact.max_level">max_level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.model_config" href="#genshin.models.genshin.calculator.CalculatorArtifact.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.name" href="#genshin.models.genshin.calculator.CalculatorArtifact.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.pos" href="#genshin.models.genshin.calculator.CalculatorArtifact.pos">pos</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.pos_name" href="#genshin.models.genshin.calculator.CalculatorArtifact.pos_name">pos_name</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifact.rarity" href="#genshin.models.genshin.calculator.CalculatorArtifact.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorArtifactResult" href="#genshin.models.genshin.calculator.CalculatorArtifactResult">CalculatorArtifactResult</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifactResult.artifact_id" href="#genshin.models.genshin.calculator.CalculatorArtifactResult.artifact_id">artifact_id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifactResult.list" href="#genshin.models.genshin.calculator.CalculatorArtifactResult.list">list</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorArtifactResult.model_config" href="#genshin.models.genshin.calculator.CalculatorArtifactResult.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorCharacter" href="#genshin.models.genshin.calculator.CalculatorCharacter">CalculatorCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.element" href="#genshin.models.genshin.calculator.CalculatorCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.level" href="#genshin.models.genshin.calculator.CalculatorCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.max_level" href="#genshin.models.genshin.calculator.CalculatorCharacter.max_level">max_level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.model_config" href="#genshin.models.genshin.calculator.CalculatorCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.rarity" href="#genshin.models.genshin.calculator.CalculatorCharacter.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacter.weapon_type" href="#genshin.models.genshin.calculator.CalculatorCharacter.weapon_type">weapon_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails">CalculatorCharacterDetails</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails.artifacts" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails.model_config" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails.talents" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails.talents">talents</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails.upgradeable_talents" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails.upgradeable_talents">upgradeable_talents</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorCharacterDetails.weapon" href="#genshin.models.genshin.calculator.CalculatorCharacterDetails.weapon">weapon</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorConsumable" href="#genshin.models.genshin.calculator.CalculatorConsumable">CalculatorConsumable</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorConsumable.amount" href="#genshin.models.genshin.calculator.CalculatorConsumable.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorConsumable.icon" href="#genshin.models.genshin.calculator.CalculatorConsumable.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorConsumable.id" href="#genshin.models.genshin.calculator.CalculatorConsumable.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorConsumable.model_config" href="#genshin.models.genshin.calculator.CalculatorConsumable.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorConsumable.name" href="#genshin.models.genshin.calculator.CalculatorConsumable.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing" href="#genshin.models.genshin.calculator.CalculatorFurnishing">CalculatorFurnishing</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.amount" href="#genshin.models.genshin.calculator.CalculatorFurnishing.amount">amount</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.icon" href="#genshin.models.genshin.calculator.CalculatorFurnishing.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.id" href="#genshin.models.genshin.calculator.CalculatorFurnishing.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.model_config" href="#genshin.models.genshin.calculator.CalculatorFurnishing.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.name" href="#genshin.models.genshin.calculator.CalculatorFurnishing.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishing.rarity" href="#genshin.models.genshin.calculator.CalculatorFurnishing.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorFurnishingResults" href="#genshin.models.genshin.calculator.CalculatorFurnishingResults">CalculatorFurnishingResults</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishingResults.furnishings" href="#genshin.models.genshin.calculator.CalculatorFurnishingResults.furnishings">furnishings</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishingResults.model_config" href="#genshin.models.genshin.calculator.CalculatorFurnishingResults.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorFurnishingResults.total" href="#genshin.models.genshin.calculator.CalculatorFurnishingResults.total">total</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorResult" href="#genshin.models.genshin.calculator.CalculatorResult">CalculatorResult</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.artifacts" href="#genshin.models.genshin.calculator.CalculatorResult.artifacts">artifacts</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.character" href="#genshin.models.genshin.calculator.CalculatorResult.character">character</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.model_config" href="#genshin.models.genshin.calculator.CalculatorResult.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.talents" href="#genshin.models.genshin.calculator.CalculatorResult.talents">talents</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.total" href="#genshin.models.genshin.calculator.CalculatorResult.total">total</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorResult.weapon" href="#genshin.models.genshin.calculator.CalculatorResult.weapon">weapon</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorTalent" href="#genshin.models.genshin.calculator.CalculatorTalent">CalculatorTalent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.group_id" href="#genshin.models.genshin.calculator.CalculatorTalent.group_id">group_id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.icon" href="#genshin.models.genshin.calculator.CalculatorTalent.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.id" href="#genshin.models.genshin.calculator.CalculatorTalent.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.level" href="#genshin.models.genshin.calculator.CalculatorTalent.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.max_level" href="#genshin.models.genshin.calculator.CalculatorTalent.max_level">max_level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.model_config" href="#genshin.models.genshin.calculator.CalculatorTalent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.name" href="#genshin.models.genshin.calculator.CalculatorTalent.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.type" href="#genshin.models.genshin.calculator.CalculatorTalent.type">type</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorTalent.upgradeable" href="#genshin.models.genshin.calculator.CalculatorTalent.upgradeable">upgradeable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.calculator.CalculatorWeapon" href="#genshin.models.genshin.calculator.CalculatorWeapon">CalculatorWeapon</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.icon" href="#genshin.models.genshin.calculator.CalculatorWeapon.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.id" href="#genshin.models.genshin.calculator.CalculatorWeapon.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.level" href="#genshin.models.genshin.calculator.CalculatorWeapon.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.max_level" href="#genshin.models.genshin.calculator.CalculatorWeapon.max_level">max_level</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.model_config" href="#genshin.models.genshin.calculator.CalculatorWeapon.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.name" href="#genshin.models.genshin.calculator.CalculatorWeapon.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.rarity" href="#genshin.models.genshin.calculator.CalculatorWeapon.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.calculator.CalculatorWeapon.type" href="#genshin.models.genshin.calculator.CalculatorWeapon.type">type</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

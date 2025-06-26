@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.act_calendar API documentation</title>
+<meta name="description" content="Event calendar models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.act_calendar</code></h1>
+</header>
+<section id="section-intro">
+<p>Event calendar models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail"><code class="flex name class">
+<span>class <span class="ident">AbyssDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AbyssDetail(APIModel):
+    &#34;&#34;&#34;Spiral abyss detail.&#34;&#34;&#34;
+
+    unlocked: bool = Aliased(&#34;is_unlock&#34;)
+    max_star: int
+    total_star: int
+    has_data: bool</code></pre>
+</details>
+<div class="desc"><p>Spiral abyss detail.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.max_star"><code class="name">var <span class="ident">max_star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.total_star"><code class="name">var <span class="ident">total_star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.unlocked"><code class="name">var <span class="ident">unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner"><code class="flex name class">
+<span>class <span class="ident">Banner</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Banner(APIModel):
+    &#34;&#34;&#34;Banner model.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;pool_id&#34;)
+    version: str = Aliased(&#34;version_name&#34;)  # e.g. 5.2
+    name: str = Aliased(&#34;pool_name&#34;)
+    type: int = Aliased(&#34;pool_type&#34;)
+
+    characters: typing.Sequence[BannerCharacter] = Aliased(&#34;avatars&#34;)
+    weapons: typing.Sequence[BannerWeapon] = Aliased(&#34;weapon&#34;)
+
+    start_timestamp: int
+    end_timestamp: int
+    start_time: DateTime
+    end_time: DateTime
+
+    jump_url: str
+    pool_status: int
+    countdown_seconds: int</code></pre>
+</details>
+<div class="desc"><p>Banner model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter">BannerCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.countdown_seconds"><code class="name">var <span class="ident">countdown_seconds</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.end_timestamp"><code class="name">var <span class="ident">end_timestamp</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.jump_url"><code class="name">var <span class="ident">jump_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.pool_status"><code class="name">var <span class="ident">pool_status</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.start_timestamp"><code class="name">var <span class="ident">start_timestamp</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.type"><code class="name">var <span class="ident">type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Banner.weapons"><code class="name">var <span class="ident">weapons</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon">BannerWeapon</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter"><code class="flex name class">
+<span>class <span class="ident">BannerCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BannerCharacter(APIModel):
+    &#34;&#34;&#34;Banner character.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    name: str
+    element: str
+    rarity: typing.Literal[4, 5]</code></pre>
+</details>
+<div class="desc"><p>Banner character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : Literal[4, 5]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon"><code class="flex name class">
+<span>class <span class="ident">BannerWeapon</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BannerWeapon(APIModel):
+    &#34;&#34;&#34;Banner weapon.&#34;&#34;&#34;
+
+    id: int
+    icon: str
+    rarity: typing.Literal[4, 5]
+    name: str
+    wiki_url: str</code></pre>
+</details>
+<div class="desc"><p>Banner weapon.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.rarity"><code class="name">var <span class="ident">rarity</span> : Literal[4, 5]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.wiki_url"><code class="name">var <span class="ident">wiki_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail"><code class="flex name class">
+<span>class <span class="ident">DoubleRewardDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DoubleRewardDetail(APIModel):
+    &#34;&#34;&#34;Double reward detail.&#34;&#34;&#34;
+
+    total: int
+    remaining: int = Aliased(&#34;left&#34;)</code></pre>
+</details>
+<div class="desc"><p>Double reward detail.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.remaining"><code class="name">var <span class="ident">remaining</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.total"><code class="name">var <span class="ident">total</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event"><code class="flex name class">
+<span>class <span class="ident">Event</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Event(APIModel):
+    &#34;&#34;&#34;Event model.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    description: str = Aliased(&#34;desc&#34;)
+    strategy: str
+    type: str
+
+    start_timestamp: int
+    end_timestamp: int
+    start_time: typing.Optional[DateTime] = None
+    end_time: typing.Optional[DateTime] = None
+
+    status: int
+    countdown_seconds: int
+    rewards: typing.Sequence[EventReward] = Aliased(&#34;reward_list&#34;)
+    is_finished: bool
+
+    exploration_detail: typing.Optional[EventExplorationDetail] = Aliased(&#34;explore_detail&#34;, default=None)
+    double_reward_detail: typing.Optional[DoubleRewardDetail] = Aliased(&#34;double_detail&#34;, default=None)
+    abyss_detail: typing.Optional[AbyssDetail] = Aliased(&#34;tower_detail&#34;, default=None)
+    theater_detail: typing.Optional[TheaterDetail] = Aliased(&#34;role_combat_detail&#34;, default=None)
+
+    @pydantic.field_validator(&#34;description&#34;, mode=&#34;after&#34;)
+    def __format_description(cls, v: str) -&gt; str:
+        return v.replace(&#34;\\n&#34;, &#34;\n&#34;)</code></pre>
+</details>
+<div class="desc"><p>Event model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.abyss_detail"><code class="name">var <span class="ident">abyss_detail</span> : <a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail">AbyssDetail</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.countdown_seconds"><code class="name">var <span class="ident">countdown_seconds</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.double_reward_detail"><code class="name">var <span class="ident">double_reward_detail</span> : <a title="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail" href="#genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail">DoubleRewardDetail</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.end_timestamp"><code class="name">var <span class="ident">end_timestamp</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.exploration_detail"><code class="name">var <span class="ident">exploration_detail</span> : <a title="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail" href="#genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail">EventExplorationDetail</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.is_finished"><code class="name">var <span class="ident">is_finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.rewards"><code class="name">var <span class="ident">rewards</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.EventReward" href="#genshin.models.genshin.chronicle.act_calendar.EventReward">EventReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.start_timestamp"><code class="name">var <span class="ident">start_timestamp</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.status"><code class="name">var <span class="ident">status</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.strategy"><code class="name">var <span class="ident">strategy</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.theater_detail"><code class="name">var <span class="ident">theater_detail</span> : <a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail">TheaterDetail</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.Event.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail"><code class="flex name class">
+<span>class <span class="ident">EventExplorationDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventExplorationDetail(APIModel):
+    &#34;&#34;&#34;Event exploration detail.&#34;&#34;&#34;
+
+    explored_percentage: float = Aliased(&#34;explore_percent&#34;)
+    is_finished: bool</code></pre>
+</details>
+<div class="desc"><p>Event exploration detail.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.explored_percentage"><code class="name">var <span class="ident">explored_percentage</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.is_finished"><code class="name">var <span class="ident">is_finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward"><code class="flex name class">
+<span>class <span class="ident">EventReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventReward(APIModel):
+    &#34;&#34;&#34;Event reward model.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;item_id&#34;)
+    name: str
+    icon: str
+    wiki_url: str
+    num: int
+    rarity: int
+    homepage_show: bool</code></pre>
+</details>
+<div class="desc"><p>Event reward model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.homepage_show"><code class="name">var <span class="ident">homepage_show</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.EventReward.wiki_url"><code class="name">var <span class="ident">wiki_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar"><code class="flex name class">
+<span>class <span class="ident">GenshinEventCalendar</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinEventCalendar(APIModel):
+    &#34;&#34;&#34;Genshin event calendar.&#34;&#34;&#34;
+
+    character_banners: typing.Sequence[Banner] = Aliased(&#34;avatar_card_pool_list&#34;)
+    weapon_banners: typing.Sequence[Banner] = Aliased(&#34;weapon_card_pool_list&#34;)
+    chronicled_banners: typing.Sequence[Banner] = Aliased(&#34;mixed_card_pool_list&#34;)
+    events: typing.Sequence[Event] = Aliased(&#34;act_list&#34;)
+    challenges: typing.Sequence[Event] = Aliased(&#34;fixed_act_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Genshin event calendar.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.challenges"><code class="name">var <span class="ident">challenges</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.Event" href="#genshin.models.genshin.chronicle.act_calendar.Event">Event</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.character_banners"><code class="name">var <span class="ident">character_banners</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.Banner" href="#genshin.models.genshin.chronicle.act_calendar.Banner">Banner</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.chronicled_banners"><code class="name">var <span class="ident">chronicled_banners</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.Banner" href="#genshin.models.genshin.chronicle.act_calendar.Banner">Banner</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.events"><code class="name">var <span class="ident">events</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.Event" href="#genshin.models.genshin.chronicle.act_calendar.Event">Event</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.weapon_banners"><code class="name">var <span class="ident">weapon_banners</span> : Sequence[<a title="genshin.models.genshin.chronicle.act_calendar.Banner" href="#genshin.models.genshin.chronicle.act_calendar.Banner">Banner</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.TheaterDetail"><code class="flex name class">
+<span>class <span class="ident">TheaterDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterDetail(APIModel):
+    &#34;&#34;&#34;Imaginarium theater detail.&#34;&#34;&#34;
+
+    unlocked: bool = Aliased(&#34;is_unlock&#34;)
+    max_round: int = Aliased(&#34;max_round_id&#34;)
+    has_data: bool</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater detail.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.max_round"><code class="name">var <span class="ident">max_round</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.unlocked"><code class="name">var <span class="ident">unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail">AbyssDetail</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.has_data" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.max_star" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail.max_star">max_star</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.model_config" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.total_star" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail.total_star">total_star</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.AbyssDetail.unlocked" href="#genshin.models.genshin.chronicle.act_calendar.AbyssDetail.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner" href="#genshin.models.genshin.chronicle.act_calendar.Banner">Banner</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.characters" href="#genshin.models.genshin.chronicle.act_calendar.Banner.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.countdown_seconds" href="#genshin.models.genshin.chronicle.act_calendar.Banner.countdown_seconds">countdown_seconds</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.end_time" href="#genshin.models.genshin.chronicle.act_calendar.Banner.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.end_timestamp" href="#genshin.models.genshin.chronicle.act_calendar.Banner.end_timestamp">end_timestamp</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.id" href="#genshin.models.genshin.chronicle.act_calendar.Banner.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.jump_url" href="#genshin.models.genshin.chronicle.act_calendar.Banner.jump_url">jump_url</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.model_config" href="#genshin.models.genshin.chronicle.act_calendar.Banner.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.name" href="#genshin.models.genshin.chronicle.act_calendar.Banner.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.pool_status" href="#genshin.models.genshin.chronicle.act_calendar.Banner.pool_status">pool_status</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.start_time" href="#genshin.models.genshin.chronicle.act_calendar.Banner.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.start_timestamp" href="#genshin.models.genshin.chronicle.act_calendar.Banner.start_timestamp">start_timestamp</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.type" href="#genshin.models.genshin.chronicle.act_calendar.Banner.type">type</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.version" href="#genshin.models.genshin.chronicle.act_calendar.Banner.version">version</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Banner.weapons" href="#genshin.models.genshin.chronicle.act_calendar.Banner.weapons">weapons</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter">BannerCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.element" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.icon" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.id" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.model_config" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.name" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerCharacter.rarity" href="#genshin.models.genshin.chronicle.act_calendar.BannerCharacter.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon">BannerWeapon</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.icon" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.id" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.model_config" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.name" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.rarity" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.BannerWeapon.wiki_url" href="#genshin.models.genshin.chronicle.act_calendar.BannerWeapon.wiki_url">wiki_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail" href="#genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail">DoubleRewardDetail</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.model_config" href="#genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.remaining" href="#genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.remaining">remaining</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.total" href="#genshin.models.genshin.chronicle.act_calendar.DoubleRewardDetail.total">total</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.Event" href="#genshin.models.genshin.chronicle.act_calendar.Event">Event</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.abyss_detail" href="#genshin.models.genshin.chronicle.act_calendar.Event.abyss_detail">abyss_detail</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.countdown_seconds" href="#genshin.models.genshin.chronicle.act_calendar.Event.countdown_seconds">countdown_seconds</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.description" href="#genshin.models.genshin.chronicle.act_calendar.Event.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.double_reward_detail" href="#genshin.models.genshin.chronicle.act_calendar.Event.double_reward_detail">double_reward_detail</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.end_time" href="#genshin.models.genshin.chronicle.act_calendar.Event.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.end_timestamp" href="#genshin.models.genshin.chronicle.act_calendar.Event.end_timestamp">end_timestamp</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.exploration_detail" href="#genshin.models.genshin.chronicle.act_calendar.Event.exploration_detail">exploration_detail</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.id" href="#genshin.models.genshin.chronicle.act_calendar.Event.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.is_finished" href="#genshin.models.genshin.chronicle.act_calendar.Event.is_finished">is_finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.model_config" href="#genshin.models.genshin.chronicle.act_calendar.Event.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.name" href="#genshin.models.genshin.chronicle.act_calendar.Event.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.rewards" href="#genshin.models.genshin.chronicle.act_calendar.Event.rewards">rewards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.start_time" href="#genshin.models.genshin.chronicle.act_calendar.Event.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.start_timestamp" href="#genshin.models.genshin.chronicle.act_calendar.Event.start_timestamp">start_timestamp</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.status" href="#genshin.models.genshin.chronicle.act_calendar.Event.status">status</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.strategy" href="#genshin.models.genshin.chronicle.act_calendar.Event.strategy">strategy</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.theater_detail" href="#genshin.models.genshin.chronicle.act_calendar.Event.theater_detail">theater_detail</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.Event.type" href="#genshin.models.genshin.chronicle.act_calendar.Event.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail" href="#genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail">EventExplorationDetail</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.explored_percentage" href="#genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.explored_percentage">explored_percentage</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.is_finished" href="#genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.is_finished">is_finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.model_config" href="#genshin.models.genshin.chronicle.act_calendar.EventExplorationDetail.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward" href="#genshin.models.genshin.chronicle.act_calendar.EventReward">EventReward</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.homepage_show" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.homepage_show">homepage_show</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.icon" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.id" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.model_config" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.name" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.num" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.num">num</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.rarity" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.EventReward.wiki_url" href="#genshin.models.genshin.chronicle.act_calendar.EventReward.wiki_url">wiki_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar">GenshinEventCalendar</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.challenges" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.challenges">challenges</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.character_banners" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.character_banners">character_banners</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.chronicled_banners" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.chronicled_banners">chronicled_banners</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.events" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.events">events</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.model_config" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.weapon_banners" href="#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar.weapon_banners">weapon_banners</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail">TheaterDetail</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.has_data" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.max_round" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail.max_round">max_round</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.model_config" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.act_calendar.TheaterDetail.unlocked" href="#genshin.models.genshin.chronicle.act_calendar.TheaterDetail.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

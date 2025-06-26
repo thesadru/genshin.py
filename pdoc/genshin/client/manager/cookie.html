@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.manager.cookie API documentation</title>
+<meta name="description" content="Cookie completion …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.manager.cookie</code></h1>
+</header>
+<section id="section-intro">
+<p>Cookie completion.</p>
+<p>Available conversions:</p>
+<ul>
+<li>fetch_cookie_with_cookie<ul>
+<li>cookie_token -&gt; cookie_token</li>
+<li>cookie_token -&gt; ltoken</li>
+<li>stoken -&gt; cookie_token</li>
+<li>stoken -&gt; ltoken</li>
+<li>stoken -&gt; login_ticket</li>
+</ul>
+</li>
+<li>fetch_cookie_token_info<ul>
+<li>cookie_token -&gt; cookie_token</li>
+<li>login_ticket -&gt; cookie_token</li>
+</ul>
+</li>
+<li>fetch_cookie_with_stoken_v2<ul>
+<li>stoken (v2) + mid -&gt; ltoken_v2 (token_type=2)</li>
+<li>stoken (v2) + mid -&gt; cookie_token_v2 (token_type=4)</li>
+</ul>
+</li>
+<li>cn_fetch_cookie_token_with_stoken_v2<ul>
+<li>stoken (v2) + mid -&gt; cookie_token</li>
+</ul>
+</li>
+<li>fetch_cookie_token_with_game_token<ul>
+<li>game_token -&gt; cookie_token</li>
+</ul>
+</li>
+<li>fetch_stoken_with_game_token<ul>
+<li>game_token -&gt; stoken</li>
+</ul>
+</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="genshin.client.manager.cookie.cn_fetch_cookie_token_with_stoken_v2"><code class="name flex">
+<span>async def <span class="ident">cn_fetch_cookie_token_with_stoken_v2</span></span>(<span>cookies: managers.CookieOrHeader) ‑> typing.Mapping[typing.Literal['uid', 'cookie_token'], str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def cn_fetch_cookie_token_with_stoken_v2(
+    cookies: managers.CookieOrHeader,
+) -&gt; typing.Mapping[typing.Literal[&#34;uid&#34;, &#34;cookie_token&#34;], str]:
+    &#34;&#34;&#34;Fetch cookie_token with an stoken (v2) and mid.&#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+    url = routes.CN_GET_COOKIE_TOKEN_BY_STOKEN_URL.get_url()
+
+    headers = {
+        &#34;ds&#34;: ds_utility.generate_dynamic_secret(constants.DS_SALT[&#34;app_login&#34;]),
+        &#34;x-rpc-app_id&#34;: &#34;bll8iq97cem8&#34;,
+    }
+    async with aiohttp.ClientSession() as session:
+        r = await session.request(&#34;GET&#34;, url, headers=headers, cookies=cookies)
+        data = await r.json()
+
+    if data[&#34;retcode&#34;] != 0:
+        errors.raise_for_retcode(data)
+
+    return data[&#34;data&#34;]</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie_token with an stoken (v2) and mid.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.complete_cookies"><code class="name flex">
+<span>async def <span class="ident">complete_cookies</span></span>(<span>cookies: managers.CookieOrHeader,<br>*,<br>refresh: bool = True,<br>region: types.Region = Region.OVERSEAS) ‑> typing.Mapping[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def complete_cookies(
+    cookies: managers.CookieOrHeader,
+    *,
+    refresh: bool = True,
+    region: types.Region = types.Region.OVERSEAS,
+) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Add ltoken and ltuid to a cookie with only a cookie_token and an account_id.
+
+    If refresh is True, the cookie token will be refreshed to last longer.
+    &#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+
+    if refresh:
+        cookies = await refresh_cookie_token(cookies, region=region)  # type: ignore[assignment]
+
+    return cookies</code></pre>
+</details>
+<div class="desc"><p>Add ltoken and ltuid to a cookie with only a cookie_token and an account_id.</p>
+<p>If refresh is True, the cookie token will be refreshed to last longer.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.fetch_cookie_token_info"><code class="name flex">
+<span>async def <span class="ident">fetch_cookie_token_info</span></span>(<span>cookies: managers.CookieOrHeader,<br>*,<br>source: "typing.Literal['cookie_token', 'login_ticket']",<br>region: types.Region = Region.OVERSEAS) ‑> typing.Mapping[str, typing.Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def fetch_cookie_token_info(
+    cookies: managers.CookieOrHeader,
+    *,
+    source: typing.Literal[&#34;cookie_token&#34;, &#34;login_ticket&#34;],
+    region: types.Region = types.Region.OVERSEAS,
+) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Fetch cookie token info.&#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+
+    base_url = routes.WEBAPI_URL.get_url(region)
+    if source == &#34;cookie_token&#34;:
+        url = base_url / &#34;fetch_cookie_accountinfo&#34;
+    elif source == &#34;login_ticket&#34;:
+        url = base_url / &#34;cookie_accountinfo_by_loginticket&#34;
+    else:
+        raise ValueError(&#34;Invalid source&#34;)
+
+    async with aiohttp.ClientSession() as session:
+        r = await session.request(&#34;GET&#34;, url, cookies=cookies)
+        data = await r.json()
+
+    data = data[&#34;data&#34;]
+    if data[&#34;status&#34;] != 1 or not data or not data[&#34;cookie_info&#34;]:
+        raise errors.CookieException(msg=f&#34;Error fetching cookie token info {data[&#39;status&#39;]}&#34;)
+
+    return data[&#34;cookie_info&#34;]</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie token info.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.fetch_cookie_token_with_game_token"><code class="name flex">
+<span>async def <span class="ident">fetch_cookie_token_with_game_token</span></span>(<span>*, game_token: str, account_id: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def fetch_cookie_token_with_game_token(*, game_token: str, account_id: str) -&gt; str:
+    &#34;&#34;&#34;Fetch cookie token with game token, which can be obtained by scanning a QR code.&#34;&#34;&#34;
+    url = routes.GET_COOKIE_TOKEN_BY_GAME_TOKEN_URL.get_url()
+    params = {
+        &#34;game_token&#34;: game_token,
+        &#34;account_id&#34;: account_id,
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params) as r:
+            data = await r.json()
+
+    if not data[&#34;data&#34;]:
+        errors.raise_for_retcode(data)
+
+    return data[&#34;data&#34;][&#34;cookie_token&#34;]</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie token with game token, which can be obtained by scanning a QR code.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.fetch_cookie_with_cookie"><code class="name flex">
+<span>async def <span class="ident">fetch_cookie_with_cookie</span></span>(<span>cookies: managers.CookieOrHeader,<br>*,<br>source: "typing.Literal['CookieToken', 'SToken']",<br>target: "typing.Literal['CookieAccountInfo', 'LToken', 'ActionTicket']",<br>region: types.Region = Region.OVERSEAS) ‑> typing.Mapping[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def fetch_cookie_with_cookie(
+    cookies: managers.CookieOrHeader,
+    *,
+    source: typing.Literal[&#34;CookieToken&#34;, &#34;SToken&#34;],
+    target: typing.Literal[&#34;CookieAccountInfo&#34;, &#34;LToken&#34;, &#34;ActionTicket&#34;],
+    region: types.Region = types.Region.OVERSEAS,
+) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Fetch cookie token info with an stoken.&#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+
+    base_url = routes.ACCOUNT_URL.get_url(region)
+    url = base_url / f&#34;get{target}By{source}&#34;
+
+    body = cookies.copy()
+    account_id = body.pop(&#34;ltuid&#34;, None) or body.pop(&#34;account_id&#34;)
+    body[&#34;uid&#34;] = account_id
+    if target == &#34;ActionTicket&#34;:
+        body[&#34;action_type&#34;] = &#34;login&#34;
+
+    async with aiohttp.ClientSession() as session:
+        r = await session.request(&#34;POST&#34;, url, json=body)
+        data = await r.json(content_type=None)
+
+    if data[&#34;retcode&#34;] != 0:
+        errors.raise_for_retcode(data)
+
+    cookies = dict(data[&#34;data&#34;])
+    if account_id := cookies.pop(&#34;uid&#34;):
+        cookies[&#34;account_id&#34;] = account_id
+
+    return data</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie token info with an stoken.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.fetch_cookie_with_stoken_v2"><code class="name flex">
+<span>async def <span class="ident">fetch_cookie_with_stoken_v2</span></span>(<span>cookies: managers.CookieOrHeader, *, token_types: list[typing.Literal[2, 4]]) ‑> typing.Mapping[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def fetch_cookie_with_stoken_v2(
+    cookies: managers.CookieOrHeader,
+    *,
+    token_types: list[typing.Literal[2, 4]],
+) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Fetch cookie (v2) with an stoken (v2) and mid.&#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+    if &#34;ltmid_v2&#34; in cookies:
+        # The endpoint requires ltmid_v2 to be named mid
+        cookies[&#34;mid&#34;] = cookies[&#34;ltmid_v2&#34;]
+
+    url = routes.COOKIE_V2_REFRESH_URL.get_url()
+
+    headers = {
+        &#34;ds&#34;: ds_utility.generate_dynamic_secret(constants.DS_SALT[&#34;app_login&#34;]),
+        &#34;x-rpc-app_id&#34;: &#34;c9oqaq3s3gu8&#34;,
+    }
+    body = {&#34;dst_token_types&#34;: token_types}
+
+    async with aiohttp.ClientSession() as session:
+        r = await session.request(&#34;POST&#34;, url, json=body, headers=headers, cookies=cookies)
+        data = await r.json(content_type=None)
+
+    if data[&#34;retcode&#34;] != 0:
+        errors.raise_for_retcode(data)
+
+    cookies = dict()
+    for token in data[&#34;data&#34;][&#34;tokens&#34;]:
+        if token[&#34;token_type&#34;] == 2:
+            cookies[&#34;ltoken_v2&#34;] = token[&#34;token&#34;]
+        elif token[&#34;token_type&#34;] == 4:
+            cookies[&#34;cookie_token_v2&#34;] = token[&#34;token&#34;]
+
+    return cookies</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie (v2) with an stoken (v2) and mid.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.fetch_stoken_with_game_token"><code class="name flex">
+<span>async def <span class="ident">fetch_stoken_with_game_token</span></span>(<span>*, game_token: str, account_id: int) ‑> <a title="genshin.models.auth.cookie.StokenResult" href="../../models/auth/cookie.html#genshin.models.auth.cookie.StokenResult">StokenResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def fetch_stoken_with_game_token(*, game_token: str, account_id: int) -&gt; StokenResult:
+    &#34;&#34;&#34;Fetch cookie token with game token, which can be obtained by scanning a QR code.&#34;&#34;&#34;
+    url = routes.GET_STOKEN_BY_GAME_TOKEN_URL.get_url()
+    payload = {
+        &#34;account_id&#34;: account_id,
+        &#34;game_token&#34;: game_token,
+    }
+    headers = {
+        &#34;DS&#34;: ds_utility.generate_passport_ds(body=payload),
+        &#34;x-rpc-device_id&#34;: uuid.uuid4().hex,
+        &#34;x-rpc-device_fp&#34;: &#34;&#34;.join(random.choices(ascii_letters + digits, k=13)),
+        &#34;x-rpc-app_id&#34;: &#34;bll8iq97cem8&#34;,
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload, headers=headers) as r:
+            data = await r.json()
+
+    if not data[&#34;data&#34;]:
+        errors.raise_for_retcode(data)
+
+    return StokenResult(**data[&#34;data&#34;])</code></pre>
+</details>
+<div class="desc"><p>Fetch cookie token with game token, which can be obtained by scanning a QR code.</p></div>
+</dd>
+<dt id="genshin.client.manager.cookie.refresh_cookie_token"><code class="name flex">
+<span>async def <span class="ident">refresh_cookie_token</span></span>(<span>cookies: managers.CookieOrHeader,<br>*,<br>source: "typing.Literal['cookie_token', 'login_ticket']" = 'cookie_token',<br>region: types.Region = Region.OVERSEAS) ‑> typing.MutableMapping[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def refresh_cookie_token(
+    cookies: managers.CookieOrHeader,
+    *,
+    source: typing.Literal[&#34;cookie_token&#34;, &#34;login_ticket&#34;] = &#34;cookie_token&#34;,
+    region: types.Region = types.Region.OVERSEAS,
+) -&gt; typing.MutableMapping[str, str]:
+    &#34;&#34;&#34;Refresh a cookie token to make it last longer.&#34;&#34;&#34;
+    cookies = managers.parse_cookie(cookies)
+
+    info = await fetch_cookie_token_info(cookies, region=region, source=source)
+    cookies[&#34;account_id&#34;] = info[&#34;account_id&#34;]
+    cookies[&#34;cookie_token&#34;] = info[&#34;cookie_token&#34;]
+
+    return cookies</code></pre>
+</details>
+<div class="desc"><p>Refresh a cookie token to make it last longer.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.manager" href="index.html">genshin.client.manager</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="genshin.client.manager.cookie.cn_fetch_cookie_token_with_stoken_v2" href="#genshin.client.manager.cookie.cn_fetch_cookie_token_with_stoken_v2">cn_fetch_cookie_token_with_stoken_v2</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.complete_cookies" href="#genshin.client.manager.cookie.complete_cookies">complete_cookies</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.fetch_cookie_token_info" href="#genshin.client.manager.cookie.fetch_cookie_token_info">fetch_cookie_token_info</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.fetch_cookie_token_with_game_token" href="#genshin.client.manager.cookie.fetch_cookie_token_with_game_token">fetch_cookie_token_with_game_token</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.fetch_cookie_with_cookie" href="#genshin.client.manager.cookie.fetch_cookie_with_cookie">fetch_cookie_with_cookie</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.fetch_cookie_with_stoken_v2" href="#genshin.client.manager.cookie.fetch_cookie_with_stoken_v2">fetch_cookie_with_stoken_v2</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.fetch_stoken_with_game_token" href="#genshin.client.manager.cookie.fetch_stoken_with_game_token">fetch_stoken_with_game_token</a></code></li>
+<li><code><a title="genshin.client.manager.cookie.refresh_cookie_token" href="#genshin.client.manager.cookie.refresh_cookie_token">refresh_cookie_token</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
