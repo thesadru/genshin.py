@@ -35,7 +35,7 @@ client.set_cookies("ltuid=...; ltoken=...") # cookie header
 
 #### Using username and password
 
-1. Run `python -m genshin login <account> <password>`.
+1. Run `python -m genshin login -a <account> -p <password>`.
 2. Press the `Login` button and solve a captcha.
 3. Copy cookies.
 
