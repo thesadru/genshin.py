@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - pyproject.toml
   workflow_dispatch:
 
 jobs:
