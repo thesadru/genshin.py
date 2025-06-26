@@ -373,6 +373,13 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record("char_master", uid, lang=lang)
         return [models.EnvisagedEchoCharacter(**item) for item in data["list"]]
 
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -> list[models.HardChallenge]:
+        """Get Stygian Onslaught data."""
+        data = await self._request_genshin_record("hard_challenge", uid, lang=lang, payload={"need_detail": "true"})
+        return [models.HardChallenge(**item) for item in data["data"] if item["schedule"]["is_valid"]]
+
     get_spiral_abyss = get_genshin_spiral_abyss
     get_notes = get_genshin_notes
     get_activities = get_genshin_activities

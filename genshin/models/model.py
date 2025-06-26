@@ -72,3 +72,4 @@ def prevent_enum_error(value: InputValue, cls: typing.Type[EnumType]) -> typing.
 
 TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
 DateTime = Annotated[datetime.datetime, pydantic.BeforeValidator(convert_datetime)]
+LevelField = Annotated[int, pydantic.Field(ge=1)]
