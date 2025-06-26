@@ -1,6 +1,25 @@
 name: Run checks
 
-on: [push, pull_request, issue_comment]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'genshin/**.py'
+      - 'noxfile.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/checks.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'genshin/**.py'
+      - 'noxfile.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/checks.yml'
 
 jobs:
   lint:
