@@ -11,7 +11,7 @@ from genshin.models.model import Aliased, APIModel, prevent_enum_error
 
 __all__ = ("BatteryCharge", "VideoStoreState", "ZZZEngagement", "ZZZMemberCard", "ZZZNotes", "ZZZTempleRunning")
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class VideoStoreState(enum.Enum):
