@@ -15,7 +15,7 @@ from genshin.constants import CN_TIMEZONE
 
 __all__ = ["APIModel", "Aliased", "Unique"]
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class APIModel(pydantic.BaseModel):
