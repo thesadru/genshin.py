@@ -129,9 +129,14 @@ jobs:
           uv venv
           uv pip install nox
 
-      - name: Run type checker
+      - name: Run pyright
+        uses: jakebailey/pyright-action@v2
+        with:
+          working-directory: genshin
+
+      - name: Run mypy
         run: |
-          uv run nox -s type-check
+          uv run nox -s mypy
 
   verify-types:
     runs-on: ubuntu-latest
@@ -140,17 +145,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: install nox
-        run: |
-          uv venv
-          uv pip install nox
-
-      - name: Run type checker
-        run: |
-          uv run nox -s verify-types
+      - name: Run pyright
+        uses: jakebailey/pyright-action@v2
+        with:
+          working-directory: genshin
+          verify-types: true
+          ignore-external: true
 
   prettier:
     runs-on: ubuntu-latest
