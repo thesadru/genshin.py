@@ -373,11 +373,21 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
         data = await self._request_genshin_record("char_master", uid, lang=lang)
         return [models.EnvisagedEchoCharacter(**item) for item in data["list"]]
 
+    @typing.overload
     async def get_stygian_onslaught(
-        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
-    ) -> list[models.HardChallenge]:
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -> list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -> typing.Mapping[str, typing.Any]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -> typing.Union[list[models.HardChallenge], typing.Mapping[str, typing.Any]]:
         """Get Stygian Onslaught data."""
         data = await self._request_genshin_record("hard_challenge", uid, lang=lang, payload={"need_detail": "true"})
+        if raw:
+            return data["data"]
         return [models.HardChallenge(**item) for item in data["data"] if item["schedule"]["is_valid"]]
 
     get_spiral_abyss = get_genshin_spiral_abyss

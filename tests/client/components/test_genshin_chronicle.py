@@ -81,3 +81,8 @@ async def test_envisaged_echoes(client: genshin.Client, genshin_uid: int):
 async def test_stygian_onslaught(client: genshin.Client, genshin_uid: int):
     data = await client.get_stygian_onslaught(genshin_uid)
     assert data
+
+
+async def test_raw_stygian_onslaught(client: genshin.Client, genshin_uid: int):
+    data = await client.get_stygian_onslaught(genshin_uid, raw=True)
+    assert data
