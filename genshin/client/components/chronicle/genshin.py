@@ -380,10 +380,10 @@ class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
     @typing.overload
     async def get_stygian_onslaught(
         self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
-    ) -> typing.Mapping[str, typing.Any]: ...
+    ) -> list[typing.Mapping[str, typing.Any]]: ...
     async def get_stygian_onslaught(
         self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
-    ) -> typing.Union[list[models.HardChallenge], typing.Mapping[str, typing.Any]]:
+    ) -> typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
         """Get Stygian Onslaught data."""
         data = await self._request_genshin_record("hard_challenge", uid, lang=lang, payload={"need_detail": "true"})
         if raw:
