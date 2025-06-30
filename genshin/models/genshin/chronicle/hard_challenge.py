@@ -63,9 +63,13 @@ class HardChallengeBestRecord(APIModel):
     difficulty: int
     time_used: int = Aliased("second")
     """Time used for challenge in seconds."""
-    icon: str  # Don't know how to get the URL yet, example: UI_LeyLineChallenge_Medal_4
-    """Badge icon URL."""
+    icon: str
+    """Badge icon filename."""
 
+    @pydantic.field_validator("icon")
+    @classmethod
+    def __parse_icon(cls, v: str) -> str:
+        return v.split(",")[-1]
 
 class HardChallengeCharacter(APIModel):
     """A character in Stygian Onslaught."""
