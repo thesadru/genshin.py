@@ -27,6 +27,24 @@ __all__ = [
 ]
 
 
+class ImgTheaterStats(APIModel):
+    """Imaginarium Theater stats."""
+
+    unlocked: bool = Aliased("is_unlock")
+    max_act: int = Aliased("max_round_id")
+    has_data: bool
+    has_detail_data: bool
+
+
+class StygianOnslaughtStats(APIModel):
+    """Stygian Onslaught stats."""
+
+    difficulty: int
+    name: str
+    has_data: bool
+    unlocked: bool = Aliased("is_unlock")
+
+
 # flake8: noqa: E222
 class Stats(APIModel):
     """Overall user stats."""
@@ -49,6 +67,9 @@ class Stats(APIModel):
     unlocked_waypoints: int = Aliased("way_point_number")
     unlocked_domains: int = Aliased("domain_number")
     max_friendship_characters: int = Aliased("full_fetter_avatar_num")
+
+    theater: ImgTheaterStats = Aliased("role_combat")
+    stygian: StygianOnslaughtStats = Aliased("hard_challenge")
 
 
 class Offering(APIModel):
