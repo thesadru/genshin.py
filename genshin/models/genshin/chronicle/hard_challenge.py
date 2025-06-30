@@ -130,7 +130,7 @@ class HardChallengeChallenge(APIModel):
 class HardChallengeData(APIModel):
     """Stygian Onslaught single/multi player data."""
 
-    best_record: HardChallengeBestRecord = Aliased("best")
+    best_record: typing.Optional[HardChallengeBestRecord] = Aliased("best")
     challenges: list[HardChallengeChallenge] = Aliased("challenge")
     has_data: bool
 
