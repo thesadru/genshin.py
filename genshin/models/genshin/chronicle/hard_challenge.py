@@ -15,8 +15,8 @@ __all__ = (
     "HardChallengeCharacter",
     "HardChallengeEnemy",
     "HardChallengeEnemyTag",
-    "HardChallengeSP",
-    "HardChallengeSPChallenge",
+    "HardChallengeData",
+    "HardChallengeChallenge",
     "HardChallengeSeason",
     "HardChallengeTagElement",
     "HardChallengeTagType",
@@ -116,8 +116,8 @@ class HardChallengeEnemy(APIModel):
     tags: list[HardChallengeEnemyTag]
 
 
-class HardChallengeSPChallenge(APIModel):
-    """A single player challenge in Stygian Onslaught."""
+class HardChallengeChallenge(APIModel):
+    """A single/multi player challenge in Stygian Onslaught."""
 
     name: str
     time_used: int = Aliased("second")
@@ -127,11 +127,11 @@ class HardChallengeSPChallenge(APIModel):
     enemy: HardChallengeEnemy = Aliased("monster")
 
 
-class HardChallengeSP(APIModel):
-    """Stygian Onslaught single player data."""
+class HardChallengeData(APIModel):
+    """Stygian Onslaught single/multi player data."""
 
     best_record: HardChallengeBestRecord = Aliased("best")
-    challenges: list[HardChallengeSPChallenge] = Aliased("challenge")
+    challenges: list[HardChallengeChallenge] = Aliased("challenge")
     has_data: bool
 
 
@@ -139,4 +139,5 @@ class HardChallenge(APIModel):
     """Stygian Onslaught data."""
 
     season: HardChallengeSeason = Aliased("schedule")
-    single_player: HardChallengeSP = Aliased("single")
+    single_player: HardChallengeData = Aliased("single")
+    multi_player: HardChallengeData = Aliased("mp")
