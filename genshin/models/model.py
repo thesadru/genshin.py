@@ -61,7 +61,7 @@ def parse_timestamp(value: typing.Optional[typing.Union[str, int]]) -> datetime.
     if isinstance(value, str):
         value = int(value)
     if isinstance(value, int):
-        return datetime.datetime.fromtimestamp(value, tz=datetime.timezone.utc)
+        return datetime.datetime.fromtimestamp(value).replace(tzinfo=datetime.timezone.utc)
     raise ValueError(f"Invalid timestamp value provided: {value!r}")
 
 InputValue = typing.TypeVar("InputValue", str, int, enum.Enum)
