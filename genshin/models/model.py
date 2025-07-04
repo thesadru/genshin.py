@@ -56,6 +56,13 @@ def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) ->
     msg = f"Invalid datetime value provided: {value!r}"
     raise ValueError(msg)
 
+def parse_timestamp(value: typing.Optional[typing.Union[str, int]]) -> datetime.datetime:
+    """Parse a timestamp into a datetime object."""
+    if isinstance(value, str):
+        value = int(value)
+    if isinstance(value, int):
+        return datetime.datetime.fromtimestamp(value)
+    raise ValueError(f"Invalid timestamp value provided: {value!r}")
 
 InputValue = typing.TypeVar("InputValue", str, int, enum.Enum)
 EnumType = typing.TypeVar("EnumType", bound=enum.Enum)
@@ -72,4 +79,5 @@ def prevent_enum_error(value: InputValue, cls: typing.Type[EnumType]) -> typing.
 
 TZDateTime = Annotated[datetime.datetime, pydantic.AfterValidator(add_timezone)]
 DateTime = Annotated[datetime.datetime, pydantic.BeforeValidator(convert_datetime)]
+UnixDateTime = Annotated[datetime.datetime, pydantic.BeforeValidator(parse_timestamp)]
 LevelField = Annotated[int, pydantic.Field(ge=1)]

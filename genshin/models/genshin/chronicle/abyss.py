@@ -3,7 +3,7 @@ import typing
 import pydantic
 
 from genshin.models.genshin import character
-from genshin.models.model import Aliased, APIModel, TZDateTime
+from genshin.models.model import Aliased, APIModel, UnixDateTime
 
 __all__ = [
     "AbyssCharacter",
@@ -63,7 +63,7 @@ class Battle(APIModel):
     """Battle in the spiral abyss."""
 
     half: int = Aliased("index")
-    timestamp: TZDateTime
+    timestamp: UnixDateTime
     characters: typing.Sequence[AbyssCharacter] = Aliased("avatars")
 
 
@@ -104,8 +104,8 @@ class SpiralAbyss(APIModel):
 
     unlocked: bool = Aliased("is_unlock")
     season: int = Aliased("schedule_id")
-    start_time: TZDateTime
-    end_time: TZDateTime
+    start_time: UnixDateTime
+    end_time: UnixDateTime
 
     total_battles: int = Aliased("total_battle_times")
     total_wins: int = Aliased("total_win_times")
