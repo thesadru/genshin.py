@@ -1,9 +1,10 @@
 import datetime
+import enum
 import typing
 
 import pydantic
 
-from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime, prevent_enum_error
+from genshin.models.model import Aliased, APIModel, DateTime, TZDateTime
 from genshin.models.zzz.character import ZZZElementType, ZZZSpecialty
 
 __all__ = (
@@ -20,7 +21,17 @@ __all__ = (
     "ShiyuDefenseFloor",
     "ShiyuDefenseMonster",
     "ShiyuDefenseNode",
+    "ShiyuMonsterElementEffect",
+    "ShiyuMonsterElementEffects",
 )
+
+
+class ShiyuMonsterElementEffect(enum.IntEnum):
+    """Shiyu Defense monster element effect enum."""
+
+    WEAKNESS = 1
+    RESISTANCE = -1
+    NEUTRAL = 0
 
 
 class ShiyuDefenseBangboo(APIModel):
@@ -54,17 +65,38 @@ class ShiyuDefenseBuff(APIModel):
     description: str = Aliased("text")
 
 
+class ShiyuMonsterElementEffects(pydantic.BaseModel):
+    """Shiyu Defense monster element effects model."""
+
+    ice: ShiyuMonsterElementEffect = Aliased("ice_weakness")
+    fire: ShiyuMonsterElementEffect = Aliased("fire_weakness")
+    electric: ShiyuMonsterElementEffect = Aliased("elec_weakness")
+    ether: ShiyuMonsterElementEffect = Aliased("ether_weakness")
+    physical: ShiyuMonsterElementEffect = Aliased("physics_weakness")
+
+
 class ShiyuDefenseMonster(APIModel):
     """Shiyu Defense monster model."""
 
     id: int
     name: str
-    weakness: typing.Union[ZZZElementType, int] = Aliased("weak_element_type")
+    weakness: typing.Union[ZZZElementType, int] = Aliased(
+        "weak_element_type", deprecated="ShiyuDefenseMonster.weakness doesn't return anything meaningful anymore."
+    )
     level: int
+    element_effects: ShiyuMonsterElementEffects
 
-    @pydantic.field_validator("weakness", mode="before")
-    def __convert_weakness(cls, v: int) -> typing.Union[ZZZElementType, int]:
-        return prevent_enum_error(v, ZZZElementType)
+    @pydantic.model_validator(mode="before")
+    @classmethod
+    def __nest_element_effects(cls, v: dict[str, typing.Any]) -> dict[str, typing.Any]:
+        v["element_effects"] = {
+            "ice_weakness": v["ice_weakness"],
+            "fire_weakness": v["fire_weakness"],
+            "elec_weakness": v["elec_weakness"],
+            "ether_weakness": v["ether_weakness"],
+            "physics_weakness": v["physics_weakness"],
+        }
+        return v
 
 
 class ShiyuDefenseNode(APIModel):
