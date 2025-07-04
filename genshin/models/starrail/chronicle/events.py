@@ -41,6 +41,13 @@ class HSREventStatus(Enum):
     DOUBLE_REWARDS_LOCKED = "DoubleActStatusUnopened"
     SIGN_IN_UNCLAIMED = "SignActStatusUnclaimed"
 
+    # Enums below exist but we don't know what they mean for now
+    SIGN_STATUS_UNSIGNED_TODAY = "SignStatusUnSignedToday"
+    SIGN_STATUS_SIGNED_TODAY = "SignStatusSignedToday"
+    SIGN_STATUS_UNCLAIMED = "SignStatusUnclaimed"
+    DOUBLE_REWARD_ACT_STATUS_UNOPENED = "DoubleRewardActStatusUnopened"
+    OTHER_ACT_STATUS_FINISH = "OtherActStatusFinish"
+
 
 class HSREventTimeType(Enum):
     """Event time type enum."""
@@ -65,6 +72,7 @@ class ChallengeStatus(Enum):
 
     IN_PROGRESS = "challengeStatusInProgress"
     LOCKED = "challengeStatusUnopened"
+    FINISHED = "challengeStatusFinish"
 
 
 class TimeInfo(APIModel):
