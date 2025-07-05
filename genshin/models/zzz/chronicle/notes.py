@@ -23,28 +23,34 @@ class VideoStoreState(enum.Enum):
 
 
 class BenchState(enum.Enum):
-    """Bench management state."""
+    """Crafting state."""
 
     CAN_PRODUCE = "BenchStateCanProduce"
+    """Craftable."""
     PRODUCING = "BenchStateProducing"
     UNKNOWN = "BenchStateUnknown"
 
 
 class ShelveStoreState(enum.Enum):
-    """Shelve management state."""
+    """Selling state."""
 
     CAN_SELL = "ShelveStateCanSell"
+    """Can Be Stocked."""
     SELLING = "ShelveStateSelling"
     SOLD_OUT = "ShelveStateSoldOut"
+    """Out of Stock."""
     UNKNOWN = "ShelveStateUnknown"
 
 
 class ExpeditionState(enum.Enum):
-    """Expedition state."""
+    """Bangboo expedition state."""
 
     CAN_SEND = "ExpeditionStateInCanSend"
+    """Dispatchable."""
     IN_PROGRESS = "ExpeditionStateInProgress"
+    """Adventuring."""
     ENDED = "ExpeditionStateEnd"
+    """Squad Return."""
     UNKNOWN = "ExpeditionStateUnknown"
 
 
