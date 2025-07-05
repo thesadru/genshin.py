@@ -22,7 +22,7 @@ class Announcement(APIModel, Unique):
     type: int
     tag_icon: str
 
-    login_alert: bool
+    login_alert: int
     remind: bool
     alert: bool
     remind_ver: int
