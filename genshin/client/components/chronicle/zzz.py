@@ -240,6 +240,11 @@ class ZZZBattleChronicleClient(base.BaseBattleChronicleClient):
         """Get ZZZ Shiyu defense stats."""
         payload = {"schedule_type": 2 if previous else 1, "need_all": "true"}
         data = await self._request_zzz_record("challenge", uid, lang=lang, payload=payload)
+
+        account_tz = self.get_account_timezone(game=types.Game.ZZZ, uid=uid)
+        data["hadal_begin_time"]["tzinfo"] = account_tz
+        data["hadal_end_time"]["tzinfo"] = account_tz
+
         if raw:
             return data
         return models.ShiyuDefense(**data)

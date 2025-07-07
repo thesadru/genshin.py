@@ -143,21 +143,14 @@ class ShiyuDefense(APIModel):
     """ZZZ Shiyu Defense model."""
 
     schedule_id: int
-    begin_time: typing.Optional[TZDateTime] = Aliased("hadal_begin_time")
-    end_time: typing.Optional[TZDateTime] = Aliased("hadal_end_time")
+    begin_time: typing.Optional[DateTime] = Aliased("hadal_begin_time")
+    end_time: typing.Optional[DateTime] = Aliased("hadal_end_time")
     has_data: bool
     ratings: typing.Mapping[typing.Literal["S", "A", "B"], int] = Aliased("rating_list")
     floors: list[ShiyuDefenseFloor] = Aliased("all_floor_detail")
     fastest_clear_time: int = Aliased("fast_layer_time")
     """Fastest clear time this season in seconds."""
     max_floor: int = Aliased("max_layer")
-
-    @pydantic.field_validator("begin_time", "end_time", mode="before")
-    @classmethod
-    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -> typing.Optional[TZDateTime]:
-        if value:
-            return datetime.datetime(**value)
-        return None
 
     @pydantic.field_validator("ratings", mode="before")
     @classmethod

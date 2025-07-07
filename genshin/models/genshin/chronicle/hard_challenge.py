@@ -71,6 +71,7 @@ class HardChallengeBestRecord(APIModel):
     def __parse_icon(cls, v: str) -> str:
         return v.split(",")[-1]
 
+
 class HardChallengeCharacter(APIModel):
     """A character in Stygian Onslaught."""
 
