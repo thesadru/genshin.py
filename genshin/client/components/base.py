@@ -20,6 +20,7 @@ from genshin.client import routes
 from genshin.client.manager import managers
 from genshin.models import hoyolab as hoyolab_models
 from genshin.utility import concurrency, deprecation, ds
+from genshin.utility.uid import recognize_server
 
 __all__ = ["BaseClient"]
 
@@ -571,6 +572,26 @@ class BaseClient(abc.ABC):
             raise RuntimeError("Hoyolab ID must be provided when using multi-cookie managers.")
 
         raise RuntimeError("No default hoyolab ID provided.")
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -> typing.Optional[int]:
+        """Get the timezone offset of the default game account."""
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None
 
 
 def region_specific(region: types.Region) -> typing.Callable[[AsyncCallableT], AsyncCallableT]:
