@@ -51,10 +51,18 @@ def add_timezone(value: datetime.datetime) -> datetime.datetime:
 
 def convert_datetime(value: typing.Optional[typing.Mapping[str, typing.Any]]) -> datetime.datetime:
     if value:
-        return datetime.datetime(**value)
+        value = typing.cast(typing.Dict[str, typing.Any], value)
+        tzinfo = value.pop("tzinfo", None)
+        if tzinfo is not None:
+            tz = datetime.timezone(datetime.timedelta(hours=tzinfo))
+        else:
+            tz = None
+
+        return datetime.datetime(tzinfo=tz, **value)
 
     msg = f"Invalid datetime value provided: {value!r}"
     raise ValueError(msg)
+
 
 def parse_timestamp(value: typing.Optional[typing.Union[str, int]]) -> datetime.datetime:
     """Parse a timestamp into a datetime object."""
@@ -63,6 +71,7 @@ def parse_timestamp(value: typing.Optional[typing.Union[str, int]]) -> datetime.
     if isinstance(value, int):
         return datetime.datetime.fromtimestamp(value).replace(tzinfo=datetime.timezone.utc)
     raise ValueError(f"Invalid timestamp value provided: {value!r}")
+
 
 InputValue = typing.TypeVar("InputValue", str, int, enum.Enum)
 EnumType = typing.TypeVar("EnumType", bound=enum.Enum)
