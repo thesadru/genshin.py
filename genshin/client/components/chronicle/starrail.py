@@ -114,15 +114,37 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         basic_data = models.StarRailUserInfo(**basic_info)
         return models.StarRailUserStats(**index_data, info=basic_data)
 
+    @typing.overload
+    async def get_starrail_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        simple: typing.Literal[False] = ...,
+    ) -> models.StarRailDetailCharacterResponse: ...
+
+    @typing.overload
+    async def get_starrail_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        simple: typing.Literal[True] = ...,
+    ) -> models.StarRailSimpleCharacterResponse: ...
+
     async def get_starrail_characters(
         self,
         uid: typing.Optional[int] = None,
         *,
         lang: typing.Optional[str] = None,
-    ) -> models.StarRailDetailCharacterResponse:
+        simple: bool = False,
+    ) -> typing.Union[models.StarRailSimpleCharacterResponse, models.StarRailDetailCharacterResponse]:
         """Get starrail characters."""
         payload = {"need_wiki": "true"}
         data = await self._request_starrail_record("avatar/info", uid, lang=lang, payload=payload)
+
+        if simple:
+            return models.StarRailSimpleCharacterResponse(**data)
         return models.StarRailDetailCharacterResponse(**data)
 
     @typing.overload

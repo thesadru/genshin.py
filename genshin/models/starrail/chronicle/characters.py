@@ -9,7 +9,12 @@ from genshin.models.model import APIModel
 
 from .. import character
 
-__all__ = ["StarRailDetailCharacterResponse"]
+__all__ = [
+    "ModifyRelicProperty",
+    "RecommendProperty",
+    "StarRailDetailCharacterResponse",
+    "StarRailSimpleCharacterResponse",
+]
 
 
 class RecommendProperty(APIModel):
@@ -27,10 +32,10 @@ class ModifyRelicProperty(APIModel):
     modify_property_type: int
 
 
-class StarRailDetailCharacterResponse(APIModel):
-    """StarRail characters."""
+class StarRailSimpleCharacterResponse(APIModel):
+    """HSR characters endpoint response model for when viewed by other players."""
 
-    avatar_list: Sequence[character.StarRailDetailCharacter]
+    avatar_list: Sequence[character.StarRailSimpleCharacter]
     equip_wiki: Mapping[str, str]
     relic_wiki: Mapping[str, str]
     property_info: Mapping[str, character.PropertyInfo]
@@ -58,6 +63,10 @@ class StarRailDetailCharacterResponse(APIModel):
                     prop["info"] = props_info[str(prop_type)]
 
             for relic in char["relics"] + char["ornaments"]:
+                if relic["main_property"] is None:
+                    # Relic has no main stat and substats when the profile is viewed by other players
+                    continue
+
                 prop_type = relic["main_property"]["property_type"]
                 relic["main_property"]["info"] = props_info[str(prop_type)]
                 relic["main_property"]["recommended"] = prop_type in char_rec_props
@@ -81,3 +90,9 @@ class StarRailDetailCharacterResponse(APIModel):
                 char["equip"]["wiki"] = equip_wiki.get(str(char["equip"]["id"]), "")
 
         return values
+
+
+class StarRailDetailCharacterResponse(StarRailSimpleCharacterResponse):
+    """HSR characters endpoint response model for when viewed by the user."""
+
+    avatar_list: Sequence[character.StarRailDetailCharacter]
