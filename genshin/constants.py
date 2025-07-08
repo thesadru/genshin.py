@@ -205,7 +205,7 @@ WEB_EVENT_GAME_IDS = {
 }
 
 # Server names are from uid.py
-SERVER_TIMEZONE_OFFSETS = {
+SERVER_TIMEZONE_OFFSETS: typing.Final[dict[int, typing.Tuple[str, ...]]] = {
     8: (
         "cn_gf01",
         "cn_qd01",
