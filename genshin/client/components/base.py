@@ -585,7 +585,7 @@ class BaseClient(abc.ABC):
         if uid is None:
             return None
 
-        server = recognize_server(uid, game=game)
+        server = recognize_server(uid, game=game)  # type: ignore[arg-type]
 
         for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
             if server in servers:
