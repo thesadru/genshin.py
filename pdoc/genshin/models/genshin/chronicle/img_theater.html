@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.img_theater API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.img_theater</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act"><code class="flex name class">
+<span>class <span class="ident">Act</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Act(APIModel):
+    &#34;&#34;&#34;One act in the theater.&#34;&#34;&#34;
+
+    characters: typing.Sequence[ActCharacter] = Aliased(&#34;avatars&#34;)
+    mystery_caches: typing.Sequence[TheaterBuff] = Aliased(&#34;choice_cards&#34;)
+    wondroud_booms: typing.Sequence[TheaterBuff] = Aliased(&#34;buffs&#34;)
+    medal_obtained: bool = Aliased(&#34;is_get_medal&#34;)
+    round_id: int
+    finish_time: int  # As timestamp
+    finish_datetime: TZDateTime = Aliased(&#34;finish_date_time&#34;)
+
+    @pydantic.field_validator(&#34;finish_datetime&#34;, mode=&#34;before&#34;)
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -&gt; datetime.datetime:
+        return datetime.datetime(**value)</code></pre>
+</details>
+<div class="desc"><p>One act in the theater.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.ActCharacter" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter">ActCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.finish_datetime"><code class="name">var <span class="ident">finish_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.finish_time"><code class="name">var <span class="ident">finish_time</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.medal_obtained"><code class="name">var <span class="ident">medal_obtained</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.mystery_caches"><code class="name">var <span class="ident">mystery_caches</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff">TheaterBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.round_id"><code class="name">var <span class="ident">round_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.Act.wondroud_booms"><code class="name">var <span class="ident">wondroud_booms</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff">TheaterBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ActCharacter"><code class="flex name class">
+<span>class <span class="ident">ActCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ActCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;A character in an act.&#34;&#34;&#34;
+
+    type: TheaterCharaType = Aliased(&#34;avatar_type&#34;)
+    level: int</code></pre>
+</details>
+<div class="desc"><p>A character in an act.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.ActCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ActCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ActCharacter.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.genshin.chronicle.img_theater.TheaterCharaType" href="#genshin.models.genshin.chronicle.img_theater.TheaterCharaType">TheaterCharaType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter"><code class="flex name class">
+<span>class <span class="ident">BattleStatCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BattleStatCharacter(APIModel):
+    &#34;&#34;&#34;Imaginarium theater battle statistic character.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;avatar_id&#34;)
+    icon: str = Aliased(&#34;avatar_icon&#34;)
+    value: int
+    rarity: int
+
+    @pydantic.field_validator(&#34;value&#34;, mode=&#34;before&#34;)
+    def __intify_value(cls, value: str) -&gt; int:
+        if not value:
+            return 0
+        return int(value)</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater battle statistic character.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.value"><code class="name">var <span class="ident">value</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheater"><code class="flex name class">
+<span>class <span class="ident">ImgTheater</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImgTheater(APIModel):
+    &#34;&#34;&#34;Imaginarium theater.&#34;&#34;&#34;
+
+    datas: typing.Sequence[ImgTheaterData] = Aliased(&#34;data&#34;)
+    unlocked: bool = Aliased(&#34;is_unlock&#34;)</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheater.datas"><code class="name">var <span class="ident">datas</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData">ImgTheaterData</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheater.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheater.unlocked"><code class="name">var <span class="ident">unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData"><code class="flex name class">
+<span>class <span class="ident">ImgTheaterData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImgTheaterData(APIModel):
+    &#34;&#34;&#34;Imaginarium theater data.&#34;&#34;&#34;
+
+    acts: typing.Sequence[Act] = Aliased(alias=&#34;rounds_data&#34;)
+    backup_characters: typing.Sequence[ActCharacter] = Aliased(&#34;backup_avatars&#34;)  # Not sure what this is
+    stats: TheaterStats = Aliased(alias=&#34;stat&#34;)
+    schedule: TheaterSchedule
+    has_data: bool
+    has_detail_data: bool
+    battle_stats: typing.Optional[TheaterBattleStats] = Aliased(&#34;fight_statisic&#34;, default=None)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __unnest_detail(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        detail: typing.Optional[dict[str, typing.Any]] = values.get(&#34;detail&#34;)
+        values[&#34;rounds_data&#34;] = detail.get(&#34;rounds_data&#34;, []) if detail is not None else []
+        values[&#34;backup_avatars&#34;] = detail.get(&#34;backup_avatars&#34;, []) if detail is not None else []
+        values[&#34;fight_statisic&#34;] = detail.get(&#34;fight_statisic&#34;, None) if detail is not None else None
+        return values</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater data.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.acts"><code class="name">var <span class="ident">acts</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.Act" href="#genshin.models.genshin.chronicle.img_theater.Act">Act</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.backup_characters"><code class="name">var <span class="ident">backup_characters</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.ActCharacter" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter">ActCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.battle_stats"><code class="name">var <span class="ident">battle_stats</span> : <a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats">TheaterBattleStats</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_detail_data"><code class="name">var <span class="ident">has_detail_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.schedule"><code class="name">var <span class="ident">schedule</span> : <a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule">TheaterSchedule</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.stats"><code class="name">var <span class="ident">stats</span> : <a title="genshin.models.genshin.chronicle.img_theater.TheaterStats" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats">TheaterStats</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats"><code class="flex name class">
+<span>class <span class="ident">TheaterBattleStats</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterBattleStats(APIModel):
+    &#34;&#34;&#34;Imaginarium theater battle statistics.&#34;&#34;&#34;
+
+    max_defeat_character: typing.Optional[BattleStatCharacter] = Aliased(&#34;max_defeat_avatar&#34;, default=None)
+    max_damage_character: typing.Optional[BattleStatCharacter] = Aliased(&#34;max_damage_avatar&#34;, default=None)
+    max_take_damage_character: typing.Optional[BattleStatCharacter] = Aliased(&#34;max_take_damage_avatar&#34;, default=None)
+    fastest_character_list: typing.Sequence[BattleStatCharacter] = Aliased(&#34;shortest_avatar_list&#34;)
+    total_cast_seconds: int = Aliased(&#34;total_use_time&#34;)</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater battle statistics.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.fastest_character_list"><code class="name">var <span class="ident">fastest_character_list</span> : Sequence[<a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter">BattleStatCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_damage_character"><code class="name">var <span class="ident">max_damage_character</span> : <a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter">BattleStatCharacter</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_defeat_character"><code class="name">var <span class="ident">max_defeat_character</span> : <a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter">BattleStatCharacter</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_take_damage_character"><code class="name">var <span class="ident">max_take_damage_character</span> : <a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter">BattleStatCharacter</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.total_cast_seconds"><code class="name">var <span class="ident">total_cast_seconds</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff"><code class="flex name class">
+<span>class <span class="ident">TheaterBuff</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterBuff(APIModel):
+    &#34;&#34;&#34;Represents either a &#39;mystery cache&#39; or a &#39;wondrous boom&#39;.&#34;&#34;&#34;
+
+    icon: str
+    name: str
+    description: str = Aliased(&#34;desc&#34;)
+    received_audience_support: bool = Aliased(&#34;is_enhanced&#34;)
+    &#34;&#34;&#34;Whether external audience support is received.&#34;&#34;&#34;
+    id: int</code></pre>
+</details>
+<div class="desc"><p>Represents either a 'mystery cache' or a 'wondrous boom'.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterBuff.received_audience_support"><code class="name">var <span class="ident">received_audience_support</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether external audience support is received.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterCharaType"><code class="flex name class">
+<span>class <span class="ident">TheaterCharaType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterCharaType(enum.IntEnum):
+    &#34;&#34;&#34;The type of character in the context of the imaginarium theater gamemode.&#34;&#34;&#34;
+
+    NORMAL = 1
+    TRIAL = 2
+    SUPPORT = 3</code></pre>
+</details>
+<div class="desc"><p>The type of character in the context of the imaginarium theater gamemode.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.NORMAL"><code class="name">var <span class="ident">NORMAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.SUPPORT"><code class="name">var <span class="ident">SUPPORT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.TRIAL"><code class="name">var <span class="ident">TRIAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty"><code class="flex name class">
+<span>class <span class="ident">TheaterDifficulty</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterDifficulty(enum.IntEnum):
+    &#34;&#34;&#34;The difficulty of the imaginarium theater data.&#34;&#34;&#34;
+
+    UNKNOWN = 0
+    EASY = 1
+    NORMAL = 2
+    HARD = 3
+    VISIONARY = 4</code></pre>
+</details>
+<div class="desc"><p>The difficulty of the imaginarium theater data.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.EASY"><code class="name">var <span class="ident">EASY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.HARD"><code class="name">var <span class="ident">HARD</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.NORMAL"><code class="name">var <span class="ident">NORMAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.UNKNOWN"><code class="name">var <span class="ident">UNKNOWN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.VISIONARY"><code class="name">var <span class="ident">VISIONARY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule"><code class="flex name class">
+<span>class <span class="ident">TheaterSchedule</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterSchedule(APIModel):
+    &#34;&#34;&#34;Imaginarium theater schedule.&#34;&#34;&#34;
+
+    start_time: int  # As timestamp
+    end_time: int  # As timestamp
+    schedule_type: int  # Not sure what this is
+    id: int = Aliased(&#34;schedule_id&#34;)
+    start_datetime: TZDateTime = Aliased(&#34;start_date_time&#34;)
+    end_datetime: TZDateTime = Aliased(&#34;end_date_time&#34;)
+
+    @pydantic.field_validator(&#34;start_datetime&#34;, &#34;end_datetime&#34;, mode=&#34;before&#34;)
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -&gt; datetime.datetime:
+        return datetime.datetime(**value)</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater schedule.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_datetime"><code class="name">var <span class="ident">end_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_time"><code class="name">var <span class="ident">end_time</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.schedule_type"><code class="name">var <span class="ident">schedule_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_datetime"><code class="name">var <span class="ident">start_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_time"><code class="name">var <span class="ident">start_time</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats"><code class="flex name class">
+<span>class <span class="ident">TheaterStats</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TheaterStats(APIModel):
+    &#34;&#34;&#34;Imaginarium theater stats.&#34;&#34;&#34;
+
+    difficulty: TheaterDifficulty = Aliased(&#34;difficulty_id&#34;)
+    best_record: int = Aliased(&#34;max_round_id&#34;)
+    &#34;&#34;&#34;The maximum act the player has reached.&#34;&#34;&#34;
+    heraldry: int  # Not sure what this is
+    star_challenge_stellas: typing.Sequence[bool] = Aliased(&#34;get_medal_round_list&#34;)
+    &#34;&#34;&#34;Whether the player has obtained the medal for each act.&#34;&#34;&#34;
+    fantasia_flowers_used: int = Aliased(&#34;coin_num&#34;)
+    &#34;&#34;&#34;The number of Fantasia Flowers used.&#34;&#34;&#34;
+    audience_support_trigger_num: int = Aliased(&#34;avatar_bonus_num&#34;)
+    &#34;&#34;&#34;The number of external audience support triggers.&#34;&#34;&#34;
+    player_assists: int = Aliased(&#34;rent_cnt&#34;)
+    &#34;&#34;&#34;The number of supporting cast characters assisting other players.&#34;&#34;&#34;
+    medal_num: int
+    &#34;&#34;&#34;The number of medals the player has obtained.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Imaginarium theater stats.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.audience_support_trigger_num"><code class="name">var <span class="ident">audience_support_trigger_num</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The number of external audience support triggers.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.best_record"><code class="name">var <span class="ident">best_record</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The maximum act the player has reached.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.difficulty"><code class="name">var <span class="ident">difficulty</span> : <a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty">TheaterDifficulty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.fantasia_flowers_used"><code class="name">var <span class="ident">fantasia_flowers_used</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The number of Fantasia Flowers used.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.heraldry"><code class="name">var <span class="ident">heraldry</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.medal_num"><code class="name">var <span class="ident">medal_num</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The number of medals the player has obtained.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.player_assists"><code class="name">var <span class="ident">player_assists</span> : int</code></dt>
+<dd>
+<div class="desc"><p>The number of supporting cast characters assisting other players.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.img_theater.TheaterStats.star_challenge_stellas"><code class="name">var <span class="ident">star_challenge_stellas</span> : Sequence[bool]</code></dt>
+<dd>
+<div class="desc"><p>Whether the player has obtained the medal for each act.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.Act" href="#genshin.models.genshin.chronicle.img_theater.Act">Act</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.characters" href="#genshin.models.genshin.chronicle.img_theater.Act.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.finish_datetime" href="#genshin.models.genshin.chronicle.img_theater.Act.finish_datetime">finish_datetime</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.finish_time" href="#genshin.models.genshin.chronicle.img_theater.Act.finish_time">finish_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.medal_obtained" href="#genshin.models.genshin.chronicle.img_theater.Act.medal_obtained">medal_obtained</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.model_config" href="#genshin.models.genshin.chronicle.img_theater.Act.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.mystery_caches" href="#genshin.models.genshin.chronicle.img_theater.Act.mystery_caches">mystery_caches</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.round_id" href="#genshin.models.genshin.chronicle.img_theater.Act.round_id">round_id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.Act.wondroud_booms" href="#genshin.models.genshin.chronicle.img_theater.Act.wondroud_booms">wondroud_booms</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.ActCharacter" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter">ActCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ActCharacter.level" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ActCharacter.model_config" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ActCharacter.type" href="#genshin.models.genshin.chronicle.img_theater.ActCharacter.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter">BattleStatCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.icon" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.id" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.model_config" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.rarity" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.value" href="#genshin.models.genshin.chronicle.img_theater.BattleStatCharacter.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheater" href="#genshin.models.genshin.chronicle.img_theater.ImgTheater">ImgTheater</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheater.datas" href="#genshin.models.genshin.chronicle.img_theater.ImgTheater.datas">datas</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheater.model_config" href="#genshin.models.genshin.chronicle.img_theater.ImgTheater.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheater.unlocked" href="#genshin.models.genshin.chronicle.img_theater.ImgTheater.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData">ImgTheaterData</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.acts" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.acts">acts</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.backup_characters" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.backup_characters">backup_characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.battle_stats" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.battle_stats">battle_stats</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_data" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_detail_data" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.has_detail_data">has_detail_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.model_config" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.schedule" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.schedule">schedule</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.ImgTheaterData.stats" href="#genshin.models.genshin.chronicle.img_theater.ImgTheaterData.stats">stats</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats">TheaterBattleStats</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.fastest_character_list" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.fastest_character_list">fastest_character_list</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_damage_character" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_damage_character">max_damage_character</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_defeat_character" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_defeat_character">max_defeat_character</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_take_damage_character" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.max_take_damage_character">max_take_damage_character</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.model_config" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.total_cast_seconds" href="#genshin.models.genshin.chronicle.img_theater.TheaterBattleStats.total_cast_seconds">total_cast_seconds</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff">TheaterBuff</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.description" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.icon" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.id" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.model_config" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.name" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterBuff.received_audience_support" href="#genshin.models.genshin.chronicle.img_theater.TheaterBuff.received_audience_support">received_audience_support</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterCharaType" href="#genshin.models.genshin.chronicle.img_theater.TheaterCharaType">TheaterCharaType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.NORMAL" href="#genshin.models.genshin.chronicle.img_theater.TheaterCharaType.NORMAL">NORMAL</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.SUPPORT" href="#genshin.models.genshin.chronicle.img_theater.TheaterCharaType.SUPPORT">SUPPORT</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterCharaType.TRIAL" href="#genshin.models.genshin.chronicle.img_theater.TheaterCharaType.TRIAL">TRIAL</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty">TheaterDifficulty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.EASY" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.EASY">EASY</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.HARD" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.HARD">HARD</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.NORMAL" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.NORMAL">NORMAL</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.UNKNOWN" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.UNKNOWN">UNKNOWN</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.VISIONARY" href="#genshin.models.genshin.chronicle.img_theater.TheaterDifficulty.VISIONARY">VISIONARY</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule">TheaterSchedule</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_datetime" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_datetime">end_datetime</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_time" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.id" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.model_config" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.schedule_type" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.schedule_type">schedule_type</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_datetime" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_datetime">start_datetime</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_time" href="#genshin.models.genshin.chronicle.img_theater.TheaterSchedule.start_time">start_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats">TheaterStats</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.audience_support_trigger_num" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.audience_support_trigger_num">audience_support_trigger_num</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.best_record" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.best_record">best_record</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.difficulty" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.difficulty">difficulty</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.fantasia_flowers_used" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.fantasia_flowers_used">fantasia_flowers_used</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.heraldry" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.heraldry">heraldry</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.medal_num" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.medal_num">medal_num</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.model_config" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.player_assists" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.player_assists">player_assists</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.img_theater.TheaterStats.star_challenge_stellas" href="#genshin.models.genshin.chronicle.img_theater.TheaterStats.star_challenge_stellas">star_challenge_stellas</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

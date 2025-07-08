@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.activities API documentation</title>
+<meta name="description" content="Chronicle activities models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.activities</code></h1>
+</header>
+<section id="section-intro">
+<p>Chronicle activities models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.Activities"><code class="flex name class">
+<span>class <span class="ident">Activities</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Activities(APIModel):
+    &#34;&#34;&#34;Collection of genshin activities.&#34;&#34;&#34;
+
+    hyakunin_ikki_v21: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(
+        None, json_schema_extra={&#34;gslug&#34;: &#34;sumo&#34;}
+    )
+    hyakunin_ikki_v25: typing.Optional[OldActivity[HyakuninIkki]] = pydantic.Field(
+        None, json_schema_extra={&#34;gslug&#34;: &#34;sumo_second&#34;}
+    )
+    labyrinth_warriors: typing.Optional[OldActivity[LabyrinthWarriors]] = pydantic.Field(
+        None, json_schema_extra={&#34;gslug&#34;: &#34;rogue&#34;}
+    )
+    energy_amplifier: typing.Optional[Activity[EnergyAmplifier]] = pydantic.Field(
+        None, json_schema_extra={&#34;gslug&#34;: &#34;channeller_slab_copy&#34;}
+    )
+    study_in_potions: typing.Optional[OldActivity[Potion]] = pydantic.Field(None, json_schema_extra={&#34;gslug&#34;: &#34;potion&#34;})
+    summertime_odyssey: typing.Optional[Summer] = pydantic.Field(None, json_schema_extra={&#34;gslug&#34;: &#34;summer_v2&#34;})
+
+    effigy: typing.Optional[Activity[typing.Any]] = None
+    mechanicus: typing.Optional[Activity[typing.Any]] = None
+    fleur_fair: typing.Optional[Activity[typing.Any]] = None
+    channeller_slab: typing.Optional[Activity[typing.Any]] = None
+    martial_legend: typing.Optional[Activity[typing.Any]] = None
+    chess: typing.Optional[Activity[typing.Any]] = None
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __flatten_activities(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        if not values.get(&#34;activities&#34;):
+            return values
+
+        slugs = {  # type: ignore
+            field.json_schema_extra[&#34;gslug&#34;]: name
+            for name, field in Activities.model_fields.items()
+            if isinstance(field.json_schema_extra, dict) and field.json_schema_extra.get(&#34;gslug&#34;)
+        }
+
+        activites: list[dict[str, typing.Any]] = values[&#34;activities&#34;]
+        for activity in activites:
+            for name, value in activity.items():
+                if &#34;exists_data&#34; not in value:
+                    continue
+
+                name_ = slugs.get(name, name)
+                values[name_] = value if value[&#34;exists_data&#34;] else None
+
+        return values</code></pre>
+</details>
+<div class="desc"><p>Collection of genshin activities.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.channeller_slab"><code class="name">var <span class="ident">channeller_slab</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.chess"><code class="name">var <span class="ident">chess</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.effigy"><code class="name">var <span class="ident">effigy</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.energy_amplifier"><code class="name">var <span class="ident">energy_amplifier</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[<a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier">EnergyAmplifier</a>] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.fleur_fair"><code class="name">var <span class="ident">fleur_fair</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v21"><code class="name">var <span class="ident">hyakunin_ikki_v21</span> : <a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a>[<a title="genshin.models.genshin.chronicle.activities.HyakuninIkki" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki">HyakuninIkki</a>] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v25"><code class="name">var <span class="ident">hyakunin_ikki_v25</span> : <a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a>[<a title="genshin.models.genshin.chronicle.activities.HyakuninIkki" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki">HyakuninIkki</a>] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.labyrinth_warriors"><code class="name">var <span class="ident">labyrinth_warriors</span> : <a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a>[<a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors">LabyrinthWarriors</a>] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.martial_legend"><code class="name">var <span class="ident">martial_legend</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.mechanicus"><code class="name">var <span class="ident">mechanicus</span> : <a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a>[Any] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.study_in_potions"><code class="name">var <span class="ident">study_in_potions</span> : <a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a>[<a title="genshin.models.genshin.chronicle.activities.Potion" href="#genshin.models.genshin.chronicle.activities.Potion">Potion</a>] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activities.summertime_odyssey"><code class="name">var <span class="ident">summertime_odyssey</span> : <a title="genshin.models.genshin.chronicle.activities.Summer" href="#genshin.models.genshin.chronicle.activities.Summer">Summer</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activity"><code class="flex name class">
+<span>class <span class="ident">Activity</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Activity(OldActivity[ModelT], typing.Generic[ModelT]):
+    &#34;&#34;&#34;Arbitrary activity for chinese events.&#34;&#34;&#34;
+
+    start_time: typing.Optional[datetime.datetime] = None
+    end_time: typing.Optional[datetime.datetime] = None
+    total_score: int = 0
+
+    # cn only
+    total_times: int = 1</code></pre>
+</details>
+<div class="desc"><p>Arbitrary activity for chinese events.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>genshin.models.genshin.chronicle.activities.Activity[Any]</li>
+<li>genshin.models.genshin.chronicle.activities.Activity[EnergyAmplifier]</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.Activity.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activity.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activity.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activity.total_score"><code class="name">var <span class="ident">total_score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Activity.total_times"><code class="name">var <span class="ident">total_times</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier"><code class="flex name class">
+<span>class <span class="ident">EnergyAmplifier</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EnergyAmplifier(APIModel):
+    &#34;&#34;&#34;Energy Amplifier challenge.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;challenge_id&#34;)
+    name: str = Aliased(&#34;challenge_name&#34;)
+    energy: int
+    difficulty: int
+    max_score: int
+    score_multiplier: int = Aliased(&#34;score_multiple&#34;)
+
+    characters: typing.Sequence[EnergyAmplifierCharacter] = Aliased(&#34;avatars&#34;)
+    criteria: typing.Sequence[EnergyAmplifierCriteria] = Aliased(&#34;limit_conditions&#34;)
+    buffs: typing.Sequence[EnergyAmplifierBuff]</code></pre>
+</details>
+<div class="desc"><p>Energy Amplifier challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.buffs"><code class="name">var <span class="ident">buffs</span> : Sequence[genshin.models.genshin.chronicle.activities.EnergyAmplifierBuff]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.characters"><code class="name">var <span class="ident">characters</span> : Sequence[genshin.models.genshin.chronicle.activities.EnergyAmplifierCharacter]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.criteria"><code class="name">var <span class="ident">criteria</span> : Sequence[genshin.models.genshin.chronicle.activities.EnergyAmplifierCriteria]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.difficulty"><code class="name">var <span class="ident">difficulty</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.energy"><code class="name">var <span class="ident">energy</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.max_score"><code class="name">var <span class="ident">max_score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.EnergyAmplifier.score_multiplier"><code class="name">var <span class="ident">score_multiplier</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki"><code class="flex name class">
+<span>class <span class="ident">HyakuninIkki</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HyakuninIkki(APIModel):
+    &#34;&#34;&#34;Hyakunin Ikki challenge.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;challenge_id&#34;)
+    name: str = Aliased(&#34;challenge_name&#34;)
+    difficulty: int
+    multiplier: int = Aliased(&#34;score_multiple&#34;)
+    score: int = Aliased(&#34;max_score&#34;)
+    medal_icon: str = Aliased(&#34;heraldry_icon&#34;)
+
+    battles: typing.Sequence[HyakuninIkkiBattle] = Aliased(&#34;lineups&#34;)
+
+    @property
+    def medal(self) -&gt; str:
+        match = re.search(r&#34;heraldry_(\w+)\.png&#34;, self.medal_icon)
+        return match.group(1) if match else &#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Hyakunin Ikki challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.battles"><code class="name">var <span class="ident">battles</span> : Sequence[genshin.models.genshin.chronicle.activities.HyakuninIkkiBattle]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.difficulty"><code class="name">var <span class="ident">difficulty</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.medal_icon"><code class="name">var <span class="ident">medal_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.multiplier"><code class="name">var <span class="ident">multiplier</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.score"><code class="name">var <span class="ident">score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.HyakuninIkki.medal"><code class="name">prop <span class="ident">medal</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def medal(self) -&gt; str:
+    match = re.search(r&#34;heraldry_(\w+)\.png&#34;, self.medal_icon)
+    return match.group(1) if match else &#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors"><code class="flex name class">
+<span>class <span class="ident">LabyrinthWarriors</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LabyrinthWarriors(APIModel):
+    &#34;&#34;&#34;Labyrinth Warriors challenge.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;challenge_id&#34;)
+    name: str = Aliased(&#34;challenge_name&#34;)
+    passed: bool = Aliased(&#34;is_passed&#34;)
+    level: int = Aliased(&#34;settled_level&#34;)
+
+    main_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(&#34;main_avatars&#34;)
+    support_characters: typing.Sequence[LabyrinthWarriorsCharacter] = Aliased(&#34;support_avatars&#34;)
+    runes: typing.Sequence[LabyrinthWarriorsRune]</code></pre>
+</details>
+<div class="desc"><p>Labyrinth Warriors challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.main_characters"><code class="name">var <span class="ident">main_characters</span> : Sequence[genshin.models.genshin.chronicle.activities.LabyrinthWarriorsCharacter]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.passed"><code class="name">var <span class="ident">passed</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.runes"><code class="name">var <span class="ident">runes</span> : Sequence[genshin.models.genshin.chronicle.activities.LabyrinthWarriorsRune]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.support_characters"><code class="name">var <span class="ident">support_characters</span> : Sequence[genshin.models.genshin.chronicle.activities.LabyrinthWarriorsCharacter]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.OldActivity"><code class="flex name class">
+<span>class <span class="ident">OldActivity</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OldActivity(APIModel, typing.Generic[ModelT]):
+    &#34;&#34;&#34;Arbitrary activity for chinese events.&#34;&#34;&#34;
+
+    # sometimes __parameters__ may not be provided in older versions
+    __parameters__: typing.ClassVar[tuple[typing.Any, ...]] = (ModelT,)  # type: ignore
+
+    exists_data: bool
+    records: typing.Sequence[ModelT]</code></pre>
+</details>
+<div class="desc"><p>Arbitrary activity for chinese events.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a></li>
+<li>genshin.models.genshin.chronicle.activities.OldActivity[HyakuninIkki]</li>
+<li>genshin.models.genshin.chronicle.activities.OldActivity[LabyrinthWarriors]</li>
+<li>genshin.models.genshin.chronicle.activities.OldActivity[Potion]</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.OldActivity.exists_data"><code class="name">var <span class="ident">exists_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.OldActivity.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.OldActivity.records"><code class="name">var <span class="ident">records</span> : Sequence[~ModelT]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Potion"><code class="flex name class">
+<span>class <span class="ident">Potion</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Potion(APIModel):
+    &#34;&#34;&#34;Study In Potions challenge.&#34;&#34;&#34;
+
+    name: str = Aliased(&#34;stage_name&#34;)
+    score: int = Aliased(&#34;stage_score&#34;)
+    finished: bool
+    stages: typing.Sequence[PotionStage] = Aliased(&#34;levels&#34;)</code></pre>
+</details>
+<div class="desc"><p>Study In Potions challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.Potion.finished"><code class="name">var <span class="ident">finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Potion.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Potion.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Potion.score"><code class="name">var <span class="ident">score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Potion.stages"><code class="name">var <span class="ident">stages</span> : Sequence[genshin.models.genshin.chronicle.activities.PotionStage]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer"><code class="flex name class">
+<span>class <span class="ident">Summer</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Summer(APIModel):
+    &#34;&#34;&#34;Summer event.&#34;&#34;&#34;
+
+    waverider_waypoints: int = Aliased(&#34;anchor_number&#34;)
+    waypoints: int = Aliased(&#34;way_point_number&#34;)
+    treasure_chests: int = Aliased(&#34;chest_number&#34;)
+
+    surfpiercer: typing.Sequence[SummerSurfpiercer] = Aliased(&#34;sailing&#34;)
+    memories: typing.Sequence[SummerMemories] = Aliased(&#34;story&#34;)
+    realm_exploration: typing.Sequence[SummerRealmExploration] = Aliased(&#34;challenge&#34;)
+
+    @pydantic.field_validator(&#34;surfpiercer&#34;, &#34;memories&#34;, &#34;realm_exploration&#34;, mode=&#34;before&#34;)
+    def __flatten_records(cls, value: typing.Any) -&gt; typing.Sequence[typing.Any]:
+        if isinstance(value, typing.Sequence):
+            return typing.cast(&#34;typing.Sequence[object]&#34;, value)
+
+        return value[&#34;records&#34;]</code></pre>
+</details>
+<div class="desc"><p>Summer event.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.memories"><code class="name">var <span class="ident">memories</span> : Sequence[genshin.models.genshin.chronicle.activities.SummerMemories]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.realm_exploration"><code class="name">var <span class="ident">realm_exploration</span> : Sequence[genshin.models.genshin.chronicle.activities.SummerRealmExploration]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.surfpiercer"><code class="name">var <span class="ident">surfpiercer</span> : Sequence[genshin.models.genshin.chronicle.activities.SummerSurfpiercer]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.treasure_chests"><code class="name">var <span class="ident">treasure_chests</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.waverider_waypoints"><code class="name">var <span class="ident">waverider_waypoints</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.activities.Summer.waypoints"><code class="name">var <span class="ident">waypoints</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.Activities" href="#genshin.models.genshin.chronicle.activities.Activities">Activities</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.channeller_slab" href="#genshin.models.genshin.chronicle.activities.Activities.channeller_slab">channeller_slab</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.chess" href="#genshin.models.genshin.chronicle.activities.Activities.chess">chess</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.effigy" href="#genshin.models.genshin.chronicle.activities.Activities.effigy">effigy</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.energy_amplifier" href="#genshin.models.genshin.chronicle.activities.Activities.energy_amplifier">energy_amplifier</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.fleur_fair" href="#genshin.models.genshin.chronicle.activities.Activities.fleur_fair">fleur_fair</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v21" href="#genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v21">hyakunin_ikki_v21</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v25" href="#genshin.models.genshin.chronicle.activities.Activities.hyakunin_ikki_v25">hyakunin_ikki_v25</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.labyrinth_warriors" href="#genshin.models.genshin.chronicle.activities.Activities.labyrinth_warriors">labyrinth_warriors</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.martial_legend" href="#genshin.models.genshin.chronicle.activities.Activities.martial_legend">martial_legend</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.mechanicus" href="#genshin.models.genshin.chronicle.activities.Activities.mechanicus">mechanicus</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.model_config" href="#genshin.models.genshin.chronicle.activities.Activities.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.study_in_potions" href="#genshin.models.genshin.chronicle.activities.Activities.study_in_potions">study_in_potions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activities.summertime_odyssey" href="#genshin.models.genshin.chronicle.activities.Activities.summertime_odyssey">summertime_odyssey</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.Activity" href="#genshin.models.genshin.chronicle.activities.Activity">Activity</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activity.end_time" href="#genshin.models.genshin.chronicle.activities.Activity.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activity.model_config" href="#genshin.models.genshin.chronicle.activities.Activity.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activity.start_time" href="#genshin.models.genshin.chronicle.activities.Activity.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activity.total_score" href="#genshin.models.genshin.chronicle.activities.Activity.total_score">total_score</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Activity.total_times" href="#genshin.models.genshin.chronicle.activities.Activity.total_times">total_times</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier">EnergyAmplifier</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.buffs" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.buffs">buffs</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.characters" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.criteria" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.criteria">criteria</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.difficulty" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.difficulty">difficulty</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.energy" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.energy">energy</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.id" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.max_score" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.max_score">max_score</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.model_config" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.name" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.EnergyAmplifier.score_multiplier" href="#genshin.models.genshin.chronicle.activities.EnergyAmplifier.score_multiplier">score_multiplier</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki">HyakuninIkki</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.battles" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.battles">battles</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.difficulty" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.difficulty">difficulty</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.id" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.medal" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.medal">medal</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.medal_icon" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.medal_icon">medal_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.model_config" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.multiplier" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.multiplier">multiplier</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.name" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.HyakuninIkki.score" href="#genshin.models.genshin.chronicle.activities.HyakuninIkki.score">score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors">LabyrinthWarriors</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.id" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.level" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.main_characters" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.main_characters">main_characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.model_config" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.name" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.passed" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.passed">passed</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.runes" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.runes">runes</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.LabyrinthWarriors.support_characters" href="#genshin.models.genshin.chronicle.activities.LabyrinthWarriors.support_characters">support_characters</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.OldActivity" href="#genshin.models.genshin.chronicle.activities.OldActivity">OldActivity</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.activities.OldActivity.exists_data" href="#genshin.models.genshin.chronicle.activities.OldActivity.exists_data">exists_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.OldActivity.model_config" href="#genshin.models.genshin.chronicle.activities.OldActivity.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.OldActivity.records" href="#genshin.models.genshin.chronicle.activities.OldActivity.records">records</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.Potion" href="#genshin.models.genshin.chronicle.activities.Potion">Potion</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.activities.Potion.finished" href="#genshin.models.genshin.chronicle.activities.Potion.finished">finished</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Potion.model_config" href="#genshin.models.genshin.chronicle.activities.Potion.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Potion.name" href="#genshin.models.genshin.chronicle.activities.Potion.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Potion.score" href="#genshin.models.genshin.chronicle.activities.Potion.score">score</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Potion.stages" href="#genshin.models.genshin.chronicle.activities.Potion.stages">stages</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.activities.Summer" href="#genshin.models.genshin.chronicle.activities.Summer">Summer</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.memories" href="#genshin.models.genshin.chronicle.activities.Summer.memories">memories</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.model_config" href="#genshin.models.genshin.chronicle.activities.Summer.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.realm_exploration" href="#genshin.models.genshin.chronicle.activities.Summer.realm_exploration">realm_exploration</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.surfpiercer" href="#genshin.models.genshin.chronicle.activities.Summer.surfpiercer">surfpiercer</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.treasure_chests" href="#genshin.models.genshin.chronicle.activities.Summer.treasure_chests">treasure_chests</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.waverider_waypoints" href="#genshin.models.genshin.chronicle.activities.Summer.waverider_waypoints">waverider_waypoints</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.activities.Summer.waypoints" href="#genshin.models.genshin.chronicle.activities.Summer.waypoints">waypoints</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.zzz.character API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.zzz.character</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.zzz.character.AgentSkill"><code class="flex name class">
+<span>class <span class="ident">AgentSkill</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentSkill(APIModel):
+    &#34;&#34;&#34;ZZZ agent skill model.&#34;&#34;&#34;
+
+    level: int
+    type: ZZZSkillType = Aliased(&#34;skill_type&#34;)
+    items: typing.Sequence[AgentSkillItem]
+    &#34;&#34;&#34;One skill can have different forms (?), so there are multiple &#39;items&#39;.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>ZZZ agent skill model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.AgentSkill.items"><code class="name">var <span class="ident">items</span> : Sequence[<a title="genshin.models.zzz.character.AgentSkillItem" href="#genshin.models.zzz.character.AgentSkillItem">AgentSkillItem</a>]</code></dt>
+<dd>
+<div class="desc"><p>One skill can have different forms (?), so there are multiple 'items'.</p></div>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkill.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkill.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkill.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.zzz.character.ZZZSkillType" href="#genshin.models.zzz.character.ZZZSkillType">ZZZSkillType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkillItem"><code class="flex name class">
+<span>class <span class="ident">AgentSkillItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AgentSkillItem(APIModel):
+    &#34;&#34;&#34;An agent skill item.&#34;&#34;&#34;
+
+    title: str
+    text: str</code></pre>
+</details>
+<div class="desc"><p>An agent skill item.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.AgentSkillItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkillItem.text"><code class="name">var <span class="ident">text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.AgentSkillItem.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect"><code class="flex name class">
+<span>class <span class="ident">DiscSetEffect</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DiscSetEffect(APIModel):
+    &#34;&#34;&#34;A disc set effect.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;suit_id&#34;)
+    name: str
+    owned_num: int = Aliased(&#34;own&#34;)
+    two_piece_description: str = Aliased(&#34;desc1&#34;)
+    four_piece_description: str = Aliased(&#34;desc2&#34;)</code></pre>
+</details>
+<div class="desc"><p>A disc set effect.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.DiscSetEffect.four_piece_description"><code class="name">var <span class="ident">four_piece_description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect.owned_num"><code class="name">var <span class="ident">owned_num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.DiscSetEffect.two_piece_description"><code class="name">var <span class="ident">two_piece_description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine"><code class="flex name class">
+<span>class <span class="ident">WEngine</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class WEngine(APIModel):
+    &#34;&#34;&#34;A ZZZ W-engine, it&#39;s like a weapon.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    name: str
+    icon: str
+    refinement: typing.Literal[1, 2, 3, 4, 5] = Aliased(&#34;star&#34;)
+    rarity: typing.Literal[&#34;B&#34;, &#34;A&#34;, &#34;S&#34;]
+    properties: typing.Sequence[ZZZProperty]
+    main_properties: typing.Sequence[ZZZProperty]
+    effect_title: str = Aliased(&#34;talent_title&#34;)
+    effect_description: str = Aliased(&#34;talent_content&#34;)
+    profession: ZZZSpecialty</code></pre>
+</details>
+<div class="desc"><p>A ZZZ W-engine, it's like a weapon.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.WEngine.effect_description"><code class="name">var <span class="ident">effect_description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.effect_title"><code class="name">var <span class="ident">effect_title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.main_properties"><code class="name">var <span class="ident">main_properties</span> : Sequence[<a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.profession"><code class="name">var <span class="ident">profession</span> : <a title="genshin.models.zzz.character.ZZZSpecialty" href="#genshin.models.zzz.character.ZZZSpecialty">ZZZSpecialty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.properties"><code class="name">var <span class="ident">properties</span> : Sequence[<a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['B', 'A', 'S']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.WEngine.refinement"><code class="name">var <span class="ident">refinement</span> : Literal[1, 2, 3, 4, 5]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentProperty"><code class="flex name class">
+<span>class <span class="ident">ZZZAgentProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZAgentProperty(ZZZProperty):
+    &#34;&#34;&#34;A property model, but for agents.&#34;&#34;&#34;
+
+    add: str
+    final: str</code></pre>
+</details>
+<div class="desc"><p>A property model, but for agents.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZAgentProperty.add"><code class="name">var <span class="ident">add</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentProperty.final"><code class="name">var <span class="ident">final</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank"><code class="flex name class">
+<span>class <span class="ident">ZZZAgentRank</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZAgentRank(APIModel):
+    &#34;&#34;&#34;ZZZ agent rank model.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    description: str = Aliased(&#34;desc&#34;)
+    position: int = Aliased(&#34;pos&#34;)
+    unlocked: bool = Aliased(&#34;is_unlocked&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ agent rank model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.position"><code class="name">var <span class="ident">position</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZAgentRank.unlocked"><code class="name">var <span class="ident">unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent"><code class="flex name class">
+<span>class <span class="ident">ZZZBaseAgent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZBaseAgent(APIModel, Unique):
+    &#34;&#34;&#34;ZZZ base agent model.&#34;&#34;&#34;
+
+    id: int  # 4 digit number
+    element: ZZZElementType = Aliased(&#34;element_type&#34;)
+    rarity: typing.Literal[&#34;S&#34;, &#34;A&#34;]
+    name: str = Aliased(&#34;name_mi18n&#34;)
+    full_name: str = Aliased(&#34;full_name_mi18n&#34;)
+    specialty: ZZZSpecialty = Aliased(&#34;avatar_profession&#34;)
+    faction_icon: str = Aliased(&#34;group_icon_path&#34;)
+    flat_icon: str = Aliased(&#34;hollow_icon_path&#34;)
+
+    @property
+    def base_icon_url(self) -&gt; str:
+        return &#34;https://act-webstatic.hoyoverse.com/game_record/zzzv2&#34;
+
+    @property
+    def square_icon(self) -&gt; str:
+        &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png&#34;&#34;&#34;
+        return f&#34;{self.base_icon_url}/role_square_avatar/role_square_avatar_{self.id}.png&#34;
+
+    @property
+    def rectangle_icon(self) -&gt; str:
+        &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png&#34;&#34;&#34;
+        return f&#34;{self.base_icon_url}/role_rectangle_avatar/role_rectangle_avatar_{self.id}.png&#34;
+
+    @property
+    def banner_icon(self) -&gt; str:
+        &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png&#34;&#34;&#34;
+        return f&#34;{self.base_icon_url}/role_vertical_painting/role_vertical_painting_{self.id}.png&#34;</code></pre>
+</details>
+<div class="desc"><p>ZZZ base agent model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.character.ZZZFullAgent" href="#genshin.models.zzz.character.ZZZFullAgent">ZZZFullAgent</a></li>
+<li><a title="genshin.models.zzz.character.ZZZPartialAgent" href="#genshin.models.zzz.character.ZZZPartialAgent">ZZZPartialAgent</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.element"><code class="name">var <span class="ident">element</span> : <a title="genshin.models.zzz.character.ZZZElementType" href="#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.faction_icon"><code class="name">var <span class="ident">faction_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.flat_icon"><code class="name">var <span class="ident">flat_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.full_name"><code class="name">var <span class="ident">full_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.specialty"><code class="name">var <span class="ident">specialty</span> : <a title="genshin.models.zzz.character.ZZZSpecialty" href="#genshin.models.zzz.character.ZZZSpecialty">ZZZSpecialty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.banner_icon"><code class="name">prop <span class="ident">banner_icon</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def banner_icon(self) -&gt; str:
+    &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png&#34;&#34;&#34;
+    return f&#34;{self.base_icon_url}/role_vertical_painting/role_vertical_painting_{self.id}.png&#34;</code></pre>
+</details>
+<div class="desc"><p>Example: <a href="https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png">https://act-webstatic.hoyoverse.com/game_record/zzz/role_vertical_painting/role_vertical_painting_1131.png</a></p></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.base_icon_url"><code class="name">prop <span class="ident">base_icon_url</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def base_icon_url(self) -&gt; str:
+    return &#34;https://act-webstatic.hoyoverse.com/game_record/zzzv2&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon"><code class="name">prop <span class="ident">rectangle_icon</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def rectangle_icon(self) -&gt; str:
+    &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png&#34;&#34;&#34;
+    return f&#34;{self.base_icon_url}/role_rectangle_avatar/role_rectangle_avatar_{self.id}.png&#34;</code></pre>
+</details>
+<div class="desc"><p>Example: <a href="https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png">https://act-webstatic.hoyoverse.com/game_record/zzz/role_rectangle_avatar/role_rectangle_avatar_1131.png</a></p></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZBaseAgent.square_icon"><code class="name">prop <span class="ident">square_icon</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def square_icon(self) -&gt; str:
+    &#34;&#34;&#34;Example: https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png&#34;&#34;&#34;
+    return f&#34;{self.base_icon_url}/role_square_avatar/role_square_avatar_{self.id}.png&#34;</code></pre>
+</details>
+<div class="desc"><p>Example: <a href="https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png">https://act-webstatic.hoyoverse.com/game_record/zzz/role_square_avatar/role_square_avatar_1131.png</a></p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc"><code class="flex name class">
+<span>class <span class="ident">ZZZDisc</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZDisc(APIModel):
+    &#34;&#34;&#34;A ZZZ disc, like an artifact in Genshin.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    name: str
+    icon: str
+    rarity: typing.Literal[&#34;B&#34;, &#34;A&#34;, &#34;S&#34;]
+    main_properties: typing.Sequence[ZZZProperty]
+    properties: typing.Sequence[ZZZProperty]
+    set_effect: DiscSetEffect = Aliased(&#34;equip_suit&#34;)
+    position: int = Aliased(&#34;equipment_type&#34;)</code></pre>
+</details>
+<div class="desc"><p>A ZZZ disc, like an artifact in Genshin.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZDisc.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.main_properties"><code class="name">var <span class="ident">main_properties</span> : Sequence[<a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.position"><code class="name">var <span class="ident">position</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.properties"><code class="name">var <span class="ident">properties</span> : Sequence[<a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['B', 'A', 'S']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZDisc.set_effect"><code class="name">var <span class="ident">set_effect</span> : <a title="genshin.models.zzz.character.DiscSetEffect" href="#genshin.models.zzz.character.DiscSetEffect">DiscSetEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZElementType"><code class="flex name class">
+<span>class <span class="ident">ZZZElementType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZElementType(enum.IntEnum):
+    &#34;&#34;&#34;ZZZ element type.&#34;&#34;&#34;
+
+    PHYSICAL = 200
+    FIRE = 201
+    ICE = 202
+    ELECTRIC = 203
+    ETHER = 205</code></pre>
+</details>
+<div class="desc"><p>ZZZ element type.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZElementType.ELECTRIC"><code class="name">var <span class="ident">ELECTRIC</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZElementType.ETHER"><code class="name">var <span class="ident">ETHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZElementType.FIRE"><code class="name">var <span class="ident">FIRE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZElementType.ICE"><code class="name">var <span class="ident">ICE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZElementType.PHYSICAL"><code class="name">var <span class="ident">PHYSICAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent"><code class="flex name class">
+<span>class <span class="ident">ZZZFullAgent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZFullAgent(ZZZBaseAgent):
+    &#34;&#34;&#34;Character with equipment.&#34;&#34;&#34;
+
+    level: int
+    rank: int
+    &#34;&#34;&#34;Also known as Mindscape Cinema in-game.&#34;&#34;&#34;
+    faction_name: str = Aliased(&#34;camp_name_mi18n&#34;)
+    properties: typing.Sequence[ZZZAgentProperty]
+    discs: typing.Sequence[ZZZDisc] = Aliased(&#34;equip&#34;)
+    w_engine: typing.Optional[WEngine] = Aliased(&#34;weapon&#34;, default=None)
+    skills: typing.Sequence[AgentSkill]
+    ranks: typing.Sequence[ZZZAgentRank]
+    &#34;&#34;&#34;Also known as Mindscape Cinemas in-game.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Character with equipment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.character.ZZZBaseAgent" href="#genshin.models.zzz.character.ZZZBaseAgent">ZZZBaseAgent</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.discs"><code class="name">var <span class="ident">discs</span> : Sequence[<a title="genshin.models.zzz.character.ZZZDisc" href="#genshin.models.zzz.character.ZZZDisc">ZZZDisc</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.faction_name"><code class="name">var <span class="ident">faction_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.properties"><code class="name">var <span class="ident">properties</span> : Sequence[<a title="genshin.models.zzz.character.ZZZAgentProperty" href="#genshin.models.zzz.character.ZZZAgentProperty">ZZZAgentProperty</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.rank"><code class="name">var <span class="ident">rank</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Also known as Mindscape Cinema in-game.</p></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.ranks"><code class="name">var <span class="ident">ranks</span> : Sequence[<a title="genshin.models.zzz.character.ZZZAgentRank" href="#genshin.models.zzz.character.ZZZAgentRank">ZZZAgentRank</a>]</code></dt>
+<dd>
+<div class="desc"><p>Also known as Mindscape Cinemas in-game.</p></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.skills"><code class="name">var <span class="ident">skills</span> : Sequence[<a title="genshin.models.zzz.character.AgentSkill" href="#genshin.models.zzz.character.AgentSkill">AgentSkill</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZFullAgent.w_engine"><code class="name">var <span class="ident">w_engine</span> : <a title="genshin.models.zzz.character.WEngine" href="#genshin.models.zzz.character.WEngine">WEngine</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.zzz.character.ZZZBaseAgent" href="#genshin.models.zzz.character.ZZZBaseAgent">ZZZBaseAgent</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.banner_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.banner_icon">banner_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon">rectangle_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.square_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.square_icon">square_icon</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPartialAgent"><code class="flex name class">
+<span>class <span class="ident">ZZZPartialAgent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZPartialAgent(ZZZBaseAgent):
+    &#34;&#34;&#34;Character without any equipment.&#34;&#34;&#34;
+
+    level: int
+    rank: int
+    &#34;&#34;&#34;Also known as Mindscape Cinema in-game.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Character without any equipment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.character.ZZZBaseAgent" href="#genshin.models.zzz.character.ZZZBaseAgent">ZZZBaseAgent</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZPartialAgent.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPartialAgent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPartialAgent.rank"><code class="name">var <span class="ident">rank</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Also known as Mindscape Cinema in-game.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.zzz.character.ZZZBaseAgent" href="#genshin.models.zzz.character.ZZZBaseAgent">ZZZBaseAgent</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.banner_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.banner_icon">banner_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon">rectangle_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.square_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.square_icon">square_icon</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZProperty"><code class="flex name class">
+<span>class <span class="ident">ZZZProperty</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZProperty(APIModel):
+    &#34;&#34;&#34;A property (stat) for disc or w-engine.&#34;&#34;&#34;
+
+    name: str = Aliased(&#34;property_name&#34;)
+    type: typing.Union[int, ZZZPropertyType] = Aliased(&#34;property_id&#34;)
+    value: str = Aliased(&#34;base&#34;)
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __cast_id(cls, v: int) -&gt; typing.Union[int, ZZZPropertyType]:
+        return prevent_enum_error(v, ZZZPropertyType)</code></pre>
+</details>
+<div class="desc"><p>A property (stat) for disc or w-engine.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.character.ZZZAgentProperty" href="#genshin.models.zzz.character.ZZZAgentProperty">ZZZAgentProperty</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZProperty.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZProperty.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZProperty.type"><code class="name">var <span class="ident">type</span> : int | <a title="genshin.models.zzz.character.ZZZPropertyType" href="#genshin.models.zzz.character.ZZZPropertyType">ZZZPropertyType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZProperty.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType"><code class="flex name class">
+<span>class <span class="ident">ZZZPropertyType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZPropertyType(enum.IntEnum):
+    &#34;&#34;&#34;ZZZ property type.&#34;&#34;&#34;
+
+    # Agent prop
+    AGENT_HP = 1
+    AGENT_ATK = 2
+    AGENT_DEF = 3
+    AGENT_IMPACT = 4
+    AGENT_CRIT_RATE = 5
+    AGENT_CRIT_DMG = 6
+    AGENT_ANOMALY_MASTERY = 7
+    AGENT_ANOMALY_PROFICIENCY = 8
+    AGENT_PEN_RATIO = 9
+    AGENT_ENERGY_GEN = 11
+    AGENT_PEN = 232
+    AGENT_SHEER_FORCE = 19
+    AGENT_ADRENALINE = 20
+
+    # Agent DMG bonus
+    PHYSICAL_DMG_BONUS = 315
+    FIRE_DMG_BONUS = 316
+    ICE_DMG_BONUS = 317
+    ELECTRIC_DMG_BONUS = 318
+    ETHER_DMG_BONUS = 319
+
+    # Disc drive and w-engine
+    CRIT_RATE = 20103
+    CRIT_DMG = 21103
+
+    ANOMALY_PROFICIENCY = 31203
+    ANOMALY_MASTERY = 31402
+    ENERGY_REGEN = 30502
+    IMPACT = 12202
+
+    BASE_ATK = 12101
+    FLAT_HP = 11103
+    FLAT_ATK = 12103
+    FLAT_DEF = 13103
+    FLAT_PEN = 23203
+
+    HP_PERCENT = 11102
+    ATK_PERCENT = 12102
+    DEF_PERCENT = 13102
+    PEN_PERCENT = 23103
+
+    DISC_PHYSICAL_DMG_BONUS = 31503
+    DISC_FIRE_DMG_BONUS = 31603
+    DISC_ICE_DMG_BONUS = 31703
+    DISC_ELECTRIC_DMG_BONUS = 31803
+    DISC_ETHER_DMG_BONUS = 31903</code></pre>
+</details>
+<div class="desc"><p>ZZZ property type.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_ADRENALINE"><code class="name">var <span class="ident">AGENT_ADRENALINE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_MASTERY"><code class="name">var <span class="ident">AGENT_ANOMALY_MASTERY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_PROFICIENCY"><code class="name">var <span class="ident">AGENT_ANOMALY_PROFICIENCY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_ATK"><code class="name">var <span class="ident">AGENT_ATK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_DMG"><code class="name">var <span class="ident">AGENT_CRIT_DMG</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_RATE"><code class="name">var <span class="ident">AGENT_CRIT_RATE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_DEF"><code class="name">var <span class="ident">AGENT_DEF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_ENERGY_GEN"><code class="name">var <span class="ident">AGENT_ENERGY_GEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_HP"><code class="name">var <span class="ident">AGENT_HP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_IMPACT"><code class="name">var <span class="ident">AGENT_IMPACT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN"><code class="name">var <span class="ident">AGENT_PEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN_RATIO"><code class="name">var <span class="ident">AGENT_PEN_RATIO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.AGENT_SHEER_FORCE"><code class="name">var <span class="ident">AGENT_SHEER_FORCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ANOMALY_MASTERY"><code class="name">var <span class="ident">ANOMALY_MASTERY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ANOMALY_PROFICIENCY"><code class="name">var <span class="ident">ANOMALY_PROFICIENCY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ATK_PERCENT"><code class="name">var <span class="ident">ATK_PERCENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.BASE_ATK"><code class="name">var <span class="ident">BASE_ATK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.CRIT_DMG"><code class="name">var <span class="ident">CRIT_DMG</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.CRIT_RATE"><code class="name">var <span class="ident">CRIT_RATE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DEF_PERCENT"><code class="name">var <span class="ident">DEF_PERCENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DISC_ELECTRIC_DMG_BONUS"><code class="name">var <span class="ident">DISC_ELECTRIC_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DISC_ETHER_DMG_BONUS"><code class="name">var <span class="ident">DISC_ETHER_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DISC_FIRE_DMG_BONUS"><code class="name">var <span class="ident">DISC_FIRE_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DISC_ICE_DMG_BONUS"><code class="name">var <span class="ident">DISC_ICE_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.DISC_PHYSICAL_DMG_BONUS"><code class="name">var <span class="ident">DISC_PHYSICAL_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ELECTRIC_DMG_BONUS"><code class="name">var <span class="ident">ELECTRIC_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ENERGY_REGEN"><code class="name">var <span class="ident">ENERGY_REGEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ETHER_DMG_BONUS"><code class="name">var <span class="ident">ETHER_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.FIRE_DMG_BONUS"><code class="name">var <span class="ident">FIRE_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.FLAT_ATK"><code class="name">var <span class="ident">FLAT_ATK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.FLAT_DEF"><code class="name">var <span class="ident">FLAT_DEF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.FLAT_HP"><code class="name">var <span class="ident">FLAT_HP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.FLAT_PEN"><code class="name">var <span class="ident">FLAT_PEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.HP_PERCENT"><code class="name">var <span class="ident">HP_PERCENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.ICE_DMG_BONUS"><code class="name">var <span class="ident">ICE_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.IMPACT"><code class="name">var <span class="ident">IMPACT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.PEN_PERCENT"><code class="name">var <span class="ident">PEN_PERCENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZPropertyType.PHYSICAL_DMG_BONUS"><code class="name">var <span class="ident">PHYSICAL_DMG_BONUS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType"><code class="flex name class">
+<span>class <span class="ident">ZZZSkillType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZSkillType(enum.IntEnum):
+    &#34;&#34;&#34;ZZZ agent skill type.&#34;&#34;&#34;
+
+    BASIC_ATTACK = 0
+    DODGE = 2
+    ASSIST = 6
+    SPECIAL_ATTACK = 1
+    CHAIN_ATTACK = 3
+    CORE_SKILL = 5</code></pre>
+</details>
+<div class="desc"><p>ZZZ agent skill type.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZSkillType.ASSIST"><code class="name">var <span class="ident">ASSIST</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType.BASIC_ATTACK"><code class="name">var <span class="ident">BASIC_ATTACK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType.CHAIN_ATTACK"><code class="name">var <span class="ident">CHAIN_ATTACK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType.CORE_SKILL"><code class="name">var <span class="ident">CORE_SKILL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType.DODGE"><code class="name">var <span class="ident">DODGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSkillType.SPECIAL_ATTACK"><code class="name">var <span class="ident">SPECIAL_ATTACK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty"><code class="flex name class">
+<span>class <span class="ident">ZZZSpecialty</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZSpecialty(enum.IntEnum):
+    &#34;&#34;&#34;ZZZ agent compatible specialty.&#34;&#34;&#34;
+
+    ATTACK = 1
+    STUN = 2
+    ANOMALY = 3
+    SUPPORT = 4
+    DEFENSE = 5
+    RUPTURE = 6</code></pre>
+</details>
+<div class="desc"><p>ZZZ agent compatible specialty.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.ANOMALY"><code class="name">var <span class="ident">ANOMALY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.ATTACK"><code class="name">var <span class="ident">ATTACK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.DEFENSE"><code class="name">var <span class="ident">DEFENSE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.RUPTURE"><code class="name">var <span class="ident">RUPTURE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.STUN"><code class="name">var <span class="ident">STUN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.character.ZZZSpecialty.SUPPORT"><code class="name">var <span class="ident">SUPPORT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.zzz" href="index.html">genshin.models.zzz</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.zzz.character.AgentSkill" href="#genshin.models.zzz.character.AgentSkill">AgentSkill</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.AgentSkill.items" href="#genshin.models.zzz.character.AgentSkill.items">items</a></code></li>
+<li><code><a title="genshin.models.zzz.character.AgentSkill.level" href="#genshin.models.zzz.character.AgentSkill.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.character.AgentSkill.model_config" href="#genshin.models.zzz.character.AgentSkill.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.AgentSkill.type" href="#genshin.models.zzz.character.AgentSkill.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.AgentSkillItem" href="#genshin.models.zzz.character.AgentSkillItem">AgentSkillItem</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.AgentSkillItem.model_config" href="#genshin.models.zzz.character.AgentSkillItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.AgentSkillItem.text" href="#genshin.models.zzz.character.AgentSkillItem.text">text</a></code></li>
+<li><code><a title="genshin.models.zzz.character.AgentSkillItem.title" href="#genshin.models.zzz.character.AgentSkillItem.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.DiscSetEffect" href="#genshin.models.zzz.character.DiscSetEffect">DiscSetEffect</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.four_piece_description" href="#genshin.models.zzz.character.DiscSetEffect.four_piece_description">four_piece_description</a></code></li>
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.id" href="#genshin.models.zzz.character.DiscSetEffect.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.model_config" href="#genshin.models.zzz.character.DiscSetEffect.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.name" href="#genshin.models.zzz.character.DiscSetEffect.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.owned_num" href="#genshin.models.zzz.character.DiscSetEffect.owned_num">owned_num</a></code></li>
+<li><code><a title="genshin.models.zzz.character.DiscSetEffect.two_piece_description" href="#genshin.models.zzz.character.DiscSetEffect.two_piece_description">two_piece_description</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.WEngine" href="#genshin.models.zzz.character.WEngine">WEngine</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.WEngine.effect_description" href="#genshin.models.zzz.character.WEngine.effect_description">effect_description</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.effect_title" href="#genshin.models.zzz.character.WEngine.effect_title">effect_title</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.icon" href="#genshin.models.zzz.character.WEngine.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.id" href="#genshin.models.zzz.character.WEngine.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.level" href="#genshin.models.zzz.character.WEngine.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.main_properties" href="#genshin.models.zzz.character.WEngine.main_properties">main_properties</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.model_config" href="#genshin.models.zzz.character.WEngine.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.name" href="#genshin.models.zzz.character.WEngine.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.profession" href="#genshin.models.zzz.character.WEngine.profession">profession</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.properties" href="#genshin.models.zzz.character.WEngine.properties">properties</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.rarity" href="#genshin.models.zzz.character.WEngine.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.zzz.character.WEngine.refinement" href="#genshin.models.zzz.character.WEngine.refinement">refinement</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZAgentProperty" href="#genshin.models.zzz.character.ZZZAgentProperty">ZZZAgentProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.ZZZAgentProperty.add" href="#genshin.models.zzz.character.ZZZAgentProperty.add">add</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentProperty.final" href="#genshin.models.zzz.character.ZZZAgentProperty.final">final</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentProperty.model_config" href="#genshin.models.zzz.character.ZZZAgentProperty.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZAgentRank" href="#genshin.models.zzz.character.ZZZAgentRank">ZZZAgentRank</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.description" href="#genshin.models.zzz.character.ZZZAgentRank.description">description</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.id" href="#genshin.models.zzz.character.ZZZAgentRank.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.model_config" href="#genshin.models.zzz.character.ZZZAgentRank.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.name" href="#genshin.models.zzz.character.ZZZAgentRank.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.position" href="#genshin.models.zzz.character.ZZZAgentRank.position">position</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZAgentRank.unlocked" href="#genshin.models.zzz.character.ZZZAgentRank.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZBaseAgent" href="#genshin.models.zzz.character.ZZZBaseAgent">ZZZBaseAgent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.banner_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.banner_icon">banner_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.base_icon_url" href="#genshin.models.zzz.character.ZZZBaseAgent.base_icon_url">base_icon_url</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.element" href="#genshin.models.zzz.character.ZZZBaseAgent.element">element</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.faction_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.faction_icon">faction_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.flat_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.flat_icon">flat_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.full_name" href="#genshin.models.zzz.character.ZZZBaseAgent.full_name">full_name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.id" href="#genshin.models.zzz.character.ZZZBaseAgent.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.model_config" href="#genshin.models.zzz.character.ZZZBaseAgent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.name" href="#genshin.models.zzz.character.ZZZBaseAgent.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.rarity" href="#genshin.models.zzz.character.ZZZBaseAgent.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.rectangle_icon">rectangle_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.specialty" href="#genshin.models.zzz.character.ZZZBaseAgent.specialty">specialty</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZBaseAgent.square_icon" href="#genshin.models.zzz.character.ZZZBaseAgent.square_icon">square_icon</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZDisc" href="#genshin.models.zzz.character.ZZZDisc">ZZZDisc</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.icon" href="#genshin.models.zzz.character.ZZZDisc.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.id" href="#genshin.models.zzz.character.ZZZDisc.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.level" href="#genshin.models.zzz.character.ZZZDisc.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.main_properties" href="#genshin.models.zzz.character.ZZZDisc.main_properties">main_properties</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.model_config" href="#genshin.models.zzz.character.ZZZDisc.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.name" href="#genshin.models.zzz.character.ZZZDisc.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.position" href="#genshin.models.zzz.character.ZZZDisc.position">position</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.properties" href="#genshin.models.zzz.character.ZZZDisc.properties">properties</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.rarity" href="#genshin.models.zzz.character.ZZZDisc.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZDisc.set_effect" href="#genshin.models.zzz.character.ZZZDisc.set_effect">set_effect</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZElementType" href="#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.ZZZElementType.ELECTRIC" href="#genshin.models.zzz.character.ZZZElementType.ELECTRIC">ELECTRIC</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZElementType.ETHER" href="#genshin.models.zzz.character.ZZZElementType.ETHER">ETHER</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZElementType.FIRE" href="#genshin.models.zzz.character.ZZZElementType.FIRE">FIRE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZElementType.ICE" href="#genshin.models.zzz.character.ZZZElementType.ICE">ICE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZElementType.PHYSICAL" href="#genshin.models.zzz.character.ZZZElementType.PHYSICAL">PHYSICAL</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZFullAgent" href="#genshin.models.zzz.character.ZZZFullAgent">ZZZFullAgent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.discs" href="#genshin.models.zzz.character.ZZZFullAgent.discs">discs</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.faction_name" href="#genshin.models.zzz.character.ZZZFullAgent.faction_name">faction_name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.level" href="#genshin.models.zzz.character.ZZZFullAgent.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.model_config" href="#genshin.models.zzz.character.ZZZFullAgent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.properties" href="#genshin.models.zzz.character.ZZZFullAgent.properties">properties</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.rank" href="#genshin.models.zzz.character.ZZZFullAgent.rank">rank</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.ranks" href="#genshin.models.zzz.character.ZZZFullAgent.ranks">ranks</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.skills" href="#genshin.models.zzz.character.ZZZFullAgent.skills">skills</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZFullAgent.w_engine" href="#genshin.models.zzz.character.ZZZFullAgent.w_engine">w_engine</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZPartialAgent" href="#genshin.models.zzz.character.ZZZPartialAgent">ZZZPartialAgent</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.ZZZPartialAgent.level" href="#genshin.models.zzz.character.ZZZPartialAgent.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPartialAgent.model_config" href="#genshin.models.zzz.character.ZZZPartialAgent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPartialAgent.rank" href="#genshin.models.zzz.character.ZZZPartialAgent.rank">rank</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZProperty" href="#genshin.models.zzz.character.ZZZProperty">ZZZProperty</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.ZZZProperty.model_config" href="#genshin.models.zzz.character.ZZZProperty.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZProperty.name" href="#genshin.models.zzz.character.ZZZProperty.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZProperty.type" href="#genshin.models.zzz.character.ZZZProperty.type">type</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZProperty.value" href="#genshin.models.zzz.character.ZZZProperty.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZPropertyType" href="#genshin.models.zzz.character.ZZZPropertyType">ZZZPropertyType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_ADRENALINE" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_ADRENALINE">AGENT_ADRENALINE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_MASTERY" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_MASTERY">AGENT_ANOMALY_MASTERY</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_PROFICIENCY" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_ANOMALY_PROFICIENCY">AGENT_ANOMALY_PROFICIENCY</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_ATK" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_ATK">AGENT_ATK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_DMG" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_DMG">AGENT_CRIT_DMG</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_RATE" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_CRIT_RATE">AGENT_CRIT_RATE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_DEF" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_DEF">AGENT_DEF</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_ENERGY_GEN" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_ENERGY_GEN">AGENT_ENERGY_GEN</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_HP" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_HP">AGENT_HP</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_IMPACT" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_IMPACT">AGENT_IMPACT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN">AGENT_PEN</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN_RATIO" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_PEN_RATIO">AGENT_PEN_RATIO</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.AGENT_SHEER_FORCE" href="#genshin.models.zzz.character.ZZZPropertyType.AGENT_SHEER_FORCE">AGENT_SHEER_FORCE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ANOMALY_MASTERY" href="#genshin.models.zzz.character.ZZZPropertyType.ANOMALY_MASTERY">ANOMALY_MASTERY</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ANOMALY_PROFICIENCY" href="#genshin.models.zzz.character.ZZZPropertyType.ANOMALY_PROFICIENCY">ANOMALY_PROFICIENCY</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ATK_PERCENT" href="#genshin.models.zzz.character.ZZZPropertyType.ATK_PERCENT">ATK_PERCENT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.BASE_ATK" href="#genshin.models.zzz.character.ZZZPropertyType.BASE_ATK">BASE_ATK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.CRIT_DMG" href="#genshin.models.zzz.character.ZZZPropertyType.CRIT_DMG">CRIT_DMG</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.CRIT_RATE" href="#genshin.models.zzz.character.ZZZPropertyType.CRIT_RATE">CRIT_RATE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DEF_PERCENT" href="#genshin.models.zzz.character.ZZZPropertyType.DEF_PERCENT">DEF_PERCENT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DISC_ELECTRIC_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.DISC_ELECTRIC_DMG_BONUS">DISC_ELECTRIC_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DISC_ETHER_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.DISC_ETHER_DMG_BONUS">DISC_ETHER_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DISC_FIRE_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.DISC_FIRE_DMG_BONUS">DISC_FIRE_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DISC_ICE_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.DISC_ICE_DMG_BONUS">DISC_ICE_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.DISC_PHYSICAL_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.DISC_PHYSICAL_DMG_BONUS">DISC_PHYSICAL_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ELECTRIC_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.ELECTRIC_DMG_BONUS">ELECTRIC_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ENERGY_REGEN" href="#genshin.models.zzz.character.ZZZPropertyType.ENERGY_REGEN">ENERGY_REGEN</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ETHER_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.ETHER_DMG_BONUS">ETHER_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.FIRE_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.FIRE_DMG_BONUS">FIRE_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.FLAT_ATK" href="#genshin.models.zzz.character.ZZZPropertyType.FLAT_ATK">FLAT_ATK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.FLAT_DEF" href="#genshin.models.zzz.character.ZZZPropertyType.FLAT_DEF">FLAT_DEF</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.FLAT_HP" href="#genshin.models.zzz.character.ZZZPropertyType.FLAT_HP">FLAT_HP</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.FLAT_PEN" href="#genshin.models.zzz.character.ZZZPropertyType.FLAT_PEN">FLAT_PEN</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.HP_PERCENT" href="#genshin.models.zzz.character.ZZZPropertyType.HP_PERCENT">HP_PERCENT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.ICE_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.ICE_DMG_BONUS">ICE_DMG_BONUS</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.IMPACT" href="#genshin.models.zzz.character.ZZZPropertyType.IMPACT">IMPACT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.PEN_PERCENT" href="#genshin.models.zzz.character.ZZZPropertyType.PEN_PERCENT">PEN_PERCENT</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZPropertyType.PHYSICAL_DMG_BONUS" href="#genshin.models.zzz.character.ZZZPropertyType.PHYSICAL_DMG_BONUS">PHYSICAL_DMG_BONUS</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZSkillType" href="#genshin.models.zzz.character.ZZZSkillType">ZZZSkillType</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.ASSIST" href="#genshin.models.zzz.character.ZZZSkillType.ASSIST">ASSIST</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.BASIC_ATTACK" href="#genshin.models.zzz.character.ZZZSkillType.BASIC_ATTACK">BASIC_ATTACK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.CHAIN_ATTACK" href="#genshin.models.zzz.character.ZZZSkillType.CHAIN_ATTACK">CHAIN_ATTACK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.CORE_SKILL" href="#genshin.models.zzz.character.ZZZSkillType.CORE_SKILL">CORE_SKILL</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.DODGE" href="#genshin.models.zzz.character.ZZZSkillType.DODGE">DODGE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSkillType.SPECIAL_ATTACK" href="#genshin.models.zzz.character.ZZZSkillType.SPECIAL_ATTACK">SPECIAL_ATTACK</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.character.ZZZSpecialty" href="#genshin.models.zzz.character.ZZZSpecialty">ZZZSpecialty</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.ANOMALY" href="#genshin.models.zzz.character.ZZZSpecialty.ANOMALY">ANOMALY</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.ATTACK" href="#genshin.models.zzz.character.ZZZSpecialty.ATTACK">ATTACK</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.DEFENSE" href="#genshin.models.zzz.character.ZZZSpecialty.DEFENSE">DEFENSE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.RUPTURE" href="#genshin.models.zzz.character.ZZZSpecialty.RUPTURE">RUPTURE</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.STUN" href="#genshin.models.zzz.character.ZZZSpecialty.STUN">STUN</a></code></li>
+<li><code><a title="genshin.models.zzz.character.ZZZSpecialty.SUPPORT" href="#genshin.models.zzz.character.ZZZSpecialty.SUPPORT">SUPPORT</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

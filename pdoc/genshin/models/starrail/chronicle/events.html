@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.starrail.chronicle.events API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.starrail.chronicle.events</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeStatus"><code class="flex name class">
+<span>class <span class="ident">ChallengeStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChallengeStatus(Enum):
+    &#34;&#34;&#34;Challenge status enum.&#34;&#34;&#34;
+
+    IN_PROGRESS = &#34;challengeStatusInProgress&#34;
+    LOCKED = &#34;challengeStatusUnopened&#34;
+    FINISHED = &#34;challengeStatusFinish&#34;</code></pre>
+</details>
+<div class="desc"><p>Challenge status enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeStatus.FINISHED"><code class="name">var <span class="ident">FINISHED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeStatus.IN_PROGRESS"><code class="name">var <span class="ident">IN_PROGRESS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeStatus.LOCKED"><code class="name">var <span class="ident">LOCKED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeType"><code class="flex name class">
+<span>class <span class="ident">ChallengeType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChallengeType(Enum):
+    &#34;&#34;&#34;Challenge type enum.&#34;&#34;&#34;
+
+    APC_SHADOW = &#34;ChallengeTypeBoss&#34;
+    &#34;&#34;&#34;Apocalyptic shadow.&#34;&#34;&#34;
+    MOC = &#34;ChallengeTypeChasm&#34;
+    &#34;&#34;&#34;Memory of Chaos.&#34;&#34;&#34;
+    PURE_FICTION = &#34;ChallengeTypeStory&#34;</code></pre>
+</details>
+<div class="desc"><p>Challenge type enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeType.APC_SHADOW"><code class="name">var <span class="ident">APC_SHADOW</span></code></dt>
+<dd>
+<div class="desc"><p>Apocalyptic shadow.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeType.MOC"><code class="name">var <span class="ident">MOC</span></code></dt>
+<dd>
+<div class="desc"><p>Memory of Chaos.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.ChallengeType.PURE_FICTION"><code class="name">var <span class="ident">PURE_FICTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp"><code class="flex name class">
+<span>class <span class="ident">EventWarp</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventWarp(HSRBaseEvent):
+    &#34;&#34;&#34;Event warp model.&#34;&#34;&#34;
+
+    name: str
+    type: str  # Seems to always be &#39;CardPoolRole&#39;
+    characters: typing.Sequence[EventWarpCharacter] = pydantic.Field(alias=&#34;avatar_list&#34;)
+    light_cones: typing.Sequence[EventWarpLightCone] = pydantic.Field(alias=&#34;equip_list&#34;)
+
+    is_after_version: bool
+    &#34;&#34;&#34;Whether the event happens after last version&#39;s update.&#34;&#34;&#34;
+    version: str
+    id: int</code></pre>
+</details>
+<div class="desc"><p>Event warp model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.events.HSRBaseEvent</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.EventWarpCharacter" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter">EventWarpCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.is_after_version"><code class="name">var <span class="ident">is_after_version</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether the event happens after last version's update.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.light_cones"><code class="name">var <span class="ident">light_cones</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.EventWarpLightCone" href="#genshin.models.starrail.chronicle.events.EventWarpLightCone">EventWarpLightCone</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarp.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpCharacter"><code class="flex name class">
+<span>class <span class="ident">EventWarpCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventWarpCharacter(HSRBaseEventItem):
+    &#34;&#34;&#34;Event warp character model.&#34;&#34;&#34;
+
+    icon: str = pydantic.Field(alias=&#34;icon_url&#34;)
+    large_icon: str = pydantic.Field(alias=&#34;item_avatar_icon_path&#34;)
+    element: int = pydantic.Field(alias=&#34;damage_type&#34;)</code></pre>
+</details>
+<div class="desc"><p>Event warp character model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem">HSRBaseEventItem</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpCharacter.element"><code class="name">var <span class="ident">element</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpCharacter.large_icon"><code class="name">var <span class="ident">large_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpLightCone"><code class="flex name class">
+<span>class <span class="ident">EventWarpLightCone</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EventWarpLightCone(HSRBaseEventItem):
+    &#34;&#34;&#34;Event warp light cone model.&#34;&#34;&#34;
+
+    icon: str = pydantic.Field(alias=&#34;item_url&#34;)</code></pre>
+</details>
+<div class="desc"><p>Event warp light cone model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem">HSRBaseEventItem</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpLightCone.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.EventWarpLightCone.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem"><code class="flex name class">
+<span>class <span class="ident">HSRBaseEventItem</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRBaseEventItem(APIModel):
+    &#34;&#34;&#34;Base event item model.&#34;&#34;&#34;
+
+    id: int = pydantic.Field(alias=&#34;item_id&#34;)
+    name: str = pydantic.Field(alias=&#34;item_name&#34;)
+    icon: str = pydantic.Field(alias=&#34;icon_url&#34;)
+    path: int = pydantic.Field(alias=&#34;avatar_base_type&#34;)
+
+    rarity: int
+    wiki_url: str
+
+    is_forward: bool  # No clue what this is</code></pre>
+</details>
+<div class="desc"><p>Base event item model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter">EventWarpCharacter</a></li>
+<li><a title="genshin.models.starrail.chronicle.events.EventWarpLightCone" href="#genshin.models.starrail.chronicle.events.EventWarpLightCone">EventWarpLightCone</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.is_forward"><code class="name">var <span class="ident">is_forward</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.path"><code class="name">var <span class="ident">path</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRBaseEventItem.wiki_url"><code class="name">var <span class="ident">wiki_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge"><code class="flex name class">
+<span>class <span class="ident">HSRChallenge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRChallenge(HSRBaseEvent):
+    &#34;&#34;&#34;HSR challenge model.&#34;&#34;&#34;
+
+    id: int = pydantic.Field(alias=&#34;group_id&#34;)
+    name: str = pydantic.Field(alias=&#34;name_mi18n&#34;)
+
+    type: typing.Union[ChallengeType, str] = pydantic.Field(alias=&#34;challenge_type&#34;)
+    status: typing.Union[ChallengeStatus, str]
+
+    rewards: typing.Sequence[HSREventReward] = pydantic.Field(alias=&#34;reward_list&#34;)
+    special_reward: typing.Optional[HSREventReward]
+    total_progress: int
+    current_progress: int
+    show_text: str
+
+    @pydantic.field_validator(&#34;special_reward&#34;, mode=&#34;after&#34;)
+    def __validate_special_reward(cls, v: HSREventReward) -&gt; typing.Optional[HSREventReward]:
+        if v.id == 0:
+            return None
+        return v
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __validate_type(cls, v: str) -&gt; typing.Union[ChallengeType, str]:
+        return prevent_enum_error(v, ChallengeType)
+
+    @pydantic.field_validator(&#34;status&#34;, mode=&#34;before&#34;)
+    def __validate_status(cls, v: str) -&gt; typing.Union[ChallengeStatus, str]:
+        return prevent_enum_error(v, ChallengeStatus)</code></pre>
+</details>
+<div class="desc"><p>HSR challenge model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.events.HSRBaseEvent</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.current_progress"><code class="name">var <span class="ident">current_progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.rewards"><code class="name">var <span class="ident">rewards</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.HSREventReward" href="#genshin.models.starrail.chronicle.events.HSREventReward">HSREventReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.show_text"><code class="name">var <span class="ident">show_text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.special_reward"><code class="name">var <span class="ident">special_reward</span> : <a title="genshin.models.starrail.chronicle.events.HSREventReward" href="#genshin.models.starrail.chronicle.events.HSREventReward">HSREventReward</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.starrail.chronicle.events.ChallengeStatus" href="#genshin.models.starrail.chronicle.events.ChallengeStatus">ChallengeStatus</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.total_progress"><code class="name">var <span class="ident">total_progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSRChallenge.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.starrail.chronicle.events.ChallengeType" href="#genshin.models.starrail.chronicle.events.ChallengeType">ChallengeType</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent"><code class="flex name class">
+<span>class <span class="ident">HSREvent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREvent(HSRBaseEvent):
+    &#34;&#34;&#34;HSR event model.&#34;&#34;&#34;
+
+    id: int
+    version: str
+    name: str
+    description: str = pydantic.Field(alias=&#34;panel_desc&#34;)
+
+    type: typing.Union[HSREventType, str] = pydantic.Field(alias=&#34;act_type&#34;)
+    time_type: typing.Union[HSREventTimeType, str] = pydantic.Field(alias=&#34;act_time_type&#34;)
+    status: typing.Union[HSREventStatus, str] = pydantic.Field(alias=&#34;act_status&#34;)
+
+    rewards: typing.Sequence[HSREventReward] = pydantic.Field(alias=&#34;reward_list&#34;)
+    total_progress: int
+    current_progress: int
+    special_reward: typing.Optional[HSREventReward]
+
+    is_after_version: bool
+    &#34;&#34;&#34;Whether the event happens after last version&#39;s update.&#34;&#34;&#34;
+    all_finished: bool
+    show_text: str
+
+    # No clue what these are
+    strategy: str
+    multiple_drop_type: int
+    multiple_drop_type_list: list[int]
+    count_refresh_type: int
+    count_value: int
+    drop_multiple: int
+    panel_id: int
+    sort_weight: int
+
+    @pydantic.field_validator(&#34;special_reward&#34;, mode=&#34;after&#34;)
+    def __validate_special_reward(cls, v: HSREventReward) -&gt; typing.Optional[HSREventReward]:
+        if v.id == 0:
+            return None
+        return v
+
+    @pydantic.field_validator(&#34;type&#34;, mode=&#34;before&#34;)
+    def __validate_type(cls, v: str) -&gt; typing.Union[HSREventType, str]:
+        return prevent_enum_error(v, HSREventType)
+
+    @pydantic.field_validator(&#34;time_type&#34;, mode=&#34;before&#34;)
+    def __validate_time_type(cls, v: str) -&gt; typing.Union[HSREventTimeType, str]:
+        return prevent_enum_error(v, HSREventTimeType)
+
+    @pydantic.field_validator(&#34;status&#34;, mode=&#34;before&#34;)
+    def __validate_status(cls, v: str) -&gt; typing.Union[HSREventStatus, str]:
+        return prevent_enum_error(v, HSREventStatus)
+
+    @pydantic.field_validator(&#34;name&#34;, mode=&#34;after&#34;)
+    def __format_name(cls, v: str) -&gt; str:
+        return v.replace(&#34;\\n&#34;, &#34; &#34;)
+
+    @pydantic.field_validator(&#34;description&#34;, mode=&#34;after&#34;)
+    def __format_description(cls, v: str) -&gt; str:
+        return v.replace(&#34;\\n&#34;, &#34;\n&#34;)</code></pre>
+</details>
+<div class="desc"><p>HSR event model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.events.HSRBaseEvent</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.all_finished"><code class="name">var <span class="ident">all_finished</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.count_refresh_type"><code class="name">var <span class="ident">count_refresh_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.count_value"><code class="name">var <span class="ident">count_value</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.current_progress"><code class="name">var <span class="ident">current_progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.drop_multiple"><code class="name">var <span class="ident">drop_multiple</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.is_after_version"><code class="name">var <span class="ident">is_after_version</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether the event happens after last version's update.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type"><code class="name">var <span class="ident">multiple_drop_type</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type_list"><code class="name">var <span class="ident">multiple_drop_type_list</span> : list[int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.panel_id"><code class="name">var <span class="ident">panel_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.rewards"><code class="name">var <span class="ident">rewards</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.HSREventReward" href="#genshin.models.starrail.chronicle.events.HSREventReward">HSREventReward</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.show_text"><code class="name">var <span class="ident">show_text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.sort_weight"><code class="name">var <span class="ident">sort_weight</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.special_reward"><code class="name">var <span class="ident">special_reward</span> : <a title="genshin.models.starrail.chronicle.events.HSREventReward" href="#genshin.models.starrail.chronicle.events.HSREventReward">HSREventReward</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.status"><code class="name">var <span class="ident">status</span> : <a title="genshin.models.starrail.chronicle.events.HSREventStatus" href="#genshin.models.starrail.chronicle.events.HSREventStatus">HSREventStatus</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.strategy"><code class="name">var <span class="ident">strategy</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.time_type"><code class="name">var <span class="ident">time_type</span> : <a title="genshin.models.starrail.chronicle.events.HSREventTimeType" href="#genshin.models.starrail.chronicle.events.HSREventTimeType">HSREventTimeType</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.total_progress"><code class="name">var <span class="ident">total_progress</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.starrail.chronicle.events.HSREventType" href="#genshin.models.starrail.chronicle.events.HSREventType">HSREventType</a> | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREvent.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar"><code class="flex name class">
+<span>class <span class="ident">HSREventCalendar</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREventCalendar(APIModel):
+    &#34;&#34;&#34;HSR event calendar model.&#34;&#34;&#34;
+
+    character_warps: typing.Sequence[EventWarp] = pydantic.Field(alias=&#34;avatar_card_pool_list&#34;)
+    light_cone_warps: typing.Sequence[EventWarp] = pydantic.Field(alias=&#34;equip_card_pool_list&#34;)
+    events: typing.Sequence[HSREvent] = pydantic.Field(alias=&#34;act_list&#34;)
+    challenges: typing.Sequence[HSRChallenge] = pydantic.Field(alias=&#34;challenge_list&#34;)
+
+    cur_game_version: str
+    &#34;&#34;&#34;Current game version.&#34;&#34;&#34;
+    now: TZDateTime</code></pre>
+</details>
+<div class="desc"><p>HSR event calendar model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.challenges"><code class="name">var <span class="ident">challenges</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.HSRChallenge" href="#genshin.models.starrail.chronicle.events.HSRChallenge">HSRChallenge</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.character_warps"><code class="name">var <span class="ident">character_warps</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.EventWarp" href="#genshin.models.starrail.chronicle.events.EventWarp">EventWarp</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.cur_game_version"><code class="name">var <span class="ident">cur_game_version</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Current game version.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.events"><code class="name">var <span class="ident">events</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.HSREvent" href="#genshin.models.starrail.chronicle.events.HSREvent">HSREvent</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.light_cone_warps"><code class="name">var <span class="ident">light_cone_warps</span> : Sequence[<a title="genshin.models.starrail.chronicle.events.EventWarp" href="#genshin.models.starrail.chronicle.events.EventWarp">EventWarp</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventCalendar.now"><code class="name">var <span class="ident">now</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward"><code class="flex name class">
+<span>class <span class="ident">HSREventReward</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREventReward(APIModel):
+    &#34;&#34;&#34;HSR event reward model.&#34;&#34;&#34;
+
+    id: int = pydantic.Field(alias=&#34;item_id&#34;)
+    name: str
+    icon: str
+    wiki_url: str
+    num: int
+    rarity: int</code></pre>
+</details>
+<div class="desc"><p>HSR event reward model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.num"><code class="name">var <span class="ident">num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventReward.wiki_url"><code class="name">var <span class="ident">wiki_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus"><code class="flex name class">
+<span>class <span class="ident">HSREventStatus</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREventStatus(Enum):
+    &#34;&#34;&#34;Event status enum.&#34;&#34;&#34;
+
+    OTHER_LOCKED = &#34;OtherActStatusUnopened&#34;
+    OTHER_IN_PROGRESS = &#34;OtherActStatusUnFinish&#34;
+    DOUBLE_REWARDS_LOCKED = &#34;DoubleActStatusUnopened&#34;
+    SIGN_IN_UNCLAIMED = &#34;SignActStatusUnclaimed&#34;
+
+    # Enums below exist but we don&#39;t know what they mean for now
+    SIGN_STATUS_UNSIGNED_TODAY = &#34;SignStatusUnSignedToday&#34;
+    SIGN_STATUS_SIGNED_TODAY = &#34;SignStatusSignedToday&#34;
+    SIGN_STATUS_UNCLAIMED = &#34;SignStatusUnclaimed&#34;
+    DOUBLE_REWARD_ACT_STATUS_UNOPENED = &#34;DoubleRewardActStatusUnopened&#34;
+    OTHER_ACT_STATUS_FINISH = &#34;OtherActStatusFinish&#34;</code></pre>
+</details>
+<div class="desc"><p>Event status enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARDS_LOCKED"><code class="name">var <span class="ident">DOUBLE_REWARDS_LOCKED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARD_ACT_STATUS_UNOPENED"><code class="name">var <span class="ident">DOUBLE_REWARD_ACT_STATUS_UNOPENED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_ACT_STATUS_FINISH"><code class="name">var <span class="ident">OTHER_ACT_STATUS_FINISH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_IN_PROGRESS"><code class="name">var <span class="ident">OTHER_IN_PROGRESS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_LOCKED"><code class="name">var <span class="ident">OTHER_LOCKED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_IN_UNCLAIMED"><code class="name">var <span class="ident">SIGN_IN_UNCLAIMED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_SIGNED_TODAY"><code class="name">var <span class="ident">SIGN_STATUS_SIGNED_TODAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNCLAIMED"><code class="name">var <span class="ident">SIGN_STATUS_UNCLAIMED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNSIGNED_TODAY"><code class="name">var <span class="ident">SIGN_STATUS_UNSIGNED_TODAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventTimeType"><code class="flex name class">
+<span>class <span class="ident">HSREventTimeType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREventTimeType(Enum):
+    &#34;&#34;&#34;Event time type enum.&#34;&#34;&#34;
+
+    LONG = &#34;ActTimeTypeLong&#34;
+    &#34;&#34;&#34;Simulated universe.&#34;&#34;&#34;
+    DEFAULT = &#34;ActTimeTypeDefault&#34;</code></pre>
+</details>
+<div class="desc"><p>Event time type enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREventTimeType.DEFAULT"><code class="name">var <span class="ident">DEFAULT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventTimeType.LONG"><code class="name">var <span class="ident">LONG</span></code></dt>
+<dd>
+<div class="desc"><p>Simulated universe.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventType"><code class="flex name class">
+<span>class <span class="ident">HSREventType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSREventType(Enum):
+    &#34;&#34;&#34;Event type enum.&#34;&#34;&#34;
+
+    SIGN_IN = &#34;ActivityTypeSign&#34;
+    &#34;&#34;&#34;Daily sign-in event.&#34;&#34;&#34;
+    OTHER = &#34;ActivityTypeOther&#34;
+    DOUBLE_REWARDS = &#34;ActivityTypeDouble&#34;
+    &#34;&#34;&#34;Plannar Fissure, Garden of Plenty, etc.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Event type enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.HSREventType.DOUBLE_REWARDS"><code class="name">var <span class="ident">DOUBLE_REWARDS</span></code></dt>
+<dd>
+<div class="desc"><p>Plannar Fissure, Garden of Plenty, etc.</p></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventType.OTHER"><code class="name">var <span class="ident">OTHER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.HSREventType.SIGN_IN"><code class="name">var <span class="ident">SIGN_IN</span></code></dt>
+<dd>
+<div class="desc"><p>Daily sign-in event.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.TimeInfo"><code class="flex name class">
+<span>class <span class="ident">TimeInfo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TimeInfo(APIModel):
+    &#34;&#34;&#34;Time info model.&#34;&#34;&#34;
+
+    start: TZDateTime = pydantic.Field(alias=&#34;start_ts&#34;)
+    end: TZDateTime = pydantic.Field(alias=&#34;end_ts&#34;)
+    now: TZDateTime</code></pre>
+</details>
+<div class="desc"><p>Time info model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.events.TimeInfo.end"><code class="name">var <span class="ident">end</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.TimeInfo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.TimeInfo.now"><code class="name">var <span class="ident">now</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.events.TimeInfo.start"><code class="name">var <span class="ident">start</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.starrail.chronicle" href="index.html">genshin.models.starrail.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.ChallengeStatus" href="#genshin.models.starrail.chronicle.events.ChallengeStatus">ChallengeStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeStatus.FINISHED" href="#genshin.models.starrail.chronicle.events.ChallengeStatus.FINISHED">FINISHED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeStatus.IN_PROGRESS" href="#genshin.models.starrail.chronicle.events.ChallengeStatus.IN_PROGRESS">IN_PROGRESS</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeStatus.LOCKED" href="#genshin.models.starrail.chronicle.events.ChallengeStatus.LOCKED">LOCKED</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.ChallengeType" href="#genshin.models.starrail.chronicle.events.ChallengeType">ChallengeType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeType.APC_SHADOW" href="#genshin.models.starrail.chronicle.events.ChallengeType.APC_SHADOW">APC_SHADOW</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeType.MOC" href="#genshin.models.starrail.chronicle.events.ChallengeType.MOC">MOC</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.ChallengeType.PURE_FICTION" href="#genshin.models.starrail.chronicle.events.ChallengeType.PURE_FICTION">PURE_FICTION</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.EventWarp" href="#genshin.models.starrail.chronicle.events.EventWarp">EventWarp</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.characters" href="#genshin.models.starrail.chronicle.events.EventWarp.characters">characters</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.id" href="#genshin.models.starrail.chronicle.events.EventWarp.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.is_after_version" href="#genshin.models.starrail.chronicle.events.EventWarp.is_after_version">is_after_version</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.light_cones" href="#genshin.models.starrail.chronicle.events.EventWarp.light_cones">light_cones</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.model_config" href="#genshin.models.starrail.chronicle.events.EventWarp.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.name" href="#genshin.models.starrail.chronicle.events.EventWarp.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.type" href="#genshin.models.starrail.chronicle.events.EventWarp.type">type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarp.version" href="#genshin.models.starrail.chronicle.events.EventWarp.version">version</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter">EventWarpCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter.element" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter.icon" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter.large_icon" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter.large_icon">large_icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpCharacter.model_config" href="#genshin.models.starrail.chronicle.events.EventWarpCharacter.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.EventWarpLightCone" href="#genshin.models.starrail.chronicle.events.EventWarpLightCone">EventWarpLightCone</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpLightCone.icon" href="#genshin.models.starrail.chronicle.events.EventWarpLightCone.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.EventWarpLightCone.model_config" href="#genshin.models.starrail.chronicle.events.EventWarpLightCone.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem">HSRBaseEventItem</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.icon" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.id" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.is_forward" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.is_forward">is_forward</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.model_config" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.name" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.path" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.path">path</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.rarity" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRBaseEventItem.wiki_url" href="#genshin.models.starrail.chronicle.events.HSRBaseEventItem.wiki_url">wiki_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge" href="#genshin.models.starrail.chronicle.events.HSRChallenge">HSRChallenge</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.current_progress" href="#genshin.models.starrail.chronicle.events.HSRChallenge.current_progress">current_progress</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.id" href="#genshin.models.starrail.chronicle.events.HSRChallenge.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.model_config" href="#genshin.models.starrail.chronicle.events.HSRChallenge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.name" href="#genshin.models.starrail.chronicle.events.HSRChallenge.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.rewards" href="#genshin.models.starrail.chronicle.events.HSRChallenge.rewards">rewards</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.show_text" href="#genshin.models.starrail.chronicle.events.HSRChallenge.show_text">show_text</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.special_reward" href="#genshin.models.starrail.chronicle.events.HSRChallenge.special_reward">special_reward</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.status" href="#genshin.models.starrail.chronicle.events.HSRChallenge.status">status</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.total_progress" href="#genshin.models.starrail.chronicle.events.HSRChallenge.total_progress">total_progress</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSRChallenge.type" href="#genshin.models.starrail.chronicle.events.HSRChallenge.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREvent" href="#genshin.models.starrail.chronicle.events.HSREvent">HSREvent</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.all_finished" href="#genshin.models.starrail.chronicle.events.HSREvent.all_finished">all_finished</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.count_refresh_type" href="#genshin.models.starrail.chronicle.events.HSREvent.count_refresh_type">count_refresh_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.count_value" href="#genshin.models.starrail.chronicle.events.HSREvent.count_value">count_value</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.current_progress" href="#genshin.models.starrail.chronicle.events.HSREvent.current_progress">current_progress</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.description" href="#genshin.models.starrail.chronicle.events.HSREvent.description">description</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.drop_multiple" href="#genshin.models.starrail.chronicle.events.HSREvent.drop_multiple">drop_multiple</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.id" href="#genshin.models.starrail.chronicle.events.HSREvent.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.is_after_version" href="#genshin.models.starrail.chronicle.events.HSREvent.is_after_version">is_after_version</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.model_config" href="#genshin.models.starrail.chronicle.events.HSREvent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type" href="#genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type">multiple_drop_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type_list" href="#genshin.models.starrail.chronicle.events.HSREvent.multiple_drop_type_list">multiple_drop_type_list</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.name" href="#genshin.models.starrail.chronicle.events.HSREvent.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.panel_id" href="#genshin.models.starrail.chronicle.events.HSREvent.panel_id">panel_id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.rewards" href="#genshin.models.starrail.chronicle.events.HSREvent.rewards">rewards</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.show_text" href="#genshin.models.starrail.chronicle.events.HSREvent.show_text">show_text</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.sort_weight" href="#genshin.models.starrail.chronicle.events.HSREvent.sort_weight">sort_weight</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.special_reward" href="#genshin.models.starrail.chronicle.events.HSREvent.special_reward">special_reward</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.status" href="#genshin.models.starrail.chronicle.events.HSREvent.status">status</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.strategy" href="#genshin.models.starrail.chronicle.events.HSREvent.strategy">strategy</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.time_type" href="#genshin.models.starrail.chronicle.events.HSREvent.time_type">time_type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.total_progress" href="#genshin.models.starrail.chronicle.events.HSREvent.total_progress">total_progress</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.type" href="#genshin.models.starrail.chronicle.events.HSREvent.type">type</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREvent.version" href="#genshin.models.starrail.chronicle.events.HSREvent.version">version</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar" href="#genshin.models.starrail.chronicle.events.HSREventCalendar">HSREventCalendar</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.challenges" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.challenges">challenges</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.character_warps" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.character_warps">character_warps</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.cur_game_version" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.cur_game_version">cur_game_version</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.events" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.events">events</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.light_cone_warps" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.light_cone_warps">light_cone_warps</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.model_config" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventCalendar.now" href="#genshin.models.starrail.chronicle.events.HSREventCalendar.now">now</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREventReward" href="#genshin.models.starrail.chronicle.events.HSREventReward">HSREventReward</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.icon" href="#genshin.models.starrail.chronicle.events.HSREventReward.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.id" href="#genshin.models.starrail.chronicle.events.HSREventReward.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.model_config" href="#genshin.models.starrail.chronicle.events.HSREventReward.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.name" href="#genshin.models.starrail.chronicle.events.HSREventReward.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.num" href="#genshin.models.starrail.chronicle.events.HSREventReward.num">num</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.rarity" href="#genshin.models.starrail.chronicle.events.HSREventReward.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventReward.wiki_url" href="#genshin.models.starrail.chronicle.events.HSREventReward.wiki_url">wiki_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus" href="#genshin.models.starrail.chronicle.events.HSREventStatus">HSREventStatus</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARDS_LOCKED" href="#genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARDS_LOCKED">DOUBLE_REWARDS_LOCKED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARD_ACT_STATUS_UNOPENED" href="#genshin.models.starrail.chronicle.events.HSREventStatus.DOUBLE_REWARD_ACT_STATUS_UNOPENED">DOUBLE_REWARD_ACT_STATUS_UNOPENED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_ACT_STATUS_FINISH" href="#genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_ACT_STATUS_FINISH">OTHER_ACT_STATUS_FINISH</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_IN_PROGRESS" href="#genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_IN_PROGRESS">OTHER_IN_PROGRESS</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_LOCKED" href="#genshin.models.starrail.chronicle.events.HSREventStatus.OTHER_LOCKED">OTHER_LOCKED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_IN_UNCLAIMED" href="#genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_IN_UNCLAIMED">SIGN_IN_UNCLAIMED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_SIGNED_TODAY" href="#genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_SIGNED_TODAY">SIGN_STATUS_SIGNED_TODAY</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNCLAIMED" href="#genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNCLAIMED">SIGN_STATUS_UNCLAIMED</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNSIGNED_TODAY" href="#genshin.models.starrail.chronicle.events.HSREventStatus.SIGN_STATUS_UNSIGNED_TODAY">SIGN_STATUS_UNSIGNED_TODAY</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREventTimeType" href="#genshin.models.starrail.chronicle.events.HSREventTimeType">HSREventTimeType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventTimeType.DEFAULT" href="#genshin.models.starrail.chronicle.events.HSREventTimeType.DEFAULT">DEFAULT</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventTimeType.LONG" href="#genshin.models.starrail.chronicle.events.HSREventTimeType.LONG">LONG</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.HSREventType" href="#genshin.models.starrail.chronicle.events.HSREventType">HSREventType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventType.DOUBLE_REWARDS" href="#genshin.models.starrail.chronicle.events.HSREventType.DOUBLE_REWARDS">DOUBLE_REWARDS</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventType.OTHER" href="#genshin.models.starrail.chronicle.events.HSREventType.OTHER">OTHER</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.HSREventType.SIGN_IN" href="#genshin.models.starrail.chronicle.events.HSREventType.SIGN_IN">SIGN_IN</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.events.TimeInfo" href="#genshin.models.starrail.chronicle.events.TimeInfo">TimeInfo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.events.TimeInfo.end" href="#genshin.models.starrail.chronicle.events.TimeInfo.end">end</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.TimeInfo.model_config" href="#genshin.models.starrail.chronicle.events.TimeInfo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.TimeInfo.now" href="#genshin.models.starrail.chronicle.events.TimeInfo.now">now</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.events.TimeInfo.start" href="#genshin.models.starrail.chronicle.events.TimeInfo.start">start</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

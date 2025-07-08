@@ -1,0 +1,2863 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.auth.client API documentation</title>
+<meta name="description" content="Main auth client.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.auth.client</code></h1>
+</header>
+<section id="section-intro">
+<p>Main auth client.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.auth.client.AuthClient"><code class="flex name class">
+<span>class <span class="ident">AuthClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"><p>Auth client component.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.auth.subclients.app.AppAuthClient" href="subclients/app.html#genshin.client.components.auth.subclients.app.AppAuthClient">AppAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.web.WebAuthClient" href="subclients/web.html#genshin.client.components.auth.subclients.web.WebAuthClient">WebAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.game.GameAuthClient" href="subclients/game.html#genshin.client.components.auth.subclients.game.GameAuthClient">GameAuthClient</a></li>
+<li><a title="genshin.client.components.base.BaseClient" href="../base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.clients.Client" href="../../clients.html#genshin.client.clients.Client">Client</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.auth.client.AuthClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.auth.client.AuthClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AuthClient(subclients.AppAuthClient, subclients.WebAuthClient, subclients.GameAuthClient):
+    &#34;&#34;&#34;Auth client component.&#34;&#34;&#34;
+
+    async def login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Endpoint is chosen based on client region.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        if self.region is types.Region.CHINESE:
+            return await self.cn_login_with_password(
+                account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+            )
+
+        return await self.os_login_with_password(
+            account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def os_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        port: int = 5000,
+        encrypted: bool = False,
+        token_type: typing.Optional[int] = 6,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; WebLoginResult:
+        &#34;&#34;&#34;Login with a password via web endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        &#34;&#34;&#34;
+        result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._os_web_login(
+            account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+        )
+
+    @base.region_specific(types.Region.CHINESE)
+    async def cn_login_with_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; CNWebLoginResult:
+        &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+        Note that this will start a webserver if captcha is
+        triggered and `geetest_solver` is not passed.
+        &#34;&#34;&#34;
+        result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+        if not isinstance(result, SessionMMT):
+            # Captcha not triggered
+            return result
+
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+        &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+        Returns True if the mobile number is valid, False otherwise.
+        &#34;&#34;&#34;
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(
+                routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+                params={&#34;mobile&#34;: mobile},
+            ) as r:
+                data = await r.json()
+
+        return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_mobile_number(
+        self,
+        mobile: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+    ) -&gt; MobileLoginResult:
+        &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+        Only works for Chinese region (Miyoushe) users, do not include
+        area code (+86) in the mobile number.
+
+        Steps:
+        1. Sends OTP to the provided mobile number.
+        2. If captcha is triggered, prompts the user to solve it.
+        3. Lets user enter the OTP.
+        4. Logs in with the OTP.
+        5. Returns cookies.
+        &#34;&#34;&#34;
+        result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            mmt_result = await server.solve_geetest(result, port=port)
+            await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+        otp = await server.enter_code(port=port)
+        return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def login_with_app_password(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+    ) -&gt; AppLoginResult:
+        &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+        Note that this will start a webserver if either of the
+        following happens:
+
+        1. Captcha is triggered and `geetest_solver` is not passed.
+        2. Email verification is triggered (can happen if you
+        first login with a new device).
+
+        Raises
+        ------
+        - AccountLoginFail: Invalid password provided.
+        - AccountDoesNotExist: Invalid email/username.
+        - VerificationCodeRateLimited: Too many verification code requests.
+        &#34;&#34;&#34;
+        result = await self._app_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, SessionMMT):
+            # Captcha triggered
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port)
+
+            result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if isinstance(result, ActionTicket):
+            # Email verification required
+            mmt = await self._send_verification_email(result)
+            if mmt:
+                if geetest_solver:
+                    mmt_result = await geetest_solver(mmt)
+                else:
+                    mmt_result = await server.solve_geetest(mmt, port=port)
+
+                await asyncio.sleep(2)  # Add delay to prevent [-3206]
+                await self._send_verification_email(result, mmt_result=mmt_result)
+
+            code = await server.enter_code(port=port)
+            await self._verify_email(code, result)
+
+            result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+        return result
+
+    @base.region_specific(types.Region.CHINESE)
+    async def login_with_qrcode(self) -&gt; QRLoginResult:
+        &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+        import qrcode
+        import qrcode.image.pil
+        from qrcode.constants import ERROR_CORRECT_L
+
+        creation_result = await self._create_qrcode()
+        qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+        qrcode_.show()
+
+        scanned = False
+        while True:
+            status, cookies = await self._check_qrcode(creation_result.ticket)
+            if status is QRCodeStatus.SCANNED and not scanned:
+                LOGGER_.info(&#34;QR code scanned&#34;)
+                scanned = True
+            elif status is QRCodeStatus.CONFIRMED:
+                LOGGER_.info(&#34;QR code login confirmed&#34;)
+                break
+
+            await asyncio.sleep(1)
+
+        self.set_cookies(cookies)
+        dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+        return QRLoginResult(**dict_cookies)
+
+    @managers.no_multi
+    async def create_mmt(self) -&gt; MMT:
+        &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        url = routes.CREATE_MMT_URL.get_url(self.region)
+        if self.region is types.Region.OVERSEAS:
+            url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+        return MMT(**data[&#34;data&#34;])
+
+    @base.region_specific(types.Region.OVERSEAS)
+    @managers.no_multi
+    async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+        &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+        if self.default_game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        headers = {
+            &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+            **auth_utility.CREATE_MMT_HEADERS[self.region],
+        }
+
+        body = mmt_result.model_dump()
+        body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+        assert isinstance(self.cookie_manager, managers.CookieManager)
+        async with self.cookie_manager.create_session() as session:
+            async with session.post(
+                routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+            ) as r:
+                data = await r.json()
+
+        if not data[&#34;data&#34;]:
+            errors.raise_for_retcode(data)
+
+    async def os_game_login(
+        self,
+        account: str,
+        password: str,
+        *,
+        encrypted: bool = False,
+        port: int = 5000,
+        geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+    ) -&gt; GameLoginResult:
+        &#34;&#34;&#34;Perform a login to the game.
+
+        Raises
+        ------
+        - IncorrectGameAccount: Invalid account provided.
+        - IncorrectGamePassword: Invalid password provided.
+        &#34;&#34;&#34;
+        api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+        result = await self._shield_login(account, password, encrypted=encrypted)
+
+        if isinstance(result, RiskyCheckMMT):
+            if geetest_solver:
+                mmt_result = await geetest_solver(result)
+            else:
+                mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+            result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+        if not result.device_grant_required:
+            return await self._os_game_login(result.account.uid, result.account.token)
+
+        mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+            await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+        code = await server.enter_code()
+        verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+        return await self._os_game_login(result.account.uid, verification_result.game_token)
+
+    def _gen_random_fp(self) -&gt; str:
+        &#34;&#34;&#34;Generate a random device fingerprint used for generating authentic device fingerprint.&#34;&#34;&#34;
+        char = digits + &#34;abcdef&#34;
+        return &#34;&#34;.join(random.choices(char, k=13))
+
+    def _gen_ext_fields(self, oaid: str, board: str) -&gt; str:
+        oaid_key = &#34;oaid&#34; if self.region is types.Region.CHINESE else &#34;adid&#34;
+        ext_fields = {oaid_key: oaid, &#34;board&#34;: board}
+        return json.dumps(ext_fields)
+
+    async def generate_fp(
+        self,
+        *,
+        device_id: str,
+        device_board: str,
+        oaid: str,
+    ) -&gt; str:
+        &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+        device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+        payload = {
+            &#34;device_id&#34;: device_id,
+            &#34;device_fp&#34;: self._gen_random_fp(),
+            &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+            &#34;seed_time&#34;: str(int(time.time() * 1000)),
+            &#34;platform&#34;: &#34;2&#34;,
+            &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+            &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+            device_id_key: str(uuid.uuid4()).lower(),
+        }
+
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+        ):
+            data = await r.json()
+
+        if data[&#34;data&#34;][&#34;code&#34;] != 200:
+            raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+        return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.auth.client.AuthClient.check_mobile_number_validity"><code class="name flex">
+<span>async def <span class="ident">check_mobile_number_validity</span></span>(<span>self, mobile: str) ‑> bool</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def check_mobile_number_validity(self, mobile: str) -&gt; bool:
+    &#34;&#34;&#34;Check if a mobile number is valid (it&#39;s registered on Miyoushe).
+
+    Returns True if the mobile number is valid, False otherwise.
+    &#34;&#34;&#34;
+    async with self.cookie_manager.create_session() as session:
+        async with session.get(
+            routes.CHECK_MOBILE_VALIDITY_URL.get_url(),
+            params={&#34;mobile&#34;: mobile},
+        ) as r:
+            data = await r.json()
+
+    return data[&#34;data&#34;][&#34;status&#34;] != data[&#34;data&#34;][&#34;is_registable&#34;]</code></pre>
+</details>
+<div class="desc"><p>Check if a mobile number is valid (it's registered on Miyoushe).</p>
+<p>Returns True if the mobile number is valid, False otherwise.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.cn_login_with_password"><code class="name flex">
+<span>async def <span class="ident">cn_login_with_password</span></span>(<span>self,<br>account: str,<br>password: str,<br>*,<br>encrypted: bool = False,<br>port: int = 5000,<br>geetest_solver: Callable[[<a title="genshin.models.auth.geetest.SessionMMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMT">SessionMMT</a>], Awaitable[<a title="genshin.models.auth.geetest.SessionMMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMTResult">SessionMMTResult</a>]] | None = None) ‑> <a title="genshin.models.auth.cookie.CNWebLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.CNWebLoginResult">CNWebLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.CHINESE)
+async def cn_login_with_password(
+    self,
+    account: str,
+    password: str,
+    *,
+    encrypted: bool = False,
+    port: int = 5000,
+    geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+) -&gt; CNWebLoginResult:
+    &#34;&#34;&#34;Login with a password via Miyoushe loginByPassword endpoint.
+
+    Note that this will start a webserver if captcha is
+    triggered and `geetest_solver` is not passed.
+    &#34;&#34;&#34;
+    result = await self._cn_web_login(account, password, encrypted=encrypted)
+
+    if not isinstance(result, SessionMMT):
+        # Captcha not triggered
+        return result
+
+    if geetest_solver:
+        mmt_result = await geetest_solver(result)
+    else:
+        mmt_result = await server.solve_geetest(result, port=port)
+
+    return await self._cn_web_login(account, password, encrypted=encrypted, mmt_result=mmt_result)</code></pre>
+</details>
+<div class="desc"><p>Login with a password via Miyoushe loginByPassword endpoint.</p>
+<p>Note that this will start a webserver if captcha is
+triggered and <code>geetest_solver</code> is not passed.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.create_mmt"><code class="name flex">
+<span>async def <span class="ident">create_mmt</span></span>(<span>self) ‑> <a title="genshin.models.auth.geetest.MMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.MMT">MMT</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def create_mmt(self) -&gt; MMT:
+    &#34;&#34;&#34;Create a geetest challenge.&#34;&#34;&#34;
+    if self.default_game is None:
+        raise ValueError(&#34;No default game set.&#34;)
+
+    headers = {
+        &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+        **auth_utility.CREATE_MMT_HEADERS[self.region],
+    }
+
+    url = routes.CREATE_MMT_URL.get_url(self.region)
+    if self.region is types.Region.OVERSEAS:
+        url = url.update_query(app_key=constants.GEETEST_RECORD_KEYS[self.default_game])
+
+    assert isinstance(self.cookie_manager, managers.CookieManager)
+    async with self.cookie_manager.create_session() as session:
+        async with session.get(url, headers=headers, cookies=self.cookie_manager.cookies) as r:
+            data = await r.json()
+
+    if not data[&#34;data&#34;]:
+        errors.raise_for_retcode(data)
+
+    return MMT(**data[&#34;data&#34;])</code></pre>
+</details>
+<div class="desc"><p>Create a geetest challenge.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.generate_fp"><code class="name flex">
+<span>async def <span class="ident">generate_fp</span></span>(<span>self, *, device_id: str, device_board: str, oaid: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def generate_fp(
+    self,
+    *,
+    device_id: str,
+    device_board: str,
+    oaid: str,
+) -&gt; str:
+    &#34;&#34;&#34;Generate an authentic device fingerprint.&#34;&#34;&#34;
+    device_id_key = &#34;bbs_device_id&#34; if self.region is types.Region.CHINESE else &#34;hoyolab_device_id&#34;
+    payload = {
+        &#34;device_id&#34;: device_id,
+        &#34;device_fp&#34;: self._gen_random_fp(),
+        &#34;seed_id&#34;: str(uuid.uuid4()).lower(),
+        &#34;seed_time&#34;: str(int(time.time() * 1000)),
+        &#34;platform&#34;: &#34;2&#34;,
+        &#34;app_name&#34;: &#34;bbs_cn&#34; if self.region is types.Region.CHINESE else &#34;bbs_oversea&#34;,
+        &#34;ext_fields&#34;: self._gen_ext_fields(oaid, device_board),
+        device_id_key: str(uuid.uuid4()).lower(),
+    }
+
+    async with (
+        aiohttp.ClientSession() as session,
+        session.post(routes.GET_FP_URL.get_url(self.region), json=payload) as r,
+    ):
+        data = await r.json()
+
+    if data[&#34;data&#34;][&#34;code&#34;] != 200:
+        raise errors.GenshinException(data, data[&#34;data&#34;][&#34;msg&#34;])
+
+    return data[&#34;data&#34;][&#34;device_fp&#34;]</code></pre>
+</details>
+<div class="desc"><p>Generate an authentic device fingerprint.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.login_with_app_password"><code class="name flex">
+<span>async def <span class="ident">login_with_app_password</span></span>(<span>self,<br>account: str,<br>password: str,<br>*,<br>encrypted: bool = False,<br>port: int = 5000,<br>geetest_solver: Callable[[<a title="genshin.models.auth.geetest.SessionMMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMT">SessionMMT</a>], Awaitable[<a title="genshin.models.auth.geetest.SessionMMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMTResult">SessionMMTResult</a>]] | None = None) ‑> <a title="genshin.models.auth.cookie.AppLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.AppLoginResult">AppLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def login_with_app_password(
+    self,
+    account: str,
+    password: str,
+    *,
+    encrypted: bool = False,
+    port: int = 5000,
+    geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+) -&gt; AppLoginResult:
+    &#34;&#34;&#34;Login with a password via HoYoLab app endpoint.
+
+    Note that this will start a webserver if either of the
+    following happens:
+
+    1. Captcha is triggered and `geetest_solver` is not passed.
+    2. Email verification is triggered (can happen if you
+    first login with a new device).
+
+    Raises
+    ------
+    - AccountLoginFail: Invalid password provided.
+    - AccountDoesNotExist: Invalid email/username.
+    - VerificationCodeRateLimited: Too many verification code requests.
+    &#34;&#34;&#34;
+    result = await self._app_login(account, password, encrypted=encrypted)
+
+    if isinstance(result, SessionMMT):
+        # Captcha triggered
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port)
+
+        result = await self._app_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    if isinstance(result, ActionTicket):
+        # Email verification required
+        mmt = await self._send_verification_email(result)
+        if mmt:
+            if geetest_solver:
+                mmt_result = await geetest_solver(mmt)
+            else:
+                mmt_result = await server.solve_geetest(mmt, port=port)
+
+            await asyncio.sleep(2)  # Add delay to prevent [-3206]
+            await self._send_verification_email(result, mmt_result=mmt_result)
+
+        code = await server.enter_code(port=port)
+        await self._verify_email(code, result)
+
+        result = await self._app_login(account, password, encrypted=encrypted, ticket=result)
+
+    return result</code></pre>
+</details>
+<div class="desc"><p>Login with a password via HoYoLab app endpoint.</p>
+<p>Note that this will start a webserver if either of the
+following happens:</p>
+<ol>
+<li>Captcha is triggered and <code>geetest_solver</code> is not passed.</li>
+<li>Email verification is triggered (can happen if you
+first login with a new device).</li>
+</ol>
+<h2 id="raises">Raises</h2>
+<ul>
+<li>AccountLoginFail: Invalid password provided.</li>
+<li>AccountDoesNotExist: Invalid email/username.</li>
+<li>VerificationCodeRateLimited: Too many verification code requests.</li>
+</ul></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.login_with_mobile_number"><code class="name flex">
+<span>async def <span class="ident">login_with_mobile_number</span></span>(<span>self, mobile: str, *, encrypted: bool = False, port: int = 5000) ‑> <a title="genshin.models.auth.cookie.MobileLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.MobileLoginResult">MobileLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.CHINESE)
+async def login_with_mobile_number(
+    self,
+    mobile: str,
+    *,
+    encrypted: bool = False,
+    port: int = 5000,
+) -&gt; MobileLoginResult:
+    &#34;&#34;&#34;Login with mobile number, returns cookies.
+
+    Only works for Chinese region (Miyoushe) users, do not include
+    area code (+86) in the mobile number.
+
+    Steps:
+    1. Sends OTP to the provided mobile number.
+    2. If captcha is triggered, prompts the user to solve it.
+    3. Lets user enter the OTP.
+    4. Logs in with the OTP.
+    5. Returns cookies.
+    &#34;&#34;&#34;
+    result = await self._send_mobile_otp(mobile, encrypted=encrypted)
+
+    if isinstance(result, SessionMMT):
+        # Captcha triggered
+        mmt_result = await server.solve_geetest(result, port=port)
+        await self._send_mobile_otp(mobile, encrypted=encrypted, mmt_result=mmt_result)
+
+    otp = await server.enter_code(port=port)
+    return await self._login_with_mobile_otp(mobile, otp, encrypted=encrypted)</code></pre>
+</details>
+<div class="desc"><p>Login with mobile number, returns cookies.</p>
+<p>Only works for Chinese region (Miyoushe) users, do not include
+area code (+86) in the mobile number.</p>
+<p>Steps:
+1. Sends OTP to the provided mobile number.
+2. If captcha is triggered, prompts the user to solve it.
+3. Lets user enter the OTP.
+4. Logs in with the OTP.
+5. Returns cookies.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.login_with_password"><code class="name flex">
+<span>async def <span class="ident">login_with_password</span></span>(<span>self,<br>account: str,<br>password: str,<br>*,<br>port: int = 5000,<br>encrypted: bool = False,<br>geetest_solver: Callable[[<a title="genshin.models.auth.geetest.SessionMMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMT">SessionMMT</a>], Awaitable[<a title="genshin.models.auth.geetest.SessionMMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMTResult">SessionMMTResult</a>]] | None = None) ‑> <a title="genshin.models.auth.cookie.WebLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.WebLoginResult">WebLoginResult</a> | <a title="genshin.models.auth.cookie.CNWebLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.CNWebLoginResult">CNWebLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def login_with_password(
+    self,
+    account: str,
+    password: str,
+    *,
+    port: int = 5000,
+    encrypted: bool = False,
+    geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+) -&gt; typing.Union[WebLoginResult, CNWebLoginResult]:
+    &#34;&#34;&#34;Login with a password via web endpoint.
+
+    Endpoint is chosen based on client region.
+
+    Note that this will start a webserver if captcha is
+    triggered and `geetest_solver` is not passed.
+
+    Raises
+    ------
+    - AccountLoginFail: Invalid password provided.
+    - AccountDoesNotExist: Invalid email/username.
+    &#34;&#34;&#34;
+    if self.region is types.Region.CHINESE:
+        return await self.cn_login_with_password(
+            account, password, encrypted=encrypted, port=port, geetest_solver=geetest_solver
+        )
+
+    return await self.os_login_with_password(
+        account, password, port=port, encrypted=encrypted, geetest_solver=geetest_solver
+    )</code></pre>
+</details>
+<div class="desc"><p>Login with a password via web endpoint.</p>
+<p>Endpoint is chosen based on client region.</p>
+<p>Note that this will start a webserver if captcha is
+triggered and <code>geetest_solver</code> is not passed.</p>
+<h2 id="raises">Raises</h2>
+<ul>
+<li>AccountLoginFail: Invalid password provided.</li>
+<li>AccountDoesNotExist: Invalid email/username.</li>
+</ul></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.login_with_qrcode"><code class="name flex">
+<span>async def <span class="ident">login_with_qrcode</span></span>(<span>self) ‑> <a title="genshin.models.auth.cookie.QRLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.QRLoginResult">QRLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.CHINESE)
+async def login_with_qrcode(self) -&gt; QRLoginResult:
+    &#34;&#34;&#34;Login with QR code, only available for Miyoushe users.&#34;&#34;&#34;
+    import qrcode
+    import qrcode.image.pil
+    from qrcode.constants import ERROR_CORRECT_L
+
+    creation_result = await self._create_qrcode()
+    qrcode_: qrcode.image.pil.PilImage = qrcode.make(creation_result.url, error_correction=ERROR_CORRECT_L)  # type: ignore
+    qrcode_.show()
+
+    scanned = False
+    while True:
+        status, cookies = await self._check_qrcode(creation_result.ticket)
+        if status is QRCodeStatus.SCANNED and not scanned:
+            LOGGER_.info(&#34;QR code scanned&#34;)
+            scanned = True
+        elif status is QRCodeStatus.CONFIRMED:
+            LOGGER_.info(&#34;QR code login confirmed&#34;)
+            break
+
+        await asyncio.sleep(1)
+
+    self.set_cookies(cookies)
+    dict_cookies = {key: morsel.value for key, morsel in cookies.items()}
+    return QRLoginResult(**dict_cookies)</code></pre>
+</details>
+<div class="desc"><p>Login with QR code, only available for Miyoushe users.</p></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.os_game_login"><code class="name flex">
+<span>async def <span class="ident">os_game_login</span></span>(<span>self,<br>account: str,<br>password: str,<br>*,<br>encrypted: bool = False,<br>port: int = 5000,<br>geetest_solver: Callable[[<a title="genshin.models.auth.geetest.RiskyCheckMMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.RiskyCheckMMT">RiskyCheckMMT</a>], Awaitable[<a title="genshin.models.auth.geetest.RiskyCheckMMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.RiskyCheckMMTResult">RiskyCheckMMTResult</a>]] | None = None) ‑> <a title="genshin.models.auth.cookie.GameLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.GameLoginResult">GameLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def os_game_login(
+    self,
+    account: str,
+    password: str,
+    *,
+    encrypted: bool = False,
+    port: int = 5000,
+    geetest_solver: typing.Optional[typing.Callable[[RiskyCheckMMT], typing.Awaitable[RiskyCheckMMTResult]]] = None,
+) -&gt; GameLoginResult:
+    &#34;&#34;&#34;Perform a login to the game.
+
+    Raises
+    ------
+    - IncorrectGameAccount: Invalid account provided.
+    - IncorrectGamePassword: Invalid password provided.
+    &#34;&#34;&#34;
+    api_server = &#34;api.geetest.com&#34; if self.region is types.Region.CHINESE else &#34;api-na.geetest.com&#34;
+
+    result = await self._shield_login(account, password, encrypted=encrypted)
+
+    if isinstance(result, RiskyCheckMMT):
+        if geetest_solver:
+            mmt_result = await geetest_solver(result)
+        else:
+            mmt_result = await server.solve_geetest(result, port=port, api_server=api_server)
+
+        result = await self._shield_login(account, password, encrypted=encrypted, mmt_result=mmt_result)
+
+    if not result.device_grant_required:
+        return await self._os_game_login(result.account.uid, result.account.token)
+
+    mmt = await self._send_game_verification_email(result.account.device_grant_ticket)
+    if mmt:
+        if geetest_solver:
+            mmt_result = await geetest_solver(mmt)
+        else:
+            mmt_result = await server.solve_geetest(mmt, port=port, api_server=api_server)
+
+        await self._send_game_verification_email(result.account.device_grant_ticket, mmt_result=mmt_result)
+
+    code = await server.enter_code()
+    verification_result = await self._verify_game_email(code, result.account.device_grant_ticket)
+
+    return await self._os_game_login(result.account.uid, verification_result.game_token)</code></pre>
+</details>
+<div class="desc"><p>Perform a login to the game.</p>
+<h2 id="raises">Raises</h2>
+<ul>
+<li>IncorrectGameAccount: Invalid account provided.</li>
+<li>IncorrectGamePassword: Invalid password provided.</li>
+</ul></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.os_login_with_password"><code class="name flex">
+<span>async def <span class="ident">os_login_with_password</span></span>(<span>self,<br>account: str,<br>password: str,<br>*,<br>port: int = 5000,<br>encrypted: bool = False,<br>token_type: int | None = 6,<br>geetest_solver: Callable[[<a title="genshin.models.auth.geetest.SessionMMT" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMT">SessionMMT</a>], Awaitable[<a title="genshin.models.auth.geetest.SessionMMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.SessionMMTResult">SessionMMTResult</a>]] | None = None) ‑> <a title="genshin.models.auth.cookie.WebLoginResult" href="../../../models/auth/cookie.html#genshin.models.auth.cookie.WebLoginResult">WebLoginResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def os_login_with_password(
+    self,
+    account: str,
+    password: str,
+    *,
+    port: int = 5000,
+    encrypted: bool = False,
+    token_type: typing.Optional[int] = 6,
+    geetest_solver: typing.Optional[typing.Callable[[SessionMMT], typing.Awaitable[SessionMMTResult]]] = None,
+) -&gt; WebLoginResult:
+    &#34;&#34;&#34;Login with a password via web endpoint.
+
+    Note that this will start a webserver if captcha is
+    triggered and `geetest_solver` is not passed.
+
+    Raises
+    ------
+    - AccountLoginFail: Invalid password provided.
+    - AccountDoesNotExist: Invalid email/username.
+    &#34;&#34;&#34;
+    result = await self._os_web_login(account, password, encrypted=encrypted, token_type=token_type)
+
+    if not isinstance(result, SessionMMT):
+        # Captcha not triggered
+        return result
+
+    if geetest_solver:
+        mmt_result = await geetest_solver(result)
+    else:
+        mmt_result = await server.solve_geetest(result, port=port)
+
+    return await self._os_web_login(
+        account, password, encrypted=encrypted, token_type=token_type, mmt_result=mmt_result
+    )</code></pre>
+</details>
+<div class="desc"><p>Login with a password via web endpoint.</p>
+<p>Note that this will start a webserver if captcha is
+triggered and <code>geetest_solver</code> is not passed.</p>
+<h2 id="raises">Raises</h2>
+<ul>
+<li>AccountLoginFail: Invalid password provided.</li>
+<li>AccountDoesNotExist: Invalid email/username.</li>
+</ul></div>
+</dd>
+<dt id="genshin.client.components.auth.client.AuthClient.verify_mmt"><code class="name flex">
+<span>async def <span class="ident">verify_mmt</span></span>(<span>self,<br>mmt_result: <a title="genshin.models.auth.geetest.MMTResult" href="../../../models/auth/geetest.html#genshin.models.auth.geetest.MMTResult">MMTResult</a>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+@managers.no_multi
+async def verify_mmt(self, mmt_result: MMTResult) -&gt; None:
+    &#34;&#34;&#34;Verify a geetest challenge.&#34;&#34;&#34;
+    if self.default_game is None:
+        raise ValueError(&#34;No default game set.&#34;)
+
+    headers = {
+        &#34;DS&#34;: ds_utility.generate_geetest_ds(self.region),
+        **auth_utility.CREATE_MMT_HEADERS[self.region],
+    }
+
+    body = mmt_result.model_dump()
+    body[&#34;app_key&#34;] = constants.GEETEST_RECORD_KEYS[self.default_game]
+
+    assert isinstance(self.cookie_manager, managers.CookieManager)
+    async with self.cookie_manager.create_session() as session:
+        async with session.post(
+            routes.VERIFY_MMT_URL.get_url(), json=body, headers=headers, cookies=self.cookie_manager.cookies
+        ) as r:
+            data = await r.json()
+
+    if not data[&#34;data&#34;]:
+        errors.raise_for_retcode(data)</code></pre>
+</details>
+<div class="desc"><p>Verify a geetest challenge.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.auth.subclients.app.AppAuthClient" href="subclients/app.html#genshin.client.components.auth.subclients.app.AppAuthClient">AppAuthClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.authkey" href="../base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.debug" href="../base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.default_game" href="../base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.device_fp" href="../base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.device_id" href="../base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.game" href="../base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.genshin_accounts" href="../base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.get_account_timezone" href="../base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.get_game_accounts" href="../base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.hoyolab_id" href="../base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.lang" href="../base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.proxy" href="../base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.region" href="../base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.request" href="../base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.request_bbs" href="../base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.request_hoyolab" href="../base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.request_webstatic" href="../base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.set_authkey" href="../base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.set_browser_cookies" href="../base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.set_cache" href="../base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.set_cookies" href="../base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.set_redis_cache" href="../base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.auth.subclients.app.AppAuthClient.uid" href="../base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components.auth" href="index.html">genshin.client.components.auth</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.auth.client.AuthClient" href="#genshin.client.components.auth.client.AuthClient">AuthClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.auth.client.AuthClient.authkeys" href="#genshin.client.components.auth.client.AuthClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.cache" href="#genshin.client.components.auth.client.AuthClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.check_mobile_number_validity" href="#genshin.client.components.auth.client.AuthClient.check_mobile_number_validity">check_mobile_number_validity</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.cn_login_with_password" href="#genshin.client.components.auth.client.AuthClient.cn_login_with_password">cn_login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.cookie_manager" href="#genshin.client.components.auth.client.AuthClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.create_mmt" href="#genshin.client.components.auth.client.AuthClient.create_mmt">create_mmt</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.custom_headers" href="#genshin.client.components.auth.client.AuthClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.generate_fp" href="#genshin.client.components.auth.client.AuthClient.generate_fp">generate_fp</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.logger" href="#genshin.client.components.auth.client.AuthClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_app_password" href="#genshin.client.components.auth.client.AuthClient.login_with_app_password">login_with_app_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_mobile_number" href="#genshin.client.components.auth.client.AuthClient.login_with_mobile_number">login_with_mobile_number</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_password" href="#genshin.client.components.auth.client.AuthClient.login_with_password">login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_qrcode" href="#genshin.client.components.auth.client.AuthClient.login_with_qrcode">login_with_qrcode</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.os_game_login" href="#genshin.client.components.auth.client.AuthClient.os_game_login">os_game_login</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.os_login_with_password" href="#genshin.client.components.auth.client.AuthClient.os_login_with_password">os_login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.uids" href="#genshin.client.components.auth.client.AuthClient.uids">uids</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.verify_mmt" href="#genshin.client.components.auth.client.AuthClient.verify_mmt">verify_mmt</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

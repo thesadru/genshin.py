@@ -1,0 +1,3967 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.hoyolab API documentation</title>
+<meta name="description" content="Hoyolab component.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.hoyolab</code></h1>
+</header>
+<section id="section-intro">
+<p>Hoyolab component.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.hoyolab.HoyolabClient"><code class="flex name class">
+<span>class <span class="ident">HoyolabClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"><p>Hoyolab component.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.clients.Client" href="../clients.html#genshin.client.clients.Client">Client</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HoyolabClient(base.BaseClient):
+    &#34;&#34;&#34;Hoyolab component.&#34;&#34;&#34;
+
+    async def _get_server_region(self, uid: int, game: types.Game) -&gt; str:
+        &#34;&#34;&#34;Fetch the server region of an account from the API.&#34;&#34;&#34;
+        data = await self.request(
+            routes.GET_USER_REGION_URL.get_url(),
+            params=dict(game_biz=utility.get_prod_game_biz(self.region, game)),
+            cache=client_cache.cache_key(&#34;server_region&#34;, game=game, uid=uid, region=self.region),
+        )
+        for account in data[&#34;list&#34;]:
+            if account[&#34;game_uid&#34;] == str(uid):
+                return account[&#34;region&#34;]
+
+        raise ValueError(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}&#34;)
+
+    async def _request_announcements(
+        self,
+        game: types.Game,
+        uid: int,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of game announcements.&#34;&#34;&#34;
+        if game is types.Game.GENSHIN:
+            params = dict(
+                game=&#34;hk4e&#34;,
+                game_biz=&#34;hk4e_global&#34;,
+                bundle_id=&#34;hk4e_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_genshin_server(uid),
+                uid=uid,
+                level=8,
+                lang=lang or self.lang,
+            )
+            url = routes.HK4E_URL.get_url()
+        elif game is types.Game.ZZZ:
+            params = dict(
+                game=&#34;nap&#34;,
+                game_biz=&#34;nap_global&#34;,
+                bundle_id=&#34;nap_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_zzz_server(uid),
+                level=60,
+                lang=lang or self.lang,
+                uid=uid,
+            )
+            url = routes.NAP_URL.get_url()
+        elif game is types.Game.STARRAIL:
+            params = dict(
+                game=&#34;hkrpg&#34;,
+                game_biz=&#34;hkrpg_global&#34;,
+                bundle_id=&#34;hkrpg_global&#34;,
+                platform=&#34;pc&#34;,
+                region=utility.recognize_starrail_server(uid),
+                uid=uid,
+                level=70,
+                lang=lang or self.lang,
+                channel_id=1,
+            )
+            url = routes.HKRPG_URL.get_url()
+        else:
+            msg = f&#34;{game!r} is not supported yet.&#34;
+            raise ValueError(msg)
+
+        info, details = await asyncio.gather(
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnList&#34;,
+                lang=lang,
+                params=params,
+            ),
+            self.request_hoyolab(
+                url / &#34;announcement/api/getAnnContent&#34;,
+                lang=lang,
+                params=params,
+            ),
+        )
+
+        announcements: list[typing.Dict[str, typing.Any]] = []
+        extra_list: list[typing.Dict[str, typing.Any]] = (
+            info[&#34;pic_list&#34;][0][&#34;type_list&#34;] if &#34;pic_list&#34; in info and info[&#34;pic_list&#34;] else []
+        )
+
+        for sublist in info[&#34;list&#34;] + extra_list:
+            for ann in sublist[&#34;list&#34;]:
+                detail = next((i for i in details[&#34;list&#34;] if i[&#34;ann_id&#34;] == ann[&#34;ann_id&#34;]), None)
+
+                # Update existing announcements with new details
+                same_title = next((a for a in announcements if a[&#34;title&#34;] == ann[&#34;title&#34;]), None)
+                if same_title is not None:
+                    if ann.get(&#34;banner&#34;):
+                        same_title[&#34;banner&#34;] = ann[&#34;banner&#34;]
+                    if ann.get(&#34;img&#34;):
+                        same_title[&#34;img&#34;] = ann[&#34;img&#34;]
+                    continue
+
+                announcements.append({**ann, **(detail or {})})
+
+        return [models.Announcement(**i) for i in announcements]
+
+    async def _request_mimo(
+        self,
+        endpoint: str,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+    ) -&gt; typing.Any:
+        game_id = params.get(&#34;game_id&#34;) if params else data.get(&#34;game_id&#34;)
+        if game_id is None and self.game is None:
+            raise ValueError(&#34;Cannot determine game for this traveling mimo request.&#34;)
+
+        if game_id == 2 or self.game is types.Game.GENSHIN:
+            url = routes.MIMO_URL.get_url() / &#34;nata&#34; / endpoint.replace(&#34;-&#34;, &#34;_&#34;)
+        else:
+            url = routes.MIMO_URL.get_url() / endpoint
+        return await self.request(url, method=method, params=params, data=data)
+
+    async def search_users(
+        self,
+        keyword: str,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/search/wapi/search/user&#34;,
+            lang=lang,
+            params=dict(keyword=keyword, page_size=20),
+            cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+        )
+        return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]
+
+    async def get_hoyolab_user(
+        self,
+        hoyolab_id: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullHoyolabUser:
+        &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+        if self.region == types.Region.OVERSEAS:
+            url = &#34;/community/painter/wapi/user/full&#34;
+        elif self.region == types.Region.CHINESE:
+            url = &#34;/user/wapi/getUserFullInfo&#34;
+        else:
+            raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+        data = await self.request_bbs(
+            url=url,
+            lang=lang,
+            params=dict(uid=hoyolab_id) if hoyolab_id else None,
+            cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+        )
+        return models.FullHoyolabUser(**data[&#34;user_info&#34;])
+
+    async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+        &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+        warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+        return []
+
+    async def get_genshin_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+        else:
+            uid = uid or 900000005
+        return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)
+
+    async def get_zzz_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.ZZZ)
+        else:
+            uid = uid or 1300000000
+        return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)
+
+    async def get_starrail_announcements(
+        self,
+        *,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Announcement]:
+        &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+        if self.cookie_manager.multi:
+            uid = uid or await self._get_uid(types.Game.STARRAIL)
+        else:
+            uid = uid or 809162009
+        return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)
+
+    @managers.requires_cookie_token
+    async def redeem_code(
+        self,
+        code: str,
+        uid: typing.Optional[int] = None,
+        *,
+        game: typing.Optional[types.Game] = None,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+        if game is None:
+            if self.default_game is None:
+                raise RuntimeError(&#34;No default game set.&#34;)
+
+            game = self.default_game
+
+        if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+            raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+        uid = uid or await self._get_uid(game)
+
+        try:
+            region = region or utility.recognize_server(uid, game)
+        except Exception:
+            warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+            region = await self._get_server_region(uid, game)
+
+        await self.request(
+            routes.CODE_URL.get_url(self.region, game),
+            params=dict(
+                uid=uid,
+                region=region,
+                cdkey=code,
+                game_biz=utility.get_prod_game_biz(self.region, game),
+                lang=utility.create_short_lang_code(lang or self.lang),
+            ),
+            method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+        )
+
+    @managers.no_multi
+    async def check_in_community(self) -&gt; None:
+        &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+        raise RuntimeError(&#34;This API is deprecated.&#34;)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def fetch_mi18n(
+        self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Mapping[str, str]:
+        &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+        return await self.request(
+            yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+            cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+        data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+        if self.game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        if self.game is types.Game.GENSHIN:
+            return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+        return [models.MimoGame(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _get_mimo_game_data(
+        self, game: typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]
+    ) -&gt; typing.Tuple[int, int]:
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.id, mimo_game.version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def _parse_mimo_args(
+        self,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; typing.Tuple[int, int]:
+        if game_id is None or version_id is None:
+            if game is None:
+                if self.default_game is None:
+                    raise RuntimeError(&#34;No default game set.&#34;)
+                game = self.default_game
+
+            if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, &#34;hoyolab&#34;}:
+                raise ValueError(f&#34;{game!r} does not support Traveling Mimo.&#34;)
+            game_id, version_id = await self._get_mimo_game_data(game)
+
+        return game_id, version_id
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_tasks(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoTask]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;task-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def claim_mimo_task_reward(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;receive-point&#34;,
+            params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def finish_mimo_task(
+        self,
+        task_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        await self._request_mimo(
+            &#34;finish-task&#34;,
+            data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_shop_items(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.MimoShopItem]:
+        &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange-list&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def buy_mimo_shop_item(
+        self,
+        item_id: int,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; str:
+        &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;exchange&#34;,
+            data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return data[&#34;exchange_code&#34;]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_point_count(
+        self,
+        *,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    ) -&gt; int:
+        &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+        game = game or self.default_game
+        games = await self.get_mimo_games()
+        mimo_game = next((i for i in games if i.game == game), None)
+        if mimo_game is None:
+            raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+        return mimo_game.point
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_mimo_lottery_info(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryInfo:
+        &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery-info&#34;,
+            params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        )
+        return models.MimoLotteryInfo(**data)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def draw_mimo_lottery(
+        self,
+        *,
+        game_id: typing.Optional[int] = None,
+        version_id: typing.Optional[int] = None,
+        game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.MimoLotteryResult:
+        &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+        game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+        data = await self._request_mimo(
+            &#34;lottery&#34;,
+            data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+            method=&#34;POST&#34;,
+        )
+        return models.MimoLotteryResult(**data)
+
+    async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+        &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/releaseReply&#34;,
+            data=dict(
+                post_id=str(post_id),
+                content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+                image_list=[],
+                reply_bubble_id=&#34;&#34;,
+                structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+            ),
+            method=&#34;POST&#34;,
+            headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+        )
+        return int(data[&#34;reply_id&#34;])
+
+    async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+        &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+        await self.request_bbs(
+            &#34;community/post/wapi/deleteReply&#34;,
+            data=dict(reply_id=reply_id, post_id=post_id),
+            method=&#34;POST&#34;,
+        )
+
+    async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+        &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/post/wapi/userReply&#34;,
+            params=dict(size=size),
+        )
+        return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]
+
+    async def _request_join(self, topic_id: int, *, is_cancel: bool) -&gt; None:
+        await self.request_bbs(
+            &#34;community/topic/wapi/join&#34;,
+            data=dict(topic_id=topic_id, is_cancel=is_cancel),
+            method=&#34;POST&#34;,
+        )
+
+    async def join_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=False)
+
+    async def leave_topic(self, topic_id: int) -&gt; None:
+        &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+        await self._request_join(topic_id, is_cancel=True)
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_web_events(
+        self,
+        game: typing.Optional[types.Game] = None,
+        *,
+        size: int = 15,
+        offset: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; list[models.WebEvent]:
+        &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+        game = game or self.default_game
+        if game is None:
+            raise ValueError(&#34;No default game set.&#34;)
+
+        data = await self.request_bbs(
+            &#34;community/community_contribution/wapi/event/list&#34;,
+            params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+            lang=lang,
+        )
+        return [models.WebEvent(**i) for i in data[&#34;list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def get_accompany_characters(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+        &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/painter/api/getChannelRoleList&#34;,
+            cache=client_cache.cache_key(&#34;accp_chars&#34;),
+            method=&#34;POST&#34;,
+            lang=lang,
+        )
+        return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]
+
+    @base.region_specific(types.Region.OVERSEAS)
+    async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+        &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+        data = await self.request_bbs(
+            &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+        )
+        return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.accompany_character"><code class="name flex">
+<span>async def <span class="ident">accompany_character</span></span>(<span>self, *, role_id: int, topic_id: int) ‑> <a title="genshin.models.hoyolab.accompany.AccompanyResult" href="../../models/hoyolab/accompany.html#genshin.models.hoyolab.accompany.AccompanyResult">AccompanyResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def accompany_character(self, *, role_id: int, topic_id: int) -&gt; models.AccompanyResult:
+    &#34;&#34;&#34;Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.&#34;&#34;&#34;
+    data = await self.request_bbs(
+        &#34;community/apihub/api/user/accompany/role&#34;, params=dict(role_id=role_id, topic_id=topic_id)
+    )
+    return models.AccompanyResult(**data)</code></pre>
+</details>
+<div class="desc"><p>Accompany a character, role_id and topic_id can be found by calling get_accompany_characters.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.buy_mimo_shop_item"><code class="name flex">
+<span>async def <span class="ident">buy_mimo_shop_item</span></span>(<span>self,<br>item_id: int,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def buy_mimo_shop_item(
+    self,
+    item_id: int,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; str:
+    &#34;&#34;&#34;Buy an item from the Traveling Mimo shop and return a gift code to redeem it.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    data = await self._request_mimo(
+        &#34;exchange&#34;,
+        data=dict(award_id=item_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        method=&#34;POST&#34;,
+    )
+    return data[&#34;exchange_code&#34;]</code></pre>
+</details>
+<div class="desc"><p>Buy an item from the Traveling Mimo shop and return a gift code to redeem it.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.check_in_community"><code class="name flex">
+<span>async def <span class="ident">check_in_community</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def check_in_community(self) -&gt; None:
+    &#34;&#34;&#34;Check in to the hoyolab community and claim your daily 5 community exp.&#34;&#34;&#34;
+    raise RuntimeError(&#34;This API is deprecated.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Check in to the hoyolab community and claim your daily 5 community exp.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.claim_mimo_task_reward"><code class="name flex">
+<span>async def <span class="ident">claim_mimo_task_reward</span></span>(<span>self,<br>task_id: int,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def claim_mimo_task_reward(
+    self,
+    task_id: int,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; None:
+    &#34;&#34;&#34;Claim a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    await self._request_mimo(
+        &#34;receive-point&#34;,
+        params=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        method=&#34;POST&#34; if game_id == 2 else &#34;GET&#34;,
+    )</code></pre>
+</details>
+<div class="desc"><p>Claim a Traveling Mimo mission (task) reward.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.delete_reply"><code class="name flex">
+<span>async def <span class="ident">delete_reply</span></span>(<span>self, *, reply_id: int, post_id: int) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def delete_reply(self, *, reply_id: int, post_id: int) -&gt; None:
+    &#34;&#34;&#34;Delete a reply.&#34;&#34;&#34;
+    await self.request_bbs(
+        &#34;community/post/wapi/deleteReply&#34;,
+        data=dict(reply_id=reply_id, post_id=post_id),
+        method=&#34;POST&#34;,
+    )</code></pre>
+</details>
+<div class="desc"><p>Delete a reply.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.draw_mimo_lottery"><code class="name flex">
+<span>async def <span class="ident">draw_mimo_lottery</span></span>(<span>self,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> <a title="genshin.models.hoyolab.mimo.MimoLotteryResult" href="../../models/hoyolab/mimo.html#genshin.models.hoyolab.mimo.MimoLotteryResult">MimoLotteryResult</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def draw_mimo_lottery(
+    self,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; models.MimoLotteryResult:
+    &#34;&#34;&#34;Draw a Traveling Mimo lottery.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    data = await self._request_mimo(
+        &#34;lottery&#34;,
+        data=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        method=&#34;POST&#34;,
+    )
+    return models.MimoLotteryResult(**data)</code></pre>
+</details>
+<div class="desc"><p>Draw a Traveling Mimo lottery.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.fetch_mi18n"><code class="name flex">
+<span>async def <span class="ident">fetch_mi18n</span></span>(<span>self, url: str | yarl.URL, filename: str, *, lang: str | None = None) ‑> Mapping[str, str]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def fetch_mi18n(
+    self, url: typing.Union[str, yarl.URL], filename: str, *, lang: typing.Optional[str] = None
+) -&gt; typing.Mapping[str, str]:
+    &#34;&#34;&#34;Fetch a mi18n file.&#34;&#34;&#34;
+    return await self.request(
+        yarl.URL(url) / f&#34;{filename}/{filename}-{lang or self.lang}.json&#34;,
+        cache=client_cache.cache_key(&#34;mi18n&#34;, filename=filename, url=url, lang=lang or self.lang),
+    )</code></pre>
+</details>
+<div class="desc"><p>Fetch a mi18n file.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.finish_mimo_task"><code class="name flex">
+<span>async def <span class="ident">finish_mimo_task</span></span>(<span>self,<br>task_id: int,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def finish_mimo_task(
+    self,
+    task_id: int,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; None:
+    &#34;&#34;&#34;Finish a Traveling Mimo mission (task) reward.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    await self._request_mimo(
+        &#34;finish-task&#34;,
+        data=dict(task_id=task_id, game_id=game_id, lang=lang or self.lang, version_id=version_id),
+        method=&#34;POST&#34;,
+    )</code></pre>
+</details>
+<div class="desc"><p>Finish a Traveling Mimo mission (task) reward.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_accompany_characters"><code class="name flex">
+<span>async def <span class="ident">get_accompany_characters</span></span>(<span>self, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.accompany.AccompanyCharacterGame" href="../../models/hoyolab/accompany.html#genshin.models.hoyolab.accompany.AccompanyCharacterGame">AccompanyCharacterGame</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_accompany_characters(
+    self, *, lang: typing.Optional[str] = None
+) -&gt; typing.Sequence[models.AccompanyCharacterGame]:
+    &#34;&#34;&#34;Get a list of accompany characters, this endpoint doesn&#39;t require cookies.&#34;&#34;&#34;
+    data = await self.request_bbs(
+        &#34;community/painter/api/getChannelRoleList&#34;,
+        cache=client_cache.cache_key(&#34;accp_chars&#34;),
+        method=&#34;POST&#34;,
+        lang=lang,
+    )
+    return [models.AccompanyCharacterGame(**i) for i in data[&#34;game_roles_list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get a list of accompany characters, this endpoint doesn't require cookies.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_genshin_announcements"><code class="name flex">
+<span>async def <span class="ident">get_genshin_announcements</span></span>(<span>self, *, uid: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.announcements.Announcement" href="../../models/hoyolab/announcements.html#genshin.models.hoyolab.announcements.Announcement">Announcement</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_announcements(
+    self,
+    *,
+    uid: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.Announcement]:
+    &#34;&#34;&#34;Get a list of Genshin Impact announcements.&#34;&#34;&#34;
+    if self.cookie_manager.multi:
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+    else:
+        uid = uid or 900000005
+    return await self._request_announcements(types.Game.GENSHIN, uid, lang=lang)</code></pre>
+</details>
+<div class="desc"><p>Get a list of Genshin Impact announcements.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_hoyolab_user"><code class="name flex">
+<span>async def <span class="ident">get_hoyolab_user</span></span>(<span>self, hoyolab_id: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.hoyolab.record.FullHoyolabUser" href="../../models/hoyolab/record.html#genshin.models.hoyolab.record.FullHoyolabUser">FullHoyolabUser</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_hoyolab_user(
+    self,
+    hoyolab_id: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.FullHoyolabUser:
+    &#34;&#34;&#34;Get a hoyolab user.&#34;&#34;&#34;
+    if self.region == types.Region.OVERSEAS:
+        url = &#34;/community/painter/wapi/user/full&#34;
+    elif self.region == types.Region.CHINESE:
+        url = &#34;/user/wapi/getUserFullInfo&#34;
+    else:
+        raise TypeError(f&#34;{self.region!r} is not a valid region.&#34;)
+
+    data = await self.request_bbs(
+        url=url,
+        lang=lang,
+        params=dict(uid=hoyolab_id) if hoyolab_id else None,
+        cache=client_cache.cache_key(&#34;hoyolab&#34;, uid=hoyolab_id, lang=lang or self.lang),
+    )
+    return models.FullHoyolabUser(**data[&#34;user_info&#34;])</code></pre>
+</details>
+<div class="desc"><p>Get a hoyolab user.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_mimo_games"><code class="name flex">
+<span>async def <span class="ident">get_mimo_games</span></span>(<span>self, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.mimo.MimoGame" href="../../models/hoyolab/mimo.html#genshin.models.hoyolab.mimo.MimoGame">MimoGame</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_mimo_games(self, *, lang: typing.Optional[str] = None) -&gt; typing.Sequence[models.MimoGame]:
+    &#34;&#34;&#34;Get a list of Traveling Mimo games.&#34;&#34;&#34;
+    data = await self._request_mimo(&#34;index&#34;, params=dict(lang=lang or self.lang))
+    if self.game is None:
+        raise RuntimeError(&#34;No default game set.&#34;)
+
+    if self.game is types.Game.GENSHIN:
+        return [models.MimoGame(**i[&#34;act_info&#34;]) for i in data[&#34;act_list&#34;]]
+    return [models.MimoGame(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get a list of Traveling Mimo games.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_mimo_lottery_info"><code class="name flex">
+<span>async def <span class="ident">get_mimo_lottery_info</span></span>(<span>self,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> <a title="genshin.models.hoyolab.mimo.MimoLotteryInfo" href="../../models/hoyolab/mimo.html#genshin.models.hoyolab.mimo.MimoLotteryInfo">MimoLotteryInfo</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_mimo_lottery_info(
+    self,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; models.MimoLotteryInfo:
+    &#34;&#34;&#34;Get Traveling Mimo lottery info.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    data = await self._request_mimo(
+        &#34;lottery-info&#34;,
+        params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+    )
+    return models.MimoLotteryInfo(**data)</code></pre>
+</details>
+<div class="desc"><p>Get Traveling Mimo lottery info.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_mimo_point_count"><code class="name flex">
+<span>async def <span class="ident">get_mimo_point_count</span></span>(<span>self,<br>*,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_mimo_point_count(
+    self,
+    *,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+) -&gt; int:
+    &#34;&#34;&#34;Get the current Traveling Mimo point count.&#34;&#34;&#34;
+    game = game or self.default_game
+    games = await self.get_mimo_games()
+    mimo_game = next((i for i in games if i.game == game), None)
+    if mimo_game is None:
+        raise ValueError(f&#34;Game {game!r} not found in the list of Traveling Mimo games.&#34;)
+    return mimo_game.point</code></pre>
+</details>
+<div class="desc"><p>Get the current Traveling Mimo point count.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_mimo_shop_items"><code class="name flex">
+<span>async def <span class="ident">get_mimo_shop_items</span></span>(<span>self,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.mimo.MimoShopItem" href="../../models/hoyolab/mimo.html#genshin.models.hoyolab.mimo.MimoShopItem">MimoShopItem</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_mimo_shop_items(
+    self,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.MimoShopItem]:
+    &#34;&#34;&#34;Get a list of Traveling Mimo shop items.&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    data = await self._request_mimo(
+        &#34;exchange-list&#34;,
+        params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+    )
+    return [models.MimoShopItem(**i) for i in data[&#34;exchange_award_list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get a list of Traveling Mimo shop items.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_mimo_tasks"><code class="name flex">
+<span>async def <span class="ident">get_mimo_tasks</span></span>(<span>self,<br>*,<br>game_id: int | None = None,<br>version_id: int | None = None,<br>game: Literal['hoyolab'] | <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.mimo.MimoTask" href="../../models/hoyolab/mimo.html#genshin.models.hoyolab.mimo.MimoTask">MimoTask</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_mimo_tasks(
+    self,
+    *,
+    game_id: typing.Optional[int] = None,
+    version_id: typing.Optional[int] = None,
+    game: typing.Optional[typing.Union[typing.Literal[&#34;hoyolab&#34;], types.Game]] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.MimoTask]:
+    &#34;&#34;&#34;Get a list of Traveling Mimo missions (tasks).&#34;&#34;&#34;
+    game_id, version_id = await self._parse_mimo_args(game_id, version_id, game)
+    data = await self._request_mimo(
+        &#34;task-list&#34;,
+        params=dict(game_id=game_id, lang=lang or self.lang, version_id=version_id),
+    )
+    return [models.MimoTask(**i) for i in data[&#34;task_list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get a list of Traveling Mimo missions (tasks).</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_recommended_users"><code class="name flex">
+<span>async def <span class="ident">get_recommended_users</span></span>(<span>self, *, limit: int = 200) ‑> Sequence[<a title="genshin.models.hoyolab.record.PartialHoyolabUser" href="../../models/hoyolab/record.html#genshin.models.hoyolab.record.PartialHoyolabUser">PartialHoyolabUser</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_recommended_users(self, *, limit: int = 200) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+    &#34;&#34;&#34;Get a list of recommended active users.&#34;&#34;&#34;
+    warnings.warn(&#34;This endpoint is removed and an empty list will always be returned&#34;, DeprecationWarning)
+    return []</code></pre>
+</details>
+<div class="desc"><p>Get a list of recommended active users.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_replies"><code class="name flex">
+<span>async def <span class="ident">get_replies</span></span>(<span>self, *, size: int = 15) ‑> Sequence[<a title="genshin.models.hoyolab.reply.Reply" href="../../models/hoyolab/reply.html#genshin.models.hoyolab.reply.Reply">Reply</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_replies(self, *, size: int = 15) -&gt; typing.Sequence[models.Reply]:
+    &#34;&#34;&#34;Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.&#34;&#34;&#34;
+    data = await self.request_bbs(
+        &#34;community/post/wapi/userReply&#34;,
+        params=dict(size=size),
+    )
+    return [models.Reply(**i[&#34;reply&#34;]) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get the latest replies as a list of tuples, where the first element is the reply ID and the second is the content.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_starrail_announcements"><code class="name flex">
+<span>async def <span class="ident">get_starrail_announcements</span></span>(<span>self, *, uid: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.announcements.Announcement" href="../../models/hoyolab/announcements.html#genshin.models.hoyolab.announcements.Announcement">Announcement</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_starrail_announcements(
+    self,
+    *,
+    uid: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.Announcement]:
+    &#34;&#34;&#34;Get a list of Star Rail announcements.&#34;&#34;&#34;
+    if self.cookie_manager.multi:
+        uid = uid or await self._get_uid(types.Game.STARRAIL)
+    else:
+        uid = uid or 809162009
+    return await self._request_announcements(types.Game.STARRAIL, uid, lang=lang)</code></pre>
+</details>
+<div class="desc"><p>Get a list of Star Rail announcements.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_web_events"><code class="name flex">
+<span>async def <span class="ident">get_web_events</span></span>(<span>self,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>*,<br>size: int = 15,<br>offset: int | None = None,<br>lang: str | None = None) ‑> list[<a title="genshin.models.hoyolab.web_event.WebEvent" href="../../models/hoyolab/web_event.html#genshin.models.hoyolab.web_event.WebEvent">WebEvent</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@base.region_specific(types.Region.OVERSEAS)
+async def get_web_events(
+    self,
+    game: typing.Optional[types.Game] = None,
+    *,
+    size: int = 15,
+    offset: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; list[models.WebEvent]:
+    &#34;&#34;&#34;Get a list of web events.&#34;&#34;&#34;
+    game = game or self.default_game
+    if game is None:
+        raise ValueError(&#34;No default game set.&#34;)
+
+    data = await self.request_bbs(
+        &#34;community/community_contribution/wapi/event/list&#34;,
+        params=dict(gids=WEB_EVENT_GAME_IDS[game], size=size, offset=offset or &#34;&#34;),
+        lang=lang,
+    )
+    return [models.WebEvent(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get a list of web events.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.get_zzz_announcements"><code class="name flex">
+<span>async def <span class="ident">get_zzz_announcements</span></span>(<span>self, *, uid: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.announcements.Announcement" href="../../models/hoyolab/announcements.html#genshin.models.hoyolab.announcements.Announcement">Announcement</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_zzz_announcements(
+    self,
+    *,
+    uid: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.Announcement]:
+    &#34;&#34;&#34;Get a list of Zenless Zone Zero announcements.&#34;&#34;&#34;
+    if self.cookie_manager.multi:
+        uid = uid or await self._get_uid(types.Game.ZZZ)
+    else:
+        uid = uid or 1300000000
+    return await self._request_announcements(types.Game.ZZZ, uid, lang=lang)</code></pre>
+</details>
+<div class="desc"><p>Get a list of Zenless Zone Zero announcements.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.join_topic"><code class="name flex">
+<span>async def <span class="ident">join_topic</span></span>(<span>self, topic_id: int) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def join_topic(self, topic_id: int) -&gt; None:
+    &#34;&#34;&#34;Join a topic.&#34;&#34;&#34;
+    await self._request_join(topic_id, is_cancel=False)</code></pre>
+</details>
+<div class="desc"><p>Join a topic.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.leave_topic"><code class="name flex">
+<span>async def <span class="ident">leave_topic</span></span>(<span>self, topic_id: int) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def leave_topic(self, topic_id: int) -&gt; None:
+    &#34;&#34;&#34;Leave a topic.&#34;&#34;&#34;
+    await self._request_join(topic_id, is_cancel=True)</code></pre>
+</details>
+<div class="desc"><p>Leave a topic.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.redeem_code"><code class="name flex">
+<span>async def <span class="ident">redeem_code</span></span>(<span>self,<br>code: str,<br>uid: int | None = None,<br>*,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>lang: str | None = None,<br>region: str | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.requires_cookie_token
+async def redeem_code(
+    self,
+    code: str,
+    uid: typing.Optional[int] = None,
+    *,
+    game: typing.Optional[types.Game] = None,
+    lang: typing.Optional[str] = None,
+    region: typing.Optional[str] = None,
+) -&gt; None:
+    &#34;&#34;&#34;Redeems a gift code for the current user.&#34;&#34;&#34;
+    if game is None:
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        game = self.default_game
+
+    if game not in {types.Game.GENSHIN, types.Game.ZZZ, types.Game.STARRAIL, types.Game.TOT}:
+        raise ValueError(f&#34;{game} does not support code redemption.&#34;)
+
+    uid = uid or await self._get_uid(game)
+
+    try:
+        region = region or utility.recognize_server(uid, game)
+    except Exception:
+        warnings.warn(f&#34;Failed to recognize server for game {game!r} and uid {uid!r}, fetching from API now.&#34;)
+        region = await self._get_server_region(uid, game)
+
+    await self.request(
+        routes.CODE_URL.get_url(self.region, game),
+        params=dict(
+            uid=uid,
+            region=region,
+            cdkey=code,
+            game_biz=utility.get_prod_game_biz(self.region, game),
+            lang=utility.create_short_lang_code(lang or self.lang),
+        ),
+        method=&#34;POST&#34; if game is types.Game.STARRAIL else &#34;GET&#34;,
+    )</code></pre>
+</details>
+<div class="desc"><p>Redeems a gift code for the current user.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.reply_to_post"><code class="name flex">
+<span>async def <span class="ident">reply_to_post</span></span>(<span>self, content: str, *, post_id: int) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def reply_to_post(self, content: str, *, post_id: int) -&gt; int:
+    &#34;&#34;&#34;Reply to a community post.&#34;&#34;&#34;
+    data = await self.request_bbs(
+        &#34;community/post/wapi/releaseReply&#34;,
+        data=dict(
+            post_id=str(post_id),
+            content=f&#34;&lt;p&gt;{content}&lt;/p&gt;&#34;,
+            image_list=[],
+            reply_bubble_id=&#34;&#34;,
+            structured_content=json.dumps([{&#34;insert&#34;: f&#34;{content}\n&#34;}]),
+        ),
+        method=&#34;POST&#34;,
+        headers={&#34;x-rpc-device_id&#34;: str(uuid.uuid4())},
+    )
+    return int(data[&#34;reply_id&#34;])</code></pre>
+</details>
+<div class="desc"><p>Reply to a community post.</p></div>
+</dd>
+<dt id="genshin.client.components.hoyolab.HoyolabClient.search_users"><code class="name flex">
+<span>async def <span class="ident">search_users</span></span>(<span>self, keyword: str, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.record.PartialHoyolabUser" href="../../models/hoyolab/record.html#genshin.models.hoyolab.record.PartialHoyolabUser">PartialHoyolabUser</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def search_users(
+    self,
+    keyword: str,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.PartialHoyolabUser]:
+    &#34;&#34;&#34;Search hoyolab users.&#34;&#34;&#34;
+    data = await self.request_bbs(
+        &#34;community/search/wapi/search/user&#34;,
+        lang=lang,
+        params=dict(keyword=keyword, page_size=20),
+        cache=client_cache.cache_key(&#34;search&#34;, keyword=keyword, lang=self.lang),
+    )
+    return [models.PartialHoyolabUser(**i[&#34;user&#34;]) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Search hoyolab users.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.base.BaseClient.authkey" href="base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.debug" href="base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.default_game" href="base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_fp" href="base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_id" href="base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.game" href="base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.genshin_accounts" href="base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_account_timezone" href="base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_game_accounts" href="base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.hoyolab_id" href="base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.lang" href="base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.proxy" href="base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.region" href="base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request" href="base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_bbs" href="base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_hoyolab" href="base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_webstatic" href="base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_authkey" href="base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_browser_cookies" href="base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cache" href="base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cookies" href="base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_redis_cache" href="base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.uid" href="base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components" href="index.html">genshin.client.components</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.hoyolab.HoyolabClient" href="#genshin.client.components.hoyolab.HoyolabClient">HoyolabClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.accompany_character" href="#genshin.client.components.hoyolab.HoyolabClient.accompany_character">accompany_character</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.authkeys" href="#genshin.client.components.hoyolab.HoyolabClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.buy_mimo_shop_item" href="#genshin.client.components.hoyolab.HoyolabClient.buy_mimo_shop_item">buy_mimo_shop_item</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.cache" href="#genshin.client.components.hoyolab.HoyolabClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.check_in_community" href="#genshin.client.components.hoyolab.HoyolabClient.check_in_community">check_in_community</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.claim_mimo_task_reward" href="#genshin.client.components.hoyolab.HoyolabClient.claim_mimo_task_reward">claim_mimo_task_reward</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.cookie_manager" href="#genshin.client.components.hoyolab.HoyolabClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.custom_headers" href="#genshin.client.components.hoyolab.HoyolabClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.delete_reply" href="#genshin.client.components.hoyolab.HoyolabClient.delete_reply">delete_reply</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.draw_mimo_lottery" href="#genshin.client.components.hoyolab.HoyolabClient.draw_mimo_lottery">draw_mimo_lottery</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.fetch_mi18n" href="#genshin.client.components.hoyolab.HoyolabClient.fetch_mi18n">fetch_mi18n</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.finish_mimo_task" href="#genshin.client.components.hoyolab.HoyolabClient.finish_mimo_task">finish_mimo_task</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_accompany_characters" href="#genshin.client.components.hoyolab.HoyolabClient.get_accompany_characters">get_accompany_characters</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_genshin_announcements" href="#genshin.client.components.hoyolab.HoyolabClient.get_genshin_announcements">get_genshin_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_hoyolab_user" href="#genshin.client.components.hoyolab.HoyolabClient.get_hoyolab_user">get_hoyolab_user</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_games" href="#genshin.client.components.hoyolab.HoyolabClient.get_mimo_games">get_mimo_games</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_lottery_info" href="#genshin.client.components.hoyolab.HoyolabClient.get_mimo_lottery_info">get_mimo_lottery_info</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_point_count" href="#genshin.client.components.hoyolab.HoyolabClient.get_mimo_point_count">get_mimo_point_count</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_shop_items" href="#genshin.client.components.hoyolab.HoyolabClient.get_mimo_shop_items">get_mimo_shop_items</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_tasks" href="#genshin.client.components.hoyolab.HoyolabClient.get_mimo_tasks">get_mimo_tasks</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_recommended_users" href="#genshin.client.components.hoyolab.HoyolabClient.get_recommended_users">get_recommended_users</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_replies" href="#genshin.client.components.hoyolab.HoyolabClient.get_replies">get_replies</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_starrail_announcements" href="#genshin.client.components.hoyolab.HoyolabClient.get_starrail_announcements">get_starrail_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_web_events" href="#genshin.client.components.hoyolab.HoyolabClient.get_web_events">get_web_events</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_zzz_announcements" href="#genshin.client.components.hoyolab.HoyolabClient.get_zzz_announcements">get_zzz_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.join_topic" href="#genshin.client.components.hoyolab.HoyolabClient.join_topic">join_topic</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.leave_topic" href="#genshin.client.components.hoyolab.HoyolabClient.leave_topic">leave_topic</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.logger" href="#genshin.client.components.hoyolab.HoyolabClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.redeem_code" href="#genshin.client.components.hoyolab.HoyolabClient.redeem_code">redeem_code</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.reply_to_post" href="#genshin.client.components.hoyolab.HoyolabClient.reply_to_post">reply_to_post</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.search_users" href="#genshin.client.components.hoyolab.HoyolabClient.search_users">search_users</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.uids" href="#genshin.client.components.hoyolab.HoyolabClient.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

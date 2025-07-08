@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.zzz.chronicle.challenge API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.zzz.chronicle.challenge</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo"><code class="flex name class">
+<span>class <span class="ident">ChallengeBangboo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChallengeBangboo(ShiyuDefenseBangboo):
+    &#34;&#34;&#34;Bangboo model for backward compatibility.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Bangboo model for backward compatibility.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo">ShiyuDefenseBangboo</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault"><code class="flex name class">
+<span>class <span class="ident">DeadlyAssault</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeadlyAssault(APIModel):
+    &#34;&#34;&#34;ZZZ Deadly Assault model.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;zone_id&#34;)
+    start_time: typing.Optional[DateTime]
+    end_time: typing.Optional[DateTime]
+
+    challenges: typing.Sequence[DeadlyAssaultChallenge] = Aliased(&#34;list&#34;)
+    has_data: bool
+    total_score: int
+    total_star: int
+    rank_percent: str
+
+    nickname: str = Aliased(&#34;nick_name&#34;)
+    player_avatar: str = Aliased(&#34;avatar_icon&#34;)
+
+    @pydantic.field_validator(&#34;rank_percent&#34;, mode=&#34;before&#34;)
+    def __parse_rank_percent(cls, value: int) -&gt; str:
+        return f&#34;{value / 100}%&#34;</code></pre>
+</details>
+<div class="desc"><p>ZZZ Deadly Assault model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.challenges"><code class="name">var <span class="ident">challenges</span> : Sequence[<a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge">DeadlyAssaultChallenge</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.player_avatar"><code class="name">var <span class="ident">player_avatar</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.rank_percent"><code class="name">var <span class="ident">rank_percent</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_score"><code class="name">var <span class="ident">total_score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_star"><code class="name">var <span class="ident">total_star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent"><code class="flex name class">
+<span>class <span class="ident">DeadlyAssaultAgent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeadlyAssaultAgent(APIModel):
+    &#34;&#34;&#34;ZZZ Deadly Assault agent model.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    element: ZZZElementType = Aliased(&#34;element_type&#34;)
+    specialty: ZZZSpecialty = Aliased(&#34;avatar_profession&#34;)
+    rarity: typing.Literal[&#34;S&#34;, &#34;A&#34;]
+    mindscape: int = Aliased(&#34;rank&#34;)
+    icon: str = Aliased(&#34;role_square_url&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ Deadly Assault agent model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.element"><code class="name">var <span class="ident">element</span> : <a title="genshin.models.zzz.character.ZZZElementType" href="../character.html#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.mindscape"><code class="name">var <span class="ident">mindscape</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.specialty"><code class="name">var <span class="ident">specialty</span> : <a title="genshin.models.zzz.character.ZZZSpecialty" href="../character.html#genshin.models.zzz.character.ZZZSpecialty">ZZZSpecialty</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss"><code class="flex name class">
+<span>class <span class="ident">DeadlyAssaultBoss</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeadlyAssaultBoss(APIModel):
+    &#34;&#34;&#34;ZZZ Deadly Assault boss.&#34;&#34;&#34;
+
+    icon: str
+    name: str
+    background: str = Aliased(&#34;bg_icon&#34;)
+    badge_icon: str = Aliased(&#34;race_icon&#34;)</code></pre>
+</details>
+<div class="desc"><p>ZZZ Deadly Assault boss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.background"><code class="name">var <span class="ident">background</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.badge_icon"><code class="name">var <span class="ident">badge_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff"><code class="flex name class">
+<span>class <span class="ident">DeadlyAssaultBuff</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeadlyAssaultBuff(APIModel):
+    &#34;&#34;&#34;ZZZ Deadly Assault buff model.&#34;&#34;&#34;
+
+    name: str
+    description: str = Aliased(&#34;desc&#34;)
+    icon: str</code></pre>
+</details>
+<div class="desc"><p>ZZZ Deadly Assault buff model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge"><code class="flex name class">
+<span>class <span class="ident">DeadlyAssaultChallenge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DeadlyAssaultChallenge(APIModel):
+    &#34;&#34;&#34;ZZZ Deadly Assault challenge model.&#34;&#34;&#34;
+
+    score: int
+    star: int
+    total_star: int
+    challenge_time: datetime.datetime
+
+    boss: DeadlyAssaultBoss
+    buffs: typing.Sequence[DeadlyAssaultBuff] = Aliased(&#34;buffer&#34;)
+    agents: typing.Sequence[DeadlyAssaultAgent] = Aliased(&#34;avatar_list&#34;)
+    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased(&#34;buddy&#34;, default=None)
+
+    @pydantic.field_validator(&#34;challenge_time&#34;, mode=&#34;before&#34;)
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -&gt; typing.Optional[TZDateTime]:
+        if value:
+            return datetime.datetime(**value)
+        return None
+
+    @pydantic.field_validator(&#34;boss&#34;, mode=&#34;before&#34;)
+    def __parse_boss(cls, value: typing.List[typing.Mapping[str, typing.Any]]) -&gt; DeadlyAssaultBoss:
+        if not value:
+            raise ValueError(&#34;No boss data provided.&#34;)
+        return DeadlyAssaultBoss(**value[0])</code></pre>
+</details>
+<div class="desc"><p>ZZZ Deadly Assault challenge model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.agents"><code class="name">var <span class="ident">agents</span> : Sequence[<a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent">DeadlyAssaultAgent</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.bangboo"><code class="name">var <span class="ident">bangboo</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo">ShiyuDefenseBangboo</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.boss"><code class="name">var <span class="ident">boss</span> : <a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss">DeadlyAssaultBoss</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.buffs"><code class="name">var <span class="ident">buffs</span> : Sequence[<a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff">DeadlyAssaultBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.challenge_time"><code class="name">var <span class="ident">challenge_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.score"><code class="name">var <span class="ident">score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.star"><code class="name">var <span class="ident">star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.total_star"><code class="name">var <span class="ident">total_star</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefense</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefense(APIModel):
+    &#34;&#34;&#34;ZZZ Shiyu Defense model.&#34;&#34;&#34;
+
+    schedule_id: int
+    begin_time: typing.Optional[DateTime] = Aliased(&#34;hadal_begin_time&#34;)
+    end_time: typing.Optional[DateTime] = Aliased(&#34;hadal_end_time&#34;)
+    has_data: bool
+    ratings: typing.Mapping[typing.Literal[&#34;S&#34;, &#34;A&#34;, &#34;B&#34;], int] = Aliased(&#34;rating_list&#34;)
+    floors: list[ShiyuDefenseFloor] = Aliased(&#34;all_floor_detail&#34;)
+    fastest_clear_time: int = Aliased(&#34;fast_layer_time&#34;)
+    &#34;&#34;&#34;Fastest clear time this season in seconds.&#34;&#34;&#34;
+    max_floor: int = Aliased(&#34;max_layer&#34;)
+
+    @pydantic.field_validator(&#34;ratings&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __convert_ratings(
+        cls, v: list[dict[typing.Literal[&#34;times&#34;, &#34;rating&#34;], typing.Any]]
+    ) -&gt; typing.Mapping[typing.Literal[&#34;S&#34;, &#34;A&#34;, &#34;B&#34;], int]:
+        return {d[&#34;rating&#34;]: d[&#34;times&#34;] for d in v}</code></pre>
+</details>
+<div class="desc"><p>ZZZ Shiyu Defense model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.begin_time"><code class="name">var <span class="ident">begin_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.fastest_clear_time"><code class="name">var <span class="ident">fastest_clear_time</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Fastest clear time this season in seconds.</p></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.floors"><code class="name">var <span class="ident">floors</span> : list[<a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor">ShiyuDefenseFloor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.max_floor"><code class="name">var <span class="ident">max_floor</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.ratings"><code class="name">var <span class="ident">ratings</span> : Mapping[Literal['S', 'A', 'B'], int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefense.schedule_id"><code class="name">var <span class="ident">schedule_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseBangboo</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseBangboo(APIModel):
+    &#34;&#34;&#34;Shiyu Defense bangboo model.&#34;&#34;&#34;
+
+    id: int
+    rarity: typing.Literal[&#34;S&#34;, &#34;A&#34;]
+    level: int
+    icon: str = Aliased(&#34;bangboo_rectangle_url&#34;)</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense bangboo model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo">ChallengeBangboo</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseBuff</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseBuff(APIModel):
+    &#34;&#34;&#34;Shiyu Defense buff model.&#34;&#34;&#34;
+
+    name: str = Aliased(&#34;title&#34;)
+    description: str = Aliased(&#34;text&#34;)</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense buff model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseCharacter(APIModel):
+    &#34;&#34;&#34;Shiyu Defense character model.&#34;&#34;&#34;
+
+    id: int
+    level: int
+    rarity: typing.Literal[&#34;S&#34;, &#34;A&#34;]
+    element: ZZZElementType = Aliased(&#34;element_type&#34;)
+    icon: str = Aliased(&#34;role_square_url&#34;)
+    mindscape: int = Aliased(&#34;rank&#34;)</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense character model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.element"><code class="name">var <span class="ident">element</span> : <a title="genshin.models.zzz.character.ZZZElementType" href="../character.html#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.mindscape"><code class="name">var <span class="ident">mindscape</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : Literal['S', 'A']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseFloor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseFloor(APIModel):
+    &#34;&#34;&#34;Shiyu Defense floor model.&#34;&#34;&#34;
+
+    index: int = Aliased(&#34;layer_index&#34;)
+    rating: typing.Literal[&#34;S&#34;, &#34;A&#34;, &#34;B&#34;]
+    id: int = Aliased(&#34;layer_id&#34;)
+    buffs: list[ShiyuDefenseBuff]
+    node_1: ShiyuDefenseNode
+    node_2: ShiyuDefenseNode
+    challenge_time: TZDateTime = Aliased(&#34;floor_challenge_time&#34;)
+    name: str = Aliased(&#34;zone_name&#34;)
+
+    @pydantic.field_validator(&#34;challenge_time&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_datetime(cls, value: typing.Mapping[str, typing.Any]) -&gt; typing.Optional[TZDateTime]:
+        if value:
+            return datetime.datetime(**value)
+        return None</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense floor model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.buffs"><code class="name">var <span class="ident">buffs</span> : list[<a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff">ShiyuDefenseBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.challenge_time"><code class="name">var <span class="ident">challenge_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.index"><code class="name">var <span class="ident">index</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_1"><code class="name">var <span class="ident">node_1</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode">ShiyuDefenseNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_2"><code class="name">var <span class="ident">node_2</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode">ShiyuDefenseNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.rating"><code class="name">var <span class="ident">rating</span> : Literal['B', 'A', 'S']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseMonster</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseMonster(APIModel):
+    &#34;&#34;&#34;Shiyu Defense monster model.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    weakness: typing.Union[ZZZElementType, int] = Aliased(
+        &#34;weak_element_type&#34;, deprecated=&#34;ShiyuDefenseMonster.weakness doesn&#39;t return anything meaningful anymore.&#34;
+    )
+    level: int
+    element_effects: ShiyuMonsterElementEffects
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __nest_element_effects(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        v[&#34;element_effects&#34;] = {
+            &#34;ice_weakness&#34;: v[&#34;ice_weakness&#34;],
+            &#34;fire_weakness&#34;: v[&#34;fire_weakness&#34;],
+            &#34;elec_weakness&#34;: v[&#34;elec_weakness&#34;],
+            &#34;ether_weakness&#34;: v[&#34;ether_weakness&#34;],
+            &#34;physics_weakness&#34;: v[&#34;physics_weakness&#34;],
+        }
+        return v</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense monster model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.element_effects"><code class="name">var <span class="ident">element_effects</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects">ShiyuMonsterElementEffects</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.weakness"><code class="name">var <span class="ident">weakness</span> : <a title="genshin.models.zzz.character.ZZZElementType" href="../character.html#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a> | int</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj: BaseModel | None, obj_type: type[BaseModel] | None = None) -&gt; Any:
+    if obj is None:
+        if self.wrapped_property is not None:
+            return self.wrapped_property.__get__(None, obj_type)
+        raise AttributeError(self.field_name)
+
+    warnings.warn(self.msg, builtins.DeprecationWarning, stacklevel=2)
+
+    if self.wrapped_property is not None:
+        return self.wrapped_property.__get__(obj, obj_type)
+    return obj.__dict__[self.field_name]</code></pre>
+</details>
+<div class="desc"><p>Read-only data descriptor used to emit a runtime deprecation warning before accessing a deprecated field.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>msg</code></strong></dt>
+<dd>The deprecation message to be emitted.</dd>
+<dt><strong><code>wrapped_property</code></strong></dt>
+<dd>The property instance if the deprecated field is a computed field, or <code>None</code>.</dd>
+<dt><strong><code>field_name</code></strong></dt>
+<dd>The name of the field being deprecated.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode"><code class="flex name class">
+<span>class <span class="ident">ShiyuDefenseNode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuDefenseNode(APIModel):
+    &#34;&#34;&#34;Shiyu Defense node model.&#34;&#34;&#34;
+
+    characters: list[ShiyuDefenseCharacter] = Aliased(&#34;avatars&#34;)
+    bangboo: typing.Optional[ShiyuDefenseBangboo] = Aliased(&#34;buddy&#34;, default=None)
+    recommended_elements: list[ZZZElementType] = Aliased(&#34;element_type_list&#34;)
+    enemies: list[ShiyuDefenseMonster] = Aliased(&#34;monster_info&#34;)
+    battle_time: typing.Optional[datetime.timedelta] = None
+
+    @pydantic.field_validator(&#34;enemies&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __convert_enemies(cls, value: dict[typing.Literal[&#34;level&#34;, &#34;list&#34;], typing.Any]) -&gt; list[ShiyuDefenseMonster]:
+        level = value[&#34;level&#34;]
+        result: list[ShiyuDefenseMonster] = []
+        for monster in value[&#34;list&#34;]:
+            monster[&#34;level&#34;] = level
+            result.append(ShiyuDefenseMonster(**monster))
+        return result</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense node model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.bangboo"><code class="name">var <span class="ident">bangboo</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo">ShiyuDefenseBangboo</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.battle_time"><code class="name">var <span class="ident">battle_time</span> : datetime.timedelta | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.characters"><code class="name">var <span class="ident">characters</span> : list[<a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter">ShiyuDefenseCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.enemies"><code class="name">var <span class="ident">enemies</span> : list[<a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster">ShiyuDefenseMonster</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.recommended_elements"><code class="name">var <span class="ident">recommended_elements</span> : list[<a title="genshin.models.zzz.character.ZZZElementType" href="../character.html#genshin.models.zzz.character.ZZZElementType">ZZZElementType</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect"><code class="flex name class">
+<span>class <span class="ident">ShiyuMonsterElementEffect</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuMonsterElementEffect(enum.IntEnum):
+    &#34;&#34;&#34;Shiyu Defense monster element effect enum.&#34;&#34;&#34;
+
+    WEAKNESS = 1
+    RESISTANCE = -1
+    NEUTRAL = 0</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense monster element effect enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.NEUTRAL"><code class="name">var <span class="ident">NEUTRAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.RESISTANCE"><code class="name">var <span class="ident">RESISTANCE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.WEAKNESS"><code class="name">var <span class="ident">WEAKNESS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects"><code class="flex name class">
+<span>class <span class="ident">ShiyuMonsterElementEffects</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShiyuMonsterElementEffects(pydantic.BaseModel):
+    &#34;&#34;&#34;Shiyu Defense monster element effects model.&#34;&#34;&#34;
+
+    ice: ShiyuMonsterElementEffect = Aliased(&#34;ice_weakness&#34;)
+    fire: ShiyuMonsterElementEffect = Aliased(&#34;fire_weakness&#34;)
+    electric: ShiyuMonsterElementEffect = Aliased(&#34;elec_weakness&#34;)
+    ether: ShiyuMonsterElementEffect = Aliased(&#34;ether_weakness&#34;)
+    physical: ShiyuMonsterElementEffect = Aliased(&#34;physics_weakness&#34;)</code></pre>
+</details>
+<div class="desc"><p>Shiyu Defense monster element effects model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.electric"><code class="name">var <span class="ident">electric</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ether"><code class="name">var <span class="ident">ether</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.fire"><code class="name">var <span class="ident">fire</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ice"><code class="name">var <span class="ident">ice</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.physical"><code class="name">var <span class="ident">physical</span> : <a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.zzz.chronicle" href="index.html">genshin.models.zzz.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo">ChallengeBangboo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.icon" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.id" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.level" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.model_config" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ChallengeBangboo.rarity" href="#genshin.models.zzz.chronicle.challenge.ChallengeBangboo.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault">DeadlyAssault</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.challenges" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.challenges">challenges</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.end_time" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.has_data" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.id" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.model_config" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.nickname" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.player_avatar" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.player_avatar">player_avatar</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.rank_percent" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.rank_percent">rank_percent</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.start_time" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_score" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_score">total_score</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_star" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssault.total_star">total_star</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent">DeadlyAssaultAgent</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.element" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.element">element</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.icon" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.id" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.level" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.mindscape" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.mindscape">mindscape</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.model_config" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.rarity" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.rarity">rarity</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.specialty" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultAgent.specialty">specialty</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss">DeadlyAssaultBoss</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.background" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.background">background</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.badge_icon" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.badge_icon">badge_icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.icon" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.model_config" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.name" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBoss.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff">DeadlyAssaultBuff</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.description" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.description">description</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.icon" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.model_config" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.name" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultBuff.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge">DeadlyAssaultChallenge</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.agents" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.agents">agents</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.bangboo" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.bangboo">bangboo</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.boss" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.boss">boss</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.buffs" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.buffs">buffs</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.challenge_time" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.challenge_time">challenge_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.model_config" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.score" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.score">score</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.star" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.star">star</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.total_star" href="#genshin.models.zzz.chronicle.challenge.DeadlyAssaultChallenge.total_star">total_star</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense">ShiyuDefense</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.begin_time" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.begin_time">begin_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.end_time" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.fastest_clear_time" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.fastest_clear_time">fastest_clear_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.floors" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.floors">floors</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.has_data" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.max_floor" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.max_floor">max_floor</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.ratings" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.ratings">ratings</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefense.schedule_id" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefense.schedule_id">schedule_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo">ShiyuDefenseBangboo</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.icon" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.id" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.level" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.rarity" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBangboo.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff">ShiyuDefenseBuff</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.description" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.description">description</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.name" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseBuff.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter">ShiyuDefenseCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.element" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.icon" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.id" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.level" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.mindscape" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.mindscape">mindscape</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.rarity" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseCharacter.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor">ShiyuDefenseFloor</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.buffs" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.buffs">buffs</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.challenge_time" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.challenge_time">challenge_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.id" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.index" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.index">index</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.name" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_1" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_1">node_1</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_2" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.node_2">node_2</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.rating" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseFloor.rating">rating</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster">ShiyuDefenseMonster</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.element_effects" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.element_effects">element_effects</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.id" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.id">id</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.level" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.name" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.name">name</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.weakness" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseMonster.weakness">weakness</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode">ShiyuDefenseNode</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.bangboo" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.bangboo">bangboo</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.battle_time" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.battle_time">battle_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.characters" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.characters">characters</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.enemies" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.enemies">enemies</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.recommended_elements" href="#genshin.models.zzz.chronicle.challenge.ShiyuDefenseNode.recommended_elements">recommended_elements</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect">ShiyuMonsterElementEffect</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.NEUTRAL" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.NEUTRAL">NEUTRAL</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.RESISTANCE" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.RESISTANCE">RESISTANCE</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.WEAKNESS" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffect.WEAKNESS">WEAKNESS</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects">ShiyuMonsterElementEffects</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.electric" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.electric">electric</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ether" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ether">ether</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.fire" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.fire">fire</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ice" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.ice">ice</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.model_config" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.physical" href="#genshin.models.zzz.chronicle.challenge.ShiyuMonsterElementEffects.physical">physical</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

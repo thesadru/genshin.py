@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.tcg API documentation</title>
+<meta name="description" content="Genshin serenitea pot replica display models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.tcg</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin serenitea pot replica display models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard"><code class="flex name class">
+<span>class <span class="ident">TCGBaseCard</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGBaseCard(TCGPartialCard):
+    &#34;&#34;&#34;TCG card.&#34;&#34;&#34;
+
+    type: TCGCardType = Aliased(&#34;card_type&#34;)
+
+    name: str
+    proficiency: int
+    rank_id: int
+    usages: int = Aliased(&#34;use_count&#34;)
+
+    image_tags: typing.Sequence[str] = Aliased(&#34;tags&#34;)
+
+    wiki_url: str = Aliased(&#34;card_wiki&#34;)</code></pre>
+</details>
+<div class="desc"><p>TCG card.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGCard" href="#genshin.models.genshin.chronicle.tcg.TCGCard">TCGCard</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard">TCGCharacterCard</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.image_tags"><code class="name">var <span class="ident">image_tags</span> : Sequence[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.proficiency"><code class="name">var <span class="ident">proficiency</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.rank_id"><code class="name">var <span class="ident">rank_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.genshin.chronicle.tcg.TCGCardType" href="#genshin.models.genshin.chronicle.tcg.TCGCardType">TCGCardType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.usages"><code class="name">var <span class="ident">usages</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGBaseCard.wiki_url"><code class="name">var <span class="ident">wiki_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCard"><code class="flex name class">
+<span>class <span class="ident">TCGCard</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGCard(TCGBaseCard):
+    &#34;&#34;&#34;TCG equipment card.&#34;&#34;&#34;
+
+    type: typing.Literal[TCGCardType.EQUIPMENT, TCGCardType.ASSIST, TCGCardType.EVENT] = Aliased(&#34;card_type&#34;)
+
+    cost: typing.Sequence[TCGCost] = Aliased(&#34;action_cost&#34;)
+    description: str = Aliased(&#34;desc&#34;)</code></pre>
+</details>
+<div class="desc"><p>TCG equipment card.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard">TCGBaseCard</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCard.cost"><code class="name">var <span class="ident">cost</span> : Sequence[<a title="genshin.models.genshin.chronicle.tcg.TCGCost" href="#genshin.models.genshin.chronicle.tcg.TCGCost">TCGCost</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCard.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCard.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCard.type"><code class="name">var <span class="ident">type</span> : Literal[<<a title="genshin.models.genshin.chronicle.tcg.TCGCardType.EQUIPMENT" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.EQUIPMENT">TCGCardType.EQUIPMENT</a>: 'CardTypeModify'>, <<a title="genshin.models.genshin.chronicle.tcg.TCGCardType.ASSIST" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.ASSIST">TCGCardType.ASSIST</a>: 'CardTypeAssist'>, <<a title="genshin.models.genshin.chronicle.tcg.TCGCardType.EVENT" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.EVENT">TCGCardType.EVENT</a>: 'CardTypeEvent'>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCardType"><code class="flex name class">
+<span>class <span class="ident">TCGCardType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGCardType(str, enum.Enum):
+    &#34;&#34;&#34;TCG card type.&#34;&#34;&#34;
+
+    CHARACTER = &#34;CardTypeCharacter&#34;
+    EQUIPMENT = &#34;CardTypeModify&#34;
+    ASSIST = &#34;CardTypeAssist&#34;
+    EVENT = &#34;CardTypeEvent&#34;</code></pre>
+</details>
+<div class="desc"><p>TCG card type.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCardType.ASSIST"><code class="name">var <span class="ident">ASSIST</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCardType.CHARACTER"><code class="name">var <span class="ident">CHARACTER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCardType.EQUIPMENT"><code class="name">var <span class="ident">EQUIPMENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCardType.EVENT"><code class="name">var <span class="ident">EVENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard"><code class="flex name class">
+<span>class <span class="ident">TCGCharacterCard</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGCharacterCard(TCGBaseCard):
+    &#34;&#34;&#34;TCG character card.&#34;&#34;&#34;
+
+    type: typing.Literal[TCGCardType.CHARACTER] = Aliased(&#34;card_type&#34;)
+
+    name: str
+    health: int = Aliased(&#34;hp&#34;)
+
+    talents: typing.Sequence[TCGCharacterTalent] = Aliased(&#34;card_skills&#34;)</code></pre>
+</details>
+<div class="desc"><p>TCG character card.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard">TCGBaseCard</a></li>
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.health"><code class="name">var <span class="ident">health</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.talents"><code class="name">var <span class="ident">talents</span> : Sequence[<a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent">TCGCharacterTalent</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.type"><code class="name">var <span class="ident">type</span> : Literal[<<a title="genshin.models.genshin.chronicle.tcg.TCGCardType.CHARACTER" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.CHARACTER">TCGCardType.CHARACTER</a>: 'CardTypeCharacter'>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent"><code class="flex name class">
+<span>class <span class="ident">TCGCharacterTalent</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGCharacterTalent(APIModel):
+    &#34;&#34;&#34;TCG character talent.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    description: str = Aliased(&#34;desc&#34;)
+    type: str = Aliased(&#34;tag&#34;)</code></pre>
+</details>
+<div class="desc"><p>TCG character talent.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCost"><code class="flex name class">
+<span>class <span class="ident">TCGCost</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGCost(APIModel):
+    &#34;&#34;&#34;TCG cost.&#34;&#34;&#34;
+
+    element: str = Aliased(&#34;cost_type&#34;)
+    value: int = Aliased(&#34;cost_value&#34;)
+
+    @pydantic.field_validator(&#34;element&#34;)
+    def __fix_element(cls, value: str) -&gt; str:
+        return {
+            &#34;CostTypeCryo&#34;: &#34;Cryo&#34;,
+            &#34;CostTypeDendro&#34;: &#34;Dendro&#34;,
+            &#34;CostTypeElectro&#34;: &#34;Electro&#34;,
+            &#34;CostTypeGeo&#34;: &#34;Geo&#34;,
+            &#34;CostTypeHydro&#34;: &#34;Hydro&#34;,
+            &#34;CostTypePyro&#34;: &#34;Pyro&#34;,
+            &#34;CostTypeAnemo&#34;: &#34;Anemo&#34;,
+            &#34;CostTypeSame&#34;: &#34;Same&#34;,
+            &#34;CostTypeVoid&#34;: &#34;Void&#34;,
+        }.get(value, value)</code></pre>
+</details>
+<div class="desc"><p>TCG cost.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCost.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCost.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGCost.value"><code class="name">var <span class="ident">value</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPartialCard"><code class="flex name class">
+<span>class <span class="ident">TCGPartialCard</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGPartialCard(APIModel, Unique):
+    &#34;&#34;&#34;Partial TCG card data.&#34;&#34;&#34;
+
+    id: int
+    image: str</code></pre>
+</details>
+<div class="desc"><p>Partial TCG card data.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard">TCGBaseCard</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPartialCard.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPartialCard.image"><code class="name">var <span class="ident">image</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPartialCard.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview"><code class="flex name class">
+<span>class <span class="ident">TCGPreview</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCGPreview(APIModel):
+    &#34;&#34;&#34;Preview of TCG stats.&#34;&#34;&#34;
+
+    character_cards: int = Aliased(&#34;avatar_card_num_gained&#34;)
+    action_cards: int = Aliased(&#34;action_card_num_gained&#34;)
+
+    total_character_cards: int = Aliased(&#34;avatar_card_num_total&#34;)
+    total_action_cards: int = Aliased(&#34;action_card_num_total&#34;)
+
+    level: int
+    nickname: str
+
+    cards: typing.Sequence[TCGPartialCard] = Aliased(&#34;covers&#34;)</code></pre>
+</details>
+<div class="desc"><p>Preview of TCG stats.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.action_cards"><code class="name">var <span class="ident">action_cards</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.cards"><code class="name">var <span class="ident">cards</span> : Sequence[<a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.character_cards"><code class="name">var <span class="ident">character_cards</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.total_action_cards"><code class="name">var <span class="ident">total_action_cards</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.tcg.TCGPreview.total_character_cards"><code class="name">var <span class="ident">total_character_cards</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard">TCGBaseCard</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.image_tags" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.image_tags">image_tags</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.name" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.proficiency" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.proficiency">proficiency</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.rank_id" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.rank_id">rank_id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.type" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.type">type</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.usages" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.usages">usages</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard.wiki_url" href="#genshin.models.genshin.chronicle.tcg.TCGBaseCard.wiki_url">wiki_url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGCard" href="#genshin.models.genshin.chronicle.tcg.TCGCard">TCGCard</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCard.cost" href="#genshin.models.genshin.chronicle.tcg.TCGCard.cost">cost</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCard.description" href="#genshin.models.genshin.chronicle.tcg.TCGCard.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCard.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGCard.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCard.type" href="#genshin.models.genshin.chronicle.tcg.TCGCard.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGCardType" href="#genshin.models.genshin.chronicle.tcg.TCGCardType">TCGCardType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCardType.ASSIST" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.ASSIST">ASSIST</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCardType.CHARACTER" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.CHARACTER">CHARACTER</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCardType.EQUIPMENT" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.EQUIPMENT">EQUIPMENT</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCardType.EVENT" href="#genshin.models.genshin.chronicle.tcg.TCGCardType.EVENT">EVENT</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard">TCGCharacterCard</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.health" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard.health">health</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.name" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.talents" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard.talents">talents</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterCard.type" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterCard.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent">TCGCharacterTalent</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.description" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.description">description</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.id" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.name" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.type" href="#genshin.models.genshin.chronicle.tcg.TCGCharacterTalent.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGCost" href="#genshin.models.genshin.chronicle.tcg.TCGCost">TCGCost</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCost.element" href="#genshin.models.genshin.chronicle.tcg.TCGCost.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCost.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGCost.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGCost.value" href="#genshin.models.genshin.chronicle.tcg.TCGCost.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard">TCGPartialCard</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard.id" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard.image" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard.image">image</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPartialCard.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGPartialCard.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview" href="#genshin.models.genshin.chronicle.tcg.TCGPreview">TCGPreview</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.action_cards" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.action_cards">action_cards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.cards" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.cards">cards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.character_cards" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.character_cards">character_cards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.level" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.model_config" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.nickname" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.total_action_cards" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.total_action_cards">total_action_cards</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.tcg.TCGPreview.total_character_cards" href="#genshin.models.genshin.chronicle.tcg.TCGPreview.total_character_cards">total_character_cards</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

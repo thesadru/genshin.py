@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.abyss API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.abyss</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssCharacter"><code class="flex name class">
+<span>class <span class="ident">AbyssCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AbyssCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;Character with just a level.&#34;&#34;&#34;
+
+    level: int</code></pre>
+</details>
+<div class="desc"><p>Character with just a level.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter"><code class="flex name class">
+<span>class <span class="ident">AbyssRankCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AbyssRankCharacter(character.BaseCharacter):
+    &#34;&#34;&#34;Character with a value of a rank.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;avatar_id&#34;)
+    icon: str = Aliased(&#34;avatar_icon&#34;)
+
+    value: int</code></pre>
+</details>
+<div class="desc"><p>Character with a value of a rank.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+<li><a title="genshin.models.model.Unique" href="../../model.html#genshin.models.model.Unique">Unique</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.value"><code class="name">var <span class="ident">value</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.models.genshin.character.BaseCharacter" href="../character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.models.genshin.character.BaseCharacter.image" href="../character.html#genshin.models.genshin.character.BaseCharacter.image">image</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Battle"><code class="flex name class">
+<span>class <span class="ident">Battle</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Battle(APIModel):
+    &#34;&#34;&#34;Battle in the spiral abyss.&#34;&#34;&#34;
+
+    half: int = Aliased(&#34;index&#34;)
+    timestamp: UnixDateTime
+    characters: typing.Sequence[AbyssCharacter] = Aliased(&#34;avatars&#34;)</code></pre>
+</details>
+<div class="desc"><p>Battle in the spiral abyss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.Battle.characters"><code class="name">var <span class="ident">characters</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssCharacter">AbyssCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Battle.half"><code class="name">var <span class="ident">half</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Battle.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Battle.timestamp"><code class="name">var <span class="ident">timestamp</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber"><code class="flex name class">
+<span>class <span class="ident">Chamber</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Chamber(APIModel):
+    &#34;&#34;&#34;Chamber of the spiral abyss.&#34;&#34;&#34;
+
+    chamber: int = Aliased(&#34;index&#34;)
+    stars: int = Aliased(&#34;star&#34;)
+    max_stars: typing.Literal[3] = Aliased(&#34;max_star&#34;)
+    battles: typing.Sequence[Battle]
+
+    first_half_enemies: typing.Sequence[SpiralAbyssEnemy] = Aliased(&#34;top_half_floor_monster&#34;, default=[])
+    second_half_enemies: typing.Sequence[SpiralAbyssEnemy] = Aliased(&#34;bottom_half_floor_monster&#34;, default=[])</code></pre>
+</details>
+<div class="desc"><p>Chamber of the spiral abyss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.battles"><code class="name">var <span class="ident">battles</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.Battle" href="#genshin.models.genshin.chronicle.abyss.Battle">Battle</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.chamber"><code class="name">var <span class="ident">chamber</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.first_half_enemies"><code class="name">var <span class="ident">first_half_enemies</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy">SpiralAbyssEnemy</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.max_stars"><code class="name">var <span class="ident">max_stars</span> : Literal[3]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.second_half_enemies"><code class="name">var <span class="ident">second_half_enemies</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy">SpiralAbyssEnemy</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Chamber.stars"><code class="name">var <span class="ident">stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks"><code class="flex name class">
+<span>class <span class="ident">CharacterRanks</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CharacterRanks(APIModel):
+    &#34;&#34;&#34;Collection of rankings achieved during spiral abyss runs.&#34;&#34;&#34;
+
+    most_played: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;reveal_rank&#34;, default=[])
+    most_kills: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;defeat_rank&#34;, default=[])
+    strongest_strike: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;damage_rank&#34;, default=[])
+    most_damage_taken: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;take_damage_rank&#34;, default=[])  # noqa: E501
+    most_bursts_used: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;energy_skill_rank&#34;, default=[])  # noqa: E501
+    most_skills_used: typing.Sequence[AbyssRankCharacter] = Aliased(&#34;normal_skill_rank&#34;, default=[])  # noqa: E501
+
+    @pydantic.field_validator(
+        &#34;most_played&#34;,
+        &#34;most_kills&#34;,
+        &#34;strongest_strike&#34;,
+        &#34;most_damage_taken&#34;,
+        &#34;most_bursts_used&#34;,
+        &#34;most_skills_used&#34;,
+        mode=&#34;before&#34;,
+    )
+    def __filter_invalid_chars(
+        cls, v: typing.List[typing.Dict[str, typing.Any]]
+    ) -&gt; typing.List[typing.Dict[str, typing.Any]]:
+        return [char for char in v if char[&#34;avatar_id&#34;] != 0]</code></pre>
+</details>
+<div class="desc"><p>Collection of rankings achieved during spiral abyss runs.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_bursts_used"><code class="name">var <span class="ident">most_bursts_used</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_damage_taken"><code class="name">var <span class="ident">most_damage_taken</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_kills"><code class="name">var <span class="ident">most_kills</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_played"><code class="name">var <span class="ident">most_played</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_skills_used"><code class="name">var <span class="ident">most_skills_used</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.CharacterRanks.strongest_strike"><code class="name">var <span class="ident">strongest_strike</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor"><code class="flex name class">
+<span>class <span class="ident">Floor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Floor(APIModel):
+    &#34;&#34;&#34;Floor of the spiral abyss.&#34;&#34;&#34;
+
+    floor: int = Aliased(&#34;index&#34;)
+    # icon: str - unused
+    # settle_time: int - appsample might be using this?
+    unlocked: typing.Literal[True] = Aliased(&#34;is_unlock&#34;)
+    stars: int = Aliased(&#34;star&#34;)
+    max_stars: typing.Literal[9] = Aliased(&#34;max_star&#34;)  # maybe one day
+    chambers: typing.Sequence[Chamber] = Aliased(&#34;levels&#34;)</code></pre>
+</details>
+<div class="desc"><p>Floor of the spiral abyss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.chambers"><code class="name">var <span class="ident">chambers</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.Chamber" href="#genshin.models.genshin.chronicle.abyss.Chamber">Chamber</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.floor"><code class="name">var <span class="ident">floor</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.max_stars"><code class="name">var <span class="ident">max_stars</span> : Literal[9]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.stars"><code class="name">var <span class="ident">stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.Floor.unlocked"><code class="name">var <span class="ident">unlocked</span> : Literal[True]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss"><code class="flex name class">
+<span>class <span class="ident">SpiralAbyss</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SpiralAbyss(APIModel):
+    &#34;&#34;&#34;Information about Spiral Abyss runs during a specific season.&#34;&#34;&#34;
+
+    unlocked: bool = Aliased(&#34;is_unlock&#34;)
+    season: int = Aliased(&#34;schedule_id&#34;)
+    start_time: UnixDateTime
+    end_time: UnixDateTime
+
+    total_battles: int = Aliased(&#34;total_battle_times&#34;)
+    total_wins: int = Aliased(&#34;total_win_times&#34;)
+    max_floor: str
+    total_stars: int = Aliased(&#34;total_star&#34;)
+
+    ranks: CharacterRanks
+
+    floors: typing.Sequence[Floor]
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __nest_ranks(cls, values: dict[str, typing.Any]) -&gt; dict[str, AbyssCharacter]:
+        &#34;&#34;&#34;By default ranks are for some reason on the same level as the rest of the abyss.&#34;&#34;&#34;
+        values.setdefault(&#34;ranks&#34;, {}).update(values)
+        return values</code></pre>
+</details>
+<div class="desc"><p>Information about Spiral Abyss runs during a specific season.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.floors"><code class="name">var <span class="ident">floors</span> : Sequence[<a title="genshin.models.genshin.chronicle.abyss.Floor" href="#genshin.models.genshin.chronicle.abyss.Floor">Floor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.max_floor"><code class="name">var <span class="ident">max_floor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.ranks"><code class="name">var <span class="ident">ranks</span> : <a title="genshin.models.genshin.chronicle.abyss.CharacterRanks" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks">CharacterRanks</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.season"><code class="name">var <span class="ident">season</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_battles"><code class="name">var <span class="ident">total_battles</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_stars"><code class="name">var <span class="ident">total_stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_wins"><code class="name">var <span class="ident">total_wins</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyss.unlocked"><code class="name">var <span class="ident">unlocked</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy"><code class="flex name class">
+<span>class <span class="ident">SpiralAbyssEnemy</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SpiralAbyssEnemy(APIModel):
+    &#34;&#34;&#34;An enemy in Spiral Abyss.&#34;&#34;&#34;
+
+    name: str
+    icon: str
+    level: int</code></pre>
+</details>
+<div class="desc"><p>An enemy in Spiral Abyss.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair"><code class="flex name class">
+<span>class <span class="ident">SpiralAbyssPair</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SpiralAbyssPair(APIModel):
+    &#34;&#34;&#34;Pair of both current and previous spiral abyss.
+
+    This may not be a namedtuple due to how pydantic handles them.
+    &#34;&#34;&#34;
+
+    current: SpiralAbyss
+    previous: SpiralAbyss</code></pre>
+</details>
+<div class="desc"><p>Pair of both current and previous spiral abyss.</p>
+<p>This may not be a namedtuple due to how pydantic handles them.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.current"><code class="name">var <span class="ident">current</span> : <a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.previous"><code class="name">var <span class="ident">previous</span> : <a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.AbyssCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssCharacter">AbyssCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssCharacter.level" href="#genshin.models.genshin.chronicle.abyss.AbyssCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssCharacter.model_config" href="#genshin.models.genshin.chronicle.abyss.AbyssCharacter.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter">AbyssRankCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.icon" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.id" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.model_config" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.value" href="#genshin.models.genshin.chronicle.abyss.AbyssRankCharacter.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.Battle" href="#genshin.models.genshin.chronicle.abyss.Battle">Battle</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Battle.characters" href="#genshin.models.genshin.chronicle.abyss.Battle.characters">characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Battle.half" href="#genshin.models.genshin.chronicle.abyss.Battle.half">half</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Battle.model_config" href="#genshin.models.genshin.chronicle.abyss.Battle.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Battle.timestamp" href="#genshin.models.genshin.chronicle.abyss.Battle.timestamp">timestamp</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.Chamber" href="#genshin.models.genshin.chronicle.abyss.Chamber">Chamber</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.battles" href="#genshin.models.genshin.chronicle.abyss.Chamber.battles">battles</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.chamber" href="#genshin.models.genshin.chronicle.abyss.Chamber.chamber">chamber</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.first_half_enemies" href="#genshin.models.genshin.chronicle.abyss.Chamber.first_half_enemies">first_half_enemies</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.max_stars" href="#genshin.models.genshin.chronicle.abyss.Chamber.max_stars">max_stars</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.model_config" href="#genshin.models.genshin.chronicle.abyss.Chamber.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.second_half_enemies" href="#genshin.models.genshin.chronicle.abyss.Chamber.second_half_enemies">second_half_enemies</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Chamber.stars" href="#genshin.models.genshin.chronicle.abyss.Chamber.stars">stars</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks">CharacterRanks</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.model_config" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_bursts_used" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.most_bursts_used">most_bursts_used</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_damage_taken" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.most_damage_taken">most_damage_taken</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_kills" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.most_kills">most_kills</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_played" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.most_played">most_played</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.most_skills_used" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.most_skills_used">most_skills_used</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.CharacterRanks.strongest_strike" href="#genshin.models.genshin.chronicle.abyss.CharacterRanks.strongest_strike">strongest_strike</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.Floor" href="#genshin.models.genshin.chronicle.abyss.Floor">Floor</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.chambers" href="#genshin.models.genshin.chronicle.abyss.Floor.chambers">chambers</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.floor" href="#genshin.models.genshin.chronicle.abyss.Floor.floor">floor</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.max_stars" href="#genshin.models.genshin.chronicle.abyss.Floor.max_stars">max_stars</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.model_config" href="#genshin.models.genshin.chronicle.abyss.Floor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.stars" href="#genshin.models.genshin.chronicle.abyss.Floor.stars">stars</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.Floor.unlocked" href="#genshin.models.genshin.chronicle.abyss.Floor.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.end_time" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.floors" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.floors">floors</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.max_floor" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.max_floor">max_floor</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.model_config" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.ranks" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.ranks">ranks</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.season" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.season">season</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.start_time" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.start_time">start_time</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_battles" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_battles">total_battles</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_stars" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_stars">total_stars</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_wins" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.total_wins">total_wins</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss.unlocked" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyss.unlocked">unlocked</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy">SpiralAbyssEnemy</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.icon" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.level" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.model_config" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.name" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssEnemy.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssPair">SpiralAbyssPair</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.current" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.current">current</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.model_config" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.previous" href="#genshin.models.genshin.chronicle.abyss.SpiralAbyssPair.previous">previous</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

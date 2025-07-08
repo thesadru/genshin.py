@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.zzz.chronicle.notes API documentation</title>
+<meta name="description" content="ZZZ sticky notes (real-time notes) models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.zzz.chronicle.notes</code></h1>
+</header>
+<section id="section-intro">
+<p>ZZZ sticky notes (real-time notes) models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge"><code class="flex name class">
+<span>class <span class="ident">BatteryCharge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BatteryCharge(APIModel):
+    &#34;&#34;&#34;ZZZ battery charge model.&#34;&#34;&#34;
+
+    current: int
+    max: int
+    seconds_till_full: int = Aliased(&#34;restore&#34;)
+
+    @property
+    def is_full(self) -&gt; bool:
+        &#34;&#34;&#34;Check if the energy is full.&#34;&#34;&#34;
+        return self.current == self.max
+
+    @property
+    def full_datetime(self) -&gt; datetime.datetime:
+        &#34;&#34;&#34;Get the datetime when the energy will be full.&#34;&#34;&#34;
+        return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_full)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __unnest_progress(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        return {**values, **values.pop(&#34;progress&#34;, {})}</code></pre>
+</details>
+<div class="desc"><p>ZZZ battery charge model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.current"><code class="name">var <span class="ident">current</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.max"><code class="name">var <span class="ident">max</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.seconds_till_full"><code class="name">var <span class="ident">seconds_till_full</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.full_datetime"><code class="name">prop <span class="ident">full_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def full_datetime(self) -&gt; datetime.datetime:
+    &#34;&#34;&#34;Get the datetime when the energy will be full.&#34;&#34;&#34;
+    return datetime.datetime.now().astimezone() + datetime.timedelta(seconds=self.seconds_till_full)</code></pre>
+</details>
+<div class="desc"><p>Get the datetime when the energy will be full.</p></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.BatteryCharge.is_full"><code class="name">prop <span class="ident">is_full</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def is_full(self) -&gt; bool:
+    &#34;&#34;&#34;Check if the energy is full.&#34;&#34;&#34;
+    return self.current == self.max</code></pre>
+</details>
+<div class="desc"><p>Check if the energy is full.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.VideoStoreState"><code class="flex name class">
+<span>class <span class="ident">VideoStoreState</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VideoStoreState(enum.Enum):
+    &#34;&#34;&#34;Video store management state.&#34;&#34;&#34;
+
+    REVENUE_AVAILABLE = &#34;SaleStateDone&#34;
+    WAITING_TO_OPEN = &#34;SaleStateNo&#34;
+    CURRENTLY_OPEN = &#34;SaleStateDoing&#34;</code></pre>
+</details>
+<div class="desc"><p>Video store management state.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.VideoStoreState.CURRENTLY_OPEN"><code class="name">var <span class="ident">CURRENTLY_OPEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.VideoStoreState.REVENUE_AVAILABLE"><code class="name">var <span class="ident">REVENUE_AVAILABLE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.VideoStoreState.WAITING_TO_OPEN"><code class="name">var <span class="ident">WAITING_TO_OPEN</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZEngagement"><code class="flex name class">
+<span>class <span class="ident">ZZZEngagement</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZEngagement(APIModel):
+    &#34;&#34;&#34;ZZZ engagement model.&#34;&#34;&#34;
+
+    current: int
+    max: int</code></pre>
+</details>
+<div class="desc"><p>ZZZ engagement model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZEngagement.current"><code class="name">var <span class="ident">current</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZEngagement.max"><code class="name">var <span class="ident">max</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZEngagement.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard"><code class="flex name class">
+<span>class <span class="ident">ZZZMemberCard</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZMemberCard(APIModel):
+    &#34;&#34;&#34;ZZZ Member Card model.&#34;&#34;&#34;
+
+    exp_time: datetime.timedelta
+    is_open: bool
+    member_card_state: ZZZMemberCardState
+
+    @property
+    def reset_datetime(self) -&gt; datetime.datetime:
+        &#34;&#34;&#34;The datetime when the member card will be reset.&#34;&#34;&#34;
+        return datetime.datetime.now().astimezone() + self.exp_time
+
+    @pydantic.field_validator(&#34;exp_time&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_currency_refresh(cls, v: str) -&gt; datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))</code></pre>
+</details>
+<div class="desc"><p>ZZZ Member Card model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard.exp_time"><code class="name">var <span class="ident">exp_time</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard.is_open"><code class="name">var <span class="ident">is_open</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard.member_card_state"><code class="name">var <span class="ident">member_card_state</span> : genshin.models.zzz.chronicle.notes.ZZZMemberCardState</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZMemberCard.reset_datetime"><code class="name">prop <span class="ident">reset_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def reset_datetime(self) -&gt; datetime.datetime:
+    &#34;&#34;&#34;The datetime when the member card will be reset.&#34;&#34;&#34;
+    return datetime.datetime.now().astimezone() + self.exp_time</code></pre>
+</details>
+<div class="desc"><p>The datetime when the member card will be reset.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes"><code class="flex name class">
+<span>class <span class="ident">ZZZNotes</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZNotes(APIModel):
+    &#34;&#34;&#34;Zenless Zone Zero sticky notes model.&#34;&#34;&#34;
+
+    battery_charge: BatteryCharge = Aliased(&#34;energy&#34;)
+    engagement: ZZZEngagement = Aliased(&#34;vitality&#34;)
+    scratch_card_completed: bool = Aliased(&#34;card_sign&#34;)
+    video_store_state: VideoStoreState
+    hollow_zero: HollowZero
+    weekly_task: typing.Optional[WeeklyTask] = None
+    card_sign: ZZZCardSignState
+    member_card: ZZZMemberCard
+    temple_running: ZZZTempleRunning
+
+    @pydantic.field_validator(&#34;scratch_card_completed&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __transform_value(cls, v: typing.Literal[&#34;CardSignDone&#34;, &#34;CardSignNotDone&#34;]) -&gt; bool:
+        return v == &#34;CardSignDone&#34;
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __unnest_value(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        if &#34;video_store_state&#34; not in values:
+            values[&#34;video_store_state&#34;] = values[&#34;vhs_sale&#34;][&#34;sale_state&#34;]
+        if &#34;hollow_zero&#34; not in values:
+            values[&#34;hollow_zero&#34;] = {
+                &#34;bounty_commission&#34;: values[&#34;bounty_commission&#34;],
+                &#34;survey_points&#34;: values[&#34;survey_points&#34;],
+            }
+        return values</code></pre>
+</details>
+<div class="desc"><p>Zenless Zone Zero sticky notes model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.battery_charge"><code class="name">var <span class="ident">battery_charge</span> : <a title="genshin.models.zzz.chronicle.notes.BatteryCharge" href="#genshin.models.zzz.chronicle.notes.BatteryCharge">BatteryCharge</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.card_sign"><code class="name">var <span class="ident">card_sign</span> : genshin.models.zzz.chronicle.notes.ZZZCardSignState</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.engagement"><code class="name">var <span class="ident">engagement</span> : <a title="genshin.models.zzz.chronicle.notes.ZZZEngagement" href="#genshin.models.zzz.chronicle.notes.ZZZEngagement">ZZZEngagement</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.hollow_zero"><code class="name">var <span class="ident">hollow_zero</span> : genshin.models.zzz.chronicle.notes.HollowZero</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.member_card"><code class="name">var <span class="ident">member_card</span> : <a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard">ZZZMemberCard</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.scratch_card_completed"><code class="name">var <span class="ident">scratch_card_completed</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.temple_running"><code class="name">var <span class="ident">temple_running</span> : <a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning">ZZZTempleRunning</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.video_store_state"><code class="name">var <span class="ident">video_store_state</span> : <a title="genshin.models.zzz.chronicle.notes.VideoStoreState" href="#genshin.models.zzz.chronicle.notes.VideoStoreState">VideoStoreState</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZNotes.weekly_task"><code class="name">var <span class="ident">weekly_task</span> : genshin.models.zzz.chronicle.notes.WeeklyTask | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning"><code class="flex name class">
+<span>class <span class="ident">ZZZTempleRunning</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ZZZTempleRunning(APIModel):
+    &#34;&#34;&#34;ZZZ Suibian Temple Management model.&#34;&#34;&#34;
+
+    bench_state: typing.Union[BenchState, str]
+    currency_next_refresh_ts: datetime.timedelta
+    current_currency: int
+    expedition_state: typing.Union[ExpeditionState, str]
+    level: int
+    shelve_state: typing.Union[ShelveStoreState, str]
+    weekly_currency_max: int
+
+    @property
+    def reset_datetime(self) -&gt; datetime.datetime:
+        &#34;&#34;&#34;The datetime when the currency will be reset.&#34;&#34;&#34;
+        return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts
+
+    @pydantic.field_validator(&#34;currency_next_refresh_ts&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_currency_refresh(cls, v: str) -&gt; datetime.timedelta:
+        return datetime.timedelta(seconds=int(v))
+
+    @pydantic.field_validator(&#34;bench_state&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_bench_state(cls, v: str) -&gt; typing.Union[BenchState, str]:
+        return prevent_enum_error(v, BenchState)
+
+    @pydantic.field_validator(&#34;expedition_state&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_expedition_state(cls, v: str) -&gt; typing.Union[ExpeditionState, str]:
+        return prevent_enum_error(v, ExpeditionState)
+
+    @pydantic.field_validator(&#34;shelve_state&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __parse_shelve_store_state(cls, v: str) -&gt; typing.Union[ShelveStoreState, str]:
+        return prevent_enum_error(v, ShelveStoreState)</code></pre>
+</details>
+<div class="desc"><p>ZZZ Suibian Temple Management model.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.bench_state"><code class="name">var <span class="ident">bench_state</span> : genshin.models.zzz.chronicle.notes.BenchState | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.currency_next_refresh_ts"><code class="name">var <span class="ident">currency_next_refresh_ts</span> : datetime.timedelta</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.current_currency"><code class="name">var <span class="ident">current_currency</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.expedition_state"><code class="name">var <span class="ident">expedition_state</span> : genshin.models.zzz.chronicle.notes.ExpeditionState | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.shelve_state"><code class="name">var <span class="ident">shelve_state</span> : genshin.models.zzz.chronicle.notes.ShelveStoreState | str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.weekly_currency_max"><code class="name">var <span class="ident">weekly_currency_max</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.reset_datetime"><code class="name">prop <span class="ident">reset_datetime</span> : datetime.datetime</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def reset_datetime(self) -&gt; datetime.datetime:
+    &#34;&#34;&#34;The datetime when the currency will be reset.&#34;&#34;&#34;
+    return datetime.datetime.now().astimezone() + self.currency_next_refresh_ts</code></pre>
+</details>
+<div class="desc"><p>The datetime when the currency will be reset.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.zzz.chronicle" href="index.html">genshin.models.zzz.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge" href="#genshin.models.zzz.chronicle.notes.BatteryCharge">BatteryCharge</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.current" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.current">current</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.full_datetime" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.full_datetime">full_datetime</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.is_full" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.is_full">is_full</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.max" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.max">max</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.model_config" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.BatteryCharge.seconds_till_full" href="#genshin.models.zzz.chronicle.notes.BatteryCharge.seconds_till_full">seconds_till_full</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.VideoStoreState" href="#genshin.models.zzz.chronicle.notes.VideoStoreState">VideoStoreState</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.notes.VideoStoreState.CURRENTLY_OPEN" href="#genshin.models.zzz.chronicle.notes.VideoStoreState.CURRENTLY_OPEN">CURRENTLY_OPEN</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.VideoStoreState.REVENUE_AVAILABLE" href="#genshin.models.zzz.chronicle.notes.VideoStoreState.REVENUE_AVAILABLE">REVENUE_AVAILABLE</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.VideoStoreState.WAITING_TO_OPEN" href="#genshin.models.zzz.chronicle.notes.VideoStoreState.WAITING_TO_OPEN">WAITING_TO_OPEN</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.ZZZEngagement" href="#genshin.models.zzz.chronicle.notes.ZZZEngagement">ZZZEngagement</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZEngagement.current" href="#genshin.models.zzz.chronicle.notes.ZZZEngagement.current">current</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZEngagement.max" href="#genshin.models.zzz.chronicle.notes.ZZZEngagement.max">max</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZEngagement.model_config" href="#genshin.models.zzz.chronicle.notes.ZZZEngagement.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard">ZZZMemberCard</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard.exp_time" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard.exp_time">exp_time</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard.is_open" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard.is_open">is_open</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard.member_card_state" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard.member_card_state">member_card_state</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard.model_config" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZMemberCard.reset_datetime" href="#genshin.models.zzz.chronicle.notes.ZZZMemberCard.reset_datetime">reset_datetime</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes" href="#genshin.models.zzz.chronicle.notes.ZZZNotes">ZZZNotes</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.battery_charge" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.battery_charge">battery_charge</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.card_sign" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.card_sign">card_sign</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.engagement" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.engagement">engagement</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.hollow_zero" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.hollow_zero">hollow_zero</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.member_card" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.member_card">member_card</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.model_config" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.scratch_card_completed" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.scratch_card_completed">scratch_card_completed</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.temple_running" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.temple_running">temple_running</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.video_store_state" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.video_store_state">video_store_state</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZNotes.weekly_task" href="#genshin.models.zzz.chronicle.notes.ZZZNotes.weekly_task">weekly_task</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning">ZZZTempleRunning</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.bench_state" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.bench_state">bench_state</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.currency_next_refresh_ts" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.currency_next_refresh_ts">currency_next_refresh_ts</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.current_currency" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.current_currency">current_currency</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.expedition_state" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.expedition_state">expedition_state</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.level" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.level">level</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.model_config" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.reset_datetime" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.reset_datetime">reset_datetime</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.shelve_state" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.shelve_state">shelve_state</a></code></li>
+<li><code><a title="genshin.models.zzz.chronicle.notes.ZZZTempleRunning.weekly_currency_max" href="#genshin.models.zzz.chronicle.notes.ZZZTempleRunning.weekly_currency_max">weekly_currency_max</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

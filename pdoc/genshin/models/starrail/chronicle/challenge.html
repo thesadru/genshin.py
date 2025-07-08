@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.starrail.chronicle.challenge API documentation</title>
+<meta name="description" content="Starrail chronicle challenge.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.starrail.chronicle.challenge</code></h1>
+</header>
+<section id="section-intro">
+<p>Starrail chronicle challenge.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowBoss"><code class="flex name class">
+<span>class <span class="ident">APCShadowBoss</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowBoss(APIModel):
+    &#34;&#34;&#34;Boss in an apocalyptic shadow challenge.&#34;&#34;&#34;
+
+    id: int
+    name_mi18n: str
+    icon: str</code></pre>
+</details>
+<div class="desc"><p>Boss in an apocalyptic shadow challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowBoss.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowBoss.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowBoss.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowBoss.name_mi18n"><code class="name">var <span class="ident">name_mi18n</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor"><code class="flex name class">
+<span>class <span class="ident">APCShadowFloor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowFloor(StarRailChallengeFloor):
+    &#34;&#34;&#34;Floor in an apocalyptic shadow challenge.&#34;&#34;&#34;
+
+    node_1: APCShadowFloorNode
+    node_2: APCShadowFloorNode
+    last_update_time: PartialTime
+    is_quick_clear: bool = Aliased(&#34;is_fast&#34;)
+
+    @property
+    def score(self) -&gt; int:
+        &#34;&#34;&#34;Total score of the floor.&#34;&#34;&#34;
+        return self.node_1.score + self.node_2.score</code></pre>
+</details>
+<div class="desc"><p>Floor in an apocalyptic shadow challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.challenge.StarRailChallengeFloor</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.is_quick_clear"><code class="name">var <span class="ident">is_quick_clear</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.last_update_time"><code class="name">var <span class="ident">last_update_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_1"><code class="name">var <span class="ident">node_1</span> : <a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode">APCShadowFloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_2"><code class="name">var <span class="ident">node_2</span> : <a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode">APCShadowFloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloor.score"><code class="name">prop <span class="ident">score</span> : int</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def score(self) -&gt; int:
+    &#34;&#34;&#34;Total score of the floor.&#34;&#34;&#34;
+    return self.node_1.score + self.node_2.score</code></pre>
+</details>
+<div class="desc"><p>Total score of the floor.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode"><code class="flex name class">
+<span>class <span class="ident">APCShadowFloorNode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowFloorNode(FloorNode):
+    &#34;&#34;&#34;Node for a apocalyptic shadow floor.&#34;&#34;&#34;
+
+    challenge_time: typing.Optional[PartialTime]  # type: ignore[assignment]
+    buff: typing.Optional[ChallengeBuff]
+    score: int
+    boss_defeated: bool
+
+    @property
+    def has_data(self) -&gt; bool:
+        &#34;&#34;&#34;Check if the node has data.&#34;&#34;&#34;
+        return bool(self.avatars)</code></pre>
+</details>
+<div class="desc"><p>Node for a apocalyptic shadow floor.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.boss_defeated"><code class="name">var <span class="ident">boss_defeated</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.buff"><code class="name">var <span class="ident">buff</span> : <a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff">ChallengeBuff</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.challenge_time"><code class="name">var <span class="ident">challenge_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.score"><code class="name">var <span class="ident">score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.has_data"><code class="name">prop <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def has_data(self) -&gt; bool:
+    &#34;&#34;&#34;Check if the node has data.&#34;&#34;&#34;
+    return bool(self.avatars)</code></pre>
+</details>
+<div class="desc"><p>Check if the node has data.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowSeason"><code class="flex name class">
+<span>class <span class="ident">APCShadowSeason</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowSeason(StarRailChallengeSeason):
+    &#34;&#34;&#34;Season of an apocalyptic shadow challenge.&#34;&#34;&#34;
+
+    upper_boss: APCShadowBoss
+    lower_boss: APCShadowBoss</code></pre>
+</details>
+<div class="desc"><p>Season of an apocalyptic shadow challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason">StarRailChallengeSeason</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowSeason.lower_boss"><code class="name">var <span class="ident">lower_boss</span> : <a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss">APCShadowBoss</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowSeason.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.APCShadowSeason.upper_boss"><code class="name">var <span class="ident">upper_boss</span> : <a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss">APCShadowBoss</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff"><code class="flex name class">
+<span>class <span class="ident">ChallengeBuff</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChallengeBuff(APIModel):
+    &#34;&#34;&#34;Buff used in a pure fiction or apocalyptic shadow node.&#34;&#34;&#34;
+
+    id: int
+    name: str = Aliased(&#34;name_mi18n&#34;)
+    description: str = Aliased(&#34;desc_mi18n&#34;)
+    icon: str</code></pre>
+</details>
+<div class="desc"><p>Buff used in a pure fiction or apocalyptic shadow node.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.ChallengeBuff.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor"><code class="flex name class">
+<span>class <span class="ident">FictionFloor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FictionFloor(StarRailChallengeFloor):
+    &#34;&#34;&#34;Floor in a Pure Fiction challenge.&#34;&#34;&#34;
+
+    round_num: int
+    node_1: FictionFloorNode
+    node_2: FictionFloorNode
+
+    @property
+    def score(self) -&gt; int:
+        &#34;&#34;&#34;Total score of the floor.&#34;&#34;&#34;
+        return self.node_1.score + self.node_2.score</code></pre>
+</details>
+<div class="desc"><p>Floor in a Pure Fiction challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.challenge.StarRailChallengeFloor</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor.node_1"><code class="name">var <span class="ident">node_1</span> : <a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode">FictionFloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor.node_2"><code class="name">var <span class="ident">node_2</span> : <a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode">FictionFloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor.round_num"><code class="name">var <span class="ident">round_num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloor.score"><code class="name">prop <span class="ident">score</span> : int</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def score(self) -&gt; int:
+    &#34;&#34;&#34;Total score of the floor.&#34;&#34;&#34;
+    return self.node_1.score + self.node_2.score</code></pre>
+</details>
+<div class="desc"><p>Total score of the floor.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloorNode"><code class="flex name class">
+<span>class <span class="ident">FictionFloorNode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FictionFloorNode(FloorNode):
+    &#34;&#34;&#34;Node for a Pure Fiction floor.&#34;&#34;&#34;
+
+    buff: typing.Optional[ChallengeBuff]
+    score: int</code></pre>
+</details>
+<div class="desc"><p>Node for a Pure Fiction floor.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloorNode.buff"><code class="name">var <span class="ident">buff</span> : <a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff">ChallengeBuff</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloorNode.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FictionFloorNode.score"><code class="name">var <span class="ident">score</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FloorNode"><code class="flex name class">
+<span>class <span class="ident">FloorNode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FloorNode(APIModel):
+    &#34;&#34;&#34;Node for a memory of chaos floor.&#34;&#34;&#34;
+
+    challenge_time: PartialTime
+    avatars: list[FloorCharacter]</code></pre>
+</details>
+<div class="desc"><p>Node for a memory of chaos floor.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode">APCShadowFloorNode</a></li>
+<li><a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode">FictionFloorNode</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.FloorNode.avatars"><code class="name">var <span class="ident">avatars</span> : list[<a title="genshin.models.starrail.character.FloorCharacter" href="../character.html#genshin.models.starrail.character.FloorCharacter">FloorCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FloorNode.challenge_time"><code class="name">var <span class="ident">challenge_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.FloorNode.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow"><code class="flex name class">
+<span>class <span class="ident">StarRailAPCShadow</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailAPCShadow(APIModel):
+    &#34;&#34;&#34;Apocalyptic shadow challenge in a season.&#34;&#34;&#34;
+
+    total_stars: int = Aliased(&#34;star_num&#34;)
+    max_floor: str
+    total_battles: int = Aliased(&#34;battle_num&#34;)
+    has_data: bool
+
+    floors: list[APCShadowFloor] = Aliased(&#34;all_floor_detail&#34;)
+    seasons: list[APCShadowSeason] = Aliased(&#34;groups&#34;)
+    max_floor_id: int</code></pre>
+</details>
+<div class="desc"><p>Apocalyptic shadow challenge in a season.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.floors"><code class="name">var <span class="ident">floors</span> : list[<a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor">APCShadowFloor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor"><code class="name">var <span class="ident">max_floor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor_id"><code class="name">var <span class="ident">max_floor_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.seasons"><code class="name">var <span class="ident">seasons</span> : list[<a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason">APCShadowSeason</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_battles"><code class="name">var <span class="ident">total_battles</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_stars"><code class="name">var <span class="ident">total_stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge"><code class="flex name class">
+<span>class <span class="ident">StarRailChallenge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailChallenge(APIModel):
+    &#34;&#34;&#34;Memory of chaos challenge in a season.&#34;&#34;&#34;
+
+    name: str
+    season: int = Aliased(&#34;schedule_id&#34;)
+    begin_time: typing.Optional[PartialTime]
+    end_time: typing.Optional[PartialTime]
+
+    total_stars: int = Aliased(&#34;star_num&#34;)
+    max_floor: str
+    total_battles: int = Aliased(&#34;battle_num&#34;)
+    has_data: bool
+
+    floors: typing.Sequence[StarRailFloor] = Aliased(&#34;all_floor_detail&#34;)
+    seasons: typing.Sequence[StarRailChallengeSeason] = Aliased(&#34;groups&#34;)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __extract_name(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        if &#34;groups&#34; in values and isinstance(values[&#34;groups&#34;], list):
+            seasons = typing.cast(list[dict[str, typing.Any]], values[&#34;groups&#34;])
+            if len(seasons) &gt; 0:
+                values[&#34;name&#34;] = seasons[0][&#34;name_mi18n&#34;]
+            else:
+                values[&#34;name&#34;] = &#34;&#34;
+
+        return values</code></pre>
+</details>
+<div class="desc"><p>Memory of chaos challenge in a season.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.begin_time"><code class="name">var <span class="ident">begin_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.end_time"><code class="name">var <span class="ident">end_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.floors"><code class="name">var <span class="ident">floors</span> : Sequence[<a title="genshin.models.starrail.chronicle.challenge.StarRailFloor" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor">StarRailFloor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.max_floor"><code class="name">var <span class="ident">max_floor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.season"><code class="name">var <span class="ident">season</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.seasons"><code class="name">var <span class="ident">seasons</span> : Sequence[<a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason">StarRailChallengeSeason</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_battles"><code class="name">var <span class="ident">total_battles</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_stars"><code class="name">var <span class="ident">total_stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason"><code class="flex name class">
+<span>class <span class="ident">StarRailChallengeSeason</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailChallengeSeason(APIModel):
+    &#34;&#34;&#34;A season of a challenge.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;schedule_id&#34;)
+    name: str = Aliased(&#34;name_mi18n&#34;)
+    status: str
+    begin_time: PartialTime
+    end_time: PartialTime</code></pre>
+</details>
+<div class="desc"><p>A season of a challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason">APCShadowSeason</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.begin_time"><code class="name">var <span class="ident">begin_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.end_time"><code class="name">var <span class="ident">end_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.status"><code class="name">var <span class="ident">status</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor"><code class="flex name class">
+<span>class <span class="ident">StarRailFloor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailFloor(StarRailChallengeFloor):
+    &#34;&#34;&#34;Floor in a memory of chaos challenge.&#34;&#34;&#34;
+
+    round_num: int
+    is_chaos: bool
+    node_1: FloorNode
+    node_2: FloorNode</code></pre>
+</details>
+<div class="desc"><p>Floor in a memory of chaos challenge.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>genshin.models.starrail.chronicle.challenge.StarRailChallengeFloor</li>
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor.is_chaos"><code class="name">var <span class="ident">is_chaos</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor.node_1"><code class="name">var <span class="ident">node_1</span> : <a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor.node_2"><code class="name">var <span class="ident">node_2</span> : <a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailFloor.round_num"><code class="name">var <span class="ident">round_num</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction"><code class="flex name class">
+<span>class <span class="ident">StarRailPureFiction</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailPureFiction(APIModel):
+    &#34;&#34;&#34;Pure Fiction challenge in a season.&#34;&#34;&#34;
+
+    name: str = pydantic.Field(deprecated=&#34;Use `season_id` together with `seasons instead`.&#34;)
+    season_id: int = pydantic.Field(deprecated=&#34;Use `season_id` together with `seasons instead`.&#34;)
+    begin_time: PartialTime = pydantic.Field(deprecated=&#34;Use `season_id` together with `seasons instead`.&#34;)
+    end_time: PartialTime = pydantic.Field(deprecated=&#34;Use `season_id` together with `seasons instead`.&#34;)
+
+    total_stars: int = Aliased(&#34;star_num&#34;)
+    max_floor: str
+    total_battles: int = Aliased(&#34;battle_num&#34;)
+    has_data: bool
+
+    floors: list[FictionFloor] = Aliased(&#34;all_floor_detail&#34;)
+    seasons: list[StarRailChallengeSeason] = Aliased(&#34;groups&#34;)
+    max_floor_id: int
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    def __unnest_groups(cls, values: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        if &#34;groups&#34; in values and isinstance(values[&#34;groups&#34;], list):
+            seasons = typing.cast(list[dict[str, typing.Any]], values[&#34;groups&#34;])
+            if len(seasons) &gt; 0:
+                values[&#34;name&#34;] = seasons[0][&#34;name_mi18n&#34;]
+                values[&#34;season_id&#34;] = seasons[0][&#34;schedule_id&#34;]
+                values[&#34;begin_time&#34;] = seasons[0][&#34;begin_time&#34;]
+                values[&#34;end_time&#34;] = seasons[0][&#34;end_time&#34;]
+
+        return values</code></pre>
+</details>
+<div class="desc"><p>Pure Fiction challenge in a season.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.floors"><code class="name">var <span class="ident">floors</span> : list[<a title="genshin.models.starrail.chronicle.challenge.FictionFloor" href="#genshin.models.starrail.chronicle.challenge.FictionFloor">FictionFloor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor"><code class="name">var <span class="ident">max_floor</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor_id"><code class="name">var <span class="ident">max_floor_id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.seasons"><code class="name">var <span class="ident">seasons</span> : list[<a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason">StarRailChallengeSeason</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_battles"><code class="name">var <span class="ident">total_battles</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_stars"><code class="name">var <span class="ident">total_stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.begin_time"><code class="name">var <span class="ident">begin_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj: BaseModel | None, obj_type: type[BaseModel] | None = None) -&gt; Any:
+    if obj is None:
+        if self.wrapped_property is not None:
+            return self.wrapped_property.__get__(None, obj_type)
+        raise AttributeError(self.field_name)
+
+    warnings.warn(self.msg, builtins.DeprecationWarning, stacklevel=2)
+
+    if self.wrapped_property is not None:
+        return self.wrapped_property.__get__(obj, obj_type)
+    return obj.__dict__[self.field_name]</code></pre>
+</details>
+<div class="desc"><p>Read-only data descriptor used to emit a runtime deprecation warning before accessing a deprecated field.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>msg</code></strong></dt>
+<dd>The deprecation message to be emitted.</dd>
+<dt><strong><code>wrapped_property</code></strong></dt>
+<dd>The property instance if the deprecated field is a computed field, or <code>None</code>.</dd>
+<dt><strong><code>field_name</code></strong></dt>
+<dd>The name of the field being deprecated.</dd>
+</dl></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.end_time"><code class="name">var <span class="ident">end_time</span> : <a title="genshin.models.starrail.chronicle.base.PartialTime" href="base.html#genshin.models.starrail.chronicle.base.PartialTime">PartialTime</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj: BaseModel | None, obj_type: type[BaseModel] | None = None) -&gt; Any:
+    if obj is None:
+        if self.wrapped_property is not None:
+            return self.wrapped_property.__get__(None, obj_type)
+        raise AttributeError(self.field_name)
+
+    warnings.warn(self.msg, builtins.DeprecationWarning, stacklevel=2)
+
+    if self.wrapped_property is not None:
+        return self.wrapped_property.__get__(obj, obj_type)
+    return obj.__dict__[self.field_name]</code></pre>
+</details>
+<div class="desc"><p>Read-only data descriptor used to emit a runtime deprecation warning before accessing a deprecated field.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>msg</code></strong></dt>
+<dd>The deprecation message to be emitted.</dd>
+<dt><strong><code>wrapped_property</code></strong></dt>
+<dd>The property instance if the deprecated field is a computed field, or <code>None</code>.</dd>
+<dt><strong><code>field_name</code></strong></dt>
+<dd>The name of the field being deprecated.</dd>
+</dl></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj: BaseModel | None, obj_type: type[BaseModel] | None = None) -&gt; Any:
+    if obj is None:
+        if self.wrapped_property is not None:
+            return self.wrapped_property.__get__(None, obj_type)
+        raise AttributeError(self.field_name)
+
+    warnings.warn(self.msg, builtins.DeprecationWarning, stacklevel=2)
+
+    if self.wrapped_property is not None:
+        return self.wrapped_property.__get__(obj, obj_type)
+    return obj.__dict__[self.field_name]</code></pre>
+</details>
+<div class="desc"><p>Read-only data descriptor used to emit a runtime deprecation warning before accessing a deprecated field.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>msg</code></strong></dt>
+<dd>The deprecation message to be emitted.</dd>
+<dt><strong><code>wrapped_property</code></strong></dt>
+<dd>The property instance if the deprecated field is a computed field, or <code>None</code>.</dd>
+<dt><strong><code>field_name</code></strong></dt>
+<dd>The name of the field being deprecated.</dd>
+</dl></div>
+</dd>
+<dt id="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.season_id"><code class="name">var <span class="ident">season_id</span> : int</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj: BaseModel | None, obj_type: type[BaseModel] | None = None) -&gt; Any:
+    if obj is None:
+        if self.wrapped_property is not None:
+            return self.wrapped_property.__get__(None, obj_type)
+        raise AttributeError(self.field_name)
+
+    warnings.warn(self.msg, builtins.DeprecationWarning, stacklevel=2)
+
+    if self.wrapped_property is not None:
+        return self.wrapped_property.__get__(obj, obj_type)
+    return obj.__dict__[self.field_name]</code></pre>
+</details>
+<div class="desc"><p>Read-only data descriptor used to emit a runtime deprecation warning before accessing a deprecated field.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>msg</code></strong></dt>
+<dd>The deprecation message to be emitted.</dd>
+<dt><strong><code>wrapped_property</code></strong></dt>
+<dd>The property instance if the deprecated field is a computed field, or <code>None</code>.</dd>
+<dt><strong><code>field_name</code></strong></dt>
+<dd>The name of the field being deprecated.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.starrail.chronicle" href="index.html">genshin.models.starrail.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss">APCShadowBoss</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss.icon" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss.id" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss.model_config" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowBoss.name_mi18n" href="#genshin.models.starrail.chronicle.challenge.APCShadowBoss.name_mi18n">name_mi18n</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor">APCShadowFloor</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.is_quick_clear" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.is_quick_clear">is_quick_clear</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.last_update_time" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.last_update_time">last_update_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.model_config" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_1" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_1">node_1</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_2" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.node_2">node_2</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloor.score" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloor.score">score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode">APCShadowFloorNode</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.boss_defeated" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.boss_defeated">boss_defeated</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.buff" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.buff">buff</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.challenge_time" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.challenge_time">challenge_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.has_data" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.model_config" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.score" href="#genshin.models.starrail.chronicle.challenge.APCShadowFloorNode.score">score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason">APCShadowSeason</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason.lower_boss" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason.lower_boss">lower_boss</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason.model_config" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.APCShadowSeason.upper_boss" href="#genshin.models.starrail.chronicle.challenge.APCShadowSeason.upper_boss">upper_boss</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff">ChallengeBuff</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff.description" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff.description">description</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff.icon" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff.id" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff.model_config" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.ChallengeBuff.name" href="#genshin.models.starrail.chronicle.challenge.ChallengeBuff.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor" href="#genshin.models.starrail.chronicle.challenge.FictionFloor">FictionFloor</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor.model_config" href="#genshin.models.starrail.chronicle.challenge.FictionFloor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor.node_1" href="#genshin.models.starrail.chronicle.challenge.FictionFloor.node_1">node_1</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor.node_2" href="#genshin.models.starrail.chronicle.challenge.FictionFloor.node_2">node_2</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor.round_num" href="#genshin.models.starrail.chronicle.challenge.FictionFloor.round_num">round_num</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloor.score" href="#genshin.models.starrail.chronicle.challenge.FictionFloor.score">score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode">FictionFloorNode</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode.buff" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode.buff">buff</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode.model_config" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FictionFloorNode.score" href="#genshin.models.starrail.chronicle.challenge.FictionFloorNode.score">score</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.FloorNode" href="#genshin.models.starrail.chronicle.challenge.FloorNode">FloorNode</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FloorNode.avatars" href="#genshin.models.starrail.chronicle.challenge.FloorNode.avatars">avatars</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FloorNode.challenge_time" href="#genshin.models.starrail.chronicle.challenge.FloorNode.challenge_time">challenge_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.FloorNode.model_config" href="#genshin.models.starrail.chronicle.challenge.FloorNode.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow">StarRailAPCShadow</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.floors" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.floors">floors</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.has_data" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor">max_floor</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor_id" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.max_floor_id">max_floor_id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.model_config" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.seasons" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.seasons">seasons</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_battles" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_battles">total_battles</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_stars" href="#genshin.models.starrail.chronicle.challenge.StarRailAPCShadow.total_stars">total_stars</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge">StarRailChallenge</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.begin_time" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.begin_time">begin_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.end_time" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.floors" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.floors">floors</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.has_data" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.max_floor" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.max_floor">max_floor</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.model_config" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.name" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.season" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.season">season</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.seasons" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.seasons">seasons</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_battles" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_battles">total_battles</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_stars" href="#genshin.models.starrail.chronicle.challenge.StarRailChallenge.total_stars">total_stars</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason">StarRailChallengeSeason</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.begin_time" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.begin_time">begin_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.end_time" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.id" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.model_config" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.name" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.status" href="#genshin.models.starrail.chronicle.challenge.StarRailChallengeSeason.status">status</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor">StarRailFloor</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor.is_chaos" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor.is_chaos">is_chaos</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor.model_config" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor.node_1" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor.node_1">node_1</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor.node_2" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor.node_2">node_2</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailFloor.round_num" href="#genshin.models.starrail.chronicle.challenge.StarRailFloor.round_num">round_num</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction">StarRailPureFiction</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.begin_time" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.begin_time">begin_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.end_time" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.floors" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.floors">floors</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.has_data" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor">max_floor</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor_id" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.max_floor_id">max_floor_id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.model_config" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.name" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.season_id" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.season_id">season_id</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.seasons" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.seasons">seasons</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_battles" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_battles">total_battles</a></code></li>
+<li><code><a title="genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_stars" href="#genshin.models.starrail.chronicle.challenge.StarRailPureFiction.total_stars">total_stars</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.clients API documentation</title>
+<meta name="description" content="A simple HTTP client for API endpoints.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.clients</code></h1>
+</header>
+<section id="section-intro">
+<p>A simple HTTP client for API endpoints.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.clients.Client"><code class="flex name class">
+<span>class <span class="ident">Client</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>A simple HTTP client for API endpoints.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.chronicle.client.BattleChronicleClient" href="components/chronicle/client.html#genshin.client.components.chronicle.client.BattleChronicleClient">BattleChronicleClient</a></li>
+<li><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient">GenshinBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient">HonkaiBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient">StarRailBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient">ZZZBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient">BaseBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.hoyolab.HoyolabClient" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient">HoyolabClient</a></li>
+<li><a title="genshin.client.components.daily.DailyRewardClient" href="components/daily.html#genshin.client.components.daily.DailyRewardClient">DailyRewardClient</a></li>
+<li><a title="genshin.client.components.calculator.client.CalculatorClient" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient">CalculatorClient</a></li>
+<li><a title="genshin.client.components.diary.DiaryClient" href="components/diary.html#genshin.client.components.diary.DiaryClient">DiaryClient</a></li>
+<li><a title="genshin.client.components.lineup.LineupClient" href="components/lineup.html#genshin.client.components.lineup.LineupClient">LineupClient</a></li>
+<li><a title="genshin.client.components.teapot.TeapotClient" href="components/teapot.html#genshin.client.components.teapot.TeapotClient">TeapotClient</a></li>
+<li><a title="genshin.client.components.wiki.WikiClient" href="components/wiki.html#genshin.client.components.wiki.WikiClient">WikiClient</a></li>
+<li><a title="genshin.client.components.gacha.WishClient" href="components/gacha.html#genshin.client.components.gacha.WishClient">WishClient</a></li>
+<li><a title="genshin.client.components.transaction.TransactionClient" href="components/transaction.html#genshin.client.components.transaction.TransactionClient">TransactionClient</a></li>
+<li><a title="genshin.client.components.auth.client.AuthClient" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient">AuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.app.AppAuthClient" href="components/auth/subclients/app.html#genshin.client.components.auth.subclients.app.AppAuthClient">AppAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.web.WebAuthClient" href="components/auth/subclients/web.html#genshin.client.components.auth.subclients.web.WebAuthClient">WebAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.game.GameAuthClient" href="components/auth/subclients/game.html#genshin.client.components.auth.subclients.game.GameAuthClient">GameAuthClient</a></li>
+<li><a title="genshin.client.components.hsr_lineup.HSRLineupClient" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient">HSRLineupClient</a></li>
+<li><a title="genshin.client.components.base.BaseClient" href="components/base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.compatibility.GenshinClient" href="compatibility.html#genshin.client.compatibility.GenshinClient">GenshinClient</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.clients.Client.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.clients.Client.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.clients.Client.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.clients.Client.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.clients.Client.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.clients.Client.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(
+    chronicle.BattleChronicleClient,
+    hoyolab.HoyolabClient,
+    daily.DailyRewardClient,
+    calculator.CalculatorClient,
+    diary.DiaryClient,
+    lineup.LineupClient,
+    teapot.TeapotClient,
+    wiki.WikiClient,
+    gacha.WishClient,
+    transaction.TransactionClient,
+    auth.AuthClient,
+    hsr_lineup.HSRLineupClient,
+):
+    &#34;&#34;&#34;A simple HTTP client for API endpoints.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.chronicle.client.BattleChronicleClient" href="components/chronicle/client.html#genshin.client.components.chronicle.client.BattleChronicleClient">BattleChronicleClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.authkey" href="components/base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.debug" href="components/base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.default_game" href="components/base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.device_fp" href="components/base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.device_id" href="components/base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.game" href="components/base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.genshin_accounts" href="components/base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.genshin_tcg" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.genshin_tcg">genshin_tcg</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_account_timezone" href="components/base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_activities" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_activities">get_activities</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_bangboos" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_bangboos">get_bangboos</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_deadly_assault" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_deadly_assault">get_deadly_assault</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_elysian_realm" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_elysian_realm">get_elysian_realm</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_envisaged_echoes" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_envisaged_echoes">get_envisaged_echoes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_full_genshin_user" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_full_genshin_user">get_full_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_full_honkai_user" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_full_honkai_user">get_full_honkai_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_game_accounts" href="components/base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_activities" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_activities">get_genshin_activities</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_characters" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_characters">get_genshin_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_detailed_characters" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_detailed_characters">get_genshin_detailed_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_event_calendar" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_event_calendar">get_genshin_event_calendar</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_notes" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_notes">get_genshin_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_spiral_abyss" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_spiral_abyss">get_genshin_spiral_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_tcg_preview" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_tcg_preview">get_genshin_tcg_preview</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_genshin_user" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_user">get_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_abyss" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_abyss">get_honkai_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_battlesuits" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_battlesuits">get_honkai_battlesuits</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_elysian_realm" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_elysian_realm">get_honkai_elysian_realm</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_memorial_arena" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_memorial_arena">get_honkai_memorial_arena</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_notes" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_notes">get_honkai_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_old_abyss" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_old_abyss">get_honkai_old_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_superstring_abyss" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_superstring_abyss">get_honkai_superstring_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_honkai_user" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_honkai_user">get_honkai_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_imaginarium_theater" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_imaginarium_theater">get_imaginarium_theater</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_lost_void_summary" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_lost_void_summary">get_lost_void_summary</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_memorial_arena" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_memorial_arena">get_memorial_arena</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_notes" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_notes">get_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_old_abyss" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_old_abyss">get_old_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_partial_genshin_user" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_partial_genshin_user">get_partial_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_record_card" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_card">get_record_card</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_record_cards" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_cards">get_record_cards</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_shiyu_defense" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_shiyu_defense">get_shiyu_defense</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_spiral_abyss" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_spiral_abyss">get_spiral_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_apc_shadow" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_apc_shadow">get_starrail_apc_shadow</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_challenge" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_challenge">get_starrail_challenge</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_characters" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_characters">get_starrail_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_event_calendar" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_event_calendar">get_starrail_event_calendar</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_notes" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_notes">get_starrail_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_pure_fiction" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_pure_fiction">get_starrail_pure_fiction</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_rogue" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_rogue">get_starrail_rogue</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_starrail_user" href="components/chronicle/starrail.html#genshin.client.components.chronicle.starrail.StarRailBattleChronicleClient.get_starrail_user">get_starrail_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_stygian_onslaught" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_stygian_onslaught">get_stygian_onslaught</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_superstring_abyss" href="components/chronicle/honkai.html#genshin.client.components.chronicle.honkai.HonkaiBattleChronicleClient.get_superstring_abyss">get_superstring_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_agent_info" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_agent_info">get_zzz_agent_info</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_agents" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_agents">get_zzz_agents</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_diary" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_diary">get_zzz_diary</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_diary_detail" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_diary_detail">get_zzz_diary_detail</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_notes" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_notes">get_zzz_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.get_zzz_user" href="components/chronicle/zzz.html#genshin.client.components.chronicle.zzz.ZZZBattleChronicleClient.get_zzz_user">get_zzz_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.hoyolab_id" href="components/base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.lang" href="components/base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.proxy" href="components/base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.region" href="components/base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.request" href="components/base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.request_bbs" href="components/base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.request_game_record" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_game_record">request_game_record</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.request_hoyolab" href="components/base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.request_webstatic" href="components/base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_authkey" href="components/base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_browser_cookies" href="components/base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_cache" href="components/base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_cookies" href="components/base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_redis_cache" href="components/base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_top_genshin_characters" href="components/chronicle/genshin.html#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.set_top_genshin_characters">set_top_genshin_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.set_visibility" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_visibility">set_visibility</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.uid" href="components/base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.client.BattleChronicleClient.update_settings" href="components/chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.update_settings">update_settings</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.hoyolab.HoyolabClient" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient">HoyolabClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.accompany_character" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.accompany_character">accompany_character</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.buy_mimo_shop_item" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.buy_mimo_shop_item">buy_mimo_shop_item</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.check_in_community" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.check_in_community">check_in_community</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.claim_mimo_task_reward" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.claim_mimo_task_reward">claim_mimo_task_reward</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.delete_reply" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.delete_reply">delete_reply</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.draw_mimo_lottery" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.draw_mimo_lottery">draw_mimo_lottery</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.fetch_mi18n" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.fetch_mi18n">fetch_mi18n</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.finish_mimo_task" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.finish_mimo_task">finish_mimo_task</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_accompany_characters" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_accompany_characters">get_accompany_characters</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_genshin_announcements" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_genshin_announcements">get_genshin_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_hoyolab_user" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_hoyolab_user">get_hoyolab_user</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_games" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_mimo_games">get_mimo_games</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_lottery_info" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_mimo_lottery_info">get_mimo_lottery_info</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_point_count" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_mimo_point_count">get_mimo_point_count</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_shop_items" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_mimo_shop_items">get_mimo_shop_items</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_mimo_tasks" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_mimo_tasks">get_mimo_tasks</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_recommended_users" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_recommended_users">get_recommended_users</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_replies" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_replies">get_replies</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_starrail_announcements" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_starrail_announcements">get_starrail_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_web_events" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_web_events">get_web_events</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.get_zzz_announcements" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.get_zzz_announcements">get_zzz_announcements</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.join_topic" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.join_topic">join_topic</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.leave_topic" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.leave_topic">leave_topic</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.redeem_code" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.redeem_code">redeem_code</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.reply_to_post" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.reply_to_post">reply_to_post</a></code></li>
+<li><code><a title="genshin.client.components.hoyolab.HoyolabClient.search_users" href="components/hoyolab.html#genshin.client.components.hoyolab.HoyolabClient.search_users">search_users</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.daily.DailyRewardClient" href="components/daily.html#genshin.client.components.daily.DailyRewardClient">DailyRewardClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.daily.DailyRewardClient.claim_daily_reward" href="components/daily.html#genshin.client.components.daily.DailyRewardClient.claim_daily_reward">claim_daily_reward</a></code></li>
+<li><code><a title="genshin.client.components.daily.DailyRewardClient.claimed_rewards" href="components/daily.html#genshin.client.components.daily.DailyRewardClient.claimed_rewards">claimed_rewards</a></code></li>
+<li><code><a title="genshin.client.components.daily.DailyRewardClient.get_monthly_rewards" href="components/daily.html#genshin.client.components.daily.DailyRewardClient.get_monthly_rewards">get_monthly_rewards</a></code></li>
+<li><code><a title="genshin.client.components.daily.DailyRewardClient.get_reward_info" href="components/daily.html#genshin.client.components.daily.DailyRewardClient.get_reward_info">get_reward_info</a></code></li>
+<li><code><a title="genshin.client.components.daily.DailyRewardClient.request_daily_reward" href="components/daily.html#genshin.client.components.daily.DailyRewardClient.request_daily_reward">request_daily_reward</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.calculator.client.CalculatorClient" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient">CalculatorClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.calculator" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.calculator">calculator</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.furnishings_calculator" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.furnishings_calculator">furnishings_calculator</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_calculator_artifacts" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_calculator_artifacts">get_calculator_artifacts</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_calculator_characters" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_calculator_characters">get_calculator_characters</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_calculator_furnishings" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_calculator_furnishings">get_calculator_furnishings</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_calculator_weapons" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_calculator_weapons">get_calculator_weapons</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_character_details" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_character_details">get_character_details</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_character_talents" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_character_talents">get_character_talents</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_complete_artifact_set" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_complete_artifact_set">get_complete_artifact_set</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.get_teapot_replica_blueprint" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.get_teapot_replica_blueprint">get_teapot_replica_blueprint</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.request_calculator" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.request_calculator">request_calculator</a></code></li>
+<li><code><a title="genshin.client.components.calculator.client.CalculatorClient.update_character_names" href="components/calculator/client.html#genshin.client.components.calculator.client.CalculatorClient.update_character_names">update_character_names</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.diary.DiaryClient" href="components/diary.html#genshin.client.components.diary.DiaryClient">DiaryClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.diary.DiaryClient.diary_log" href="components/diary.html#genshin.client.components.diary.DiaryClient.diary_log">diary_log</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.genshin_diary_log" href="components/diary.html#genshin.client.components.diary.DiaryClient.genshin_diary_log">genshin_diary_log</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.get_diary" href="components/diary.html#genshin.client.components.diary.DiaryClient.get_diary">get_diary</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.get_genshin_diary" href="components/diary.html#genshin.client.components.diary.DiaryClient.get_genshin_diary">get_genshin_diary</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.get_starrail_diary" href="components/diary.html#genshin.client.components.diary.DiaryClient.get_starrail_diary">get_starrail_diary</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.request_ledger" href="components/diary.html#genshin.client.components.diary.DiaryClient.request_ledger">request_ledger</a></code></li>
+<li><code><a title="genshin.client.components.diary.DiaryClient.starrail_diary_log" href="components/diary.html#genshin.client.components.diary.DiaryClient.starrail_diary_log">starrail_diary_log</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.lineup.LineupClient" href="components/lineup.html#genshin.client.components.lineup.LineupClient">LineupClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_favorite_lineups" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_favorite_lineups">get_favorite_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_character_history" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_lineup_character_history">get_lineup_character_history</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_details" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_lineup_details">get_lineup_details</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_fields" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_lineup_fields">get_lineup_fields</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_scenarios" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_lineup_scenarios">get_lineup_scenarios</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineups" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_lineups">get_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_user_lineups" href="components/lineup.html#genshin.client.components.lineup.LineupClient.get_user_lineups">get_user_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.request_lineup" href="components/lineup.html#genshin.client.components.lineup.LineupClient.request_lineup">request_lineup</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.teapot.TeapotClient" href="components/teapot.html#genshin.client.components.teapot.TeapotClient">TeapotClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.teapot.TeapotClient.request_teapot" href="components/teapot.html#genshin.client.components.teapot.TeapotClient.request_teapot">request_teapot</a></code></li>
+<li><code><a title="genshin.client.components.teapot.TeapotClient.teapot_replicas" href="components/teapot.html#genshin.client.components.teapot.TeapotClient.teapot_replicas">teapot_replicas</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.wiki.WikiClient" href="components/wiki.html#genshin.client.components.wiki.WikiClient">WikiClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.wiki.WikiClient.get_wiki_page" href="components/wiki.html#genshin.client.components.wiki.WikiClient.get_wiki_page">get_wiki_page</a></code></li>
+<li><code><a title="genshin.client.components.wiki.WikiClient.get_wiki_pages" href="components/wiki.html#genshin.client.components.wiki.WikiClient.get_wiki_pages">get_wiki_pages</a></code></li>
+<li><code><a title="genshin.client.components.wiki.WikiClient.get_wiki_previews" href="components/wiki.html#genshin.client.components.wiki.WikiClient.get_wiki_previews">get_wiki_previews</a></code></li>
+<li><code><a title="genshin.client.components.wiki.WikiClient.request_wiki" href="components/wiki.html#genshin.client.components.wiki.WikiClient.request_wiki">request_wiki</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.gacha.WishClient" href="components/gacha.html#genshin.client.components.gacha.WishClient">WishClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.gacha.WishClient.get_banner_details" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_banner_details">get_banner_details</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_banner_ids" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_banner_ids">get_banner_ids</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_banner_names" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_banner_names">get_banner_names</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_gacha_items" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_gacha_items">get_gacha_items</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_genshin_banner_ids" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_genshin_banner_ids">get_genshin_banner_ids</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_genshin_banner_names" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_genshin_banner_names">get_genshin_banner_names</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.get_genshin_gacha_items" href="components/gacha.html#genshin.client.components.gacha.WishClient.get_genshin_gacha_items">get_genshin_gacha_items</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.request_gacha_info" href="components/gacha.html#genshin.client.components.gacha.WishClient.request_gacha_info">request_gacha_info</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.signal_history" href="components/gacha.html#genshin.client.components.gacha.WishClient.signal_history">signal_history</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.warp_history" href="components/gacha.html#genshin.client.components.gacha.WishClient.warp_history">warp_history</a></code></li>
+<li><code><a title="genshin.client.components.gacha.WishClient.wish_history" href="components/gacha.html#genshin.client.components.gacha.WishClient.wish_history">wish_history</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.transaction.TransactionClient" href="components/transaction.html#genshin.client.components.transaction.TransactionClient">TransactionClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.transaction.TransactionClient.request_transaction" href="components/transaction.html#genshin.client.components.transaction.TransactionClient.request_transaction">request_transaction</a></code></li>
+<li><code><a title="genshin.client.components.transaction.TransactionClient.transaction_log" href="components/transaction.html#genshin.client.components.transaction.TransactionClient.transaction_log">transaction_log</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.auth.client.AuthClient" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient">AuthClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.auth.client.AuthClient.check_mobile_number_validity" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.check_mobile_number_validity">check_mobile_number_validity</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.cn_login_with_password" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.cn_login_with_password">cn_login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.create_mmt" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.create_mmt">create_mmt</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.generate_fp" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.generate_fp">generate_fp</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_app_password" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.login_with_app_password">login_with_app_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_mobile_number" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.login_with_mobile_number">login_with_mobile_number</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_password" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.login_with_password">login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.login_with_qrcode" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.login_with_qrcode">login_with_qrcode</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.os_game_login" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.os_game_login">os_game_login</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.os_login_with_password" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.os_login_with_password">os_login_with_password</a></code></li>
+<li><code><a title="genshin.client.components.auth.client.AuthClient.verify_mmt" href="components/auth/client.html#genshin.client.components.auth.client.AuthClient.verify_mmt">verify_mmt</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="genshin.client.components.hsr_lineup.HSRLineupClient" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient">HSRLineupClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_floor" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_floor">get_starrail_lineup_floor</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_game_modes" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_game_modes">get_starrail_lineup_game_modes</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_schedules" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_schedules">get_starrail_lineup_schedules</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineups" href="components/hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineups">get_starrail_lineups</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client" href="index.html">genshin.client</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.clients.Client" href="#genshin.client.clients.Client">Client</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.client.clients.Client.authkeys" href="#genshin.client.clients.Client.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.clients.Client.cache" href="#genshin.client.clients.Client.cache">cache</a></code></li>
+<li><code><a title="genshin.client.clients.Client.cookie_manager" href="#genshin.client.clients.Client.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.clients.Client.custom_headers" href="#genshin.client.clients.Client.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.clients.Client.logger" href="#genshin.client.clients.Client.logger">logger</a></code></li>
+<li><code><a title="genshin.client.clients.Client.uids" href="#genshin.client.clients.Client.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

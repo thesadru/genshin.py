@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.paginators.base API documentation</title>
+<meta name="description" content="Base paginators.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.paginators.base</code></h1>
+</header>
+<section id="section-intro">
+<p>Base paginators.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.paginators.base.BufferedPaginator"><code class="flex name class">
+<span>class <span class="ident">BufferedPaginator</span></span>
+<span>(</span><span>*, limit: typing.Optional[int] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
+    &#34;&#34;&#34;Paginator with a support for buffers.&#34;&#34;&#34;
+
+    __slots__ = (&#34;limit&#34;, &#34;_buffer&#34;, &#34;_counter&#34;)
+
+    limit: typing.Optional[int]
+    &#34;&#34;&#34;Limit of items to be yielded.&#34;&#34;&#34;
+
+    _buffer: typing.Optional[typing.Iterator[T]]
+    &#34;&#34;&#34;Item buffer. If none then exhausted.&#34;&#34;&#34;
+
+    _counter: int
+    &#34;&#34;&#34;Amount of yielded items so far. No guarantee to be synchronized.&#34;&#34;&#34;
+
+    def __init__(self, *, limit: typing.Optional[int] = None) -&gt; None:
+        self.limit = limit
+
+        self._buffer = iter(())
+        self._counter = 0
+
+    @property
+    def exhausted(self) -&gt; bool:
+        &#34;&#34;&#34;Whether all pages have been fetched.&#34;&#34;&#34;
+        return self._buffer is None
+
+    def _complete(self) -&gt; typing.NoReturn:
+        self._buffer = None
+
+        super()._complete()
+        raise  # pyright bug
+
+    @abc.abstractmethod
+    async def next_page(self) -&gt; typing.Optional[typing.Iterable[T]]:
+        &#34;&#34;&#34;Get the next page of the paginator.&#34;&#34;&#34;
+
+    async def __anext__(self) -&gt; T:
+        if not self._buffer:
+            self._complete()
+
+        if self.limit and self._counter &gt;= self.limit:
+            self._complete()
+
+        self._counter += 1
+
+        try:
+            return next(self._buffer)
+        except StopIteration:
+            pass
+
+        buffer = await self.next_page()
+        if not buffer:
+            self._complete()
+
+        self._buffer = iter(buffer)
+        return next(self._buffer)</code></pre>
+</details>
+<div class="desc"><p>Paginator with a support for buffers.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.paginators.base.Paginator" href="#genshin.paginators.base.Paginator">Paginator</a></li>
+<li>typing.Generic</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>genshin.paginators.api.APIPaginator</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.paginators.base.BufferedPaginator.exhausted"><code class="name">prop <span class="ident">exhausted</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def exhausted(self) -&gt; bool:
+    &#34;&#34;&#34;Whether all pages have been fetched.&#34;&#34;&#34;
+    return self._buffer is None</code></pre>
+</details>
+<div class="desc"><p>Whether all pages have been fetched.</p></div>
+</dd>
+<dt id="genshin.paginators.base.BufferedPaginator.limit"><code class="name">var <span class="ident">limit</span> : int | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BufferedPaginator(typing.Generic[T], Paginator[T], abc.ABC):
+    &#34;&#34;&#34;Paginator with a support for buffers.&#34;&#34;&#34;
+
+    __slots__ = (&#34;limit&#34;, &#34;_buffer&#34;, &#34;_counter&#34;)
+
+    limit: typing.Optional[int]
+    &#34;&#34;&#34;Limit of items to be yielded.&#34;&#34;&#34;
+
+    _buffer: typing.Optional[typing.Iterator[T]]
+    &#34;&#34;&#34;Item buffer. If none then exhausted.&#34;&#34;&#34;
+
+    _counter: int
+    &#34;&#34;&#34;Amount of yielded items so far. No guarantee to be synchronized.&#34;&#34;&#34;
+
+    def __init__(self, *, limit: typing.Optional[int] = None) -&gt; None:
+        self.limit = limit
+
+        self._buffer = iter(())
+        self._counter = 0
+
+    @property
+    def exhausted(self) -&gt; bool:
+        &#34;&#34;&#34;Whether all pages have been fetched.&#34;&#34;&#34;
+        return self._buffer is None
+
+    def _complete(self) -&gt; typing.NoReturn:
+        self._buffer = None
+
+        super()._complete()
+        raise  # pyright bug
+
+    @abc.abstractmethod
+    async def next_page(self) -&gt; typing.Optional[typing.Iterable[T]]:
+        &#34;&#34;&#34;Get the next page of the paginator.&#34;&#34;&#34;
+
+    async def __anext__(self) -&gt; T:
+        if not self._buffer:
+            self._complete()
+
+        if self.limit and self._counter &gt;= self.limit:
+            self._complete()
+
+        self._counter += 1
+
+        try:
+            return next(self._buffer)
+        except StopIteration:
+            pass
+
+        buffer = await self.next_page()
+        if not buffer:
+            self._complete()
+
+        self._buffer = iter(buffer)
+        return next(self._buffer)</code></pre>
+</details>
+<div class="desc"><p>Limit of items to be yielded.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.paginators.base.BufferedPaginator.next_page"><code class="name flex">
+<span>async def <span class="ident">next_page</span></span>(<span>self) ‑> Iterable[~T] | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def next_page(self) -&gt; typing.Optional[typing.Iterable[T]]:
+    &#34;&#34;&#34;Get the next page of the paginator.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Get the next page of the paginator.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.paginators.base.Paginator" href="#genshin.paginators.base.Paginator">Paginator</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.paginators.base.Paginator.flatten" href="#genshin.paginators.base.Paginator.flatten">flatten</a></code></li>
+<li><code><a title="genshin.paginators.base.Paginator.next" href="#genshin.paginators.base.Paginator.next">next</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.paginators.base.MergedPaginator"><code class="flex name class">
+<span>class <span class="ident">MergedPaginator</span></span>
+<span>(</span><span>iterables: typing.Collection[typing.AsyncIterable[T]],<br>*,<br>key: typing.Optional[typing.Callable[[T], typing.Any]] = None,<br>limit: typing.Optional[int] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MergedPaginator(typing.Generic[T], Paginator[T]):
+    &#34;&#34;&#34;A paginator merging a collection of iterators.&#34;&#34;&#34;
+
+    __slots__ = (&#34;iterators&#34;, &#34;_heap&#34;, &#34;limit&#34;, &#34;_key&#34;, &#34;_prepared&#34;, &#34;_counter&#34;)
+
+    # TODO: Use named tuples for the heap
+
+    iterators: typing.Sequence[typing.AsyncIterator[T]]
+    &#34;&#34;&#34;Entry iterators.
+
+    Only used as pointers to a heap.
+    &#34;&#34;&#34;
+
+    _heap: list[tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    &#34;&#34;&#34;Underlying heap queue.
+
+    List of (comparable, unique order id, value, iterator)
+    &#34;&#34;&#34;
+
+    limit: typing.Optional[int]
+    &#34;&#34;&#34;Limit of items to be yielded&#34;&#34;&#34;
+
+    _key: typing.Optional[typing.Callable[[T], typing.Any]]
+    &#34;&#34;&#34;Sorting key.&#34;&#34;&#34;
+
+    _prepared: bool
+    &#34;&#34;&#34;Whether the paginator is prepared&#34;&#34;&#34;
+
+    _counter: int
+    &#34;&#34;&#34;Amount of yielded items so far. No guarantee to be synchronized.&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        iterables: typing.Collection[typing.AsyncIterable[T]],
+        *,
+        key: typing.Optional[typing.Callable[[T], typing.Any]] = None,
+        limit: typing.Optional[int] = None,
+    ) -&gt; None:
+        self.iterators = [iterable.__aiter__() for iterable in iterables]
+        self._key = key
+        self.limit = limit
+
+        self._prepared = False
+        self._counter = 0
+
+    def _complete(self) -&gt; typing.NoReturn:
+        &#34;&#34;&#34;Mark paginator as complete and clear memory.&#34;&#34;&#34;
+        # free memory in heaps
+        self._heap = []
+        self.iterators = []
+
+        super()._complete()
+        raise  # pyright bug
+
+    def _create_heap_item(
+        self,
+        value: T,
+        iterator: typing.AsyncIterator[T],
+        order: typing.Optional[int] = None,
+    ) -&gt; tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+        &#34;&#34;&#34;Create a new item for the heap queue.&#34;&#34;&#34;
+        sort_value = self._key(value) if self._key else value
+        if order is None:
+            order = random.getrandbits(16)
+
+        return (sort_value, order, value, iterator)
+
+    async def _prepare(self) -&gt; None:
+        &#34;&#34;&#34;Prepare the heap queue by filling it with initial values.&#34;&#34;&#34;
+        coros = (it.__anext__() for it in self.iterators)
+        first_values = await asyncio.gather(*coros, return_exceptions=True)
+
+        self._heap = []
+        for order, (it, value) in enumerate(zip(self.iterators, first_values)):
+            if isinstance(value, BaseException):
+                if isinstance(value, StopAsyncIteration):
+                    continue
+
+                raise value
+
+            heapq.heappush(self._heap, self._create_heap_item(value, iterator=it, order=order))
+
+        self._prepared = True
+
+    async def __anext__(self) -&gt; T:
+        if not self._prepared:
+            await self._prepare()
+
+        if not self._heap:
+            self._complete()
+
+        if self.limit and self._counter &gt;= self.limit:
+            self._complete()
+
+        self._counter += 1
+
+        _, order, value, it = self._heap[0]
+
+        try:
+            new_value = await it.__anext__()
+        except StopAsyncIteration:
+            heapq.heappop(self._heap)
+            return value
+
+        heapq.heapreplace(self._heap, self._create_heap_item(new_value, iterator=it, order=order))
+
+        return value
+
+    async def flatten(self, *, lazy: bool = False) -&gt; typing.Sequence[T]:
+        &#34;&#34;&#34;Flatten the paginator.&#34;&#34;&#34;
+        if self.limit is not None and lazy:
+            return [item async for item in self]
+
+        coros = (flatten(i) for i in self.iterators)
+        lists: typing.Sequence[typing.Sequence[T]] = await asyncio.gather(*coros)  # pyright: ignore
+
+        return list(heapq.merge(*lists, key=self._key))[: self.limit]  # pyright: ignore</code></pre>
+</details>
+<div class="desc"><p>A paginator merging a collection of iterators.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.paginators.base.Paginator" href="#genshin.paginators.base.Paginator">Paginator</a></li>
+<li>typing.Generic</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.paginators.base.MergedPaginator.iterators"><code class="name">var <span class="ident">iterators</span> : Sequence[AsyncIterator[~T]]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MergedPaginator(typing.Generic[T], Paginator[T]):
+    &#34;&#34;&#34;A paginator merging a collection of iterators.&#34;&#34;&#34;
+
+    __slots__ = (&#34;iterators&#34;, &#34;_heap&#34;, &#34;limit&#34;, &#34;_key&#34;, &#34;_prepared&#34;, &#34;_counter&#34;)
+
+    # TODO: Use named tuples for the heap
+
+    iterators: typing.Sequence[typing.AsyncIterator[T]]
+    &#34;&#34;&#34;Entry iterators.
+
+    Only used as pointers to a heap.
+    &#34;&#34;&#34;
+
+    _heap: list[tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    &#34;&#34;&#34;Underlying heap queue.
+
+    List of (comparable, unique order id, value, iterator)
+    &#34;&#34;&#34;
+
+    limit: typing.Optional[int]
+    &#34;&#34;&#34;Limit of items to be yielded&#34;&#34;&#34;
+
+    _key: typing.Optional[typing.Callable[[T], typing.Any]]
+    &#34;&#34;&#34;Sorting key.&#34;&#34;&#34;
+
+    _prepared: bool
+    &#34;&#34;&#34;Whether the paginator is prepared&#34;&#34;&#34;
+
+    _counter: int
+    &#34;&#34;&#34;Amount of yielded items so far. No guarantee to be synchronized.&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        iterables: typing.Collection[typing.AsyncIterable[T]],
+        *,
+        key: typing.Optional[typing.Callable[[T], typing.Any]] = None,
+        limit: typing.Optional[int] = None,
+    ) -&gt; None:
+        self.iterators = [iterable.__aiter__() for iterable in iterables]
+        self._key = key
+        self.limit = limit
+
+        self._prepared = False
+        self._counter = 0
+
+    def _complete(self) -&gt; typing.NoReturn:
+        &#34;&#34;&#34;Mark paginator as complete and clear memory.&#34;&#34;&#34;
+        # free memory in heaps
+        self._heap = []
+        self.iterators = []
+
+        super()._complete()
+        raise  # pyright bug
+
+    def _create_heap_item(
+        self,
+        value: T,
+        iterator: typing.AsyncIterator[T],
+        order: typing.Optional[int] = None,
+    ) -&gt; tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+        &#34;&#34;&#34;Create a new item for the heap queue.&#34;&#34;&#34;
+        sort_value = self._key(value) if self._key else value
+        if order is None:
+            order = random.getrandbits(16)
+
+        return (sort_value, order, value, iterator)
+
+    async def _prepare(self) -&gt; None:
+        &#34;&#34;&#34;Prepare the heap queue by filling it with initial values.&#34;&#34;&#34;
+        coros = (it.__anext__() for it in self.iterators)
+        first_values = await asyncio.gather(*coros, return_exceptions=True)
+
+        self._heap = []
+        for order, (it, value) in enumerate(zip(self.iterators, first_values)):
+            if isinstance(value, BaseException):
+                if isinstance(value, StopAsyncIteration):
+                    continue
+
+                raise value
+
+            heapq.heappush(self._heap, self._create_heap_item(value, iterator=it, order=order))
+
+        self._prepared = True
+
+    async def __anext__(self) -&gt; T:
+        if not self._prepared:
+            await self._prepare()
+
+        if not self._heap:
+            self._complete()
+
+        if self.limit and self._counter &gt;= self.limit:
+            self._complete()
+
+        self._counter += 1
+
+        _, order, value, it = self._heap[0]
+
+        try:
+            new_value = await it.__anext__()
+        except StopAsyncIteration:
+            heapq.heappop(self._heap)
+            return value
+
+        heapq.heapreplace(self._heap, self._create_heap_item(new_value, iterator=it, order=order))
+
+        return value
+
+    async def flatten(self, *, lazy: bool = False) -&gt; typing.Sequence[T]:
+        &#34;&#34;&#34;Flatten the paginator.&#34;&#34;&#34;
+        if self.limit is not None and lazy:
+            return [item async for item in self]
+
+        coros = (flatten(i) for i in self.iterators)
+        lists: typing.Sequence[typing.Sequence[T]] = await asyncio.gather(*coros)  # pyright: ignore
+
+        return list(heapq.merge(*lists, key=self._key))[: self.limit]  # pyright: ignore</code></pre>
+</details>
+<div class="desc"><p>Entry iterators.</p>
+<p>Only used as pointers to a heap.</p></div>
+</dd>
+<dt id="genshin.paginators.base.MergedPaginator.limit"><code class="name">var <span class="ident">limit</span> : int | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MergedPaginator(typing.Generic[T], Paginator[T]):
+    &#34;&#34;&#34;A paginator merging a collection of iterators.&#34;&#34;&#34;
+
+    __slots__ = (&#34;iterators&#34;, &#34;_heap&#34;, &#34;limit&#34;, &#34;_key&#34;, &#34;_prepared&#34;, &#34;_counter&#34;)
+
+    # TODO: Use named tuples for the heap
+
+    iterators: typing.Sequence[typing.AsyncIterator[T]]
+    &#34;&#34;&#34;Entry iterators.
+
+    Only used as pointers to a heap.
+    &#34;&#34;&#34;
+
+    _heap: list[tuple[typing.Any, int, T, typing.AsyncIterator[T]]]
+    &#34;&#34;&#34;Underlying heap queue.
+
+    List of (comparable, unique order id, value, iterator)
+    &#34;&#34;&#34;
+
+    limit: typing.Optional[int]
+    &#34;&#34;&#34;Limit of items to be yielded&#34;&#34;&#34;
+
+    _key: typing.Optional[typing.Callable[[T], typing.Any]]
+    &#34;&#34;&#34;Sorting key.&#34;&#34;&#34;
+
+    _prepared: bool
+    &#34;&#34;&#34;Whether the paginator is prepared&#34;&#34;&#34;
+
+    _counter: int
+    &#34;&#34;&#34;Amount of yielded items so far. No guarantee to be synchronized.&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        iterables: typing.Collection[typing.AsyncIterable[T]],
+        *,
+        key: typing.Optional[typing.Callable[[T], typing.Any]] = None,
+        limit: typing.Optional[int] = None,
+    ) -&gt; None:
+        self.iterators = [iterable.__aiter__() for iterable in iterables]
+        self._key = key
+        self.limit = limit
+
+        self._prepared = False
+        self._counter = 0
+
+    def _complete(self) -&gt; typing.NoReturn:
+        &#34;&#34;&#34;Mark paginator as complete and clear memory.&#34;&#34;&#34;
+        # free memory in heaps
+        self._heap = []
+        self.iterators = []
+
+        super()._complete()
+        raise  # pyright bug
+
+    def _create_heap_item(
+        self,
+        value: T,
+        iterator: typing.AsyncIterator[T],
+        order: typing.Optional[int] = None,
+    ) -&gt; tuple[typing.Any, int, T, typing.AsyncIterator[T]]:
+        &#34;&#34;&#34;Create a new item for the heap queue.&#34;&#34;&#34;
+        sort_value = self._key(value) if self._key else value
+        if order is None:
+            order = random.getrandbits(16)
+
+        return (sort_value, order, value, iterator)
+
+    async def _prepare(self) -&gt; None:
+        &#34;&#34;&#34;Prepare the heap queue by filling it with initial values.&#34;&#34;&#34;
+        coros = (it.__anext__() for it in self.iterators)
+        first_values = await asyncio.gather(*coros, return_exceptions=True)
+
+        self._heap = []
+        for order, (it, value) in enumerate(zip(self.iterators, first_values)):
+            if isinstance(value, BaseException):
+                if isinstance(value, StopAsyncIteration):
+                    continue
+
+                raise value
+
+            heapq.heappush(self._heap, self._create_heap_item(value, iterator=it, order=order))
+
+        self._prepared = True
+
+    async def __anext__(self) -&gt; T:
+        if not self._prepared:
+            await self._prepare()
+
+        if not self._heap:
+            self._complete()
+
+        if self.limit and self._counter &gt;= self.limit:
+            self._complete()
+
+        self._counter += 1
+
+        _, order, value, it = self._heap[0]
+
+        try:
+            new_value = await it.__anext__()
+        except StopAsyncIteration:
+            heapq.heappop(self._heap)
+            return value
+
+        heapq.heapreplace(self._heap, self._create_heap_item(new_value, iterator=it, order=order))
+
+        return value
+
+    async def flatten(self, *, lazy: bool = False) -&gt; typing.Sequence[T]:
+        &#34;&#34;&#34;Flatten the paginator.&#34;&#34;&#34;
+        if self.limit is not None and lazy:
+            return [item async for item in self]
+
+        coros = (flatten(i) for i in self.iterators)
+        lists: typing.Sequence[typing.Sequence[T]] = await asyncio.gather(*coros)  # pyright: ignore
+
+        return list(heapq.merge(*lists, key=self._key))[: self.limit]  # pyright: ignore</code></pre>
+</details>
+<div class="desc"><p>Limit of items to be yielded</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.paginators.base.Paginator" href="#genshin.paginators.base.Paginator">Paginator</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.paginators.base.Paginator.flatten" href="#genshin.paginators.base.Paginator.flatten">flatten</a></code></li>
+<li><code><a title="genshin.paginators.base.Paginator.next" href="#genshin.paginators.base.Paginator.next">next</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.paginators.base.Paginator"><code class="flex name class">
+<span>class <span class="ident">Paginator</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Paginator(typing.Generic[T], abc.ABC):
+    &#34;&#34;&#34;Base paginator.&#34;&#34;&#34;
+
+    __slots__ = ()
+
+    @property
+    def _repr_attributes(self) -&gt; typing.Sequence[str]:
+        &#34;&#34;&#34;Attributes to be used in repr.&#34;&#34;&#34;
+        return [
+            attribute
+            for subclass in self.__class__.__mro__
+            for attribute in getattr(subclass, &#34;__slots__&#34;, ())
+            if not attribute.startswith(&#34;_&#34;)
+        ]
+
+    def __repr__(self) -&gt; str:
+        kwargs = &#34;, &#34;.join(f&#34;{name}={getattr(self, name, &#39;undefined&#39;)!r}&#34; for name in self._repr_attributes)
+        return f&#34;{self.__class__.__name__}({kwargs})&#34;
+
+    def __pretty__(
+        self,
+        fmt: typing.Callable[[typing.Any], str],
+        **kwargs: typing.Any,
+    ) -&gt; typing.Iterator[typing.Any]:
+        &#34;&#34;&#34;Devtools pretty formatting.&#34;&#34;&#34;
+        yield self.__class__.__name__
+        yield &#34;(&#34;
+        yield 1
+
+        for name in self._repr_attributes:
+            yield name
+            yield &#34;=&#34;
+            if hasattr(self, name):
+                yield fmt(getattr(self, name))
+            else:
+                yield &#34;&lt;undefined&gt;&#34;
+
+            yield 0
+
+        yield -1
+        yield &#34;)&#34;
+
+    async def next(self) -&gt; T:
+        &#34;&#34;&#34;Return the next element.&#34;&#34;&#34;
+        try:
+            return await self.__anext__()
+        except StopAsyncIteration:
+            raise LookupError(&#34;No elements were found&#34;) from None
+
+    def _complete(self) -&gt; typing.NoReturn:
+        &#34;&#34;&#34;Mark paginator as complete and clear memory.&#34;&#34;&#34;
+        raise StopAsyncIteration(&#34;No more items exist in this paginator. It has been exhausted.&#34;) from None
+
+    def __aiter__(self) -&gt; Paginator[T]:
+        return self
+
+    async def flatten(self) -&gt; typing.Sequence[T]:
+        &#34;&#34;&#34;Flatten the paginator.&#34;&#34;&#34;
+        return [item async for item in self]
+
+    def __await__(self) -&gt; typing.Generator[None, None, typing.Sequence[T]]:
+        return self.flatten().__await__()
+
+    @abc.abstractmethod
+    async def __anext__(self) -&gt; T: ...</code></pre>
+</details>
+<div class="desc"><p>Base paginator.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>typing.Generic</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>genshin.paginators.base.BasicPaginator</li>
+<li><a title="genshin.paginators.base.BufferedPaginator" href="#genshin.paginators.base.BufferedPaginator">BufferedPaginator</a></li>
+<li><a title="genshin.paginators.base.MergedPaginator" href="#genshin.paginators.base.MergedPaginator">MergedPaginator</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.paginators.base.Paginator.flatten"><code class="name flex">
+<span>async def <span class="ident">flatten</span></span>(<span>self) ‑> Sequence[~T]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def flatten(self) -&gt; typing.Sequence[T]:
+    &#34;&#34;&#34;Flatten the paginator.&#34;&#34;&#34;
+    return [item async for item in self]</code></pre>
+</details>
+<div class="desc"><p>Flatten the paginator.</p></div>
+</dd>
+<dt id="genshin.paginators.base.Paginator.next"><code class="name flex">
+<span>async def <span class="ident">next</span></span>(<span>self) ‑> ~T</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def next(self) -&gt; T:
+    &#34;&#34;&#34;Return the next element.&#34;&#34;&#34;
+    try:
+        return await self.__anext__()
+    except StopAsyncIteration:
+        raise LookupError(&#34;No elements were found&#34;) from None</code></pre>
+</details>
+<div class="desc"><p>Return the next element.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.paginators" href="index.html">genshin.paginators</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.paginators.base.BufferedPaginator" href="#genshin.paginators.base.BufferedPaginator">BufferedPaginator</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.paginators.base.BufferedPaginator.exhausted" href="#genshin.paginators.base.BufferedPaginator.exhausted">exhausted</a></code></li>
+<li><code><a title="genshin.paginators.base.BufferedPaginator.limit" href="#genshin.paginators.base.BufferedPaginator.limit">limit</a></code></li>
+<li><code><a title="genshin.paginators.base.BufferedPaginator.next_page" href="#genshin.paginators.base.BufferedPaginator.next_page">next_page</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.paginators.base.MergedPaginator" href="#genshin.paginators.base.MergedPaginator">MergedPaginator</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.paginators.base.MergedPaginator.iterators" href="#genshin.paginators.base.MergedPaginator.iterators">iterators</a></code></li>
+<li><code><a title="genshin.paginators.base.MergedPaginator.limit" href="#genshin.paginators.base.MergedPaginator.limit">limit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.paginators.base.Paginator" href="#genshin.paginators.base.Paginator">Paginator</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.paginators.base.Paginator.flatten" href="#genshin.paginators.base.Paginator.flatten">flatten</a></code></li>
+<li><code><a title="genshin.paginators.base.Paginator.next" href="#genshin.paginators.base.Paginator.next">next</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

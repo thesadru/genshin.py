@@ -1,0 +1,1310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.hsr_lineup API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.hsr_lineup</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient"><code class="flex name class">
+<span>class <span class="ident">HSRLineupClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"><p>HSR lineup simulator client.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.clients.Client" href="../clients.html#genshin.client.clients.Client">Client</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HSRLineupClient(base.BaseClient):
+    &#34;&#34;&#34;HSR lineup simulator client.&#34;&#34;&#34;
+
+    async def _request(
+        self,
+        endpoint: str,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in GAME_LANGS[types.Game.STARRAIL]:
+            raise ValueError(f&#34;Invalid language {lang!r} for game {types.Game.STARRAIL}.&#34;)
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.HSR_LINEUP_SIMULATOR_URL.get_url() / endpoint
+
+        headers = base.parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang))
+
+        return await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+
+    async def get_starrail_lineup_game_modes(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; list[models.StarRailGameMode]:
+        &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+        data = await self._request(&#34;tag&#34;, lang=lang)
+        return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]
+
+    def get_starrail_lineup_floor(
+        self,
+        game_modes: typing.Sequence[models.StarRailGameMode],
+        *,
+        type: LineupGameMode,
+        floor: int,
+    ) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+        &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+        for mode in game_modes:
+            if mode.type != type:
+                continue
+            for f in mode.floors:
+                if f.floor == floor:
+                    return f
+
+        return None
+
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.StarRailLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.PureFictionLineupResponse: ...
+    @typing.overload
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        next_page_token: typing.Optional[str] = ...,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = ...,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; models.APCShadowLineupResponse: ...
+    async def get_starrail_lineups(
+        self,
+        *,
+        tag_id: int,
+        group_id: int,
+        type: LineupGameMode,
+        next_page_token: typing.Optional[str] = None,
+        order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+        &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = {
+            &#34;tag_id&#34;: tag_id,
+            &#34;group_id&#34;: group_id,
+            &#34;lineup_type&#34;: str(type),
+            &#34;game&#34;: &#34;hkrpg&#34;,
+        }
+
+        if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+            msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+            raise ValueError(msg)
+        params[&#34;order&#34;] = order
+
+        if self.uid is not None:
+            params[&#34;uid&#34;] = self.uid
+            params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+        if next_page_token:
+            params[&#34;next_page_token&#34;] = next_page_token
+
+        data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        if type == &#34;Story&#34;:
+            return models.PureFictionLineupResponse(**data)
+        elif type == &#34;Boss&#34;:
+            return models.APCShadowLineupResponse(**data)
+        return models.StarRailLineupResponse(**data)
+
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.MOC], typing.Literal[&#34;Chasm&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.MOCSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.PURE_FICTION], typing.Literal[&#34;Story&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.PureFictionSchedule]: ...
+    @typing.overload
+    async def get_starrail_lineup_schedules(
+        self,
+        type: typing.Union[typing.Literal[models.StarRailGameModeType.APC_SHADOW], typing.Literal[&#34;Boss&#34;]],
+        *,
+        lang: typing.Optional[str] = ...,
+    ) -&gt; list[models.APCShadowSchedule]: ...
+    async def get_starrail_lineup_schedules(
+        self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+        &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+        endpoints = {
+            &#34;Chasm&#34;: &#34;schedule/list&#34;,
+            &#34;Story&#34;: &#34;story_schedule/list&#34;,
+            &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+        }
+        endpoint = endpoints.get(type)
+        if endpoint is None:
+            msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+            raise ValueError(msg)
+
+        data = await self._request(endpoint, lang=lang)
+        if type == &#34;Boss&#34;:
+            return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+        if type == &#34;Chasm&#34;:
+            return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+        return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_floor"><code class="name flex">
+<span>def <span class="ident">get_starrail_lineup_floor</span></span>(<span>self,<br>game_modes: Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameMode" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameMode">StarRailGameMode</a>],<br>*,<br>type: <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a> | Literal['Chasm', 'Story', 'Boss'],<br>floor: int) ‑> <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor">StarRailGameModeFloor</a> | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_starrail_lineup_floor(
+    self,
+    game_modes: typing.Sequence[models.StarRailGameMode],
+    *,
+    type: LineupGameMode,
+    floor: int,
+) -&gt; typing.Optional[models.StarRailGameModeFloor]:
+    &#34;&#34;&#34;Get a specific floor from the game modes.&#34;&#34;&#34;
+    for mode in game_modes:
+        if mode.type != type:
+            continue
+        for f in mode.floors:
+            if f.floor == floor:
+                return f
+
+    return None</code></pre>
+</details>
+<div class="desc"><p>Get a specific floor from the game modes.</p></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_game_modes"><code class="name flex">
+<span>async def <span class="ident">get_starrail_lineup_game_modes</span></span>(<span>self, *, lang: str | None = None) ‑> list[<a title="genshin.models.starrail.rpgsimulator.StarRailGameMode" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameMode">StarRailGameMode</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_starrail_lineup_game_modes(
+    self, *, lang: typing.Optional[str] = None
+) -&gt; list[models.StarRailGameMode]:
+    &#34;&#34;&#34;Get the available game modes for the HSR lineup simulator.&#34;&#34;&#34;
+    data = await self._request(&#34;tag&#34;, lang=lang)
+    return [models.StarRailGameMode(**item) for item in data[&#34;tree&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get the available game modes for the HSR lineup simulator.</p></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_schedules"><code class="name flex">
+<span>async def <span class="ident">get_starrail_lineup_schedules</span></span>(<span>self,<br>type: <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a> | Literal['Chasm', 'Story', 'Boss'],<br>*,<br>lang: str | None = None) ‑> list[<a title="genshin.models.starrail.rpgsimulator.MOCSchedule" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.MOCSchedule">MOCSchedule</a>] | list[<a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.PureFictionSchedule">PureFictionSchedule</a>] | list[<a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.APCShadowSchedule">APCShadowSchedule</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_starrail_lineup_schedules(
+    self, type: LineupGameMode, *, lang: typing.Optional[str] = None
+) -&gt; typing.Union[list[models.MOCSchedule], list[models.PureFictionSchedule], list[models.APCShadowSchedule]]:
+    &#34;&#34;&#34;Get the schedule for the HSR lineup simulator.&#34;&#34;&#34;
+    endpoints = {
+        &#34;Chasm&#34;: &#34;schedule/list&#34;,
+        &#34;Story&#34;: &#34;story_schedule/list&#34;,
+        &#34;Boss&#34;: &#34;boss_schedule/list&#34;,
+    }
+    endpoint = endpoints.get(type)
+    if endpoint is None:
+        msg = f&#34;Invalid type {type!r} for HSR lineup schedule.&#34;
+        raise ValueError(msg)
+
+    data = await self._request(endpoint, lang=lang)
+    if type == &#34;Boss&#34;:
+        return [models.APCShadowSchedule(**item) for item in data[&#34;schedule&#34;]]
+    if type == &#34;Chasm&#34;:
+        return [models.MOCSchedule(**item) for item in data[&#34;schedule&#34;]]
+    return [models.PureFictionSchedule(**item) for item in data[&#34;schedule&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get the schedule for the HSR lineup simulator.</p></div>
+</dd>
+<dt id="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineups"><code class="name flex">
+<span>async def <span class="ident">get_starrail_lineups</span></span>(<span>self,<br>*,<br>tag_id: int,<br>group_id: int,<br>type: <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a> | Literal['Chasm', 'Story', 'Boss'],<br>next_page_token: str | None = None,<br>order: Literal['Hot', 'Match', 'CreatedTime'] = 'Match',<br>lang: str | None = None) ‑> <a title="genshin.models.starrail.rpgsimulator.StarRailLineupResponse" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.StarRailLineupResponse">StarRailLineupResponse</a> | <a title="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.PureFictionLineupResponse">PureFictionLineupResponse</a> | <a title="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse" href="../../models/starrail/rpgsimulator.html#genshin.models.starrail.rpgsimulator.APCShadowLineupResponse">APCShadowLineupResponse</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_starrail_lineups(
+    self,
+    *,
+    tag_id: int,
+    group_id: int,
+    type: LineupGameMode,
+    next_page_token: typing.Optional[str] = None,
+    order: typing.Literal[&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;] = &#34;Match&#34;,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Union[models.StarRailLineupResponse, models.PureFictionLineupResponse, models.APCShadowLineupResponse]:
+    &#34;&#34;&#34;Get the available lineups for the HSR lineup simulator.&#34;&#34;&#34;
+    params: dict[str, typing.Any] = {
+        &#34;tag_id&#34;: tag_id,
+        &#34;group_id&#34;: group_id,
+        &#34;lineup_type&#34;: str(type),
+        &#34;game&#34;: &#34;hkrpg&#34;,
+    }
+
+    if order not in {&#34;Hot&#34;, &#34;Match&#34;, &#34;CreatedTime&#34;}:
+        msg = f&#34;Invalid order {order!r}. Must be one of &#39;Hot&#39;, &#39;Match&#39;, or &#39;CreatedTime&#39;.&#34;
+        raise ValueError(msg)
+    params[&#34;order&#34;] = order
+
+    if self.uid is not None:
+        params[&#34;uid&#34;] = self.uid
+        params[&#34;region&#34;] = recognize_server(self.uid, types.Game.STARRAIL)
+
+    if next_page_token:
+        params[&#34;next_page_token&#34;] = next_page_token
+
+    data = await self._request(&#34;lineup/index&#34;, lang=lang, params=params)
+
+    if type == &#34;Story&#34;:
+        return models.PureFictionLineupResponse(**data)
+    elif type == &#34;Boss&#34;:
+        return models.APCShadowLineupResponse(**data)
+    return models.StarRailLineupResponse(**data)</code></pre>
+</details>
+<div class="desc"><p>Get the available lineups for the HSR lineup simulator.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.base.BaseClient.authkey" href="base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.debug" href="base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.default_game" href="base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_fp" href="base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_id" href="base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.game" href="base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.genshin_accounts" href="base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_account_timezone" href="base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_game_accounts" href="base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.hoyolab_id" href="base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.lang" href="base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.proxy" href="base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.region" href="base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request" href="base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_bbs" href="base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_hoyolab" href="base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_webstatic" href="base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_authkey" href="base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_browser_cookies" href="base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cache" href="base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cookies" href="base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_redis_cache" href="base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.uid" href="base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components" href="index.html">genshin.client.components</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient" href="#genshin.client.components.hsr_lineup.HSRLineupClient">HSRLineupClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.authkeys" href="#genshin.client.components.hsr_lineup.HSRLineupClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.cache" href="#genshin.client.components.hsr_lineup.HSRLineupClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.cookie_manager" href="#genshin.client.components.hsr_lineup.HSRLineupClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.custom_headers" href="#genshin.client.components.hsr_lineup.HSRLineupClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_floor" href="#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_floor">get_starrail_lineup_floor</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_game_modes" href="#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_game_modes">get_starrail_lineup_game_modes</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_schedules" href="#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineup_schedules">get_starrail_lineup_schedules</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineups" href="#genshin.client.components.hsr_lineup.HSRLineupClient.get_starrail_lineups">get_starrail_lineups</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.logger" href="#genshin.client.components.hsr_lineup.HSRLineupClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.hsr_lineup.HSRLineupClient.uids" href="#genshin.client.components.hsr_lineup.HSRLineupClient.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

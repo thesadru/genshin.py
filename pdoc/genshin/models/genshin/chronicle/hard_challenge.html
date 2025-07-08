@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.genshin.chronicle.hard_challenge API documentation</title>
+<meta name="description" content="Stygian Onslaught models.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.genshin.chronicle.hard_challenge</code></h1>
+</header>
+<section id="section-intro">
+<p>Stygian Onslaught models.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallenge"><code class="flex name class">
+<span>class <span class="ident">HardChallenge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallenge(APIModel):
+    &#34;&#34;&#34;Stygian Onslaught data.&#34;&#34;&#34;
+
+    season: HardChallengeSeason = Aliased(&#34;schedule&#34;)
+    single_player: HardChallengeData = Aliased(&#34;single&#34;)
+    multi_player: HardChallengeData = Aliased(&#34;mp&#34;)</code></pre>
+</details>
+<div class="desc"><p>Stygian Onslaught data.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.multi_player"><code class="name">var <span class="ident">multi_player</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData">HardChallengeData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.season"><code class="name">var <span class="ident">season</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason">HardChallengeSeason</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.single_player"><code class="name">var <span class="ident">single_player</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData">HardChallengeData</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter"><code class="flex name class">
+<span>class <span class="ident">HardChallengeBestCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeBestCharacter(APIModel):
+    &#34;&#34;&#34;Best character in Stygian Onslaught.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;avatar_id&#34;)
+    side_icon: str
+    value: str = Aliased(&#34;dps&#34;)
+    type: HardChallengeBestCharacterType</code></pre>
+</details>
+<div class="desc"><p>Best character in Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.side_icon"><code class="name">var <span class="ident">side_icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType">HardChallengeBestCharacterType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType"><code class="flex name class">
+<span>class <span class="ident">HardChallengeBestCharacterType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeBestCharacterType(enum.IntEnum):
+    &#34;&#34;&#34;Type of best character in Stygian Onslaught.&#34;&#34;&#34;
+
+    STRIKE = 1
+    &#34;&#34;&#34;Strongest single strike.&#34;&#34;&#34;
+    DAMAGE = 2
+    &#34;&#34;&#34;Highest total damage dealt.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Type of best character in Stygian Onslaught.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.DAMAGE"><code class="name">var <span class="ident">DAMAGE</span></code></dt>
+<dd>
+<div class="desc"><p>Highest total damage dealt.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.STRIKE"><code class="name">var <span class="ident">STRIKE</span></code></dt>
+<dd>
+<div class="desc"><p>Strongest single strike.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord"><code class="flex name class">
+<span>class <span class="ident">HardChallengeBestRecord</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeBestRecord(APIModel):
+    &#34;&#34;&#34;Best record for a Stygian Onslaught season.&#34;&#34;&#34;
+
+    difficulty: int
+    time_used: int = Aliased(&#34;second&#34;)
+    &#34;&#34;&#34;Time used for challenge in seconds.&#34;&#34;&#34;
+    icon: str
+    &#34;&#34;&#34;Badge icon filename.&#34;&#34;&#34;
+
+    @pydantic.field_validator(&#34;icon&#34;)
+    @classmethod
+    def __parse_icon(cls, v: str) -&gt; str:
+        return v.split(&#34;,&#34;)[-1]</code></pre>
+</details>
+<div class="desc"><p>Best record for a Stygian Onslaught season.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.difficulty"><code class="name">var <span class="ident">difficulty</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Badge icon filename.</p></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.time_used"><code class="name">var <span class="ident">time_used</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Time used for challenge in seconds.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge"><code class="flex name class">
+<span>class <span class="ident">HardChallengeChallenge</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeChallenge(APIModel):
+    &#34;&#34;&#34;A single/multi player challenge in Stygian Onslaught.&#34;&#34;&#34;
+
+    name: str
+    time_used: int = Aliased(&#34;second&#34;)
+    &#34;&#34;&#34;Time used for challenge in seconds.&#34;&#34;&#34;
+    team: list[HardChallengeCharacter] = Aliased(&#34;teams&#34;)
+    best_characters: list[HardChallengeBestCharacter] = Aliased(&#34;best_avatar&#34;)
+    enemy: HardChallengeEnemy = Aliased(&#34;monster&#34;)</code></pre>
+</details>
+<div class="desc"><p>A single/multi player challenge in Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.best_characters"><code class="name">var <span class="ident">best_characters</span> : list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter">HardChallengeBestCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.enemy"><code class="name">var <span class="ident">enemy</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy">HardChallengeEnemy</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.team"><code class="name">var <span class="ident">team</span> : list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter">HardChallengeCharacter</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.time_used"><code class="name">var <span class="ident">time_used</span> : int</code></dt>
+<dd>
+<div class="desc"><p>Time used for challenge in seconds.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter"><code class="flex name class">
+<span>class <span class="ident">HardChallengeCharacter</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeCharacter(APIModel):
+    &#34;&#34;&#34;A character in Stygian Onslaught.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;avatar_id&#34;)
+    name: str
+    element: str
+    icon: str = Aliased(&#34;image&#34;)
+    level: LevelField
+    rarity: int
+    constellation: int = Aliased(&#34;rank&#34;)</code></pre>
+</details>
+<div class="desc"><p>A character in Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.constellation"><code class="name">var <span class="ident">constellation</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.element"><code class="name">var <span class="ident">element</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.rarity"><code class="name">var <span class="ident">rarity</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData"><code class="flex name class">
+<span>class <span class="ident">HardChallengeData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeData(APIModel):
+    &#34;&#34;&#34;Stygian Onslaught single/multi player data.&#34;&#34;&#34;
+
+    best_record: typing.Optional[HardChallengeBestRecord] = Aliased(&#34;best&#34;)
+    challenges: list[HardChallengeChallenge] = Aliased(&#34;challenge&#34;)
+    has_data: bool</code></pre>
+</details>
+<div class="desc"><p>Stygian Onslaught single/multi player data.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.best_record"><code class="name">var <span class="ident">best_record</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord">HardChallengeBestRecord</a> | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.challenges"><code class="name">var <span class="ident">challenges</span> : list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge">HardChallengeChallenge</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.has_data"><code class="name">var <span class="ident">has_data</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy"><code class="flex name class">
+<span>class <span class="ident">HardChallengeEnemy</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeEnemy(APIModel):
+    &#34;&#34;&#34;An enemy in Stygian Onslaught.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;monster_id&#34;)
+    name: str
+    level: LevelField
+    icon: str
+    descriptions: list[str] = Aliased(&#34;desc&#34;)
+    tags: list[HardChallengeEnemyTag]</code></pre>
+</details>
+<div class="desc"><p>An enemy in Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.descriptions"><code class="name">var <span class="ident">descriptions</span> : list[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.icon"><code class="name">var <span class="ident">icon</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.tags"><code class="name">var <span class="ident">tags</span> : list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag">HardChallengeEnemyTag</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag"><code class="flex name class">
+<span>class <span class="ident">HardChallengeEnemyTag</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeEnemyTag(APIModel):
+    &#34;&#34;&#34;An enemy tag in Stygian Onslaught.&#34;&#34;&#34;
+
+    type: HardChallengeTagType
+    elements: list[HardChallengeTagElement]
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __parse_elements(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Parse elements from string to HardChallengeTagElement enum.&#34;&#34;&#34;
+        desc = v.get(&#34;desc&#34;, &#34;&#34;)
+        for element in HardChallengeTagElement:
+            if element.value in desc:
+                v.setdefault(&#34;elements&#34;, []).append(element)
+        return v</code></pre>
+</details>
+<div class="desc"><p>An enemy tag in Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.elements"><code class="name">var <span class="ident">elements</span> : list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement">HardChallengeTagElement</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType">HardChallengeTagType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason"><code class="flex name class">
+<span>class <span class="ident">HardChallengeSeason</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeSeason(APIModel):
+    &#34;&#34;&#34;A season of Stygian Onslaught.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;schedule_id&#34;)
+    name: str
+    start_at: DateTime = Aliased(&#34;start_date_time&#34;)
+    end_at: DateTime = Aliased(&#34;end_date_time&#34;)</code></pre>
+</details>
+<div class="desc"><p>A season of Stygian Onslaught.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.end_at"><code class="name">var <span class="ident">end_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.start_at"><code class="name">var <span class="ident">start_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement"><code class="flex name class">
+<span>class <span class="ident">HardChallengeTagElement</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeTagElement(enum.Enum):
+    &#34;&#34;&#34;Element of tag in Stygian Onslaught.&#34;&#34;&#34;
+
+    CRYO = &#34;{SPRITE_PRESET#11001}&#34;
+    HYDRO = &#34;{SPRITE_PRESET#11002}&#34;
+    PYRO = &#34;{SPRITE_PRESET#11003}&#34;
+    DENDRO = &#34;{SPRITE_PRESET#11007}&#34;</code></pre>
+</details>
+<div class="desc"><p>Element of tag in Stygian Onslaught.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.CRYO"><code class="name">var <span class="ident">CRYO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.DENDRO"><code class="name">var <span class="ident">DENDRO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.HYDRO"><code class="name">var <span class="ident">HYDRO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.PYRO"><code class="name">var <span class="ident">PYRO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType"><code class="flex name class">
+<span>class <span class="ident">HardChallengeTagType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HardChallengeTagType(enum.IntEnum):
+    &#34;&#34;&#34;Type of tag in Stygian Onslaught.&#34;&#34;&#34;
+
+    DISADVANTAGE = 0
+    ADVANTAGE = 1</code></pre>
+</details>
+<div class="desc"><p>Type of tag in Stygian Onslaught.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.IntEnum</li>
+<li>builtins.int</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.ADVANTAGE"><code class="name">var <span class="ident">ADVANTAGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.DISADVANTAGE"><code class="name">var <span class="ident">DISADVANTAGE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.genshin.chronicle" href="index.html">genshin.models.genshin.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallenge">HardChallenge</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallenge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.multi_player" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallenge.multi_player">multi_player</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.season" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallenge.season">season</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge.single_player" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallenge.single_player">single_player</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter">HardChallengeBestCharacter</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.id" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.side_icon" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.side_icon">side_icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.type" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.type">type</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.value" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacter.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType">HardChallengeBestCharacterType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.DAMAGE" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.DAMAGE">DAMAGE</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.STRIKE" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestCharacterType.STRIKE">STRIKE</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord">HardChallengeBestRecord</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.difficulty" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.difficulty">difficulty</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.icon" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.time_used" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeBestRecord.time_used">time_used</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge">HardChallengeChallenge</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.best_characters" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.best_characters">best_characters</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.enemy" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.enemy">enemy</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.name" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.team" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.team">team</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.time_used" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeChallenge.time_used">time_used</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter">HardChallengeCharacter</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.constellation" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.constellation">constellation</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.element" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.element">element</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.icon" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.id" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.level" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.name" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.rarity" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeCharacter.rarity">rarity</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData">HardChallengeData</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.best_record" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.best_record">best_record</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.challenges" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.challenges">challenges</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.has_data" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.has_data">has_data</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeData.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy">HardChallengeEnemy</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.descriptions" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.descriptions">descriptions</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.icon" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.icon">icon</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.id" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.level" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.level">level</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.name" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.tags" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemy.tags">tags</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag">HardChallengeEnemyTag</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.elements" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.elements">elements</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.type" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeEnemyTag.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason">HardChallengeSeason</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.end_at" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.end_at">end_at</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.id" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.id">id</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.model_config" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.name" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.name">name</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.start_at" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeSeason.start_at">start_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement">HardChallengeTagElement</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.CRYO" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.CRYO">CRYO</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.DENDRO" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.DENDRO">DENDRO</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.HYDRO" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.HYDRO">HYDRO</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.PYRO" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagElement.PYRO">PYRO</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType">HardChallengeTagType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.ADVANTAGE" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.ADVANTAGE">ADVANTAGE</a></code></li>
+<li><code><a title="genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.DISADVANTAGE" href="#genshin.models.genshin.chronicle.hard_challenge.HardChallengeTagType.DISADVANTAGE">DISADVANTAGE</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,4048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.base API documentation</title>
+<meta name="description" content="Base ABC Client.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.base</code></h1>
+</header>
+<section id="section-intro">
+<p>Base ABC Client.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.base.BaseClient"><code class="flex name class">
+<span>class <span class="ident">BaseClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"><p>Base ABC Client.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.auth.subclients.app.AppAuthClient" href="auth/subclients/app.html#genshin.client.components.auth.subclients.app.AppAuthClient">AppAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.game.GameAuthClient" href="auth/subclients/game.html#genshin.client.components.auth.subclients.game.GameAuthClient">GameAuthClient</a></li>
+<li><a title="genshin.client.components.auth.subclients.web.WebAuthClient" href="auth/subclients/web.html#genshin.client.components.auth.subclients.web.WebAuthClient">WebAuthClient</a></li>
+<li><a title="genshin.client.components.calculator.client.CalculatorClient" href="calculator/client.html#genshin.client.components.calculator.client.CalculatorClient">CalculatorClient</a></li>
+<li><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient" href="chronicle/base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient">BaseBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.daily.DailyRewardClient" href="daily.html#genshin.client.components.daily.DailyRewardClient">DailyRewardClient</a></li>
+<li><a title="genshin.client.components.diary.DiaryClient" href="diary.html#genshin.client.components.diary.DiaryClient">DiaryClient</a></li>
+<li><a title="genshin.client.components.gacha.WishClient" href="gacha.html#genshin.client.components.gacha.WishClient">WishClient</a></li>
+<li><a title="genshin.client.components.hoyolab.HoyolabClient" href="hoyolab.html#genshin.client.components.hoyolab.HoyolabClient">HoyolabClient</a></li>
+<li><a title="genshin.client.components.hsr_lineup.HSRLineupClient" href="hsr_lineup.html#genshin.client.components.hsr_lineup.HSRLineupClient">HSRLineupClient</a></li>
+<li><a title="genshin.client.components.lineup.LineupClient" href="lineup.html#genshin.client.components.lineup.LineupClient">LineupClient</a></li>
+<li><a title="genshin.client.components.teapot.TeapotClient" href="teapot.html#genshin.client.components.teapot.TeapotClient">TeapotClient</a></li>
+<li><a title="genshin.client.components.transaction.TransactionClient" href="transaction.html#genshin.client.components.transaction.TransactionClient">TransactionClient</a></li>
+<li><a title="genshin.client.components.wiki.WikiClient" href="wiki.html#genshin.client.components.wiki.WikiClient">WikiClient</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.base.BaseClient.USER_AGENT"><code class="name">var <span class="ident">USER_AGENT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.base.BaseClient.authkey"><code class="name">prop <span class="ident">authkey</span> : str | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def authkey(self) -&gt; typing.Optional[str]:
+    &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+    if self.default_game is None:
+        if self.authkeys:
+            warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+        return None
+
+    return self.authkeys.get(self.default_game)</code></pre>
+</details>
+<div class="desc"><p>The default genshin authkey used for paginators.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.debug"><code class="name">prop <span class="ident">debug</span> : bool</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def debug(self) -&gt; bool:
+    &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+    return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG</code></pre>
+</details>
+<div class="desc"><p>Whether the debug logs are being shown in stdout</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.default_game"><code class="name">prop <span class="ident">default_game</span> : <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def default_game(self) -&gt; typing.Optional[types.Game]:
+    &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+    return self._default_game</code></pre>
+</details>
+<div class="desc"><p>The default game.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.device_fp"><code class="name">prop <span class="ident">device_fp</span> : str | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def device_fp(self) -&gt; typing.Optional[str]:
+    &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+    return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)</code></pre>
+</details>
+<div class="desc"><p>The device fingerprint used in headers.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.device_id"><code class="name">prop <span class="ident">device_id</span> : str | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def device_id(self) -&gt; typing.Optional[str]:
+    &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+    return self.custom_headers.get(&#34;x-rpc-device_id&#34;)</code></pre>
+</details>
+<div class="desc"><p>The device id used in headers.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.game"><code class="name">prop <span class="ident">game</span> : <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def default_game(self) -&gt; typing.Optional[types.Game]:
+    &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+    return self._default_game</code></pre>
+</details>
+<div class="desc"><p>The default game.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.hoyolab_id"><code class="name">prop <span class="ident">hoyolab_id</span> : int | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def hoyolab_id(self) -&gt; typing.Optional[int]:
+    &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+    Returns None if not found or not applicable.
+    &#34;&#34;&#34;
+    return self._hoyolab_id or self.cookie_manager.user_id</code></pre>
+</details>
+<div class="desc"><p>The logged-in user's hoyolab uid.</p>
+<p>Returns None if not found or not applicable.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.lang"><code class="name">prop <span class="ident">lang</span> : str</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def lang(self) -&gt; str:
+    &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+    return self._lang</code></pre>
+</details>
+<div class="desc"><p>The default language, defaults to "en-us"</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.proxy"><code class="name">prop <span class="ident">proxy</span> : str | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def proxy(self) -&gt; typing.Optional[str]:
+    &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+    if self.cookie_manager.proxy is None:
+        return None
+
+    return str(self.cookie_manager.proxy)</code></pre>
+</details>
+<div class="desc"><p>Proxy for http requests.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.region"><code class="name">prop <span class="ident">region</span> : <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def region(self) -&gt; types.Region:
+    &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+    return self._region</code></pre>
+</details>
+<div class="desc"><p>The default region.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.uid"><code class="name">prop <span class="ident">uid</span> : int | None</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def uid(self) -&gt; typing.Optional[int]:
+    &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+    if self.default_game is None:
+        if len(self.uids) != 1:
+            return None
+
+        (self.default_game,) = self.uids.keys()
+
+    return self.uids.get(self.default_game)</code></pre>
+</details>
+<div class="desc"><p>UID of the default game.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseClient(abc.ABC):
+    &#34;&#34;&#34;Base ABC Client.&#34;&#34;&#34;
+
+    __slots__ = (
+        &#34;cookie_manager&#34;,
+        &#34;cache&#34;,
+        &#34;_lang&#34;,
+        &#34;_region&#34;,
+        &#34;_default_game&#34;,
+        &#34;uids&#34;,
+        &#34;authkeys&#34;,
+        &#34;_hoyolab_id&#34;,
+        &#34;_accounts&#34;,
+        &#34;custom_headers&#34;,
+    )
+
+    USER_AGENT = &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&#34;  # noqa: E501
+
+    logger: logging.Logger = logging.getLogger(__name__)
+
+    cookie_manager: managers.BaseCookieManager
+    cache: client_cache.BaseCache
+    _lang: str
+    _region: types.Region
+    _default_game: typing.Optional[types.Game]
+
+    uids: dict[types.Game, int]
+    authkeys: dict[types.Game, str]
+    _hoyolab_id: typing.Optional[int]
+    _accounts: dict[types.Game, hoyolab_models.GenshinAccount]
+    custom_headers: multidict.CIMultiDict[str]
+
+    def __init__(
+        self,
+        cookies: typing.Optional[managers.AnyCookieOrHeader] = None,
+        *,
+        authkey: typing.Optional[str] = None,
+        lang: types.Lang = &#34;en-us&#34;,
+        region: types.Region = types.Region.OVERSEAS,
+        proxy: typing.Optional[str] = None,
+        game: typing.Optional[types.Game] = None,
+        uid: typing.Optional[int] = None,
+        hoyolab_id: typing.Optional[int] = None,
+        device_id: typing.Optional[str] = None,
+        device_fp: typing.Optional[str] = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Optional[client_cache.BaseCache] = None,
+        debug: bool = False,
+    ) -&gt; None:
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies)
+        self.cache = cache or client_cache.StaticCache()
+
+        self.uids = {}
+        self.authkeys = {}
+        self._accounts = {}
+
+        self.default_game = game
+        self.lang = lang
+        self.region = region
+        self.authkey = authkey
+        self.debug = debug
+        self.proxy = proxy
+        self.uid = uid
+        self.hoyolab_id = hoyolab_id
+
+        self.custom_headers = parse_loose_headers(headers)
+        self.custom_headers.update({&#34;x-rpc-device_id&#34;: device_id} if device_id else {})
+        self.custom_headers.update({&#34;x-rpc-device_fp&#34;: device_fp} if device_fp else {})
+
+    def __repr__(self) -&gt; str:
+        kwargs = dict(
+            lang=self.lang,
+            region=self.region.value,
+            default_game=self.default_game and self.default_game.value,
+            hoyolab_id=self.hoyolab_id,
+            uid=self.default_game and self.uid,
+            authkey=self.authkey and self.authkey[:12] + &#34;...&#34;,
+            proxy=self.proxy,
+            debug=self.debug,
+        )
+        return f&#34;&lt;{type(self).__name__} {&#39;, &#39;.join(f&#39;{k}={v!r}&#39; for k, v in kwargs.items() if v)}&gt;&#34;
+
+    @property
+    def device_id(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device id used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_id&#34;)
+
+    @device_id.setter
+    def device_id(self, device_id: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_id&#34;] = device_id
+
+    @property
+    def device_fp(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The device fingerprint used in headers.&#34;&#34;&#34;
+        return self.custom_headers.get(&#34;x-rpc-device_fp&#34;)
+
+    @device_fp.setter
+    def device_fp(self, device_fp: str) -&gt; None:
+        self.custom_headers[&#34;x-rpc-device_fp&#34;] = device_fp
+
+    @property
+    def hoyolab_id(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;The logged-in user&#39;s hoyolab uid.
+
+        Returns None if not found or not applicable.
+        &#34;&#34;&#34;
+        return self._hoyolab_id or self.cookie_manager.user_id
+
+    @hoyolab_id.setter
+    def hoyolab_id(self, hoyolab_id: typing.Optional[int]) -&gt; None:
+        if hoyolab_id is None:
+            self._hoyolab_id = None
+            return
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Cannot specify a hoyolab uid when using multiple cookies.&#34;)
+
+        if self.cookie_manager.user_id and hoyolab_id and self.cookie_manager.user_id != hoyolab_id:
+            raise ValueError(&#34;The provided hoyolab uid does not match the cookie id.&#34;)
+
+        self._hoyolab_id = hoyolab_id
+
+    @property
+    def lang(self) -&gt; str:
+        &#34;&#34;&#34;The default language, defaults to &#34;en-us&#34; &#34;&#34;&#34;
+        return self._lang
+
+    @lang.setter
+    def lang(self, lang: str) -&gt; None:
+        if lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        self._lang = lang
+
+    @property
+    def region(self) -&gt; types.Region:
+        &#34;&#34;&#34;The default region.&#34;&#34;&#34;
+        return self._region
+
+    @region.setter
+    def region(self, region: str) -&gt; None:
+        self._region = types.Region(region)
+
+        if region == types.Region.CHINESE:
+            self.lang = &#34;zh-cn&#34;
+
+    @property
+    def default_game(self) -&gt; typing.Optional[types.Game]:
+        &#34;&#34;&#34;The default game.&#34;&#34;&#34;
+        return self._default_game
+
+    @default_game.setter
+    def default_game(self, game: typing.Optional[str]) -&gt; None:
+        self._default_game = types.Game(game) if game else None
+
+    game = default_game
+
+    @property
+    def uid(self) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;UID of the default game.&#34;&#34;&#34;
+        if self.default_game is None:
+            if len(self.uids) != 1:
+                return None
+
+            (self.default_game,) = self.uids.keys()
+
+        return self.uids.get(self.default_game)
+
+    @uid.setter
+    def uid(self, uid: typing.Optional[int]) -&gt; None:
+        if uid is None:
+            self.uids.clear()
+            return
+
+        self._default_game = self._default_game or utility.recognize_game(uid, region=self.region)
+        if self.default_game is None:
+            raise RuntimeError(&#34;No default game set. Cannot set uid.&#34;)
+
+        self.uids[self.default_game] = uid
+
+    @property
+    def authkey(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;The default genshin authkey used for paginators.&#34;&#34;&#34;
+        if self.default_game is None:
+            if self.authkeys:
+                warnings.warn(&#34;Tried to get an authkey without a default game set.&#34;)
+
+            return None
+
+        return self.authkeys.get(self.default_game)
+
+    @authkey.setter
+    def authkey(self, authkey: typing.Optional[str]) -&gt; None:
+        if authkey is None:
+            self.authkeys.clear()
+            return
+
+        authkey = urllib.parse.unquote(authkey)
+
+        try:
+            base64.b64decode(authkey, validate=True)
+        except Exception as e:
+            raise ValueError(&#34;authkey is not a valid base64 encoded string&#34;) from e
+
+        if not self.default_game:
+            raise RuntimeError(&#34;No default game set. Cannot set authkey with property.&#34;)
+
+        self.authkeys[self.default_game] = authkey
+
+    @property
+    def debug(self) -&gt; bool:
+        &#34;&#34;&#34;Whether the debug logs are being shown in stdout&#34;&#34;&#34;
+        return logging.getLogger(&#34;genshin&#34;).level == logging.DEBUG
+
+    @debug.setter
+    def debug(self, debug: bool) -&gt; None:
+        logging.basicConfig()
+        level = logging.DEBUG if debug else logging.NOTSET
+        logging.getLogger(&#34;genshin&#34;).setLevel(level)
+
+    def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+        if not bool(cookies) ^ bool(kwargs):
+            raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+        self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)
+
+    def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+        &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+        Available browsers: chrome, chromium, opera, edge, firefox.
+        &#34;&#34;&#34;
+        self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)
+
+    def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+        &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+        Accepts an authkey, a url containing an authkey or a path towards a logfile.
+        &#34;&#34;&#34;
+        if authkey is None or os.path.isfile(authkey):
+            authkey = utility.get_authkey(authkey)
+        else:
+            authkey = utility.extract_authkey(authkey) or authkey
+
+        game = game or self.default_game
+        if game is None:
+            raise RuntimeError(&#34;No default game set.&#34;)
+
+        self.authkeys[game] = authkey
+
+    def set_cache(
+        self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+        self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)
+
+    def set_redis_cache(
+        self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+    ) -&gt; None:
+        &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+        import aioredis
+
+        redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+        self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)
+
+    @property
+    def proxy(self) -&gt; typing.Optional[str]:
+        &#34;&#34;&#34;Proxy for http requests.&#34;&#34;&#34;
+        if self.cookie_manager.proxy is None:
+            return None
+
+        return str(self.cookie_manager.proxy)
+
+    @proxy.setter
+    def proxy(self, proxy: typing.Optional[aiohttp.typedefs.StrOrURL]) -&gt; None:
+        self.cookie_manager.proxy = yarl.URL(proxy) if proxy else None
+
+    async def _request_hook(
+        self,
+        method: str,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; None:
+        &#34;&#34;&#34;Perform an action before a request.
+
+        Debug logging by default.
+        &#34;&#34;&#34;
+        url = yarl.URL(url)
+        if params:
+            params = {k: v for k, v in params.items() if k != &#34;authkey&#34;}
+            url = url.update_query(params)
+
+        if data:
+            self.logger.debug(&#34;%s %s\n%s&#34;, method, url, json.dumps(data, separators=(&#34;,&#34;, &#34;:&#34;)))
+        else:
+            self.logger.debug(&#34;%s %s&#34;, method, url)
+
+    async def request(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        static_cache: typing.Any = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get(cache)
+            if value is not None:
+                return value
+        elif static_cache is not None:
+            value = await self.cache.get_static(static_cache)
+            if value is not None:
+                return value
+
+        # actual request
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        if method is None:
+            method = &#34;POST&#34; if data else &#34;GET&#34;
+
+        if &#34;json&#34; in kwargs:
+            raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+        await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+        response = await self.cookie_manager.request(
+            url, method=method, params=params, json=data, headers=headers, **kwargs
+        )
+
+        # cache
+
+        if cache is not None:
+            await self.cache.set(cache, response)
+        elif static_cache is not None:
+            await self.cache.set_static(static_cache, response)
+
+        return response
+
+    async def request_webstatic(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        cache: typing.Any = None,
+        region: types.Region = types.Region.OVERSEAS,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Any:
+        &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+        if cache is not None:
+            value = await self.cache.get_static(cache)
+            if value is not None:
+                return value
+
+        url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers[&#34;User-Agent&#34;] = self.USER_AGENT
+        headers.update(self.custom_headers)
+
+        await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+        async with self.cookie_manager.create_session() as session:
+            async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+                r.raise_for_status()
+                data = await r.json()
+
+        if cache is not None:
+            await self.cache.set_static(cache, data)
+
+        return data
+
+    async def request_bbs(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+        headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    async def request_hoyolab(
+        self,
+        url: aiohttp.typedefs.StrOrURL,
+        *,
+        lang: typing.Optional[str] = None,
+        region: typing.Optional[types.Region] = None,
+        method: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        data: typing.Any = None,
+        headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+        if lang is not None and lang not in constants.LANGS:
+            raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+        lang = lang or self.lang
+        region = region or self.region
+
+        url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+        headers = parse_loose_headers(headers)
+        headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+        data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+        return data
+
+    @managers.no_multi
+    async def get_game_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+        if self.hoyolab_id is None:
+            warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+        data = await self.request_hoyolab(
+            &#34;binding/api/getUserGameRolesByCookie&#34;,
+            lang=lang,
+            cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+        )
+        return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]
+
+    @deprecation.deprecated(&#34;get_game_accounts&#34;)
+    async def genshin_accounts(
+        self, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+        &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+        accounts = await self.get_game_accounts(lang=lang)
+        return [account for account in accounts if account.game == types.Game.GENSHIN]
+
+    async def _update_cached_uids(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback uids.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self.uids = {game: max(accounts, key=lambda a: a.level).uid for game, accounts in game_accounts.items()}
+
+        if len(self.uids) == 1 and self.default_game is None:
+            (self.default_game,) = self.uids.keys()
+
+    @concurrency.prevent_concurrency
+    async def _get_uid(self, game: types.Game) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback uid.&#34;&#34;&#34;
+        # TODO: use lock
+        if uid := self.uids.get(game):
+            return uid
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;UID must be provided when using multi-cookie managers.&#34;)
+
+        await self._update_cached_uids()
+
+        if uid := self.uids.get(game):
+            return uid
+
+        raise errors.AccountNotFound(msg=&#34;No UID provided and account has no game account bound to it.&#34;)
+
+    async def _update_cached_accounts(self) -&gt; None:
+        &#34;&#34;&#34;Update cached fallback accounts.&#34;&#34;&#34;
+        mixed_accounts = await self.get_game_accounts()
+
+        game_accounts: dict[types.Game, list[hoyolab_models.GenshinAccount]] = {}
+        for account in mixed_accounts:
+            if not isinstance(account.game, types.Game):  # pyright: ignore[reportUnnecessaryIsInstance]
+                continue
+
+            game_accounts.setdefault(account.game, []).append(account)
+
+        self._accounts = {}
+        for game, accounts in game_accounts.items():
+            self._accounts[game] = next(
+                (acc for acc in accounts if acc.uid == self.uids.get(game)), max(accounts, key=lambda a: a.level)
+            )
+
+    @concurrency.prevent_concurrency
+    async def _get_account(self, game: types.Game) -&gt; hoyolab_models.GenshinAccount:
+        &#34;&#34;&#34;Get a cached fallback account.&#34;&#34;&#34;
+        if (account := self._accounts.get(game)) and (uid := self.uids.get(game)) and account.uid == uid:
+            return account
+
+        await self._update_cached_accounts()
+
+        if account := self._accounts.get(game):
+            if (uid := self.uids.get(game)) and account.uid != uid:
+                raise errors.AccountNotFound(msg=&#34;There is no game account with such UID.&#34;)
+
+            return account
+
+        raise errors.AccountNotFound(msg=&#34;Account has no game account bound to it.&#34;)
+
+    def _get_hoyolab_id(self) -&gt; int:
+        &#34;&#34;&#34;Get a cached fallback hoyolab ID.&#34;&#34;&#34;
+        if self.hoyolab_id is not None:
+            return self.hoyolab_id
+
+        if self.cookie_manager.multi:
+            raise RuntimeError(&#34;Hoyolab ID must be provided when using multi-cookie managers.&#34;)
+
+        raise RuntimeError(&#34;No default hoyolab ID provided.&#34;)
+
+    def get_account_timezone(
+        self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+    ) -&gt; typing.Optional[int]:
+        &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+        game = game or self.game
+        if game is None:
+            return None
+
+        uid = uid or self.uid
+        if uid is None:
+            return None
+
+        server = recognize_server(uid, game=game)
+
+        for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+            if server in servers:
+                return offset
+
+        return None</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.base.BaseClient.genshin_accounts"><code class="name flex">
+<span>async def <span class="ident">genshin_accounts</span></span>(<span>self, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.record.GenshinAccount" href="../../models/hoyolab/record.html#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@deprecation.deprecated(&#34;get_game_accounts&#34;)
+async def genshin_accounts(
+    self, *, lang: typing.Optional[str] = None
+) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+    &#34;&#34;&#34;Get the genshin accounts of the currently logged-in user.&#34;&#34;&#34;
+    accounts = await self.get_game_accounts(lang=lang)
+    return [account for account in accounts if account.game == types.Game.GENSHIN]</code></pre>
+</details>
+<div class="desc"><p>Get the genshin accounts of the currently logged-in user.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function is deprecated and will be removed in the following version.
+You can use <code>get_game_accounts</code> instead.</p>
+</div></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.get_account_timezone"><code class="name flex">
+<span>def <span class="ident">get_account_timezone</span></span>(<span>self,<br>*,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None) ‑> int | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_account_timezone(
+    self, *, game: typing.Optional[types.Game] = None, uid: typing.Optional[int] = None
+) -&gt; typing.Optional[int]:
+    &#34;&#34;&#34;Get the timezone offset of the default game account.&#34;&#34;&#34;
+    game = game or self.game
+    if game is None:
+        return None
+
+    uid = uid or self.uid
+    if uid is None:
+        return None
+
+    server = recognize_server(uid, game=game)
+
+    for offset, servers in constants.SERVER_TIMEZONE_OFFSETS.items():
+        if server in servers:
+            return offset
+
+    return None</code></pre>
+</details>
+<div class="desc"><p>Get the timezone offset of the default game account.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.get_game_accounts"><code class="name flex">
+<span>async def <span class="ident">get_game_accounts</span></span>(<span>self, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.hoyolab.record.GenshinAccount" href="../../models/hoyolab/record.html#genshin.models.hoyolab.record.GenshinAccount">GenshinAccount</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def get_game_accounts(
+    self, *, lang: typing.Optional[str] = None
+) -&gt; typing.Sequence[hoyolab_models.GenshinAccount]:
+    &#34;&#34;&#34;Get the game accounts of the currently logged-in user.&#34;&#34;&#34;
+    if self.hoyolab_id is None:
+        warnings.warn(&#34;No hoyolab id set, caching may be unreliable.&#34;)
+
+    data = await self.request_hoyolab(
+        &#34;binding/api/getUserGameRolesByCookie&#34;,
+        lang=lang,
+        cache=client_cache.cache_key(&#34;accounts&#34;, hoyolab_id=self.hoyolab_id),
+    )
+    return [hoyolab_models.GenshinAccount(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get the game accounts of the currently logged-in user.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.request"><code class="name flex">
+<span>async def <span class="ident">request</span></span>(<span>self,<br>url: str | yarl.URL,<br>*,<br>method: str | None = None,<br>params: Mapping[str, Any] | None = None,<br>data: Any = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: Any = None,<br>static_cache: Any = None,<br>**kwargs: Any) ‑> Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def request(
+    self,
+    url: aiohttp.typedefs.StrOrURL,
+    *,
+    method: typing.Optional[str] = None,
+    params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    data: typing.Any = None,
+    headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+    cache: typing.Any = None,
+    static_cache: typing.Any = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Make a request and return a parsed json response.&#34;&#34;&#34;
+    if cache is not None:
+        value = await self.cache.get(cache)
+        if value is not None:
+            return value
+    elif static_cache is not None:
+        value = await self.cache.get_static(static_cache)
+        if value is not None:
+            return value
+
+    # actual request
+
+    headers = parse_loose_headers(headers)
+    headers[&#34;User-Agent&#34;] = self.USER_AGENT
+    headers.update(self.custom_headers)
+
+    if method is None:
+        method = &#34;POST&#34; if data else &#34;GET&#34;
+
+    if &#34;json&#34; in kwargs:
+        raise TypeError(&#34;Use data instead of json in request.&#34;)
+
+    await self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
+
+    response = await self.cookie_manager.request(
+        url, method=method, params=params, json=data, headers=headers, **kwargs
+    )
+
+    # cache
+
+    if cache is not None:
+        await self.cache.set(cache, response)
+    elif static_cache is not None:
+        await self.cache.set_static(static_cache, response)
+
+    return response</code></pre>
+</details>
+<div class="desc"><p>Make a request and return a parsed json response.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.request_bbs"><code class="name flex">
+<span>async def <span class="ident">request_bbs</span></span>(<span>self,<br>url: str | yarl.URL,<br>*,<br>lang: str | None = None,<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> | None = None,<br>method: str | None = None,<br>params: Mapping[str, Any] | None = None,<br>data: Any = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>**kwargs: Any) ‑> Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def request_bbs(
+    self,
+    url: aiohttp.typedefs.StrOrURL,
+    *,
+    lang: typing.Optional[str] = None,
+    region: typing.Optional[types.Region] = None,
+    method: typing.Optional[str] = None,
+    params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    data: typing.Any = None,
+    headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Make a request any bbs endpoint.&#34;&#34;&#34;
+    if lang is not None and lang not in constants.LANGS:
+        raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+    lang = lang or self.lang
+    region = region or self.region
+
+    url = routes.BBS_URL.get_url(region).join(yarl.URL(url))
+
+    headers = parse_loose_headers(headers)
+    headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+    headers[&#34;Referer&#34;] = str(routes.BBS_REFERER_URL.get_url(self.region))
+
+    data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+    return data</code></pre>
+</details>
+<div class="desc"><p>Make a request any bbs endpoint.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.request_hoyolab"><code class="name flex">
+<span>async def <span class="ident">request_hoyolab</span></span>(<span>self,<br>url: str | yarl.URL,<br>*,<br>lang: str | None = None,<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> | None = None,<br>method: str | None = None,<br>params: Mapping[str, Any] | None = None,<br>data: Any = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>**kwargs: Any) ‑> Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def request_hoyolab(
+    self,
+    url: aiohttp.typedefs.StrOrURL,
+    *,
+    lang: typing.Optional[str] = None,
+    region: typing.Optional[types.Region] = None,
+    method: typing.Optional[str] = None,
+    params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    data: typing.Any = None,
+    headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Make a request any hoyolab endpoint.&#34;&#34;&#34;
+    if lang is not None and lang not in constants.LANGS:
+        raise ValueError(f&#34;{lang} is not a valid language, must be one of: &#34; + &#34;, &#34;.join(constants.LANGS))
+
+    lang = lang or self.lang
+    region = region or self.region
+
+    url = routes.TAKUMI_URL.get_url(region).join(yarl.URL(url))
+
+    headers = parse_loose_headers(headers)
+    headers.update(ds.get_ds_headers(data=data, params=params, region=region, lang=lang or self.lang))
+
+    data = await self.request(url, method=method, params=params, data=data, headers=headers, **kwargs)
+    return data</code></pre>
+</details>
+<div class="desc"><p>Make a request any hoyolab endpoint.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.request_webstatic"><code class="name flex">
+<span>async def <span class="ident">request_webstatic</span></span>(<span>self,<br>url: str | yarl.URL,<br>*,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: Any = None,<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>**kwargs: Any) ‑> Any</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def request_webstatic(
+    self,
+    url: aiohttp.typedefs.StrOrURL,
+    *,
+    headers: typing.Optional[aiohttp.typedefs.LooseHeaders] = None,
+    cache: typing.Any = None,
+    region: types.Region = types.Region.OVERSEAS,
+    **kwargs: typing.Any,
+) -&gt; typing.Any:
+    &#34;&#34;&#34;Request a static json file.&#34;&#34;&#34;
+    if cache is not None:
+        value = await self.cache.get_static(cache)
+        if value is not None:
+            return value
+
+    url = routes.WEBSTATIC_URL.get_url(region).join(yarl.URL(url))
+
+    headers = parse_loose_headers(headers)
+    headers[&#34;User-Agent&#34;] = self.USER_AGENT
+    headers.update(self.custom_headers)
+
+    await self._request_hook(&#34;GET&#34;, url, headers=headers, **kwargs)
+
+    async with self.cookie_manager.create_session() as session:
+        async with session.get(url, headers=headers, proxy=self.proxy, **kwargs) as r:
+            r.raise_for_status()
+            data = await r.json()
+
+    if cache is not None:
+        await self.cache.set_static(cache, data)
+
+    return data</code></pre>
+</details>
+<div class="desc"><p>Request a static json file.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.set_authkey"><code class="name flex">
+<span>def <span class="ident">set_authkey</span></span>(<span>self,<br>authkey: str | None = None,<br>*,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_authkey(self, authkey: typing.Optional[str] = None, *, game: typing.Optional[types.Game] = None) -&gt; None:
+    &#34;&#34;&#34;Set an authkey for wish &amp; transaction logs.
+
+    Accepts an authkey, a url containing an authkey or a path towards a logfile.
+    &#34;&#34;&#34;
+    if authkey is None or os.path.isfile(authkey):
+        authkey = utility.get_authkey(authkey)
+    else:
+        authkey = utility.extract_authkey(authkey) or authkey
+
+    game = game or self.default_game
+    if game is None:
+        raise RuntimeError(&#34;No default game set.&#34;)
+
+    self.authkeys[game] = authkey</code></pre>
+</details>
+<div class="desc"><p>Set an authkey for wish &amp; transaction logs.</p>
+<p>Accepts an authkey, a url containing an authkey or a path towards a logfile.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.set_browser_cookies"><code class="name flex">
+<span>def <span class="ident">set_browser_cookies</span></span>(<span>self, browser: str | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_browser_cookies(self, browser: typing.Optional[str] = None) -&gt; None:
+    &#34;&#34;&#34;Extract cookies from your browser and set them as client cookies.
+
+    Available browsers: chrome, chromium, opera, edge, firefox.
+    &#34;&#34;&#34;
+    self.cookie_manager = managers.BaseCookieManager.from_browser_cookies(browser)</code></pre>
+</details>
+<div class="desc"><p>Extract cookies from your browser and set them as client cookies.</p>
+<p>Available browsers: chrome, chromium, opera, edge, firefox.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.set_cache"><code class="name flex">
+<span>def <span class="ident">set_cache</span></span>(<span>self, maxsize: int = 1024, *, ttl: int = 3600, static_ttl: int = 86400) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_cache(
+    self, maxsize: int = 1024, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY
+) -&gt; None:
+    &#34;&#34;&#34;Create and set a new cache.&#34;&#34;&#34;
+    self.cache = client_cache.Cache(maxsize, ttl=ttl, static_ttl=static_ttl)</code></pre>
+</details>
+<div class="desc"><p>Create and set a new cache.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.set_cookies"><code class="name flex">
+<span>def <span class="ident">set_cookies</span></span>(<span>self,<br>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>**kwargs: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_cookies(self, cookies: typing.Optional[managers.AnyCookieOrHeader] = None, **kwargs: typing.Any) -&gt; None:
+    &#34;&#34;&#34;Parse and set cookies.&#34;&#34;&#34;
+    if not bool(cookies) ^ bool(kwargs):
+        raise TypeError(&#34;Cannot use both positional and keyword arguments at once&#34;)
+
+    self.cookie_manager = managers.BaseCookieManager.from_cookies(cookies or kwargs)</code></pre>
+</details>
+<div class="desc"><p>Parse and set cookies.</p></div>
+</dd>
+<dt id="genshin.client.components.base.BaseClient.set_redis_cache"><code class="name flex">
+<span>def <span class="ident">set_redis_cache</span></span>(<span>self, url: str, *, ttl: int = 3600, static_ttl: int = 86400, **redis_kwargs: Any) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_redis_cache(
+    self, url: str, *, ttl: int = client_cache.HOUR, static_ttl: int = client_cache.DAY, **redis_kwargs: typing.Any
+) -&gt; None:
+    &#34;&#34;&#34;Create and set a new redis cache.&#34;&#34;&#34;
+    import aioredis
+
+    redis = aioredis.Redis.from_url(url, **redis_kwargs)  # pyright: ignore[reportUnknownMemberType]
+    self.cache = client_cache.RedisCache(redis, ttl=ttl, static_ttl=static_ttl)</code></pre>
+</details>
+<div class="desc"><p>Create and set a new redis cache.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components" href="index.html">genshin.client.components</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.base.BaseClient" href="#genshin.client.components.base.BaseClient">BaseClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.base.BaseClient.USER_AGENT" href="#genshin.client.components.base.BaseClient.USER_AGENT">USER_AGENT</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.authkey" href="#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.authkeys" href="#genshin.client.components.base.BaseClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.cache" href="#genshin.client.components.base.BaseClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.cookie_manager" href="#genshin.client.components.base.BaseClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.custom_headers" href="#genshin.client.components.base.BaseClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.debug" href="#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.default_game" href="#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_fp" href="#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_id" href="#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.game" href="#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.genshin_accounts" href="#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_account_timezone" href="#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_game_accounts" href="#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.hoyolab_id" href="#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.lang" href="#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.logger" href="#genshin.client.components.base.BaseClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.proxy" href="#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.region" href="#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request" href="#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_bbs" href="#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_hoyolab" href="#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_webstatic" href="#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_authkey" href="#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_browser_cookies" href="#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cache" href="#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cookies" href="#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_redis_cache" href="#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.uid" href="#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.uids" href="#genshin.client.components.base.BaseClient.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

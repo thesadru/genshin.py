@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.cache API documentation</title>
+<meta name="description" content="Cache for client.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.cache</code></h1>
+</header>
+<section id="section-intro">
+<p>Cache for client.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.cache.BaseCache"><code class="flex name class">
+<span>class <span class="ident">BaseCache</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseCache(abc.ABC):
+    &#34;&#34;&#34;Base cache for the client.&#34;&#34;&#34;
+
+    @abc.abstractmethod
+    async def get(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get an object with a key.&#34;&#34;&#34;
+
+    @abc.abstractmethod
+    async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save an object with a key.&#34;&#34;&#34;
+
+    @abc.abstractmethod
+    async def get_static(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get a static object with a key.&#34;&#34;&#34;
+
+    @abc.abstractmethod
+    async def set_static(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save a static object with a key.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Base cache for the client.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.Cache" href="#genshin.client.cache.Cache">Cache</a></li>
+<li><a title="genshin.client.cache.RedisCache" href="#genshin.client.cache.RedisCache">RedisCache</a></li>
+<li><a title="genshin.client.cache.SQLiteCache" href="#genshin.client.cache.SQLiteCache">SQLiteCache</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.cache.BaseCache.get"><code class="name flex">
+<span>async def <span class="ident">get</span></span>(<span>self, key: typing.Any) ‑> Any | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def get(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+    &#34;&#34;&#34;Get an object with a key.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Get an object with a key.</p></div>
+</dd>
+<dt id="genshin.client.cache.BaseCache.get_static"><code class="name flex">
+<span>async def <span class="ident">get_static</span></span>(<span>self, key: typing.Any) ‑> Any | None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def get_static(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+    &#34;&#34;&#34;Get a static object with a key.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Get a static object with a key.</p></div>
+</dd>
+<dt id="genshin.client.cache.BaseCache.set"><code class="name flex">
+<span>async def <span class="ident">set</span></span>(<span>self, key: typing.Any, value: typing.Any) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+    &#34;&#34;&#34;Save an object with a key.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Save an object with a key.</p></div>
+</dd>
+<dt id="genshin.client.cache.BaseCache.set_static"><code class="name flex">
+<span>async def <span class="ident">set_static</span></span>(<span>self, key: typing.Any, value: typing.Any) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abc.abstractmethod
+async def set_static(self, key: typing.Any, value: typing.Any) -&gt; None:
+    &#34;&#34;&#34;Save a static object with a key.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Save a static object with a key.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.client.cache.Cache"><code class="flex name class">
+<span>class <span class="ident">Cache</span></span>
+<span>(</span><span>maxsize: int = 1024, *, ttl: float = 3600, static_ttl: float = 86400)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Cache(BaseCache):
+    &#34;&#34;&#34;Standard implementation of the cache.&#34;&#34;&#34;
+
+    cache: dict[typing.Any, tuple[float, typing.Any]]
+    maxsize: int
+    ttl: float
+    static_ttl: float
+
+    def __init__(self, maxsize: int = 1024, *, ttl: float = HOUR, static_ttl: float = DAY) -&gt; None:
+        self.cache = {}
+        self.maxsize = maxsize
+
+        self.ttl = ttl
+        self.static_ttl = static_ttl
+
+    def __len__(self) -&gt; int:
+        self._clear_cache()
+        return len(self.cache)
+
+    def _clear_cache(self) -&gt; None:
+        &#34;&#34;&#34;Clear timed-out items.&#34;&#34;&#34;
+        # since this is always called from an async function we don&#39;t need locks
+        now = time.time()
+
+        for key, value in self.cache.copy().items():
+            if value[0] &lt; now:
+                del self.cache[key]
+
+        if len(self.cache) &gt; self.maxsize:
+            overflow = len(self.cache) - self.maxsize
+            keys = list(self.cache.keys())[:overflow]
+
+            for key in keys:
+                del self.cache[key]
+
+    async def get(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get an object with a key.&#34;&#34;&#34;
+        self._clear_cache()
+
+        if key not in self.cache:
+            return None
+
+        return self.cache[key][1]
+
+    async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save an object with a key.&#34;&#34;&#34;
+        self.cache[key] = (time.time() + self.ttl, value)
+
+        self._clear_cache()
+
+    async def get_static(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get a static object with a key.&#34;&#34;&#34;
+        return await self.get(key)
+
+    async def set_static(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save a static object with a key.&#34;&#34;&#34;
+        self.cache[key] = (time.time() + self.static_ttl, value)
+
+        self._clear_cache()</code></pre>
+</details>
+<div class="desc"><p>Standard implementation of the cache.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.StaticCache" href="#genshin.client.cache.StaticCache">StaticCache</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.cache.Cache.cache"><code class="name">var <span class="ident">cache</span> : dict[typing.Any, tuple[float, typing.Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.Cache.maxsize"><code class="name">var <span class="ident">maxsize</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.Cache.static_ttl"><code class="name">var <span class="ident">static_ttl</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.Cache.ttl"><code class="name">var <span class="ident">ttl</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.cache.BaseCache.get" href="#genshin.client.cache.BaseCache.get">get</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.get_static" href="#genshin.client.cache.BaseCache.get_static">get_static</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set" href="#genshin.client.cache.BaseCache.set">set</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set_static" href="#genshin.client.cache.BaseCache.set_static">set_static</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.client.cache.RedisCache"><code class="flex name class">
+<span>class <span class="ident">RedisCache</span></span>
+<span>(</span><span>redis: aioredis.Redis, *, ttl: int = 3600, static_ttl: int = 86400)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RedisCache(BaseCache):
+    &#34;&#34;&#34;Redis implementation of the cache.&#34;&#34;&#34;
+
+    redis: aioredis.Redis
+    ttl: int
+    static_ttl: int
+
+    def __init__(self, redis: aioredis.Redis, *, ttl: int = HOUR, static_ttl: int = DAY) -&gt; None:
+        self.redis = redis
+        self.ttl = ttl
+        self.static_ttl = static_ttl
+
+    def serialize_key(self, key: typing.Any) -&gt; str:
+        &#34;&#34;&#34;Serialize a key by turning it into a string.&#34;&#34;&#34;
+        return str(key)
+
+    def serialize_value(self, value: typing.Any) -&gt; typing.Union[str, bytes]:
+        &#34;&#34;&#34;Serialize a value by turning it into bytes.&#34;&#34;&#34;
+        return json.dumps(value)
+
+    def deserialize_value(self, value: bytes) -&gt; typing.Any:
+        &#34;&#34;&#34;Deserialize a value back into data.&#34;&#34;&#34;
+        return json.loads(value)
+
+    async def get(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get an object with a key.&#34;&#34;&#34;
+        value = typing.cast(&#34;typing.Optional[bytes]&#34;, await self.redis.get(self.serialize_key(key)))  # pyright: ignore
+        if value is None:
+            return None
+
+        return self.deserialize_value(value)
+
+    async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save an object with a key.&#34;&#34;&#34;
+        await self.redis.set(  # pyright: ignore
+            self.serialize_key(key),
+            self.serialize_value(value),
+            ex=self.ttl,
+        )
+
+    async def get_static(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get a static object with a key.&#34;&#34;&#34;
+        return await self.get(key)
+
+    async def set_static(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save a static object with a key.&#34;&#34;&#34;
+        await self.redis.set(  # pyright: ignore
+            self.serialize_key(key),
+            self.serialize_value(value),
+            ex=self.static_ttl,
+        )</code></pre>
+</details>
+<div class="desc"><p>Redis implementation of the cache.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.cache.RedisCache.redis"><code class="name">var <span class="ident">redis</span> : aioredis.Redis</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.RedisCache.static_ttl"><code class="name">var <span class="ident">static_ttl</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.RedisCache.ttl"><code class="name">var <span class="ident">ttl</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.cache.RedisCache.deserialize_value"><code class="name flex">
+<span>def <span class="ident">deserialize_value</span></span>(<span>self, value: bytes) ‑> Any</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deserialize_value(self, value: bytes) -&gt; typing.Any:
+    &#34;&#34;&#34;Deserialize a value back into data.&#34;&#34;&#34;
+    return json.loads(value)</code></pre>
+</details>
+<div class="desc"><p>Deserialize a value back into data.</p></div>
+</dd>
+<dt id="genshin.client.cache.RedisCache.serialize_key"><code class="name flex">
+<span>def <span class="ident">serialize_key</span></span>(<span>self, key: typing.Any) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_key(self, key: typing.Any) -&gt; str:
+    &#34;&#34;&#34;Serialize a key by turning it into a string.&#34;&#34;&#34;
+    return str(key)</code></pre>
+</details>
+<div class="desc"><p>Serialize a key by turning it into a string.</p></div>
+</dd>
+<dt id="genshin.client.cache.RedisCache.serialize_value"><code class="name flex">
+<span>def <span class="ident">serialize_value</span></span>(<span>self, value: typing.Any) ‑> str | bytes</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_value(self, value: typing.Any) -&gt; typing.Union[str, bytes]:
+    &#34;&#34;&#34;Serialize a value by turning it into bytes.&#34;&#34;&#34;
+    return json.dumps(value)</code></pre>
+</details>
+<div class="desc"><p>Serialize a value by turning it into bytes.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.cache.BaseCache.get" href="#genshin.client.cache.BaseCache.get">get</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.get_static" href="#genshin.client.cache.BaseCache.get_static">get_static</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set" href="#genshin.client.cache.BaseCache.set">set</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set_static" href="#genshin.client.cache.BaseCache.set_static">set_static</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache"><code class="flex name class">
+<span>class <span class="ident">SQLiteCache</span></span>
+<span>(</span><span>conn: aiosqlite.Connection | None = None,<br>*,<br>ttl: int = 3600,<br>static_ttl: int = 86400,<br>db_name: str = 'genshin_py.db')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SQLiteCache(BaseCache):
+    &#34;&#34;&#34;SQLite implementation of the cache.&#34;&#34;&#34;
+
+    conn: aiosqlite.Connection | None
+    ttl: int
+    static_ttl: int
+
+    def __init__(
+        self,
+        conn: aiosqlite.Connection | None = None,
+        *,
+        ttl: int = HOUR,
+        static_ttl: int = DAY,
+        db_name: str = &#34;genshin_py.db&#34;,
+    ) -&gt; None:
+        self.conn = conn
+        self.ttl = ttl
+        self.static_ttl = static_ttl
+        self.db_name = db_name
+
+    async def _clear_cache(self, conn: aiosqlite.Connection) -&gt; None:
+        &#34;&#34;&#34;Clear timed-out items.&#34;&#34;&#34;
+        now = time.time()
+
+        await conn.execute(&#34;DELETE FROM cache WHERE expiration &lt; ?&#34;, (now,))
+        await conn.commit()
+
+    async def initialize(self) -&gt; None:
+        &#34;&#34;&#34;Initialize the cache.&#34;&#34;&#34;
+        import aiosqlite
+
+        if self.conn is None:
+            conn = await aiosqlite.connect(self.db_name)
+        else:
+            conn = self.conn
+
+        await conn.execute(&#34;CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT, expiration INTEGER)&#34;)
+        await conn.commit()
+
+        if self.conn is None:
+            await conn.close()
+
+    def serialize_key(self, key: typing.Any) -&gt; str:
+        &#34;&#34;&#34;Serialize a key by turning it into a string.&#34;&#34;&#34;
+        return str(key)
+
+    def serialize_value(self, value: typing.Any) -&gt; str:
+        &#34;&#34;&#34;Serialize a value by turning it into a string.&#34;&#34;&#34;
+        return json.dumps(value)
+
+    def deserialize_value(self, value: str) -&gt; typing.Any:
+        &#34;&#34;&#34;Deserialize a value back into data.&#34;&#34;&#34;
+        return json.loads(value)
+
+    async def get(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get an object with a key.&#34;&#34;&#34;
+        import aiosqlite
+
+        if self.conn is None:
+            conn = await aiosqlite.connect(self.db_name)
+        else:
+            conn = self.conn
+
+        async with conn.execute(
+            &#34;SELECT value FROM cache WHERE key = ? AND expiration &gt; ?&#34;, (self.serialize_key(key), int(time.time()))
+        ) as cursor:
+            value = await cursor.fetchone()
+
+        if self.conn is None:
+            await conn.close()
+
+        if value is None:
+            return None
+
+        return self.deserialize_value(value[0])
+
+    async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save an object with a key.&#34;&#34;&#34;
+        import aiosqlite
+
+        if self.conn is None:
+            conn = await aiosqlite.connect(self.db_name)
+        else:
+            conn = self.conn
+
+        await conn.execute(
+            &#34;INSERT OR REPLACE INTO cache (key, value, expiration) VALUES (?, ?, ?)&#34;,
+            (self.serialize_key(key), self.serialize_value(value), int(time.time() + self.ttl)),
+        )
+        await conn.commit()
+        await self._clear_cache(conn)
+
+        if self.conn is None:
+            await conn.close()
+
+    async def get_static(self, key: typing.Any) -&gt; typing.Optional[typing.Any]:
+        &#34;&#34;&#34;Get a static object with a key.&#34;&#34;&#34;
+        return await self.get(key)
+
+    async def set_static(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Save a static object with a key.&#34;&#34;&#34;
+        import aiosqlite
+
+        if self.conn is None:
+            conn = await aiosqlite.connect(self.db_name)
+        else:
+            conn = self.conn
+
+        await conn.execute(
+            &#34;INSERT OR REPLACE INTO cache (key, value, expiration) VALUES (?, ?, ?)&#34;,
+            (self.serialize_key(key), self.serialize_value(value), int(time.time() + self.static_ttl)),
+        )
+        await conn.commit()
+        await self._clear_cache(conn)
+
+        if self.conn is None:
+            await conn.close()</code></pre>
+</details>
+<div class="desc"><p>SQLite implementation of the cache.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.cache.SQLiteCache.conn"><code class="name">var <span class="ident">conn</span> : aiosqlite.Connection | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache.static_ttl"><code class="name">var <span class="ident">static_ttl</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache.ttl"><code class="name">var <span class="ident">ttl</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.cache.SQLiteCache.deserialize_value"><code class="name flex">
+<span>def <span class="ident">deserialize_value</span></span>(<span>self, value: str) ‑> Any</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deserialize_value(self, value: str) -&gt; typing.Any:
+    &#34;&#34;&#34;Deserialize a value back into data.&#34;&#34;&#34;
+    return json.loads(value)</code></pre>
+</details>
+<div class="desc"><p>Deserialize a value back into data.</p></div>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache.initialize"><code class="name flex">
+<span>async def <span class="ident">initialize</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def initialize(self) -&gt; None:
+    &#34;&#34;&#34;Initialize the cache.&#34;&#34;&#34;
+    import aiosqlite
+
+    if self.conn is None:
+        conn = await aiosqlite.connect(self.db_name)
+    else:
+        conn = self.conn
+
+    await conn.execute(&#34;CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT, expiration INTEGER)&#34;)
+    await conn.commit()
+
+    if self.conn is None:
+        await conn.close()</code></pre>
+</details>
+<div class="desc"><p>Initialize the cache.</p></div>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache.serialize_key"><code class="name flex">
+<span>def <span class="ident">serialize_key</span></span>(<span>self, key: typing.Any) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_key(self, key: typing.Any) -&gt; str:
+    &#34;&#34;&#34;Serialize a key by turning it into a string.&#34;&#34;&#34;
+    return str(key)</code></pre>
+</details>
+<div class="desc"><p>Serialize a key by turning it into a string.</p></div>
+</dd>
+<dt id="genshin.client.cache.SQLiteCache.serialize_value"><code class="name flex">
+<span>def <span class="ident">serialize_value</span></span>(<span>self, value: typing.Any) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serialize_value(self, value: typing.Any) -&gt; str:
+    &#34;&#34;&#34;Serialize a value by turning it into a string.&#34;&#34;&#34;
+    return json.dumps(value)</code></pre>
+</details>
+<div class="desc"><p>Serialize a value by turning it into a string.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.cache.BaseCache.get" href="#genshin.client.cache.BaseCache.get">get</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.get_static" href="#genshin.client.cache.BaseCache.get_static">get_static</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set" href="#genshin.client.cache.BaseCache.set">set</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set_static" href="#genshin.client.cache.BaseCache.set_static">set_static</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="genshin.client.cache.StaticCache"><code class="flex name class">
+<span>class <span class="ident">StaticCache</span></span>
+<span>(</span><span>ttl: float = 86400)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StaticCache(Cache):
+    &#34;&#34;&#34;Cache for only static resources.&#34;&#34;&#34;
+
+    def __init__(self, ttl: float = DAY) -&gt; None:
+        super().__init__(maxsize=sys.maxsize, ttl=0, static_ttl=ttl)
+
+    async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+        &#34;&#34;&#34;Do nothing.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Cache for only static resources.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.cache.Cache" href="#genshin.client.cache.Cache">Cache</a></li>
+<li><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.cache.StaticCache.cache"><code class="name">var <span class="ident">cache</span> : dict[typing.Any, tuple[float, typing.Any]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.StaticCache.maxsize"><code class="name">var <span class="ident">maxsize</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.StaticCache.static_ttl"><code class="name">var <span class="ident">static_ttl</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.cache.StaticCache.ttl"><code class="name">var <span class="ident">ttl</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.cache.StaticCache.set"><code class="name flex">
+<span>async def <span class="ident">set</span></span>(<span>self, key: typing.Any, value: typing.Any) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set(self, key: typing.Any, value: typing.Any) -&gt; None:
+    &#34;&#34;&#34;Do nothing.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>Do nothing.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.cache.Cache" href="#genshin.client.cache.Cache">Cache</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.cache.Cache.get" href="#genshin.client.cache.BaseCache.get">get</a></code></li>
+<li><code><a title="genshin.client.cache.Cache.get_static" href="#genshin.client.cache.BaseCache.get_static">get_static</a></code></li>
+<li><code><a title="genshin.client.cache.Cache.set_static" href="#genshin.client.cache.BaseCache.set_static">set_static</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client" href="index.html">genshin.client</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.cache.BaseCache" href="#genshin.client.cache.BaseCache">BaseCache</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.cache.BaseCache.get" href="#genshin.client.cache.BaseCache.get">get</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.get_static" href="#genshin.client.cache.BaseCache.get_static">get_static</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set" href="#genshin.client.cache.BaseCache.set">set</a></code></li>
+<li><code><a title="genshin.client.cache.BaseCache.set_static" href="#genshin.client.cache.BaseCache.set_static">set_static</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.cache.Cache" href="#genshin.client.cache.Cache">Cache</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.cache.Cache.cache" href="#genshin.client.cache.Cache.cache">cache</a></code></li>
+<li><code><a title="genshin.client.cache.Cache.maxsize" href="#genshin.client.cache.Cache.maxsize">maxsize</a></code></li>
+<li><code><a title="genshin.client.cache.Cache.static_ttl" href="#genshin.client.cache.Cache.static_ttl">static_ttl</a></code></li>
+<li><code><a title="genshin.client.cache.Cache.ttl" href="#genshin.client.cache.Cache.ttl">ttl</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.cache.RedisCache" href="#genshin.client.cache.RedisCache">RedisCache</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.client.cache.RedisCache.deserialize_value" href="#genshin.client.cache.RedisCache.deserialize_value">deserialize_value</a></code></li>
+<li><code><a title="genshin.client.cache.RedisCache.redis" href="#genshin.client.cache.RedisCache.redis">redis</a></code></li>
+<li><code><a title="genshin.client.cache.RedisCache.serialize_key" href="#genshin.client.cache.RedisCache.serialize_key">serialize_key</a></code></li>
+<li><code><a title="genshin.client.cache.RedisCache.serialize_value" href="#genshin.client.cache.RedisCache.serialize_value">serialize_value</a></code></li>
+<li><code><a title="genshin.client.cache.RedisCache.static_ttl" href="#genshin.client.cache.RedisCache.static_ttl">static_ttl</a></code></li>
+<li><code><a title="genshin.client.cache.RedisCache.ttl" href="#genshin.client.cache.RedisCache.ttl">ttl</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.cache.SQLiteCache" href="#genshin.client.cache.SQLiteCache">SQLiteCache</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.client.cache.SQLiteCache.conn" href="#genshin.client.cache.SQLiteCache.conn">conn</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.deserialize_value" href="#genshin.client.cache.SQLiteCache.deserialize_value">deserialize_value</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.initialize" href="#genshin.client.cache.SQLiteCache.initialize">initialize</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.serialize_key" href="#genshin.client.cache.SQLiteCache.serialize_key">serialize_key</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.serialize_value" href="#genshin.client.cache.SQLiteCache.serialize_value">serialize_value</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.static_ttl" href="#genshin.client.cache.SQLiteCache.static_ttl">static_ttl</a></code></li>
+<li><code><a title="genshin.client.cache.SQLiteCache.ttl" href="#genshin.client.cache.SQLiteCache.ttl">ttl</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.client.cache.StaticCache" href="#genshin.client.cache.StaticCache">StaticCache</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.cache.StaticCache.cache" href="#genshin.client.cache.StaticCache.cache">cache</a></code></li>
+<li><code><a title="genshin.client.cache.StaticCache.maxsize" href="#genshin.client.cache.StaticCache.maxsize">maxsize</a></code></li>
+<li><code><a title="genshin.client.cache.StaticCache.set" href="#genshin.client.cache.StaticCache.set">set</a></code></li>
+<li><code><a title="genshin.client.cache.StaticCache.static_ttl" href="#genshin.client.cache.StaticCache.static_ttl">static_ttl</a></code></li>
+<li><code><a title="genshin.client.cache.StaticCache.ttl" href="#genshin.client.cache.StaticCache.ttl">ttl</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

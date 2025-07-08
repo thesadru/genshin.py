@@ -1,0 +1,2943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.chronicle.genshin API documentation</title>
+<meta name="description" content="Genshin battle chronicle component.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.chronicle.genshin</code></h1>
+</header>
+<section id="section-intro">
+<p>Genshin battle chronicle component.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient"><code class="flex name class">
+<span>class <span class="ident">GenshinBattleChronicleClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"><p>Genshin battle chronicle component.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient">BaseBattleChronicleClient</a></li>
+<li><a title="genshin.client.components.base.BaseClient" href="../base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.chronicle.client.BattleChronicleClient" href="client.html#genshin.client.components.chronicle.client.BattleChronicleClient">BattleChronicleClient</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenshinBattleChronicleClient(base.BaseBattleChronicleClient):
+    &#34;&#34;&#34;Genshin battle chronicle component.&#34;&#34;&#34;
+
+    async def _request_genshin_record(
+        self,
+        endpoint: str,
+        uid: typing.Optional[int] = None,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        payload: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        cache: bool = False,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Get an arbitrary genshin object.&#34;&#34;&#34;
+        payload = dict(payload or {})
+        original_payload = payload.copy()
+
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        payload = dict(role_id=uid, server=utility.recognize_genshin_server(uid), **payload)
+
+        data, params = None, None
+        if method == &#34;POST&#34;:
+            data = payload
+        else:
+            params = payload
+
+        cache_key: typing.Optional[base.ChronicleCacheKey] = None
+        if cache:
+            cache_key = base.ChronicleCacheKey(
+                types.Game.GENSHIN,
+                endpoint,
+                uid,
+                lang=lang or self.lang,
+                params=tuple(original_payload.values()),
+            )
+
+        return await self.request_game_record(
+            endpoint,
+            lang=lang,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            params=params,
+            data=data,
+            cache=cache_key,
+        )
+
+    async def get_partial_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.PartialGenshinUserStats:
+        &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+        data = await self._request_genshin_record(
+            &#34;index&#34;,
+            uid,
+            lang=lang,
+            payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+        )
+        return models.PartialGenshinUserStats(**data)
+
+    async def get_genshin_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.Character]:
+        &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return [models.Character(**i) for i in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.GenshinDetailCharacters: ...
+    @typing.overload
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = ...,
+        lang: typing.Optional[str] = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_detailed_characters(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        characters: typing.Optional[typing.Sequence[int]] = None,
+        lang: typing.Optional[str] = None,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+        if (
+            characters is None
+        ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+            character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+            characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+        data = await self._request_genshin_record(
+            &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+        )
+        if return_raw_data:
+            return data
+        return models.GenshinDetailCharacters(**data)
+
+    async def get_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.GenshinUserStats:
+        &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+        data, character_data = await asyncio.gather(
+            self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+            self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+        )
+        data = {**data, **character_data}
+
+        return models.GenshinUserStats(**data)
+
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.SpiralAbyss: ...
+    @typing.overload
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_spiral_abyss(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+        payload = dict(schedule_type=2 if previous else 1)
+        data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.SpiralAbyss(**data)
+
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[False] = ...,
+    ) -&gt; models.ImgTheater: ...
+    @typing.overload
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        previous: bool = ...,
+        need_detail: bool = ...,
+        lang: typing.Optional[str] = ...,
+        raw: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_imaginarium_theater(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        need_detail: bool = True,
+        lang: typing.Optional[str] = None,
+        raw: bool = False,
+    ) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+        if previous:
+            warnings.warn(
+                &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+            )
+
+        payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+        data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+        if raw:
+            return data
+
+        return models.ImgTheater(**data)
+
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[False] = ...,
+    ) -&gt; models.Notes: ...
+    @typing.overload
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = ...,
+        *,
+        lang: typing.Optional[str] = ...,
+        autoauth: bool = ...,
+        return_raw_data: typing.Literal[True] = ...,
+    ) -&gt; typing.Mapping[str, typing.Any]: ...
+    async def get_genshin_notes(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+        autoauth: bool = True,
+        return_raw_data: bool = False,
+    ) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+        &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+        try:
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+        except errors.DataNotPublic as e:
+            # error raised only when real-time notes are not enabled
+            if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+                raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+            if not autoauth:
+                raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+            await self.update_settings(3, True, game=types.Game.GENSHIN)
+            data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+        if return_raw_data:
+            return data
+        return models.Notes(**data)
+
+    async def get_genshin_activities(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.Activities:
+        &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+        return models.Activities(**data)
+
+    async def get_genshin_tcg_preview(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.TCGPreview:
+        &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+        return models.TCGPreview(**data)
+
+    async def _get_genshin_tcg_page(
+        self,
+        page: int,
+        *,
+        uid: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        limit: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg page.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+        params = dict(
+            need_avatar=&#34;true&#34; if characters else &#34;false&#34;,
+            need_action=&#34;true&#34; if action else &#34;false&#34;,
+            offset=(page - 1) * limit,
+            limit=limit,
+            need_stats=&#34;false&#34;,
+        )
+        data = await self._request_genshin_record(&#34;gcg/cardList&#34;, uid, lang=lang, payload=params)
+        return [
+            (models.TCGCharacterCard(**i) if i[&#34;card_type&#34;] == models.TCGCardType.CHARACTER else models.TCGCard(**i))
+            for i in data[&#34;card_list&#34;]
+        ]
+
+    def genshin_tcg(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        characters: bool = True,
+        action: bool = True,
+        page_size: int = 32,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+        &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+        return paginators.PagedPaginator(
+            functools.partial(
+                self._get_genshin_tcg_page,
+                uid=uid,
+                characters=characters,
+                action=action,
+                limit=page_size,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_full_genshin_user(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.FullGenshinUserStats:
+        &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+        user, abyss1, abyss2, activities = await asyncio.gather(
+            self.get_genshin_user(uid, lang=lang),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+            self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+            self.get_genshin_activities(uid, lang=lang),
+        )
+        abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+        return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)
+
+    async def set_top_genshin_characters(
+        self,
+        characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+        *,
+        uid: typing.Optional[int] = None,
+    ) -&gt; None:
+        &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+        uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+        await self.request_game_record(
+            &#34;character/top&#34;,
+            game=types.Game.GENSHIN,
+            region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+            data=dict(
+                avatar_ids=[int(character) for character in characters],
+                uid_key=uid,
+                server_key=utility.recognize_genshin_server(uid),
+            ),
+        )
+
+    async def get_genshin_event_calendar(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; models.GenshinEventCalendar:
+        &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        return models.GenshinEventCalendar(**data)
+
+    async def get_envisaged_echoes(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+    ) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+        &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+        return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]
+
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[False] = ...
+    ) -&gt; list[models.HardChallenge]: ...
+    @typing.overload
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = ..., *, lang: typing.Optional[str] = ..., raw: typing.Literal[True] = ...
+    ) -&gt; list[typing.Mapping[str, typing.Any]]: ...
+    async def get_stygian_onslaught(
+        self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+    ) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+        &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+        data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+        if raw:
+            return data[&#34;data&#34;]
+        return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]
+
+    get_spiral_abyss = get_genshin_spiral_abyss
+    get_notes = get_genshin_notes
+    get_activities = get_genshin_activities</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.genshin_tcg"><code class="name flex">
+<span>def <span class="ident">genshin_tcg</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>limit: int | None = None,<br>characters: bool = True,<br>action: bool = True,<br>page_size: int = 32,<br>lang: str | None = None) ‑> <a title="genshin.paginators.api.PagedPaginator" href="../../../paginators/api.html#genshin.paginators.api.PagedPaginator">PagedPaginator</a>[<a title="genshin.models.genshin.chronicle.tcg.TCGBaseCard" href="../../../models/genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGBaseCard">TCGBaseCard</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def genshin_tcg(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    limit: typing.Optional[int] = None,
+    characters: bool = True,
+    action: bool = True,
+    page_size: int = 32,
+    lang: typing.Optional[str] = None,
+) -&gt; paginators.PagedPaginator[models.TCGBaseCard]:
+    &#34;&#34;&#34;Get genshin tcg cards.&#34;&#34;&#34;
+    return paginators.PagedPaginator(
+        functools.partial(
+            self._get_genshin_tcg_page,
+            uid=uid,
+            characters=characters,
+            action=action,
+            limit=page_size,
+            lang=lang,
+        ),
+        limit=limit,
+        page_size=page_size,
+    )</code></pre>
+</details>
+<div class="desc"><p>Get genshin tcg cards.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_activities"><code class="name flex">
+<span>async def <span class="ident">get_activities</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.activities.Activities" href="../../../models/genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.Activities">Activities</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_activities(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+) -&gt; models.Activities:
+    &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+    return models.Activities(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin activities.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_envisaged_echoes"><code class="name flex">
+<span>async def <span class="ident">get_envisaged_echoes</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.genshin.chronicle.char_master.EnvisagedEchoCharacter" href="../../../models/genshin/chronicle/char_master.html#genshin.models.genshin.chronicle.char_master.EnvisagedEchoCharacter">EnvisagedEchoCharacter</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_envisaged_echoes(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+) -&gt; typing.Sequence[models.EnvisagedEchoCharacter]:
+    &#34;&#34;&#34;Get Genshin Envisaged Echo characters information.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;char_master&#34;, uid, lang=lang)
+    return [models.EnvisagedEchoCharacter(**item) for item in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get Genshin Envisaged Echo characters information.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_full_genshin_user"><code class="name flex">
+<span>async def <span class="ident">get_full_genshin_user</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.stats.FullGenshinUserStats" href="../../../models/genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.FullGenshinUserStats">FullGenshinUserStats</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_full_genshin_user(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.FullGenshinUserStats:
+    &#34;&#34;&#34;Get a genshin user with all their possible data.&#34;&#34;&#34;
+    user, abyss1, abyss2, activities = await asyncio.gather(
+        self.get_genshin_user(uid, lang=lang),
+        self.get_genshin_spiral_abyss(uid, lang=lang, previous=False),
+        self.get_genshin_spiral_abyss(uid, lang=lang, previous=True),
+        self.get_genshin_activities(uid, lang=lang),
+    )
+    abyss = models.SpiralAbyssPair(current=abyss1, previous=abyss2)
+
+    return models.FullGenshinUserStats(**user.model_dump(by_alias=True), abyss=abyss, activities=activities)</code></pre>
+</details>
+<div class="desc"><p>Get a genshin user with all their possible data.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_activities"><code class="name flex">
+<span>async def <span class="ident">get_genshin_activities</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.activities.Activities" href="../../../models/genshin/chronicle/activities.html#genshin.models.genshin.chronicle.activities.Activities">Activities</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_activities(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+) -&gt; models.Activities:
+    &#34;&#34;&#34;Get genshin activities.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;activities&#34;, uid, lang=lang)
+    return models.Activities(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin activities.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_characters"><code class="name flex">
+<span>async def <span class="ident">get_genshin_characters</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> Sequence[<a title="genshin.models.genshin.chronicle.characters.Character" href="../../../models/genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Character">Character</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_characters(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.Character]:
+    &#34;&#34;&#34;Get genshin user characters.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+    return [models.Character(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get genshin user characters.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_detailed_characters"><code class="name flex">
+<span>async def <span class="ident">get_genshin_detailed_characters</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>characters: Sequence[int] | None = None,<br>lang: str | None = None,<br>return_raw_data: bool = False) ‑> <a title="genshin.models.genshin.chronicle.characters.GenshinDetailCharacters" href="../../../models/genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.GenshinDetailCharacters">GenshinDetailCharacters</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_detailed_characters(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    characters: typing.Optional[typing.Sequence[int]] = None,
+    lang: typing.Optional[str] = None,
+    return_raw_data: bool = False,
+) -&gt; typing.Union[models.GenshinDetailCharacters, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Return a list of genshin characters with full details.&#34;&#34;&#34;
+    if (
+        characters is None
+    ):  # If characters aren&#39;t provided, fetch the list of owned ID&#39;s first as they&#39;re required in the payload.
+        character_data = await self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;)
+        characters = [char[&#34;id&#34;] for char in character_data[&#34;list&#34;]]
+
+    data = await self._request_genshin_record(
+        &#34;character/detail&#34;, uid, lang=lang, method=&#34;POST&#34;, payload={&#34;character_ids&#34;: (*characters,)}
+    )
+    if return_raw_data:
+        return data
+    return models.GenshinDetailCharacters(**data)</code></pre>
+</details>
+<div class="desc"><p>Return a list of genshin characters with full details.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_event_calendar"><code class="name flex">
+<span>async def <span class="ident">get_genshin_event_calendar</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar" href="../../../models/genshin/chronicle/act_calendar.html#genshin.models.genshin.chronicle.act_calendar.GenshinEventCalendar">GenshinEventCalendar</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_event_calendar(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+) -&gt; models.GenshinEventCalendar:
+    &#34;&#34;&#34;Get Genshin event calendar.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;act_calendar&#34;, uid, lang=lang, method=&#34;POST&#34;)
+    return models.GenshinEventCalendar(**data)</code></pre>
+</details>
+<div class="desc"><p>Get Genshin event calendar.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_notes"><code class="name flex">
+<span>async def <span class="ident">get_genshin_notes</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>lang: str | None = None,<br>autoauth: bool = True,<br>return_raw_data: bool = False) ‑> <a title="genshin.models.genshin.chronicle.notes.Notes" href="../../../models/genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.Notes">Notes</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_notes(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+    autoauth: bool = True,
+    return_raw_data: bool = False,
+) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+    try:
+        data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+    except errors.DataNotPublic as e:
+        # error raised only when real-time notes are not enabled
+        if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+            raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+        if not autoauth:
+            raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+        await self.update_settings(3, True, game=types.Game.GENSHIN)
+        data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+    if return_raw_data:
+        return data
+    return models.Notes(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin real-time notes.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_spiral_abyss"><code class="name flex">
+<span>async def <span class="ident">get_genshin_spiral_abyss</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>previous: bool = False,<br>lang: str | None = None,<br>raw: bool = False) ‑> <a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="../../../models/genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_spiral_abyss(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    previous: bool = False,
+    lang: typing.Optional[str] = None,
+    raw: bool = False,
+) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+    payload = dict(schedule_type=2 if previous else 1)
+    data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+    if raw:
+        return data
+
+    return models.SpiralAbyss(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin spiral abyss runs.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_tcg_preview"><code class="name flex">
+<span>async def <span class="ident">get_genshin_tcg_preview</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.tcg.TCGPreview" href="../../../models/genshin/chronicle/tcg.html#genshin.models.genshin.chronicle.tcg.TCGPreview">TCGPreview</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_tcg_preview(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None
+) -&gt; models.TCGPreview:
+    &#34;&#34;&#34;Get genshin tcg.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;gcg/basicInfo&#34;, uid, lang=lang)
+    return models.TCGPreview(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin tcg.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_user"><code class="name flex">
+<span>async def <span class="ident">get_genshin_user</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.stats.GenshinUserStats" href="../../../models/genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.GenshinUserStats">GenshinUserStats</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_user(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.GenshinUserStats:
+    &#34;&#34;&#34;Get genshin user.&#34;&#34;&#34;
+    data, character_data = await asyncio.gather(
+        self._request_genshin_record(&#34;index&#34;, uid, lang=lang),
+        self._request_genshin_record(&#34;character/list&#34;, uid, lang=lang, method=&#34;POST&#34;),
+    )
+    data = {**data, **character_data}
+
+    return models.GenshinUserStats(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin user.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_imaginarium_theater"><code class="name flex">
+<span>async def <span class="ident">get_imaginarium_theater</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>previous: bool = False,<br>need_detail: bool = True,<br>lang: str | None = None,<br>raw: bool = False) ‑> <a title="genshin.models.genshin.chronicle.img_theater.ImgTheater" href="../../../models/genshin/chronicle/img_theater.html#genshin.models.genshin.chronicle.img_theater.ImgTheater">ImgTheater</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_imaginarium_theater(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    previous: bool = False,
+    need_detail: bool = True,
+    lang: typing.Optional[str] = None,
+    raw: bool = False,
+) -&gt; typing.Union[models.ImgTheater, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Get Genshin Impact imaginarium theater runs.&#34;&#34;&#34;
+    if previous:
+        warnings.warn(
+            &#34;The &#39;previous&#39; parameter does nothing for this endpoint, previous data will always be returned.&#34;
+        )
+
+    payload = {&#34;need_detail&#34;: str(need_detail).lower()}
+    data = await self._request_genshin_record(&#34;role_combat&#34;, uid, lang=lang, payload=payload)
+    if raw:
+        return data
+
+    return models.ImgTheater(**data)</code></pre>
+</details>
+<div class="desc"><p>Get Genshin Impact imaginarium theater runs.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_notes"><code class="name flex">
+<span>async def <span class="ident">get_notes</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>lang: str | None = None,<br>autoauth: bool = True,<br>return_raw_data: bool = False) ‑> <a title="genshin.models.genshin.chronicle.notes.Notes" href="../../../models/genshin/chronicle/notes.html#genshin.models.genshin.chronicle.notes.Notes">Notes</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_notes(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+    autoauth: bool = True,
+    return_raw_data: bool = False,
+) -&gt; typing.Union[models.Notes, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Get genshin real-time notes.&#34;&#34;&#34;
+    try:
+        data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+    except errors.DataNotPublic as e:
+        # error raised only when real-time notes are not enabled
+        if uid and (await self._get_uid(types.Game.GENSHIN)) != uid:
+            raise errors.GenshinException(e.response, &#34;Cannot view real-time notes of other users.&#34;) from e
+        if not autoauth:
+            raise errors.GenshinException(e.response, &#34;Real-time notes are not enabled.&#34;) from e
+
+        await self.update_settings(3, True, game=types.Game.GENSHIN)
+        data = await self._request_genshin_record(&#34;dailyNote&#34;, uid, lang=lang)
+
+    if return_raw_data:
+        return data
+    return models.Notes(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin real-time notes.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_partial_genshin_user"><code class="name flex">
+<span>async def <span class="ident">get_partial_genshin_user</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None) ‑> <a title="genshin.models.genshin.chronicle.stats.PartialGenshinUserStats" href="../../../models/genshin/chronicle/stats.html#genshin.models.genshin.chronicle.stats.PartialGenshinUserStats">PartialGenshinUserStats</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_partial_genshin_user(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.PartialGenshinUserStats:
+    &#34;&#34;&#34;Get partial genshin user without character equipment.&#34;&#34;&#34;
+    data = await self._request_genshin_record(
+        &#34;index&#34;,
+        uid,
+        lang=lang,
+        payload={&#34;avatar_list_type&#34;: 0},  # Set to 1 for characters with equipment
+    )
+    return models.PartialGenshinUserStats(**data)</code></pre>
+</details>
+<div class="desc"><p>Get partial genshin user without character equipment.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_spiral_abyss"><code class="name flex">
+<span>async def <span class="ident">get_spiral_abyss</span></span>(<span>self,<br>uid: int | None = None,<br>*,<br>previous: bool = False,<br>lang: str | None = None,<br>raw: bool = False) ‑> <a title="genshin.models.genshin.chronicle.abyss.SpiralAbyss" href="../../../models/genshin/chronicle/abyss.html#genshin.models.genshin.chronicle.abyss.SpiralAbyss">SpiralAbyss</a> | Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_genshin_spiral_abyss(
+    self,
+    uid: typing.Optional[int] = None,
+    *,
+    previous: bool = False,
+    lang: typing.Optional[str] = None,
+    raw: bool = False,
+) -&gt; typing.Union[models.SpiralAbyss, typing.Mapping[str, typing.Any]]:
+    &#34;&#34;&#34;Get genshin spiral abyss runs.&#34;&#34;&#34;
+    payload = dict(schedule_type=2 if previous else 1)
+    data = await self._request_genshin_record(&#34;spiralAbyss&#34;, uid, lang=lang, payload=payload)
+    if raw:
+        return data
+
+    return models.SpiralAbyss(**data)</code></pre>
+</details>
+<div class="desc"><p>Get genshin spiral abyss runs.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_stygian_onslaught"><code class="name flex">
+<span>async def <span class="ident">get_stygian_onslaught</span></span>(<span>self, uid: int | None = None, *, lang: str | None = None, raw: bool = False) ‑> list[<a title="genshin.models.genshin.chronicle.hard_challenge.HardChallenge" href="../../../models/genshin/chronicle/hard_challenge.html#genshin.models.genshin.chronicle.hard_challenge.HardChallenge">HardChallenge</a>] | list[typing.Mapping[str, typing.Any]]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_stygian_onslaught(
+    self, uid: typing.Optional[int] = None, *, lang: typing.Optional[str] = None, raw: bool = False
+) -&gt; typing.Union[list[models.HardChallenge], list[typing.Mapping[str, typing.Any]]]:
+    &#34;&#34;&#34;Get Stygian Onslaught data.&#34;&#34;&#34;
+    data = await self._request_genshin_record(&#34;hard_challenge&#34;, uid, lang=lang, payload={&#34;need_detail&#34;: &#34;true&#34;})
+    if raw:
+        return data[&#34;data&#34;]
+    return [models.HardChallenge(**item) for item in data[&#34;data&#34;] if item[&#34;schedule&#34;][&#34;is_valid&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get Stygian Onslaught data.</p></div>
+</dd>
+<dt id="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.set_top_genshin_characters"><code class="name flex">
+<span>async def <span class="ident">set_top_genshin_characters</span></span>(<span>self,<br>characters: Sequence[int | <a title="genshin.models.genshin.character.BaseCharacter" href="../../../models/genshin/character.html#genshin.models.genshin.character.BaseCharacter">BaseCharacter</a>],<br>*,<br>uid: int | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_top_genshin_characters(
+    self,
+    characters: typing.Sequence[types.IDOr[character_models.BaseCharacter]],
+    *,
+    uid: typing.Optional[int] = None,
+) -&gt; None:
+    &#34;&#34;&#34;Set the top 8 visible genshin characters for the current user.&#34;&#34;&#34;
+    uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+    await self.request_game_record(
+        &#34;character/top&#34;,
+        game=types.Game.GENSHIN,
+        region=utility.recognize_region(uid, game=types.Game.GENSHIN),
+        data=dict(
+            avatar_ids=[int(character) for character in characters],
+            uid_key=uid,
+            server_key=utility.recognize_genshin_server(uid),
+        ),
+    )</code></pre>
+</details>
+<div class="desc"><p>Set the top 8 visible genshin characters for the current user.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient">BaseBattleChronicleClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.authkey" href="../base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.debug" href="../base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.default_game" href="../base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.device_fp" href="../base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.device_id" href="../base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.game" href="../base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.genshin_accounts" href="../base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_account_timezone" href="../base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_game_accounts" href="../base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_card" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_card">get_record_card</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_cards" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.get_record_cards">get_record_cards</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.hoyolab_id" href="../base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.lang" href="../base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.proxy" href="../base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.region" href="../base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.request" href="../base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_bbs" href="../base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_game_record" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_game_record">request_game_record</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_hoyolab" href="../base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.request_webstatic" href="../base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_authkey" href="../base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_browser_cookies" href="../base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_cache" href="../base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_cookies" href="../base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_redis_cache" href="../base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_visibility" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.set_visibility">set_visibility</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.uid" href="../base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.base.BaseBattleChronicleClient.update_settings" href="base.html#genshin.client.components.chronicle.base.BaseBattleChronicleClient.update_settings">update_settings</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components.chronicle" href="index.html">genshin.client.components.chronicle</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient">GenshinBattleChronicleClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.authkeys" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cache" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cookie_manager" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.custom_headers" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.genshin_tcg" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.genshin_tcg">genshin_tcg</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_activities" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_activities">get_activities</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_envisaged_echoes" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_envisaged_echoes">get_envisaged_echoes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_full_genshin_user" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_full_genshin_user">get_full_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_activities" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_activities">get_genshin_activities</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_characters" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_characters">get_genshin_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_detailed_characters" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_detailed_characters">get_genshin_detailed_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_event_calendar" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_event_calendar">get_genshin_event_calendar</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_notes" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_notes">get_genshin_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_spiral_abyss" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_spiral_abyss">get_genshin_spiral_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_tcg_preview" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_tcg_preview">get_genshin_tcg_preview</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_user" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_genshin_user">get_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_imaginarium_theater" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_imaginarium_theater">get_imaginarium_theater</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_notes" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_notes">get_notes</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_partial_genshin_user" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_partial_genshin_user">get_partial_genshin_user</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_spiral_abyss" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_spiral_abyss">get_spiral_abyss</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_stygian_onslaught" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.get_stygian_onslaught">get_stygian_onslaught</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.logger" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.set_top_genshin_characters" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.set_top_genshin_characters">set_top_genshin_characters</a></code></li>
+<li><code><a title="genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.uids" href="#genshin.client.components.chronicle.genshin.GenshinBattleChronicleClient.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

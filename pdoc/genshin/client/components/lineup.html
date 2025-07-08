@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.client.components.lineup API documentation</title>
+<meta name="description" content="Lineup component.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.client.components.lineup</code></h1>
+</header>
+<section id="section-intro">
+<p>Lineup component.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.client.components.lineup.LineupClient"><code class="flex name class">
+<span>class <span class="ident">LineupClient</span></span>
+<span>(</span><span>cookies: ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str | Sequence[ForwardRef('http.cookies.BaseCookie[Any]') | Mapping[Any, Any] | str] | None = None,<br>*,<br>authkey: str | None = None,<br>lang: Literal['zh-cn', 'zh-tw', 'de-de', 'en-us', 'es-es', 'fr-fr', 'id-id', 'it-it', 'ja-jp', 'ko-kr', 'pt-pt', 'ru-ru', 'th-th', 'vi-vn', 'tr-tr'] = 'en-us',<br>region: <a title="genshin.types.Region" href="../../types.html#genshin.types.Region">Region</a> = Region.OVERSEAS,<br>proxy: str | None = None,<br>game: <a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a> | None = None,<br>uid: int | None = None,<br>hoyolab_id: int | None = None,<br>device_id: str | None = None,<br>device_fp: str | None = None,<br>headers: Mapping[str, str] | Mapping[multidict._multidict.istr, str] | multidict._multidict.CIMultiDict | multidict._multidict.CIMultiDictProxy | Iterable[Tuple[str | multidict._multidict.istr, str]] | None = None,<br>cache: <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a> | None = None,<br>debug: bool = False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Lineup component.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.client.clients.Client" href="../clients.html#genshin.client.clients.Client">Client</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.client.components.lineup.LineupClient.logger"><code class="name">var <span class="ident">logger</span> : logging.Logger</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="genshin.client.components.lineup.LineupClient.authkeys"><code class="name">var <span class="ident">authkeys</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.cache"><code class="name">var <span class="ident">cache</span> : <a title="genshin.client.cache.BaseCache" href="../cache.html#genshin.client.cache.BaseCache">BaseCache</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.cookie_manager"><code class="name">var <span class="ident">cookie_manager</span> : <a title="genshin.client.manager.managers.BaseCookieManager" href="../manager/managers.html#genshin.client.manager.managers.BaseCookieManager">BaseCookieManager</a></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.custom_headers"><code class="name">var <span class="ident">custom_headers</span> : multidict._multidict.CIMultiDict[str]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.uids"><code class="name">var <span class="ident">uids</span> : dict[<a title="genshin.types.Game" href="../../types.html#genshin.types.Game">Game</a>, int]</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupClient(base.BaseClient):
+    &#34;&#34;&#34;Lineup component.&#34;&#34;&#34;
+
+    async def request_lineup(
+        self,
+        endpoint: str,
+        *,
+        method: str = &#34;GET&#34;,
+        lang: typing.Optional[str] = None,
+        params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+        **kwargs: typing.Any,
+    ) -&gt; typing.Mapping[str, typing.Any]:
+        &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+        params = dict(params or {})
+
+        base_url = routes.LINEUP_URL.get_url(self.region)
+        url = base_url / endpoint
+
+        params[&#34;lang&#34;] = lang or self.lang
+
+        return await self.request(url, method=method, params=params, **kwargs)
+
+    async def get_lineup_fields(
+        self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+    ) -&gt; models.LineupFields:
+        &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;config&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+        )
+
+        return models.LineupFields(**data)
+
+    async def get_lineup_scenarios(
+        self,
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.LineupScenarios:
+        &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;tags&#34;,
+            lang=lang,
+            static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+        )
+        dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+        return models.LineupScenarios(**dummy)
+
+    async def _get_lineup_page(
+        self,
+        token: str,
+        *,
+        limit: typing.Optional[int] = None,
+        tag_id: typing.Optional[int] = None,
+        roles: typing.Optional[typing.Sequence[int]] = None,
+        order: typing.Optional[str] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; tuple[str, typing.Sequence[models.LineupPreview]]:
+        &#34;&#34;&#34;Get a single page of lineups.&#34;&#34;&#34;
+        params: dict[str, typing.Any] = dict(
+            next_page_token=token,
+            limit=limit or &#34;&#34;,
+            tag_id=tag_id or &#34;&#34;,
+            order=order or &#34;&#34;,
+            roles=roles or &#34;&#34;,
+        )
+
+        if order == &#34;Match&#34;:
+            uid = uid or await self._get_uid(types.Game.GENSHIN)
+
+            params[&#34;uid&#34;] = uid
+            params[&#34;region&#34;] = utility.recognize_genshin_server(uid)
+
+        data = await self.request_lineup(&#34;lineup/index&#34;, lang=lang, params=params)
+
+        return data[&#34;next_page_token&#34;], [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    def get_lineups(
+        self,
+        scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+        *,
+        limit: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        newest: bool = False,
+        match_characters: bool = False,
+        characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+        uid: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+        if scenario is not None:
+            scenario = int(scenario)
+
+        character_ids = [int(i) for i in characters] if characters is not None else None
+
+        if match_characters:
+            order = &#34;Match&#34;
+        else:
+            order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+        return paginators.TokenPaginator(
+            functools.partial(
+                self._get_lineup_page,
+                tag_id=scenario,
+                roles=character_ids,
+                order=order,
+                uid=uid,
+                lang=lang,
+            ),
+            limit=limit,
+            page_size=page_size,
+        )
+
+    async def get_lineup_details(
+        self,
+        lineup: typing.Union[str, models.LineupPreview],
+        *,
+        lang: typing.Optional[str] = None,
+    ) -&gt; models.Lineup:
+        &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+        lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+        data = await self.request_lineup(
+            &#34;lineup/detail&#34;,
+            lang=lang,
+            params=dict(id=lineup_id),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+        )
+
+        return models.Lineup(**data[&#34;lineup&#34;])
+
+    @managers.no_multi
+    async def get_user_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_favorite_lineups(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupPreview]:
+        &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;user/favour_lineup&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]
+
+    @managers.no_multi
+    async def get_lineup_character_history(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        lang: typing.Optional[str] = None,
+    ) -&gt; typing.Sequence[models.LineupCharacter]:
+        &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+        data = await self.request_lineup(
+            &#34;lineup/history&#34;,
+            lang=lang,
+            params=dict(limit=limit or 1000),
+            cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+        )
+
+        return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="genshin.client.components.lineup.LineupClient.get_favorite_lineups"><code class="name flex">
+<span>async def <span class="ident">get_favorite_lineups</span></span>(<span>self, *, limit: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.genshin.lineup.LineupPreview" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def get_favorite_lineups(
+    self,
+    *,
+    limit: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.LineupPreview]:
+    &#34;&#34;&#34;Get favorited lineups of the currently logged-in user.&#34;&#34;&#34;
+    data = await self.request_lineup(
+        &#34;user/favour_lineup&#34;,
+        lang=lang,
+        params=dict(limit=limit or 1000),
+        cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;favorite&#34;, lang=lang or self.lang),
+    )
+
+    return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get favorited lineups of the currently logged-in user.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_lineup_character_history"><code class="name flex">
+<span>async def <span class="ident">get_lineup_character_history</span></span>(<span>self, *, limit: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.genshin.lineup.LineupCharacter" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupCharacter">LineupCharacter</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def get_lineup_character_history(
+    self,
+    *,
+    limit: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.LineupCharacter]:
+    &#34;&#34;&#34;Get previous character builds of the currently logged-in user..&#34;&#34;&#34;
+    data = await self.request_lineup(
+        &#34;lineup/history&#34;,
+        lang=lang,
+        params=dict(limit=limit or 1000),
+        cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;history&#34;, lang=lang or self.lang),
+    )
+
+    return [models.LineupCharacter(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get previous character builds of the currently logged-in user..</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_lineup_details"><code class="name flex">
+<span>async def <span class="ident">get_lineup_details</span></span>(<span>self,<br>lineup: str | <a title="genshin.models.genshin.lineup.LineupPreview" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a>,<br>*,<br>lang: str | None = None) ‑> <a title="genshin.models.genshin.lineup.Lineup" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.Lineup">Lineup</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_lineup_details(
+    self,
+    lineup: typing.Union[str, models.LineupPreview],
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.Lineup:
+    &#34;&#34;&#34;Get lineup with detailed characters.&#34;&#34;&#34;
+    lineup_id = lineup if isinstance(lineup, str) else lineup.id
+
+    data = await self.request_lineup(
+        &#34;lineup/detail&#34;,
+        lang=lang,
+        params=dict(id=lineup_id),
+        cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;detail&#34;, id=lineup_id, lang=lang or self.lang),
+    )
+
+    return models.Lineup(**data[&#34;lineup&#34;])</code></pre>
+</details>
+<div class="desc"><p>Get lineup with detailed characters.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_lineup_fields"><code class="name flex">
+<span>async def <span class="ident">get_lineup_fields</span></span>(<span>self, *, lang: str | None = None, use_cache: bool = True) ‑> <a title="genshin.models.genshin.lineup.LineupFields" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupFields">LineupFields</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_lineup_fields(
+    self, *, lang: typing.Optional[str] = None, use_cache: bool = True
+) -&gt; models.LineupFields:
+    &#34;&#34;&#34;Get configuration lineup fields.&#34;&#34;&#34;
+    data = await self.request_lineup(
+        &#34;config&#34;,
+        lang=lang,
+        static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;config&#34;, lang=lang or self.lang) if use_cache else None,
+    )
+
+    return models.LineupFields(**data)</code></pre>
+</details>
+<div class="desc"><p>Get configuration lineup fields.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_lineup_scenarios"><code class="name flex">
+<span>async def <span class="ident">get_lineup_scenarios</span></span>(<span>self, *, lang: str | None = None) ‑> genshin.models.genshin.lineup.LineupScenarios</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_lineup_scenarios(
+    self,
+    *,
+    lang: typing.Optional[str] = None,
+) -&gt; models.LineupScenarios:
+    &#34;&#34;&#34;Get lineup scenarios.&#34;&#34;&#34;
+    data = await self.request_lineup(
+        &#34;tags&#34;,
+        lang=lang,
+        static_cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;tags&#34;, lang=lang or self.lang),
+    )
+    dummy: dict[str, typing.Any] = dict(id=0, name=&#34;&#34;, children=data[&#34;tree&#34;])
+
+    return models.LineupScenarios(**dummy)</code></pre>
+</details>
+<div class="desc"><p>Get lineup scenarios.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_lineups"><code class="name flex">
+<span>def <span class="ident">get_lineups</span></span>(<span>self,<br>scenario: int | <a title="genshin.models.genshin.lineup.LineupScenario" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupScenario">LineupScenario</a> | None = None,<br>*,<br>limit: int | None = None,<br>page_size: int | None = None,<br>newest: bool = False,<br>match_characters: bool = False,<br>characters: Sequence[int | <a title="genshin.models.genshin.chronicle.characters.Character" href="../../models/genshin/chronicle/characters.html#genshin.models.genshin.chronicle.characters.Character">Character</a>] | None = None,<br>uid: int | None = None,<br>lang: str | None = None) ‑> <a title="genshin.paginators.api.TokenPaginator" href="../../paginators/api.html#genshin.paginators.api.TokenPaginator">TokenPaginator</a>[<a title="genshin.models.genshin.lineup.LineupPreview" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_lineups(
+    self,
+    scenario: typing.Optional[types.IDOr[models.LineupScenario]] = None,
+    *,
+    limit: typing.Optional[int] = None,
+    page_size: typing.Optional[int] = None,
+    newest: bool = False,
+    match_characters: bool = False,
+    characters: typing.Optional[typing.Sequence[types.IDOr[genshin_models.Character]]] = None,
+    uid: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; paginators.TokenPaginator[models.LineupPreview]:
+    &#34;&#34;&#34;Get lineups.&#34;&#34;&#34;
+    if scenario is not None:
+        scenario = int(scenario)
+
+    character_ids = [int(i) for i in characters] if characters is not None else None
+
+    if match_characters:
+        order = &#34;Match&#34;
+    else:
+        order = &#34;CreatedTime&#34; if newest else &#34;Hot&#34;
+
+    return paginators.TokenPaginator(
+        functools.partial(
+            self._get_lineup_page,
+            tag_id=scenario,
+            roles=character_ids,
+            order=order,
+            uid=uid,
+            lang=lang,
+        ),
+        limit=limit,
+        page_size=page_size,
+    )</code></pre>
+</details>
+<div class="desc"><p>Get lineups.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.get_user_lineups"><code class="name flex">
+<span>async def <span class="ident">get_user_lineups</span></span>(<span>self, *, limit: int | None = None, lang: str | None = None) ‑> Sequence[<a title="genshin.models.genshin.lineup.LineupPreview" href="../../models/genshin/lineup.html#genshin.models.genshin.lineup.LineupPreview">LineupPreview</a>]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@managers.no_multi
+async def get_user_lineups(
+    self,
+    *,
+    limit: typing.Optional[int] = None,
+    lang: typing.Optional[str] = None,
+) -&gt; typing.Sequence[models.LineupPreview]:
+    &#34;&#34;&#34;Get lineups of the currently logged-in user.&#34;&#34;&#34;
+    data = await self.request_lineup(
+        &#34;user/lineup&#34;,
+        lang=lang,
+        params=dict(limit=limit or 1000),
+        cache=cache.cache_key(&#34;lineup&#34;, endpoint=&#34;user&#34;, lang=lang or self.lang),
+    )
+
+    return [models.LineupPreview(**i) for i in data[&#34;list&#34;]]</code></pre>
+</details>
+<div class="desc"><p>Get lineups of the currently logged-in user.</p></div>
+</dd>
+<dt id="genshin.client.components.lineup.LineupClient.request_lineup"><code class="name flex">
+<span>async def <span class="ident">request_lineup</span></span>(<span>self,<br>endpoint: str,<br>*,<br>method: str = 'GET',<br>lang: str | None = None,<br>params: Mapping[str, Any] | None = None,<br>**kwargs: Any) ‑> Mapping[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def request_lineup(
+    self,
+    endpoint: str,
+    *,
+    method: str = &#34;GET&#34;,
+    lang: typing.Optional[str] = None,
+    params: typing.Optional[typing.Mapping[str, typing.Any]] = None,
+    **kwargs: typing.Any,
+) -&gt; typing.Mapping[str, typing.Any]:
+    &#34;&#34;&#34;Make a request towards the lineup endpoint.&#34;&#34;&#34;
+    params = dict(params or {})
+
+    base_url = routes.LINEUP_URL.get_url(self.region)
+    url = base_url / endpoint
+
+    params[&#34;lang&#34;] = lang or self.lang
+
+    return await self.request(url, method=method, params=params, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>Make a request towards the lineup endpoint.</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="genshin.client.components.base.BaseClient" href="base.html#genshin.client.components.base.BaseClient">BaseClient</a></b></code>:
+<ul class="hlist">
+<li><code><a title="genshin.client.components.base.BaseClient.authkey" href="base.html#genshin.client.components.base.BaseClient.authkey">authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.debug" href="base.html#genshin.client.components.base.BaseClient.debug">debug</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.default_game" href="base.html#genshin.client.components.base.BaseClient.default_game">default_game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_fp" href="base.html#genshin.client.components.base.BaseClient.device_fp">device_fp</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.device_id" href="base.html#genshin.client.components.base.BaseClient.device_id">device_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.game" href="base.html#genshin.client.components.base.BaseClient.game">game</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.genshin_accounts" href="base.html#genshin.client.components.base.BaseClient.genshin_accounts">genshin_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_account_timezone" href="base.html#genshin.client.components.base.BaseClient.get_account_timezone">get_account_timezone</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.get_game_accounts" href="base.html#genshin.client.components.base.BaseClient.get_game_accounts">get_game_accounts</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.hoyolab_id" href="base.html#genshin.client.components.base.BaseClient.hoyolab_id">hoyolab_id</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.lang" href="base.html#genshin.client.components.base.BaseClient.lang">lang</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.proxy" href="base.html#genshin.client.components.base.BaseClient.proxy">proxy</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.region" href="base.html#genshin.client.components.base.BaseClient.region">region</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request" href="base.html#genshin.client.components.base.BaseClient.request">request</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_bbs" href="base.html#genshin.client.components.base.BaseClient.request_bbs">request_bbs</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_hoyolab" href="base.html#genshin.client.components.base.BaseClient.request_hoyolab">request_hoyolab</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.request_webstatic" href="base.html#genshin.client.components.base.BaseClient.request_webstatic">request_webstatic</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_authkey" href="base.html#genshin.client.components.base.BaseClient.set_authkey">set_authkey</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_browser_cookies" href="base.html#genshin.client.components.base.BaseClient.set_browser_cookies">set_browser_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cache" href="base.html#genshin.client.components.base.BaseClient.set_cache">set_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_cookies" href="base.html#genshin.client.components.base.BaseClient.set_cookies">set_cookies</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.set_redis_cache" href="base.html#genshin.client.components.base.BaseClient.set_redis_cache">set_redis_cache</a></code></li>
+<li><code><a title="genshin.client.components.base.BaseClient.uid" href="base.html#genshin.client.components.base.BaseClient.uid">uid</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.client.components" href="index.html">genshin.client.components</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.client.components.lineup.LineupClient" href="#genshin.client.components.lineup.LineupClient">LineupClient</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.client.components.lineup.LineupClient.authkeys" href="#genshin.client.components.lineup.LineupClient.authkeys">authkeys</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.cache" href="#genshin.client.components.lineup.LineupClient.cache">cache</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.cookie_manager" href="#genshin.client.components.lineup.LineupClient.cookie_manager">cookie_manager</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.custom_headers" href="#genshin.client.components.lineup.LineupClient.custom_headers">custom_headers</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_favorite_lineups" href="#genshin.client.components.lineup.LineupClient.get_favorite_lineups">get_favorite_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_character_history" href="#genshin.client.components.lineup.LineupClient.get_lineup_character_history">get_lineup_character_history</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_details" href="#genshin.client.components.lineup.LineupClient.get_lineup_details">get_lineup_details</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_fields" href="#genshin.client.components.lineup.LineupClient.get_lineup_fields">get_lineup_fields</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineup_scenarios" href="#genshin.client.components.lineup.LineupClient.get_lineup_scenarios">get_lineup_scenarios</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_lineups" href="#genshin.client.components.lineup.LineupClient.get_lineups">get_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.get_user_lineups" href="#genshin.client.components.lineup.LineupClient.get_user_lineups">get_user_lineups</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.logger" href="#genshin.client.components.lineup.LineupClient.logger">logger</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.request_lineup" href="#genshin.client.components.lineup.LineupClient.request_lineup">request_lineup</a></code></li>
+<li><code><a title="genshin.client.components.lineup.LineupClient.uids" href="#genshin.client.components.lineup.LineupClient.uids">uids</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

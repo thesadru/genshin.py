@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>genshin.models.starrail.rpgsimulator API documentation</title>
+<meta name="description" content="HSR Lineup Simulator.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>genshin.models.starrail.rpgsimulator</code></h1>
+</header>
+<section id="section-intro">
+<p>HSR Lineup Simulator.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineup"><code class="flex name class">
+<span>class <span class="ident">APCShadowLineup</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowLineup(StarRailLineup):
+    &#34;&#34;&#34;A Apocalyptic Shadow lineup.&#34;&#34;&#34;
+
+    detail: LineupDetail = Aliased(&#34;boss_info&#34;)
+    node1_challenged_at: DateTime = Aliased(&#34;challenge_time&#34;)
+    node2_challenged_at: DateTime = Aliased(&#34;challenge_time_node2&#34;)</code></pre>
+</details>
+<div class="desc"><p>A Apocalyptic Shadow lineup.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.StarRailLineup" href="#genshin.models.starrail.rpgsimulator.StarRailLineup">StarRailLineup</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineup.detail"><code class="name">var <span class="ident">detail</span> : <a title="genshin.models.starrail.rpgsimulator.LineupDetail" href="#genshin.models.starrail.rpgsimulator.LineupDetail">LineupDetail</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineup.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineup.node1_challenged_at"><code class="name">var <span class="ident">node1_challenged_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineup.node2_challenged_at"><code class="name">var <span class="ident">node2_challenged_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse"><code class="flex name class">
+<span>class <span class="ident">APCShadowLineupResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowLineupResponse(APIModel):
+    &#34;&#34;&#34;Response for Apocalyptic Shadow lineups.&#34;&#34;&#34;
+
+    lineups: typing.Sequence[APCShadowLineup] = Aliased(&#34;list&#34;)
+    next_page_token: str</code></pre>
+</details>
+<div class="desc"><p>Response for Apocalyptic Shadow lineups.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.lineups"><code class="name">var <span class="ident">lineups</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.APCShadowLineup" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup">APCShadowLineup</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.next_page_token"><code class="name">var <span class="ident">next_page_token</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowSchedule"><code class="flex name class">
+<span>class <span class="ident">APCShadowSchedule</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class APCShadowSchedule(StarRailGameModeSchedule):
+    &#34;&#34;&#34;Apocalyptic Shadow schedule.&#34;&#34;&#34;
+
+    buff: StarRailGameModeBuff
+    node1_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased(&#34;addition_buff_1&#34;)
+    node2_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased(&#34;addition_buff_2&#34;)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __convert_buffs(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        v[&#34;buff&#34;] = {&#34;name&#34;: v[&#34;maze_buff_name_mi18n&#34;], &#34;desc&#34;: v[&#34;maze_buff_desc_mi18n&#34;], &#34;icon&#34;: v[&#34;buff_icon&#34;]}
+        return v</code></pre>
+</details>
+<div class="desc"><p>Apocalyptic Shadow schedule.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule">StarRailGameModeSchedule</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowSchedule.buff"><code class="name">var <span class="ident">buff</span> : <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowSchedule.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowSchedule.node1_buffs"><code class="name">var <span class="ident">node1_buffs</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.APCShadowSchedule.node2_buffs"><code class="name">var <span class="ident">node2_buffs</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.LineupDetail"><code class="flex name class">
+<span>class <span class="ident">LineupDetail</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LineupDetail(APIModel):
+    &#34;&#34;&#34;Detail for a lineup.&#34;&#34;&#34;
+
+    buffs: typing.Sequence[StarRailGameModeBuff] = Aliased(&#34;buff_list&#34;)
+    points: int</code></pre>
+</details>
+<div class="desc"><p>Detail for a lineup.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.LineupDetail.buffs"><code class="name">var <span class="ident">buffs</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.LineupDetail.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.LineupDetail.points"><code class="name">var <span class="ident">points</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.MOCSchedule"><code class="flex name class">
+<span>class <span class="ident">MOCSchedule</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MOCSchedule(StarRailGameModeSchedule):
+    &#34;&#34;&#34;Memory of Chaos schedule.&#34;&#34;&#34;
+
+    buff: StarRailGameModeBuff
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __convert_buffs(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        v[&#34;buff&#34;] = {&#34;name&#34;: v[&#34;maze_buff_name_mi18n&#34;], &#34;desc&#34;: v[&#34;maze_buff_desc_mi18n&#34;]}
+        return v</code></pre>
+</details>
+<div class="desc"><p>Memory of Chaos schedule.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule">StarRailGameModeSchedule</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.MOCSchedule.buff"><code class="name">var <span class="ident">buff</span> : <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.MOCSchedule.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineup"><code class="flex name class">
+<span>class <span class="ident">PureFictionLineup</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PureFictionLineup(StarRailLineup):
+    &#34;&#34;&#34;A Pure Fiction lineup.&#34;&#34;&#34;
+
+    detail: LineupDetail = Aliased(&#34;story_info&#34;)
+    node1_challenged_at: DateTime = Aliased(&#34;challenge_time&#34;)
+    node2_challenged_at: DateTime = Aliased(&#34;challenge_time_node2&#34;)</code></pre>
+</details>
+<div class="desc"><p>A Pure Fiction lineup.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.StarRailLineup" href="#genshin.models.starrail.rpgsimulator.StarRailLineup">StarRailLineup</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineup.detail"><code class="name">var <span class="ident">detail</span> : <a title="genshin.models.starrail.rpgsimulator.LineupDetail" href="#genshin.models.starrail.rpgsimulator.LineupDetail">LineupDetail</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineup.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineup.node1_challenged_at"><code class="name">var <span class="ident">node1_challenged_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineup.node2_challenged_at"><code class="name">var <span class="ident">node2_challenged_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse"><code class="flex name class">
+<span>class <span class="ident">PureFictionLineupResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PureFictionLineupResponse(APIModel):
+    &#34;&#34;&#34;Response for Pure Fiction lineups.&#34;&#34;&#34;
+
+    lineups: typing.Sequence[PureFictionLineup] = Aliased(&#34;list&#34;)
+    next_page_token: str</code></pre>
+</details>
+<div class="desc"><p>Response for Pure Fiction lineups.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.lineups"><code class="name">var <span class="ident">lineups</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.PureFictionLineup" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup">PureFictionLineup</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.next_page_token"><code class="name">var <span class="ident">next_page_token</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionSchedule"><code class="flex name class">
+<span>class <span class="ident">PureFictionSchedule</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PureFictionSchedule(StarRailGameModeSchedule):
+    &#34;&#34;&#34;Pure Future schedule.&#34;&#34;&#34;
+
+    buffs: typing.Sequence[StarRailGameModeBuff] = Aliased(&#34;addition_buff&#34;)
+    default_buffs: typing.Sequence[StarRailGameModeBuff] = Aliased(&#34;sub_maze_buff_list&#34;)</code></pre>
+</details>
+<div class="desc"><p>Pure Future schedule.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule">StarRailGameModeSchedule</a></li>
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionSchedule.buffs"><code class="name">var <span class="ident">buffs</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionSchedule.default_buffs"><code class="name">var <span class="ident">default_buffs</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.PureFictionSchedule.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode"><code class="flex name class">
+<span>class <span class="ident">StarRailGameMode</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailGameMode(APIModel):
+    &#34;&#34;&#34;HSR game mode, like MOC.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    floors: typing.Sequence[StarRailGameModeFloor]
+    type: StarRailGameModeType = Aliased(&#34;root_type&#34;)
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __unnest_children(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Unnest the children field.&#34;&#34;&#34;
+        if not (children := v.get(&#34;children&#34;)):
+            msg = &#34;Missing &#39;children&#39; field in HSRGameMode.&#34;
+            raise ValueError(msg)
+
+        v[&#34;floors&#34;] = children[0][&#34;children&#34;]
+        v[&#34;name&#34;] = children[0][&#34;name&#34;]
+        return v</code></pre>
+</details>
+<div class="desc"><p>HSR game mode, like MOC.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode.floors"><code class="name">var <span class="ident">floors</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor">StarRailGameModeFloor</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameMode.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff"><code class="flex name class">
+<span>class <span class="ident">StarRailGameModeBuff</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailGameModeBuff(APIModel):
+    &#34;&#34;&#34;HSR game mode buff.&#34;&#34;&#34;
+
+    name: str
+    desc: str
+    icon: typing.Optional[str] = None
+    simple_desc: typing.Optional[str] = None</code></pre>
+</details>
+<div class="desc"><p>HSR game mode buff.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.desc"><code class="name">var <span class="ident">desc</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.icon"><code class="name">var <span class="ident">icon</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.simple_desc"><code class="name">var <span class="ident">simple_desc</span> : str | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor"><code class="flex name class">
+<span>class <span class="ident">StarRailGameModeFloor</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailGameModeFloor(APIModel):
+    &#34;&#34;&#34;A floor of a game mode, like MOC Stage 1.&#34;&#34;&#34;
+
+    id: int
+    name: str
+    floor: int
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __extract_floor(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        extend = v[&#34;extend&#34;]
+        v[&#34;floor&#34;] = extend[&#34;floor&#34;]
+        return v</code></pre>
+</details>
+<div class="desc"><p>A floor of a game mode, like MOC Stage 1.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.floor"><code class="name">var <span class="ident">floor</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule"><code class="flex name class">
+<span>class <span class="ident">StarRailGameModeSchedule</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailGameModeSchedule(APIModel):
+    &#34;&#34;&#34;Base HSR lineup game mode schedule.&#34;&#34;&#34;
+
+    id: int = Aliased(&#34;group_id&#34;)
+    name: str = Aliased(&#34;name_mi18n&#34;)
+    start_time: datetime.datetime = Aliased(&#34;schedule_begin_time&#34;)
+    end_time: datetime.datetime = Aliased(&#34;schedule_end_time&#34;)
+
+    is_now: bool
+    is_show: bool
+    floor_nums: int</code></pre>
+</details>
+<div class="desc"><p>Base HSR lineup game mode schedule.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule">APCShadowSchedule</a></li>
+<li><a title="genshin.models.starrail.rpgsimulator.MOCSchedule" href="#genshin.models.starrail.rpgsimulator.MOCSchedule">MOCSchedule</a></li>
+<li><a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule" href="#genshin.models.starrail.rpgsimulator.PureFictionSchedule">PureFictionSchedule</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.end_time"><code class="name">var <span class="ident">end_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.floor_nums"><code class="name">var <span class="ident">floor_nums</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_now"><code class="name">var <span class="ident">is_now</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_show"><code class="name">var <span class="ident">is_show</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.start_time"><code class="name">var <span class="ident">start_time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeType"><code class="flex name class">
+<span>class <span class="ident">StarRailGameModeType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailGameModeType(str, Enum):
+    &#34;&#34;&#34;HSR lineup game mode enum.&#34;&#34;&#34;
+
+    MOC = &#34;Chasm&#34;
+    &#34;&#34;&#34;Memory of Chaos.&#34;&#34;&#34;
+    PURE_FICTION = &#34;Story&#34;
+    &#34;&#34;&#34;Pure Fiction.&#34;&#34;&#34;
+    APC_SHADOW = &#34;Boss&#34;
+    &#34;&#34;&#34;Apocalyptic Shadow.&#34;&#34;&#34;</code></pre>
+</details>
+<div class="desc"><p>HSR lineup game mode enum.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeType.APC_SHADOW"><code class="name">var <span class="ident">APC_SHADOW</span></code></dt>
+<dd>
+<div class="desc"><p>Apocalyptic Shadow.</p></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeType.MOC"><code class="name">var <span class="ident">MOC</span></code></dt>
+<dd>
+<div class="desc"><p>Memory of Chaos.</p></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailGameModeType.PURE_FICTION"><code class="name">var <span class="ident">PURE_FICTION</span></code></dt>
+<dd>
+<div class="desc"><p>Pure Fiction.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup"><code class="flex name class">
+<span>class <span class="ident">StarRailLineup</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailLineup(APIModel):
+    &#34;&#34;&#34;A HSR lineup.&#34;&#34;&#34;
+
+    id: str
+    player: StarRailLineupPlayer
+    type: StarRailGameModeType = Aliased(&#34;lineup_type&#34;)
+
+    title: str
+    description: str
+    likes: int = Aliased(&#34;like_cnt&#34;)
+    comments: int = Aliased(&#34;comment_cnt&#34;)
+    favorites: int = Aliased(&#34;favour_cnt&#34;)
+    views: int = Aliased(&#34;view_cnt&#34;)
+
+    created_at: datetime.datetime
+    last_edited_at: datetime.datetime = Aliased(&#34;last_edit&#34;)
+
+    stars: int = Aliased(&#34;star_num&#34;)
+    cycles_taken: int = Aliased(&#34;round_num&#34;)
+
+    characters: typing.Sequence[typing.Sequence[character.StarRailLineupCharacter]] = Aliased(&#34;avatar_group&#34;)
+
+    @pydantic.field_validator(&#34;characters&#34;, mode=&#34;before&#34;)
+    @classmethod
+    def __unnest_characters(
+        cls, v: typing.Sequence[dict[str, typing.Any]]
+    ) -&gt; typing.Sequence[typing.Sequence[dict[str, typing.Any]]]:
+        # Merge relic info from &#34;group&#34;
+        for g in v:
+            group = g[&#34;group&#34;]
+
+            for avatar in g[&#34;avatar_details&#34;]:
+                group_avatar = next((a for a in group if a[&#34;item_id&#34;] == str(avatar[&#34;id&#34;])), None)
+                if not group_avatar:
+                    continue
+
+                relics = group_avatar.get(&#34;relics&#34;, []) + group_avatar.get(&#34;relic_sides&#34;, [])
+
+                for relic in avatar.get(&#34;relics&#34;, []):
+                    group_avatar_relic = next((r for r in relics if r[&#34;item_id&#34;] == str(relic[&#34;id&#34;])), None)
+                    if not group_avatar_relic:
+                        continue
+
+                    relic.update(group_avatar_relic)
+
+        return [g[&#34;avatar_details&#34;] for g in v]
+
+    @pydantic.model_validator(mode=&#34;before&#34;)
+    @classmethod
+    def __nest_player(cls, v: dict[str, typing.Any]) -&gt; dict[str, typing.Any]:
+        &#34;&#34;&#34;Nest the player field.&#34;&#34;&#34;
+        v[&#34;player&#34;] = {
+            &#34;uid&#34;: v[&#34;account_uid&#34;],
+            &#34;nickname&#34;: v[&#34;nickname&#34;],
+            &#34;avatar_url&#34;: v[&#34;avatar_url&#34;],
+            &#34;level&#34;: v[&#34;game_level&#34;],
+        }
+        return v</code></pre>
+</details>
+<div class="desc"><p>A HSR lineup.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup">APCShadowLineup</a></li>
+<li><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup">PureFictionLineup</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.characters"><code class="name">var <span class="ident">characters</span> : Sequence[Sequence[<a title="genshin.models.starrail.character.StarRailLineupCharacter" href="character.html#genshin.models.starrail.character.StarRailLineupCharacter">StarRailLineupCharacter</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.comments"><code class="name">var <span class="ident">comments</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.created_at"><code class="name">var <span class="ident">created_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.cycles_taken"><code class="name">var <span class="ident">cycles_taken</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.favorites"><code class="name">var <span class="ident">favorites</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.id"><code class="name">var <span class="ident">id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.last_edited_at"><code class="name">var <span class="ident">last_edited_at</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.likes"><code class="name">var <span class="ident">likes</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.player"><code class="name">var <span class="ident">player</span> : <a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer">StarRailLineupPlayer</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.stars"><code class="name">var <span class="ident">stars</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.type"><code class="name">var <span class="ident">type</span> : <a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineup.views"><code class="name">var <span class="ident">views</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer"><code class="flex name class">
+<span>class <span class="ident">StarRailLineupPlayer</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailLineupPlayer(APIModel):
+    &#34;&#34;&#34;A HSR lineup player.&#34;&#34;&#34;
+
+    uid: str
+    nickname: str
+    avatar_url: str
+    level: int</code></pre>
+</details>
+<div class="desc"><p>A HSR lineup player.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.avatar_url"><code class="name">var <span class="ident">avatar_url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.level"><code class="name">var <span class="ident">level</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.nickname"><code class="name">var <span class="ident">nickname</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.uid"><code class="name">var <span class="ident">uid</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupResponse"><code class="flex name class">
+<span>class <span class="ident">StarRailLineupResponse</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StarRailLineupResponse(APIModel):
+    &#34;&#34;&#34;Response for HSR lineups.&#34;&#34;&#34;
+
+    lineups: typing.Sequence[StarRailLineup] = Aliased(&#34;list&#34;)
+    next_page_token: str</code></pre>
+</details>
+<div class="desc"><p>Response for HSR lineups.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="genshin.models.model.APIModel" href="../model.html#genshin.models.model.APIModel">APIModel</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.lineups"><code class="name">var <span class="ident">lineups</span> : Sequence[<a title="genshin.models.starrail.rpgsimulator.StarRailLineup" href="#genshin.models.starrail.rpgsimulator.StarRailLineup">StarRailLineup</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.model_config"><code class="name">var <span class="ident">model_config</span> : pydantic.config.ConfigDict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.next_page_token"><code class="name">var <span class="ident">next_page_token</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="genshin.models.starrail" href="index.html">genshin.models.starrail</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup">APCShadowLineup</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup.detail" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup.detail">detail</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup.model_config" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup.node1_challenged_at" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup.node1_challenged_at">node1_challenged_at</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineup.node2_challenged_at" href="#genshin.models.starrail.rpgsimulator.APCShadowLineup.node2_challenged_at">node2_challenged_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse" href="#genshin.models.starrail.rpgsimulator.APCShadowLineupResponse">APCShadowLineupResponse</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.lineups" href="#genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.lineups">lineups</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.model_config" href="#genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.next_page_token" href="#genshin.models.starrail.rpgsimulator.APCShadowLineupResponse.next_page_token">next_page_token</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule">APCShadowSchedule</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule.buff" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule.buff">buff</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule.model_config" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule.node1_buffs" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule.node1_buffs">node1_buffs</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.APCShadowSchedule.node2_buffs" href="#genshin.models.starrail.rpgsimulator.APCShadowSchedule.node2_buffs">node2_buffs</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.LineupDetail" href="#genshin.models.starrail.rpgsimulator.LineupDetail">LineupDetail</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.LineupDetail.buffs" href="#genshin.models.starrail.rpgsimulator.LineupDetail.buffs">buffs</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.LineupDetail.model_config" href="#genshin.models.starrail.rpgsimulator.LineupDetail.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.LineupDetail.points" href="#genshin.models.starrail.rpgsimulator.LineupDetail.points">points</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.MOCSchedule" href="#genshin.models.starrail.rpgsimulator.MOCSchedule">MOCSchedule</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.MOCSchedule.buff" href="#genshin.models.starrail.rpgsimulator.MOCSchedule.buff">buff</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.MOCSchedule.model_config" href="#genshin.models.starrail.rpgsimulator.MOCSchedule.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup">PureFictionLineup</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup.detail" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup.detail">detail</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup.model_config" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup.node1_challenged_at" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup.node1_challenged_at">node1_challenged_at</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineup.node2_challenged_at" href="#genshin.models.starrail.rpgsimulator.PureFictionLineup.node2_challenged_at">node2_challenged_at</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse" href="#genshin.models.starrail.rpgsimulator.PureFictionLineupResponse">PureFictionLineupResponse</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.lineups" href="#genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.lineups">lineups</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.model_config" href="#genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.next_page_token" href="#genshin.models.starrail.rpgsimulator.PureFictionLineupResponse.next_page_token">next_page_token</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule" href="#genshin.models.starrail.rpgsimulator.PureFictionSchedule">PureFictionSchedule</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule.buffs" href="#genshin.models.starrail.rpgsimulator.PureFictionSchedule.buffs">buffs</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule.default_buffs" href="#genshin.models.starrail.rpgsimulator.PureFictionSchedule.default_buffs">default_buffs</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.PureFictionSchedule.model_config" href="#genshin.models.starrail.rpgsimulator.PureFictionSchedule.model_config">model_config</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode">StarRailGameMode</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode.floors" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode.floors">floors</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode.id" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode.name" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameMode.type" href="#genshin.models.starrail.rpgsimulator.StarRailGameMode.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff">StarRailGameModeBuff</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.desc" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.desc">desc</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.icon" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.icon">icon</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.name" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.simple_desc" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeBuff.simple_desc">simple_desc</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor">StarRailGameModeFloor</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.floor" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.floor">floor</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.id" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.name" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeFloor.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule">StarRailGameModeSchedule</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.end_time" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.end_time">end_time</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.floor_nums" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.floor_nums">floor_nums</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.id" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_now" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_now">is_now</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_show" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.is_show">is_show</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.name" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.name">name</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.start_time" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeSchedule.start_time">start_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType">StarRailGameModeType</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType.APC_SHADOW" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType.APC_SHADOW">APC_SHADOW</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType.MOC" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType.MOC">MOC</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailGameModeType.PURE_FICTION" href="#genshin.models.starrail.rpgsimulator.StarRailGameModeType.PURE_FICTION">PURE_FICTION</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup" href="#genshin.models.starrail.rpgsimulator.StarRailLineup">StarRailLineup</a></code></h4>
+<ul class="two-column">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.characters" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.characters">characters</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.comments" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.comments">comments</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.created_at" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.created_at">created_at</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.cycles_taken" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.cycles_taken">cycles_taken</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.description" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.description">description</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.favorites" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.favorites">favorites</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.id" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.id">id</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.last_edited_at" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.last_edited_at">last_edited_at</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.likes" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.likes">likes</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.player" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.player">player</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.stars" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.stars">stars</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.title" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.title">title</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.type" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.type">type</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineup.views" href="#genshin.models.starrail.rpgsimulator.StarRailLineup.views">views</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer">StarRailLineupPlayer</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.avatar_url" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.avatar_url">avatar_url</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.level" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.level">level</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.nickname" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.nickname">nickname</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.uid" href="#genshin.models.starrail.rpgsimulator.StarRailLineupPlayer.uid">uid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupResponse" href="#genshin.models.starrail.rpgsimulator.StarRailLineupResponse">StarRailLineupResponse</a></code></h4>
+<ul class="">
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.lineups" href="#genshin.models.starrail.rpgsimulator.StarRailLineupResponse.lineups">lineups</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.model_config" href="#genshin.models.starrail.rpgsimulator.StarRailLineupResponse.model_config">model_config</a></code></li>
+<li><code><a title="genshin.models.starrail.rpgsimulator.StarRailLineupResponse.next_page_token" href="#genshin.models.starrail.rpgsimulator.StarRailLineupResponse.next_page_token">next_page_token</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
