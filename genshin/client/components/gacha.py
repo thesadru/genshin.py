@@ -15,6 +15,8 @@ from genshin.utility import deprecation
 
 __all__ = ["WishClient"]
 
+FATE_BANNER_TYPES = {models.StarRailBannerType.FATE_CHARACTER, models.StarRailBannerType.FATE_WEAPON}
+
 
 class WishClient(base.BaseClient):
     """Wish component."""
@@ -59,8 +61,13 @@ class WishClient(base.BaseClient):
         authkey: typing.Optional[str] = None,
     ) -> tuple[typing.Sequence[typing.Any], int]:
         """Get a single page of wishes."""
+        if banner_type in FATE_BANNER_TYPES:
+            endpoint = "getLdGachaLog"
+        else:
+            endpoint = "getGachaLog"
+
         data = await self.request_gacha_info(
-            "getGachaLog",
+            endpoint,
             lang=lang,
             game=game,
             authkey=authkey,
@@ -145,7 +152,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.Wish]:
         """Get the wish history of a user."""
-        banner_types = banner_type or [100, 200, 301, 302, 500]
+        banner_types = banner_type or list(models.GenshinBannerType)
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
@@ -180,7 +187,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.Warp]:
         """Get the warp history of a user."""
-        banner_types = banner_type or [1, 2, 11, 12]
+        banner_types = banner_type or list(models.StarRailBannerType)
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
@@ -215,7 +222,7 @@ class WishClient(base.BaseClient):
         end_id: int = 0,
     ) -> paginators.Paginator[models.SignalSearch]:
         """Get the signal search history of a user."""
-        banner_types = banner_type or [1, 2, 3, 5]
+        banner_types = banner_type or list(models.ZZZBannerType)
 
         if not isinstance(banner_types, typing.Sequence):
             banner_types = [banner_types]
