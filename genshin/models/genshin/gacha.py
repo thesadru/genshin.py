@@ -61,7 +61,12 @@ class StarRailBannerType(enum.IntEnum):
     CHARACTER = 11
     """Rotating character banner."""
     WEAPON = 12
-    """Rotating weapon banner."""
+    """Rotating light cone banner."""
+
+    FATE_CHARACTER = 21
+    """FGO collab character banner."""
+    FATE_WEAPON = 22
+    """FGO collab light cone banner."""
 
 
 class ZZZBannerType(enum.IntEnum):
